@@ -152,6 +152,16 @@ local hideVariousFrames = CreateFrame("Frame")
   PetActionBar:Hide()
   PetActionBar:HookScript("OnShow",function(self) self:Hide() end)
 
+  -- Hide Pet Unit frame
+  PetFrame:UnregisterAllEvents()
+  PetFrame:Hide()
+  PetFrame:HookScript("OnShow",function(self) self:Hide() end)
+
+  -- Hide Totem frame
+  TotemFrame:UnregisterAllEvents()
+  TotemFrame:Hide()
+  TotemFrame:HookScript("OnShow",function(self) self:Hide() end)
+
   -- Hide UI errors
   UIErrorsFrame:Hide()
 
@@ -178,7 +188,7 @@ local COMBATFEEDBACK_FADEOUTTIME = 0
 
 -- Remove buffs/debuffs from target frame
 TargetFrame.maxBuffs = 0
-TargetFrame.maxDebuffs = 5
+TargetFrame.maxDebuffs = 0
 
 -- Hide Reputation background for target and focus frames
 TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
@@ -301,8 +311,18 @@ ActionButton6:SetScript("OnEnter", nil)
 ActionButton6:SetScript("OnClick", nil)
 ActionButton7:SetScript("OnEnter", nil)
 ActionButton7:SetScript("OnClick", nil)
+ActionButton8:SetScript("OnEnter", nil)
+ActionButton8:SetScript("OnClick", nil)
+ActionButton9:SetScript("OnEnter", nil)
+ActionButton9:SetScript("OnClick", nil)
+ActionButton10:SetScript("OnEnter", nil)
+ActionButton10:SetScript("OnClick", nil)
+ActionButton11:SetScript("OnEnter", nil)
+ActionButton11:SetScript("OnClick", nil)
+ActionButton12:SetScript("OnEnter", nil)
+ActionButton12:SetScript("OnClick", nil)
 
--- Hide MainActionBar out of combat
+-- Hide MainActionBar out of combat/in combat
 MainMenuBar:SetAlpha(0)
 local hideMainMenu = CreateFrame("Frame")
 
@@ -317,7 +337,8 @@ local hideMainMenu = CreateFrame("Frame")
     MainMenuBar:SetAlpha(0)
     MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
   elseif event == "PLAYER_REGEN_DISABLED" then
-    MainMenuBar:SetAlpha(1)
+    MainMenuBar:SetAlpha(0)
+    MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
   end
 
 end)
@@ -332,36 +353,77 @@ MonkHarmonyBarFrame:SetAlpha(0)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
 
-    MonkStaggerBar:SetAlpha(1)
-    MonkStaggerBar:ClearAllPoints()
-    MonkStaggerBar:SetScale(1.1)
-    MonkStaggerBar:SetPoint("CENTER",UIParent,"CENTER", 0, -170)
+    -- Rogue
+    ComboPointPlayerFrame:SetAlpha(1)
+    ComboPointPlayerFrame:ClearAllPoints()
+    ComboPointPlayerFrame:SetScale(1.0)
+    ComboPointPlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+    -- Mage
+    MageArcaneChargesFrame:SetAlpha(1)
+    MageArcaneChargesFrame:ClearAllPoints()
+    MageArcaneChargesFrame:SetScale(1.0)
+    MageArcaneChargesFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+    -- Monk
     MonkHarmonyBarFrame:SetAlpha(1)
     MonkHarmonyBarFrame:ClearAllPoints()
     MonkHarmonyBarFrame:SetScale(1.0)
     MonkHarmonyBarFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    MageArcaneChargesFrame:SetAlpha(1)
-    MageArcaneChargesFrame:ClearAllPoints()
-    MageArcaneChargesFrame:SetScale(1.1)
-    MageArcaneChargesFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -170)
+    MonkStaggerBar:SetAlpha(1)
+    MonkStaggerBar:ClearAllPoints()
+    MonkStaggerBar:SetScale(1.1)
+    MonkStaggerBar:SetPoint("CENTER",UIParent,"CENTER", 0, -170)
+    -- Paladin
+    PaladinPowerBarFrame:SetAlpha(1)
+    PaladinPowerBarFrame:ClearAllPoints()
+    PaladinPowerBarFrame:SetScale(1.0)
+    PaladinPowerBarFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+    -- Death Knight
+    RuneFrame:SetAlpha(1)
+    RuneFrame:ClearAllPoints()
+    RuneFrame:SetScale(1.0)
+    RuneFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+    -- Warlock
+    WarlockPowerFrame:SetAlpha(1)
+    WarlockPowerFrame:ClearAllPoints()
+    WarlockPowerFrame:SetScale(1.0)
+    WarlockPowerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
 
 end)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function() 
 
-    MonkStaggerBar:SetAlpha(0)
-    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
-    MonkHarmonyBarFrame:SetAlpha(0)
-    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Rogue
+    ComboPointPlayerFrame:SetAlpha(0)
+    ComboPointPlayerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Mage
     MageArcaneChargesFrame:SetAlpha(0)
     MageArcaneChargesFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
-  --elseif playerClass == 'Shaman' then
+    -- Monk
+    MonkHarmonyBarFrame:SetAlpha(0)
+    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    MonkStaggerBar:SetAlpha(0)
+    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
+    -- Paladin
+    PaladinPowerBarFrame:SetAlpha(0)
+    PaladinPowerBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Death Knight
+    RuneFrame:SetAlpha(0)
+    RuneFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Warlock
+    WarlockPowerFrame:SetAlpha(0)
+    WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
 
 end)
 
 --------------------------------------------------------------------------------
--- 09. FONTS
+-- 09. TOOLTIP
 --------------------------------------------------------------------------------
 
---DAMAGE_TEXT_FONT = "Interface\\AddOns\\PanzaUI\\font.ttf"
-
+-- Add spell ID to Tooltip
+GameTooltip:HookScript("OnTooltipSetSpell", function(self)
+  local name, id = self:GetSpell()
+  if id then
+    self:AddLine("    ")
+    self:AddLine("ID: " .. tostring(id), 1, 1, 1)
+  end
+  end)
