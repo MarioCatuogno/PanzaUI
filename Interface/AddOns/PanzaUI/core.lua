@@ -19,7 +19,7 @@ local setupUiVariables = CreateFrame("Frame")
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
   C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatDamage", 0)
+  C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
@@ -184,6 +184,34 @@ TargetFrame.maxDebuffs = 5
 TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
 FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
 
+-- Colour Unit Frames based on Class (thanks to: https://www.curseforge.com/wow/addons/classcoloredhealthbars)
+local _, _, _, tocversion = GetBuildInfo()
+local _, englishClass = UnitClass("player")
+local r,g,b = GetClassColor(englishClass)
+if tocversion >= 100000 then 
+    hooksecurefunc("UnitFrameHealthBar_RefreshUpdateEvent", function(self) 
+        self:SetStatusBarDesaturated(true)
+        self:SetStatusBarColor(r,g,b) 
+    end);
+
+    hooksecurefunc("UnitFrameHealthBar_Update", function(self) 
+        self:SetStatusBarDesaturated(true)
+        self:SetStatusBarColor(r,g,b) 
+    end);
+
+    hooksecurefunc("HealthBar_OnValueChanged", function(self)
+            self:SetStatusBarDesaturated(true)
+            self:SetStatusBarColor(r,g,b) 
+    end);   
+else 
+    hooksecurefunc("UnitFrameHealthBar_Update", function(self) 
+        self:SetStatusBarColor(r,g,b) 
+    end);
+    hooksecurefunc("HealthBar_OnValueChanged", function(self)
+            self:SetStatusBarColor(r,g,b) 
+    end);
+end
+
 --------------------------------------------------------------------------------
 -- 04. CHAT
 --------------------------------------------------------------------------------
@@ -258,6 +286,22 @@ for i = 1, 12 do
 
 end
 
+-- Avoid interaction with MainActionBar buttons
+ActionButton1:SetScript("OnEnter", nil)
+ActionButton1:SetScript("OnClick", nil)
+ActionButton2:SetScript("OnEnter", nil)
+ActionButton2:SetScript("OnClick", nil)
+ActionButton3:SetScript("OnEnter", nil)
+ActionButton3:SetScript("OnClick", nil)
+ActionButton4:SetScript("OnEnter", nil)
+ActionButton4:SetScript("OnClick", nil)
+ActionButton5:SetScript("OnEnter", nil)
+ActionButton5:SetScript("OnClick", nil)
+ActionButton6:SetScript("OnEnter", nil)
+ActionButton6:SetScript("OnClick", nil)
+ActionButton7:SetScript("OnEnter", nil)
+ActionButton7:SetScript("OnClick", nil)
+
 -- Hide MainActionBar out of combat
 MainMenuBar:SetAlpha(0)
 local hideMainMenu = CreateFrame("Frame")
@@ -278,6 +322,8 @@ local hideMainMenu = CreateFrame("Frame")
 
 end)
 
+
+
 --------------------------------------------------------------------------------
 -- 08. POWER BARS
 --------------------------------------------------------------------------------
@@ -296,7 +342,10 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     MonkHarmonyBarFrame:ClearAllPoints()
     MonkHarmonyBarFrame:SetScale(1.0)
     MonkHarmonyBarFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-  --elseif playerClass == 'Shaman' then
+    MageArcaneChargesFrame:SetAlpha(1)
+    MageArcaneChargesFrame:ClearAllPoints()
+    MageArcaneChargesFrame:SetScale(1.1)
+    MageArcaneChargesFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -170)
 
 end)
 
@@ -306,6 +355,15 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
     MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
     MonkHarmonyBarFrame:SetAlpha(0)
     MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    MageArcaneChargesFrame:SetAlpha(0)
+    MageArcaneChargesFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
   --elseif playerClass == 'Shaman' then
 
 end)
+
+--------------------------------------------------------------------------------
+-- 09. FONTS
+--------------------------------------------------------------------------------
+
+--DAMAGE_TEXT_FONT = "Interface\\AddOns\\PanzaUI\\font.ttf"
+
