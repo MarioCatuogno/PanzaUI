@@ -414,16 +414,3 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
     WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
 
 end)
-
---------------------------------------------------------------------------------
--- 09. TOOLTIP
---------------------------------------------------------------------------------
-
--- Add spell ID to Tooltip
-GameTooltip:HookScript("OnTooltipSetSpell", function(self)
-  local name, id = self:GetSpell()
-  if id then
-    self:AddLine("    ")
-    self:AddLine("ID: " .. tostring(id), 1, 1, 1)
-  end
-  end)
