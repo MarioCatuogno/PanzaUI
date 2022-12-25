@@ -9,7 +9,7 @@
 ## UI
 
 * [PanzaUI - DPS/Tank](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/PanzaUI_dpstank.txt)
-* [PanzaUI - Heal](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/PanzaUI_heal.txt)
+* [PanzaUI - Heal](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/PanzaUI_healer.txt)
 
 ## WeakAuras
 
