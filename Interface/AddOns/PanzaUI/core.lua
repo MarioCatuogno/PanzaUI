@@ -194,34 +194,6 @@ TargetFrame.maxDebuffs = 0
 TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
 FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
 
--- Colour Unit Frames based on Class (thanks to: https://www.curseforge.com/wow/addons/classcoloredhealthbars)
-local _, _, _, tocversion = GetBuildInfo()
-local _, englishClass = UnitClass("player")
-local r,g,b = GetClassColor(englishClass)
-if tocversion >= 100000 then 
-    hooksecurefunc("UnitFrameHealthBar_RefreshUpdateEvent", function(self) 
-        self:SetStatusBarDesaturated(true)
-        self:SetStatusBarColor(r,g,b) 
-    end);
-
-    hooksecurefunc("UnitFrameHealthBar_Update", function(self) 
-        self:SetStatusBarDesaturated(true)
-        self:SetStatusBarColor(r,g,b) 
-    end);
-
-    hooksecurefunc("HealthBar_OnValueChanged", function(self)
-            self:SetStatusBarDesaturated(true)
-            self:SetStatusBarColor(r,g,b) 
-    end);   
-else 
-    hooksecurefunc("UnitFrameHealthBar_Update", function(self) 
-        self:SetStatusBarColor(r,g,b) 
-    end);
-    hooksecurefunc("HealthBar_OnValueChanged", function(self)
-            self:SetStatusBarColor(r,g,b) 
-    end);
-end
-
 --------------------------------------------------------------------------------
 -- 04. CHAT
 --------------------------------------------------------------------------------
