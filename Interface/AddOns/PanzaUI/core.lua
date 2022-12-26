@@ -42,6 +42,9 @@ local setupUiVariables = CreateFrame("Frame")
   C_CVar.SetCVar("renderscale", 0.999)
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
+  -- Minimap
+  C_CVar.SetCVar("minimapInsideZoom", 2)
+
   -- Nameplate
   C_CVar.SetCVar('nameplateMaxDistance', 60)
   C_CVar.SetCVar('nameplateOccludedAlphaMult',0.3)
@@ -92,9 +95,6 @@ local setupUiVariables = CreateFrame("Frame")
   C_CVar.SetCVar("showToastOffline", 0)
   C_CVar.SetCVar("showToastOnline", 0)
   C_CVar.SetCVar("showToastWindow", 0)
-
-  -- Minimap
-  C_CVar.SetCVar("minimapInsideZoom", 2)
 
   -- Various
   C_CVar.SetCVar("alwaysCompareItems", 1)
@@ -297,30 +297,55 @@ for i = 1, 12 do
 end
 
 -- Avoid interaction with MainActionBar buttons
-ActionButton1:SetScript("OnEnter", nil)
-ActionButton1:SetScript("OnClick", nil)
-ActionButton2:SetScript("OnEnter", nil)
-ActionButton2:SetScript("OnClick", nil)
-ActionButton3:SetScript("OnEnter", nil)
-ActionButton3:SetScript("OnClick", nil)
-ActionButton4:SetScript("OnEnter", nil)
-ActionButton4:SetScript("OnClick", nil)
-ActionButton5:SetScript("OnEnter", nil)
-ActionButton5:SetScript("OnClick", nil)
-ActionButton6:SetScript("OnEnter", nil)
-ActionButton6:SetScript("OnClick", nil)
-ActionButton7:SetScript("OnEnter", nil)
-ActionButton7:SetScript("OnClick", nil)
-ActionButton8:SetScript("OnEnter", nil)
-ActionButton8:SetScript("OnClick", nil)
-ActionButton9:SetScript("OnEnter", nil)
-ActionButton9:SetScript("OnClick", nil)
-ActionButton10:SetScript("OnEnter", nil)
-ActionButton10:SetScript("OnClick", nil)
-ActionButton11:SetScript("OnEnter", nil)
-ActionButton11:SetScript("OnClick", nil)
-ActionButton12:SetScript("OnEnter", nil)
-ActionButton12:SetScript("OnClick", nil)
+MultiBar5Button1:SetScript("OnEnter", nil)
+MultiBar5Button1:SetScript("OnClick", nil)
+MultiBar5Button2:SetScript("OnEnter", nil)
+MultiBar5Button2:SetScript("OnClick", nil)
+MultiBar5Button3:SetScript("OnEnter", nil)
+MultiBar5Button3:SetScript("OnClick", nil)
+MultiBar5Button4:SetScript("OnEnter", nil)
+MultiBar5Button4:SetScript("OnClick", nil)
+MultiBar5Button5:SetScript("OnEnter", nil)
+MultiBar5Button5:SetScript("OnClick", nil)
+MultiBar5Button6:SetScript("OnEnter", nil)
+MultiBar5Button6:SetScript("OnClick", nil)
+MultiBar5Button7:SetScript("OnEnter", nil)
+MultiBar5Button7:SetScript("OnClick", nil)
+MultiBar5Button8:SetScript("OnEnter", nil)
+MultiBar5Button8:SetScript("OnClick", nil)
+MultiBar5Button9:SetScript("OnEnter", nil)
+MultiBar5Button9:SetScript("OnClick", nil)
+MultiBar5Button10:SetScript("OnEnter", nil)
+MultiBar5Button10:SetScript("OnClick", nil)
+MultiBar5Button11:SetScript("OnEnter", nil)
+MultiBar5Button11:SetScript("OnClick", nil)
+MultiBar5Button12:SetScript("OnEnter", nil)
+MultiBar5Button12:SetScript("OnClick", nil)
+
+MultiBar7Button1:SetScript("OnEnter", nil)
+MultiBar7Button1:SetScript("OnClick", nil)
+MultiBar7Button2:SetScript("OnEnter", nil)
+MultiBar7Button2:SetScript("OnClick", nil)
+MultiBar7Button3:SetScript("OnEnter", nil)
+MultiBar7Button3:SetScript("OnClick", nil)
+MultiBar7Button4:SetScript("OnEnter", nil)
+MultiBar7Button4:SetScript("OnClick", nil)
+MultiBar7Button5:SetScript("OnEnter", nil)
+MultiBar7Button5:SetScript("OnClick", nil)
+MultiBar7Button6:SetScript("OnEnter", nil)
+MultiBar7Button6:SetScript("OnClick", nil)
+MultiBar7Button7:SetScript("OnEnter", nil)
+MultiBar7Button7:SetScript("OnClick", nil)
+MultiBar7Button8:SetScript("OnEnter", nil)
+MultiBar7Button8:SetScript("OnClick", nil)
+MultiBar7Button9:SetScript("OnEnter", nil)
+MultiBar7Button9:SetScript("OnClick", nil)
+MultiBar7Button10:SetScript("OnEnter", nil)
+MultiBar7Button10:SetScript("OnClick", nil)
+MultiBar7Button11:SetScript("OnEnter", nil)
+MultiBar7Button11:SetScript("OnClick", nil)
+MultiBar7Button12:SetScript("OnEnter", nil)
+MultiBar7Button12:SetScript("OnClick", nil)
 
 -- Hide MainActionBar out of combat/in combat
 MainMenuBar:SetAlpha(0)
@@ -352,6 +377,31 @@ MonkStaggerBar:SetAlpha(0)
 MonkHarmonyBarFrame:SetAlpha(0)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
+
+  if UnitInVehicle  ("player") then
+
+    -- Rogue
+    ComboPointPlayerFrame:SetAlpha(0)
+    ComboPointPlayerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Mage
+    MageArcaneChargesFrame:SetAlpha(0)
+    MageArcaneChargesFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Monk
+    MonkHarmonyBarFrame:SetAlpha(0)
+    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    MonkStaggerBar:SetAlpha(0)
+    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
+    -- Paladin
+    PaladinPowerBarFrame:SetAlpha(0)
+    PaladinPowerBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Death Knight
+    RuneFrame:SetAlpha(0)
+    RuneFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    -- Warlock
+    WarlockPowerFrame:SetAlpha(0)
+    WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+
+  else
 
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(1)
@@ -387,6 +437,8 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     WarlockPowerFrame:ClearAllPoints()
     WarlockPowerFrame:SetScale(1.0)
     WarlockPowerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+
+  end
 
 end)
 
