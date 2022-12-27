@@ -175,6 +175,16 @@ local hideVariousFrames = CreateFrame("Frame")
   ChatFrameChannelButton:Hide()
   ChatFrameChannelButton:EnableMouse(false)
 
+  -- Hide durability frame
+  DurabilityFrame:UnregisterAllEvents()
+  DurabilityFrame:Hide()
+  DurabilityFrame:HookScript("OnShow",function(self) self:Hide() end)
+
+  -- Hide vehicle seat indicator
+  VehicleSeatIndicator:UnregisterAllEvents()
+  VehicleSeatIndicator:Hide()
+  VehicleSeatIndicator:HookScript("OnShow",function(self) self:Hide() end)
+
 end)
 
 --------------------------------------------------------------------------------
@@ -204,7 +214,7 @@ CHANNEL_STYLE = "%d"
 PLAYER_STYLE  = "%s"
 
 -- Lines to scroll on mousewheel
-NUM_LINES_TO_SCROLL = 3
+--NUM_LINES_TO_SCROLL = 3
 
 -- Reduce overlay animation
 CHAT_TAB_SHOW_DELAY = 0.1
@@ -221,12 +231,52 @@ CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0
 CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.5
 CHAT_FRAME_TAB_NORMAL_NOMOUSE_ALPHA = 0
 
+-- Tag players in chat
+CHAT_FLAG_AFK = "[AFK] "
+CHAT_FLAG_DND = "[DND] "
+CHAT_FLAG_GM = "[GM] "
+
+-- Improve mousewheel scrolling
+hooksecurefunc("FloatingChatFrame_OnMouseScroll", function(self, direction)
+  if direction > 0 then
+    if IsShiftKeyDown() then
+      self:ScrollToTop()
+    else
+      self:ScrollUp()
+      self:ScrollUp()
+    end
+  elseif direction < 0 then
+    if IsShiftKeyDown() then
+      self:ScrollToBottom()
+    else
+      self:ScrollDown()
+      self:ScrollDown()
+    end
+  end
+end)
+
+-- Hide main menu
+ChatFrameMenuButton:SetAlpha(0)
+ChatFrameMenuButton:EnableMouse(false)
+
 --------------------------------------------------------------------------------
 -- 05. MAP
 --------------------------------------------------------------------------------
 
--- Enlarge Minimap
-Minimap:SetScale(1.1)
+-- Set Minimap scale
+MinimapCluster:SetScale(1.0)
+
+-- Hide zoom buttons
+Minimap.ZoomIn:UnregisterAllEvents()
+Minimap.ZoomIn:Hide()
+Minimap.ZoomIn:HookScript("OnShow",function(self) self:Hide() end)
+
+Minimap.ZoomOut:UnregisterAllEvents()
+Minimap.ZoomOut:Hide()
+Minimap.ZoomOut:HookScript("OnShow",function(self) self:Hide() end)
+
+-- Set Garrison button scale
+ExpansionLandingPageMinimapButton:SetScale(0.85)
 
 --------------------------------------------------------------------------------
 -- 06. RAID AND DUNGEONS
