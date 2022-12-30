@@ -44,6 +44,7 @@ local setupUiVariables = CreateFrame("Frame")
 
   -- Minimap
   C_CVar.SetCVar("minimapInsideZoom", 2)
+  C_CVar.SetCVar("minimapTrackingShowAll",1)
 
   -- Nameplate
   C_CVar.SetCVar('nameplateMaxDistance', 60)
@@ -60,7 +61,7 @@ local setupUiVariables = CreateFrame("Frame")
   C_CVar.SetCVar("nameplateShowOnlyNames", 0)
 
   -- Unit Frames
-  C_CVar.SetCVar("showTargetOfTarget", 0)
+  C_CVar.SetCVar("showTargetOfTarget", 1)
   C_CVar.SetCVar("UnitNameEnemyGuardianName", 1)
   C_CVar.SetCVar("UnitNameEnemyPetName", 1)
   C_CVar.SetCVar("UnitNameEnemyPlayerName", 1)
@@ -187,14 +188,19 @@ local hideVariousFrames = CreateFrame("Frame")
 
 end)
 
+-- Collapse Buff frame
+BuffFrame.CollapseAndExpandButton:SetChecked(false)
+BuffFrame.CollapseAndExpandButton:UpdateOrientation()
+BuffFrame:SetBuffsExpandedState()
+
 --------------------------------------------------------------------------------
 -- 03. UNIT FRAMES
 --------------------------------------------------------------------------------
 
 -- Remove damage and healing text in portraits
-local COMBATFEEDBACK_FADEINTIME = 0 
-local COMBATFEEDBACK_HOLDTIME = 0 
-local COMBATFEEDBACK_FADEOUTTIME = 0
+COMBATFEEDBACK_FADEINTIME = 0 
+COMBATFEEDBACK_HOLDTIME = 0 
+COMBATFEEDBACK_FADEOUTTIME = 0
 
 -- Remove buffs/debuffs from target frame
 TargetFrame.maxBuffs = 0
@@ -203,6 +209,58 @@ TargetFrame.maxDebuffs = 0
 -- Hide Reputation background for target and focus frames
 TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
 FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
+
+-- Hide combat flash and rest
+local hideRest = CreateFrame("Frame")
+
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
+  TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
+  hideRest:Hide()
+
+-- Unit Frames color (thanks to: http://www.vranx.com/ui.htm)
+hooksecurefunc("HealthBar_OnValueChanged", function (self)
+
+  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
+    local c = RAID_CLASS_COLORS[select(2,UnitClass(self.unit))];
+    if c then
+      self:SetStatusBarColor(c.r, c.g, c.b)
+      self:SetStatusBarDesaturated(true)
+    else
+      self:SetStatusBarColor(0.5, 0.5, 0.5)
+      self:SetStatusBarDesaturated(true)
+    end
+    elseif UnitIsPlayer(self.unit) then
+      self:SetStatusBarColor(0.5, 0.5, 0.5)
+      self:SetStatusBarDesaturated(true)
+    else
+      self:SetStatusBarColor(0.0, 1.0, 0.0)
+      self:SetStatusBarDesaturated(true)
+  end
+
+end)
+
+hooksecurefunc("UnitFrameHealthBar_Update", function (self)
+  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
+    local c = RAID_CLASS_COLORS[select(2,UnitClass(self.unit))];
+    if c then
+      self:SetStatusBarColor(c.r, c.g, c.b)
+      self:SetStatusBarDesaturated(true)
+    else
+      self:SetStatusBarColor(0.5, 0.5, 0.5)
+      self:SetStatusBarDesaturated(true)
+    end
+    elseif UnitIsPlayer(self.unit) then
+      self:SetStatusBarColor(0.5, 0.5, 0.5)
+      self:SetStatusBarDesaturated(true)
+    else
+      self:SetStatusBarColor(0.0, 1.0, 0.0)
+      self:SetStatusBarDesaturated(true)
+    end
+
+end)
 
 --------------------------------------------------------------------------------
 -- 04. CHAT
@@ -214,7 +272,7 @@ CHANNEL_STYLE = "%d"
 PLAYER_STYLE  = "%s"
 
 -- Lines to scroll on mousewheel
---NUM_LINES_TO_SCROLL = 3
+NUM_LINES_TO_SCROLL = 1
 
 -- Reduce overlay animation
 CHAT_TAB_SHOW_DELAY = 0.1
@@ -255,25 +313,32 @@ hooksecurefunc("FloatingChatFrame_OnMouseScroll", function(self, direction)
   end
 end)
 
--- Hide main menu
+-- Hide chat menu
 ChatFrameMenuButton:SetAlpha(0)
 ChatFrameMenuButton:EnableMouse(false)
+QuickJoinToastButton:SetAlpha(0)
+QuickJoinToastButton:EnableMouse(false)
 
 --------------------------------------------------------------------------------
 -- 05. MAP
 --------------------------------------------------------------------------------
 
 -- Set Minimap scale
+Minimap:SetScale(1.0)
 MinimapCluster:SetScale(1.0)
+
+-- Hide Minimap elements
+MinimapZoneText:SetScale(1.0)
+MinimapCluster.BorderTop:SetAlpha(0)
 
 -- Hide zoom buttons
 Minimap.ZoomIn:UnregisterAllEvents()
 Minimap.ZoomIn:Hide()
-Minimap.ZoomIn:HookScript("OnShow",function(self) self:Hide() end)
+Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
 
 Minimap.ZoomOut:UnregisterAllEvents()
 Minimap.ZoomOut:Hide()
-Minimap.ZoomOut:HookScript("OnShow",function(self) self:Hide() end)
+Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
 
 -- Set Garrison button scale
 ExpansionLandingPageMinimapButton:SetScale(0.85)
@@ -297,15 +362,6 @@ hooksecurefunc("CompactUnitFrame_UpdateName",function(frame)
 
 end)
 
--- Hide Objective Tracker while in Raid Boss encounter
-local hideQuestTracker = CreateFrame("Frame")
-
-  hideQuestTracker:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-  if event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" and instanceType == 'raid' then
-  ObjectiveTracker_Collapse()
-
-end
-
 --------------------------------------------------------------------------------
 -- 07. ACTION BARS
 --------------------------------------------------------------------------------
@@ -319,6 +375,32 @@ for i = 1, 12 do
 end
 
 -- Avoid interaction with MainActionBar buttons
+ActionButton1:SetScript("OnEnter", nil)
+ActionButton1:SetScript("OnClick", nil)
+ActionButton2:SetScript("OnEnter", nil)
+ActionButton2:SetScript("OnClick", nil)
+ActionButton3:SetScript("OnEnter", nil)
+ActionButton3:SetScript("OnClick", nil)
+ActionButton4:SetScript("OnEnter", nil)
+ActionButton4:SetScript("OnClick", nil)
+ActionButton5:SetScript("OnEnter", nil)
+ActionButton5:SetScript("OnClick", nil)
+ActionButton6:SetScript("OnEnter", nil)
+ActionButton6:SetScript("OnClick", nil)
+ActionButton7:SetScript("OnEnter", nil)
+ActionButton7:SetScript("OnClick", nil)
+ActionButton8:SetScript("OnEnter", nil)
+ActionButton8:SetScript("OnClick", nil)
+ActionButton9:SetScript("OnEnter", nil)
+ActionButton9:SetScript("OnClick", nil)
+ActionButton10:SetScript("OnEnter", nil)
+ActionButton10:SetScript("OnClick", nil)
+ActionButton11:SetScript("OnEnter", nil)
+ActionButton11:SetScript("OnClick", nil)
+ActionButton12:SetScript("OnEnter", nil)
+ActionButton12:SetScript("OnClick", nil)
+
+-- Avoid interaction with MultiActionBar 5
 MultiBar5Button1:SetScript("OnEnter", nil)
 MultiBar5Button1:SetScript("OnClick", nil)
 MultiBar5Button2:SetScript("OnEnter", nil)
@@ -344,6 +426,33 @@ MultiBar5Button11:SetScript("OnClick", nil)
 MultiBar5Button12:SetScript("OnEnter", nil)
 MultiBar5Button12:SetScript("OnClick", nil)
 
+-- Avoid interaction with MultiActionBar 6
+MultiBar6Button1:SetScript("OnEnter", nil)
+MultiBar6Button1:SetScript("OnClick", nil)
+MultiBar6Button2:SetScript("OnEnter", nil)
+MultiBar6Button2:SetScript("OnClick", nil)
+MultiBar6Button3:SetScript("OnEnter", nil)
+MultiBar6Button3:SetScript("OnClick", nil)
+MultiBar6Button4:SetScript("OnEnter", nil)
+MultiBar6Button4:SetScript("OnClick", nil)
+MultiBar6Button5:SetScript("OnEnter", nil)
+MultiBar6Button5:SetScript("OnClick", nil)
+MultiBar6Button6:SetScript("OnEnter", nil)
+MultiBar6Button6:SetScript("OnClick", nil)
+MultiBar6Button7:SetScript("OnEnter", nil)
+MultiBar6Button7:SetScript("OnClick", nil)
+MultiBar6Button8:SetScript("OnEnter", nil)
+MultiBar6Button8:SetScript("OnClick", nil)
+MultiBar6Button9:SetScript("OnEnter", nil)
+MultiBar6Button9:SetScript("OnClick", nil)
+MultiBar6Button10:SetScript("OnEnter", nil)
+MultiBar6Button10:SetScript("OnClick", nil)
+MultiBar6Button11:SetScript("OnEnter", nil)
+MultiBar6Button11:SetScript("OnClick", nil)
+MultiBar6Button12:SetScript("OnEnter", nil)
+MultiBar6Button12:SetScript("OnClick", nil)
+
+-- Avoid interaction with MultiActionBar 7
 MultiBar7Button1:SetScript("OnEnter", nil)
 MultiBar7Button1:SetScript("OnClick", nil)
 MultiBar7Button2:SetScript("OnEnter", nil)
@@ -369,7 +478,7 @@ MultiBar7Button11:SetScript("OnClick", nil)
 MultiBar7Button12:SetScript("OnEnter", nil)
 MultiBar7Button12:SetScript("OnClick", nil)
 
--- Hide MainActionBar out of combat/in combat
+-- Hide MainActionBar
 MainMenuBar:SetAlpha(0)
 local hideMainMenu = CreateFrame("Frame")
 
@@ -488,3 +597,20 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
     WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
 
 end)
+
+--------------------------------------------------------------------------------
+-- 09. OTHER FRAMES
+--------------------------------------------------------------------------------
+
+-- Resize QuestTracker frame and EncounterBar
+ObjectiveTrackerFrame:SetScale(0.95)
+EncounterBar:SetScale(0.7)
+
+-- Hide Objective Tracker while in Raid Boss encounter
+local hideQuestTracker = CreateFrame("Frame")
+
+  hideQuestTracker:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+  if event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" and instanceType == 'raid' then
+  ObjectiveTracker_Collapse()
+
+end
