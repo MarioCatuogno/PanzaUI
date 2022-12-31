@@ -511,12 +511,15 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
 
   if UnitInVehicle  ("player") then
 
+    -- Druid
+    ComboPointDruidPlayerFrame:SetAlpha(0)
+    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
     -- Mage
     MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
     -- Monk
     MonkHarmonyBarFrame:SetAlpha(0)
     MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
@@ -524,16 +527,21 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
     -- Paladin
     PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
     -- Death Knight
     RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
     -- Warlock
     WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
 
   else
 
+    --Druid
+    ComboPointDruidPlayerFrame:SetAlpha(1)
+    ComboPointDruidPlayerFrame:ClearAllPoints()
+    ComboPointDruidPlayerFrame:SetScale(1.0)
+    ComboPointDruidPlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(1)
     ComboPointPlayerFrame:ClearAllPoints()
@@ -575,12 +583,15 @@ end)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function() 
 
+    -- Druid
+    ComboPointDruidPlayerFrame:SetAlpha(0)
+    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
     -- Mage
     MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
     -- Monk
     MonkHarmonyBarFrame:SetAlpha(0)
     MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
@@ -588,13 +599,13 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
     MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
     -- Paladin
     PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
     -- Death Knight
     RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
     -- Warlock
     WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
+    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
 
 end)
 
