@@ -8,7 +8,7 @@
 
 ## UI
 
-* [PanzaUI - DPS/Tank](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/blizzui.txt)
+* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/blizzui.txt)
 
 ## WeakAuras
 
