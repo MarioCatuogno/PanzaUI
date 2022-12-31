@@ -517,6 +517,9 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(0)
     ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
+    --Evoker
+    EssencePlayerFrame:SetAlpha(0)
+    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
     -- Mage
     MageArcaneChargesFrame:SetAlpha(0)
     MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
@@ -547,6 +550,11 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     ComboPointPlayerFrame:ClearAllPoints()
     ComboPointPlayerFrame:SetScale(1.0)
     ComboPointPlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
+    -- Evoker
+    EssencePlayerFrame:SetAlpha(1)
+    EssencePlayerFrame:ClearAllPoints()
+    EssencePlayerFrame:SetScale(1.0)
+    EssencePlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
     -- Mage
     MageArcaneChargesFrame:SetAlpha(1)
     MageArcaneChargesFrame:ClearAllPoints()
@@ -589,6 +597,9 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
     -- Rogue
     ComboPointPlayerFrame:SetAlpha(0)
     ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
+    -- Evoker
+    EssencePlayerFrame:SetAlpha(0)
+    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
     -- Mage
     MageArcaneChargesFrame:SetAlpha(0)
     MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
