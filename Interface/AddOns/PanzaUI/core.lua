@@ -499,8 +499,15 @@ end)
 --------------------------------------------------------------------------------
 
 -- Hide Power bars out of combat
+ComboPointDruidPlayerFrame:SetAlpha(0)
+ComboPointPlayerFrame:SetAlpha(0)
+EssencePlayerFrame:SetAlpha(0)
+MageArcaneChargesFrame:SetAlpha(0)
 MonkStaggerBar:SetAlpha(0)
 MonkHarmonyBarFrame:SetAlpha(0)
+PaladinPowerBarFrame:SetAlpha(0)
+RuneFrame:SetAlpha(0)
+WarlockPowerFrame:SetAlpha(0)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
 
