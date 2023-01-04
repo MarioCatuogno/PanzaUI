@@ -158,11 +158,6 @@ local hideVariousFrames = CreateFrame("Frame")
   PetFrame:Hide()
   PetFrame:HookScript("OnShow",function(self) self:Hide() end)
 
-  -- Hide Totem frame
-  TotemFrame:UnregisterAllEvents()
-  TotemFrame:Hide()
-  TotemFrame:HookScript("OnShow",function(self) self:Hide() end)
-
   -- Hide UI errors
   UIErrorsFrame:Hide()
 
