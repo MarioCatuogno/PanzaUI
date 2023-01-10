@@ -511,8 +511,6 @@ WarlockPowerFrame:SetAlpha(0)
 
 EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
 
-  if UnitInVehicle  ("player") then
-
     -- Druid
     ComboPointDruidPlayerFrame:SetAlpha(0)
     ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
@@ -539,55 +537,6 @@ EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
     -- Warlock
     WarlockPowerFrame:SetAlpha(0)
     WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
-
-  else
-
-    --Druid
-    ComboPointDruidPlayerFrame:SetAlpha(1)
-    ComboPointDruidPlayerFrame:ClearAllPoints()
-    ComboPointDruidPlayerFrame:SetScale(1.0)
-    ComboPointDruidPlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Rogue
-    ComboPointPlayerFrame:SetAlpha(1)
-    ComboPointPlayerFrame:ClearAllPoints()
-    ComboPointPlayerFrame:SetScale(1.0)
-    ComboPointPlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Evoker
-    EssencePlayerFrame:SetAlpha(1)
-    EssencePlayerFrame:ClearAllPoints()
-    EssencePlayerFrame:SetScale(1.0)
-    EssencePlayerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Mage
-    MageArcaneChargesFrame:SetAlpha(1)
-    MageArcaneChargesFrame:ClearAllPoints()
-    MageArcaneChargesFrame:SetScale(1.0)
-    MageArcaneChargesFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Monk
-    MonkHarmonyBarFrame:SetAlpha(1)
-    MonkHarmonyBarFrame:ClearAllPoints()
-    MonkHarmonyBarFrame:SetScale(1.0)
-    MonkHarmonyBarFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    MonkStaggerBar:SetAlpha(1)
-    MonkStaggerBar:ClearAllPoints()
-    MonkStaggerBar:SetScale(1.1)
-    MonkStaggerBar:SetPoint("CENTER",UIParent,"CENTER", 0, -170)
-    -- Paladin
-    PaladinPowerBarFrame:SetAlpha(1)
-    PaladinPowerBarFrame:ClearAllPoints()
-    PaladinPowerBarFrame:SetScale(1.0)
-    PaladinPowerBarFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Death Knight
-    RuneFrame:SetAlpha(1)
-    RuneFrame:ClearAllPoints()
-    RuneFrame:SetScale(1.0)
-    RuneFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-    -- Warlock
-    WarlockPowerFrame:SetAlpha(1)
-    WarlockPowerFrame:ClearAllPoints()
-    WarlockPowerFrame:SetScale(1.0)
-    WarlockPowerFrame:SetPoint("CENTER",UIParent,"CENTER", 0, -190)
-
-  end
 
 end)
 
