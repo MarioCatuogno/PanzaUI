@@ -584,6 +584,8 @@ local hideQuestTracker = CreateFrame("Frame")
 
   hideQuestTracker:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
   if event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" and instanceType == 'raid' then
-  ObjectiveTracker_Collapse()
+    ObjectiveTrackerFrame:Hide()
+  else 
+    ObjectiveTrackerFrame:Show()
 
 end
