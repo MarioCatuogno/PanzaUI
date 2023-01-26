@@ -598,3 +598,9 @@ EncounterBar:SetScale(0.7)
 function MainMenuMicroButton_AreAlertsEnabled()
   return false
 end
+
+-- Position Queue Status
+QueueStatusButtonIcon:ClearAllPoints()
+QueueStatusButtonIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+QueueStatusButton:ClearAllPoints()
+QueueStatusButton:SetPoint("TOPRIGHT",UIParent, -170, -175)
