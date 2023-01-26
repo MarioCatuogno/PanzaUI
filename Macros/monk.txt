@@ -1,19 +1,18 @@
 #showtooltip
-/cast [target=focus,exists] Paralysis;Paralysis
+/cast [target=focus,exists][@mouseover,exists,harm,nodead] Paralysis;Paralysis
 
 #showtooltip
-/cast [mod:shift,@cursor][@player] Bonedust Brew
+/cast [mod:shift,@player] Exploding Keg; [@player] Bonedust Brew
 
 #showtooltip
-/cast Purifying Brew
-/cast [mod:shift] Celestial Brew
+/cast [mod:shift] Celestial Brew; Purifying Brew
 /cast [mod:shift][known:115399] Black Ox Brew
 
 #showtooltip
-/cast [known:132578][nopet] Invoke Niuzao, the Black Ox
-/cast [known:322188][nopet] Invoke Yu'lon, the Jade Serpent
-/cast [known:325197][nopet] Invoke Chi-Ji, the Red Crane
-/cast [known:123904][nopet] Invoke Xuen, the White Tiger
+/cast [known:132578] Invoke Niuzao, the Black Ox
+/cast [known:325197] Invoke Chi-Ji, the Red Crane
+/cast [known:322118] Invoke Yu'lon, the Jade Serpent
+/cast [known:123904] Invoke Xuen, the White Tiger
 
 #showtooltip
 /cast [known:115098] Chi Wave
@@ -21,14 +20,15 @@
 
 #showtooltip Keg Smash
 /startattack [harm,nodead]
+/use 14
 /cast [mod:shift] Weapons of Order; Keg Smash
 
 #showtooltip Rising Sun Kick
 /stopmacro [channeling:Fists of Fury]
 /stopmacro [channeling:Essence Font]
-/cast Thunder Focus Tea
+/startattack [harm,nodead]
 /cast Rising Sun Kick
-/use 13
+/use 14
 
 #showtooltip
 /cast [@focus,exists] Spear Hand Strike; Spear Hand Strike
@@ -48,12 +48,9 @@
 /startattack [harm,nodead]
 /cast [@mouseover,help,nodead,mod:shift][@target,help,nodead,mod:shift]Vivify;[@player,mod:shift]Vivify;[harm,nodead]Blackout Kick
 
-#showtooltip
-/cast [mod:shift,@cursor][@player] Exploding Keg
-
 #showtooltip Fists of Fury
-/startattack
-/use 13
+/startattack [harm,nodead]
+/use 14
 /cast Fists of Fury
 
 #showtooltip
@@ -63,7 +60,7 @@
 /stopmacro [channeling:Essence Font]
 /cast Mana Tea
 /cast [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Enveloping Mist
-/use 13
+/use 14
 
 #showtooltip Life Cocoon
 /use 13
@@ -81,3 +78,8 @@
 #showtooltip
 /cast [mod:shift,@cursor][@player] Ring of Peace
 
+#showtooltip
+/cast [mod:shift] Dampen Harm; Diffuse Magic
+
+#showtooltip
+/cast [mod:shift] Dampen Harm; Diffuse Magic
