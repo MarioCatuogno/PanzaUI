@@ -144,9 +144,13 @@ local hideVariousFrames = CreateFrame("Frame")
   hideVariousFrames:SetScript("OnEvent",function(self, event, ...)
 
   -- Hide Micro buttons and bags
-  MicroButtonAndBagsBar:UnregisterAllEvents()
-  MicroButtonAndBagsBar:Hide()
-  MicroButtonAndBagsBar:HookScript("OnShow",function(self) self:Hide() end)
+  MicroMenu:UnregisterAllEvents()
+  MicroMenu:Hide()
+  MicroMenu:HookScript("OnShow",function(self) self:Hide() end)
+
+  BagsBar:UnregisterAllEvents()
+  BagsBar:Hide()
+  BagsBar:HookScript("OnShow",function(self) self:Hide() end)
 
   -- Hide Pet bar
   PetActionBar:UnregisterAllEvents()
@@ -578,6 +582,17 @@ end)
 -- Resize QuestTracker frame and EncounterBar
 ObjectiveTrackerFrame:SetScale(0.95)
 EncounterBar:SetScale(0.7)
+
+-- Hide Objective Tracker while in Raid Boss encounter
+--local hideQuestTracker = CreateFrame("Frame")
+--
+--  hideQuestTracker:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+--  if event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" and instanceType == 'raid' then
+--    ObjectiveTrackerFrame:Hide()
+--  else 
+--    ObjectiveTrackerFrame:Show()
+--
+--end
 
 -- Hide Micro Menu alerts
 function MainMenuMicroButton_AreAlertsEnabled()
