@@ -1,4 +1,7 @@
 #showtooltip
+/cast [mod:shift,@cursor][@player] Ring of Peace
+
+#showtooltip
 /cast [target=focus,exists][@mouseover,exists,harm,nodead] Paralysis;Paralysis
 
 #showtooltip
@@ -74,9 +77,6 @@
 
 #showtooltip
 /cast [@player] Tiger's Lust
-
-#showtooltip
-/cast [mod:shift,@cursor][@player] Ring of Peace
 
 #showtooltip
 /cast [mod:shift] Dampen Harm; Diffuse Magic
