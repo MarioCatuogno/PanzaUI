@@ -477,26 +477,21 @@ MultiBar7Button11:SetScript("OnClick", nil)
 MultiBar7Button12:SetScript("OnEnter", nil)
 MultiBar7Button12:SetScript("OnClick", nil)
 
--- Hide MainActionBar
+-- Hide Action Bars
 MainMenuBar:SetAlpha(0)
-local hideMainMenu = CreateFrame("Frame")
-
-  hideMainMenu:RegisterEvent("PLAYER_ENTERING_WORLD")
-  hideMainMenu:RegisterEvent("PLAYER_LOGIN")
-  hideMainMenu:RegisterEvent("ADDON_LOADED")
-  hideMainMenu:RegisterEvent("PLAYER_REGEN_ENABLED")
-  hideMainMenu:RegisterEvent("PLAYER_REGEN_DISABLED")
-  hideMainMenu:SetScript("OnEvent", function(self, event)
-
-  if event == "PLAYER_REGEN_ENABLED" then
-    MainMenuBar:SetAlpha(0)
-    MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
-  elseif event == "PLAYER_REGEN_DISABLED" then
-    MainMenuBar:SetAlpha(0)
-    MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
-  end
-
-end)
+MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
+MultiBarBottomLeft:Hide()
+MultiBarBottomLeft:SetScript("OnShow", function() MultiBarBottomLeft:Hide() end)
+MultiBarRight:Hide()
+MultiBarRight:SetScript("OnShow", function() MultiBarRight:Hide() end)
+MultiBarLeft:Hide()
+MultiBarLeft:SetScript("OnShow", function() MultiBarLeft:Hide() end)
+MultiBar5:Hide()
+MultiBar5:SetScript("OnShow", function() MultiBar5:Hide() end)
+MultiBar6:Hide()
+MultiBar6:SetScript("OnShow", function() MultiBar6:Hide() end)
+MultiBar7:Hide()
+MultiBar7:SetScript("OnShow", function() MultiBar7:Hide() end)
 
 --------------------------------------------------------------------------------
 -- 08. POWER BARS
