@@ -16,6 +16,9 @@ local setupUiVariables = CreateFrame("Frame")
   -- Action Bar
   C_CVar.SetCVar("lockActionBar", 1)
 
+  -- Bags
+  C_CVar.SetCVar("combinedBags", 0)
+
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
   C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
