@@ -581,17 +581,6 @@ end)
 ObjectiveTrackerFrame:SetScale(0.95)
 EncounterBar:SetScale(0.7)
 
--- Hide Objective Tracker while in Raid Boss encounter
---local hideQuestTracker = CreateFrame("Frame")
---
---  hideQuestTracker:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
---  if event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" and instanceType == 'raid' then
---    ObjectiveTrackerFrame:Hide()
---  else 
---    ObjectiveTrackerFrame:Show()
---
---end
-
 -- Hide Micro Menu alerts
 function MainMenuMicroButton_AreAlertsEnabled()
   return false
