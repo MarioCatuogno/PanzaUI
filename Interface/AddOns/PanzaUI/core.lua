@@ -381,133 +381,46 @@ end)
 -- 07. ACTION BARS
 --------------------------------------------------------------------------------
 
+-- Hide MainMenuBar
+local function HideMainMenuBar()
+  MainMenuBar:SetAlpha(0)
+  MainMenuBar:EnableMouse(false)
+  end
+  
+  -- Call the function on load
+  local f = CreateFrame("Frame")
+  f:RegisterEvent("PLAYER_LOGIN")
+  f:SetScript("OnEvent", function(self, event)
+  if event == "PLAYER_LOGIN" then
+  HideMainMenuBar()
+  end
+  end)
+
 -- Hide GCD blink
 for i = 1, 12 do
-
   local button = _G["ActionButton"..i]
+  if button then
   button.cooldown:SetDrawBling(false)
-
-end
-
--- Avoid interaction with MainActionBar buttons
-ActionButton1:SetScript("OnEnter", nil)
-ActionButton1:SetScript("OnClick", nil)
-ActionButton2:SetScript("OnEnter", nil)
-ActionButton2:SetScript("OnClick", nil)
-ActionButton3:SetScript("OnEnter", nil)
-ActionButton3:SetScript("OnClick", nil)
-ActionButton4:SetScript("OnEnter", nil)
-ActionButton4:SetScript("OnClick", nil)
-ActionButton5:SetScript("OnEnter", nil)
-ActionButton5:SetScript("OnClick", nil)
-ActionButton6:SetScript("OnEnter", nil)
-ActionButton6:SetScript("OnClick", nil)
-ActionButton7:SetScript("OnEnter", nil)
-ActionButton7:SetScript("OnClick", nil)
-ActionButton8:SetScript("OnEnter", nil)
-ActionButton8:SetScript("OnClick", nil)
-ActionButton9:SetScript("OnEnter", nil)
-ActionButton9:SetScript("OnClick", nil)
-ActionButton10:SetScript("OnEnter", nil)
-ActionButton10:SetScript("OnClick", nil)
-ActionButton11:SetScript("OnEnter", nil)
-ActionButton11:SetScript("OnClick", nil)
-ActionButton12:SetScript("OnEnter", nil)
-ActionButton12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 5
-MultiBar5Button1:SetScript("OnEnter", nil)
-MultiBar5Button1:SetScript("OnClick", nil)
-MultiBar5Button2:SetScript("OnEnter", nil)
-MultiBar5Button2:SetScript("OnClick", nil)
-MultiBar5Button3:SetScript("OnEnter", nil)
-MultiBar5Button3:SetScript("OnClick", nil)
-MultiBar5Button4:SetScript("OnEnter", nil)
-MultiBar5Button4:SetScript("OnClick", nil)
-MultiBar5Button5:SetScript("OnEnter", nil)
-MultiBar5Button5:SetScript("OnClick", nil)
-MultiBar5Button6:SetScript("OnEnter", nil)
-MultiBar5Button6:SetScript("OnClick", nil)
-MultiBar5Button7:SetScript("OnEnter", nil)
-MultiBar5Button7:SetScript("OnClick", nil)
-MultiBar5Button8:SetScript("OnEnter", nil)
-MultiBar5Button8:SetScript("OnClick", nil)
-MultiBar5Button9:SetScript("OnEnter", nil)
-MultiBar5Button9:SetScript("OnClick", nil)
-MultiBar5Button10:SetScript("OnEnter", nil)
-MultiBar5Button10:SetScript("OnClick", nil)
-MultiBar5Button11:SetScript("OnEnter", nil)
-MultiBar5Button11:SetScript("OnClick", nil)
-MultiBar5Button12:SetScript("OnEnter", nil)
-MultiBar5Button12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 6
-MultiBar6Button1:SetScript("OnEnter", nil)
-MultiBar6Button1:SetScript("OnClick", nil)
-MultiBar6Button2:SetScript("OnEnter", nil)
-MultiBar6Button2:SetScript("OnClick", nil)
-MultiBar6Button3:SetScript("OnEnter", nil)
-MultiBar6Button3:SetScript("OnClick", nil)
-MultiBar6Button4:SetScript("OnEnter", nil)
-MultiBar6Button4:SetScript("OnClick", nil)
-MultiBar6Button5:SetScript("OnEnter", nil)
-MultiBar6Button5:SetScript("OnClick", nil)
-MultiBar6Button6:SetScript("OnEnter", nil)
-MultiBar6Button6:SetScript("OnClick", nil)
-MultiBar6Button7:SetScript("OnEnter", nil)
-MultiBar6Button7:SetScript("OnClick", nil)
-MultiBar6Button8:SetScript("OnEnter", nil)
-MultiBar6Button8:SetScript("OnClick", nil)
-MultiBar6Button9:SetScript("OnEnter", nil)
-MultiBar6Button9:SetScript("OnClick", nil)
-MultiBar6Button10:SetScript("OnEnter", nil)
-MultiBar6Button10:SetScript("OnClick", nil)
-MultiBar6Button11:SetScript("OnEnter", nil)
-MultiBar6Button11:SetScript("OnClick", nil)
-MultiBar6Button12:SetScript("OnEnter", nil)
-MultiBar6Button12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 7
-MultiBar7Button1:SetScript("OnEnter", nil)
-MultiBar7Button1:SetScript("OnClick", nil)
-MultiBar7Button2:SetScript("OnEnter", nil)
-MultiBar7Button2:SetScript("OnClick", nil)
-MultiBar7Button3:SetScript("OnEnter", nil)
-MultiBar7Button3:SetScript("OnClick", nil)
-MultiBar7Button4:SetScript("OnEnter", nil)
-MultiBar7Button4:SetScript("OnClick", nil)
-MultiBar7Button5:SetScript("OnEnter", nil)
-MultiBar7Button5:SetScript("OnClick", nil)
-MultiBar7Button6:SetScript("OnEnter", nil)
-MultiBar7Button6:SetScript("OnClick", nil)
-MultiBar7Button7:SetScript("OnEnter", nil)
-MultiBar7Button7:SetScript("OnClick", nil)
-MultiBar7Button8:SetScript("OnEnter", nil)
-MultiBar7Button8:SetScript("OnClick", nil)
-MultiBar7Button9:SetScript("OnEnter", nil)
-MultiBar7Button9:SetScript("OnClick", nil)
-MultiBar7Button10:SetScript("OnEnter", nil)
-MultiBar7Button10:SetScript("OnClick", nil)
-MultiBar7Button11:SetScript("OnEnter", nil)
-MultiBar7Button11:SetScript("OnClick", nil)
-MultiBar7Button12:SetScript("OnEnter", nil)
-MultiBar7Button12:SetScript("OnClick", nil)
-
--- Hide Action Bars
-MainMenuBar:SetAlpha(0)
-MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
-MultiBarBottomLeft:Hide()
-MultiBarBottomLeft:SetScript("OnShow", function() MultiBarBottomLeft:Hide() end)
-MultiBarRight:Hide()
-MultiBarRight:SetScript("OnShow", function() MultiBarRight:Hide() end)
-MultiBarLeft:Hide()
-MultiBarLeft:SetScript("OnShow", function() MultiBarLeft:Hide() end)
-MultiBar5:Hide()
-MultiBar5:SetScript("OnShow", function() MultiBar5:Hide() end)
-MultiBar6:Hide()
-MultiBar6:SetScript("OnShow", function() MultiBar6:Hide() end)
-MultiBar7:Hide()
-MultiBar7:SetScript("OnShow", function() MultiBar7:Hide() end)
+  end
+  end
+  
+  -- Avoid interaction with action bars
+  local bars = {
+  "ActionButton",
+  "MultiBar5Button",
+  "MultiBar6Button",
+  "MultiBar7Button"
+  }
+  
+  for _, bar in pairs(bars) do
+  for i = 1, 12 do
+  local button = _G[bar..i]
+  if button then
+  button:SetScript("OnEnter", nil)
+  button:SetScript("OnClick", nil)
+  end
+  end
+  end
 
 --------------------------------------------------------------------------------
 -- 08. POWER BARS
