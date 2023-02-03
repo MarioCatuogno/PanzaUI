@@ -470,16 +470,30 @@ end)
 --------------------------------------------------------------------------------
 
 -- Resize QuestTracker frame and EncounterBar
-ObjectiveTrackerFrame:SetScale(0.95)
-EncounterBar:SetScale(0.7)
+local scale = 0.95
+ObjectiveTrackerFrame:SetScale(scale)
+
+local barScale = 0.7
+EncounterBar:SetScale(barScale)
 
 -- Hide Micro Menu alerts
 function MainMenuMicroButton_AreAlertsEnabled()
-  return false
+return false
 end
 
 -- Position Queue Status
-QueueStatusButtonIcon:ClearAllPoints()
-QueueStatusButtonIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
-QueueStatusButton:ClearAllPoints()
-QueueStatusButton:SetPoint("TOPRIGHT",UIParent, -170, -175)
+local queueStatus = QueueStatusButton
+local queueStatusIcon = QueueStatusButtonIcon
+
+queueStatusIcon:ClearAllPoints()
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+queueStatus:ClearAllPoints()
+queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
+
+-- Check if the QueueStatusButtonIcon and QueueStatusButton exist before trying to manipulate them
+if not (queueStatusIcon and queueStatus) then return end
+
+queueStatusIcon:ClearAllPoints()
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+queueStatus:ClearAllPoints()
+queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
