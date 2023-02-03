@@ -1,0 +1,7 @@
+## Interface: 100005
+## Title: |cff44ABDBPanza|rUI
+## Notes: World of Warcraft custom UI
+## Version: 0.2
+## Author: Panzarotto
+
+core.lua
