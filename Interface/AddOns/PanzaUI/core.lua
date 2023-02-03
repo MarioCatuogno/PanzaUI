@@ -426,77 +426,43 @@ for i = 1, 12 do
 -- 08. POWER BARS
 --------------------------------------------------------------------------------
 
--- Hide Power bars out of combat
-ComboPointDruidPlayerFrame:SetAlpha(0)
-ComboPointPlayerFrame:SetAlpha(0)
-EssencePlayerFrame:SetAlpha(0)
-MageArcaneChargesFrame:SetAlpha(0)
-MonkStaggerBar:SetAlpha(0)
-MonkHarmonyBarFrame:SetAlpha(0)
-PaladinPowerBarFrame:SetAlpha(0)
-RuneFrame:SetAlpha(0)
-WarlockPowerFrame:SetAlpha(0)
+local EventRegistry = EventRegistry
+local UIParent = UIParent
+local frames = {
+  ["ComboPointDruidPlayerFrame"] = { alpha = 0, y = -190 },
+  ["ComboPointPlayerFrame"] = { alpha = 0, y = -190 },
+  ["EssencePlayerFrame"] = { alpha = 0, y = -190 },
+  ["MageArcaneChargesFrame"] = { alpha = 0, y = -190 },
+  ["MonkHarmonyBarFrame"] = { alpha = 0, y = -190 },
+  ["MonkStaggerBar"] = { alpha = 0, y = -100 },
+  ["PaladinPowerBarFrame"] = { alpha = 0, y = -190 },
+  ["RuneFrame"] = { alpha = 0, y = -100  },
+  ["WarlockPowerFrame"] = { alpha = 0,  },
+}
 
-EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
+for frameName, properties in pairs(frames) do
+  local frame = _G[frameName]
+  frame:SetAlpha(properties.alpha)
+  frame:SetScript("OnShow", function() frame:Hide() end)
+end
 
-    -- Druid
-    ComboPointDruidPlayerFrame:SetAlpha(0)
-    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
-    -- Rogue
-    ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
-    --Evoker
-    EssencePlayerFrame:SetAlpha(0)
-    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
-    -- Mage
-    MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
-    -- Monk
-    MonkHarmonyBarFrame:SetAlpha(0)
-    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
-    MonkStaggerBar:SetAlpha(0)
-    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
-    -- Paladin
-    PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
-    -- Death Knight
-    RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
-    -- Warlock
-    WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
-
+EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
+  for frameName, properties in pairs(frames) do
+    local frame = _G[frameName]
+    frame:SetAlpha(properties.alpha)
+    frame:SetScript("OnShow", function() frame:Hide() end)
+  end
 end)
 
-EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function() 
-
-    -- Druid
-    ComboPointDruidPlayerFrame:SetAlpha(0)
-    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
-    -- Rogue
-    ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
-    -- Evoker
-    EssencePlayerFrame:SetAlpha(0)
-    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
-    -- Mage
-    MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
-    -- Monk
-    MonkHarmonyBarFrame:SetAlpha(0)
-    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
-    MonkStaggerBar:SetAlpha(0)
-    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
-    -- Paladin
-    PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
-    -- Death Knight
-    RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
-    -- Warlock
-    WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
-
+EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
+  for frameName, properties in pairs(frames) do
+    local frame = _G[frameName]
+    frame:SetAlpha(1)
+    frame:ClearAllPoints()
+    frame:SetScale(1.5)
+    frame:SetPoint("CENTER", UIParent, "CENTER", 0, properties.y)
+    frame:SetScript("OnShow", function() frame:Show() end)
+  end
 end)
 
 --------------------------------------------------------------------------------
