@@ -140,62 +140,39 @@ SLASH_CHECKROLE1 = '/cr'
 -- 02. HIDE FRAMES
 --------------------------------------------------------------------------------
 
--- Register events and hide frames
 local hideVariousFrames = CreateFrame("Frame")
 
-  hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
-  hideVariousFrames:RegisterEvent("ADDON_LOADED")
-  hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
-  hideVariousFrames:RegisterEvent("CINEMATIC_STOP")
-  hideVariousFrames:RegisterEvent("CLIENT_SCENE_CLOSED")
-  hideVariousFrames:RegisterEvent("CLIENT_SCENE_OPENED")
-  hideVariousFrames:SetScript("OnEvent",function(self, event, ...)
+local function hideFrame(frame)
+  if not frame then return end
+  frame:UnregisterAllEvents()
+  frame:Hide()
+  frame:HookScript("OnShow", function() frame:Hide() end)
+end
 
-  -- Hide Micro buttons and bags
-  MicroMenu:UnregisterAllEvents()
-  MicroMenu:Hide()
-  MicroMenu:HookScript("OnShow",function(self) self:Hide() end)
+local function hideFrames()
+  hideFrame(MicroMenu)
+  hideFrame(BagsBar)
+  hideFrame(PetActionBar)
+  hideFrame(PetFrame)
+  hideFrame(UIErrorsFrame)
+  hideFrame(StatusTrackingBarManager)
+  hideFrame(ChatFrameChannelButton)
+  hideFrame(DurabilityFrame)
+  hideFrame(VehicleSeatIndicator)
+  hideFrame(TotemFrame)
+end
 
-  BagsBar:UnregisterAllEvents()
-  BagsBar:Hide()
-  BagsBar:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide Pet bar
-  PetActionBar:UnregisterAllEvents()
-  PetActionBar:Hide()
-  PetActionBar:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide Pet Unit frame
-  PetFrame:UnregisterAllEvents()
-  PetFrame:Hide()
-  PetFrame:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide UI errors
-  UIErrorsFrame:Hide()
-
-  -- Hide Reputation/XP bar
-  StatusTrackingBarManager:UnregisterAllEvents()
-  StatusTrackingBarManager:Hide()
-  StatusTrackingBarManager:SetScript("OnShow", function() StatusTrackingBarManager:Hide() end)
-
-  -- Hide Chat Frame Channel button
-  ChatFrameChannelButton:UnregisterAllEvents()
-  ChatFrameChannelButton:Hide()
-  ChatFrameChannelButton:EnableMouse(false)
-
-  -- Hide durability frame
-  DurabilityFrame:UnregisterAllEvents()
-  DurabilityFrame:Hide()
-  DurabilityFrame:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide vehicle seat indicator
-  VehicleSeatIndicator:UnregisterAllEvents()
-  VehicleSeatIndicator:Hide()
-  VehicleSeatIndicator:HookScript("OnShow",function(self) self:Hide() end)
-
+hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
+hideVariousFrames:RegisterEvent("ADDON_LOADED")
+hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
+hideVariousFrames:RegisterEvent("CINEMATIC_STOP")
+hideVariousFrames:RegisterEvent("CLIENT_SCENE_CLOSED")
+hideVariousFrames:RegisterEvent("CLIENT_SCENE_OPENED")
+hideVariousFrames:SetScript("OnEvent", function()
+  hideFrames()
+  hideVariousFrames:UnregisterAllEvents()
 end)
 
--- Collapse Buff frame
 BuffFrame.CollapseAndExpandButton:SetChecked(false)
 BuffFrame.CollapseAndExpandButton:UpdateOrientation()
 BuffFrame:SetBuffsExpandedState()
