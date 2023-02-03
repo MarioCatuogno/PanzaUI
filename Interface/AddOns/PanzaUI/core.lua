@@ -315,24 +315,48 @@ local function MouseScrollHandler(self, direction)
 --------------------------------------------------------------------------------
 
 -- Set Minimap scale
-Minimap:SetScale(1.0)
-MinimapCluster:SetScale(1.0)
-
--- Hide Minimap elements
-MinimapZoneText:SetScale(1.0)
-MinimapCluster.BorderTop:SetAlpha(0)
-
--- Hide zoom buttons
-Minimap.ZoomIn:UnregisterAllEvents()
-Minimap.ZoomIn:Hide()
-Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
-
-Minimap.ZoomOut:UnregisterAllEvents()
-Minimap.ZoomOut:Hide()
-Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
-
--- Set Garrison button scale
-ExpansionLandingPageMinimapButton:SetScale(0.85)
+local function SetMinimapScale()
+  Minimap:SetScale(1.0)
+  MinimapCluster:SetScale(1.0)
+  end
+  
+  -- Hide Minimap elements
+  local function HideMinimapElements()
+  MinimapZoneText:SetScale(1.0)
+  MinimapCluster.BorderTop:SetAlpha(0)
+  end
+  
+  -- Hide zoom buttons
+  local function HideMinimapZoomButtons()
+  Minimap.ZoomIn:UnregisterAllEvents()
+  Minimap.ZoomIn:Hide()
+  Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
+  Minimap.ZoomOut:UnregisterAllEvents()
+  Minimap.ZoomOut:Hide()
+  Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
+  end
+  
+  -- Set Garrison button scale
+  local function SetGarrisonButtonScale()
+  if ExpansionLandingPageMinimapButton then
+  ExpansionLandingPageMinimapButton:SetScale(0.85)
+  end
+  end
+  
+  -- Initialize functions on login
+  local function InitializeAddon()
+  SetMinimapScale()
+  HideMinimapElements()
+  HideMinimapZoomButtons()
+  SetGarrisonButtonScale()
+  end
+  
+  local frame = CreateFrame("FRAME")
+  frame:RegisterEvent("PLAYER_LOGIN")
+  frame:SetScript("OnEvent", function(self, event, ...)
+  InitializeAddon()
+  self:UnregisterEvent("PLAYER_LOGIN")
+  end)
 
 --------------------------------------------------------------------------------
 -- 06. RAID AND DUNGEONS
