@@ -279,29 +279,36 @@ CHAT_FLAG_DND = "[DND] "
 CHAT_FLAG_GM = "[GM] "
 
 -- Improve mousewheel scrolling
-hooksecurefunc("FloatingChatFrame_OnMouseScroll", function(self, direction)
+local function MouseScrollHandler(self, direction)
   if direction > 0 then
-    if IsShiftKeyDown() then
-      self:ScrollToTop()
-    else
-      self:ScrollUp()
-      self:ScrollUp()
-    end
-  elseif direction < 0 then
-    if IsShiftKeyDown() then
-      self:ScrollToBottom()
-    else
-      self:ScrollDown()
-      self:ScrollDown()
-    end
+  if IsShiftKeyDown() then
+  self:ScrollToTop()
+  else
+  self:ScrollUp()
+  self:ScrollUp()
   end
-end)
-
--- Hide chat menu
-ChatFrameMenuButton:SetAlpha(0)
-ChatFrameMenuButton:EnableMouse(false)
-QuickJoinToastButton:SetAlpha(0)
-QuickJoinToastButton:EnableMouse(false)
+  elseif direction < 0 then
+  if IsShiftKeyDown() then
+  self:ScrollToBottom()
+  else
+  self:ScrollDown()
+  self:ScrollDown()
+  end
+  end
+  end
+  
+  hooksecurefunc("FloatingChatFrame_OnMouseScroll", MouseScrollHandler)
+  
+  -- Hide chat menu
+  if ChatFrameMenuButton then
+  ChatFrameMenuButton:SetAlpha(0)
+  ChatFrameMenuButton:EnableMouse(false)
+  end
+  
+  if QuickJoinToastButton then
+  QuickJoinToastButton:SetAlpha(0)
+  QuickJoinToastButton:EnableMouse(false)
+  end
 
 --------------------------------------------------------------------------------
 -- 05. MAP
