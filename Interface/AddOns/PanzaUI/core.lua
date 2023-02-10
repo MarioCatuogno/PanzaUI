@@ -402,11 +402,13 @@ for i = 1, 12 do
   if button then
   button.cooldown:SetDrawBling(false)
   end
-  end
-  
+end
+
   -- Avoid interaction with action bars
   local bars = {
   "ActionButton",
+  "MultiBarLeftButton",
+  "MultiBarBottomLeftButton",
   "MultiBar5Button",
   "MultiBar6Button",
   "MultiBar7Button"
@@ -434,7 +436,7 @@ local frames = {
   ["EssencePlayerFrame"] = { alpha = 0, y = -190 },
   ["MageArcaneChargesFrame"] = { alpha = 0, y = -190 },
   ["MonkHarmonyBarFrame"] = { alpha = 0, y = -190 },
-  ["MonkStaggerBar"] = { alpha = 0, y = -100 },
+  ["MonkStaggerBar"] = { alpha = 0, y = -75 },
   ["PaladinPowerBarFrame"] = { alpha = 0, y = -190 },
   ["RuneFrame"] = { alpha = 0, y = -100  },
   ["WarlockPowerFrame"] = { alpha = 0,  },
