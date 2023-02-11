@@ -496,6 +496,6 @@ queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
 if not (queueStatusIcon and queueStatus) then return end
 
 queueStatusIcon:ClearAllPoints()
-queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -210, -185)
 queueStatus:ClearAllPoints()
-queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
+queueStatus:SetPoint("TOPRIGHT",UIParent, -210, -185)
