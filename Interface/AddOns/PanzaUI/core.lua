@@ -21,8 +21,8 @@ local setupUiVariables = CreateFrame("Frame")
 
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
+  C_CVar.SetCVar("floatingCombatTextCombatHealing", 0)
+  C_CVar.SetCVar("floatingCombatTextCombatDamage", 0)
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
@@ -46,27 +46,27 @@ local setupUiVariables = CreateFrame("Frame")
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
   -- Minimap
-  C_CVar.SetCVar("minimapInsideZoom", 2)
-  C_CVar.SetCVar("minimapTrackingShowAll",1)
+  --C_CVar.SetCVar("minimapInsideZoom", 2)
+  --C_CVar.SetCVar("minimapTrackingShowAll",1)
 
-  -- Nameplate
-  C_CVar.SetCVar('nameplateMaxDistance', 30)
-  C_CVar.SetCVar('nameplateOccludedAlphaMult', 0.7)
-  C_CVar.SetCVar('NameplatePersonalShowAlways', 0)
-  C_CVar.SetCVar('nameplateSelectedScale', 1.5)
-  C_CVar.SetCVar('nameplateShowSelf', 0)
-  C_CVar.SetCVar('nameplateTargetBehindMaxDistance', 10)
-  C_CVar.SetCVar('nameplateTargetRadialPosition', 0)
-  C_CVar.SetCVar("nameplateMinAlpha", 0.5)
-  C_CVar.SetCVar("nameplateMinAlphaDistance", 10)
-  C_CVar.SetCVar("nameplateMotion", 2)
-  C_CVar.SetCVar("nameplateOtherBottomInset", 0.1)
-  C_CVar.SetCVar("nameplateOtherTopInset", 0.08)
-  C_CVar.SetCVar("nameplateShowEnemies", 1)
-  C_CVar.SetCVar("nameplateShowEnemyPets", 1)
-  C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
-  C_CVar.SetCVar("nameplateShowOnlyNames", 0)
-  C_CVar.SetCVar("NamePlateVerticalScale", 1.2)
+  -- Nameplate (Enable if not using Threat Plates)
+  --C_CVar.SetCVar('nameplateMaxDistance', 30)
+  --C_CVar.SetCVar('nameplateOccludedAlphaMult', 0.7)
+  --C_CVar.SetCVar('NameplatePersonalShowAlways', 0)
+  --C_CVar.SetCVar('nameplateSelectedScale', 1.5)
+  --C_CVar.SetCVar('nameplateShowSelf', 0)
+  --C_CVar.SetCVar('nameplateTargetBehindMaxDistance', 10)
+  --C_CVar.SetCVar('nameplateTargetRadialPosition', 0)
+  --C_CVar.SetCVar("nameplateMinAlpha", 0.5)
+  --C_CVar.SetCVar("nameplateMinAlphaDistance", 10)
+  --C_CVar.SetCVar("nameplateMotion", 2)
+  --C_CVar.SetCVar("nameplateOtherBottomInset", 0.1)
+  --C_CVar.SetCVar("nameplateOtherTopInset", 0.08)
+  --C_CVar.SetCVar("nameplateShowEnemies", 1)
+  --C_CVar.SetCVar("nameplateShowEnemyPets", 1)
+  --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
+  --C_CVar.SetCVar("nameplateShowOnlyNames", 0)
+  --C_CVar.SetCVar("NamePlateVerticalScale", 1.2)
 
   -- Unit Frames
   C_CVar.SetCVar("showTargetOfTarget", 1)
@@ -140,62 +140,39 @@ SLASH_CHECKROLE1 = '/cr'
 -- 02. HIDE FRAMES
 --------------------------------------------------------------------------------
 
--- Register events and hide frames
 local hideVariousFrames = CreateFrame("Frame")
 
-  hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
-  hideVariousFrames:RegisterEvent("ADDON_LOADED")
-  hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
-  hideVariousFrames:RegisterEvent("CINEMATIC_STOP")
-  hideVariousFrames:RegisterEvent("CLIENT_SCENE_CLOSED")
-  hideVariousFrames:RegisterEvent("CLIENT_SCENE_OPENED")
-  hideVariousFrames:SetScript("OnEvent",function(self, event, ...)
+local function hideFrame(frame)
+  if not frame then return end
+  frame:UnregisterAllEvents()
+  frame:Hide()
+  frame:HookScript("OnShow", function() frame:Hide() end)
+end
 
-  -- Hide Micro buttons and bags
-  MicroMenu:UnregisterAllEvents()
-  MicroMenu:Hide()
-  MicroMenu:HookScript("OnShow",function(self) self:Hide() end)
+local function hideFrames()
+  hideFrame(MicroMenu)
+  hideFrame(BagsBar)
+  hideFrame(PetActionBar)
+  hideFrame(PetFrame)
+  hideFrame(UIErrorsFrame)
+  hideFrame(StatusTrackingBarManager)
+  hideFrame(ChatFrameChannelButton)
+  hideFrame(DurabilityFrame)
+  hideFrame(VehicleSeatIndicator)
+  hideFrame(TotemFrame)
+end
 
-  BagsBar:UnregisterAllEvents()
-  BagsBar:Hide()
-  BagsBar:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide Pet bar
-  PetActionBar:UnregisterAllEvents()
-  PetActionBar:Hide()
-  PetActionBar:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide Pet Unit frame
-  PetFrame:UnregisterAllEvents()
-  PetFrame:Hide()
-  PetFrame:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide UI errors
-  UIErrorsFrame:Hide()
-
-  -- Hide Reputation/XP bar
-  StatusTrackingBarManager:UnregisterAllEvents()
-  StatusTrackingBarManager:Hide()
-  StatusTrackingBarManager:SetScript("OnShow", function() StatusTrackingBarManager:Hide() end)
-
-  -- Hide Chat Frame Channel button
-  ChatFrameChannelButton:UnregisterAllEvents()
-  ChatFrameChannelButton:Hide()
-  ChatFrameChannelButton:EnableMouse(false)
-
-  -- Hide durability frame
-  DurabilityFrame:UnregisterAllEvents()
-  DurabilityFrame:Hide()
-  DurabilityFrame:HookScript("OnShow",function(self) self:Hide() end)
-
-  -- Hide vehicle seat indicator
-  VehicleSeatIndicator:UnregisterAllEvents()
-  VehicleSeatIndicator:Hide()
-  VehicleSeatIndicator:HookScript("OnShow",function(self) self:Hide() end)
-
+hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
+hideVariousFrames:RegisterEvent("ADDON_LOADED")
+hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
+hideVariousFrames:RegisterEvent("CINEMATIC_STOP")
+hideVariousFrames:RegisterEvent("CLIENT_SCENE_CLOSED")
+hideVariousFrames:RegisterEvent("CLIENT_SCENE_OPENED")
+hideVariousFrames:SetScript("OnEvent", function()
+  hideFrames()
+  hideVariousFrames:UnregisterAllEvents()
 end)
 
--- Collapse Buff frame
 BuffFrame.CollapseAndExpandButton:SetChecked(false)
 BuffFrame.CollapseAndExpandButton:UpdateOrientation()
 BuffFrame:SetBuffsExpandedState()
@@ -302,53 +279,84 @@ CHAT_FLAG_DND = "[DND] "
 CHAT_FLAG_GM = "[GM] "
 
 -- Improve mousewheel scrolling
-hooksecurefunc("FloatingChatFrame_OnMouseScroll", function(self, direction)
+local function MouseScrollHandler(self, direction)
   if direction > 0 then
-    if IsShiftKeyDown() then
-      self:ScrollToTop()
-    else
-      self:ScrollUp()
-      self:ScrollUp()
-    end
-  elseif direction < 0 then
-    if IsShiftKeyDown() then
-      self:ScrollToBottom()
-    else
-      self:ScrollDown()
-      self:ScrollDown()
-    end
+  if IsShiftKeyDown() then
+  self:ScrollToTop()
+  else
+  self:ScrollUp()
+  self:ScrollUp()
   end
-end)
-
--- Hide chat menu
-ChatFrameMenuButton:SetAlpha(0)
-ChatFrameMenuButton:EnableMouse(false)
-QuickJoinToastButton:SetAlpha(0)
-QuickJoinToastButton:EnableMouse(false)
+  elseif direction < 0 then
+  if IsShiftKeyDown() then
+  self:ScrollToBottom()
+  else
+  self:ScrollDown()
+  self:ScrollDown()
+  end
+  end
+  end
+  
+  hooksecurefunc("FloatingChatFrame_OnMouseScroll", MouseScrollHandler)
+  
+  -- Hide chat menu
+  if ChatFrameMenuButton then
+  ChatFrameMenuButton:SetAlpha(0)
+  ChatFrameMenuButton:EnableMouse(false)
+  end
+  
+  if QuickJoinToastButton then
+  QuickJoinToastButton:SetAlpha(0)
+  QuickJoinToastButton:EnableMouse(false)
+  end
 
 --------------------------------------------------------------------------------
 -- 05. MAP
 --------------------------------------------------------------------------------
 
 -- Set Minimap scale
-Minimap:SetScale(1.0)
-MinimapCluster:SetScale(1.0)
-
--- Hide Minimap elements
-MinimapZoneText:SetScale(1.0)
-MinimapCluster.BorderTop:SetAlpha(0)
-
--- Hide zoom buttons
-Minimap.ZoomIn:UnregisterAllEvents()
-Minimap.ZoomIn:Hide()
-Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
-
-Minimap.ZoomOut:UnregisterAllEvents()
-Minimap.ZoomOut:Hide()
-Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
-
--- Set Garrison button scale
-ExpansionLandingPageMinimapButton:SetScale(0.85)
+--local function SetMinimapScale()
+--  Minimap:SetScale(1.0)
+--  MinimapCluster:SetScale(1.0)
+--  end
+--  
+--  -- Hide Minimap elements
+--  local function HideMinimapElements()
+--  MinimapZoneText:SetScale(1.0)
+--  MinimapCluster.BorderTop:SetAlpha(0)
+--  end
+--  
+--  -- Hide zoom buttons
+--  local function HideMinimapZoomButtons()
+--  Minimap.ZoomIn:UnregisterAllEvents()
+--  Minimap.ZoomIn:Hide()
+--  Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
+--  Minimap.ZoomOut:UnregisterAllEvents()
+--  Minimap.ZoomOut:Hide()
+--  Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
+--  end
+--  
+--  -- Set Garrison button scale
+--  local function SetGarrisonButtonScale()
+--  if ExpansionLandingPageMinimapButton then
+--  ExpansionLandingPageMinimapButton:SetScale(0.85)
+--  end
+--  end
+--  
+--  -- Initialize functions on login
+--  local function InitializeAddon()
+--  SetMinimapScale()
+--  HideMinimapElements()
+--  HideMinimapZoomButtons()
+--  SetGarrisonButtonScale()
+--  end
+--  
+--  local frame = CreateFrame("FRAME")
+--  frame:RegisterEvent("PLAYER_LOGIN")
+--  frame:SetScript("OnEvent", function(self, event, ...)
+--  InitializeAddon()
+--  self:UnregisterEvent("PLAYER_LOGIN")
+--  end)
 
 --------------------------------------------------------------------------------
 -- 06. RAID AND DUNGEONS
@@ -373,209 +381,90 @@ end)
 -- 07. ACTION BARS
 --------------------------------------------------------------------------------
 
+-- Hide MainMenuBar
+local function HideMainMenuBar()
+  MainMenuBar:SetAlpha(0)
+  MainMenuBar:EnableMouse(false)
+  end
+  
+  -- Call the function on load
+  local f = CreateFrame("Frame")
+  f:RegisterEvent("PLAYER_LOGIN")
+  f:SetScript("OnEvent", function(self, event)
+  if event == "PLAYER_LOGIN" then
+  HideMainMenuBar()
+  end
+  end)
+
 -- Hide GCD blink
 for i = 1, 12 do
-
   local button = _G["ActionButton"..i]
+  if button then
   button.cooldown:SetDrawBling(false)
-
+  end
 end
 
--- Avoid interaction with MainActionBar buttons
-ActionButton1:SetScript("OnEnter", nil)
-ActionButton1:SetScript("OnClick", nil)
-ActionButton2:SetScript("OnEnter", nil)
-ActionButton2:SetScript("OnClick", nil)
-ActionButton3:SetScript("OnEnter", nil)
-ActionButton3:SetScript("OnClick", nil)
-ActionButton4:SetScript("OnEnter", nil)
-ActionButton4:SetScript("OnClick", nil)
-ActionButton5:SetScript("OnEnter", nil)
-ActionButton5:SetScript("OnClick", nil)
-ActionButton6:SetScript("OnEnter", nil)
-ActionButton6:SetScript("OnClick", nil)
-ActionButton7:SetScript("OnEnter", nil)
-ActionButton7:SetScript("OnClick", nil)
-ActionButton8:SetScript("OnEnter", nil)
-ActionButton8:SetScript("OnClick", nil)
-ActionButton9:SetScript("OnEnter", nil)
-ActionButton9:SetScript("OnClick", nil)
-ActionButton10:SetScript("OnEnter", nil)
-ActionButton10:SetScript("OnClick", nil)
-ActionButton11:SetScript("OnEnter", nil)
-ActionButton11:SetScript("OnClick", nil)
-ActionButton12:SetScript("OnEnter", nil)
-ActionButton12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 5
-MultiBar5Button1:SetScript("OnEnter", nil)
-MultiBar5Button1:SetScript("OnClick", nil)
-MultiBar5Button2:SetScript("OnEnter", nil)
-MultiBar5Button2:SetScript("OnClick", nil)
-MultiBar5Button3:SetScript("OnEnter", nil)
-MultiBar5Button3:SetScript("OnClick", nil)
-MultiBar5Button4:SetScript("OnEnter", nil)
-MultiBar5Button4:SetScript("OnClick", nil)
-MultiBar5Button5:SetScript("OnEnter", nil)
-MultiBar5Button5:SetScript("OnClick", nil)
-MultiBar5Button6:SetScript("OnEnter", nil)
-MultiBar5Button6:SetScript("OnClick", nil)
-MultiBar5Button7:SetScript("OnEnter", nil)
-MultiBar5Button7:SetScript("OnClick", nil)
-MultiBar5Button8:SetScript("OnEnter", nil)
-MultiBar5Button8:SetScript("OnClick", nil)
-MultiBar5Button9:SetScript("OnEnter", nil)
-MultiBar5Button9:SetScript("OnClick", nil)
-MultiBar5Button10:SetScript("OnEnter", nil)
-MultiBar5Button10:SetScript("OnClick", nil)
-MultiBar5Button11:SetScript("OnEnter", nil)
-MultiBar5Button11:SetScript("OnClick", nil)
-MultiBar5Button12:SetScript("OnEnter", nil)
-MultiBar5Button12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 6
-MultiBar6Button1:SetScript("OnEnter", nil)
-MultiBar6Button1:SetScript("OnClick", nil)
-MultiBar6Button2:SetScript("OnEnter", nil)
-MultiBar6Button2:SetScript("OnClick", nil)
-MultiBar6Button3:SetScript("OnEnter", nil)
-MultiBar6Button3:SetScript("OnClick", nil)
-MultiBar6Button4:SetScript("OnEnter", nil)
-MultiBar6Button4:SetScript("OnClick", nil)
-MultiBar6Button5:SetScript("OnEnter", nil)
-MultiBar6Button5:SetScript("OnClick", nil)
-MultiBar6Button6:SetScript("OnEnter", nil)
-MultiBar6Button6:SetScript("OnClick", nil)
-MultiBar6Button7:SetScript("OnEnter", nil)
-MultiBar6Button7:SetScript("OnClick", nil)
-MultiBar6Button8:SetScript("OnEnter", nil)
-MultiBar6Button8:SetScript("OnClick", nil)
-MultiBar6Button9:SetScript("OnEnter", nil)
-MultiBar6Button9:SetScript("OnClick", nil)
-MultiBar6Button10:SetScript("OnEnter", nil)
-MultiBar6Button10:SetScript("OnClick", nil)
-MultiBar6Button11:SetScript("OnEnter", nil)
-MultiBar6Button11:SetScript("OnClick", nil)
-MultiBar6Button12:SetScript("OnEnter", nil)
-MultiBar6Button12:SetScript("OnClick", nil)
-
--- Avoid interaction with MultiActionBar 7
-MultiBar7Button1:SetScript("OnEnter", nil)
-MultiBar7Button1:SetScript("OnClick", nil)
-MultiBar7Button2:SetScript("OnEnter", nil)
-MultiBar7Button2:SetScript("OnClick", nil)
-MultiBar7Button3:SetScript("OnEnter", nil)
-MultiBar7Button3:SetScript("OnClick", nil)
-MultiBar7Button4:SetScript("OnEnter", nil)
-MultiBar7Button4:SetScript("OnClick", nil)
-MultiBar7Button5:SetScript("OnEnter", nil)
-MultiBar7Button5:SetScript("OnClick", nil)
-MultiBar7Button6:SetScript("OnEnter", nil)
-MultiBar7Button6:SetScript("OnClick", nil)
-MultiBar7Button7:SetScript("OnEnter", nil)
-MultiBar7Button7:SetScript("OnClick", nil)
-MultiBar7Button8:SetScript("OnEnter", nil)
-MultiBar7Button8:SetScript("OnClick", nil)
-MultiBar7Button9:SetScript("OnEnter", nil)
-MultiBar7Button9:SetScript("OnClick", nil)
-MultiBar7Button10:SetScript("OnEnter", nil)
-MultiBar7Button10:SetScript("OnClick", nil)
-MultiBar7Button11:SetScript("OnEnter", nil)
-MultiBar7Button11:SetScript("OnClick", nil)
-MultiBar7Button12:SetScript("OnEnter", nil)
-MultiBar7Button12:SetScript("OnClick", nil)
-
--- Hide Action Bars
-MainMenuBar:SetAlpha(0)
-MainMenuBar:SetScript("OnShow", function() MainMenuBar:SetAlpha(0) end)
-MultiBarBottomLeft:Hide()
-MultiBarBottomLeft:SetScript("OnShow", function() MultiBarBottomLeft:Hide() end)
-MultiBarRight:Hide()
-MultiBarRight:SetScript("OnShow", function() MultiBarRight:Hide() end)
-MultiBarLeft:Hide()
-MultiBarLeft:SetScript("OnShow", function() MultiBarLeft:Hide() end)
-MultiBar5:Hide()
-MultiBar5:SetScript("OnShow", function() MultiBar5:Hide() end)
-MultiBar6:Hide()
-MultiBar6:SetScript("OnShow", function() MultiBar6:Hide() end)
-MultiBar7:Hide()
-MultiBar7:SetScript("OnShow", function() MultiBar7:Hide() end)
+  -- Avoid interaction with action bars
+  local bars = {
+  "ActionButton",
+  "MultiBarLeftButton",
+  "MultiBarBottomLeftButton",
+  "MultiBar5Button",
+  "MultiBar6Button",
+  "MultiBar7Button"
+  }
+  
+  for _, bar in pairs(bars) do
+  for i = 1, 12 do
+  local button = _G[bar..i]
+  if button then
+  button:SetScript("OnEnter", nil)
+  button:SetScript("OnClick", nil)
+  end
+  end
+  end
 
 --------------------------------------------------------------------------------
 -- 08. POWER BARS
 --------------------------------------------------------------------------------
 
--- Hide Power bars out of combat
-ComboPointDruidPlayerFrame:SetAlpha(0)
-ComboPointPlayerFrame:SetAlpha(0)
-EssencePlayerFrame:SetAlpha(0)
-MageArcaneChargesFrame:SetAlpha(0)
-MonkStaggerBar:SetAlpha(0)
-MonkHarmonyBarFrame:SetAlpha(0)
-PaladinPowerBarFrame:SetAlpha(0)
-RuneFrame:SetAlpha(0)
-WarlockPowerFrame:SetAlpha(0)
+local EventRegistry = EventRegistry
+local UIParent = UIParent
+local frames = {
+  ["ComboPointDruidPlayerFrame"] = { alpha = 0, y = -190 },
+  ["ComboPointPlayerFrame"] = { alpha = 0, y = -190 },
+  ["EssencePlayerFrame"] = { alpha = 0, y = -190 },
+  ["MageArcaneChargesFrame"] = { alpha = 0, y = -190 },
+  ["MonkHarmonyBarFrame"] = { alpha = 0, y = -190 },
+  ["MonkStaggerBar"] = { alpha = 0, y = -75 },
+  ["PaladinPowerBarFrame"] = { alpha = 0, y = -190 },
+  ["RuneFrame"] = { alpha = 0, y = -100  },
+  ["WarlockPowerFrame"] = { alpha = 0,  },
+}
 
-EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function() 
+for frameName, properties in pairs(frames) do
+  local frame = _G[frameName]
+  frame:SetAlpha(properties.alpha)
+  frame:SetScript("OnShow", function() frame:Hide() end)
+end
 
-    -- Druid
-    ComboPointDruidPlayerFrame:SetAlpha(0)
-    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
-    -- Rogue
-    ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
-    --Evoker
-    EssencePlayerFrame:SetAlpha(0)
-    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
-    -- Mage
-    MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
-    -- Monk
-    MonkHarmonyBarFrame:SetAlpha(0)
-    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
-    MonkStaggerBar:SetAlpha(0)
-    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
-    -- Paladin
-    PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
-    -- Death Knight
-    RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
-    -- Warlock
-    WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
-
+EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
+  for frameName, properties in pairs(frames) do
+    local frame = _G[frameName]
+    frame:SetAlpha(properties.alpha)
+    frame:SetScript("OnShow", function() frame:Hide() end)
+  end
 end)
 
-EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function() 
-
-    -- Druid
-    ComboPointDruidPlayerFrame:SetAlpha(0)
-    ComboPointDruidPlayerFrame:SetScript("OnShow", function() ComboPointDruidPlayerFrame:Hide() end)
-    -- Rogue
-    ComboPointPlayerFrame:SetAlpha(0)
-    ComboPointPlayerFrame:SetScript("OnShow", function() ComboPointPlayerFrame:Hide() end)
-    -- Evoker
-    EssencePlayerFrame:SetAlpha(0)
-    EssencePlayerFrame:SetScript("OnShow", function() EssencePlayerFrame:Hide() end)
-    -- Mage
-    MageArcaneChargesFrame:SetAlpha(0)
-    MageArcaneChargesFrame:SetScript("OnShow", function() MageArcaneChargesFrame:Hide() end)
-    -- Monk
-    MonkHarmonyBarFrame:SetAlpha(0)
-    MonkHarmonyBarFrame:SetScript("OnShow", function() MonkHarmonyBarFrame:Hide() end)
-    MonkStaggerBar:SetAlpha(0)
-    MonkStaggerBar:SetScript("OnShow", function() MonkStaggerBar:Hide() end)
-    -- Paladin
-    PaladinPowerBarFrame:SetAlpha(0)
-    PaladinPowerBarFrame:SetScript("OnShow", function() PaladinPowerBarFrame:Hide() end)
-    -- Death Knight
-    RuneFrame:SetAlpha(0)
-    RuneFrame:SetScript("OnShow", function() RuneFrame:Hide() end)
-    -- Warlock
-    WarlockPowerFrame:SetAlpha(0)
-    WarlockPowerFrame:SetScript("OnShow", function() WarlockPowerFrame:Hide() end)
-
+EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
+  for frameName, properties in pairs(frames) do
+    local frame = _G[frameName]
+    frame:SetAlpha(0)
+    frame:ClearAllPoints()
+    frame:SetScale(1.5)
+    frame:SetPoint("CENTER", UIParent, "CENTER", 0, properties.y)
+    frame:SetScript("OnShow", function() frame:Show() end)
+  end
 end)
 
 --------------------------------------------------------------------------------
@@ -583,16 +472,30 @@ end)
 --------------------------------------------------------------------------------
 
 -- Resize QuestTracker frame and EncounterBar
-ObjectiveTrackerFrame:SetScale(0.95)
-EncounterBar:SetScale(0.7)
+local scale = 0.95
+ObjectiveTrackerFrame:SetScale(scale)
+
+local barScale = 0.7
+EncounterBar:SetScale(barScale)
 
 -- Hide Micro Menu alerts
 function MainMenuMicroButton_AreAlertsEnabled()
-  return false
+return false
 end
 
 -- Position Queue Status
-QueueStatusButtonIcon:ClearAllPoints()
-QueueStatusButtonIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
-QueueStatusButton:ClearAllPoints()
-QueueStatusButton:SetPoint("TOPRIGHT",UIParent, -170, -175)
+local queueStatus = QueueStatusButton
+local queueStatusIcon = QueueStatusButtonIcon
+
+queueStatusIcon:ClearAllPoints()
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+queueStatus:ClearAllPoints()
+queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
+
+-- Check if the QueueStatusButtonIcon and QueueStatusButton exist before trying to manipulate them
+if not (queueStatusIcon and queueStatus) then return end
+
+queueStatusIcon:ClearAllPoints()
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -170, -175)
+queueStatus:ClearAllPoints()
+queueStatus:SetPoint("TOPRIGHT",UIParent, -170, -175)
