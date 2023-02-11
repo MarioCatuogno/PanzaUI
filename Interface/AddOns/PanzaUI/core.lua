@@ -21,8 +21,8 @@ local setupUiVariables = CreateFrame("Frame")
 
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
+  C_CVar.SetCVar("floatingCombatTextCombatHealing", 0)
+  C_CVar.SetCVar("floatingCombatTextCombatDamage", 0)
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
@@ -46,8 +46,8 @@ local setupUiVariables = CreateFrame("Frame")
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
   -- Minimap
-  C_CVar.SetCVar("minimapInsideZoom", 2)
-  C_CVar.SetCVar("minimapTrackingShowAll",1)
+  --C_CVar.SetCVar("minimapInsideZoom", 2)
+  --C_CVar.SetCVar("minimapTrackingShowAll",1)
 
   -- Nameplate (Enable if not using Threat Plates)
   --C_CVar.SetCVar('nameplateMaxDistance', 30)
@@ -315,48 +315,48 @@ local function MouseScrollHandler(self, direction)
 --------------------------------------------------------------------------------
 
 -- Set Minimap scale
-local function SetMinimapScale()
-  Minimap:SetScale(1.0)
-  MinimapCluster:SetScale(1.0)
-  end
-  
-  -- Hide Minimap elements
-  local function HideMinimapElements()
-  MinimapZoneText:SetScale(1.0)
-  MinimapCluster.BorderTop:SetAlpha(0)
-  end
-  
-  -- Hide zoom buttons
-  local function HideMinimapZoomButtons()
-  Minimap.ZoomIn:UnregisterAllEvents()
-  Minimap.ZoomIn:Hide()
-  Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
-  Minimap.ZoomOut:UnregisterAllEvents()
-  Minimap.ZoomOut:Hide()
-  Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
-  end
-  
-  -- Set Garrison button scale
-  local function SetGarrisonButtonScale()
-  if ExpansionLandingPageMinimapButton then
-  ExpansionLandingPageMinimapButton:SetScale(0.85)
-  end
-  end
-  
-  -- Initialize functions on login
-  local function InitializeAddon()
-  SetMinimapScale()
-  HideMinimapElements()
-  HideMinimapZoomButtons()
-  SetGarrisonButtonScale()
-  end
-  
-  local frame = CreateFrame("FRAME")
-  frame:RegisterEvent("PLAYER_LOGIN")
-  frame:SetScript("OnEvent", function(self, event, ...)
-  InitializeAddon()
-  self:UnregisterEvent("PLAYER_LOGIN")
-  end)
+--local function SetMinimapScale()
+--  Minimap:SetScale(1.0)
+--  MinimapCluster:SetScale(1.0)
+--  end
+--  
+--  -- Hide Minimap elements
+--  local function HideMinimapElements()
+--  MinimapZoneText:SetScale(1.0)
+--  MinimapCluster.BorderTop:SetAlpha(0)
+--  end
+--  
+--  -- Hide zoom buttons
+--  local function HideMinimapZoomButtons()
+--  Minimap.ZoomIn:UnregisterAllEvents()
+--  Minimap.ZoomIn:Hide()
+--  Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
+--  Minimap.ZoomOut:UnregisterAllEvents()
+--  Minimap.ZoomOut:Hide()
+--  Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
+--  end
+--  
+--  -- Set Garrison button scale
+--  local function SetGarrisonButtonScale()
+--  if ExpansionLandingPageMinimapButton then
+--  ExpansionLandingPageMinimapButton:SetScale(0.85)
+--  end
+--  end
+--  
+--  -- Initialize functions on login
+--  local function InitializeAddon()
+--  SetMinimapScale()
+--  HideMinimapElements()
+--  HideMinimapZoomButtons()
+--  SetGarrisonButtonScale()
+--  end
+--  
+--  local frame = CreateFrame("FRAME")
+--  frame:RegisterEvent("PLAYER_LOGIN")
+--  frame:SetScript("OnEvent", function(self, event, ...)
+--  InitializeAddon()
+--  self:UnregisterEvent("PLAYER_LOGIN")
+--  end)
 
 --------------------------------------------------------------------------------
 -- 06. RAID AND DUNGEONS
@@ -459,7 +459,7 @@ end)
 EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
   for frameName, properties in pairs(frames) do
     local frame = _G[frameName]
-    frame:SetAlpha(1)
+    frame:SetAlpha(0)
     frame:ClearAllPoints()
     frame:SetScale(1.5)
     frame:SetPoint("CENTER", UIParent, "CENTER", 0, properties.y)
