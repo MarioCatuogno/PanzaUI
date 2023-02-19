@@ -21,8 +21,8 @@ local setupUiVariables = CreateFrame("Frame")
 
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatHealing", 0)
-  C_CVar.SetCVar("floatingCombatTextCombatDamage", 0)
+  C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
+  C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
@@ -488,14 +488,14 @@ local queueStatus = QueueStatusButton
 local queueStatusIcon = QueueStatusButtonIcon
 
 queueStatusIcon:ClearAllPoints()
-queueStatusIcon:SetPoint("BOTTOMRIGHT", UIParent, -15, 15)
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -10)
 queueStatus:ClearAllPoints()
-queueStatus:SetPoint("BOTTOMRIGHT",UIParent, -15, 15)
+queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -10)
 
 -- Check if the QueueStatusButtonIcon and QueueStatusButton exist before trying to manipulate them
 if not (queueStatusIcon and queueStatus) then return end
 
 queueStatusIcon:ClearAllPoints()
-queueStatusIcon:SetPoint("BOTTOMRIGHT", UIParent, -15, 15)
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -10)
 queueStatus:ClearAllPoints()
-queueStatus:SetPoint("BOTTOMRIGHT",UIParent, -15, 15)
+queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -10)
