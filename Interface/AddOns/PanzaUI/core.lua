@@ -488,14 +488,14 @@ local queueStatus = QueueStatusButton
 local queueStatusIcon = QueueStatusButtonIcon
 
 queueStatusIcon:ClearAllPoints()
-queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -10)
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -25)
 queueStatus:ClearAllPoints()
-queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -10)
+queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -25)
 
 -- Check if the QueueStatusButtonIcon and QueueStatusButton exist before trying to manipulate them
 if not (queueStatusIcon and queueStatus) then return end
 
 queueStatusIcon:ClearAllPoints()
-queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -10)
+queueStatusIcon:SetPoint("TOPRIGHT", UIParent, -15, -25)
 queueStatus:ClearAllPoints()
-queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -10)
+queueStatus:SetPoint("TOPRIGHT",UIParent, -15, -25)
