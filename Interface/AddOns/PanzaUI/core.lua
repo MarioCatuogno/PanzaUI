@@ -8,9 +8,6 @@ local setupUiVariables = CreateFrame("Frame")
   setupUiVariables:RegisterEvent("PLAYER_LOGIN")
   setupUiVariables:RegisterEvent("ADDON_LOADED")
   setupUiVariables:RegisterEvent("PLAYER_ENTERING_WORLD")
-  setupUiVariables:RegisterEvent("CINEMATIC_STOP")
-  setupUiVariables:RegisterEvent("CLIENT_SCENE_CLOSED")
-  setupUiVariables:RegisterEvent("CLIENT_SCENE_OPENED")
   setupUiVariables:SetScript("OnEvent",function(self, event, ...)
 
   -- Action Bar
@@ -67,6 +64,8 @@ local setupUiVariables = CreateFrame("Frame")
   --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
   --C_CVar.SetCVar("nameplateShowOnlyNames", 0)
   --C_CVar.SetCVar("NamePlateVerticalScale", 1.2)
+  --C_CVar.SetCVar("nameplateOverlapV", 0.7)
+  --C_CVar.SetCVar("nameplateOverlapH", 0.4)
 
   -- Unit Frames
   C_CVar.SetCVar("showTargetOfTarget", 1)
@@ -165,9 +164,6 @@ end
 hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
 hideVariousFrames:RegisterEvent("ADDON_LOADED")
 hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
-hideVariousFrames:RegisterEvent("CINEMATIC_STOP")
-hideVariousFrames:RegisterEvent("CLIENT_SCENE_CLOSED")
-hideVariousFrames:RegisterEvent("CLIENT_SCENE_OPENED")
 hideVariousFrames:SetScript("OnEvent", function()
   hideFrames()
   hideVariousFrames:UnregisterAllEvents()
