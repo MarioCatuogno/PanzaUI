@@ -1,5 +1,7 @@
 #showtooltip
-/cast [mod:shift,@cursor][@player] Ring of Peace
+/cast [mod:shift, @player] Tiger's Lust; Chi Torpedo
+
+
 
 #showtooltip
 /cast [target=focus,exists][@mouseover,exists,harm,nodead] Paralysis;Paralysis
@@ -23,8 +25,8 @@
 
 #showtooltip Keg Smash
 /startattack [harm,nodead]
-/use 14
 /cast [mod:shift] Weapons of Order; Keg Smash
+/use 14
 
 #showtooltip Rising Sun Kick
 /stopmacro [channeling:Fists of Fury]
@@ -34,12 +36,12 @@
 /use 14
 
 #showtooltip
-/cast [@focus,exists] Spear Hand Strike; Spear Hand Strike
+/cast [@focus, exists] Spear Hand Strike; Spear Hand Strike
 
 #showtooltip
-/cast [mod:shift,@cursor][@player][known:388686] Summon White Tiger Statue
-/cast [mod:shift,@cursor][@player][known:115313] Summon Jade Serpent Statue
-/cast [mod:shift,@cursor][@player][known:115315] Summon Black Ox Statue
+/cast [mod:shift, @cursor][@player][known:388686] Summon White Tiger Statue
+/cast [mod:shift, @cursor][@player][known:115313] Summon Jade Serpent Statue
+/cast [mod:shift, @cursor][@player][known:115315] Summon Black Ox Statue
 
 #showtooltip Tiger Palm
 /stopmacro [channeling:Essence Font]
@@ -52,9 +54,9 @@
 /cast [@mouseover,help,nodead,mod:shift][@target,help,nodead,mod:shift]Vivify;[@player,mod:shift]Vivify;[harm,nodead]Blackout Kick
 
 #showtooltip Fists of Fury
-/startattack [harm,nodead]
-/use 14
+/startattack [harm, nodead]
 /cast Fists of Fury
+/use 14
 
 #showtooltip
 /cast [@mouseover,exists,noharm,nodead][@target,exists,noharm,nodead][@player] Detox
@@ -76,10 +78,13 @@
 /use 13
 
 #showtooltip
-/cast [@player] Tiger's Lust
-
-#showtooltip
 /cast [mod:shift] Dampen Harm; Diffuse Magic
 
 #showtooltip
-/cast [mod:shift] Dampen Harm; Diffuse Magic
+/cast [mod:shift, @cursor][@player] Ring of Peace
+
+#showtooltip
+/cast [mod:shift] Rushing Jade Wind; Spinning Crane Kick
+
+#showtooltip
+/cast [mod:shift] Transcendence; Transcendence: Transfer
