@@ -6,7 +6,7 @@
 local setupUiVariables = CreateFrame("Frame")
 
   setupUiVariables:RegisterEvent("PLAYER_LOGIN")
-  setupUiVariables:RegisterEvent("ADDON_LOADED")
+  --setupUiVariables:RegisterEvent("ADDON_LOADED")
   setupUiVariables:RegisterEvent("PLAYER_ENTERING_WORLD")
   setupUiVariables:SetScript("OnEvent",function(self, event, ...)
 
@@ -162,7 +162,7 @@ local function hideFrames()
 end
 
 hideVariousFrames:RegisterEvent("PLAYER_LOGIN")
-hideVariousFrames:RegisterEvent("ADDON_LOADED")
+--hideVariousFrames:RegisterEvent("ADDON_LOADED")
 hideVariousFrames:RegisterEvent("PLAYER_ENTERING_WORLD")
 hideVariousFrames:SetScript("OnEvent", function()
   hideFrames()
@@ -424,44 +424,54 @@ end
 -- 08. POWER BARS
 --------------------------------------------------------------------------------
 
-local EventRegistry = EventRegistry
-local UIParent = UIParent
-local frames = {
-  ["ComboPointDruidPlayerFrame"] = { alpha = 0, y = -190 },
-  ["ComboPointPlayerFrame"] = { alpha = 0, y = -190 },
-  ["EssencePlayerFrame"] = { alpha = 0, y = -190 },
-  ["MageArcaneChargesFrame"] = { alpha = 0, y = -190 },
-  ["MonkHarmonyBarFrame"] = { alpha = 0, y = -190 },
-  ["MonkStaggerBar"] = { alpha = 0, y = -75 },
-  ["PaladinPowerBarFrame"] = { alpha = 0, y = -190 },
-  ["RuneFrame"] = { alpha = 0, y = -100  },
-  ["WarlockPowerFrame"] = { alpha = 0,  },
-}
+ComboPointDruidPlayerFrame:SetAlpha(0)
+ComboPointPlayerFrame:SetAlpha(0)
+EssencePlayerFrame:SetAlpha(0)
+MageArcaneChargesFrame:SetAlpha(0)
+MonkHarmonyBarFrame:SetAlpha(0)
+MonkStaggerBar:SetAlpha(0)
+PaladinPowerBarFrame:SetAlpha(0)
+RuneFrame:SetAlpha(0)
+WarlockPowerFrame:SetAlpha(0)
 
-for frameName, properties in pairs(frames) do
-  local frame = _G[frameName]
-  frame:SetAlpha(properties.alpha)
-  frame:SetScript("OnShow", function() frame:Hide() end)
-end
-
-EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
-  for frameName, properties in pairs(frames) do
-    local frame = _G[frameName]
-    frame:SetAlpha(properties.alpha)
-    frame:SetScript("OnShow", function() frame:Hide() end)
-  end
-end)
-
-EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
-  for frameName, properties in pairs(frames) do
-    local frame = _G[frameName]
-    frame:SetAlpha(0)
-    frame:ClearAllPoints()
-    frame:SetScale(1.5)
-    frame:SetPoint("CENTER", UIParent, "CENTER", 0, properties.y)
-    frame:SetScript("OnShow", function() frame:Show() end)
-  end
-end)
+--local EventRegistry = EventRegistry
+--local UIParent = UIParent
+--local frames = {
+--  ["ComboPointDruidPlayerFrame"] = { alpha = 0, y = -190 },
+--  ["ComboPointPlayerFrame"] = { alpha = 0, y = -190 },
+--  ["EssencePlayerFrame"] = { alpha = 0, y = -190 },
+--  ["MageArcaneChargesFrame"] = { alpha = 0, y = -190 },
+--  ["MonkHarmonyBarFrame"] = { alpha = 0, y = -190 },
+--  ["MonkStaggerBar"] = { alpha = 0, y = -75 },
+--  ["PaladinPowerBarFrame"] = { alpha = 0, y = -190 },
+--  ["RuneFrame"] = { alpha = 0, y = -100  },
+--  ["WarlockPowerFrame"] = { alpha = 0,  },
+--}
+--
+--for frameName, properties in pairs(frames) do
+--  local frame = _G[frameName]
+--  frame:SetAlpha(properties.alpha)
+--  frame:SetScript("OnShow", function() frame:Hide() end)
+--end
+--
+--EventRegistry:RegisterCallback("PLAYER_REGEN_ENABLED", function()
+--  for frameName, properties in pairs(frames) do
+--    local frame = _G[frameName]
+--    frame:SetAlpha(properties.alpha)
+--    frame:SetScript("OnShow", function() frame:Hide() end)
+--  end
+--end)
+--
+--EventRegistry:RegisterCallback("PLAYER_REGEN_DISABLED", function()
+--  for frameName, properties in pairs(frames) do
+--    local frame = _G[frameName]
+--    frame:SetAlpha(0)
+--    frame:ClearAllPoints()
+--    frame:SetScale(1.5)
+--    frame:SetPoint("CENTER", UIParent, "CENTER", 0, properties.y)
+--    frame:SetScript("OnShow", function() frame:Show() end)
+--  end
+--end)
 
 --------------------------------------------------------------------------------
 -- 09. OTHER FRAMES
