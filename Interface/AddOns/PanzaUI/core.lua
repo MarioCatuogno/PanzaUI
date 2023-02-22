@@ -431,6 +431,7 @@ MageArcaneChargesFrame:SetAlpha(0)
 MonkHarmonyBarFrame:SetAlpha(0)
 MonkStaggerBar:SetAlpha(0)
 PaladinPowerBarFrame:SetAlpha(0)
+PlayerFrameAlternateManaBar:SetAlpha(0)
 RuneFrame:SetAlpha(0)
 WarlockPowerFrame:SetAlpha(0)
 
