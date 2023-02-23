@@ -473,7 +473,3 @@ local frame = CreateFrame("FRAME")
   self:UnregisterEvent("PLAYER_LOGIN")
 
 end)
-
-
-
-
