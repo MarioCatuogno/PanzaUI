@@ -12,10 +12,10 @@ I play on screen with a resolution of 3024x1964.
 
 ## UI
 
-* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI.txt)
+* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-DpsTank.txt)
 * [PanzaUI-Heal](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Heal.txt)
 
 ## WeakAuras
 
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/monk.txt)
-* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/utilities.txt)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
+* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
