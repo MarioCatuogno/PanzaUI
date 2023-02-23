@@ -1,5 +1,6 @@
 ## Interface: 100002
 ## Title: SharedMedia_MyMedia
+## Author: Panzarotto
 ## Dependencies: SharedMedia
 
 MyMedia.lua
