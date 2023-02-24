@@ -151,9 +151,9 @@ local function ConfigQueueIcon()
   -- Set Position
   if not (QueueStatusButtonIcon and QueueStatusButton) then return end
   QueueStatusButtonIcon:ClearAllPoints()
-  QueueStatusButtonIcon:SetPoint("TOPRIGHT", UIParent, -15, -25)
+  QueueStatusButtonIcon:SetPoint("BOTTOM", Minimap, 0, -10)
   QueueStatusButton:ClearAllPoints()
-  QueueStatusButton:SetPoint("TOPRIGHT",UIParent, -15, -25)
+  QueueStatusButton:SetPoint("BOTTOM",Minimap, 0, -10)
 
 end
 
