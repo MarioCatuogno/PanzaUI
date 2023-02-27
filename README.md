@@ -15,7 +15,7 @@
 </div>
 
 I'm not a Lua programmar, so this is a simple add-on which contains some useful scripts for Blizzard default UI.
-I play without action bars on screen and I have all my skills bidden to a Logitech G600 mouse.
+I play without action bars on screen because I have all my skills bidden to a Logitech G600 mouse.
 
 I play on a MacBook Pro 14" with a resolution of 3024x1964.
 
