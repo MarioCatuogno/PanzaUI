@@ -57,3 +57,24 @@ I play on a MacBook Pro 14" with a resolution of 3024x1964.
   </a>
 
 </p>
+
+## Addons used
+
+* PanzaUI
+* Advanced Interface Options
+* BigWigs
+* Details!
+* idTip
+* Immersion
+* LeatrixMaps
+* LeatrixPlus
+* LittleWigs
+* LS:Toasts
+* Masque
+* MouseoverActionBar
+* Raid Frame Settings
+* Shadowed Unit Frames
+* Simple Item Level
+* Threat Plates
+* Unlimited Map Distance
+* WeakAuras
