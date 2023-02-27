@@ -18,4 +18,5 @@ I play on screen with a resolution of 3024x1964.
 ## WeakAuras
 
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
+* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt) _WIP_
 * [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
