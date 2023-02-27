@@ -8,13 +8,15 @@ I play on screen with a resolution of 3024x1964.
 
 ## Macros
 
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/master/Macros/monk.txt)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/monk.txt)
 
 ## UI
 
-* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/master/Profiles/blizzui.txt)
+* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-DpsTank.txt)
+* [PanzaUI-Heal](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Heal.txt)
 
 ## WeakAuras
 
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/master/WeakAuras/monk.txt)
-* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/master/WeakAuras/utilities.txt)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
+* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt) _WIP_
+* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
