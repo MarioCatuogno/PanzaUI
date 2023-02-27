@@ -1,5 +1,5 @@
 ## Interface: 100005
-## Title: |cff44ABDBPanza|rUI
+## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft custom UI
 ## Version: 0.4
 ## Author: Panzarotto
