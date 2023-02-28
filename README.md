@@ -19,6 +19,8 @@ I play without action bars on screen because I have all my skills bidden to a Lo
 
 I play on a MacBook Pro 14" with a resolution of 3024x1964.
 
+Link to Wago.io collection: [https://wago.io/PO1A4B5V3](https://wago.io/PO1A4B5V3)
+
 ## Macros
 
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/monk.txt)
