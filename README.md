@@ -40,8 +40,12 @@ I play on a MacBook Pro 14" with a resolution of 3024x1964.
 
 <p align="center">
 
-  <a href="PanzaUI - Edit Mode">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit.png" alt="PanzaUI - Edit Mode">
+  <a href="PanzaUI - Tank/Dps">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.png" alt="PanzaUI - Tank/Dps">
+  </a>
+
+  <a href="PanzaUI - Healer">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_02.png" alt="PanzaUI - Healer">
   </a>
 
   <a href="PanzaUI - Combat Dummy">
@@ -52,9 +56,14 @@ I play on a MacBook Pro 14" with a resolution of 3024x1964.
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.png" alt="PanzaUI - Raid 01">
   </a>
 
+  <a href="PanzaUI - Party 01">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.png" alt="PanzaUI - Party 01">
+  </a>
+
   <a href="PanzaUI - Shadowed Unit Frames">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.png" alt="PanzaUI - Shadowed Unit Frames">
   </a>
+
 
 </p>
 
