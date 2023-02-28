@@ -1,0 +1,7021 @@
+
+MasqueDB = {
+	["namespaces"] = {
+		["LibDualSpec-1.0"] = {
+		},
+	},
+	["profileKeys"] = {
+		["Sfilatino - Draenor"] = "Default",
+		["Friarielli - Draenor"] = "Default",
+		["Formaggino - Draenor"] = "Default",
+		["Panzarotto - Draenor"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["Groups"] = {
+				["WeakAuras_F8q2vpv9ZD3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wSRBH2KRIZw"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_StanceBar"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_HIfgca5JhQC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QKIKFufAy4O"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_gRDvjBm6FFA"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)u9qsQLhFTC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2(9eZ0VTv5i"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rg6uv9KmRZu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4DABekhj)Ji"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ev)jUEZALeH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CUQd5RCceTB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_52KmtuK60cB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FYHKzkFYghM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jjUB6lka0CG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Rt)VmyHzHal"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pPRJ8TEvTgz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7uMJQpDIP)V"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xNDXFhd7Izx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oE3(ShCKiMO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Jaam7MTjY2b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HccD)L2DZOE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mq1aATO3HI0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_00Bk)B1LcTL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sh(pGtAX8N6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fCM8RqddDrX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_PetBattleFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_S6Wyp9Ak(Ov"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_mzaKQE5dnSP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_z7jKblz)uyT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A4jbzZUHCX4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ml81WGrz((j"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VKtlmRjE6xD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JX0olRbwPDL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1uv55LkN6eK"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_g(ysSV7LbPf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kKoG)X6qwqj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Q(5VWdA7IxT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hRieoz1LAq9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LW)yU3DL3qZ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_4mhhHJQCYn4"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XBgV5)lgYrh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xB)trd(ET2("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_svd4lTaLx4T"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tQjR6AkaKWY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ks4s1Nz9mMq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qcqeoPggjyo"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_hhE(Nu)sn(9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RfSETYugKZm"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_LNbzF1n8edI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RzW0VXMu7Vr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TqoQCpUeu6y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ENkjvLH7ypA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wkL7JhgL16b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D9b)Rb8WaB0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gnh0Xsb1htn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6YrCugzFVn5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eonst3LRvwK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ONUMuVAYwEh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_q4eoQj6f20M"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F3usPe(qgoR"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_NLTVXzvJuzm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yVOaaaMwOOW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d)1S3Twrzjl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vKs7lpn170I"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pT0Z9FDE5su"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_30i0Z(fB99U"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_t6SSMYZJsae"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XLKJ2cmkY10"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3kqDzlIgh6x"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CWn1nP2u5BO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GLHGu6znpcb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SYl9wWErtWR"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_o5iYJCIlpRI"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D(uYgTmsweX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PMWxdfjWFVC"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xjeUjhyd0G2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kVKhKBkD)eB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_d45GhxvM2Id"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_slfU9ib7ZtU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xo(DqS95rlr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W3p77)TSz5T"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hcD60eK6PDE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XecrjlsmNZ)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5Bl1C9X25oy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u5ZbOsL26xB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_8axpR4FhCz7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jRmVhvlkgxV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)AXu7uhV0)q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YY8Qn3lfpTg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JLKy6dlKUIi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3qSgDTrOPx7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ExZHk8MiG(a"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MravrZQ(qBT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dyMghZFVIIS"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_MNTS4Huv6al"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AdCD8T)dvvv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_t1)nYxSMtx8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jZZH3yiHm9N"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8CTWrbbg9U9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0j8ddNeHtFO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QiMpuIjqvQi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HLrT1LFlYfX"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_CBvcAeUsqP("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aRI0QgXyjPq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1UOySToQDDu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uU7RsEO1VDk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qN1Ne1IRidH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ClqKluCjPSx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Kb1i7EtabgK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)3NDr)9cGIT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Fy19zRuxi9n"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gFCjj4D4FaT"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VsyqH7S1bz)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Xwb5zVR(O6G"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iZbWrmnap2h"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JwGy4x6CZE3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yBypbt6zXJ3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DLbbkazandU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FibVlY)KnOP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_k(HrOU35z15"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jSfVxHke0f("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_p9QTnkdAR)e"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_j1DQtt2Owkj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gnajgSMc)Fq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)nT2(I1R9C)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3uqA9ebDFEm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aHsGBJcKhUc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xUwb(YAkuTh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AfzXtBplcNF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_()(f7pQqGMD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DxaduoJrKs6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7C55R0Idb4S"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tiwLIwRXKEG"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_O3)GIzZl0Tj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D3K6FpE8DA7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UruU5zYB9Kk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HV5tijgQyDx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cd7nPrGMPt0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7yOZqwTi57C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_efKw)R5wnvG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_U7vgSZL43im"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iJxunqnjgfF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WwpQevCQlk4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X0xPR8cDnnp"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bn6qGPLqZas"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0BL((qv5XJN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5gFtClFED9O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JXHwihE)lAT"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xb(YHk(zrnG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8(cN4cpdKTl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bsDJ281sDLQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)hrrJZytvYU"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_36krV5sD81F"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xvyDHrD9rw("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AVvvzogl8sA"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xkjkjjvBDFg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3tWEzGeBJg8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_945MhT6AbIn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D8e3Eh4DCEv"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WQfkm9crNSA"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tiXXHJiGdk1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ds4c1dpj7Bd"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aGH9cm0UNXo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ncqn7Ah3bzj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HsxIl0uAxI4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yd04Mx5fViZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YcOvoIDQIRy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_B(CGnB3Cawk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RF4gKzczYaO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xAff0uUpgxg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cAI36kbEUVt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d4x02D)e6F6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7vJ777VQN2W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eAqcXOoGHil"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bNG3jyi))lO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_R1waElNKUj1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wh8i5wDN6yb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_brRM6pbdB1h"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DeTfJaESp95"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_))4)wbKnLCk"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VnFtXm)VlFt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tFUU9N5qdkn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_m2F2PxjOit4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CCGt(NMGvIG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9KdqMe9qb45"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jDXYLQfnnXI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5ed3HX3BMbC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7h4krQRgtAv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KZtONoVH9dU"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Nc)G47ztgnc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LXqqLPmGs5z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VPVbiqZvxGD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u32VqrvL9kC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Xh)i(0uDs7q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)BZ3Jpk1h9b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_POSiyblIo)J"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(MYr0IQVFFG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kqXu1pFybk0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HXhq1ISrQgQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bcvwRTAVUfw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(ZoHpykrwAA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fRvtJduiJWO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DpjrlL04siC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PbD1)nHsaI9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rvM0z)WnQGV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Kbt9(k3RZXW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WEHei3gQ0fk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3s0bJ)0vGz8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ai(h9udTZre"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QuY(8W4eA1f"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TllGdAKe5Vb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4fPhRvfkZcf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Qs49SAC7vT6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7k9hhTuDNOU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ow5yEkWQTW("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_s8n(tN2QAqX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MBqEnwwdcBe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_BankFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_EL)kGbmfFgH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uDsAyNqCTlz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_K3y05eImPv3"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Yhr)AWTQtuc"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_iIJnB5nWtOa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2yCsV968ZSQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TJKeh4ZiLvH"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_702mYjFsae1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_22rmrma3C9N"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wq4JppcrOVS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_48qtDFZX5vZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_83sx1FKPT(Z"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_E9)lKhEtqqX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zc3xmq7SQ0y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MRVS7RmHQE1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IC2IQlq3gDC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vOX3dOvPL6e"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XiZvntsG1fq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cQncHRjn1gI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_m7)b7yiGFLz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_S2RgOvsYnVo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5pjOmbwAnDw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7faHaroxfqa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yWxCPsiCeAl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iI3hwmUNwxg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XFonEGRquI1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TW3sWSw6V1R"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IViDHTrlqFO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WaiV)MFl4tR"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bGlooz6(C4D"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1mS223uQSK5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d2EDXCc7zfZ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_MwSVV8EtBbr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_18EKisuM8ht"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ldU1ExJ5AS0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)xeWlp6o)xy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fw7VX(TCVde"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ku)1pbwjJ)K"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MR8nNAjUv(A"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WR0TVPQBOv)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nLbdM7zgRn7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y4VvwH4YS(p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_axJsAW140MJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uGAEjMP9hQX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8))8ZR)eiTA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nXPApHBw3ib"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TxIYxFlvABp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xi8T1lMM2Yg"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_fZNACbrCEsd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yx8UvUYUebz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4sKNkfA4GSh"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_a3drdVJPOBk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nKWAzjtiwur"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T(zpCRc15em"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KR72EGf(2C("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oqu)yZ0jSbQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_s36pv(6vk7p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F0BiC)C0grP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_ContainerFrame1"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_uXC7Nw(cQRq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KD(E39AzY3C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_x39(lIws)2Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NLjZwhmG(YT"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RXBKypFoAff"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6)oAo)kP(o8"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_vfP(YGYG2O6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_ActionBar"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_7WdmiYsgfHY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_z1wba4GC7Kr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TFqpWB11dAP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_x0WwzhOFVVl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sn4t7NR1VzE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kXjxVUjszLZ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4qaXa81Vmay"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Vv2PcJXZMje"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_C2BmSKbO7hQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hFroSZnLAKD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dzUtFQlhMeh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_coYtu1r1st4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zEoqwPtGZi("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yE6RfdA48DX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CwEKSpArt7B"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Bj(RM66GwWk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vV943qQ)k(j"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h9S4xkxj9D1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cCK0jqoNTX1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OSk0z0lJ4Dh"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_)wu9FKK8747"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_FDtj25tyrBo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_g76TmcRCLkg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_r1DvjrfAG1g"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NuaX7yo(z4N"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_NRkzB9UlJp0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7mXBsD(U2zH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ynnmquosxoa"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ZFXh5pIEYl6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7jwkITnb6zz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6o(vE6)SZZZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Iyeh86hQ0Eu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KZySiKpaJtg"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_m2ViaGZ1ijW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UizpTzDIc6B"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HbW23lEmiVZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_e(HHgo4wHuM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xoOBNFZGyiN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qjNs4bU0T3y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iau8e(r0FnT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JXOzka5GJ4j"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_R7B7J57dX5G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hoj61YHalip"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EaYjFBMOQ8v"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T0oXiXTNIwW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XEMb7SMQHbd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oLv7DpC5wh5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_uSWmRJYsZ8C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_U)SE)yEEcb)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BFd9sGHti01"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_KTDRk3Pp)tf"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4R8KabRq7h2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4Qj3510HraF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_p5HgiWi31nH"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xgQH9wcE(Nq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JMCkM6eV2Wi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Mx89GKvqjiZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bw31GJTizgE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory"] = {
+					["Backdrop"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_lvjbpcFabxm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_x9udgYkehRm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YBLi7)XkzcC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y92ALteTUsX"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_F)4sK4GQqPL"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OEp9s8LjURR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WVxrGSirDqj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kjtqgaErOBF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TuKOneMMl8H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uEupz4GWKwh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dp05Pgh)S(o"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SGR)k0AWM8U"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8MKiWWqKmYV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Tf)bWbaI)C2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pnHDdnAFKSO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ln8RUrbT3Oo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_o6pEU9feldF"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sc8NqFkHCBQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8F)ssuzZFt5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VoKaowEwwKk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3ajI(5jDoqx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ACPfOXkgf6A"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CdPulpcSxXg"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_azwf2N68HEg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_drXZcAe0kuN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_l8hhPGyHN))"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KvIGSOzBSeN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i88d56w7NqZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DAtwS(wHQkE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_l8Z9P)wl4AZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rhc9YY23OUo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Dg0i45XeiLK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Jkaji89qeW2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CDMZD3fMA5C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mTTJV3f3vxk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RZGNpuPb7yv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OL1Wbe)WMUc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_G6sVEaV5KKI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_l7HnXDw27ep"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_0yzgpOMGFj("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2QgZcylMTkQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xF7WTftyYCO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F2hwOzSRnCB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ibwgpm2p3Xr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_8J6F5j6rzzf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DJ)F5pt0COm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RVRLvaGlzsJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sR)zb(yCKul"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)saLPdq6y2y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VzICFzFJ)9H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3S1FxH98IyN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rGsIC)E0(Sk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J4ro)lziUCp"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_UifBDH7qOI1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gL04VQ5J1Bs"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0yt7w3HiNN2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_10o41Nq3kuy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VQHlC0riWZy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FlNZsKb4BSv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9Ed9FcRlChd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y4b8jMp(DnV"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_frMmi9OmVP0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hRTozZ2O76C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sg7e9Bw(GMZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GCMsmE2yHE6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iTF8O98YXFJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TialBqYc8WB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)IL3kemYlvh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FwmIaNI(pjn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zUASr3Zawpq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gKFstU5wOd9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DDIUd8RagL0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BP1Re22NFtm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HlXYofnZJ5T"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1ncVZDmNx5u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nwYF)jIhXpr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_18dWrTzzr6j"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_QXL4MoyHUaK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_x2y8t62tDj8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dsEAC22uoox"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_)qL19uwubbl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Xe0umiWNqXa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6lD5kNIJsLN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UvXcT1PYCgN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bprQoZX9jFR"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Or(SYo8c(8D"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TvLpnB64KYO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WRjU8C(iwz5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LwbI6TjvLpU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Q93XisYZRxK"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SzESJ9lxcwa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yLhZIBBhdPC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GQMygbnOq8u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)iREdnjZjd("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_s)hyGGb59uC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uRD2uQpOwFV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h3qI8FY4Jr8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TsvZwpuBpI0"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_MDCVTYXTbZu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qOaXfNcVRri"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_M1Ly(rOsSNs"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_JjbUoCdjMmB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ePbLB9yMTkQ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_C(P)l09vqLj"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_kkNvObSDLwf"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RNgApKNIAWU"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_dohyQnWUhyL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HgbYuA(MzJa"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_NVvXnlfrwBw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xAjwrnGhYtc"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_U3AWqIrM)Zo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3VivubtfOrX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rK5k4C(BxIM"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_V1gpMnAP42N"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_miWOqI6zxRA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sBoLXGAqNYi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Zt)gwo6iZIW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BqhaAgQ9mmH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7yWKV3pzEJs"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Buffs_Debuffs"] = {
+					["Backdrop"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_LkZoqPp51Fh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hiwwAX9I4Ca"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c8KLCnJL2eS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6vQIFX2OMAI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vl7yB(OxKDq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_PHmqEDiEKU5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X4ASx1fv8BR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WAVzgdeSmfo"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_9YpJDQXdRqU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_l)SCoyRSZ3E"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lDx1skb)0UM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gQmOYsr9cSa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5JIlGzUc9Ul"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_21YZZGv2O8P"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_9JjWqZG6Chk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6UAWGVgzZjR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ETvoKjIiF9N"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H6HQTOKHkXG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VSWC4C90bF0"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_c4AlEqeNPuz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["NameplateSCT"] = {
+					["Inherit"] = false,
+				},
+				["WeakAuras_5X)pUbevN1s"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IVzBqeK2N9l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_99qYAMXeAuj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_69LKxO2Hhig"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9Sijs6FZoQE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZReHKPYWCJN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MATPEjyFzeZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_18QyCeVNrGH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qGY8EkEdfOt"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_M4Fx(ZytJxk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9ssEqZPW((q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zwe7hGaA9km"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IfZueHElhuu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uCo3JnDwmLh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Yt4kVZfRCpg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qRRBn)xYqJb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Hon7Vlq(vDq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eRMECDH08Ev"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mCAvKbtg5Bg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zmS8MY8rNHU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3CKRmR1XFck"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D)djPn6d7h9"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_vjk2eJp3kMV"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_4bxjuRnUR54"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xlF0YF7guRs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_owPgZR4xyBV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1xVssEsO5Vz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_igom83T651K"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_AzbWDQpMuf0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EOuXE9z3aV9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ll4dZ(x6oz9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kPwxAuELULc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_O69zTO16)jE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LNB)u3YKPlS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kVftaCC4j3V"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_RWVnB(3CbYE"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bg7P(ZzPT2n"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xtaS416l(2O"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_8aoWzzKfz5H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T6IwIM6(08("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1wF9oUFNT(u"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_hLAHbVC4Y2l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OGzqH9Hzx5b"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GENZKJW9rsW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oze5rK)nQ1Q"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_9zKI5biboJ5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_P8dqAr9zNo6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YsAVFynTS)("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qz9K3IPPEGF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3oGEmno6c2r"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_k12rRFAQkXz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dpdLaA4goo5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_AxMa48RVk8P"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c(O5K(Er9cw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IGrKTNzUON8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4kDUEDWj6yz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(CDHL7zosxN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xmx7LOrgPyJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HQi7TQpOBl6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)onNjopzEnp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Gw9L6Vfjxfq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(j4dzXy(hbn"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_0GiX7EETb1g"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JlH)kGeqRAP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TIPPqvHZWdK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Hh)RSD9t3A0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_s)MLTTyjvdq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PzkhunqPv1W"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bpdrgZn9VXk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_V40jZ4s)c0g"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_pV0opByua3("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YZixXPLc6Ae"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)Y8rCVUC8i("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_elbiXLpzrOH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)sf3)FMuqbt"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eXh(l7hxYbS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_k4gWf(JXY2i"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Seg77YIO4bb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xPB8mGw8ZBI"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Hqw4xy37Byf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5aQizPCBucs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BnMwlnmN4Ya"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Ks8i3z65ok5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZW8VffQNT6I"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h0WnRwrcdAk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_exxx2c9tqUF"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_XlWgwyK5xiO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KCfxVx0At0f"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dB35RiKl5sP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1s08ObC1J1m"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zl767mfDo78"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bfw9yNGImjN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UVx7hUCg59g"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZWinSHh4vsQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GUhPuyJ8fsb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9UPfH2kISy2"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_73VEDbe27am"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_upkZcujdW0p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SGJA7RbLo0U"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d4STjF2()R1"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_CsZRmRk4jwb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v7JYiAlFaA6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oZAAOWrgx9i"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FpG(xiuDgbn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uF21h8G0god"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_USgIvZcsFpq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_NPH7jFd0Jro"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Q4K8EFWhobU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tuxSgp7SA3g"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Buffs_Buffs"] = {
+					["Backdrop"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_aVAOF9TXYBa"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_zkVQhLaVtmX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NQQSvYmiLiB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_l)ty9245h(w"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Bupe19HD68J"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_gCNZRgtaBfF"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_TFm04SNvksj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J7RF1RfbvF4"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_OverrideActionBar"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_k9HnIr3IYf8"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tTuxSbQBA78"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0Rizxs2HjEY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mcdvqxVDNK9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dF0LTUqmYoH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A6q4ZP27prY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_AqduSNvfFcO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_w9UStNNHjLJ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_CqF7VJBSJd8"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_BqbsI38tFZq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_AuZ5HzBgLSF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Xvx7QIRlPCb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F3SZ7QF0Yz9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zTYYEkkU0kV"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1yNTWYAmU2K"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gg8cqeDPjHA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fmLli8c1WPc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Fq3UiBydImH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TmCo8xn)cDe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jP7VrDUJ1kM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JBehBem1guJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZpE4WMQMoaZ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KVJWGJrD24p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3hsRA8zuQKQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kBUdLxjdvkJ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xgByGt1hNfM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mU6colF7DkS"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JiOXPF1BOzO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8aykVn)yojT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PMhvq(LrRGK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gAdii84m5xZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cIzIhJdg1nr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LmEwEXtSgJZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vJxcapUBK1U"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_ContainerFrames"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_iR9H(ChEz)h"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7C1AFfNs1lX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wRiT9aoCJEr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)PbPORMsTfU"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tSoHZ)oUwIe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i5rBxRtWwhF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MiwAxrmCm(6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ogeAb9Qq0ov"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bfL2BMJ9Vxj"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Y3GKJ)yAn7x"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OiPYXWYNVGZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YEqsI6XnJRu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bKZWNDZ1d6q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AHz3O3GTd3Z"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_(aRsSxBa7oY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TaFzwLwzvHX"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v0xnB8)qGl1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LxpwyFyoHLv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dNeq505jlKS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J7QdceAshUr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(hBt(AMgLTd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NAy75UL0eaW"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_nMY9QKH3kZb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sh9JsnQxLcw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_czaFbQeXhjT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pXRX8ENG7p7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_I8qrWq6k5SX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DX2mgt796BQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0N4PlMKu(cM"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sQlmTnZkk9y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LC(NGec9X70"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_U5hoMHTjyjR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_49eVHcCwJeJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OYngXAxPe0H"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xYQBcnvVArR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_f2IvPwxDleu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cjCT6HprXbe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VUS65kf6pBN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BWjhHwis97R"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4Bz)(c5pWkP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vrLyMMikou2"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)rlBqzk3AFT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qzNg)TL5(9W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d5zAHoLDi07"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ISK(RIx)S9w"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rJfnfnCSHBe"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_otqH7vgZzHq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d8ke1O3J1Y)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_m0Hm2R2E2Uj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YmNEGeTwhkb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_V7QE)iVGe6q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_ExtraAbilityContainer"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_rfF4oIlltK9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras"] = {
+					["Backdrop"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_i5(Y5QY1ds2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qJrd70Jed1q"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0gcd0pprR8z"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_3ubxxJdLzU8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vGYWenKh9FJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iupxIC0eTmz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_MultiBarLeft"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_SWUUhi6J6eE"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HiIlzLg8N9X"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Peiu3jI7)hv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PGEjGpTimMa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OnyGJn7opuv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eEN1k7YzXmI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(OH7iunhkNl"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lY6yMP50mEw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ae8UTR7uBT("] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bQjSv)ISwMi"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_iTKeEYT7RIn"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_EOB92)xG7Z3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xMymhj1dsCE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1ftaJ4AGlMs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_55mETH1Dy0I"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5XOJEaYp(a8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)rrPoN1eMNu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fIzpuKdU8U9"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_n6QYQjbnEx3"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Tl0hbNyagar"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EhmCkn79GVO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QTo4cU6yhve"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dGJOdGwfAHf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BiqUZTlwK0Y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EyWnw2KnAZ0"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T7JA07uZ68v"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WZ(YIL5l0oY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(ggVMKkaXfv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RyxJ3u84jFF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CHDDl9zy51y"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6acacFLUKAl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hzb9OuFdLlX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1lCZgz8YyRI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Dzde1IhtlQZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_p2k8ZwtA35B"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SAgyVhmDX1Z"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Kus)2FqERSu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MC(Z7Lwikn)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_j0MlaQRSNwT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)HmRtcH2yWE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_q18AlNFzLY)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4Y4qQKF8DOt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zkhIncQNIRQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YnT645Y(XVH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yVVuO5GCnNB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nrf2MBmdyk("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)WzmhznwTw0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_llRIH0Ug4xU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NmlFPsKTz(L"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Masque"] = {
+					["Backdrop"] = true,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_uqKe57XlkWV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6sk3H(ULoab"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fiA8ZQYQ6Qr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XBw8YbMA2l4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LSkvstDsdxQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oGmdKmnFaSP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SlC)cUoO4O4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NrIYbkpGeGm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W4oZsvUgDkj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qu3uPgosf6k"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_O8hf)0APq5y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)Rp(iVbfAcC"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Z8ffoL4azA6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v3oNBQ)JlsG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bmWeMj80BLi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bm9tXyyTjS0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DqpJgfDKUxa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6WLkEELZi6l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hYqhDIMFV9d"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_V6Urqokj9Ft"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LzdkOniGYZ5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_PossessBar"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_qu2IIVqvDre"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TGTTT3tH8AL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WRZkZSAGi37"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ICBb9o0If4k"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dHYfeJJf3Ss"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iX5QI7xPB1R"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W3kxCvMGxis"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_pHVjUGnzCG)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_C8FU21mXcgA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_MultiBarBottomLeft"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_COEsHbaf)3m"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(h8IA76jC1v"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XWtU1OiOvOR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WpY02jmne53"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VmC)ON4g3T5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tp24scFGqNF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1pex)r8vKYm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_poLrMi5ziLn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HZQiAwGIDPL"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_w57X3jSBONB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)f6rSJ6EdpI"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lw7CIHqvJiF"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_VgCY6WRSteq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Tm28qwvNmfO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_l5VRpBj3Vyg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NH64Am52qun"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X7p3vPILJhf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rcL2epLS5M2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pBKbRrv9pVY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ws1byTAgbfL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_E0bspIvGetH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FZbWTmGXvc("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_550lVM)(FV0"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_GX9iW98WyvG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5nXlN4UUv5Y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EpdH(aI0Gq9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_71mRp6jiMjM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QaKku7XldQb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iOWESRpQnXk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h22o5c6tCBR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(z)Tl4U8LZs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H2dKfkutHuf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EoL5zrK6uHr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2vAVlv(j9Ea"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KCL9hfohgSW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HftyGSWvAUH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_MultiBar7"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_k)FOjjPJ4EM"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y4)vn5eVPYZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PVWuAuDpEoa"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KIuEV3XGtbt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Za6qTFwQIKC"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_wtDQkbi9oQo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_r9QsxHjhyLm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_g9y6aogu(al"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kj7e0LIxu8)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cCpIJZuv2VX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars"] = {
+					["Backdrop"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ZlCelTSKDoi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XRZjOGJTQrM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_z4(1(4KV0sv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_P0PU(rEWZHT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_beilkEo4uUA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cr4NBWOHL2X"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X4w8C1TBIAz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_o)48)GHHfj9"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i9qqKdFnVMk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0OBJo)nR4t)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QpUjN(yhz99"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ug9bj5SsxTE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iwdgE7ypZbz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VqF7qexad55"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3VGB3jeRXR1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3(G4DhyPq(O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iX(HIylpVTj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FYMJas5rAdP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gN6cBKjibT4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T1YqVCVvMmN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NLya1ljWp5y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u46aSry8SSn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Vou(R1WUxI4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_S3yg(ZactSY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gBrUvzAd8tB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zrTJ4oFoI(("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wVXIkkDj6c)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EzEOn9)4uzH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_PetBar"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_wCfADFr7P(("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1bDTl2yD9bD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7j8If1vFN9Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CfeOfCTWxVy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dZNVZo53etJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fw6gqEdo5l2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TOAC(VMQQBd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Hsf(Vm5aqm8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Vk4T4GnbXow"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kZpvAU)cpNj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FdHJl7gPKC5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8DB95mPwBRF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Hp6fUclDb4a"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SDRtj2WwrUN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pskTklAly9e"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_92dJiXM1Iuw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3lxBcWJJ5FX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SWefIeESeXB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SegGo9kmLHX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3m7CIlHndga"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W(xpUBrhYJa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EbPGjB9hsMO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_HxbKDoKiJza"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_irW4wvYa4oa"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_h5IZZLGvp89"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c9f6MWc5Ao5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vNAjAYmLkzW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4rsziz1KQyQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Q7oPl2jAgxZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8CxiEdbFd7H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yxOR4d)xweS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vGTFPJYJ(yk"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_s(kCY3q)soy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_q5bqqhp)MvQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ny16HxfNyNu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rZzfQNX0QVC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7DldQ8dhEV3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5BATjBofQLr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jKpBmYvVAqs"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2pV3Om7oaXY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OXac3aVVW2q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D4bcUYO(VuY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pslr(P4lKn3"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sjJeLJpx7Cd"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_2H22fJgD6AL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NgfGbym5B9O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5LhMiQ0x3a8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pxpgDCnvJD5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rRr)wM682qp"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bj12ONR7P)p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OxU2IuQ9czY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gssUQfwSZ))"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8ENzRn6sAsC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FYTm5HXrwBi"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_HNQrrIgj6ty"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_m0Z5V(fKEqX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zQMihzu6wZ2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FliE6YTvoGx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wiA3Gb(4a(M"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oSuHtU2DbRL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Rqmj)jnSs)c"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_0d)UnCPF(wH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DMAOsnXOjCH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6cBQMgiw1U1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pg3NkDbEN1t"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_g1KxiZOgm1G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aErqlCUQHi2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UWMR0(kt3R0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fDSo0V5Olu2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qvQHA1nuD1M"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_neCH)QYqFdy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hG5k4(oljq1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vM1cvOWpsE4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1CKwKGpn2tQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iU36i5AfzL2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ppJlc0gm9FE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_diGZ5EJgl8Z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_r7(r1pM2VHK"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_a)ue3hhArK8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sa4(5zWA3kB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_I4IfCm8S9Ro"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UvLmwcZnoF("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gld6seo6Imy"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J7vpx7fKYxt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jQ1kGrh46i6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(7vkRvKmLcT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4sQu1)PjnAu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RrPg3CGhksP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_njfn1RcKJ(f"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J22n8X)w(qV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cBZYOq3gjQb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4IOqxwRqE8d"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3tzJoCSKHqi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_onyoIcUwO11"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_m3HSmzG)8KB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T9BNWAJldN6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_r4096miiYXt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9EPlVVt(l6Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uKhqUz3Rh6u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pw5Ji3brlV2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yUTo9lsNIg)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_B1qJWqk9mXC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NLT76FdiMsh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_69wOVnpTn3V"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xl4hITYw0l("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OD(hod29B0u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_n5)8jUn641U"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PVHySnqlK3C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iO9QZwuBcNL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3CwE4HNN7fx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EVL3EuXe77K"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VuqkNmDsCHp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cdozY9EsaDj"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wEC(WH(co)D"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HNzyOizL8Mw"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_vBCB8J8U0c7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TeyXK7003))"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jpyFeEMl2dg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OqTSxE0IBRV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mkf7CP1c0ru"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NYkqysUFs4z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZEZxSI0HO5Y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Gw9GZcp0kTO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_t)Q(c0SPk0d"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LJavf2rHJnl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W1K6CQX(23W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FxyFiTSTxq5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_a3EF7eOBVfO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_r2tp5goB)bX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_liNmKfxPZwt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pdF5GPKfO9W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_coFd8OxoLI1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pLU7KhG(mVV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PU8KAEid1aH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(xB3NQsFcnv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Nj2HJf2Aqlc"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_S5TbxNqB5ve"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eubgxz846lu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MhZSTRkKtCp"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i7w9mDSRMTj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_P9BYVDXTFVE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kfNBY5YolAa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IspVq1rdtAX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Z(R87gUfN3t"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kVhJKF2xiRV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EV8333YrS9J"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ikzEVuRxyG1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lvZX3q3VkTn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fogTQo9C5TN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NT67ne3AQKl"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_K1zPAV1NIjJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_huZY3KYKLJU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_G0QKhFhhyQu"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Wfgz1EHhDZW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xtv2TxZdXW7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VWuHNB0jbVD"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JnLK(YgXgmM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tGtrrUZoORm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4DTfFLgMEOl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RTil8t9gYEv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6wX)F40SyCH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_APLXIbti)g6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_6lb)8u72Z(u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aXEsHSNI(61"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2kpVhk)zkVu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0yzuiiRSM8A"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JO2MTva7RKS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0W3Te0QOa6r"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OlUnPfLKnqm"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JhnTgSOu8Zw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_18vUhMiG9N4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D7mdjL61cV3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OFQ4bjqjv9E"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_InjgwChlXJ8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0sWLUSjCCPM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_R1Yd4zlS8jJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_K8AeMSjOZQp"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_NwrDgUPcx(a"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kblWXs9Qe6p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)C)e(aO9ufz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DoBZl62ANC5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_E9pXAi49GfE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UILqLJowsXj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A0j5THpV0gt"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_i61AwXkuE8z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VGDGJg4MO8W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ewSg5MhH(cU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_toA7xoJBAiy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dD8vjYCTwcE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yiXb9Wur)4K"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qSXaRQ8pkEO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_euvWrj7)G5z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fmrPsfcCkv4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1UT0om(5IAq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8fva7Z1iaN3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Y2mt(uz4fNZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uAERmptweWV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qNBB4eJnxmv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F069S5cvGAJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zEZNE07Sg9N"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X(CBPYXu)y9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_w4GghJHe7m2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H4swphgcL0r"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F5tyHwDBC08"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ykG)0nZskaY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZJwFjdl6n7G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(qKP8Pcw4TO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DV2PpmdE75n"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i4esOkaqRRa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3ggbUWgVhTN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_a0pof7yw6w("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3XlPQTLyPAl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c3gJdUcwFW8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7kyITCaDdu7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TZYOdBaJlKR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3hDxE5RYJ8Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6z3fW14KG8H"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sk2Peg3g4np"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zkASFSlqWtg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jmBX)BA2XBg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_k76J0ZGpzFU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6cyF7kMGJ(Y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1TRpcYSuWw("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PayqwJX8THJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_w6Nm1an1so0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_39mc9W5oL5O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ufi2mqStpTM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Cb0OaOI7Glj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TZMc(Oklkia"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_x(KkUlzTCAh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(UrLSB67Ceo"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_bEtS56(guoK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_b0jKTjSLOVX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_O05erGveHaY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Z(86oZN7KvN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GW0pWcdTEcT"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i83VnBW5mhg"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_q059F5YAa2G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_quHatVIrHP2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jlNyTDYmQ2D"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HISKE)bkl(H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_acc70)cXWcC"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H2dMKca17Nt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RdQaCjw3nDi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)DcLrRhqqtc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lZkMBCzw3DO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_B2CkkMO(Ce5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FaUMGcpOFU0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CE2aKJLnOO2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0lUns8BsgXl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Tz8OnjVHwy5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bL7Mqngpx9l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6XiXUSN)9(m"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(kk4t2(ISAR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6X1nS8IN)72"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PdO)OBzzUEj"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_pWoFjqF4av5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_67vtzNpk5bq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(2DNwaRXOh0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RWe3JQcmogM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A9YPgo2y(8T"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DAxRFZwFFFx"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AKMt17Tz3bb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(3DN)Fkyb0V"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d4D1H96HogY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eZnVTSA8QQi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lwJp2fS)SSE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xvBVJMAcSaK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Z2YTTl6E)Ko"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sep9o58CdTO"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ip)SCUvBwmD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KSUfFqmDkvl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ErMpV91ETZB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OSxGVeXBHry"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CUvojJTEgNg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9hlBbZXf)wK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_U3Re5VGvXIq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tofgzDgBNdG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_px9PRTUiqWV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)c3RGsB6pMm"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(58eDFjIQVU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XRcVfN6Ntio"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EKrzxFf0AE6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Cz5h2SQFp31"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2crph1q3fjz"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_5cxoc66JbJU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TAlVZ5EDGqP"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_GSMC)R0ddw7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eNaeNeJmqzQ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uUS7JVdOVHN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v2r6H)RrTqI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)KWDJ2MF1Uw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_umJVsBiVmMQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ot88AoxVuCP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zcEMADv3EOH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wOo26WZ(bxC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_S5r(X4NYHVX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8oWDGBbA81B"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0SQQNm7lRR5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tNO6axZ66v2"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_TiA1VyRPhws"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fig7GDJ6wlp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4(PkU9nPCcn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BEPH1)aFJ9u"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_f1j8BYrVb1E"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MHlZoVFSsxH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zPqBpAzl6bS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_q4PVPkg4xTN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Jz39Py8ncy5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QjvpSSBmoW("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ps1YGNzBtLI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_93p8TIZob84"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u5cQSAk6M4C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lP5M43gjjF0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_BankContainerFrames"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_PQRI9Aw0de0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0vWIkCo1B49"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Tgl9a6hIjI1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eWKa4AWhIVH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_n(2p5xHbYYp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_noaURWrDJuJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_SjBAh3nd4XL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_RUOOumGjvuC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gLSAuT3P5ij"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uW(2rBw5qR4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cZq7F2rTDyt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(4XqHhyEY)G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iwe3yYWzY(V"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UmRB0o5QFet"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_spG45xmzF68"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bR7zUO0jsN2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0mbNNUuwYrB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_B7M)A9frHq6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jUKfM3c0Ies"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XgseTLMo8vz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PWIjP)UVW(e"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Buffs"] = {
+					["Backdrop"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_5EWQctdVVhW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(Nd6DefAueB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_t5vE72VY2bB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_scy6qdoVnln"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_L(sO)hBeIpT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YRwz7NouaDu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bAP10FQgPdI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hGtSGf(mbiJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ciXus68Nudi"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_7VAoBbkPTwr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Dn0OT)R4BBB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A90mPiH0nuz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8sMbN9rKPnV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MG4AYW69m9E"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_D2Gqm1Viluf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_g8Yv3Rlc)aT"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Xg6eJzgPozt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_z7uQ8fotAWY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rvwxbNpCi7l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tt0EJo)iSRE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_C6ElBvvBZot"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6wcfLPAaviP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_MultiBar6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_pSqRphmsHUN"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iWcfeI3(Ryu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ByZW)CShTgJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_T4D8VOyzN(y"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Nv20n4CxLby"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mVTDfVqsf56"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sG0A2BVASUs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pg(vvUJUWSV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ml)V7JFtC47"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_fqvXZi1Twxf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nfHQAGV0a5M"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X1E4CUAECyI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VLGYuGp7v0f"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9sIpGlzyeHv"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_hTvlH1SjhES"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nZHZT(Kejwz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vDLFkcYNshL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4c8PRYncGxR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TWQWTI5yz6G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_N1SPf1FC9xS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bgha6QpFl3S"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pBe1zxrS60)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X7EEEfvmggQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ulj9si2knWe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cMyIqL))Svl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pPV0iqTqwka"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_S2GaeNuenDV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DPM)UebYmai"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_au2wpDTf3UW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4YPIuiErW52"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6FEBNCkTcJz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zxYxrQzXMbJ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Bc8FzVVaDZ2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zUPLQty2NsI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zgJQoE2TOGZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NpUszSdx(3e"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TtREv9iYf3s"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Icyl5HBbnGF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DhQOMys3NFb"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["Blizzard Action Bars_MultiBarBottomRight"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_gjQ9eVoTcpl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OqaCg3pQqZg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_a9BCAmFgO6n"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_k)lluzmwlgp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fD0pAxxql76"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZJ3xQ4EQAbD"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1ex0oxWu6s("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hVG8b9x0NMI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_pO8b))XZI1)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rBnFFnXbauv"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dPsppK54(4u"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_jKi9gakgMpJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_swRdu4BwVKz"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ShvASGfM4e4"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_a7nYaSYP99c"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xpHuv3Q(u6L"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9h24UtNfqgJ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4A803jQBg26"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2)C4uyel1OH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wRm573GSRG("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YM0fI70p3VG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PiwhEIcPXQX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TOq(R1C8yV6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1frsasT(4)p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PcfpfKyrcqK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EPFOF4303Sc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eLhxGiRt)Hf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ynmqi7TwJj8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oXUr8qzgERb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_O3brp1gIwRz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uZ6O(RFzqz)"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HyvwWkDFYkZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v)6xdH0pc7F"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2Vxl(KHXiu1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gIcAcd)Uk8O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_p2ZyVP2e(lV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_K6tPPrmLaVa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jbgHc59FX18"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZP6EsZf)Qj9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2UBuImhQupR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9GxxlgpVHJH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y5(64TKn)2a"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6VmSTCPvvkR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nsUpcBWWi4p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Wa6SXYBM1gI"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_4czckXFRvqI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dWj1gF9ZYKM"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KuHoX7He)0q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nRhIHGpbIqu"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3u(QRvQ(vlb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Q03Cp1pPTw7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Y5BkSZ(2Hrd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GA4QLfdTCnf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8LWndLcR6yo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EHE0jUcVL)g"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZGjuoVYSfEr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y)A3erQ(a6N"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Zu(VN8syZR("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qP)Eas8L(O5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nT(sMisGXXO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AzGsQfvo8f)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6AWMqgoIlFj"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OpTDY21Ca(l"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aB47gQFkDvn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HdKkTN8MrXr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WPfryGd0baJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cxuEkmTUlVI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YMCzS4oj(G7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9mYnt7bk(gr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H6tbbgXB(E6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jO8pJBnh4nP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A51ZawJHTT0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_f9AEGJhz)yV"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Ky(qbVpAFxr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_)yKiY6xHUH3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wSyA)Y)2pJy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sw)tqlvd10("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EdKhUWgwZxf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_OkcFiX8gmWh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_t6b8clxG9h5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YFkKbJ68rBE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tqNFU03WQN5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UBSr7j4bUEg"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3PDY0D9866b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_e78nKxfwajv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xdWqtjqmvIZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Pz3GaWz8GUk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_P)EElzKN6a5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(dTdmKvqCnW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XKtSA6Yvh7h"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8zr3a4r7qKk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_unuTXOIhzpR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Y2bUipJxmsC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jen3MRvbSOi"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_16JNieKB6Q2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sEo5ZH0EQfd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1lbETV4XVlq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GuzLDJ9S5Xh"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_5IlFcRAcsp("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0LJXaV(zwIU"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BsrnekV7wib"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PBIaSYCXKVR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mcDoz0GrE7K"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5Oy0hZg7)9T"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_noAYUsJnqWz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_44mO7jdOSR9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BuRqCwQ)LwB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1sOUwFS6Glc"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_24eqCakKyNF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uj8SkpMPtif"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_n3Tr31)TqVx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_EOvomVBg31c"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Pqs88hz94qf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5Ek5IcBjuZy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ndg1oFUr3kM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JTiZQ0Vv8n9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3H(PAMe0hBf"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VS2hcIM2IHL"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qyFga(0V9vq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_eNULKoIfxj9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PZChJLGg1CG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_GuildBankFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_pxrb1qiA8cu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xgjiVM)8llk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BIPHQw8zos)"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3jcpZl38KyN"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_FC0WKZxN11S"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MDHyFfjLkab"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_PiWX)A3b8hL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FP0mDFebbrA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_inc5jn7FwVo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FZ5wCtN2HFE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0UPSTZNS5Ja"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_0WDE)csQU0Z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u1lJcSHTXk)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BJ7JtHpD9zg"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_0dbsutw39Wm"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iAfqNrMwprG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_U33o2MF4sLO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WHYVXxZkJs4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(9s0VuBqL8z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZopIWUNFsQB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_NiHBUOhtPkE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F1OBy2nCK94"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7lz2lrZZPrN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1vaflhuLFZI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mR2oa9oDbYh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HtzSiO6sMjF"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gVVNZnZEYLn"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BLq8FGWg0eE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Y8YO70u2S7i"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5Ci1nEdbyQ6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YVrwYG2djB4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_POdbqiJMcUR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bY1UD9SFMMt"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Trk(UeIWIw)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_v1dKJaswBFk"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Viz04AyOOxX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_ContainerFrame6"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_Lx))8UPYDql"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JpTI0ja1gfR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8qXaUZn3Ot9"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ReGLkz0tUFD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Yl8ZOLBfGt3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)Xdp0b7BC2C"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dENX(SiHdsB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MWimHCdXoK4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_nji7XhNJfig"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DS(wEXmBMlb"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sDXxZUDOn4O"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lAx4P0mIf)n"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_xR6V0AW(OI4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qqJxMo6V1qh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_H)qRzXR5opt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_m9T2M7e)nqJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yqvwkF0eA17"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jY51ZquG8bC"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hLr752KNL)I"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)yzFVsRrZ8G"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c1K5KYyl6(A"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aUGfjQNUkkW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yRBH4nXJ7cd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(vZcSedMfth"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GZvGtFiOrtL"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Obr7Vp2AHrQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yMUmJuXNB3k"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_joHUEf(dDWY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rBYZMHXo1lS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_anFjYOXxXvc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h2j91Vu5ed0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Bqn04EoQtfW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Po9BZLkf2HK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_md7d2RCxsHp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CWSf(wSwbgx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JWS1fkvXb1B"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_h)BMxYJ)Diy"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_aHNlQU4WhGt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ql84QZPlt95"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BfOuRR3KX6F"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mThoePzEm8Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_beDAXvm4WPt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QxRRbdBsvC("] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)lFbtCWhOWq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qMHHArIISEz"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Wr4juHHS2b4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_M5T5ebBjeFo"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_W1eCsito2u6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_d3hiLPV9xMb"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_S3PqS7ibzJ5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_QaPevzQXTjS"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZsmSMEpEIQI"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_w2RMp(g9tnG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_uoz2ep2aQHp"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_e7jyw0STkbi"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_cqwLc0qV3sr"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["Blizzard Action Bars_MultiBar5"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_WMleweqhZ5w"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0LSJ0AZeW7M"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_k39FxttLV(p"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_9IGwY90YMaJ"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_G81UAJL(HBY"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6oaoSsTxHg7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fvo2GGYiEYJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_sRoqRfXHXLJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_u37IUSgQqfu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5ZnjwzzeGhM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BVZmfVlhmo6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_lApigDnejMG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c89XkS8sYm1"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_uXRnWNE5fQ2"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7ufeG7hj9)I"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MytwF(V)78q"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["Blizzard Action Bars_MultiBarRight"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_ja3j)xst2SC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_19DxD8Vmhla"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WziY3IsotuE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YnAUw8iEzzX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_iqMIL8l5LtN"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_j1Gcwm45HlJ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_udU0thIFvMw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Pi7unsJDTzv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_X7hqVRWE1q)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_XgSwsr0ML3Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_24JHcNRzR1Q"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gC6T7HE1CPx"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3OVIIa8UoFs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ifwerv7qABX"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hM1M8E16EFc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_krBr4CCh5Q7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_hVHCyr0IjwO"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TXWQBnd9ls0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_atMuNLB8P9Z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TV9HjhNFgxr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_z)0tOfam3Z5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ya3a8RF)z3y"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_CgaJWxfl0jR"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AEFju8aAygS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_YiH9kld70qA"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_TH(1kE5N6A6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_wjvWkQFIN4f"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ccwVgYBHgLn"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KEC4s3dzRHr"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_dBBfUF25cDe"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WxwTVWFWQ4l"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_otqJNrL9jmc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VaTsSGosqLt"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_8)DqeodLm1z"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bDMK0dvJd5T"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_mfbqMQJRKJQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kh6pifW0qIM"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_kPb1M1KhRFP"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Iq)3z)M66BY"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_65lXA)hWL95"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_K2JJ5vUOW(x"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BQU1AwQE8r3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZSnfGPNZUeu"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_qLfukdwx11b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_DKipnUj4Fhq"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_N5uJoLBvHRd"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Jucn8jpOn6N"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6isbSvTR62W"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ITENtVpJEL2"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_TialUqBuYwT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_6wXru5ng(pw"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_3h7z9vX4(M)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ZGtgECtC04h"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Action Bars_SpellFlyout"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_GkrBTmh4aeo"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_9Y4sMecB3wC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)HOLXHU4bji"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Q6U9QK)2WGS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_LJjqSaS2A0J"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Sur6180NtO3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_tmiQZS8)lwS"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_AwRU0grT7fh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5efCR5QJxHK"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jx9N5t91vcD"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MRmWb7t4WnB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_R0fpoH4X0Lh"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yKIMCd4(LN3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_7aG69J64VqV"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_09DbU2Iy(Lc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WbQHcx7CsJa"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FI5wrHSEUl)"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_zYcMDwOmVtB"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_BqWzzGRQ3XM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_A0)pwP51mfE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_c5pIY2nI)hP"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KZdnSDLb2rW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_Fgc8f4xiqTZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HZxXsKjQWcd"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_MailFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_irFvubESLh2"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_mXZ7RytPeiM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FNMf(RGZ)W8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jqQhFp5O41b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_ReagentBankFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_aSsMjOK8x0H"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_2t(1y)c5qCc"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MfgL(Cey7q0"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_o5dplV5rfo8"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_UKWd2n6zeAl"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_xZWK3i3kkRH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_JEdr5DFT5m("] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_Qo1Gz3Y7vuj"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_gnF1AOcwkA3"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_F8JXuonW11t"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_)30q8RSuNuQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_5s73hIjLwTB"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_FXDLk21n(XQ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_HCeRjukleKv"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_y)BvUVnc97P"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ipc4bgqdloH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_WFrS2zkt0l6"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_oBMwSLY4I(a"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_fQT7XInWC4T"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_J8r0uOHKN2b"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_yWRNeGBniAP"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_hg((IrTjIO5"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_FUIW((DHsoG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_ykhJ(Rng0Av"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_bEepNNGAiYs"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(rGZQM)qwmd"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_SE9pk)l4hSE"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_1d0GSlSK0V4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_18iYp(aE8gb"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_gFgi87hPu2o"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["Blizzard Inventory_VoidStorageFrame"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["SkinID"] = "Modern Enhanced",
+					["Inherit"] = false,
+				},
+				["WeakAuras_WmtSEX7nFsC"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_(YmjGwwZdRu"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_KK3ws7xr3YH"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_0nPC(7IRYw7"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_IaGwb64dcAG"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_vPXAjdRiwkM"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_rovQffKoRVZ"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_i8lr15dn6A1"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_MnC7QPzd5oq"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_jADgq4SXgj4"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_N9SXuB1SGRf"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VQuMVJpF6(m"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_VB4xXde8)WW"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_37dgaNzMfWT"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_GHusxQHC29j"] = {
+					["Upgraded"] = true,
+					["Inherit"] = false,
+				},
+				["WeakAuras_laUvoDbXRga"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+				["WeakAuras_5Qn38f1B2(V"] = {
+					["Backdrop"] = true,
+					["Upgraded"] = true,
+					["Inherit"] = false,
+					["SkinID"] = "Modern Enhanced",
+				},
+			},
+			["API_VERSION"] = 100006,
+		},
+	},
+}

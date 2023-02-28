@@ -1,0 +1,22 @@
+
+MouseoverActionBarsDB = {
+	["profileKeys"] = {
+		["Sfilatino - Draenor"] = "Default",
+		["Panzarotto - Draenor"] = "Default",
+		["Formaggino - Draenor"] = "Default",
+		["Friarielli - Draenor"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["ActionBar4"] = false,
+			["ActionBar9"] = false,
+			["ActionBar10"] = false,
+			["ActionBar5"] = false,
+			["ActionBar8"] = false,
+			["ActionBar7"] = false,
+			["ActionBar6"] = false,
+			["ActionBar3Fade"] = 0,
+			["ActionBar2"] = false,
+		},
+	},
+}
