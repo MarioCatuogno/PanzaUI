@@ -38,7 +38,7 @@ ThreatPlatesDB = {
 		},
 	},
 	["global"] = {
-		["version"] = "11.1.14",
+		["version"] = "11.1.15",
 	},
 	["profiles"] = {
 		["Bajheera - Sargeras"] = {
@@ -69,20 +69,20 @@ ThreatPlatesDB = {
 				["ON"] = false,
 			},
 			["HeadlineView"] = {
-				["useScaling"] = true,
 				["name"] = {
 					["size"] = 12,
 				},
+				["useScaling"] = true,
 			},
 			["classWidget"] = {
 				["ON"] = false,
 			},
 			["AuraWidget"] = {
 				["Buffs"] = {
-					["ShowAllEnemy"] = true,
-					["ShowEnemy"] = false,
 					["ShowDispellable"] = false,
+					["ShowEnemy"] = false,
 					["HideUnlimitedDuration"] = true,
+					["ShowAllEnemy"] = true,
 					["ModeBar"] = {
 						["Enabled"] = true,
 					},
@@ -180,15 +180,16 @@ ThreatPlatesDB = {
 				["ON"] = false,
 			},
 			["settings"] = {
-				["name"] = {
-					["flags"] = "OUTLINE",
-					["y"] = 18,
+				["healthbar"] = {
+					["height"] = 16,
+					["width"] = 132,
 				},
 				["eliteicon"] = {
 					["theme"] = "stddragon",
 				},
-				["elitehealthborder"] = {
-					["show"] = true,
+				["name"] = {
+					["flags"] = "OUTLINE",
+					["y"] = 18,
 				},
 				["castbar"] = {
 					["y"] = -20,
@@ -204,9 +205,8 @@ ThreatPlatesDB = {
 				["skullicon"] = {
 					["scale"] = 14,
 				},
-				["healthbar"] = {
-					["height"] = 16,
-					["width"] = 132,
+				["elitehealthborder"] = {
+					["show"] = true,
 				},
 			},
 			["Visibility"] = {
@@ -222,10 +222,6 @@ ThreatPlatesDB = {
 			},
 		},
 		["Default"] = {
-			["HeadlineView"] = {
-				["ShowFocusHighlight"] = false,
-				["ForceFriendlyInCombat"] = "NAME",
-			},
 			["settings"] = {
 				["spellicon"] = {
 					["y"] = -12,
@@ -273,6 +269,10 @@ ThreatPlatesDB = {
 				["FriendlyNPC"] = {
 					["UseHeadlineView"] = true,
 				},
+			},
+			["HeadlineView"] = {
+				["ForceFriendlyInCombat"] = "NAME",
+				["ShowFocusHighlight"] = false,
 			},
 			["Automation"] = {
 				["FriendlyUnits"] = "HIDE_COMBAT",
@@ -584,7 +584,8 @@ ThreatPlatesDB = {
 				},
 			},
 			["AuraWidget"] = {
-				["CrowdControl"] = {
+				["Debuffs"] = {
+					["FilterMode"] = "Allow",
 					["ModeBar"] = {
 						["BackgroundTexture"] = "Solid",
 						["Label"] = {
@@ -594,30 +595,29 @@ ThreatPlatesDB = {
 						},
 						["Texture"] = "Solid",
 					},
-					["ShowFriendly"] = false,
+					["ShowDispellable"] = false,
 					["ModeIcon"] = {
-						["Columns"] = 1,
-						["IconWidth"] = 25,
-						["StackCount"] = {
-							["Anchor"] = "BOTTOM",
-							["Font"] = {
-								["HorizontalAlignment"] = "CENTER",
-								["Transparency"] = 0,
-							},
-						},
 						["Duration"] = {
+							["Anchor"] = "TOP",
 							["Font"] = {
-								["flags"] = "OUTLINE",
-								["HorizontalAlignment"] = "CENTER",
 								["Typeface"] = "Expressway",
-								["Color"] = {
-									["g"] = 0.05882353335618973,
-								},
-								["Size"] = 18,
+								["HorizontalAlignment"] = "CENTER",
+								["Size"] = 9,
 							},
 						},
 						["Style"] = "custom",
-						["IconHeight"] = 25,
+						["IconWidth"] = 16,
+						["StackCount"] = {
+							["Anchor"] = "BOTTOM",
+							["Font"] = {
+								["Typeface"] = "Expressway",
+								["HorizontalAlignment"] = "CENTER",
+								["Size"] = 9,
+							},
+						},
+						["Rows"] = 1,
+						["IconHeight"] = 16,
+						["MaxAuras"] = 5,
 					},
 				},
 				["Buffs"] = {
@@ -662,8 +662,7 @@ ThreatPlatesDB = {
 					},
 				},
 				["ShowTargetOnly"] = true,
-				["Debuffs"] = {
-					["FilterMode"] = "Allow",
+				["CrowdControl"] = {
 					["ModeBar"] = {
 						["BackgroundTexture"] = "Solid",
 						["Label"] = {
@@ -673,29 +672,30 @@ ThreatPlatesDB = {
 						},
 						["Texture"] = "Solid",
 					},
-					["ShowDispellable"] = false,
+					["ShowFriendly"] = false,
 					["ModeIcon"] = {
-						["Duration"] = {
-							["Anchor"] = "TOP",
-							["Font"] = {
-								["Typeface"] = "Expressway",
-								["HorizontalAlignment"] = "CENTER",
-								["Size"] = 9,
-							},
-						},
-						["Style"] = "custom",
-						["IconWidth"] = 16,
+						["Columns"] = 1,
+						["IconWidth"] = 25,
 						["StackCount"] = {
 							["Anchor"] = "BOTTOM",
 							["Font"] = {
-								["Typeface"] = "Expressway",
 								["HorizontalAlignment"] = "CENTER",
-								["Size"] = 9,
+								["Transparency"] = 0,
 							},
 						},
-						["Rows"] = 1,
-						["IconHeight"] = 16,
-						["MaxAuras"] = 5,
+						["Duration"] = {
+							["Font"] = {
+								["flags"] = "OUTLINE",
+								["HorizontalAlignment"] = "CENTER",
+								["Typeface"] = "Expressway",
+								["Color"] = {
+									["g"] = 0.05882353335618973,
+								},
+								["Size"] = 18,
+							},
+						},
+						["Style"] = "custom",
+						["IconHeight"] = 25,
 					},
 				},
 			},

@@ -1,8 +1,10 @@
 
 RaidFrameSettingsDB = {
 	["profileKeys"] = {
-		["Formaggino - Draenor"] = "Default",
+		["Sfilatino - Draenor"] = "Default",
 		["Panzarotto - Draenor"] = "PanzaUI",
+		["Formaggino - Draenor"] = "Default",
+		["Friarielli - Draenor"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -11,8 +13,8 @@ RaidFrameSettingsDB = {
 				["FGTexture"] = "ToxiUI Clean",
 			},
 			["Fonts"] = {
-				["NameFont"] = "Expressway",
 				["StatusFont"] = "Expressway",
+				["NameFont"] = "Expressway",
 			},
 		},
 		["PanzaUI"] = {
@@ -20,17 +22,17 @@ RaidFrameSettingsDB = {
 				["BGTexture"] = "ToxiUI Clean",
 				["FGTexture"] = "ToxiUI Clean",
 			},
-			["CustomDebuff"] = {
-				["height"] = 15,
-				["width"] = 15,
-			},
 			["CustomBuff"] = {
 				["height"] = 15,
 				["width"] = 15,
 			},
+			["CustomDebuff"] = {
+				["height"] = 15,
+				["width"] = 15,
+			},
 			["Fonts"] = {
-				["StatusFont"] = "Expressway",
 				["NameFont"] = "Expressway",
+				["StatusFont"] = "Expressway",
 				["NameSize"] = 10,
 			},
 		},

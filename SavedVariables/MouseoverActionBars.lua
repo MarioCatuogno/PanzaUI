@@ -1,5 +1,9 @@
 
 MouseoverActionBarsDB = {
+	["namespaces"] = {
+		["LibDualSpec-1.0"] = {
+		},
+	},
 	["profileKeys"] = {
 		["Sfilatino - Draenor"] = "Default",
 		["Friarielli - Draenor"] = "Default",
