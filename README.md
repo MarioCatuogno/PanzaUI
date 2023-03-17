@@ -97,6 +97,10 @@ Link to Wago.io collection: [https://wago.io/PO1A4B5V3](https://wago.io/PO1A4B5V
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.png" alt="PanzaUI - Party 01">
   </a>
 
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.png">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.png" alt="PanzaUI - Menu">
+  </a>
+
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.png">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.png" alt="PanzaUI - Shadowed Unit Frames">
   </a>

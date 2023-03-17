@@ -1,6 +1,6 @@
 
 BugGrabberDB = {
-	["session"] = 1028,
+	["session"] = 1212,
 	["lastSanitation"] = 3,
 	["errors"] = {
 		{
@@ -310,26 +310,19 @@ BugGrabberDB = {
 			["counter"] = 1,
 		}, -- [40]
 		{
-			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'PetFrame:Hide()'.",
-			["time"] = "2022/12/26 15:25:53",
-			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Hide'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:158: in function <Interface/AddOns/PanzaUI/core.lua:158>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n...\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/PetFrame.lua\"]:64: in function `Update'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:646: in function `PlayerFrame_ToPlayerArt'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:405: in function `PlayerFrame_UpdateArt'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:141: in function `OnEvent'\n[string \"@Interface/FrameXML/UnitFrame.lua\"]:1041: in function <Interface/FrameXML/UnitFrame.lua:1039>",
-			["session"] = 368,
-			["counter"] = 3,
-		}, -- [41]
-		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'ClearFocus()'.",
 			["time"] = "2023/01/12 15:58:45",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `ClearFocus'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1524: in function `ResetTargetAndFocus'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1500: in function `OnEditModeExit'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:188: in function `ExitEditMode'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:208: in function <Interface/FrameXML/EditModeManager.lua:206>\n[string \"=[C]\"]: in function `Hide'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2874: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2905: in function `MoveUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2936: in function `HideUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2602: in function <Interface/FrameXML/UIParent.lua:2594>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3216: in function `HideUIPanel'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:121: in function `onCloseCallback'\n[string \"@Interface/SharedXML/SharedUIPanelTemplates.lua\"]:149: in function <Interface/SharedXML/SharedUIPanelTemplates.lua:144>\n[string \"=[C]\"]: in function `Click'\n[string \"@Interface/FrameXML/UIParent.lua\"]:4026: in function `ToggleGameMenu'\n[string \"TOGGLEGAMEMENU\"]:1: in function <[string \"TOGGLEGAMEMENU\"]:1>",
 			["session"] = 370,
 			["counter"] = 1,
-		}, -- [42]
+		}, -- [41]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'CopyToClipboard()'.",
 			["time"] = "2023/01/13 10:27:43",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `CopyToClipboard'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1106: in function `CopyActiveLayoutToClipboard'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:33: in function `onClick'\n[string \"@Interface/FrameXML/EditModeTemplates.lua\"]:84: in function <Interface/FrameXML/EditModeTemplates.lua:81>",
 			["session"] = 374,
 			["counter"] = 1,
-		}, -- [43]
+		}, -- [42]
 		{
 			["message"] = "[string \"if ObjectiveTrackerFrame:IsVisible() then ObjectiveTrackerFrame...\"]:1: 'end' expected near '<eof>'",
 			["time"] = "2023/01/14 09:31:28",
@@ -337,7 +330,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `RunScript'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:2170: in function `?'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:5224: in function `ChatEdit_ParseText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4888: in function `ChatEdit_SendText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:3132: in function <Interface/FrameXML/ChatFrame.lua:3125>\n[string \"=[C]\"]: in function `UseAction'\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:364: in function `handler'\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:690: in function <Interface/FrameXML/SecureTemplates.lua:672>\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:704: in function <Interface/FrameXML/SecureTemplates.lua:697>\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:746: in function `SecureActionButton_OnClick'\n[string \"@Interface/FrameXML/ActionButton.lua\"]:1175: in function <Interface/FrameXML/ActionButton.lua:1145>\n[string \"=[C]\"]: ?",
 			["session"] = 387,
 			["counter"] = 4,
-		}, -- [44]
+		}, -- [43]
 		{
 			["message"] = "Interface/FrameXML/EditModeSystemTemplates.lua:368: attempt to perform arithmetic on local 'left' (a nil value)",
 			["time"] = "2023/01/24 09:52:17",
@@ -345,28 +338,28 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:368: in function `GetScaledSelectionSides'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:340: in function `IsVerticallyAlignedWithFrame'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:521: in function `GetFrameMagneticEligibility'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:123: in function `GetEligibleMagneticFrames'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:217: in function `FindMagneticFrames'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:279: in function `ApplyMagnetism'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:599: in function `OnDragStop'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:1855: in function <Interface/FrameXML/EditModeSystemTemplates.lua:1854>",
 			["session"] = 431,
 			["counter"] = 1,
-		}, -- [45]
+		}, -- [44]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'OribosExchange' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2023/01/25 12:06:12",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1318: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1454: in function <Interface/FrameXML/ContainerFrame.lua:1441>",
 			["session"] = 435,
 			["counter"] = 2,
-		}, -- [46]
+		}, -- [45]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'HandyNotes_DragonflightTreasures' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2023/01/26 12:48:44",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1402: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1454: in function <Interface/FrameXML/ContainerFrame.lua:1441>",
 			["session"] = 447,
 			["counter"] = 1,
-		}, -- [47]
+		}, -- [46]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'idTip' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2023/01/13 10:07:19",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1409: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1461: in function <Interface/FrameXML/ContainerFrame.lua:1448>",
 			["session"] = 448,
 			["counter"] = 3,
-		}, -- [48]
+		}, -- [47]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:606: Usage: self:SetFont(fontFile, height, flags)",
 			["time"] = "2023/01/30 22:19:30",
@@ -374,7 +367,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `SetFont'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:606: in function `SetFrameFont'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:638: in main chunk",
 			["session"] = 593,
 			["counter"] = 2,
-		}, -- [49]
+		}, -- [48]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:610: attempt to index local 'playerPortrait' (a nil value)",
 			["time"] = "2023/01/30 22:32:23",
@@ -382,7 +375,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:610: in main chunk",
 			["session"] = 600,
 			["counter"] = 1,
-		}, -- [50]
+		}, -- [49]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:616: attempt to index local 'targetPortrait' (a nil value)",
 			["time"] = "2023/01/30 22:33:37",
@@ -390,7 +383,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:616: in main chunk",
 			["session"] = 607,
 			["counter"] = 6,
-		}, -- [51]
+		}, -- [50]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:606: attempt to index global 'PlayerFrameTexture' (a nil value)",
 			["time"] = "2023/01/30 22:40:43",
@@ -398,7 +391,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:606: in main chunk",
 			["session"] = 609,
 			["counter"] = 1,
-		}, -- [52]
+		}, -- [51]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:616: attempt to index global 'TargetFrameHealthBar' (a nil value)",
 			["time"] = "2023/01/30 22:44:34",
@@ -406,7 +399,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:616: in function `changeTargetFrame'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:626: in main chunk",
 			["session"] = 610,
 			["counter"] = 1,
-		}, -- [53]
+		}, -- [52]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:343: 'then' expected near 'MinimapCluster'",
 			["time"] = "2023/02/03 19:47:08",
@@ -414,19 +407,19 @@ BugGrabberDB = {
 			["stack"] = "",
 			["session"] = 639,
 			["counter"] = 1,
-		}, -- [54]
+		}, -- [53]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:343: 'then' expected near 'MinimapCluster'",
 			["session"] = 639,
 			["time"] = "2023/02/03 19:47:09",
 			["counter"] = 1,
-		}, -- [55]
+		}, -- [54]
 		{
 			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:343: 'then' expected near 'MinimapCluster'",
 			["session"] = 639,
 			["time"] = "2023/02/03 19:47:09",
 			["counter"] = 1,
-		}, -- [56]
+		}, -- [55]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:366: attempt to index a nil value",
 			["time"] = "2023/02/03 19:50:47",
@@ -434,7 +427,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:366: in function <Interface/AddOns/PanzaUI/core.lua:365>\n[string \"=[C]\"]: in function `CompactUnitFrame_UpdateName'\n[string \"@Interface/FrameXML/CompactUnitFrame.lua\"]:501: in function `CompactUnitFrame_UpdateHealth'\n[string \"@Interface/FrameXML/CompactUnitFrame.lua\"]:322: in function `CompactUnitFrame_UpdateAll'\n[string \"@Interface/FrameXML/CompactUnitFrame.lua\"]:189: in function `CompactUnitFrame_SetUnit'\n[string \"@Interface/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua\"]:519: in function `OnAdded'\n[string \"@Interface/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua\"]:142: in function `OnNamePlateAdded'\n[string \"@Interface/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua\"]:78: in function <...e/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua:69>",
 			["session"] = 643,
 			["counter"] = 8,
-		}, -- [57]
+		}, -- [56]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:446: attempt to call method 'GetFontString' (a nil value)",
 			["time"] = "2023/02/03 22:09:35",
@@ -442,7 +435,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:446: in main chunk",
 			["session"] = 667,
 			["counter"] = 2,
-		}, -- [58]
+		}, -- [57]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:464: attempt to index field 'Value' (a nil value)",
 			["time"] = "2023/02/03 22:13:10",
@@ -450,7 +443,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:464: in function <Interface/AddOns/PanzaUI/core.lua:456>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:143: in function <Interface/SharedXML/CallbackRegistry.lua:142>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:146: in function `TriggerEvent'\n[string \"@Interface/SharedXML/GlobalCallbackRegistry.lua\"]:9: in function <Interface/SharedXML/GlobalCallbackRegistry.lua:8>",
 			["session"] = 668,
 			["counter"] = 1,
-		}, -- [59]
+		}, -- [58]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:465: attempt to index field 'Value' (a nil value)",
 			["time"] = "2023/02/03 22:14:18",
@@ -458,7 +451,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:465: in function <Interface/AddOns/PanzaUI/core.lua:456>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:143: in function <Interface/SharedXML/CallbackRegistry.lua:142>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:146: in function `TriggerEvent'\n[string \"@Interface/SharedXML/GlobalCallbackRegistry.lua\"]:9: in function <Interface/SharedXML/GlobalCallbackRegistry.lua:8>",
 			["session"] = 670,
 			["counter"] = 2,
-		}, -- [60]
+		}, -- [59]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:508: attempt to index upvalue 'healthBar' (a nil value)",
 			["time"] = "2023/02/03 22:19:29",
@@ -466,7 +459,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:508: in function `UpdateHealthBarTexture'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:511: in main chunk",
 			["session"] = 672,
 			["counter"] = 1,
-		}, -- [61]
+		}, -- [60]
 		{
 			["message"] = "Tooltip:SetScript(): Tooltip doesn't have a \"OnTooltipSetSpell\" script",
 			["time"] = "2023/02/03 22:22:28",
@@ -474,7 +467,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `SetScript'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:514: in main chunk",
 			["session"] = 673,
 			["counter"] = 1,
-		}, -- [62]
+		}, -- [61]
 		{
 			["message"] = "FontString:SetFont(): Invalid fontHeight: 0.000000, height must be > 0",
 			["time"] = "2023/02/07 21:25:17",
@@ -482,7 +475,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `SetFont'\n[string \"@Interface/AddOns/Kui_Nameplates_Core/create.lua\"]:145: in function <Interface/AddOns/Kui_Nameplates_Core/create.lua:143>\n[string \"@Interface/AddOns/Kui_Nameplates_Core/create.lua\"]:326: in function `configChangedFontOption'\n[string \"@Interface/AddOns/Kui_Nameplates_Core/config.lua\"]:521: in function `?'\n[string \"@Interface/AddOns/Kui_Nameplates_Core/config.lua\"]:933: in function `?'\n[string \"@Interface/AddOns/Kui_Nameplates_Core/lib/KuiConfig/KuiConfig.lua\"]:30: in function <...dOns/Kui_Nameplates_Core/lib/KuiConfig/KuiConfig.lua:21>\n[string \"@Interface/AddOns/Kui_Nameplates_Core/lib/KuiConfig/KuiConfig.lua\"]:99: in function `SetKey'\n[string \"@Interface/AddOns/Kui_Nameplates_Core_Config/helpers.lua\"]:250: in function `Set'\n[string \"@Interface/AddOns/Kui_Nameplates_Core_Config/helpers.lua\"]:305: in function <...erface/AddOns/Kui_Nameplates_Core_Config/helpers.lua:297>",
 			["session"] = 698,
 			["counter"] = 2,
-		}, -- [63]
+		}, -- [62]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:410: attempt to index local 'b' (a nil value)",
 			["time"] = "2023/02/08 22:08:46",
@@ -490,7 +483,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:410: in main chunk",
 			["session"] = 715,
 			["counter"] = 1,
-		}, -- [64]
+		}, -- [63]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:404: attempt to index field 'rangeIndicator' (a nil value)",
 			["time"] = "2023/02/08 22:10:04",
@@ -498,7 +491,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:404: in main chunk",
 			["session"] = 716,
 			["counter"] = 1,
-		}, -- [65]
+		}, -- [64]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:436: attempt to index local 'button' (a nil value)",
 			["time"] = "2023/02/08 22:10:36",
@@ -506,7 +499,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:436: in function <Interface/AddOns/PanzaUI/core.lua:432>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:444: in function <Interface/AddOns/PanzaUI/core.lua:442>",
 			["session"] = 719,
 			["counter"] = 2,
-		}, -- [66]
+		}, -- [65]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:438: attempt to index local 'button' (a nil value)",
 			["time"] = "2023/02/08 22:14:42",
@@ -514,7 +507,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:438: in function <Interface/AddOns/PanzaUI/core.lua:434>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:446: in function <Interface/AddOns/PanzaUI/core.lua:444>",
 			["session"] = 721,
 			["counter"] = 1,
-		}, -- [67]
+		}, -- [66]
 		{
 			["message"] = "[string \"PlayerFrame:ClearAllPoints()PlayerFrame:SetPoint(“RIGHT”,UI...\"]:1: unexpected symbol near '�'",
 			["time"] = "2023/02/09 21:14:45",
@@ -522,7 +515,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `RunScript'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:2175: in function `?'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:5229: in function `ChatEdit_ParseText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4893: in function `ChatEdit_SendText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4929: in function `ChatEdit_OnEnterPressed'\n[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1: in function <[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1>",
 			["session"] = 724,
 			["counter"] = 1,
-		}, -- [68]
+		}, -- [67]
 		{
 			["message"] = "[string \"PlayerFrame:SetPoint(“CENTER”, -150,-150);\"]:1: unexpected symbol near '�'",
 			["time"] = "2023/02/09 21:17:36",
@@ -530,14 +523,14 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `RunScript'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:2175: in function `?'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:5229: in function `ChatEdit_ParseText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4893: in function `ChatEdit_SendText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4929: in function `ChatEdit_OnEnterPressed'\n[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1: in function <[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1>",
 			["session"] = 724,
 			["counter"] = 1,
-		}, -- [69]
+		}, -- [68]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'ShadowedUnitFrames' tried to call the protected function 'SUFHeaderboss:Show()'.",
 			["time"] = "2023/02/10 11:27:26",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/units.lua\"]:1159: in function `LoadZoneHeader'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/units.lua\"]:1335: in function `InitializeFrame'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/movers.lua\"]:246: in function `Enable'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/movers.lua\"]:466: in function `Update'\n[string \"@Interface/AddOns/ShadowedUF_Options/config.lua\"]:710: in function <Interface/AddOns/ShadowedUF_Options/config.lua:708>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:45: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:43>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:836: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:658>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-CheckBox.lua\"]:64: in function <...ue/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua:53>",
 			["session"] = 747,
 			["counter"] = 1,
-		}, -- [70]
+		}, -- [69]
 		{
 			["message"] = "Texture:SetTextCoord(): TexCoord out of range",
 			["time"] = "2023/02/10 14:35:51",
@@ -545,14 +538,14 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `SetTexCoord'\n[string \"@Interface/SharedXML/Backdrop.lua\"]:208: in function <Interface/SharedXML/Backdrop.lua:207>\n[string \"@Interface/SharedXML/Backdrop.lua\"]:238: in function `SetupTextureCoordinates'\n[string \"@Interface/SharedXML/Backdrop.lua\"]:184: in function <Interface/SharedXML/Backdrop.lua:182>\n[string \"=[C]\"]: in function `GetWidth'\n[string \"@Interface/FrameXML/SecureGroupHeaders.lua\"]:239: in function <Interface/FrameXML/SecureGroupHeaders.lua:130>\n[string \"@Interface/FrameXML/SecureGroupHeaders.lua\"]:406: in function `SecureGroupHeader_Update'\n[string \"@Interface/FrameXML/SecureGroupHeaders.lua\"]:71: in function <Interface/FrameXML/SecureGroupHeaders.lua:66>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/units.lua\"]:808: in function `SetHeaderAttributes'\n[string \"@Interface/AddOns/ShadowedUnitFrames/modules/units.lua\"]:755: in function `ReloadHeader'\n[string \"@Interface/AddOns/ShadowedUF_Options/config.lua\"]:3778: in function <Interface/AddOns/ShadowedUF_Options/config.lua:3760>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:45: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:43>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:836: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:658>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-DropDown.lua\"]:432: in function <...ue/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua:423>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-DropDown-Items.lua\"]:351: in function <...s/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua:341>",
 			["session"] = 755,
 			["counter"] = 22,
-		}, -- [71]
+		}, -- [70]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'MultiBarBottomLeft:ShowBase()'.",
 			["time"] = "2023/02/10 14:41:08",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `ShowBase'\n[string \"@Interface/FrameXML/ActionBar.lua\"]:353: in function `UpdateVisibility'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:684: in function `OnEditModeEnter'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:160: in function <Interface/FrameXML/EditModeManager.lua:159>\n[string \"=[C]\"]: in function `secureexecuterange'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:164: in function `ShowSystemSelections'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:171: in function `EnterEditMode'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:196: in function <Interface/FrameXML/EditModeManager.lua:194>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2915: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2719: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2623: in function <Interface/FrameXML/UIParent.lua:2619>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3225: in function `ShowUIPanel'\n[string \"*GameMenuFrame.xml:94_OnClick\"]:2: in function <[string \"*GameMenuFrame.xml:94_OnClick\"]:1>",
 			["session"] = 762,
 			["counter"] = 2,
-		}, -- [72]
+		}, -- [71]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn '<name>' tried to call the protected function 'Reload()'.",
 			["time"] = "2023/02/13 21:56:56",
@@ -560,7 +553,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Reload'\n[string \"@Interface/SharedXML/InterfaceUtil.lua\"]:2: in function `ReloadUI'\n[string \"@Interface/SharedXML/AddonList.lua\"]:440: in function `AddonList_OnOkay'\n[string \"*AddonList.xml:198_OnClick\"]:1: in function <[string \"*AddonList.xml:198_OnClick\"]:1>",
 			["session"] = 772,
 			["counter"] = 1,
-		}, -- [73]
+		}, -- [72]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'Leatrix_Plus' tried to call the protected function 'Reload()'.",
 			["time"] = "2023/02/13 22:01:01",
@@ -568,35 +561,35 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Reload'\n[string \"@Interface/SharedXML/InterfaceUtil.lua\"]:2: in function `ReloadUI'\n[string \"@Interface/AddOns/Leatrix_Plus/Leatrix_Plus.lua\"]:14384: in function `?'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:5229: in function `ChatEdit_ParseText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4893: in function `ChatEdit_SendText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4929: in function `ChatEdit_OnEnterPressed'\n[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1: in function <[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1>",
 			["session"] = 776,
 			["counter"] = 1,
-		}, -- [74]
+		}, -- [73]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'ls_Toasts' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2022/12/31 15:05:05",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1409: in function <Interface/FrameXML/ContainerFrame.lua:1318>\n[string \"=[C]\"]: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1461: in function <Interface/FrameXML/ContainerFrame.lua:1448>",
 			["session"] = 826,
 			["counter"] = 3,
-		}, -- [75]
+		}, -- [74]
 		{
 			["message"] = "BigWigs is missing timers on \"LFR\" running 266-d3260c4, tell the devs!\nNew timer for \"373405\" at stage 1 with placement 1 and value 35.20.",
 			["time"] = "2023/02/20 12:38:03",
 			["stack"] = "[string \"@Interface/AddOns/BigWigs_Core/BossPrototype.lua\"]:436: in function `?'\n[string \"@Interface/AddOns/Details/Libs/AceTimer-3.0-17/AceTimer-3.0.lua\"]:55: in function <...ce/AddOns/Details/Libs/AceTimer-3.0/AceTimer-3.0.lua:50>",
 			["session"] = 831,
 			["counter"] = 1,
-		}, -- [76]
+		}, -- [75]
 		{
 			["message"] = "...s/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua:97: attempt to index local 'widget_frame' (a nil value)",
 			["time"] = "2023/02/20 22:14:32",
 			["stack"] = "[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua\"]:97: in function <...s/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua:89>\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua\"]:211: in function <...s/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua:165>\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Widgets/BossModsWidget.lua\"]:360: in function `ConfigBossModsWidget'\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Options.lua\"]:3372: in function <Interface/AddOns/TidyPlates_ThreatPlates/Options.lua:3372>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:45: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:43>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:836: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:658>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-Button.lua\"]:22: in function <...sque/Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua:19>",
 			["session"] = 836,
 			["counter"] = 1,
-		}, -- [77]
+		}, -- [76]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'SpellBookSpellIconsFrame:Hide()'.",
 			["time"] = "2023/02/20 22:19:51",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Hide'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:282: in function `SpellBookFrame_Update'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:72: in function `ToggleSpellBook'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:1221: in function `SpellBookFrameTabButton_OnClick'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:212: in function <Interface/FrameXML/SpellBookFrame.lua:185>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2915: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2758: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2623: in function <Interface/FrameXML/UIParent.lua:2619>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3225: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:75: in function `ToggleSpellBook'\n[string \"TOGGLESPELLBOOK\"]:1: in function <[string \"TOGGLESPELLBOOK\"]:1>",
 			["session"] = 836,
 			["counter"] = 1,
-		}, -- [78]
+		}, -- [77]
 		{
 			["message"] = "Interface/FrameXML/SpellBookFrame.lua:1229: attempt to perform arithmetic on field 'spellOffset' (a nil value)",
 			["time"] = "2023/01/23 11:20:31",
@@ -604,21 +597,14 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:1229: in function `SpellBook_GetSpellBookSlot'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:800: in function `UpdateCooldown'\n[string \"@Interface/FrameXML/SpellBookFrame.lua\"]:537: in function <Interface/FrameXML/SpellBookFrame.lua:532>",
 			["session"] = 836,
 			["counter"] = 166,
-		}, -- [79]
+		}, -- [78]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'SimpleItemLevel' tried to call the protected function 'TargetUnit()'.",
 			["time"] = "2023/02/21 15:37:56",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `TargetUnit'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1575: in function `RefreshTargetAndFocus'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1517: in function `OnEditModeEnter'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:172: in function `EnterEditMode'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:196: in function <Interface/FrameXML/EditModeManager.lua:194>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2915: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2719: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2623: in function <Interface/FrameXML/UIParent.lua:2619>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3225: in function `ShowUIPanel'\n[string \"*GameMenuFrame.xml:94_OnClick\"]:2: in function <[string \"*GameMenuFrame.xml:94_OnClick\"]:1>",
 			["session"] = 862,
 			["counter"] = 1,
-		}, -- [80]
-		{
-			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'PetActionBar:SetShownBase()'.",
-			["time"] = "2022/12/26 16:12:16",
-			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `SetShownBase'\n[string \"@Interface/FrameXML/ActionBar.lua\"]:323: in function `UpdateVisibility'\n[string \"@Interface/FrameXML/ActionBar.lua\"]:317: in function `Hide'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:153: in function <Interface/AddOns/PanzaUI/core.lua:153>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n...\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2890: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2694: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2598: in function <Interface/FrameXML/UIParent.lua:2594>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3196: in function `ShowUIPanel'\n[string \"*GameMenuFrame.xml:94_OnClick\"]:2: in function <[string \"*GameMenuFrame.xml:94_OnClick\"]:1>",
-			["session"] = 865,
-			["counter"] = 12,
-		}, -- [81]
+		}, -- [79]
 		{
 			["message"] = "...yPlates_ThreatPlates/Elements/MouseoverHighlight.lua:38: Usage: UnitIsUnit(\"unit\", \"otherUnit\")",
 			["time"] = "2023/02/22 10:49:32",
@@ -626,7 +612,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Elements/MouseoverHighlight.lua\"]:38: in function <...yPlates_ThreatPlates/Elements/MouseoverHighlight.lua:36>\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Elements/MouseoverHighlight.lua\"]:119: in function <...yPlates_ThreatPlates/Elements/MouseoverHighlight.lua:119>",
 			["session"] = 874,
 			["counter"] = 1,
-		}, -- [82]
+		}, -- [80]
 		{
 			["message"] = "Interface/FrameXML/ComboFramePlayer.lua:17: Usage: local power = UnitPower(unitToken [, powerType, unmodified])",
 			["time"] = "2023/02/16 15:53:12",
@@ -634,14 +620,14 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `UnitPower'\n[string \"@Interface/FrameXML/ComboFramePlayer.lua\"]:17: in function `UpdatePower'\n[string \"@Interface/FrameXML/ClassPowerBar.lua\"]:58: in function `OnEvent'\n[string \"@Interface/FrameXML/ClassResourceBarTemplate.lua\"]:58: in function <Interface/FrameXML/ClassResourceBarTemplate.lua:38>",
 			["session"] = 881,
 			["counter"] = 12,
-		}, -- [83]
+		}, -- [81]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2022/12/20 23:47:40",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `SetCVar'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:46: in function <Interface/AddOns/PanzaUI/core.lua:14>\n[string \"=[C]\"]: in function `LoadAddOn'\n[string \"@Interface/FrameXML/UIParent.lua\"]:538: in function `UIParentLoadAddOn'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:2356: in function `?'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:5224: in function `ChatEdit_ParseText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4888: in function `ChatEdit_SendText'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:4924: in function `ChatEdit_OnEnterPressed'\n[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1: in function <[string \"*ChatFrame.xml:127_OnEnterPressed\"]:1>",
 			["session"] = 883,
 			["counter"] = 53,
-		}, -- [84]
+		}, -- [82]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:427: attempt to call method 'Alpha' (a nil value)",
 			["time"] = "2023/02/22 15:42:42",
@@ -649,7 +635,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:427: in main chunk",
 			["session"] = 889,
 			["counter"] = 1,
-		}, -- [85]
+		}, -- [83]
 		{
 			["message"] = "Interface/FrameXML/ChatFrame.lua:3917: invalid option in `format'",
 			["time"] = "2023/02/22 15:50:47",
@@ -657,14 +643,14 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `format'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:3917: in function `ChatFrame_MessageEventHandler'\n[string \"@Interface/FrameXML/ChatFrame.lua\"]:3155: in function `ChatFrame_OnEvent'\n[string \"*FloatingChatFrame.xml:675_OnEvent\"]:1: in function <[string \"*FloatingChatFrame.xml:675_OnEvent\"]:1>",
 			["session"] = 891,
 			["counter"] = 1,
-		}, -- [86]
+		}, -- [84]
 		{
 			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'TargetUnit()'.",
 			["time"] = "2022/12/31 12:33:01",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `TargetUnit'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1539: in function `RefreshTargetAndFocus'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:1483: in function `OnEditModeEnter'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:172: in function `EnterEditMode'\n[string \"@Interface/FrameXML/EditModeManager.lua\"]:196: in function <Interface/FrameXML/EditModeManager.lua:194>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2890: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2694: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2598: in function <Interface/FrameXML/UIParent.lua:2594>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3196: in function `ShowUIPanel'\n[string \"*GameMenuFrame.xml:94_OnClick\"]:2: in function <[string \"*GameMenuFrame.xml:94_OnClick\"]:1>",
 			["session"] = 893,
 			["counter"] = 6,
-		}, -- [87]
+		}, -- [85]
 		{
 			["message"] = "FontString:SetText(): Font not set",
 			["time"] = "2023/02/23 09:31:18",
@@ -672,7 +658,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `SetText'\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Widgets/AurasWidget.lua\"]:2678: in function `UpdateWidgetTime'\n[string \"@Interface/AddOns/TidyPlates_ThreatPlates/Widgets/AurasWidget.lua\"]:2359: in function <...dOns/TidyPlates_ThreatPlates/Widgets/AurasWidget.lua:2349>",
 			["session"] = 911,
 			["counter"] = 735,
-		}, -- [88]
+		}, -- [86]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:511: attempt to index global 'PlayerFrameHealthBar' (a nil value)",
 			["time"] = "2023/02/23 10:16:30",
@@ -680,7 +666,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:511: in main chunk",
 			["session"] = 914,
 			["counter"] = 2,
-		}, -- [89]
+		}, -- [87]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:511: attempt to index field 'HealthBarArea' (a nil value)",
 			["time"] = "2023/02/23 10:21:47",
@@ -688,7 +674,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:511: in main chunk",
 			["session"] = 920,
 			["counter"] = 1,
-		}, -- [90]
+		}, -- [88]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:511: attempt to index field 'HealthBarTexture' (a nil value)",
 			["time"] = "2023/02/23 10:23:39",
@@ -696,7 +682,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:511: in main chunk",
 			["session"] = 922,
 			["counter"] = 1,
-		}, -- [91]
+		}, -- [89]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:511: attempt to call method 'SetStatusBarTexture' (a nil value)",
 			["time"] = "2023/02/23 10:24:01",
@@ -704,19 +690,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:511: in main chunk",
 			["session"] = 923,
 			["counter"] = 1,
-		}, -- [92]
-		{
-			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 (null)",
-			["time"] = "2022/12/20 23:30:16",
-			["session"] = 923,
-			["counter"] = 40,
-		}, -- [93]
-		{
-			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 (null)",
-			["time"] = "2022/12/20 23:30:16",
-			["session"] = 923,
-			["counter"] = 40,
-		}, -- [94]
+		}, -- [90]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:468: 'end' expected (to close 'function' at line 429) near '<eof>'",
 			["time"] = "2023/02/23 13:26:47",
@@ -724,26 +698,26 @@ BugGrabberDB = {
 			["stack"] = "",
 			["session"] = 958,
 			["counter"] = 1,
-		}, -- [95]
+		}, -- [91]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:468: 'end' expected (to close 'function' at line 429) near '<eof>'",
 			["time"] = "2023/02/23 13:26:48",
 			["session"] = 958,
 			["counter"] = 1,
-		}, -- [96]
+		}, -- [92]
 		{
 			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:468: 'end' expected (to close 'function' at line 429) near '<eof>'",
 			["time"] = "2023/02/23 13:26:48",
 			["session"] = 958,
 			["counter"] = 1,
-		}, -- [97]
+		}, -- [93]
 		{
 			["message"] = "Lua error in aura '[WoW Classic] Tooltip: ID': init\nWeakAuras Version: 5.3.7\nAura Version: 1.0.0\n[string \"return function() local hooksecurefunc, sel...\"]:127: GameTooltip doesn't have a \"OnTooltipSetSpell\" script",
 			["time"] = "2023/02/24 21:50:43",
 			["stack"] = "[string \"=[C]\"]: in function `HookScript'\n[string \"return function() local hooksecurefunc, select, UnitBuff, UnitDebuff, UnitAura, UnitGUID,\"]:127: in function <[string \"return function() local hooksecurefunc, sel...\"]:1>\n[string \"=[C]\"]: in function `xpcall'\n[string \"@Interface/AddOns/WeakAuras/AuraEnvironment.lua\"]:374: in function `ActivateAuraEnvironment'\n[string \"@Interface/AddOns/WeakAuras/GenericTrigger.lua\"]:812: in function `CreateFakeStates'\n[string \"@Interface/AddOns/WeakAuras/WeakAuras.lua\"]:4198: in function `UpdateFakeStatesFor'\n[string \"@Interface/AddOns/WeakAuras/WeakAuras.lua\"]:4174: in function `FakeStatesFor'\n[string \"@Interface/AddOns/WeakAuras/WeakAuras.lua\"]:3013: in function <Interface/AddOns/WeakAuras/WeakAuras.lua:2878>\n[string \"@Interface/AddOns/WeakAuras/WeakAuras.lua\"]:3036: in function `Add'\n[string \"@Interface/AddOns/WeakAurasOptions/OptionsFrames/Update.lua\"]:1934: in function `ImportPhase1'\n[string \"@Interface/AddOns/WeakAurasOptions/OptionsFrames/Update.lua\"]:1549: in function `ImportImpl'\n[string \"@Interface/AddOns/WeakAurasOptions/OptionsFrames/Update.lua\"]:1518: in function <...ace/AddOns/WeakAurasOptions/OptionsFrames/Update.lua:1517>",
 			["session"] = 986,
 			["counter"] = 2,
-		}, -- [98]
+		}, -- [94]
 		{
 			["message"] = "Interface/AddOns/PanzaUI/core.lua:218: attempt to index global 'PlayerFrameRoleIcon' (a nil value)",
 			["time"] = "2023/02/26 19:28:05",
@@ -751,7 +725,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:218: in function <Interface/AddOns/PanzaUI/core.lua:206>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:465: in function <Interface/AddOns/PanzaUI/core.lua:458>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:477: in function <Interface/AddOns/PanzaUI/core.lua:476>",
 			["session"] = 991,
 			["counter"] = 1,
-		}, -- [99]
+		}, -- [95]
 		{
 			["message"] = "Interface/AddOns/Details/core/util.lua:652: attempt to index local 'num' (a nil value)",
 			["time"] = "2023/02/27 10:51:06",
@@ -759,14 +733,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/AddOns/Details/core/util.lua\"]:652: in function `comma_value'\n[string \"@Interface/AddOns/Details/classes/class_heal.lua\"]:2351: in function <Interface/AddOns/Details/classes/class_heal.lua:2205>\n[string \"=(tail call)\"]: ?\n[string \"@Interface/AddOns/Details/frames/window_playerbreakdown.lua\"]:5593: in function <...ace/AddOns/Details/frames/window_playerbreakdown.lua:5527>",
 			["session"] = 999,
 			["counter"] = 3,
-		}, -- [100]
-		{
-			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'UNKNOWN()'.",
-			["time"] = "2023/02/01 09:56:40",
-			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1402: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1454: in function <Interface/FrameXML/ContainerFrame.lua:1441>",
-			["session"] = 1001,
-			["counter"] = 48,
-		}, -- [101]
+		}, -- [96]
 		{
 			["message"] = "...zzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:601: bad argument #1 to 'ipairs' (table expected, got nil)",
 			["time"] = "2023/02/28 07:53:59",
@@ -774,7 +741,7 @@ BugGrabberDB = {
 			["stack"] = "[string \"=[C]\"]: in function `ipairs'\n[string \"@Interface/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua\"]:601: in function `GetRelatedModules'\n[string \"@Interface/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua\"]:611: in function `SetCollapsed'\n[string \"@Interface/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua\"]:1062: in function <...zzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:1059>\n[string \"=[C]\"]: in function `Click'\n[string \"return function() -- CONSTANTS\"]:60: in function `setCollapsed'\n[string \"return function() -- CONSTANTS\"]:83: in function `collapseAllButInstance'\n[string \"return function() -- CONSTANTS\"]:101: in function <[string \"return function() -- CONSTANTS\"]:90>\n[string \"=(tail call)\"]: ?\n[string \"=[C]\"]: in function `xpcall'\n[string \"@Interface/AddOns/WeakAuras/GenericTrigger.lua\"]:618: in function <Interface/AddOns/WeakAuras/GenericTrigger.lua:544>\n[string \"@Interface/AddOns/WeakAuras/GenericTrigger.lua\"]:759: in function `ScanEventsInternal'\n[string \"@Interface/AddOns/WeakAuras/GenericTrigger.lua\"]:720: in function `ScanEvents'\n[string \"@Interface/AddOns/WeakAuras/GenericTrigger.lua\"]:893: in function <Interface/AddOns/WeakAuras/GenericTrigger.lua:878>",
 			["session"] = 1016,
 			["counter"] = 20,
-		}, -- [102]
+		}, -- [97]
 		{
 			["message"] = "Interface/FrameXML/EditModeSystemTemplates.lua:426: attempt to perform arithmetic on local 'left' (a nil value)",
 			["time"] = "2023/02/10 08:39:54",
@@ -782,13 +749,346 @@ BugGrabberDB = {
 			["stack"] = "[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:426: in function `GetScaledSelectionSides'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:398: in function `IsVerticallyAlignedWithFrame'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:588: in function `GetFrameMagneticEligibility'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:123: in function `GetEligibleMagneticFrames'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:217: in function `FindMagneticFrames'\n[string \"@Interface/FrameXML/EditModeUtil.lua\"]:279: in function `ApplyMagnetism'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:666: in function `OnDragStop'\n[string \"@Interface/FrameXML/EditModeSystemTemplates.lua\"]:2032: in function <Interface/FrameXML/EditModeSystemTemplates.lua:2031>",
 			["session"] = 1017,
 			["counter"] = 19,
-		}, -- [103]
+		}, -- [98]
 		{
 			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'MacroToolkit' tried to call the protected function 'UNKNOWN()'.",
 			["time"] = "2023/02/28 11:16:54",
 			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `EditMacro'\n[string \"@Interface/AddOns/Blizzard_MacroUI/Blizzard_MacroUI.lua\"]:330: in function `SaveMacro'\n[string \"@Interface/AddOns/Blizzard_MacroUI/Blizzard_MacroUI.lua\"]:21: in function <...terface/AddOns/Blizzard_MacroUI/Blizzard_MacroUI.lua:20>\n[string \"=[C]\"]: in function `securecall'\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:354: in function `handler'\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:690: in function <Interface/FrameXML/SecureTemplates.lua:672>\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:704: in function <Interface/FrameXML/SecureTemplates.lua:697>\n[string \"@Interface/FrameXML/SecureTemplates.lua\"]:746: in function `SecureActionButton_OnClick'\n[string \"@Interface/FrameXML/ActionButton.lua\"]:1155: in function <Interface/FrameXML/ActionButton.lua:1125>\n[string \"=[C]\"]: ?",
 			["session"] = 1028,
 			["counter"] = 1,
+		}, -- [99]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:16: attempt to call global 'HideMainActionBar' (a nil value)",
+			["time"] = "2023/03/02 21:48:36",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:16: in function <Interface/AddOns/PanzaUI/core.lua:13>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:45: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:43>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:836: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:658>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-CheckBox.lua\"]:64: in function <...ue/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua:53>",
+			["session"] = 1034,
+			["counter"] = 4,
+		}, -- [100]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:28: attempt to call global 'HidePowerBars' (a nil value)",
+			["time"] = "2023/03/02 21:48:42",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:28: in function <Interface/AddOns/PanzaUI/core.lua:25>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:45: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:43>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:836: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:658>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <...terface/AddOns/Masque/Libs/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Masque/Libs/AceGUI-3.0-41/widgets/AceGUIWidget-CheckBox.lua\"]:64: in function <...ue/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua:53>",
+			["session"] = 1034,
+			["counter"] = 3,
+		}, -- [101]
+		{
+			["message"] = "...erface/SharedXML/Settings/Blizzard_SettingsPanel.lua:831: attempt to call method 'SetParent' (a nil value)",
+			["time"] = "2023/03/02 21:55:42",
+			["locals"] = "self = SettingsPanel {\n 0 = <userdata>\n GameTab = Button {\n }\n categoryLayouts = <table> {\n }\n RegisterCategory = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:746\n RevertSettings = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:442\n ClosePanelButton = Button {\n }\n CheckTutorials = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:253\n OnShow = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:217\n Open = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:341\n GetSettingsCanvas = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:789\n AssignLayoutToCategory = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:712\n CategoryList = Frame {\n }\n SearchBox = EditBox {\n }\n modified = <table> {\n }\n AddOnsTab = Button {\n }\n SetSecureAttributeResults = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:180\n ForEachCanvas = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:541\n Bg = Frame {\n }\n CallRefreshOnCanvases = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:580\n GetSecureAttributeResults = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:184\n OnLoad = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:55\n ExitWithoutCommit = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:305\n TransitionBackOpeningPanel = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:329\n FinalizeCommit = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:422\n SetCurrentCategorySettingsToDefaults = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:491\n GetAllCategories = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:742\n ExitWithCommit = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:318\n SetApplyButtonEnabled = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:556\n HasUnappliedSettings = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:528\n OnKeybindRebindSuccess = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:904\n OnTabSelected = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:188\n searchText = \"\"\n SetAllSettingsToDefaults = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:470\n keybindingsCategory = <table> {\n }\n OnKeybindStartedListening = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:881\n OnKeybindStoppedListening = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:868\n SetOutputText = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:860\n secureAttributeResults = <table> {\n }\n SelectFirstCategory = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:758\n tabsGroup = <table> {\n }\n InputBlocker = Frame {\n }\n GetCurrentCategory = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:852\n settings = <table> {\n }\n Flush = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:269\n Container = Frame {\n }\n ApplyButton = Button {\n }\n ClearSearchBox = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:693\n GetLayout = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:716\n NineSlice = Frame {\n }\n RegisterSetting = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:697\n CommitSettings = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:373\n FindInitializersMatchingSearchText = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:586\n ClearOutputText = <function> defined @Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua:864\n OnAttributeChanged = <function> defined @Interface/S",
+			["stack"] = "[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:831: in function `DisplayLayout'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:802: in function `DisplayCategory'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:769: in function <...erface/SharedXML/Settings/Blizzard_SettingsPanel.lua:765>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:143: in function <Interface/SharedXML/CallbackRegistry.lua:142>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:146: in function `TriggerEvent'\n[string \"@Interface/SharedXML/Settings/Blizzard_CategoryList.lua\"]:136: in function <...terface/SharedXML/Settings/Blizzard_CategoryList.lua:134>",
+			["session"] = 1038,
+			["counter"] = 4,
+		}, -- [102]
+		{
+			["message"] = "...nfig-3.0/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua:1854: AceConfigRegistry-3.0-21:ValidateOptionsTable(): PanzaUI.args.general.args[1] - key is not a string",
+			["time"] = "2023/03/02 22:05:31",
+			["stack"] = "[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:50: in function <...-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua:45>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:199: in function <...-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua:196>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:254: in function <...-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua:220>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:255: in function <...-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua:220>\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:283: in function `ValidateOptionsTable'\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigRegistry-3.0-21/AceConfigRegistry-3.0.lua\"]:325: in function `app'\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:1854: in function `Open'\n[string \"@Interface/AddOns/Masque/Libs/AceConfig-3.0-3/AceConfigDialog-3.0-86/AceConfigDialog-3.0.lua\"]:1947: in function <...nfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua:1945>\n[string \"=[C]\"]: ?\n[string \"@Interface/AddOns/Ace3/AceGUI-3.0-41/AceGUI-3.0.lua\"]:66: in function <Interface/AddOns/Ace3/AceGUI-3.0/AceGUI-3.0.lua:64>\n[string \"@Interface/AddOns/Ace3/AceGUI-3.0-41/AceGUI-3.0.lua\"]:300: in function `Fire'\n[string \"@Interface/AddOns/Ace3/AceGUI-3.0-41/widgets/AceGUIContainer-BlizOptionsGroup.lua\"]:20: in function <...GUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua:19>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:847: in function `DisplayLayout'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:802: in function `DisplayCategory'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:769: in function <...erface/SharedXML/Settings/Blizzard_SettingsPanel.lua:765>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:143: in function <Interface/SharedXML/CallbackRegistry.lua:142>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:146: in function `TriggerEvent'\n[string \"@Interface/SharedXML/Settings/Blizzard_CategoryList.lua\"]:136: in function <...terface/SharedXML/Settings/Blizzard_CategoryList.lua:134>",
+			["session"] = 1040,
+			["counter"] = 1,
+		}, -- [103]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:46: attempt to call global 'PowerBars' (a nil value)",
+			["time"] = "2023/03/02 22:07:05",
+			["locals"] = "self = PanzaUIPowerBarsCheckBox {\n 0 = <userdata>\n Text = PanzaUIPowerBarsCheckBoxText {\n }\n text = \"Enable Power Bars\"\n}\n(*temporary) = nil\n(*temporary) = \"attempt to call global 'PowerBars' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:46: in function <Interface/AddOns/PanzaUI/core.lua:44>",
+			["session"] = 1041,
+			["counter"] = 1,
 		}, -- [104]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:34: attempt to call global 'ActionBar' (a nil value)",
+			["time"] = "2023/03/02 22:07:05",
+			["locals"] = "self = PanzaUIActionBarCheckBox {\n 0 = <userdata>\n Text = PanzaUIActionBarCheckBoxText {\n }\n text = \"Enable Action Bars\"\n}\n(*temporary) = nil\n(*temporary) = \"attempt to call global 'ActionBar' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:34: in function <Interface/AddOns/PanzaUI/core.lua:32>",
+			["session"] = 1044,
+			["counter"] = 2,
+		}, -- [105]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:61: attempt to index global 'SV' (a nil value)",
+			["time"] = "2023/03/02 22:14:49",
+			["locals"] = "self = PanzaUI {\n 0 = <userdata>\n}\nevent = \"ADDON_LOADED\"\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = \"attempt to index global 'SV' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:61: in function <Interface/AddOns/PanzaUI/core.lua:60>",
+			["session"] = 1047,
+			["counter"] = 11,
+		}, -- [106]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:56: attempt to call method 'RegisterEvent' (a nil value)",
+			["time"] = "2023/03/02 22:22:22",
+			["locals"] = "addonName = \"PanzaUI\"\naddon = <table> {\n settings = <table> {\n }\n defaults = <table> {\n }\n}\nframe = PanzaUIPanel {\n 0 = <userdata>\n name = \"PanzaUI\"\n}\n(*temporary) = nil\n(*temporary) = <table> {\n settings = <table> {\n }\n defaults = <table> {\n }\n}\n(*temporary) = \"ADDON_LOADED\"\n(*temporary) = \"attempt to call method 'RegisterEvent' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:56: in main chunk",
+			["session"] = 1051,
+			["counter"] = 1,
+		}, -- [107]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:7 Error loading Interface/AddOns/PanzaUI/config.lua",
+			["session"] = 1051,
+			["time"] = "2023/03/02 22:22:23",
+			["counter"] = 1,
+		}, -- [108]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface\\FrameXML\\Bindings.xml:7 Error loading Interface/AddOns/PanzaUI/config.lua",
+			["session"] = 1051,
+			["time"] = "2023/03/02 22:22:23",
+			["counter"] = 1,
+		}, -- [109]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:38: attempt to index field 'text' (a nil value)",
+			["time"] = "2023/03/02 22:24:13",
+			["locals"] = "self = PanzaUIPanel {\n 0 = <userdata>\n CheckButton = PanzaUI_CheckButton1 {\n }\n name = \"PanzaUI\"\n}\n(for index) = 1\n(for limit) = 10\n(for step) = 1\ni = 1\ncheckbox = PanzaUI_CheckButton1 {\n 0 = <userdata>\n Text = PanzaUI_CheckButton1Text {\n }\n}\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = \"OnClick\"\n(*temporary) = <function> defined @Interface/AddOns/PanzaUI/core.lua:29\n(*temporary) = 93152\n(*temporary) = \"attempt to index field 'text' (a nil value)\"\naddon = <table> {\n settings = <table> {\n }\n defaults = <table> {\n }\n}\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:38: in function <Interface/AddOns/PanzaUI/core.lua:23>\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:847: in function `DisplayLayout'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:802: in function `DisplayCategory'\n[string \"@Interface/SharedXML/Settings/Blizzard_SettingsPanel.lua\"]:769: in function <...erface/SharedXML/Settings/Blizzard_SettingsPanel.lua:765>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:143: in function <Interface/SharedXML/CallbackRegistry.lua:142>\n[string \"=[C]\"]: ?\n[string \"@Interface/SharedXML/CallbackRegistry.lua\"]:146: in function `TriggerEvent'\n[string \"@Interface/SharedXML/Settings/Blizzard_CategoryList.lua\"]:136: in function <...terface/SharedXML/Settings/Blizzard_CategoryList.lua:134>",
+			["session"] = 1051,
+			["counter"] = 1,
+		}, -- [110]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:11: attempt to index field 'text' (a nil value)",
+			["time"] = "2023/03/02 22:34:25",
+			["locals"] = "frame = MyAddonConfigPanel {\n 0 = <userdata>\n name = \"My Addon Configuration\"\n CheckButton = CheckButton {\n }\n}\ncheckbox1 = CheckButton {\n 0 = <userdata>\n Text = MyAddonConfigPanelText {\n }\n}\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = \"TOPLEFT\"\n(*temporary) = 16\n(*temporary) = -16\n(*temporary) = <userdata>\n(*temporary) = MyAddonConfigPanelText {\n 0 = <userdata>\n}\n(*temporary) = nil\n(*temporary) = \"attempt to index field 'text' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:11: in main chunk",
+			["session"] = 1053,
+			["counter"] = 2,
+		}, -- [111]
+		{
+			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'CastSpellByID()'.",
+			["time"] = "2023/03/15 11:07:27",
+			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `CastSpellByID'\n[string \"@Interface/FrameXML/SpellFlyout.lua\"]:41: in function `SpellFlyoutButton_OnClick'\n[string \"*SpellFlyout.xml:39_OnClick\"]:1: in function <[string \"*SpellFlyout.xml:39_OnClick\"]:1>",
+			["session"] = 1080,
+			["counter"] = 1,
+		}, -- [112]
+		{
+			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'PetActionBar:SetShownBase()'.",
+			["time"] = "2022/12/26 16:12:16",
+			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `SetShownBase'\n[string \"@Interface/FrameXML/ActionBar.lua\"]:323: in function `UpdateVisibility'\n[string \"@Interface/FrameXML/ActionBar.lua\"]:317: in function `Hide'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:153: in function <Interface/AddOns/PanzaUI/core.lua:153>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n...\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2890: in function `SetUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2694: in function `ShowUIPanel'\n[string \"@Interface/FrameXML/UIParent.lua\"]:2598: in function <Interface/FrameXML/UIParent.lua:2594>\n[string \"=[C]\"]: in function `SetAttribute'\n[string \"@Interface/FrameXML/UIParent.lua\"]:3196: in function `ShowUIPanel'\n[string \"*GameMenuFrame.xml:94_OnClick\"]:2: in function <[string \"*GameMenuFrame.xml:94_OnClick\"]:1>",
+			["session"] = 1088,
+			["counter"] = 15,
+		}, -- [113]
+		{
+			["message"] = "[ADDON_ACTION_BLOCKED] AddOn 'PanzaUI' tried to call the protected function 'PetFrame:Hide()'.",
+			["time"] = "2022/12/26 15:25:53",
+			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: in function `Hide'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:158: in function <Interface/AddOns/PanzaUI/core.lua:158>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n...\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `Show'\n[string \"@Interface/FrameXML/PetFrame.lua\"]:64: in function `Update'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:646: in function `PlayerFrame_ToPlayerArt'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:405: in function `PlayerFrame_UpdateArt'\n[string \"@Interface/FrameXML/PlayerFrame.lua\"]:141: in function `OnEvent'\n[string \"@Interface/FrameXML/UnitFrame.lua\"]:1041: in function <Interface/FrameXML/UnitFrame.lua:1039>",
+			["session"] = 1095,
+			["counter"] = 4,
+		}, -- [114]
+		{
+			["message"] = "[ADDON_ACTION_FORBIDDEN] AddOn 'PanzaUI' tried to call the protected function 'UNKNOWN()'.",
+			["time"] = "2023/02/01 09:56:40",
+			["stack"] = "[string \"@Interface/AddOns/!BugGrabber/BugGrabber.lua\"]:480: in function <Interface/AddOns/!BugGrabber/BugGrabber.lua:480>\n[string \"=[C]\"]: ?\n[string \"=[C]\"]: in function `UseContainerItem'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1402: in function `ContainerFrameItemButton_OnClick'\n[string \"@Interface/FrameXML/ContainerFrame.lua\"]:1454: in function <Interface/FrameXML/ContainerFrame.lua:1441>",
+			["session"] = 1115,
+			["counter"] = 71,
+		}, -- [115]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:199: attempt to call global 'configTargetFrame' (a nil value)",
+			["time"] = "2023/03/17 19:31:08",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"attempt to call global 'configTargetFrame' (a nil value)\"\nautoCollapseBuffFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:83\nconfigurePlayerFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:135\nconfigureQuestTracker = <function> defined @Interface/AddOns/PanzaUI/core.lua:16\nconfigureQueueIcon = <function> defined @Interface/AddOns/PanzaUI/core.lua:39\nhideMicroMenuAlerts = <function> defined @Interface/AddOns/PanzaUI/core.lua:71\nhideMultipleUIFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:111\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:199: in function <Interface/AddOns/PanzaUI/core.lua:195>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:216: in function <Interface/AddOns/PanzaUI/core.lua:214>",
+			["session"] = 1129,
+			["counter"] = 1,
+		}, -- [116]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:170: attempt to index field '?' (a nil value)",
+			["time"] = "2023/03/17 19:32:08",
+			["locals"] = "(for index) = 1\n(for limit) = 32\n(for step) = 1\ni = 1\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = \"1\"\n(*temporary) = \"attempt to index field '?' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:170: in function <Interface/AddOns/PanzaUI/core.lua:167>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:199: in function <Interface/AddOns/PanzaUI/core.lua:195>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:216: in function <Interface/AddOns/PanzaUI/core.lua:214>",
+			["session"] = 1130,
+			["counter"] = 1,
+		}, -- [117]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:603: '=' expected near 'local'",
+			["time"] = "2023/03/17 20:40:44",
+			["locals"] = "",
+			["stack"] = "",
+			["session"] = 1141,
+			["counter"] = 1,
+		}, -- [118]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:603: '=' expected near 'local'",
+			["session"] = 1141,
+			["time"] = "2023/03/17 20:40:45",
+			["counter"] = 1,
+		}, -- [119]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:603: '=' expected near 'local'",
+			["session"] = 1141,
+			["time"] = "2023/03/17 20:40:45",
+			["counter"] = 1,
+		}, -- [120]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:674: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["time"] = "2023/03/17 20:49:06",
+			["locals"] = "",
+			["stack"] = "",
+			["session"] = 1147,
+			["counter"] = 1,
+		}, -- [121]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:674: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["session"] = 1147,
+			["time"] = "2023/03/17 20:49:07",
+			["counter"] = 1,
+		}, -- [122]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:674: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["session"] = 1147,
+			["time"] = "2023/03/17 20:49:07",
+			["counter"] = 1,
+		}, -- [123]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:586: bad argument #1 to 'pairs' (table expected, got nil)",
+			["time"] = "2023/03/17 20:50:23",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `pairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:586: in main chunk",
+			["session"] = 1148,
+			["counter"] = 1,
+		}, -- [124]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 588) near '<eof>'",
+			["time"] = "2023/03/17 20:54:05",
+			["locals"] = "",
+			["stack"] = "",
+			["session"] = 1150,
+			["counter"] = 1,
+		}, -- [125]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 588) near '<eof>'",
+			["time"] = "2023/03/17 20:54:06",
+			["session"] = 1150,
+			["counter"] = 1,
+		}, -- [126]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 588) near '<eof>'",
+			["time"] = "2023/03/17 20:54:06",
+			["session"] = 1150,
+			["counter"] = 1,
+		}, -- [127]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:598: bad argument #1 to 'ipairs' (table expected, got nil)",
+			["time"] = "2023/03/17 20:54:52",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `ipairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:598: in main chunk",
+			["session"] = 1151,
+			["counter"] = 1,
+		}, -- [128]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["time"] = "2023/03/17 20:56:48",
+			["locals"] = "",
+			["stack"] = "",
+			["session"] = 1152,
+			["counter"] = 1,
+		}, -- [129]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["time"] = "2023/03/17 20:56:50",
+			["session"] = 1152,
+			["counter"] = 1,
+		}, -- [130]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:675: 'end' expected (to close 'function' at line 587) near '<eof>'",
+			["time"] = "2023/03/17 20:56:50",
+			["session"] = 1152,
+			["counter"] = 1,
+		}, -- [131]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:597: bad argument #1 to 'ipairs' (table expected, got nil)",
+			["time"] = "2023/03/17 20:57:07",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `ipairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:597: in main chunk",
+			["session"] = 1153,
+			["counter"] = 1,
+		}, -- [132]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:597: bad argument #1 to 'pairs' (table expected, got nil)",
+			["time"] = "2023/03/17 20:59:05",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `pairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:597: in main chunk",
+			["session"] = 1155,
+			["counter"] = 2,
+		}, -- [133]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:588: bad argument #1 to 'ipairs' (table expected, got nil)",
+			["time"] = "2023/03/17 21:03:30",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `ipairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:588: in main chunk",
+			["session"] = 1156,
+			["counter"] = 1,
+		}, -- [134]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:619: attempt to index global 'MyAddonSettings' (a nil value)",
+			["time"] = "2023/03/17 21:12:45",
+			["locals"] = "configCVars = <function> defined @Interface/AddOns/PanzaUI/core.lua:16\nconfigQuestTracker = <function> defined @Interface/AddOns/PanzaUI/core.lua:142\nconfigQueueIcon = <function> defined @Interface/AddOns/PanzaUI/core.lua:165\nhideMicroMenuAlerts = <function> defined @Interface/AddOns/PanzaUI/core.lua:197\nautoCollapseBuffFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:209\nhideUIFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:228\nhideMultipleUIFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:237\nhidePowerBar = <function> defined @Interface/AddOns/PanzaUI/core.lua:255\nconfigPlayerFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:261\nconfigTargetFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:294\nUpdateHealthBarColor = <function> defined @Interface/AddOns/PanzaUI/core.lua:312\nconfigClassColorFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:330\nSetAlphaForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:340\nImproveMouseScroll = <function> defined @Interface/AddOns/PanzaUI/core.lua:347\nconfigChatFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:355\nHideFrameAndUnregisterEvents = <function> defined @Interface/AddOns/PanzaUI/core.lua:397\nSetScaleForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:405\nSetAlphaForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:411\nconfigMapElements = <function> defined @Interface/AddOns/PanzaUI/core.lua:417\nhideRealmNameFromRaidFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:437\nconfigActionBars = <function> defined @Interface/AddOns/PanzaUI/core.lua:456\ndefaultSettings = <table> {\n configCVars = true\n configMapElements = true\n configPlayerFrame = true\n configClassColorFrames = true\n configActionBars = true\n hideRealmNameFromRaidFrames = true\n hideMultipleUIFrames = true\n configQueueIcon = true\n hideMicroMenuAlerts = true\n configQuestTracker = true\n configChatFrame = true\n autoCollapseBuffFrame = true\n configTargetFrame = true\n}\nsettings = <table> {\n}\ninitializeAddon = <function> defined @Interface/AddOns/PanzaUI/core.lua:515\nframe = Frame {\n 0 = <userdata>\n}\npanel = MyAddonPanel {\n 0 = <userdata>\n name = \"MyAddon\"\n}\ntitle = FontString {\n 0 = <userdata>\n}\ndesc = FontString {\n 0 = <userdata>\n}\ncheckboxes = <table> {\n}\nfunctions = <table> {\n 1 = <table> {\n }\n 2 = <table> {\n }\n 3 = <table> {\n }\n 4 = <table> {\n }\n 5 = <table> {\n }\n 6 = <table> {\n }\n 7 = <table> {\n }\n 8 = <table> {\n }\n 9 = <table> {\n }\n 10 = <table> {\n }\n 11 = <table> {\n }\n 12 = <table> {\n }\n 13 = <table> {\n }\n}\naddCheckbox = <function> defined @Interface/AddOns/PanzaUI/core.lua:607\n(for generator) = <function> defined =[C]:-1\n(for state) = <table> {\n 1 = <table> {\n }\n 2 = <table> {\n }\n 3 = <table> {\n }\n 4 = <table> {\n }\n 5 = <table> {\n }\n 6 = <table> {\n }\n 7 = <table> {\n }\n 8 = <table> {\n }\n 9 = <table> {\n }\n 10 = <table> {\n }\n 11 = <table> {\n }\n 12 = <table> {\n }\n 13 = <table> {\n }\n}\n(for control) = 1\ni = 1\nfunc = <table> {\n name = \"Auto Collapse Buff Frame\"\n func = <function> defined @Interface/AddOns/PanzaUI/core.lua:209\n}\ncheckbox = CheckButton {\n 0 = <userdata>\n Text = MyAddonPanelText {\n }\n tooltipText = \"Enable/disable Auto Collapse Buff Frame\"\n text = FontString {\n }\n}\n(*temporary) = <function> defined =[C]:-1\n(*temporary) = CheckButton {\n 0 = <userdata>\n Text = MyAddonPanelText {\n }\n tooltipText = \"Enable/disable Auto Collapse Buff Frame\"\n text = FontString {\n }\n}\n(*temporary) = nil\n(*temporary) = \"Auto Collapse Buff Frame\"\n(*temporary) = <function> defined =[C]:-1\n(*temporary) = FontString {\n 0 = <userdata>\n}\n(*temporary) = \"attempt to index global 'MyAddonSettings' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:619: in main chunk",
+			["session"] = 1157,
+			["counter"] = 1,
+		}, -- [135]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:619: attempt to index global 'PanzaUI_Settings' (a nil value)",
+			["time"] = "2023/03/17 21:13:47",
+			["locals"] = "configCVars = <function> defined @Interface/AddOns/PanzaUI/core.lua:16\nconfigQuestTracker = <function> defined @Interface/AddOns/PanzaUI/core.lua:142\nconfigQueueIcon = <function> defined @Interface/AddOns/PanzaUI/core.lua:165\nhideMicroMenuAlerts = <function> defined @Interface/AddOns/PanzaUI/core.lua:197\nautoCollapseBuffFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:209\nhideUIFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:228\nhideMultipleUIFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:237\nhidePowerBar = <function> defined @Interface/AddOns/PanzaUI/core.lua:255\nconfigPlayerFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:261\nconfigTargetFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:294\nUpdateHealthBarColor = <function> defined @Interface/AddOns/PanzaUI/core.lua:312\nconfigClassColorFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:330\nSetAlphaForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:340\nImproveMouseScroll = <function> defined @Interface/AddOns/PanzaUI/core.lua:347\nconfigChatFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:355\nHideFrameAndUnregisterEvents = <function> defined @Interface/AddOns/PanzaUI/core.lua:397\nSetScaleForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:405\nSetAlphaForFrame = <function> defined @Interface/AddOns/PanzaUI/core.lua:411\nconfigMapElements = <function> defined @Interface/AddOns/PanzaUI/core.lua:417\nhideRealmNameFromRaidFrames = <function> defined @Interface/AddOns/PanzaUI/core.lua:437\nconfigActionBars = <function> defined @Interface/AddOns/PanzaUI/core.lua:456\ndefaultSettings = <table> {\n configCVars = true\n configMapElements = true\n configPlayerFrame = true\n configClassColorFrames = true\n configActionBars = true\n hideRealmNameFromRaidFrames = true\n hideMultipleUIFrames = true\n configQueueIcon = true\n hideMicroMenuAlerts = true\n configQuestTracker = true\n configChatFrame = true\n autoCollapseBuffFrame = true\n configTargetFrame = true\n}\nsettings = <table> {\n}\ninitializeAddon = <function> defined @Interface/AddOns/PanzaUI/core.lua:515\nframe = Frame {\n 0 = <userdata>\n}\npanel = MyAddonPanel {\n 0 = <userdata>\n name = \"MyAddon\"\n}\ntitle = FontString {\n 0 = <userdata>\n}\ndesc = FontString {\n 0 = <userdata>\n}\ncheckboxes = <table> {\n}\nfunctions = <table> {\n 1 = <table> {\n }\n 2 = <table> {\n }\n 3 = <table> {\n }\n 4 = <table> {\n }\n 5 = <table> {\n }\n 6 = <table> {\n }\n 7 = <table> {\n }\n 8 = <table> {\n }\n 9 = <table> {\n }\n 10 = <table> {\n }\n 11 = <table> {\n }\n 12 = <table> {\n }\n 13 = <table> {\n }\n}\naddCheckbox = <function> defined @Interface/AddOns/PanzaUI/core.lua:607\n(for generator) = <function> defined =[C]:-1\n(for state) = <table> {\n 1 = <table> {\n }\n 2 = <table> {\n }\n 3 = <table> {\n }\n 4 = <table> {\n }\n 5 = <table> {\n }\n 6 = <table> {\n }\n 7 = <table> {\n }\n 8 = <table> {\n }\n 9 = <table> {\n }\n 10 = <table> {\n }\n 11 = <table> {\n }\n 12 = <table> {\n }\n 13 = <table> {\n }\n}\n(for control) = 1\ni = 1\nfunc = <table> {\n name = \"Auto Collapse Buff Frame\"\n func = <function> defined @Interface/AddOns/PanzaUI/core.lua:209\n}\ncheckbox = CheckButton {\n 0 = <userdata>\n Text = MyAddonPanelText {\n }\n tooltipText = \"Enable/disable Auto Collapse Buff Frame\"\n text = FontString {\n }\n}\n(*temporary) = <function> defined =[C]:-1\n(*temporary) = CheckButton {\n 0 = <userdata>\n Text = MyAddonPanelText {\n }\n tooltipText = \"Enable/disable Auto Collapse Buff Frame\"\n text = FontString {\n }\n}\n(*temporary) = nil\n(*temporary) = \"Auto Collapse Buff Frame\"\n(*temporary) = <function> defined =[C]:-1\n(*temporary) = FontString {\n 0 = <userdata>\n}\n(*temporary) = \"attempt to index global 'PanzaUI_Settings' (a nil value)\"\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:619: in main chunk",
+			["session"] = 1158,
+			["counter"] = 1,
+		}, -- [136]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:611: attempt to perform arithmetic on local 'index' (a string value)",
+			["time"] = "2023/03/17 21:16:00",
+			["locals"] = "index = \"Auto Collapse Buff Frame\"\ntext = \"Auto Collapse Buff Frame\"\ntooltipText = \"Enable/disable Auto Collapse Buff Frame\"\ncheckbox = MyAddonPanelCheckboxAuto Collapse Buff Frame {\n 0 = <userdata>\n Text = MyAddonPanelCheckboxAuto Collapse Buff FrameText {\n }\n text = MyAddonPanelCheckboxAuto Collapse Buff FrameText {\n }\n}\n(*temporary) = <function> defined =[C]:-1\n(*temporary) = MyAddonPanelCheckboxAuto Collapse Buff Frame {\n 0 = <userdata>\n Text = MyAddonPanelCheckboxAuto Collapse Buff FrameText {\n }\n text = MyAddonPanelCheckboxAuto Collapse Buff FrameText {\n }\n}\n(*temporary) = \"TOPLEFT\"\n(*temporary) = 10\n(*temporary) = -10\n(*temporary) = nil\n(*temporary) = \"attempt to perform arithmetic on local 'index' (a string value)\"\npanel = MyAddonPanel {\n 0 = <userdata>\n name = \"MyAddon\"\n}\nmargin = 10\ncheckboxes = <table> {\n}\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/core.lua\"]:611: in function `addCheckbox'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:620: in main chunk",
+			["session"] = 1161,
+			["counter"] = 1,
+		}, -- [137]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:504: bad argument #1 to 'pairs' (table expected, got nil)",
+			["time"] = "2023/03/17 21:22:12",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `pairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:504: in function `loadSettings'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:536: in main chunk",
+			["session"] = 1167,
+			["counter"] = 4,
+		}, -- [138]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 (null)",
+			["time"] = "2022/12/20 23:30:16",
+			["session"] = 1167,
+			["counter"] = 56,
+		}, -- [139]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 (null)",
+			["time"] = "2022/12/20 23:30:16",
+			["session"] = 1167,
+			["counter"] = 56,
+		}, -- [140]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:513: bad argument #1 to 'pairs' (table expected, got nil)",
+			["time"] = "2023/03/17 21:22:13",
+			["locals"] = "(*temporary) = nil\n(*temporary) = \"table expected, got nil\"\n = <function> defined =[C]:-1\n",
+			["stack"] = "[string \"=[C]\"]: in function `pairs'\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:513: in function <Interface/AddOns/PanzaUI/core.lua:512>\n[string \"@Interface/AddOns/PanzaUI/core.lua\"]:525: in function <Interface/AddOns/PanzaUI/core.lua:524>",
+			["session"] = 1167,
+			["counter"] = 8,
+		}, -- [141]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:524: '=' expected near 'end'",
+			["time"] = "2023/03/17 22:41:22",
+			["locals"] = "",
+			["stack"] = "",
+			["session"] = 1172,
+			["counter"] = 2,
+		}, -- [142]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:524: '=' expected near 'end'",
+			["session"] = 1172,
+			["time"] = "2023/03/17 22:41:36",
+			["counter"] = 2,
+		}, -- [143]
+		{
+			["message"] = "Interface\\FrameXML\\Bindings.xml:1 Interface/AddOns/PanzaUI/core.lua:1 Interface/AddOns/PanzaUI/core.lua:524: '=' expected near 'end'",
+			["session"] = 1172,
+			["time"] = "2023/03/17 22:41:36",
+			["counter"] = 2,
+		}, -- [144]
+		{
+			["message"] = "Interface/AddOns/PanzaUI/options.lua:50: attempt to index global 'eventFrame' (a nil value)",
+			["time"] = "2023/03/17 22:47:20",
+			["locals"] = "self = Frame {\n 0 = <userdata>\n}\nevent = \"ADDON_LOADED\"\n(*temporary) = nil\n(*temporary) = nil\n(*temporary) = <table> {\n 1 = PanzaUIautoCollapseBuffFrame {\n }\n 2 = PanzaUIconfigActionBars {\n }\n}\n(*temporary) = \"attempt to index global 'eventFrame' (a nil value)\"\naddonTable = <table> {\n panel = PanzaUIOptions {\n }\n core = <table> {\n }\n checkboxes = <table> {\n }\n}\n",
+			["stack"] = "[string \"@Interface/AddOns/PanzaUI/options.lua\"]:50: in function <Interface/AddOns/PanzaUI/options.lua:46>",
+			["session"] = 1177,
+			["counter"] = 1,
+		}, -- [145]
 	},
 }

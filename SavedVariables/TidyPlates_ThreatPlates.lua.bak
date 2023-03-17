@@ -14,17 +14,17 @@ ThreatPlatesDB = {
 			["welcome"] = true,
 		},
 		["Formaggino - Draenor"] = {
+			["welcome"] = true,
 			["spec"] = {
 				[3] = false,
 			},
-			["welcome"] = true,
 		},
 		["Panzarotto - Draenor"] = {
-			["welcome"] = true,
 			["spec"] = {
 				true, -- [1]
 				[3] = false,
 			},
+			["welcome"] = true,
 		},
 	},
 	["profileKeys"] = {
@@ -38,7 +38,7 @@ ThreatPlatesDB = {
 		},
 	},
 	["global"] = {
-		["version"] = "11.1.14",
+		["version"] = "11.1.15",
 	},
 	["profiles"] = {
 		["Bajheera - Sargeras"] = {
@@ -69,18 +69,18 @@ ThreatPlatesDB = {
 				["ON"] = false,
 			},
 			["HeadlineView"] = {
-				["useScaling"] = true,
 				["name"] = {
 					["size"] = 12,
 				},
+				["useScaling"] = true,
 			},
 			["NamePlateFriendlyClickThrough"] = true,
 			["AuraWidget"] = {
 				["Buffs"] = {
-					["HideUnlimitedDuration"] = true,
-					["ShowEnemy"] = false,
 					["ShowAllEnemy"] = true,
+					["ShowEnemy"] = false,
 					["ShowDispellable"] = false,
+					["HideUnlimitedDuration"] = true,
 					["AnchorTo"] = "Healthbar",
 					["ModeBar"] = {
 						["Enabled"] = true,
@@ -177,15 +177,15 @@ ThreatPlatesDB = {
 				["ON"] = false,
 			},
 			["settings"] = {
-				["elitehealthborder"] = {
-					["show"] = true,
+				["name"] = {
+					["flags"] = "OUTLINE",
+					["y"] = 18,
 				},
 				["castbar"] = {
 					["y"] = -20,
 				},
-				["healthbar"] = {
-					["height"] = 16,
-					["width"] = 132,
+				["elitehealthborder"] = {
+					["show"] = true,
 				},
 				["eliteicon"] = {
 					["theme"] = "stddragon",
@@ -201,9 +201,9 @@ ThreatPlatesDB = {
 				["skullicon"] = {
 					["scale"] = 14,
 				},
-				["name"] = {
-					["flags"] = "OUTLINE",
-					["y"] = 18,
+				["healthbar"] = {
+					["height"] = 16,
+					["width"] = 132,
 				},
 			},
 			["FocusWidget"] = {
@@ -222,24 +222,9 @@ ThreatPlatesDB = {
 			},
 		},
 		["Default"] = {
-			["Visibility"] = {
-				["HideFriendlyInCombat"] = true,
-				["NeutralMinus"] = {
-					["Show"] = false,
-				},
-				["FriendlyPlayer"] = {
-					["UseHeadlineView"] = true,
-				},
-				["FriendlyMinus"] = {
-					["UseHeadlineView"] = true,
-				},
-				["FriendlyNPC"] = {
-					["UseHeadlineView"] = true,
-				},
-			},
 			["HeadlineView"] = {
-				["ShowFocusHighlight"] = false,
 				["ForceFriendlyInCombat"] = "NAME",
+				["ShowFocusHighlight"] = false,
 			},
 			["settings"] = {
 				["spellicon"] = {
@@ -272,6 +257,21 @@ ThreatPlatesDB = {
 					["y"] = -20,
 					["height"] = 55.225,
 					["width"] = 154,
+				},
+			},
+			["Visibility"] = {
+				["HideFriendlyInCombat"] = true,
+				["NeutralMinus"] = {
+					["Show"] = false,
+				},
+				["FriendlyPlayer"] = {
+					["UseHeadlineView"] = true,
+				},
+				["FriendlyMinus"] = {
+					["UseHeadlineView"] = true,
+				},
+				["FriendlyNPC"] = {
+					["UseHeadlineView"] = true,
 				},
 			},
 			["Automation"] = {
@@ -584,6 +584,7 @@ ThreatPlatesDB = {
 				},
 			},
 			["AuraWidget"] = {
+				["ShowTargetOnly"] = true,
 				["Buffs"] = {
 					["ModeIcon"] = {
 						["Style"] = "custom",
@@ -625,43 +626,6 @@ ThreatPlatesDB = {
 					["ShowOnEnemyNPCs"] = false,
 					["ShowUnlimitedInInstances"] = false,
 				},
-				["Debuffs"] = {
-					["FilterMode"] = "Allow",
-					["ModeIcon"] = {
-						["Style"] = "custom",
-						["MaxAuras"] = 5,
-						["IconWidth"] = 16,
-						["StackCount"] = {
-							["Anchor"] = "BOTTOM",
-							["Font"] = {
-								["Typeface"] = "Expressway",
-								["HorizontalAlignment"] = "CENTER",
-								["Size"] = 9,
-							},
-						},
-						["Rows"] = 1,
-						["IconHeight"] = 16,
-						["Duration"] = {
-							["Anchor"] = "TOP",
-							["Font"] = {
-								["Typeface"] = "Expressway",
-								["HorizontalAlignment"] = "CENTER",
-								["Size"] = 9,
-							},
-						},
-					},
-					["ShowDispellable"] = false,
-					["ModeBar"] = {
-						["BackgroundTexture"] = "Solid",
-						["Texture"] = "Solid",
-						["Label"] = {
-							["Font"] = {
-								["Typeface"] = "Expressway",
-							},
-						},
-					},
-				},
-				["ShowTargetOnly"] = true,
 				["CrowdControl"] = {
 					["ModeIcon"] = {
 						["Columns"] = 1,
@@ -688,6 +652,42 @@ ThreatPlatesDB = {
 						["Style"] = "custom",
 					},
 					["ShowFriendly"] = false,
+					["ModeBar"] = {
+						["BackgroundTexture"] = "Solid",
+						["Texture"] = "Solid",
+						["Label"] = {
+							["Font"] = {
+								["Typeface"] = "Expressway",
+							},
+						},
+					},
+				},
+				["Debuffs"] = {
+					["FilterMode"] = "Allow",
+					["ModeIcon"] = {
+						["Style"] = "custom",
+						["MaxAuras"] = 5,
+						["IconWidth"] = 16,
+						["StackCount"] = {
+							["Anchor"] = "BOTTOM",
+							["Font"] = {
+								["Typeface"] = "Expressway",
+								["HorizontalAlignment"] = "CENTER",
+								["Size"] = 9,
+							},
+						},
+						["Rows"] = 1,
+						["IconHeight"] = 16,
+						["Duration"] = {
+							["Anchor"] = "TOP",
+							["Font"] = {
+								["Typeface"] = "Expressway",
+								["HorizontalAlignment"] = "CENTER",
+								["Size"] = 9,
+							},
+						},
+					},
+					["ShowDispellable"] = false,
 					["ModeBar"] = {
 						["BackgroundTexture"] = "Solid",
 						["Texture"] = "Solid",

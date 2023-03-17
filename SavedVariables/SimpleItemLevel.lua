@@ -3,10 +3,10 @@ SimpleItemLevelDB = {
 	["color"] = false,
 	["scaleup"] = 1,
 	["missinggems"] = false,
-	["bound"] = false,
-	["position"] = "TOP",
 	["positionup"] = "BOTTOMRIGHT",
+	["position"] = "TOP",
 	["scalebound"] = 1,
+	["bound"] = false,
 	["missingcharacter"] = false,
 	["missingenchants"] = false,
 }
