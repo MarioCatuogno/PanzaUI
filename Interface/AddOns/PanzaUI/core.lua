@@ -1,10 +1,16 @@
 --------------------------------------------------------------------------------
--- 00. VARIABLES
+-- PanzaUI: Core
 --------------------------------------------------------------------------------
 
--- Set Variables
-local function ConfigCVars()
+local addonName, addonTable = ...
+addonTable.core = {}
 
+--------------------------------------------------------------------------------
+-- FUNCTION 00: Configure CVars and commands
+--------------------------------------------------------------------------------
+
+-- Set CVars
+local function configCVars()
   -- Action Bar
   C_CVar.SetCVar("lockActionBar", 1)
 
@@ -116,12 +122,6 @@ local function ConfigCVars()
   C_CVar.SetCVar("synchronizeMacros", 1)
   C_CVar.SetCVar("synchronizeSettings", 1)
 
-end
-
---------------------------------------------------------------------------------
--- 01. COMMANDS
---------------------------------------------------------------------------------
-
 -- Create new commands
 SlashCmdList["READYCHECK"] = function() DoReadyCheck() end
 SLASH_READYCHECK1 = '/rc'
@@ -129,210 +129,239 @@ SlashCmdList["RELOADUI"] = function() ReloadUI() end
 SLASH_RELOADUI1 = '/rl'
 SlashCmdList["CHECKROLE"] = function() InitiateRolePoll() end
 SLASH_CHECKROLE1 = '/cr'
-
---------------------------------------------------------------------------------
--- 02. OTHER FRAMES
---------------------------------------------------------------------------------
-
--- Configure QuestTracker frame and Encounter bar
-local function ConfigQuestTracker()
-
-  -- Set Scale
-  local scale = 0.95
-  ObjectiveTrackerFrame:SetScale(scale)
-  local barScale = 0.7
-  EncounterBar:SetScale(barScale)
-
 end
 
--- Configure Queue icon
-local function ConfigQueueIcon()
+--------------------------------------------------------------------------------
+-- FUNCTION 1: Configure Quest Tracker
+--------------------------------------------------------------------------------
 
-  -- Set Position
-  if not (QueueStatusButtonIcon and QueueStatusButton) then return end
+-- Configure the Quest Tracker frame and Encounter bar
+local function configQuestTracker()
+  -- Configuration table to store scale values for ObjectiveTrackerFrame and EncounterBar
+  local config = {
+    objectiveTrackerScale = 0.95,
+    encounterBarScale = 0.7
+  }
+
+  -- Set the scale for ObjectiveTrackerFrame
+  if ObjectiveTrackerFrame then
+    ObjectiveTrackerFrame:SetScale(config.objectiveTrackerScale)
+  end
+
+  -- Set the scale for EncounterBar
+  if EncounterBar then
+    EncounterBar:SetScale(config.encounterBarScale)
+  end
+end
+
+--------------------------------------------------------------------------------
+-- FUNCTION 2: Configure Queue Icon
+--------------------------------------------------------------------------------
+
+-- Configure the Queue Status Button and Icon
+local function configQueueIcon()
+  -- Configuration table to store scale and position values for the Queue Status Button
+  local config = {
+    buttonScale = 0.8,
+    iconPosition = {
+      point = "BOTTOM",
+      relativeTo = Minimap,
+      offsetX = 0,
+      offsetY = -10
+    }
+  }
+
+  -- Check if both QueueStatusButtonIcon and QueueStatusButton exist
+  if not (QueueStatusButtonIcon and QueueStatusButton) then
+    return
+  end
+
+  -- Clear all points and set the new position for the QueueStatusButtonIcon
   QueueStatusButtonIcon:ClearAllPoints()
-  QueueStatusButton:SetScale(0.8)
-  QueueStatusButtonIcon:SetPoint("BOTTOM", Minimap, 0, -10)
+  QueueStatusButtonIcon:SetPoint(config.iconPosition.point, config.iconPosition.relativeTo, config.iconPosition.offsetX, config.iconPosition.offsetY)
+
+  -- Clear all points, set the scale and set the new position for the QueueStatusButton
   QueueStatusButton:ClearAllPoints()
-  QueueStatusButton:SetPoint("BOTTOM",Minimap, 0, -10)
-
+  QueueStatusButton:SetScale(config.buttonScale)
+  QueueStatusButton:SetPoint(config.iconPosition.point, config.iconPosition.relativeTo, config.iconPosition.offsetX, config.iconPosition.offsetY)
 end
 
--- Hide Micro Menu alerts
-function MainMenuMicroButton_AreAlertsEnabled()
-  return false
+--------------------------------------------------------------------------------
+-- FUNCTION 3: Hide Micro Menu Alerts
+--------------------------------------------------------------------------------
+
+-- This function disables alerts for the Micro Menu Bar
+local function hideMicroMenuAlerts()
+  -- Hook the function that checks if MainMenuMicroButton alerts are enabled
+  hooksecurefunc("MainMenuMicroButton_AreAlertsEnabled", function()
+    return false
+  end)
 end
 
--- Configure Buffs
-local function ConfigBuffs()
+--------------------------------------------------------------------------------
+-- FUNCTION 4: Auto-Collapse Buff Frame
+--------------------------------------------------------------------------------
 
-  -- Auto collapse buffs
+-- This function auto-collapses the buff frame in World of Warcraft
+local function autoCollapseBuffFrame()
+  -- Check if BuffFrame and CollapseAndExpandButton exist
+  if not (BuffFrame and BuffFrame.CollapseAndExpandButton) then return end
+  
+  -- Set the CollapseAndExpandButton to unchecked (collapsed) state
   BuffFrame.CollapseAndExpandButton:SetChecked(false)
+  
+  -- Update the orientation of the CollapseAndExpandButton
   BuffFrame.CollapseAndExpandButton:UpdateOrientation()
+  
+  -- Set the expanded state of the BuffFrame
   BuffFrame:SetBuffsExpandedState()
-
 end
 
--- Hide Various frames
-local function hideFrame(frame)
+--------------------------------------------------------------------------------
+-- FUNCTION 5: Hide Various UI Frames
+--------------------------------------------------------------------------------
 
-  if not frame then return end
+-- This function hides a specific UI frame and unregisters its events
+local function hideUIFrame(frame)
+  if not frame or frame:IsProtected() then return end
+  
   frame:UnregisterAllEvents()
   frame:Hide()
   frame:HookScript("OnShow", function() frame:Hide() end)
-
 end
 
-local function HideVariousFrames()
-
-  hideFrame(MicroMenu)
-  hideFrame(BagsBar)
-  hideFrame(PetActionBar)
-  hideFrame(PetFrame)
-  hideFrame(UIErrorsFrame)
-  hideFrame(StatusTrackingBarManager)
-  hideFrame(ChatFrameChannelButton)
-  hideFrame(DurabilityFrame)
-  hideFrame(VehicleSeatIndicator)
-  hideFrame(TotemFrame)
-
+-- This function hides multiple UI frames
+local function hideMultipleUIFrames()
+  hideUIFrame(MicroMenu)
+  hideUIFrame(BagsBar)
+  hideUIFrame(PetActionBar)
+  hideUIFrame(PetFrame)
+  hideUIFrame(UIErrorsFrame)
+  hideUIFrame(StatusTrackingBarManager)
+  hideUIFrame(ChatFrameChannelButton)
+  hideUIFrame(DurabilityFrame)
+  hideUIFrame(VehicleSeatIndicator)
+  hideUIFrame(TotemFrame)
 end
 
 --------------------------------------------------------------------------------
--- 03. UNIT FRAMES
+-- FUNCTION 6: Configure Player Frame
 --------------------------------------------------------------------------------
 
--- Configure Unit Frame
-local function ConfigPlayerFrame()
+-- Helper function to hide power bars
+local function hidePowerBar(powerBar)
+  if powerBar then
+    powerBar:SetAlpha(0)
+  end
+end
 
--- Hide combat flash and rest
+local function configPlayerFrame()
+  -- Hide combat flash and rest
   local hideRest = CreateFrame("Frame")
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
-    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
+  PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
+  TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
   hideRest:Hide()
 
   -- Hide Power Bars
-  ComboPointDruidPlayerFrame:SetAlpha(0)
-  ComboPointPlayerFrame:SetAlpha(0)
-  EssencePlayerFrame:SetAlpha(0)
-  MageArcaneChargesFrame:SetAlpha(0)
-  MonkHarmonyBarFrame:SetAlpha(0)
-  MonkStaggerBar:SetAlpha(0)
-  PaladinPowerBarFrame:SetAlpha(0)
-  PlayerFrameAlternateManaBar:SetAlpha(0)
-  RuneFrame:SetAlpha(0)
-  WarlockPowerFrame:SetAlpha(0)
+  hidePowerBar(ComboPointDruidPlayerFrame)
+  hidePowerBar(ComboPointPlayerFrame)
+  hidePowerBar(EssencePlayerFrame)
+  hidePowerBar(MageArcaneChargesFrame)
+  hidePowerBar(MonkHarmonyBarFrame)
+  hidePowerBar(MonkStaggerBar)
+  hidePowerBar(PaladinPowerBarFrame)
+  hidePowerBar(PlayerFrameAlternateManaBar)
+  hidePowerBar(RuneFrame)
+  hidePowerBar(WarlockPowerFrame)
 
+  -- Remove damage and healing text in portraits
+  COMBATFEEDBACK_FADEINTIME = 0
+  COMBATFEEDBACK_HOLDTIME = 0
+  COMBATFEEDBACK_FADEOUTTIME = 0
 end
 
--- Configure Target Frame
-local function ConfigTargetFrame()
+--------------------------------------------------------------------------------
+-- FUNCTION 7: Configure Target Frame
+--------------------------------------------------------------------------------
 
+-- Configure Target Frame
+local function configTargetFrame()
   -- Remove buffs/debuffs from target frame
   TargetFrame.maxBuffs = 0
   TargetFrame.maxDebuffs = 0
 
   -- Hide Reputation background for target and focus frames
-  TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-  FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-
+  if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor then
+    TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
+  end
+  if FocusFrame.TargetFrameContent and FocusFrame.TargetFrameContent.TargetFrameContentMain and FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor then
+    FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
+  end
 end
 
--- Remove damage and healing text in portraits
-COMBATFEEDBACK_FADEINTIME = 0 
-COMBATFEEDBACK_HOLDTIME = 0 
-COMBATFEEDBACK_FADEOUTTIME = 0
-
--- Unit Frames color (thanks to: http://www.vranx.com/ui.htm)
-hooksecurefunc("HealthBar_OnValueChanged", function (self)
-
-  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
-    local c = RAID_CLASS_COLORS[select(2,UnitClass(self.unit))];
-    if c then
-      self:SetStatusBarColor(c.r, c.g, c.b)
-      self:SetStatusBarDesaturated(true)
-    else
-      self:SetStatusBarColor(0.5, 0.5, 0.5)
-      self:SetStatusBarDesaturated(true)
-    end
-    elseif UnitIsPlayer(self.unit) then
-      self:SetStatusBarColor(0.5, 0.5, 0.5)
-      self:SetStatusBarDesaturated(true)
-    else
-      self:SetStatusBarColor(0.0, 1.0, 0.0)
-      self:SetStatusBarDesaturated(true)
-  end
-
-end)
-
-hooksecurefunc("UnitFrameHealthBar_Update", function (self)
-  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
-    local c = RAID_CLASS_COLORS[select(2,UnitClass(self.unit))];
-    if c then
-      self:SetStatusBarColor(c.r, c.g, c.b)
-      self:SetStatusBarDesaturated(true)
-    else
-      self:SetStatusBarColor(0.5, 0.5, 0.5)
-      self:SetStatusBarDesaturated(true)
-    end
-    elseif UnitIsPlayer(self.unit) then
-      self:SetStatusBarColor(0.5, 0.5, 0.5)
-      self:SetStatusBarDesaturated(true)
-    else
-      self:SetStatusBarColor(0.0, 1.0, 0.0)
-      self:SetStatusBarDesaturated(true)
-    end
-
-end)
-
 --------------------------------------------------------------------------------
--- 04. CHAT
+-- FUNCTION 8: Class colour player and target frames
 --------------------------------------------------------------------------------
 
--- Configure Chat Menu
-local function ConfigChatFrame()
+local function UpdateHealthBarColor(self)
+  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
+    local _, classToken = UnitClass(self.unit)
+    local classColor = RAID_CLASS_COLORS[classToken]
+    
+    if classColor then
+      self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
+    else
+      self:SetStatusBarColor(0.5, 0.5, 0.5)
+    end
+  elseif UnitIsPlayer(self.unit) then
+    self:SetStatusBarColor(0.5, 0.5, 0.5)
+  else
+    self:SetStatusBarColor(0.0, 1.0, 0.0)
+  end
+  self:SetStatusBarDesaturated(true)
+end
 
-  -- Set Alpha
-  if ChatFrameMenuButton then
-    ChatFrameMenuButton:SetAlpha(0)
-    ChatFrameMenuButton:EnableMouse(false)
+local function configClassColorFrames()
+  hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
+  hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
+end
+
+--------------------------------------------------------------------------------
+-- FUNCTION 9: Configure chat
+--------------------------------------------------------------------------------
+
+-- Helper function to hide frames and set chat scrolling
+local function SetAlphaForFrame(frame, alpha)
+  if frame then
+    frame:SetAlpha(alpha)
+    frame:EnableMouse(alpha ~= 0)
   end
-  if QuickJoinToastButton then
-    QuickJoinToastButton:SetAlpha(0)
-    QuickJoinToastButton:EnableMouse(false)
+end
+
+local function ImproveMouseScroll(self, direction)
+  local scrollFunc = IsShiftKeyDown() and (direction > 0 and "ScrollToTop" or "ScrollToBottom") or (direction > 0 and "ScrollUp" or "ScrollDown")
+  self[scrollFunc](self)
+  if not IsShiftKeyDown() then
+    self[scrollFunc](self)
   end
+end
+
+local function configChatFrame()
+  -- Hide buttons and toast
+  SetAlphaForFrame(ChatFrameMenuButton, 0)
+  SetAlphaForFrame(QuickJoinToastButton, 0)
 
   -- Improve mousewheel scrolling
-  local function MouseScrollHandler(self, direction)
-    if direction > 0 then
-      if IsShiftKeyDown() then
-        self:ScrollToTop()
-      else
-        self:ScrollUp()
-        self:ScrollUp()
-      end
-    elseif direction < 0 then
-        if IsShiftKeyDown() then
-        self:ScrollToBottom()
-      else
-        self:ScrollDown()
-        self:ScrollDown()
-      end
-    end
-  end
-
-  -- Register Event
-  hooksecurefunc("FloatingChatFrame_OnMouseScroll", MouseScrollHandler)
-
+  hooksecurefunc("FloatingChatFrame_OnMouseScroll", ImproveMouseScroll)
 end
 
 -- Chat style
-STRING_STYLE  = "%s|| "
+STRING_STYLE = "%s|| "
 CHANNEL_STYLE = "%d"
-PLAYER_STYLE  = "%s"
+PLAYER_STYLE = "%s"
 
 -- Lines to scroll on mousewheel
 NUM_LINES_TO_SCROLL = 1
@@ -346,7 +375,7 @@ CHAT_FRAME_FADE_OUT_TIME = 0.1
 -- Configure more font sizes
 CHAT_FONT_HEIGHTS = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 
--- Chat mousover
+-- Chat mouseover
 CHAT_FRAME_TAB_SELECTED_MOUSEOVER_ALPHA = 1
 CHAT_FRAME_TAB_SELECTED_NOMOUSE_ALPHA = 0
 CHAT_FRAME_TAB_NORMAL_MOUSEOVER_ALPHA = 0.5
@@ -358,59 +387,70 @@ CHAT_FLAG_DND = "[DND] "
 CHAT_FLAG_GM = "[GM] "
 
 --------------------------------------------------------------------------------
--- 05. MAPS
+-- FUNCTION 10: Configure minimap
 --------------------------------------------------------------------------------
 
--- Hide Minimap elements
-local function ConfigMapElements()
-
-  -- Set Alpha and Scale
-  MinimapZoneText:SetScale(1.0)
-  Minimap:SetScale(1.0)
-  MinimapCluster:SetScale(1.0)
-  MinimapCluster.BorderTop:SetAlpha(0)
-
-  --Hide Minimap zoom buttons
-  Minimap.ZoomIn:UnregisterAllEvents()
-  Minimap.ZoomIn:Hide()
-  Minimap.ZoomIn:HookScript("OnShow", function(self) self:Hide() end)
-  Minimap.ZoomOut:UnregisterAllEvents()
-  Minimap.ZoomOut:Hide()
-  Minimap.ZoomOut:HookScript("OnShow", function(self) self:Hide() end)
-
-  --Set Garrison button scale
-  if ExpansionLandingPageMinimapButton then
-    ExpansionLandingPageMinimapButton:SetScale(0.85)
+-- Helper function to unregister events and set scale
+local function HideFrameAndUnregisterEvents(frame)
+  if frame then
+    frame:UnregisterAllEvents()
+    frame:Hide()
+    frame:HookScript("OnShow", function() frame:Hide() end)
   end
+end
 
+local function SetScaleForFrame(frame, scale)
+  if frame then
+    frame:SetScale(scale)
+  end
+end
+
+local function SetAlphaForFrame(frame, alpha)
+  if frame then
+    frame:SetAlpha(alpha)
+  end
+end
+
+local function configMapElements()
+  -- Set Alpha and Scale
+  SetScaleForFrame(MinimapZoneText, 1.0)
+  SetScaleForFrame(Minimap, 1.0)
+  SetScaleForFrame(MinimapCluster, 1.0)
+  SetAlphaForFrame(MinimapCluster.BorderTop, 0)
+
+  -- Hide Minimap zoom buttons
+  HideFrameAndUnregisterEvents(Minimap.ZoomIn)
+  HideFrameAndUnregisterEvents(Minimap.ZoomOut)
+
+  -- Set Garrison button scale
+  SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
 end
 
 --------------------------------------------------------------------------------
--- 06. RAID AND DUNGEONS
+-- FUNCTION 11: Hide server names from raid frames
 --------------------------------------------------------------------------------
 
 -- Hide Realm name from Raid frames
-hooksecurefunc("CompactUnitFrame_UpdateName",function(frame)
-
-  if frame and not frame:IsForbidden() then
-  local frame_name = frame:GetName()
-    if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
-    local unit_name = GetUnitName(frame.unit,true)
-      if unit_name then
-      frame.name:SetText(unit_name:match("[^-]+"))
+local function hideRealmNameFromRaidFrames()
+  hooksecurefunc("CompactUnitFrame_UpdateName",function(frame)
+    if frame and not frame:IsForbidden() then
+      local frame_name = frame:GetName()
+      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
+        local unit_name = GetUnitName(frame.unit,true)
+        if unit_name then
+          frame.name:SetText(unit_name:match("[^-]+"))
+        end
       end
     end
-  end
-
-end)
+  end)
+end
 
 --------------------------------------------------------------------------------
--- 07. ACTION BARS
+-- FUNCTION 12: Configure action bars
 --------------------------------------------------------------------------------
 
 -- Hide MainMenuBar
-local function ConfigActionBars()
-
+local function configActionBars()
   -- Set Alpha to 0
   MainMenuBar:SetAlpha(0)
   MainMenuBar:EnableMouse(false)
@@ -419,7 +459,7 @@ local function ConfigActionBars()
   for i = 1, 12 do
     local button = _G["ActionButton"..i]
     if button then
-    button.cooldown:SetDrawBling(false)
+      button.cooldown:SetDrawBling(false)
     end
   end
 
@@ -431,10 +471,10 @@ local function ConfigActionBars()
     "MultiBar5Button",
     "MultiBar6Button",
     "MultiBar7Button"
-    }
-    
-    for _, bar in pairs(bars) do
-      for i = 1, 12 do
+  }
+
+  for _, bar in pairs(bars) do
+    for i = 1, 12 do
       local button = _G[bar..i]
       if button then
         button:SetScript("OnEnter", nil)
@@ -442,34 +482,46 @@ local function ConfigActionBars()
       end
     end
   end
-
 end
 
 --------------------------------------------------------------------------------
--- 08. LOAD FUNCTIONS
+-- STORE FUNCTIONS
 --------------------------------------------------------------------------------
 
--- Initialize functions on login
-local function InitializeAddon()
+addonTable.core.autoCollapseBuffFrame = autoCollapseBuffFrame
+addonTable.core.configActionBars = configActionBars
+addonTable.core.configChatFrame = configChatFrame
+addonTable.core.configClassColorFrames = configClassColorFrames
+addonTable.core.configCVars = configCVars
+addonTable.core.configMapElements = configMapElements
+addonTable.core.configPlayerFrame = configPlayerFrame
+addonTable.core.configQuestTracker = configQuestTracker
+addonTable.core.configQueueIcon = configQueueIcon
+addonTable.core.configTargetFrame = configTargetFrame
+addonTable.core.hideMicroMenuAlerts = hideMicroMenuAlerts
+addonTable.core.hideMultipleUIFrames = hideMultipleUIFrames
+addonTable.core.hideRealmNameFromRaidFrames = hideRealmNameFromRaidFrames
 
-  ConfigActionBars()
-  ConfigBuffs()
-  ConfigChatFrame()
-  ConfigCVars()
-  ConfigMapElements()
-  ConfigPlayerFrame()
-  ConfigTargetFrame()
-  ConfigQuestTracker()
-  ConfigQueueIcon()
-  HideVariousFrames()
+-- Initialize functions
+local function OnEvent(self, event, ...)
+  if event == "ADDON_LOADED" and ... == addonName then
+    if not PanzaUIDB then
+      PanzaUIDB = {}
+    end
+    self:UnregisterEvent("ADDON_LOADED")
+  else
+    return
+  end
 
+  -- Apply saved settings
+  for key, value in pairs(PanzaUIDB) do
+    if addonTable.core[key] and value then
+      addonTable.core[key]()
+    end
+  end
 end
-  
+
+-- Register eventss
 local frame = CreateFrame("FRAME")
-
-  frame:RegisterEvent("PLAYER_LOGIN")
-  frame:SetScript("OnEvent", function(self, event, ...)
-    InitializeAddon()
-  self:UnregisterEvent("PLAYER_LOGIN")
-
-end)
+frame:SetScript("OnEvent", OnEvent)
+frame:RegisterEvent("ADDON_LOADED")
