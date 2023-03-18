@@ -1,8 +1,6 @@
 #showtooltip
 /cast [mod:shift, @player] Tiger's Lust; Chi Torpedo
 
-
-
 #showtooltip
 /cast [target=focus,exists][@mouseover,exists,harm,nodead] Paralysis;Paralysis
 
@@ -88,3 +86,10 @@
 
 #showtooltip
 /cast [mod:shift] Transcendence; Transcendence: Transfer
+
+#showtooltip
+/cast [mod:shift] Faeline Stomp; Sheilun's Gift
+
+#showtooltip
+/use [mod:shift] Healthstone
+/cast Expel Harm
