@@ -1,3 +1,7 @@
+## 0.5.1-RELEASE
+
+* Updated TOC version
+
 ## 0.5-RELEASE
 
 * Add options.lua file with Interface panel
