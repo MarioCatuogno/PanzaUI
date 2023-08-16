@@ -1,6 +1,10 @@
+## 0.6-RELEASE
+
+* Updated TOC version
+
 ## 0.5-RELEASE
 
-* Add options.lua file with Interface panel
+* Added options.lua file with Interface panel
 * Reworked core.lua adding functions
 * Updated SavedVariables
 * Updated TOC version

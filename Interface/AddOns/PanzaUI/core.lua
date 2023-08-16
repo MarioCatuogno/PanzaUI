@@ -162,7 +162,7 @@ end
 local function configQueueIcon()
   -- Configuration table to store scale and position values for the Queue Status Button
   local config = {
-    buttonScale = 0.8,
+    buttonScale = 0.7,
     iconPosition = {
       point = "BOTTOM",
       relativeTo = Minimap,
