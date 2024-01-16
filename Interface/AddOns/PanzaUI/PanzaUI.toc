@@ -1,8 +1,8 @@
-## Interface: 100100
+## Interface: 100205
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft custom UI
 ## Author: Panzarotto
-## Version: 0.6
+## Version: 0.6.0
 ## SavedVariables: PanzaUIDB
 
 core.lua

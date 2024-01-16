@@ -1,10 +1,15 @@
 --------------------------------------------------------------------------------
--- PanzaUI: Core
+-- PanzaUI
 --------------------------------------------------------------------------------
 
-local addonName, addonTable = ...
-addonTable.core = {}
+--------------------------------------------------------------------------------
+-- HELPER FUNCTIONS
+--------------------------------------------------------------------------------
 
+-- Add any helper functions here that can be reused across other functions
+local addonName, addonTable = ...
+
+addonTable.core = {}
 --------------------------------------------------------------------------------
 -- FUNCTION 00: Configure CVars and commands
 --------------------------------------------------------------------------------
@@ -455,16 +460,9 @@ local function configActionBars()
   MainMenuBar:SetAlpha(0)
   MainMenuBar:EnableMouse(false)
 
-  -- Hide GCD blink
-  for i = 1, 12 do
-    local button = _G["ActionButton"..i]
-    if button then
-      button.cooldown:SetDrawBling(false)
-    end
-  end
-
   -- Avoid interaction with action bars
   local bars = {
+    "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
     "MultiBarBottomLeftButton",
@@ -479,13 +477,14 @@ local function configActionBars()
       if button then
         button:SetScript("OnEnter", nil)
         button:SetScript("OnClick", nil)
+        button.cooldown:SetDrawBling(false)
       end
     end
   end
 end
 
 --------------------------------------------------------------------------------
--- STORE FUNCTIONS
+-- INITIALIZATION FUNCTION
 --------------------------------------------------------------------------------
 
 addonTable.core.autoCollapseBuffFrame = autoCollapseBuffFrame
@@ -502,7 +501,6 @@ addonTable.core.hideMicroMenuAlerts = hideMicroMenuAlerts
 addonTable.core.hideMultipleUIFrames = hideMultipleUIFrames
 addonTable.core.hideRealmNameFromRaidFrames = hideRealmNameFromRaidFrames
 
--- Initialize functions
 local function OnEvent(self, event, ...)
   if event == "ADDON_LOADED" and ... == addonName then
     if not PanzaUIDB then
@@ -521,7 +519,6 @@ local function OnEvent(self, event, ...)
   end
 end
 
--- Register eventss
 local frame = CreateFrame("FRAME")
 frame:SetScript("OnEvent", OnEvent)
 frame:RegisterEvent("ADDON_LOADED")
