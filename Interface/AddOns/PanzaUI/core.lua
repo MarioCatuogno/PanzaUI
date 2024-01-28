@@ -465,6 +465,7 @@ local function configActionBars()
     "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
+--    "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
     "MultiBar5Button",
     "MultiBar6Button",
@@ -481,6 +482,28 @@ local function configActionBars()
       end
     end
   end
+
+  -- Avoid blink in action bars
+  local gdcbars = {
+    "MainMenuBar",
+    "ActionButton",
+    "MultiBarLeftButton",
+    "MultiBarBottomRightButton",
+    "MultiBarBottomLeftButton",
+    "MultiBar5Button",
+    "MultiBar6Button",
+    "MultiBar7Button"
+  }
+
+  for _, gdcbar in pairs(gdcbars) do
+    for i = 1, 12 do
+      local button = _G[gdcbar..i]
+      if button then
+        button.cooldown:SetDrawBling(false)
+      end
+    end
+  end
+
 end
 
 --------------------------------------------------------------------------------
