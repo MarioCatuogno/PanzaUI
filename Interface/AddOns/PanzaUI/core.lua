@@ -457,8 +457,8 @@ end
 -- Hide MainMenuBar
 local function configActionBars()
   -- Set Alpha to 0
-  MainMenuBar:SetAlpha(0)
-  MainMenuBar:EnableMouse(false)
+--  MainMenuBar:SetAlpha(0)
+--  MainMenuBar:EnableMouse(false)
 
   -- Avoid interaction with action bars
   local bars = {
