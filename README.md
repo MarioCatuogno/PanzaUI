@@ -37,8 +37,8 @@ To make the most out of my addon, you should also have these other addons instal
 * __Advanced Interface Options__: Gives you access to a vast array of advanced UI settings.
 * __BigWigs/LittleWigs__: Keeps you on track with boss encounters.
 * __Details!__: An advanced damage meter with many cool features.
+* __DialogueUI__: A better quest interface that's easier on the eyes.
 * __idTip__: Provides additional information about items when you mouseover them.
-* __Immersion__: A better quest interface that's easier on the eyes.
 * __LeatrixMaps/LeatrixPlus__: Adds many cool features to the default maps.
 * __LS:Toasts__: Toast notifications for important events.
 * __Masque__: Customize your action bar buttons with this addon.
@@ -49,12 +49,10 @@ To make the most out of my addon, you should also have these other addons instal
 * __Threat Plates__: Provides a more detailed view of threat levels.
 * __Unlimited Map Distance__: Allows you to zoom out the map as far as you want.
 * __WeakAuras__: Customize and personalize your UI with a vast array of options.
-* 
+  
 So, if you're looking for a more minimalistic, yet personalized UI for your WoW gameplay, give my addon a try! It's like having your own personal assistant for your UI.
 
 I play on a MacBook Pro 14" with a resolution of 3024x1964.
-
-Link to Wago.io collection: [https://wago.io/PO1A4B5V3](https://wago.io/PO1A4B5V3)
 
 ## Macros
 
@@ -62,11 +60,12 @@ Link to Wago.io collection: [https://wago.io/PO1A4B5V3](https://wago.io/PO1A4B5V
 
 ## Profiles
 
-* [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-DpsTank.txt)
-* [PanzaUI-Heal](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Heal.txt)
-* [PanzaUI-ThreatPlates](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-ThreatPlates.txt)
-* [PanzaUI-SUF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
 * [PanzaUI-Details!](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
+* [PanzaUI-DPS/Tank](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-DpsTank.txt)
+* [PanzaUI-Heal](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Heal.txt)
+* [PanzaUI-RSF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/RaidFrameSettings.txt)
+* [PanzaUI-SUF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
+* [PanzaUI-ThreatPlates](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-ThreatPlates.txt)
 
 ## WeakAuras
 
@@ -110,14 +109,15 @@ Link to Wago.io collection: [https://wago.io/PO1A4B5V3](https://wago.io/PO1A4B5V
 ## How to install
 
 1. Downaload and install the addons listed above
-2. Download the last release file from [Releases](https://github.com/MarioCatuogno/PanzaUI/releases)
+2. Download the last release file
 3. Unzip the file and copy the PanzaUI and SharedMedia_MyMedia folders into your Interface folder
 4. Run World of Warcraft and import:
-  - WeakAuras profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/WeakAuras) or [Wago.io](https://wago.io/PO1A4B5V3)
+  - WeakAuras profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/WeakAuras) 
   - ThreatPlates profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-ThreatPlates.txt)
-  - SUF profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt) or [Wago.io](https://wago.io/egWLbRohp)
+  - Raid Frame Settings profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/RaidFrameSettings.txt)
+  - SUF profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
   - Details profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
-  - BlizzardUI profile (Dps/Tank or Healer) from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles) or [Wago.io](https://wago.io/PO1A4B5V3)
+  - BlizzardUI profile (Dps/Tank or Healer) from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles)
 5. Copy the content of [SavedVariables](https://github.com/MarioCatuogno/PanzaUI/tree/main/SavedVariables) into your SavedVariables folder (into WTF folder)
 6. Copy the [Fonts](https://github.com/MarioCatuogno/PanzaUI/tree/main/Fonts) folder into your World of Warcraft folder
 7. Enjoy!
