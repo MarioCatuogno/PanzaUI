@@ -2,7 +2,7 @@
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft custom UI
 ## Author: Panzarotto
-## Version: 0.6.1
+## Version: 0.6
 ## SavedVariables: PanzaUIDB
 
 core.lua
