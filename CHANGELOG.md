@@ -1,11 +1,11 @@
-## 0.6.1-RELEASE
-
-* Fix action bars GCD
-* Updated Weak Auras profiles
-
 ## 0.6.0-RELEASE
 
-* Fix action bars GCD and animation
+* Added WA portraits for Player and Target frames
+* Changed SUF textures
+* Updated Blizzard profiles for DPS/Tank and Healer
+* Switched from Immersion to DialogueUI
+* Reworked core.lua removing unused functions and polishing the code
+* Updated SavedVariables
 * Updated TOC version
 
 ## 0.5.0-RELEASE
