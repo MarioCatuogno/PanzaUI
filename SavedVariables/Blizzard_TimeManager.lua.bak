@@ -1,0 +1,3 @@
+
+BlizzardStopwatchOptions = {
+}
