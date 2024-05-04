@@ -1,3 +1,6 @@
+## 0.7.0-RELEASE
+* Added WA for Cast Bar to show an icon and the casting time
+
 ## 0.6.0-RELEASE
 
 * Added WA portraits for Player and Target frames
