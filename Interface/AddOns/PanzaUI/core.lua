@@ -45,7 +45,7 @@ local function configCVars()
   C_CVar.SetCVar("floatingCombatTextReactives", 0)
 
   -- Graphics
-  C_CVar.SetCVar("renderscale", 0.910)
+  C_CVar.SetCVar("renderscale", 0.760)
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
   -- Minimap
