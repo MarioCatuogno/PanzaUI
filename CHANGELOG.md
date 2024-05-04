@@ -1,5 +1,6 @@
 ## 0.7.0-RELEASEù
 * Added Druid debuffs to Threat Plate
+* Added Great Vault alert to WA Utilities
 * Added WA for Cast Bar to show an icon and the casting time
 
 ## 0.6.0-RELEASE
