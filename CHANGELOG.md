@@ -1,4 +1,5 @@
-## 0.7.0-RELEASE
+## 0.7.0-RELEASEù
+* Added Druid debuffs to Threat Plate
 * Added WA for Cast Bar to show an icon and the casting time
 
 ## 0.6.0-RELEASE
