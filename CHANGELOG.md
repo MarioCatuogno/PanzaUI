@@ -1,4 +1,5 @@
-## 0.7.0-RELEASEù
+## 0.7.0-RELEASE
+* Added Cloak of Coordination to WA Utilities
 * Added Druid debuffs to Threat Plate
 * Added Great Vault alert to WA Utilities
 * Added WA for Cast Bar to show an icon and the casting time
