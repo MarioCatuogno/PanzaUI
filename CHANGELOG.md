@@ -1,6 +1,10 @@
 ## 0.7.0-RELEASE
-* Added Cloak of Coordination to WA Utilities
+
+### PanzaUI - Profiles
 * Added Druid debuffs to Threat Plate
+
+### PanzaUI - Utilities
+* Added Cloak of Coordination to WA Utilities
 * Added Great Vault alert to WA Utilities
 * Added WA for Cast Bar to show an icon and the casting time
 
