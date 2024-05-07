@@ -5,6 +5,7 @@
 * Moved Quest Tracker on both DPS/Tank and Healer profile
 
 ### PanzaUI - Utilities
+* Added Arcane Intellect to WA Utilities to track missing auras
 * Added Cloak of Coordination to WA Utilities
 * Added Great Vault alert to WA Utilities
 * Added WA for Cast Bar to show an icon and the casting time
