@@ -39,15 +39,15 @@ To make the most out of my addon, you should also have these other addons instal
 * __Details!__: An advanced damage meter with many cool features.
 * __DialogueUI__: A better quest interface that's easier on the eyes.
 * __idTip__: Provides additional information about items when you mouseover them.
-* __LeatrixMaps/LeatrixPlus__: Adds many cool features to the default maps.
+* __LeatrixMaps/LeatrixPlus__: Adds many cool features to various parts of the UI and to the default maps.
 * __LS:Toasts__: Toast notifications for important events.
 * __Masque__: Customize your action bar buttons with this addon.
 * __MouseoverActionBar__: Allows you to perform actions by hovering over your action bar buttons.
 * __Raid Frame Settings__: Customize your raid frames to your preference.
 * __Shadowed Unit Frames__: More customizable unit frames.
 * __Simple Item Level__: Displays item levels on tooltips.
-* __Threat Plates__: Provides a more detailed view of threat levels.
-* __Unlimited Map Distance__: Allows you to zoom out the map as far as you want.
+* __Threat Plates__: A better version of Nameplates of NPCs and friendly units.
+* __Unlimited Map Distance__: Unlimited distance for map pins.
 * __WeakAuras__: Customize and personalize your UI with a vast array of options.
   
 So, if you're looking for a more minimalistic, yet personalized UI for your WoW gameplay, give my addon a try! It's like having your own personal assistant for your UI.
