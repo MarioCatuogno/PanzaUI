@@ -9,6 +9,7 @@
 * Added Cloak of Coordination to WA Utilities
 * Added Great Vault alert to WA Utilities
 * Added WA for Cast Bar to show an icon and the casting time
+* Hide Quest Tracker while in Raid/Party encounter
 * Moved Movement buffs/cooldown tracker from WA Class to WA Utilities
 
 ## 0.6.0-RELEASE
