@@ -2,6 +2,7 @@
 
 ### PanzaUI - Profiles
 * Added Druid debuffs to Threat Plate
+* Moved Quest Tracker on both DPS/Tank and Healer profile
 
 ### PanzaUI - Utilities
 * Added Cloak of Coordination to WA Utilities
