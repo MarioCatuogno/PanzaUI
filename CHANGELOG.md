@@ -1,5 +1,8 @@
 ## 0.7.0-RELEASE
 
+* Updated SavedVariables
+* Updated TOC version
+
 ### PanzaUI - Profiles
 * Added Druid debuffs to Threat Plate
 * Moved Quest Tracker on both DPS/Tank and Healer profile
