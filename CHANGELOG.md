@@ -3,6 +3,7 @@
 * Added a PDF containing keybinds and macros for Druid (WIP)
 * Added a PDF containing keybinds and macros for Monk
 * Added a PDF containing keybinds and macros for Rogue (WIP)
+* Updated macros for Druid (WIP)
 * Updated macros for Monk
 * Updated macros for Rogue (WIP)
 * Updated SavedVariables
