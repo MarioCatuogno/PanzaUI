@@ -1,9 +1,19 @@
 
 Details_StreamerDB = {
 	["characters"] = {
+		["Popletta - Draenor"] = "Panzarotto - Draenor",
+		["Gelatino - Draenor"] = "Panzarotto - Draenor",
 		["Sfilatino - Draenor"] = "Panzarotto - Draenor",
-		["Formaggino - Draenor"] = "Panzarotto - Draenor",
+		["Polpetta - Draenor"] = "Panzarotto - Draenor",
+		["Salsiccio - Argent Dawn"] = "Panzarotto - Draenor",
+		["Ham - Nemesis"] = "Panzarotto - Draenor",
+		["Panuozzo - Argent Dawn"] = "Panzarotto - Draenor",
+		["Pizzadino - Argent Dawn"] = "Panzarotto - Draenor",
 		["Panzarotto - Draenor"] = "Panzarotto - Draenor",
+		["Panzarotto - Silvermoon"] = "Panzarotto - Draenor",
+		["Noiram - Argent Dawn"] = "Panzarotto - Draenor",
+		["Formaggino - Draenor"] = "Panzarotto - Draenor",
+		["Sorbetto - Draenor"] = "Panzarotto - Draenor",
 	},
 	["profiles"] = {
 		["Panzarotto - Draenor"] = {
@@ -15,7 +25,7 @@ Details_StreamerDB = {
 				1, -- [3]
 				0.5, -- [4]
 			},
-			["arrow_anchor_y"] = 0,
+			["scale"] = 1,
 			["main_frame_size"] = {
 				300.0000610351563, -- [1]
 				500, -- [2]
@@ -25,32 +35,21 @@ Details_StreamerDB = {
 				["radius"] = 160,
 				["hide"] = false,
 			},
-			["main_frame_locked"] = false,
+			["row_height"] = 20,
 			["arrow_anchor_x"] = 0,
-			["row_color"] = {
-				0.1, -- [1]
-				0.1, -- [2]
-				0.1, -- [3]
-				0.4, -- [4]
+			["font_color"] = {
+				1, -- [1]
+				1, -- [2]
+				1, -- [3]
+				1, -- [4]
 			},
 			["row_texture"] = "Details Serenity",
 			["square_grow_direction"] = "right",
-			["use_spark"] = true,
-			["author"] = "Terciob",
+			["point"] = "CENTER",
+			["main_frame_strata"] = "LOW",
 			["square_amount"] = 5,
 			["enabled"] = false,
 			["arrow_size"] = 10,
-			["y"] = -1.52587890625e-05,
-			["row_spacement"] = 21,
-			["main_frame_color"] = {
-				0, -- [1]
-				0, -- [2]
-				0, -- [3]
-				0.2, -- [4]
-			},
-			["main_frame_strata"] = "LOW",
-			["arrow_texture"] = "Interface\\CHATFRAME\\ChatFrameExpandArrow",
-			["font_size"] = 10,
 			["per_second"] = {
 				["enabled"] = false,
 				["point"] = "CENTER",
@@ -58,22 +57,33 @@ Details_StreamerDB = {
 				["font_shadow"] = true,
 				["y"] = 0,
 				["x"] = -6.103515625e-05,
-				["attribute_type"] = 1,
-				["update_speed"] = 0.05,
 				["size"] = 32,
+				["update_speed"] = 0.05,
+				["attribute_type"] = 1,
 			},
+			["row_spacement"] = 21,
+			["main_frame_color"] = {
+				0, -- [1]
+				0, -- [2]
+				0, -- [3]
+				0.2, -- [4]
+			},
+			["author"] = "Terciob",
+			["arrow_texture"] = "Interface\\CHATFRAME\\ChatFrameExpandArrow",
+			["y"] = -1.52587890625e-05,
+			["font_size"] = 10,
 			["x"] = 3.0517578125e-05,
 			["font_face"] = "Friz Quadrata TT",
 			["square_size"] = 32,
-			["point"] = "CENTER",
-			["font_color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
+			["row_color"] = {
+				0.1, -- [1]
+				0.1, -- [2]
+				0.1, -- [3]
+				0.4, -- [4]
 			},
-			["row_height"] = 20,
-			["scale"] = 1,
+			["use_spark"] = true,
+			["main_frame_locked"] = false,
+			["arrow_anchor_y"] = 0,
 		},
 	},
 }

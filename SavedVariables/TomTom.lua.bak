@@ -1,0 +1,134 @@
+
+TomTomDB = {
+["profileKeys"] = {
+["Pizzadino - Draenor"] = "Default",
+["Popletta - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Salsiccio - Argent Dawn"] = "Default",
+["Noiram - Argent Dawn"] = "Default",
+["Sorbetto - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Sfincione - Draenor"] = "Default",
+["Panzarotto - Draenor"] = "Default",
+["Panzarotto - Silvermoon"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Ham - Nemesis"] = "Default",
+},
+["profiles"] = {
+["Default"] = {
+["arrow"] = {
+["position"] = {
+"CENTER",
+nil,
+"CENTER",
+-243.1766815185547,
+-87.3724594116211,
+},
+["showtta"] = false,
+},
+["minimap"] = {
+["otherzone"] = false,
+["tooltip"] = false,
+["enable"] = false,
+},
+["mapcoords"] = {
+["cursorenable"] = false,
+["playerenable"] = false,
+},
+["block"] = {
+["enable"] = false,
+["position"] = {
+"CENTER",
+nil,
+"CENTER",
+0,
+-100,
+},
+},
+["worldmap"] = {
+["menu"] = false,
+["clickcreate"] = false,
+["otherzone"] = false,
+["tooltip"] = false,
+},
+},
+},
+}
+TomTomWaypoints = nil
+TomTomWaypointsM = {
+["profileKeys"] = {
+["Pizzadino - Draenor"] = "Pizzadino - Draenor",
+["Popletta - Draenor"] = "Popletta - Draenor",
+["Gelatino - Draenor"] = "Gelatino - Draenor",
+["Salsiccio - Argent Dawn"] = "Salsiccio - Argent Dawn",
+["Noiram - Argent Dawn"] = "Noiram - Argent Dawn",
+["Sorbetto - Draenor"] = "Sorbetto - Draenor",
+["Sfilatino - Draenor"] = "Sfilatino - Draenor",
+["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
+["Sfincione - Draenor"] = "Sfincione - Draenor",
+["Panzarotto - Draenor"] = "PanzaUI",
+["Panzarotto - Silvermoon"] = "Panzarotto - Silvermoon",
+["Pizzadino - Argent Dawn"] = "Pizzadino - Argent Dawn",
+["Formaggino - Draenor"] = "Formaggino - Draenor",
+["Ham - Nemesis"] = "Ham - Nemesis",
+},
+["profiles"] = {
+["PanzaUI"] = {
+},
+["Pizzadino - Draenor"] = {
+},
+["Popletta - Draenor"] = {
+},
+["Gelatino - Draenor"] = {
+},
+["Salsiccio - Argent Dawn"] = {
+},
+["Noiram - Argent Dawn"] = {
+},
+["Sorbetto - Draenor"] = {
+},
+["Sfilatino - Draenor"] = {
+},
+["Panuozzo - Argent Dawn"] = {
+},
+["Sfincione - Draenor"] = {
+},
+["Panzarotto - Draenor"] = {
+[2112] = {
+["2112:100000000:100000000:TomTom waypoint"] = {
+2112,
+0.1,
+0.1,
+["arrivaldistance"] = 15,
+["crazy"] = true,
+["persistent"] = true,
+["desc"] = "TomTom waypoint",
+["silent"] = true,
+["cleardistance"] = 10,
+["title"] = "TomTom waypoint",
+["from"] = "TomTom/way",
+["callbacks"] = {
+["distance"] = {
+},
+["world"] = {
+},
+["minimap"] = {
+},
+},
+["minimap"] = true,
+["world"] = true,
+},
+},
+},
+["Panzarotto - Silvermoon"] = {
+},
+["Pizzadino - Argent Dawn"] = {
+},
+["Formaggino - Draenor"] = {
+},
+["Ham - Nemesis"] = {
+},
+},
+}
