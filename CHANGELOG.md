@@ -12,8 +12,10 @@
 
 ### PanzaUI - Addon
 
+* Increased the size of the Cloack button of the Minimap
 * Increased the size of the Minimap text
 * Hide Tracker icon in Minimap
+* Set Scale to Clock button
 
 ### PanzaUI - Profiles
 
