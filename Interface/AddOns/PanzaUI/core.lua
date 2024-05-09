@@ -418,7 +418,7 @@ end
 
 local function configMapElements()
   -- Set Alpha and Scale
-  SetScaleForFrame(MinimapZoneText, 1.0)
+  SetScaleForFrame(MinimapZoneText, 1.2)
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
@@ -426,6 +426,7 @@ local function configMapElements()
   -- Hide Minimap zoom buttons
   HideFrameAndUnregisterEvents(Minimap.ZoomIn)
   HideFrameAndUnregisterEvents(Minimap.ZoomOut)
+  HideFrameAndUnregisterEvents(MinimapCluster.TrackingFrame)
 
   -- Set Garrison button scale
   SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)

@@ -10,13 +10,20 @@
 * Updated talents for Monk
 * Updated TOC version
 
+### PanzaUI - Addon
+
+* Increased the size of the Minimap text
+* Hide Tracker icon in Minimap
+
 ### PanzaUI - Profiles
+
 * Added Druid debuffs to Threat Plate
 * Adjusted Action Bar on both DPS/Tank and Healer profile
 * Adjusted Raid Frame position for DPS/Tank profile
 * Moved Quest Tracker on both DPS/Tank and Healer profile
 
 ### PanzaUI - Utilities
+
 * Added Arcane Intellect to WA Utilities to track missing buffs for Mage
 * Added Cloak of Coordination to WA Utilities
 * Added Great Vault alert to WA Utilities
