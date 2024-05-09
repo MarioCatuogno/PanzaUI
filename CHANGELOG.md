@@ -1,5 +1,6 @@
 ## 0.7.0-RELEASE
 
+* Added a PDF containing keybinds and macros for Monk
 * Updated SavedVariables
 * Updated TOC version
 
