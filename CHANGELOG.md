@@ -1,7 +1,9 @@
 ## 0.7.0-RELEASE
 
 * Added a PDF containing keybinds and macros for Monk
+* Added a PDF containing keybinds and macros for Rogue (WIP)
 * Updated macros for Monk
+* Updated macros for Rogue (WIP)
 * Updated SavedVariables
 * Updated talents for Monk
 * Updated TOC version
