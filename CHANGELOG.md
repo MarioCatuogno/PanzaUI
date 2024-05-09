@@ -13,12 +13,14 @@
 * Moved Quest Tracker on both DPS/Tank and Healer profile
 
 ### PanzaUI - Utilities
-* Added Arcane Intellect to WA Utilities to track missing auras
+* Added Arcane Intellect to WA Utilities to track missing buffs for Mage
 * Added Cloak of Coordination to WA Utilities
 * Added Great Vault alert to WA Utilities
+* Added Poisons to WA Utilities to track missing poisons for Rogue
 * Added WA for Cast Bar to show an icon and the casting time
 * Hide Quest Tracker while in Raid/Party encounter
 * Moved Movement buffs/cooldown tracker from WA Class to WA Utilities
+* Removed old Events tracker
 
 ## 0.6.0-RELEASE
 
