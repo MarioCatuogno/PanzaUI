@@ -3,6 +3,7 @@
 * Added a PDF containing keybinds and macros for Monk
 * Updated macros for Monk
 * Updated SavedVariables
+* Updated talents for Monk
 * Updated TOC version
 
 ### PanzaUI - Profiles
