@@ -26,6 +26,7 @@
 * Added highlight to SUF frames when mouseover
 * Adjusted Action Bar on Blizzard UI
 * Adjusted Raid Frame and Party position for Blizzard UI
+* Fixed Threat Plates profile to only show personal debuffs
 * Moved Quest Tracker on Blizzard UI
 * Removed dual profile for Blizzard UI. Merged into one single profile for either Tank/DPS/Healer
 * Removed unnecessary Buffs to Raid Frames
