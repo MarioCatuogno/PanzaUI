@@ -26,9 +26,15 @@
 * Adjusted Raid Frame position for DPS/Tank profile
 * Moved Quest Tracker on both DPS/Tank and Healer profile
 
+### PanzaUI - Druid
+* Re-organized Buff auras order
+
 ### PanzaUI - Monk
 * Removed Serenity Buff aura
 * Removed Summon White Tiger Statue aura
+* Re-organized Buff auras order
+
+### PanzaUI - Rogue
 * Re-organized Buff auras order
 
 ### PanzaUI - Shaman
