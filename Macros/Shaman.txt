@@ -9,7 +9,10 @@
 
 "#showtooltip
 /startattack
-/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Flame Shock; [nomod,@mouseover,exists,harm,nodead][nomod] Frost Shock"
+/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Frost Shock; [nomod,@mouseover,exists,harm,nodead][nomod] Flame Shock"
+
+"#showtooltip
+/castsequence reset=6 Ice Strike, Frost Shock, Frost Shock"
 
 "#showtooltip 
 /use [known:378081] Nature's Swiftness
