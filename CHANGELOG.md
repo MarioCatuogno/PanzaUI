@@ -26,6 +26,7 @@
 * Adjusted Action Bar on both DPS/Tank and Healer profile
 * Adjusted Raid Frame position for DPS/Tank profile
 * Moved Quest Tracker on both DPS/Tank and Healer profile
+* Removed unnecessary Buffs to Raid Frames
 
 ### PanzaUI - Druid
 
