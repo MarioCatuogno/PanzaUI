@@ -58,6 +58,7 @@
 * Fixed loading condition for Alerts
 * Hide Quest Tracker while in Raid/Party encounter
 * Moved Movement buffs/cooldown tracker from WA Class to WA Utilities
+* Moved Raid Ability Timeline
 * Re-organized Buff auras order
 * Removed old Events tracker
 
