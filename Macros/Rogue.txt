@@ -1,31 +1,31 @@
-"#showtooltip
+#showtooltip
 /startattack
-/use [mod:shift] Shiv; Sinister Strike"
+/use [mod:shift] Shiv; Sinister Strike
 
-"#showtooltip
-/use [@mouseover,exists,harm][] Pistol Shot"
+#showtooltip
+/use [@mouseover,exists,harm][] Pistol Shot
 
-"#showtooltip
+#showtooltip
 /startattack
-/cast Between the Eyes"
+/cast Between the Eyes
 
-"#showtooltip
+#showtooltip
 /startattack
-/use Dispatch"
+/use Dispatch
 
-"#showtooltip
+#showtooltip
 /startattack
-/cast Echoing Reprimand"
+/cast Echoing Reprimand
 
-"#showtooltip
-/use [mod:shift] Sprint; [@cursor] Grappling Hook"
+#showtooltip
+/use [mod:shift] Sprint; [@cursor] Grappling Hook
 
-"#showtooltip
+#showtooltip
 /stopattack
 /cqs
-/use [combat] Vanish; Stealth"
+/use [combat] Vanish; Stealth
 
-"#showtooltip
+#showtooltip
 /stopcasting
 /cqs
-/use [mod:shift] Kidney Shot; [@focus, exists] Kick; Kick"
+/use [mod:shift] Kidney Shot; [@focus, exists] Kick; Kick

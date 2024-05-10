@@ -1,59 +1,67 @@
-"#showtooltip
+#showtooltip
 /startattack
 /use Stormstrike
-/use [@player] Totemic Projection"
+/use [@player] Totemic Projection
 
-"#showtooltip
+#showtooltip
 /startattack
-/use Lava Lash"
+/use Lava Lash
 
-"#showtooltip
+#showtooltip
 /startattack
-/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Frost Shock; [nomod,@mouseover,exists,harm,nodead][nomod] Flame Shock"
+/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Frost Shock; [nomod,@mouseover,exists,harm,nodead][nomod] Flame Shock
 
-"#showtooltip
-/castsequence reset=6 Ice Strike, Frost Shock, Frost Shock"
+#showtooltip
+/castsequence reset=6 Ice Strike, Frost Shock, Frost Shock
 
-"#showtooltip 
+#showtooltip 
 /use [known:378081] Nature's Swiftness
-/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Lightning Bolt; [nomod,@mouseover,exists,harm,nodead][nomod] Chain Lightning"
+/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Lightning Bolt; [nomod,@mouseover,exists,harm,nodead][nomod] Chain Lightning
 
-"#showtooltip
+#showtooltip
 /startattack
-/use [@mouseover,exists,harm,nodead][] Primordial Wave"
+/use [@mouseover,exists,harm,nodead][] Primordial Wave
 
-"#showtooltip
-/use [mod:shift,@mousover,exists,help,nodead] Earth Shield; [@player] Earth Shield"
+#showtooltip
+/use [mod:shift,@mousover,exists,help,nodead] Earth Shield; [@player] Earth Shield
 
-"#showtooltip
+#showtooltip
 /use [known:108281] Ancestral Guidance
-/use [known:384352] Doom Winds"
+/use [known:384352] Doom Winds
 
-"#showtooltip
-/use [mod:shift] Spirit Walk; Ghost Wolf"
+#showtooltip
+/use [mod:shift] Spirit Walk; Ghost Wolf
 
-"#showtooltip
-/cast [@player] Wind Rush Totem"
+#showtooltip
+/cast [@player] Wind Rush Totem
 
-"#showtooltip
-/cast [mod:shift] Hex; [@player] Earthbind Totem"
+#showtooltip
+/cast [mod:shift] Hex; [@player] Earthbind Totem
 
-"#showtooltip 
-/use [mod:shift,@mouseover,exists,help,nodead][mod:shift] Chain Heal; [@mouseover,exists,heal,nodead][] Healing Surge"
+#showtooltip 
+/use [mod:shift,@mouseover,exists,help,nodead][mod:shift] Chain Heal; [@mouseover,exists,heal,nodead][] Healing Surge
 
-"#showtooltip
+#showtooltip
 /stopcasting
 /cqs
-/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Wind Shear"
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Wind Shear
 
-"#showtooltip
-/use [mod:shift] Windfury Totem; Healing Stream Totem"
+#showtooltip
+/use [mod:shift] Windfury Totem; Healing Stream Totem
 
-"#showtooltip
-/use [@cursor] Totemic Projection"
+#showtooltip
+/use [@cursor] Totemic Projection
 
-"#showtooltip
-/use [@cursor] Far Sight"
+#showtooltip
+/use [@cursor] Far Sight
 
-"#showtooltip
-/castsequence reset=10 Lightning Shield, Flametongue Weapon, Windfury Weapon"
+#showtooltip
+/castsequence reset=10 Lightning Shield, Flametongue Weapon, Windfury Weapon
+
+/click TotemFrameTotem1 RightButton
+/click TotemFrameTotem2 RightButton
+/click TotemFrameTotem3 RightButton
+/click TotemFrameTotem4 RightButton
+/click TotemFrameTotem5 RightButton
+/click TotemFrameTotem6 RightButton
+/petdismiss
