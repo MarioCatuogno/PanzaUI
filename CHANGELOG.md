@@ -22,11 +22,12 @@
 
 ### PanzaUI - Profiles
 
-* Added Druid debuffs to Threat Plate
+* Added Druid debuffs to Threat Plates
 * Added highlight to SUF frames when mouseover
-* Adjusted Action Bar on both DPS/Tank and Healer profile
-* Adjusted Raid Frame position for DPS/Tank profile
-* Moved Quest Tracker on both DPS/Tank and Healer profile
+* Adjusted Action Bar on Blizzard UI
+* Adjusted Raid Frame and Party position for Blizzard UI
+* Moved Quest Tracker on Blizzard UI
+* Removed dual profile for Blizzard UI. Merged into one single profile for either Tank/DPS/Healer
 * Removed unnecessary Buffs to Raid Frames
 
 ### PanzaUI - Druid
