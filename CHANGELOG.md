@@ -26,6 +26,15 @@
 * Adjusted Raid Frame position for DPS/Tank profile
 * Moved Quest Tracker on both DPS/Tank and Healer profile
 
+### PanzaUI - Monk
+* Removed Serenity Buff aura
+* Removed Summon White Tiger Statue aura
+* Re-organized Buff auras order
+
+### PanzaUI - Shaman
+* Added Buff auras for Enhancement Shaman
+* Re-organized Buff auras order
+
 ### PanzaUI - Utilities
 
 * Added Arcane Intellect to WA Utilities to track missing buffs for Mage
@@ -36,6 +45,8 @@
 * Hide Quest Tracker while in Raid/Party encounter
 * Moved Movement buffs/cooldown tracker from WA Class to WA Utilities
 * Removed old Events tracker
+
+
 
 ## 0.6.0-RELEASE
 
