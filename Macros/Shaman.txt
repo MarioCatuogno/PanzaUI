@@ -1,6 +1,7 @@
 "#showtooltip
 /startattack
-/use Stormstrike"
+/use Stormstrike
+/use [@player] Totemic Projection"
 
 "#showtooltip
 /startattack
@@ -16,10 +17,10 @@
 
 "#showtooltip
 /startattack
-/use [nomod,@mouseover,exists,harm,nodead][nomod] Primordial Wave"
+/use [@mouseover,exists,harm,nodead][] Primordial Wave"
 
 "#showtooltip
-/use [mod:shift] Lightning Shield; [@player] Earth Shield"
+/use [mod:shift,@mousover,exists,help,nodead] Earth Shield; [@player] Earth Shield"
 
 "#showtooltip
 /use [known:108281] Ancestral Guidance
@@ -40,7 +41,7 @@
 "#showtooltip
 /stopcasting
 /cqs
-/use [@focus,exists,harm,nodead][@mouseover,exists,harm,nodead] Wind Shear; Wind Shear"
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Wind Shear"
 
 "#showtooltip
 /use [mod:shift] Windfury Totem; Healing Stream Totem"
@@ -50,3 +51,6 @@
 
 "#showtooltip
 /use [@cursor] Far Sight"
+
+"#showtooltip
+/castsequence reset=10 Lightning Shield, Flametongue Weapon, Windfury Weapon"
