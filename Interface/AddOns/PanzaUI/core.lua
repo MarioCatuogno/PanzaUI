@@ -422,6 +422,7 @@ local function configMapElements()
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
+  SetAlphaForFrame(AddonCompartmentFrame, 0)
 
   -- Hide Minimap zoom buttons
   HideFrameAndUnregisterEvents(Minimap.ZoomIn)
@@ -431,7 +432,7 @@ local function configMapElements()
   -- Set Scale to Clock button
   LoadAddOn("Blizzard_TimeManager")
   local region = TimeManagerClockButton:GetRegions()
-  TimeManagerClockButton:SetScale(1.3)
+  TimeManagerClockButton:SetScale(1.25)
 
   -- Set Garrison button scale
   SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)

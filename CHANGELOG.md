@@ -14,6 +14,7 @@
 
 ### PanzaUI - Addon
 
+* Hide Addon icon in Minimap
 * Hide Tracker icon in Minimap
 * Increased the size of the Cloack button of the Minimap
 * Increased the size of the Minimap text
