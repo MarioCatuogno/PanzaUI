@@ -36,6 +36,7 @@ To make the most out of my addon, you should also have these other addons instal
 * __PanzaUI__: The core of my UI.
 * __Advanced Interface Options__: Gives you access to a vast array of advanced UI settings.
 * __BigWigs/LittleWigs__: Keeps you on track with boss encounters.
+* __Destroy Totems__: An addon to dismiss Totems and Pets with the press of a macro.
 * __Details!__: An advanced damage meter with many cool features.
 * __DialogueUI__: A better quest interface that's easier on the eyes.
 * __idTip__: Provides additional information about items when you mouseover them.
