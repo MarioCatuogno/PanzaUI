@@ -29,13 +29,13 @@
 /use [spec:3] Strike of the Windlord
 
 #showtooltip
-/use [spec:1,mod:shift] Celestial Brew; [spec:1,nomod] Purifying Brew
+/use [spec:1,mod:shift] Celestial Brew; [spec:1] Purifying Brew
 /use [spec:2,@mouseover,exists,help,nodead][spec:2,@target,exists,help,nodead] Sheilun's Gift; [spec:2,@player] Sheilun's Gift
 /use [spec:3] Storm, Earth, and Fire
 
 #showtooltip
-/use [spec:1, mod:shift] Fortifying Brew; [spec:1,nomod] Zen Meditation
-/use [spec:2, mod:shift] Fortifying Brew; [spec:2, nomod] Mana Tea
+/use [spec:1, mod:shift] Fortifying Brew; [spec:1] Zen Meditation
+/use [spec:2, mod:shift] Fortifying Brew; [spec:2] Mana Tea
 /use [spec:3] Fortifying Brew
 
 #showtooltip
