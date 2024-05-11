@@ -46,6 +46,7 @@
 * WA Utilities - Added Cloak of Coordination to Alerts
 * WA Utilities - Added for Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
+* WA Utilities - Added option to change Tooltip's Health Bar texture
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
 * WA Utilities - Fixed loading condition for Alerts
 * WA Utilities - Hide Quest Tracker while in Raid/Party encounter
