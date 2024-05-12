@@ -34,7 +34,7 @@
 * Details - Changed Title Bar texture
 * RFS - Removed unnecessary Buffs to Raid Frames
 * SUF - Added highlight to SUF frames when mouseover
-* Threat Plates - dded Druid debuffs to Threat Plates
+* Threat Plates - Changed Filtered Auras method from Allow to Block
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
 * WA Druid - Re-organized Buff auras order
 * WA Monk - Re-organized Buff auras order
