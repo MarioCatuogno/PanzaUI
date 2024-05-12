@@ -3,14 +3,15 @@
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- Helper Functions
+-- HELPER FUNCTIONS
 --------------------------------------------------------------------------------
 
+-- Add any helper functions here that can be reused across other functions
 local addonName, addonTable = ...
-addonTable.core = {}
 
+addonTable.core = {}
 --------------------------------------------------------------------------------
--- FUNCTION 01: Configure CVars and commands
+-- FUNCTION 00: Configure CVars and commands
 --------------------------------------------------------------------------------
 
 -- Set CVars
@@ -63,14 +64,15 @@ local function configCVars()
   --C_CVar.SetCVar("nameplateMinAlphaDistance", 10)
   --C_CVar.SetCVar("nameplateMotion", 2)
   --C_CVar.SetCVar("nameplateOtherBottomInset", 0.1)
-  --C_CVar.SetCVar("nameplateOtherTopInset", 0.08)
+  C_CVar.SetCVar("nameplateOtherTopInset", 0.15)
+  C_CVar.SetCVar("nameplateLargeTopInset", 0.15)
   --C_CVar.SetCVar("nameplateShowEnemies", 1)
   --C_CVar.SetCVar("nameplateShowEnemyPets", 1)
   --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
   --C_CVar.SetCVar("nameplateShowOnlyNames", 0)
   --C_CVar.SetCVar("NamePlateVerticalScale", 1.2)
-  --C_CVar.SetCVar("nameplateOverlapV", 0.7)
-  --C_CVar.SetCVar("nameplateOverlapH", 0.4)
+  C_CVar.SetCVar("nameplateOverlapV", 0.5)
+  C_CVar.SetCVar("nameplateOverlapH", 1)
 
   -- Unit Frames
   C_CVar.SetCVar("showTargetOfTarget", 1)
@@ -136,7 +138,7 @@ SLASH_CHECKROLE1 = '/cr'
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 02: Configure Quest Tracker
+-- FUNCTION 1: Configure Quest Tracker
 --------------------------------------------------------------------------------
 
 -- Configure the Quest Tracker frame and Encounter bar
@@ -159,7 +161,7 @@ local function configQuestTracker()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 03: Configure Queue Icon
+-- FUNCTION 2: Configure Queue Icon
 --------------------------------------------------------------------------------
 
 -- Configure the Queue Status Button and Icon
@@ -191,7 +193,7 @@ local function configQueueIcon()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 04: Hide Micro Menu Alerts
+-- FUNCTION 3: Hide Micro Menu Alerts
 --------------------------------------------------------------------------------
 
 -- This function disables alerts for the Micro Menu Bar
@@ -203,7 +205,7 @@ local function hideMicroMenuAlerts()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 05: Auto-Collapse Buff Frame
+-- FUNCTION 4: Auto-Collapse Buff Frame
 --------------------------------------------------------------------------------
 
 -- This function auto-collapses the buff frame in World of Warcraft
@@ -222,7 +224,7 @@ local function autoCollapseBuffFrame()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 06: Hide Various UI Frames
+-- FUNCTION 5: Hide Various UI Frames
 --------------------------------------------------------------------------------
 
 -- This function hides a specific UI frame and unregisters its events
@@ -249,7 +251,7 @@ local function hideMultipleUIFrames()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 07: Configure Player Frame
+-- FUNCTION 6: Configure Player Frame
 --------------------------------------------------------------------------------
 
 -- Helper function to hide power bars
@@ -288,7 +290,7 @@ local function configPlayerFrame()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 08: Configure Target Frame
+-- FUNCTION 7: Configure Target Frame
 --------------------------------------------------------------------------------
 
 -- Configure Target Frame
@@ -307,7 +309,7 @@ local function configTargetFrame()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 09: Class colour player and target frames
+-- FUNCTION 8: Class colour player and target frames
 --------------------------------------------------------------------------------
 
 local function UpdateHealthBarColor(self)
@@ -334,7 +336,7 @@ local function configClassColorFrames()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 10: Configure chat
+-- FUNCTION 9: Configure chat
 --------------------------------------------------------------------------------
 
 -- Helper function to hide frames and set chat scrolling
@@ -391,7 +393,7 @@ CHAT_FLAG_DND = "[DND] "
 CHAT_FLAG_GM = "[GM] "
 
 --------------------------------------------------------------------------------
--- FUNCTION 11: Configure minimap
+-- FUNCTION 10: Configure minimap
 --------------------------------------------------------------------------------
 
 -- Helper function to unregister events and set scale
@@ -438,7 +440,7 @@ local function configMapElements()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 12: Hide server names from raid frames
+-- FUNCTION 11: Hide server names from raid frames
 --------------------------------------------------------------------------------
 
 -- Hide Realm name from Raid frames
@@ -457,7 +459,7 @@ local function hideRealmNameFromRaidFrames()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 13: Configure action bars
+-- FUNCTION 12: Configure action bars
 --------------------------------------------------------------------------------
 
 -- Hide MainMenuBar
@@ -513,7 +515,7 @@ local function configActionBars()
 end
 
 --------------------------------------------------------------------------------
--- Initialize Functions
+-- INITIALIZATION FUNCTION
 --------------------------------------------------------------------------------
 
 addonTable.core.autoCollapseBuffFrame = autoCollapseBuffFrame

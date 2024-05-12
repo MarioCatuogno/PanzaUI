@@ -15,6 +15,7 @@
 * Increased the size of the Clock button
 * Increased the size of the Clock button of the Minimap
 * Increased the size of the Minimap text
+* Modified Nameplate CVars to better fit the screen
 
 ### ⌨️ Macros
 
