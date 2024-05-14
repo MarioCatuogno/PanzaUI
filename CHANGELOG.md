@@ -38,6 +38,7 @@
 * RFS - Removed unnecessary Buffs to Raid Frames
 * SUF - Added highlight to SUF frames when mouseover
 * Threat Plates - Changed Filtered Auras method from Allow to Block
+* Threat Plates - Fixed Level text position
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
 * WA Druid - Re-organized Buff auras order
 * WA Monk - Re-organized Buff auras order
