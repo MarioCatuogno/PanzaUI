@@ -1,80 +1,81 @@
-"#showtooltip
-/use [spec:2,@mouseover,help,nodead,mod:shift][spec:2,@target,help,nodead,mod:shift] Soothing Mist; [spec:2,@player,mod:shift] Soothing Mist; [harm,nodead] Tiger Palm"
+#showtooltip
+/use [spec:2,@mouseover,help,nodead,mod:shift][spec:2,@target,help,nodead,mod:shift] Soothing Mist; [spec:2,@player,mod:shift] Soothing Mist; [harm,nodead] Tiger Palm
 
-"#showtooltip Rising Sun Kick
+#showtooltip Rising Sun Kick
 /stopcasting
 /cqs
 /use [spec:2,known:116680] Thunder Focus Tea
 /use [harm,nodead] Rising Sun Kick
-/startattack"
+/startattack
 
-"#showtooltip
-/use [@mouseover,help,nodead,mod:shift][@target,help,nodead,mod:shift] Vivify; [@player,mod:shift] Vivify; [harm,nodead] Blackout Kick"
+#showtooltip
+/use [@mouseover,help,nodead,mod:shift][@target,help,nodead,mod:shift] Vivify; [@player,mod:shift] Vivify; [harm,nodead] Blackout Kick
 
-"#showtooltip
+#showtooltip
 /use [spec:1] Keg Smash
 /use [spec:2,@mouseover,help,nodead][spec:2,@target,help,nodead] Renewing Mist; [spec:2,@player] Renewing Mist
 /use [spec:3] Fists of Fury
 /use 13
-/use 14"
+/use 14
 
-"#showtooltip
+#showtooltip
 /use [spec:1,mod:shift,@player] Exploding Keg; [spec:1,@player] Bonedust Brew
 /use [spec:2] Jadefire Stomp
-/use [spec:3] Whirling Dragon Punch"
+/use [spec:3] Whirling Dragon Punch
 
-"#showtooltip
+#showtooltip
 /use [spec:1] Breath of Fire
 /use [spec:2,@mouseover,help,nodead][spec:2,@target,help,nodead] Enveloping Mist; [spec:2,@player] Enveloping Mist
-/use [spec:3] Strike of the Windlord"
+/use [spec:3] Strike of the Windlord
 
-"#showtooltip
+#showtooltip
 /use [spec:1,mod:shift] Celestial Brew; [spec:1] Purifying Brew
 /use [spec:2,@mouseover,help,nodead][spec:2,@target,help,nodead] Sheilun's Gift; [spec:2,@player] Sheilun's Gift
-/use [spec:3] Storm, Earth, and Fire"
+/use [spec:3] Storm, Earth, and Fire
 
-"#showtooltip
+#showtooltip
 /use [spec:1, mod:shift] Fortifying Brew; [spec:1] Zen Meditation
 /use [spec:2, mod:shift] Fortifying Brew; [spec:2] Mana Tea
-/use [spec:3] Fortifying Brew"
+/use [spec:3] Fortifying Brew
 
-"#showtooltip
-/use [mod:shift] Dampen Harm; Diffuse Magic"
+#showtooltip
+/use [mod:shift] Dampen Harm; Diffuse Magic
 
-"#showtooltip
-/use [spec:3,mod:alt] Flying Serpent Kick; [mod:shift, @player] Tiger's Lust; [known:115008] Chi Torpedo; Roll"
+#showtooltip
+/use [spec:3,mod:alt] Flying Serpent Kick; [mod:shift, @player] Tiger's Lust; [known:115008] Chi Torpedo; Roll
 
-"#showtooltip
-/use [mod:shift] Transcendence; Transcendence: Transfer"
+#showtooltip
+/use [mod:shift] Transcendence; Transcendence: Transfer
 
-"#showtooltip
+#showtooltip
 /stopcasting
 /cqs
-/use [mod:shift] Leg Sweep; [@cursor] Ring of Peace"
+/use [mod:shift,@cursor] Ring of Peace; Leg Sweep
 
-"#showtooltip
+
+#showtooltip
 /use [mod:shift,@mouseover,help,nodead][mod:shift,@target,help,nodead] Life Cocoon; [mod:shift,@player] Life Cocoon; [spec:2] Expel Harm
 /use [spec:1] Expel Harm
-/use [spec:3] Expel Harm"
+/use [spec:3] Expel Harm
 
-"#showtooltip
+#showtooltip
 /use [spec:1,known:132578] Invoke Niuzao, the Black Ox
 /use [spec:2,known:325197] Invoke Chi-Ji, the Red Crane
 /use [spec:2,known:322118] Invoke Yu'lon, the Jade Serpent
-/use [spec:3,known:123904] Invoke Xuen, the White Tiger"
+/use [spec:3,known:123904] Invoke Xuen, the White Tiger
 
-"#showtooltip
+#showtooltip
 /stopcasting
 /cqs
-/use [@focus, exists] Spear Hand Strike; Spear Hand Strike"
+/use [@focus, exists] Spear Hand Strike; Spear Hand Strike
 
-"#showtooltip
+#showtooltip
 /use [@focus,exists,spec:1/3][@mouseover,harm,nodead,spec:1/3] Provoke; [spec:1/3] Provoke
-/use [@mouseover,help,nodead,spec:2][@target,help,nodead,spec:2][@player,spec:2] Detox"
+/use [@mouseover,help,nodead,spec:2][@target,help,nodead,spec:2][@player,spec:2] Detox
 
-"#showtooltip
+#showtooltip
 /use [known:123986] Chi Burst
-/use [known:115098] Chi Wave"
+/use [known:115098] Chi Wave
 
-"#showtooltip
-/use [@focus,exists][@mouseover,harm,nodead] Paralysis; Paralysis"
+#showtooltip
+/use [@focus,exists][@mouseover,harm,nodead] Paralysis; Paralysis
