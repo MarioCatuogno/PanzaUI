@@ -32,6 +32,7 @@
 * BlizzUI - Adjusted Action Bar frame position
 * BlizzUI - Adjusted Raid and Party frames position
 * BlizzUI - Moved Quest Tracker frame
+* BlizzUI - Moved Tooltip frame
 * BlizzUI - Removed dual profile for Blizzard UI. Merged into one single profile for either Tank/DPS/Healer
 * Details - Changed Bars texture
 * Details - Changed Title Bar texture
