@@ -107,8 +107,6 @@ createSectionHeader("Chat and Minimap", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Configure Chat frame", "Enable or disable the configuration of chat frame.", "configChatFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure LFG Queue icon", "Enable or disable the configuration of LFG Queue icon.", "configQueueIcon", yOffset)
-yOffset = yOffset - 28
 addCheckbox("Configure Minimap", "Enable or disable the Minimap configuration.", "configMapElements", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Configure Quest tracker", "Enable or disable the configuration of Quest tracker.", "configQuestTracker", yOffset)

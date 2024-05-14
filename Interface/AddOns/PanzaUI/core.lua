@@ -161,38 +161,6 @@ local function configQuestTracker()
 end
 
 --------------------------------------------------------------------------------
--- FUNCTION 2: Configure Queue Icon
---------------------------------------------------------------------------------
-
--- Configure the Queue Status Button and Icon
-local function configQueueIcon()
-  -- Configuration table to store scale and position values for the Queue Status Button
-  local config = {
-    buttonScale = 0.7,
-    iconPosition = {
-      point = "BOTTOM",
-      relativeTo = Minimap,
-      offsetX = 0,
-      offsetY = -10
-    }
-  }
-
-  -- Check if both QueueStatusButtonIcon and QueueStatusButton exist
-  if not (QueueStatusButtonIcon and QueueStatusButton) then
-    return
-  end
-
-  -- Clear all points and set the new position for the QueueStatusButtonIcon
-  QueueStatusButtonIcon:ClearAllPoints()
-  QueueStatusButtonIcon:SetPoint(config.iconPosition.point, config.iconPosition.relativeTo, config.iconPosition.offsetX, config.iconPosition.offsetY)
-
-  -- Clear all points, set the scale and set the new position for the QueueStatusButton
-  QueueStatusButton:ClearAllPoints()
-  QueueStatusButton:SetScale(config.buttonScale)
-  QueueStatusButton:SetPoint(config.iconPosition.point, config.iconPosition.relativeTo, config.iconPosition.offsetX, config.iconPosition.offsetY)
-end
-
---------------------------------------------------------------------------------
 -- FUNCTION 3: Hide Micro Menu Alerts
 --------------------------------------------------------------------------------
 
@@ -535,7 +503,6 @@ addonTable.core.configCVars = configCVars
 addonTable.core.configMapElements = configMapElements
 addonTable.core.configPlayerFrame = configPlayerFrame
 addonTable.core.configQuestTracker = configQuestTracker
-addonTable.core.configQueueIcon = configQueueIcon
 addonTable.core.configTargetFrame = configTargetFrame
 addonTable.core.hideMicroMenuAlerts = hideMicroMenuAlerts
 addonTable.core.hideMultipleUIFrames = hideMultipleUIFrames
