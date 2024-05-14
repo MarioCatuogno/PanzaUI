@@ -17,6 +17,7 @@
 * Increased the size of the Clock button of the Minimap
 * Increased the size of the Minimap text
 * Modified Nameplate CVars to better fit the screen
+* Revamped Add-on window in-game to better show the various options
 
 ### ⌨️ Macros
 
