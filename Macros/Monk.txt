@@ -52,7 +52,6 @@
 /cqs
 /use [mod:shift,@cursor] Ring of Peace; Leg Sweep
 
-
 #showtooltip
 /use [mod:shift,@mouseover,help,nodead][mod:shift,@target,help,nodead] Life Cocoon; [mod:shift,@player] Life Cocoon; [spec:2] Expel Harm
 /use [spec:1] Expel Harm
