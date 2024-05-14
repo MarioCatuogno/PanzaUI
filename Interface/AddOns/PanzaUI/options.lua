@@ -102,3 +102,4 @@ addCheckbox("Configure Target frame", "Enable or disable the configuration of ta
 addCheckbox("Hide Micro menu", "Enable or disable the Micro menu.", "hideMicroMenuAlerts", -280)
 addCheckbox("Hide Realm names", "Enable or disable Realm names in Raid frame.", "hideRealmNameFromRaidFrames", -304)
 addCheckbox("Hide various frames", "Enable or disable various frames (e.g. Pet, Totems, etc.).", "hideMultipleUIFrames", -328)
+addCheckbox("Configure Raid frame", "Enable or disable the Raid frames configuration.", "configureRaidFrames", -352)

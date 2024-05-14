@@ -10,6 +10,7 @@
 
 ### 🛠️ Addon
 
+* Added Raid Frames configuration option
 * Hide Addon icon in Minimap
 * Hide Tracker icon in Minimap
 * Increased the size of the Clock button

@@ -458,6 +458,15 @@ local function hideRealmNameFromRaidFrames()
   end)
 end
 
+-- Configure Raid Frames
+local function configureRaidFrames()
+  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+    if frame.optionTable == DefaultCompactUnitFrameOptions then
+      frame.roleIcon:SetAlpha(0.3)
+    end
+  end)
+end
+
 --------------------------------------------------------------------------------
 -- FUNCTION 12: Configure action bars
 --------------------------------------------------------------------------------
@@ -531,6 +540,7 @@ addonTable.core.configTargetFrame = configTargetFrame
 addonTable.core.hideMicroMenuAlerts = hideMicroMenuAlerts
 addonTable.core.hideMultipleUIFrames = hideMultipleUIFrames
 addonTable.core.hideRealmNameFromRaidFrames = hideRealmNameFromRaidFrames
+addonTable.core.configureRaidFrames = configureRaidFrames
 
 local function OnEvent(self, event, ...)
   if event == "ADDON_LOADED" and ... == addonName then
