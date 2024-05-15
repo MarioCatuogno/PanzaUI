@@ -27,6 +27,8 @@
 
 * BlizzUI - Adjusted Action Bar frame position
 * BlizzUI - Adjusted Raid and Party frames position
+* BlizzUI - Moved Extra Abilities frame
+* BlizzUI - Moved Loot Window frame
 * BlizzUI - Moved Quest Tracker frame
 * BlizzUI - Moved Talking Head frame
 * BlizzUI - Moved Tooltip frame
