@@ -64,7 +64,6 @@
 * WA Utilities - Added Nameplates target arrows
 * WA Utilities - Added option to change Tooltip's Health Bar texture
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
-* WA Utilities - Disabled GCD tracker on mouse
 * WA Utilities - Fixed loading condition for Alerts
 * WA Utilities - Hide Quest Tracker while in Raid/Party encounter
 * WA Utilities - Moved Movement buffs/cooldown tracker from Class to Utilities
