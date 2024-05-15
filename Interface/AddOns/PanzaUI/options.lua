@@ -102,6 +102,8 @@ createSectionHeader("Configure Frames", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Configure Action Bars", "Remove interaction, blink and GCD animation.", "configActionBars", yOffset)
 yOffset = yOffset - 28
+addCheckbox("Configure Cast Bar", "Resize and reskin cast bar.", "configCastBar", yOffset)
+yOffset = yOffset - 28
 addCheckbox("Configure Chat", "Cleanup the chat, hide unnecessary buttons and improve scrolling.", "configChat", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Configure Minimap", "Hide unnecessary elements and resize text.", "configMinimap", yOffset)

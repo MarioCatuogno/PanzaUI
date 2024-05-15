@@ -92,6 +92,26 @@ local function configActionBars()
 end
 
 --------------------------------------------------------------------------------
+-- CONFIGURE CAST BAR
+--------------------------------------------------------------------------------
+
+local function configCastBar()
+
+  -- Configure Player Cast Bar
+  PlayerCastingBarFrame:HookScript("OnEvent", function()
+    PlayerCastingBarFrame.StandardGlow:Hide()
+    PlayerCastingBarFrame.TextBorder:Hide()
+    PlayerCastingBarFrame:SetSize(260, 10)
+    PlayerCastingBarFrame.TextBorder:ClearAllPoints()
+    PlayerCastingBarFrame.TextBorder:SetAlpha(0)
+    PlayerCastingBarFrame.Text:ClearAllPoints()
+    PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -50)
+    PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+  end)
+
+end
+
+--------------------------------------------------------------------------------
 -- CONFIGURE CHAT
 --------------------------------------------------------------------------------
 
@@ -471,6 +491,7 @@ end
 --------------------------------------------------------------------------------
 
 addonTable.core.configActionBars = configActionBars
+addonTable.core.configCastBar = configCastBar
 addonTable.core.configChat = configChat
 addonTable.core.configMinimap = configMinimap
 addonTable.core.configPlayerFrame = configPlayerFrame

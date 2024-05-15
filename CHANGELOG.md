@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Added Cast Bar configuration option
 * Added Raid Frames configuration option
 * Hide Addon icon in Minimap
 * Hide Encounter Bar frame
