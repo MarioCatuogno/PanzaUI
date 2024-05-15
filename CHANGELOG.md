@@ -41,6 +41,7 @@
 * Threat Plates - Changed Filtered Auras method from Allow to Block
 * Threat Plates - Fixed Level text position
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
+* WA Druid - Moved Buff auras to better integrate in the new layout
 * WA Druid - Re-organized Buff auras order
 * WA Dungeons & Raids - Added Raid Ability Timeline
 * WA Dungeons & Raids - Removed icon border
