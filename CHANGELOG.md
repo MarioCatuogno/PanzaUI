@@ -38,6 +38,8 @@
 * Threat Plates - Fixed Level text position
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
 * WA Druid - Re-organized Buff auras order
+* WA Dungeons & Raids - Added Raid Ability Timeline
+* WA Dungeons & Raids - Removed icon border
 * WA Monk - Re-organized Buff auras order
 * WA Monk - Removed Serenity Buff aura
 * WA Monk - Removed Summon White Tiger Statue aura
