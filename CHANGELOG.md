@@ -10,6 +10,7 @@
 * Increased the size of the Clock button of the Minimap
 * Increased the size of the Minimap text
 * Modified Nameplate CVars to better fit the screen
+* Optimized the code (now using less than 20KB of memory)
 * Removed Queue Icon configuration option
 * Revamped Add-on window in-game to better show the various options
 

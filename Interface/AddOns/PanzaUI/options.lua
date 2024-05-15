@@ -98,42 +98,34 @@ end
 -- Add sections and checkboxes
 local yOffset = -48
 
-createSectionHeader("Action Bars", yOffset)
+createSectionHeader("Configure Frames", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Action bars", "Enable or disable the configuration of action bars.", "configActionBars", yOffset)
+addCheckbox("Configure Action Bars", "Remove interaction, blink and GCD animation.", "configActionBars", yOffset)
 yOffset = yOffset - 28
-
-createSectionHeader("Chat and Minimap", yOffset)
+addCheckbox("Configure Chat", "Cleanup the chat, hide unnecessary buttons and improve scrolling.", "configChat", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Chat frame", "Enable or disable the configuration of chat frame.", "configChatFrame", yOffset)
+addCheckbox("Configure Minimap", "Hide unnecessary elements and resize text.", "configMinimap", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Minimap", "Enable or disable the Minimap configuration.", "configMapElements", yOffset)
+addCheckbox("Configure Player Frame", "Hide power bars, hide combat animation and class colour frames.", "configPlayerFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Quest tracker", "Enable or disable the configuration of Quest tracker.", "configQuestTracker", yOffset)
+addCheckbox("Configure Quest Tracker", "Resize Quest tracker.", "configQuestTracker", yOffset)
 yOffset = yOffset - 28
-
-createSectionHeader("Party and Raid", yOffset)
+addCheckbox("Configure Raid & Party", "Resize and colour Role icons.", "configRaidFrames", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Raid frame", "Enable or disable the Raid frames configuration.", "configureRaidFrames", yOffset)
-yOffset = yOffset - 28
-addCheckbox("Hide Realm names", "Enable or disable Realm names in Raid frame.", "hideRealmNameFromRaidFrames", yOffset)
+addCheckbox("Configure Target Frame", "Hide background and remove buffs/debuffs on target.", "configTargetFrame", yOffset)
 yOffset = yOffset - 28
 
-createSectionHeader("Player and Target", yOffset)
+createSectionHeader("Hide Frames", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Class colored frames", "Enable or disable the class colored frames.", "configClassColorFrames", yOffset)
+addCheckbox("Hide Buffs Frame", "Auto collapse Buffs frame.", "hideCollapseBuffFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Player frame", "Enable or disable the configuration of player frame.", "configPlayerFrame", yOffset)
+addCheckbox("Hide Micro Menu", "Hide Micro Menu alerts.", "hideMicroMenu", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Target frame", "Enable or disable the configuration of target frame.", "configTargetFrame", yOffset)
+addCheckbox("Hide Realm names", "Hide Server names in Raid frame.", "hideRealmNames", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Hide Various frames", "Hide various frames (eg. Pet, Totems, etc.).", "hideVariousFrames", yOffset)
 yOffset = yOffset - 28
 
-createSectionHeader("Various", yOffset)
+createSectionHeader("Other", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Auto Collapse Buff Frame", "Enable or disable auto-collapsing of the buff frame.", "autoCollapseBuffFrame", yOffset)
-yOffset = yOffset - 28
-addCheckbox("Configure CVars", "Enable or disable the CVars.", "configCVars", yOffset)
-yOffset = yOffset - 28
-addCheckbox("Hide Micro menu", "Enable or disable the Micro menu.", "hideMicroMenuAlerts", yOffset)
-yOffset = yOffset - 28
-addCheckbox("Hide various frames", "Enable or disable various frames (e.g. Pet, Totems, etc.).", "hideMultipleUIFrames", yOffset)
+addCheckbox("Setup CVars", "Setup various CVars and add new commands (eg. Reload, Ready Check, etc.).", "setupCVars", yOffset)
