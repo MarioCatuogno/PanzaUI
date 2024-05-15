@@ -44,6 +44,7 @@
 * WA Druid - Re-organized Buff auras order
 * WA Dungeons & Raids - Added Raid Ability Timeline
 * WA Dungeons & Raids - Removed icon border
+* WA Dungeons & Raids - Various tuning
 * WA Monk - Re-organized Buff auras order
 * WA Monk - Removed Serenity Buff aura
 * WA Monk - Removed Summon White Tiger Statue aura
