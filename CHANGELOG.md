@@ -4,6 +4,7 @@
 
 * Added Raid Frames configuration option
 * Hide Addon icon in Minimap
+* Hide Encounter Bar frame
 * Hide Tracker icon in Minimap
 * Increased the size of the Clock button
 * Increased the size of the Clock button of the Minimap

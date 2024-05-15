@@ -146,7 +146,7 @@ local function configQuestTracker()
   -- Configuration table to store scale values for ObjectiveTrackerFrame and EncounterBar
   local config = {
     objectiveTrackerScale = 0.95,
-    encounterBarScale = 0.7
+    encounterBarScale = 0.6
   }
 
   -- Set the scale for ObjectiveTrackerFrame
@@ -157,6 +157,7 @@ local function configQuestTracker()
   -- Set the scale for EncounterBar
   if EncounterBar then
     EncounterBar:SetScale(config.encounterBarScale)
+    EncounterBar:Hide()
   end
 end
 
