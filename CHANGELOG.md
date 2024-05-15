@@ -33,6 +33,7 @@
 * BlizzUI - Moved Talking Head frame
 * BlizzUI - Moved Tooltip frame
 * BlizzUI - Removed dual profile for Blizzard UI. Merged into one single profile for either Tank/DPS/Healer
+* CDTL2 - Added Cooldown Timeline 2 profile
 * Details - Changed Bars texture
 * Details - Changed Title Bar texture
 * RFS - Removed unnecessary Buffs to Raid Frames
