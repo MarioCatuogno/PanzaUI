@@ -61,6 +61,7 @@
 * WA Utilities - Added Dynamic Flight bar and buffs
 * WA Utilities - Added for Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
+* WA Utilities - Added Nameplates target arrows
 * WA Utilities - Added option to change Tooltip's Health Bar texture
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
 * WA Utilities - Disabled GCD tracker on mouse
