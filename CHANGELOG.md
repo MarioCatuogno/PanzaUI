@@ -52,6 +52,7 @@
 * WA Monk - Removed Summon White Tiger Statue aura
 * WA Rogue - Re-organized Buff auras order
 * WA Shaman - Added Buff auras for Enhancement Shaman
+* WA Shaman - Moved Buff auras to better integrate in the new layout
 * WA Shaman - Re-organized Buff auras order
 * WA Utilities - Added Arcane Intellect to Alerts to track missing buffs for Mage
 * WA Utilities - Added Cloak of Coordination to Alerts
