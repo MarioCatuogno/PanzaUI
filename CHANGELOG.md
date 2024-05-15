@@ -37,7 +37,7 @@
 * Details - Changed Bars texture
 * Details - Changed Title Bar texture
 * RFS - Removed unnecessary Buffs to Raid Frames
-* SUF - Added highlight to SUF frames when mouseover
+* SUF - Total overhaul of various frames
 * Threat Plates - Changed Filtered Auras method from Allow to Block
 * Threat Plates - Fixed Level text position
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
