@@ -40,6 +40,7 @@
 * Details - Changed Bars texture
 * Details - Changed Title Bar texture
 * RFS - Removed unnecessary Buffs to Raid Frames
+* SUF - Added Arena frames
 * SUF - Total overhaul of various frames
 * Threat Plates - Changed Filtered Auras method from Allow to Block
 * Threat Plates - Fixed Level text position
