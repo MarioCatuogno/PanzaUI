@@ -50,10 +50,12 @@
 * WA Dungeons & Raids - Added Raid Ability Timeline
 * WA Dungeons & Raids - Removed icon border
 * WA Dungeons & Raids - Various tuning
+* WA Mage - Added a new Mage profile (WIP)
 * WA Monk - Moved Buff auras to better integrate in the new layout
 * WA Monk - Re-organized Buff auras order
 * WA Monk - Removed Serenity Buff aura
 * WA Monk - Removed Summon White Tiger Statue aura
+* WA Paladin - Added a new Paladin profile (WIP)
 * WA Rogue - Re-organized Buff auras order
 * WA Shaman - Added Buff auras for Enhancement Shaman
 * WA Shaman - Moved Buff auras to better integrate in the new layout
