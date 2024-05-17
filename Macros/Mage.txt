@@ -1,0 +1,33 @@
+#showtooltip
+/startattack
+/use Frostbolt
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Ice Lance
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Fire Blast
+
+#showtooltip
+/use [mod:shift] Arcane Explosion; [@cursor] Blizzard
+
+#showtooltip
+/stopcasting
+/cancelaura Ice Block
+/use Ice Block
+
+#showtooltip
+/stopcasting
+/use Blink
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Counterspell
+
+#showtooltip
+/use [@focus,exists][@mouseover,harm,nodead] Polymorph; Polymorph

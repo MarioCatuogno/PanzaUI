@@ -17,13 +17,15 @@
 ### ⌨️ Macros
 
 * Added a PDF containing keybinds and macros for Druid (WIP)
+* Added a PDF containing keybinds and macros for Mage (WIP)
 * Added a PDF containing keybinds and macros for Monk
 * Added a PDF containing keybinds and macros for Rogue (WIP)
 * Added a PDF containing keybinds and macros for Shaman (WIP)
-* Updated macros for Druid (WIP)
+* Added macros for Druid (WIP)
+* Added macros for Mage (WIP)
 * Updated macros for Monk
-* Updated macros for Rogue (WIP)
-* Updated macros for Shaman (WIP)
+* Added macros for Rogue (WIP)
+* Added macros for Shaman (WIP)
 
 ### 👤 Profiles
 
