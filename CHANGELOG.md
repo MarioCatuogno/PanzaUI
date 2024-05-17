@@ -64,6 +64,7 @@
 * WA Utilities - Added Arcane Intellect to Alerts to track missing buffs for Mage
 * WA Utilities - Added Cloak of Coordination to Alerts
 * WA Utilities - Added Dynamic Flight bar and buffs
+* WA Utilities - Added XP information in %
 * WA Utilities - Added for Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
 * WA Utilities - Added Nameplates target arrows
