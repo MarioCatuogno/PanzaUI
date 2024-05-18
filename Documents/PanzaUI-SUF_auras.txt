@@ -1,0 +1,14 @@
+--Mage
+12486 --Blizzard
+205708 --Chilled
+212792 --Cone of Cold
+228354 --Flurry
+228358 --Winter's Chill
+289308 --Frozen Orb
+436576 --Numbing Cold
+--Monk
+121253 --Keg Smash
+123725 --Breath of Fire
+325153 --Exploding Keg
+386276 --Bonedust Brew
+387179 --Weapons of Order

@@ -26,9 +26,9 @@
 * Added a PDF containing keybinds and macros for Shaman (WIP)
 * Added macros for Druid (WIP)
 * Added macros for Mage (WIP)
-* Updated macros for Monk
 * Added macros for Rogue (WIP)
 * Added macros for Shaman (WIP)
+* Updated macros for Monk
 
 ### 👤 Profiles
 
@@ -69,12 +69,12 @@
 * WA Utilities - Added Arcane Intellect to Alerts to track missing buffs for Mage
 * WA Utilities - Added Cloak of Coordination to Alerts
 * WA Utilities - Added Dynamic Flight bar and buffs
-* WA Utilities - Added XP information in %
 * WA Utilities - Added for Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
 * WA Utilities - Added Nameplates target arrows
 * WA Utilities - Added option to change Tooltip's Health Bar texture
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
+* WA Utilities - Added XP information in %
 * WA Utilities - Fixed loading condition for Alerts
 * WA Utilities - Hide Quest Tracker while in Raid/Party encounter
 * WA Utilities - Moved Movement buffs/cooldown tracker from Class to Utilities
@@ -84,6 +84,7 @@
 
 ### Various
 
+* Added SUF auras list for buffs/debuffs
 * Updated SavedVariables
 * Updated talents for Monk
 * Updated TOC version
