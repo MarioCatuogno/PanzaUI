@@ -319,6 +319,16 @@ local function configTargetFrame()
 end
 
 --------------------------------------------------------------------------------
+-- CONFIGURE TARGET FRAME
+--------------------------------------------------------------------------------
+
+local function configVariousFrames()
+
+
+
+end
+
+--------------------------------------------------------------------------------
 -- HIDE COLLAPSED BUFFS FRAME
 --------------------------------------------------------------------------------
 
@@ -527,6 +537,7 @@ addonTable.core.configPlayerFrame = configPlayerFrame
 addonTable.core.configQuestTracker = configQuestTracker
 addonTable.core.configRaidFrames = configRaidFrames
 addonTable.core.configTargetFrame = configTargetFrame
+caddonTable.core.configVariousFrames = configVariousFrames
 addonTable.core.hideCollapseBuffFrame = hideCollapseBuffFrame
 addonTable.core.hideMicroMenu = hideMicroMenu
 addonTable.core.hideRealmNames = hideRealmNames

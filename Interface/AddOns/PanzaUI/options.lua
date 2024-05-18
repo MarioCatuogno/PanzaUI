@@ -116,6 +116,8 @@ addCheckbox("Configure Raid & Party", "Resize and colour Role icons.", "configRa
 yOffset = yOffset - 28
 addCheckbox("Configure Target Frame", "Hide background and remove buffs/debuffs on target.", "configTargetFrame", yOffset)
 yOffset = yOffset - 28
+addCheckbox("Configure Various frames", "XXX.", "configVariousFrames", yOffset)
+yOffset = yOffset - 28
 
 createSectionHeader("Hide Frames", yOffset)
 yOffset = yOffset - 28

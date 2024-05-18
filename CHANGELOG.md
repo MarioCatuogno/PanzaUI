@@ -4,6 +4,7 @@
 
 * Added Cast Bar configuration option
 * Added Raid Frames configuration option
+* Added Various Frames configuration option
 * Hide Addon icon in Minimap
 * Hide Encounter Bar frame
 * Hide Tracker icon in Minimap
