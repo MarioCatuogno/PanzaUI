@@ -418,6 +418,7 @@ local function setupCVars()
 
   -- Chat
   C_CVar.SetCVar("colorChatNamesByClass", 1)
+  C_CVar.SetCVar("chatClassColorOverride", 0)
   C_CVar.SetCVar("guildMemberNotify", 1)
   C_CVar.SetCVar("profanityFilter", 0)
   C_CVar.SetCVar("spamFilter", 1)
@@ -552,6 +553,9 @@ local function setupQol()
   hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
     self:CloseImmediately()
   end)
+
+  -- Set Action Cam
+  ConsoleExec( "ActionCam off" ); -- full/basic/off
 
 end
 
