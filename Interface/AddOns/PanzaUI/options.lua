@@ -133,4 +133,5 @@ yOffset = yOffset - 28
 createSectionHeader("Other", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Setup CVars", "Setup various CVars and add new commands (eg. Reload, Ready Check, etc.).", "setupCVars", yOffset)
+yOffset = yOffset - 28
 addCheckbox("Setup QOL Features", "Setup various Quality of Life features (eg. automatic delete, hide UI while taxi, etc.).", "setupQol", yOffset)
