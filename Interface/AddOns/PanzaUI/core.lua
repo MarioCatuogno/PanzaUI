@@ -255,7 +255,6 @@ local function configPlayerFrame()
     if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
       local _, classToken = UnitClass(self.unit)
       local classColor = RAID_CLASS_COLORS[classToken]
-      
       if classColor then
         self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
       else
@@ -268,8 +267,9 @@ local function configPlayerFrame()
     end
     self:SetStatusBarDesaturated(true)
   end
-    hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
-    hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
+
+  hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
+  hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
 
 end
 
