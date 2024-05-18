@@ -33,6 +33,16 @@ local addonName, addonTable = ...
     end
   end
 
+    -- Helper function to clear points and hide frames
+    local function ClearAllPointsHideFrame(frame)
+      if not frame or frame:IsProtected() then return end
+      if frame then
+        frame:ClearAllPoints()
+        frame:Hide()
+        frame:HookScript("OnShow", function() frame:Hide() end)
+      end
+    end
+
   -- Helper function to get class colour
   local function GetClassColor(class)
     local colors = {
@@ -233,17 +243,18 @@ local function configPlayerFrame()
   hideRest:Hide()
 
   -- Hide Power Bars
-  SetAlphaForFrame(ComboPointDruidPlayerFrame, 0)
-  SetAlphaForFrame(ComboPointPlayerFrame, 0)
-  SetAlphaForFrame(EssencePlayerFrame, 0)
-  SetAlphaForFrame(MageArcaneChargesFrame, 0)
-  SetAlphaForFrame(MonkHarmonyBarFrame, 0)
-  SetAlphaForFrame(MonkStaggerBar, 0)
-  SetAlphaForFrame(MonkStaggerBar.PowerBarMask, 0)
-  SetAlphaForFrame(PaladinPowerBarFrame, 0)
-  SetAlphaForFrame(PlayerFrameAlternateManaBar, 0)
-  SetAlphaForFrame(RuneFrame, 0)
-  SetAlphaForFrame(WarlockPowerFrame, 0)
+  ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
+  ClearAllPointsHideFrame(ComboPointPlayerFrame)
+  ClearAllPointsHideFrame(EssencePlayerFrame)
+  ClearAllPointsHideFrame(MageArcaneChargesFrame)
+  ClearAllPointsHideFrame(MonkHarmonyBarFrame)
+  ClearAllPointsHideFrame(MonkStaggerBar)
+  ClearAllPointsHideFrame(MonkStaggerBar.PowerBarMask)
+  ClearAllPointsHideFrame(PaladinPowerBarFrame)
+  ClearAllPointsHideFrame(PlayerFrameAlternateManaBar)
+  ClearAllPointsHideFrame(RogueComboPointBarFrame)
+  ClearAllPointsHideFrame(RuneFrame)
+  ClearAllPointsHideFrame(WarlockPowerFrame)
 
   -- Remove damage and healing text in portraits
   COMBATFEEDBACK_FADEINTIME = 0
