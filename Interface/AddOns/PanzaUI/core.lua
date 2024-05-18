@@ -400,7 +400,6 @@ end
 -- SETUP CVARS
 --------------------------------------------------------------------------------
 
--- Set CVars
 local function setupCVars()
 
   -- Action Bar
@@ -526,6 +525,16 @@ local function setupCVars()
 end
 
 --------------------------------------------------------------------------------
+-- SETUP QUALITY OF LIFE FEATURES
+--------------------------------------------------------------------------------
+
+local function setupQol()
+
+
+
+end
+
+--------------------------------------------------------------------------------
 -- INITIALIZATION FUNCTION
 --------------------------------------------------------------------------------
 
@@ -543,6 +552,7 @@ addonTable.core.hideMicroMenu = hideMicroMenu
 addonTable.core.hideRealmNames = hideRealmNames
 addonTable.core.hideVariousFrames = hideVariousFrames
 addonTable.core.setupCVars = setupCVars
+addonTable.core.setupQol = setupQol
 
 local function OnEvent(self, event, ...)
   if event == "ADDON_LOADED" and ... == addonName then

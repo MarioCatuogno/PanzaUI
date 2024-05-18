@@ -3,6 +3,7 @@
 ### 🛠️ Addon
 
 * Added Cast Bar configuration option
+* Added Quality of Life features option
 * Added Raid Frames configuration option
 * Added Various Frames configuration option
 * Hide Addon icon in Minimap
