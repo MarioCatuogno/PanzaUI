@@ -530,7 +530,28 @@ end
 
 local function setupQol()
 
+  -- Hide UI while using Taxi Service
+  local hideUiTaxiService = CreateFrame("Frame")
+  hideUiTaxiService:SetScript("OnEvent",function()
+    C_Timer.After(.05,function() 
+      if UnitOnTaxi("player") then
+          UIParent:Hide();
+          end
+      end)
+    end)
+  hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
 
+  -- Show UI after using Taxi Service
+  local showUiTaxiService = CreateFrame("Frame")
+  showUiTaxiService:SetScript("OnEvent",function()
+                UIParent:Show();
+    end)
+    showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
+
+  -- Hide Talking Head
+  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
+    self:CloseImmediately()
+  end)
 
 end
 
