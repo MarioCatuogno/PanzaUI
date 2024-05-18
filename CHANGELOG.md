@@ -6,6 +6,7 @@
 * Added Quality of Life features option
 * Added Raid Frames configuration option
 * Added Various Frames configuration option
+* Fixed Chat Button Frames
 * Hide Addon icon in Minimap
 * Hide Encounter Bar frame
 * Hide Tracker icon in Minimap

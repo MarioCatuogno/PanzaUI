@@ -146,8 +146,8 @@ end
 local function configChat()
 
   -- Hide buttons and toast
-  SetAlphaForFrame(ChatFrameMenuButton, 0)
-  SetAlphaForFrame(QuickJoinToastButton, 0)
+  HideFrameAndUnregisterEvents(ChatFrameMenuButton, 0)
+  HideFrameAndUnregisterEvents(QuickJoinToastButton, 0)
 
   -- Improve mousewheel scrolling
   local function ImproveMouseScroll(self, direction)
