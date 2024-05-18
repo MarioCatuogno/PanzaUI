@@ -349,11 +349,11 @@ end
 local function hideRealmNames()
 
   -- Hide Realm names from Raid frames
-  hooksecurefunc("CompactUnitFrame_UpdateName",function(frame)
+  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if frame and not frame:IsForbidden() then
       local frame_name = frame:GetName()
       if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
-        local unit_name = GetUnitName(frame.unit,true)
+        local unit_name = GetUnitName(frame.unit, true)
         if unit_name then
           frame.name:SetText(unit_name:match("[^-]+"))
         end
@@ -531,9 +531,13 @@ end
 
 local function setupQol()
 
+  -- Easyily delete items
+  hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
+  hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
+
   -- Hide UI while using Taxi Service
   local hideUiTaxiService = CreateFrame("Frame")
-  hideUiTaxiService:SetScript("OnEvent",function()
+  hideUiTaxiService:SetScript("OnEvent", function()
     C_Timer.After(.05,function() 
       if UnitOnTaxi("player") then
           UIParent:Hide();
@@ -544,7 +548,7 @@ local function setupQol()
 
   -- Show UI after using Taxi Service
   local showUiTaxiService = CreateFrame("Frame")
-  showUiTaxiService:SetScript("OnEvent",function()
+  showUiTaxiService:SetScript("OnEvent", function()
                 UIParent:Show();
     end)
     showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
