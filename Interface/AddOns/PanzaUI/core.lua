@@ -33,6 +33,26 @@ local addonName, addonTable = ...
     end
   end
 
+  -- Helper function to get class colour
+  local function GetClassColor(class)
+    local colors = {
+        ["WARRIOR"] = {1.0, 0.78, 0.55},
+        ["PALADIN"] = {0.96, 0.55, 0.73},
+        ["HUNTER"] = {0.67, 0.83, 0.45},
+        ["ROGUE"] = {1.0, 0.96, 0.41},
+        ["PRIEST"] = {1.0, 1.0, 1.0},
+        ["DEATHKNIGHT"] = {0.77, 0.12, 0.23},
+        ["SHAMAN"] = {0.0, 0.44, 0.87},
+        ["MAGE"] = {0.41, 0.8, 0.94},
+        ["WARLOCK"] = {0.58, 0.51, 0.79},
+        ["MONK"] = {0.0, 1.0, 0.59},
+        ["DRUID"] = {1.0, 0.49, 0.04},
+        ["DEMONHUNTER"] = {0.64, 0.19, 0.79},
+        ["EVOKER"] = {0.2, 0.58, 0.5},
+    }
+    return unpack(colors[class])
+  end
+
 addonTable.core = {}
 
 --------------------------------------------------------------------------------
@@ -99,6 +119,7 @@ local function configCastBar()
 
   -- Configure Player Cast Bar
   PlayerCastingBarFrame:HookScript("OnEvent", function()
+
     PlayerCastingBarFrame.StandardGlow:Hide()
     PlayerCastingBarFrame.TextBorder:Hide()
     PlayerCastingBarFrame:SetSize(220, 10)
@@ -107,6 +128,13 @@ local function configCastBar()
     PlayerCastingBarFrame.Text:ClearAllPoints()
     PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -50)
     PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+    PlayerCastingBarFrame:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+
+    -- Color Player Cast Bar based on class
+    local _, playerClass = UnitClass("player")
+    local r, g, b = GetClassColor(playerClass)
+    PlayerCastingBarFrame:SetStatusBarColor(r, g, b)
+
   end)
 
 end
