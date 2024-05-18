@@ -146,8 +146,8 @@ end
 local function configChat()
 
   -- Hide buttons and toast
-  HideFrameAndUnregisterEvents(ChatFrameMenuButton, 0)
-  HideFrameAndUnregisterEvents(QuickJoinToastButton, 0)
+  HideFrameAndUnregisterEvents(ChatFrameMenuButton)
+  HideFrameAndUnregisterEvents(QuickJoinToastButton)
 
   -- Improve mousewheel scrolling
   local function ImproveMouseScroll(self, direction)
