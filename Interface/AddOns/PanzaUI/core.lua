@@ -205,8 +205,11 @@ end
 
 local function configMinimap()
 
-  -- Set Alpha and Scale
-  SetScaleForFrame(MinimapZoneText, 1.3)
+  -- Set Alpha, Position and Scale
+  SetScaleForFrame(MinimapZoneText, 1.15)
+  MinimapZoneText:ClearAllPoints()
+  MinimapZoneText:SetPoint("LEFT", Minimap, "TOP", -55, 27.5)
+  MinimapZoneText:SetJustifyH("RIGHT")
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
@@ -219,8 +222,8 @@ local function configMinimap()
 
   -- Set Scale to Clock button
   LoadAddOn("Blizzard_TimeManager")
-  local region = TimeManagerClockButton:GetRegions()
-  TimeManagerClockButton:SetScale(1.25)
+  --local region = TimeManagerClockButton:GetRegions()
+  HideFrameAndUnregisterEvents(TimeManagerClockButton)
 
   -- Set Garrison button scale
   SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
