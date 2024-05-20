@@ -17,6 +17,7 @@
 * Moved Minimap text aligning it to the Calendar icon
 * Optimized the code (now using less than 20KB of memory)
 * Removed Queue Icon configuration option
+* Reskin Tooltip's Healthbar
 * Revamped Add-on window in-game to better show the various options
 
 ### ⌨️ Macros

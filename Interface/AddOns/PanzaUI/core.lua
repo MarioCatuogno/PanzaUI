@@ -333,12 +333,23 @@ local function configTargetFrame()
 end
 
 --------------------------------------------------------------------------------
--- CONFIGURE TARGET FRAME
+-- CONFIGURE VARIOUS FRAME
 --------------------------------------------------------------------------------
 
 local function configVariousFrames()
 
-
+  -- Reskin and colour the health bar of Tooltips
+  local function SetHealthBarTexture()
+    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+      GameTooltip:HookScript("OnUpdate", function()
+              if UnitPlayerControlled("mouseover") then
+                  local _, englishClass = UnitClass("mouseover")
+                  local r,g,b = GetClassColor(englishClass)
+                  GameTooltipStatusBarTexture:SetVertexColor(r,g,b)
+              end
+      end)
+  end
+  SetHealthBarTexture()
 
 end
 
