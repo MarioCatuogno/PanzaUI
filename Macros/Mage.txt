@@ -1,4 +1,5 @@
-#showtooltip
+#showtooltip Frostbolt
+/use [known:12472] Icy Veins
 /startattack
 /petattack
 /use Frostbolt
