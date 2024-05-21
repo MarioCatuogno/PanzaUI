@@ -38,12 +38,19 @@
 /use [known:212653] Shimmer; Blink
 
 #showtooltip
+/use [known:110959] Greater Invisibility; Invisibility
+
+#showtooltip
 /use [mod:shift] Cone of Cold; Frost Nova
 
 #showtooltip
 /stopcasting
 /cqs
 /use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Counterspell
+
+#showtooltip
+/startattack
+/use Ray of Frost
 
 #showtooltip
 /use [@focus,exists][@mouseover,harm,nodead] Polymorph; Polymorph
