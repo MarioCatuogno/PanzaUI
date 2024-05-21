@@ -351,6 +351,21 @@ local function configVariousFrames()
   end
   SetHealthBarTexture()
 
+  -- Reskin the health bar of Nameplates
+  local function SetNameplateTexture()
+    for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
+        if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
+            nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+        end
+    end
+    hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
+      if frame and frame.healthBar then
+          frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+      end
+    end)
+  end
+  SetNameplateTexture()
+
 end
 
 --------------------------------------------------------------------------------
@@ -464,27 +479,28 @@ local function setupCVars()
   C_CVar.SetCVar("minimapInsideZoom", 2)
   C_CVar.SetCVar("minimapTrackingShowAll",1)
 
-  -- Nameplate (Enable if not using Threat Plates)
-  --C_CVar.SetCVar('nameplateMaxDistance', 30)
-  --C_CVar.SetCVar('nameplateOccludedAlphaMult', 0.7)
-  --C_CVar.SetCVar('NameplatePersonalShowAlways', 0)
-  --C_CVar.SetCVar('nameplateSelectedScale', 1.5)
-  --C_CVar.SetCVar('nameplateShowSelf', 0)
-  --C_CVar.SetCVar('nameplateTargetBehindMaxDistance', 10)
-  --C_CVar.SetCVar('nameplateTargetRadialPosition', 0)
-  --C_CVar.SetCVar("nameplateMinAlpha", 0.5)
+  -- Nameplates (Disabled whil using Threat Plates)
+  --C_CVar.SetCVar("NamePlateHorizontalScale", 1.3)
+  C_CVar.SetCVar("nameplateLargeTopInset", 0.15)
+  --C_CVar.SetCVar("nameplateMaxDistance", 40)
+  --C_CVar.SetCVar("nameplateMinAlpha", 1)
   --C_CVar.SetCVar("nameplateMinAlphaDistance", 10)
-  --C_CVar.SetCVar("nameplateMotion", 2)
+  --C_CVar.SetCVar("nameplateMotion", 1)
+  --C_CVar.SetCVar("nameplateOccludedAlphaMult", 0.4)
   --C_CVar.SetCVar("nameplateOtherBottomInset", 0.1)
   C_CVar.SetCVar("nameplateOtherTopInset", 0.15)
-  C_CVar.SetCVar("nameplateLargeTopInset", 0.15)
+  C_CVar.SetCVar("nameplateOverlapH", 1)
+  C_CVar.SetCVar("nameplateOverlapV", 0.5)
+  --C_CVar.SetCVar("NameplatePersonalShowAlways", 0)
+  --C_CVar.SetCVar("nameplateSelectedScale", 1.5)
   --C_CVar.SetCVar("nameplateShowEnemies", 1)
   --C_CVar.SetCVar("nameplateShowEnemyPets", 1)
   --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
   --C_CVar.SetCVar("nameplateShowOnlyNames", 0)
-  --C_CVar.SetCVar("NamePlateVerticalScale", 1.2)
-  C_CVar.SetCVar("nameplateOverlapV", 0.5)
-  C_CVar.SetCVar("nameplateOverlapH", 1)
+  --C_CVar.SetCVar("nameplateShowSelf", 0)
+  --C_CVar.SetCVar("nameplateTargetBehindMaxDistance", 5)
+  --C_CVar.SetCVar("nameplateTargetRadialPosition", 0)
+  --C_CVar.SetCVar("NamePlateVerticalScale", 1.5)
 
   -- Unit Frames
   C_CVar.SetCVar("showTargetOfTarget", 1)
