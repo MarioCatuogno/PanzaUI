@@ -293,8 +293,10 @@ end
 
 local function configQuestTracker()
 
+  -- Set scale and hide header for Objective Tracker
   SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
-  HideFrameAndUnregisterEvents(EncounterBar)
+  ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.QuestHeader.Background)
+  ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Background)
 
 end
 
@@ -304,6 +306,7 @@ end
 
 local function configRaidFrames()
 
+  -- Reduce alpha for Role icon in Raid frames
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if frame.optionTable == DefaultCompactUnitFrameOptions then
       frame.roleIcon:SetAlpha(0.3)
@@ -318,11 +321,11 @@ end
 
 local function configTargetFrame()
 
-  -- Remove buffs/debuffs from target frame
+  -- Remove buffs/debuffs from Target frame
   TargetFrame.maxBuffs = 0
   TargetFrame.maxDebuffs = 0
 
-  -- Hide Reputation background for target and focus frames
+  -- Hide Reputation background for Target and Focus frames
   if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor then
     TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
   end
@@ -423,16 +426,17 @@ end
 local function hideVariousFrames()
 
   -- Hide various UI frames
-  HideFrameAndUnregisterEvents(MicroMenu)
   HideFrameAndUnregisterEvents(BagsBar)
-  HideFrameAndUnregisterEvents(PetActionBar)
-  HideFrameAndUnregisterEvents(PetFrame)
-  HideFrameAndUnregisterEvents(UIErrorsFrame)
-  HideFrameAndUnregisterEvents(StatusTrackingBarManager)
   HideFrameAndUnregisterEvents(ChatFrameChannelButton)
   HideFrameAndUnregisterEvents(DurabilityFrame)
-  HideFrameAndUnregisterEvents(VehicleSeatIndicator)
+  HideFrameAndUnregisterEvents(EncounterBar)
+  HideFrameAndUnregisterEvents(MicroMenu)
+  HideFrameAndUnregisterEvents(PetActionBar)
+  HideFrameAndUnregisterEvents(PetFrame)
+  HideFrameAndUnregisterEvents(StatusTrackingBarManager)
   HideFrameAndUnregisterEvents(TotemFrame)
+  HideFrameAndUnregisterEvents(UIErrorsFrame)
+  HideFrameAndUnregisterEvents(VehicleSeatIndicator)
 
 end
 
