@@ -71,12 +71,12 @@
 * WA Shaman - Moved Buff auras to better integrate in the new layout
 * WA Shaman - Re-organized Buff auras order
 * WA Utilities - Added Arcane Intellect to Alerts to track missing buffs for Mage
+* WA Utilities - Added Cast Bars for Player and Target frames (SUF is mandatory)
 * WA Utilities - Added Cloak of Coordination to Alerts
 * WA Utilities - Added Dynamic Flight bar and buffs
-* WA Utilities - Added for Cast Bar to show an icon and the casting time
+* WA Utilities - Added for Blizzard Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
 * WA Utilities - Added Nameplates target arrows
-* WA Utilities - Added option to change Tooltip's Health Bar texture
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
 * WA Utilities - Added XP information in %
 * WA Utilities - Fixed loading condition for Alerts
@@ -84,6 +84,7 @@
 * WA Utilities - Moved Movement buffs/cooldown tracker from Class to Utilities
 * WA Utilities - Moved Raid Ability Timeline
 * WA Utilities - Re-organized Buff auras order
+* WA Utilities - Removed mouse trails
 * WA Utilities - Removed old Events tracker
 
 ### Various
