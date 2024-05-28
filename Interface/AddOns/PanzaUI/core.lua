@@ -139,6 +139,7 @@ local function configCastBar()
     PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -50)
     PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
     PlayerCastingBarFrame:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+    PlayerCastingBarFrame:Hide()
 
     -- Color Player Cast Bar based on class
     local _, playerClass = UnitClass("player")
@@ -295,8 +296,19 @@ local function configQuestTracker()
 
   -- Set scale and hide header for Objective Tracker
   SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
-  ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.QuestHeader.Background)
-  ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Background)
+  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.QuestHeader.Background)
+  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Background)
+  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.AchievementHeader.Background)
+
+      -- Color Quest Tracker text based on class
+      local _, playerClass = UnitClass("player")
+      local r, g, b = GetClassColor(playerClass)
+      ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetTextColor(r, g, b)
+      ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetTextColor(r, g, b)
+      ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetTextColor(r, g, b)
+      ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
 
 end
 
