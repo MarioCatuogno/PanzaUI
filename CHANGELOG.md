@@ -61,6 +61,9 @@
 * WA Dungeons & Raids - Removed icon border
 * WA Dungeons & Raids - Various tuning
 * WA Mage - Added a new Mage profile (WIP)
+* WA Monk - Added a new Cooldown section
+* WA Monk - Added a new Resources section
+* WA Monk - Added a new Rotation section
 * WA Monk - Moved Buff auras to better integrate in the new layout
 * WA Monk - Re-organized Buff auras order
 * WA Monk - Removed Serenity Buff aura
