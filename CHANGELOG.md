@@ -48,6 +48,7 @@
 * CDTL2 - Added Cooldown Timeline 2 profile
 * Details - Changed Bars texture
 * Details - Changed Title Bar texture
+* MouseoverActionSettings - Added profile for the addon Mouseover Action Settings, used to mouseover some action bars
 * RFS - Removed unnecessary Buffs to Raid Frames
 * SUF - Added Arena frames
 * SUF - Total overhaul of various frames
