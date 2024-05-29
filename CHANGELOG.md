@@ -55,7 +55,6 @@
 * Threat Plates - Changed Filtered Auras method from Allow to Block
 * Threat Plates - Fixed Level text position
 * Threat Plates - Fixed Threat Plates profile to only show personal debuffs
-* WA Death Knight - Added a new Death Knight profile (WIP)
 * WA Druid - Moved Buff auras to better integrate in the new layout
 * WA Druid - Re-organized Buff auras order
 * WA Dungeons & Raids - Added Raid Ability Timeline
@@ -69,7 +68,6 @@
 * WA Monk - Re-organized Buff auras order
 * WA Monk - Removed Serenity Buff aura
 * WA Monk - Removed Summon White Tiger Statue aura
-* WA Paladin - Added a new Paladin profile (WIP)
 * WA Rogue - Re-organized Buff auras order
 * WA Shaman - Added Buff auras for Enhancement Shaman
 * WA Shaman - Moved Buff auras to better integrate in the new layout
