@@ -8,7 +8,7 @@ local function createCheckbox(name, label, description, onClick)
   return checkbox
 end
 
-addonTable.panel = CreateFrame("FRAME", "PanzaUIOptions")
+addonTable.panel = CreateFrame("FRAME", "PanzaUIOptions", InterfaceOptionsFramePanelContainer)
 local addonTitle, addonVersion = GetAddOnInfo("PanzaUI")
 addonTable.panel.name = addonVersion
 
@@ -116,7 +116,7 @@ addCheckbox("Configure Raid & Party", "Resize and colour Role icons.", "configRa
 yOffset = yOffset - 28
 addCheckbox("Configure Target Frame", "Hide background and remove buffs/debuffs on target.", "configTargetFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Various frames", "Reskin Tooltip and Nameplate's healthbar, etc.", "configVariousFrames", yOffset)
+addCheckbox("Configure Various frames", "Reskin Tooltip's Healthbar, etc.", "configVariousFrames", yOffset)
 yOffset = yOffset - 28
 
 createSectionHeader("Hide Frames", yOffset)
@@ -135,3 +135,10 @@ yOffset = yOffset - 28
 addCheckbox("Setup CVars", "Setup various CVars and add new commands (eg. Reload, Ready Check, etc.).", "setupCVars", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Setup QOL Features", "Setup various Quality of Life features (eg. hide Talking Head, hide UI while taxi, etc.).", "setupQol", yOffset)
+
+-- Slash command to open the Addon panel
+SLASH_PANZAUI1 = "/panzaui"
+SlashCmdList["PANZAUI"] = function()
+    InterfaceOptionsFrame_OpenToCategory(addonTable.panel)
+    InterfaceOptionsFrame_OpenToCategory(addonTable.panel)
+end

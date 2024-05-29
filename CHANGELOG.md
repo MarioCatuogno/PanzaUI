@@ -5,6 +5,7 @@
 * Added Cast Bar configuration option
 * Added Quality of Life features option
 * Added Raid Frames configuration option
+* Added Slash command "/panzaui" to open the Addon panel
 * Added Various Frames configuration option
 * Fixed Chat Button frame
 * Fixed Resource Bar frame
