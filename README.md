@@ -63,44 +63,6 @@ There are also other optional components:
 
 If you want to replicate my UI you can follow the steps [here](). Bare in mind that I play on a MacBook Pro 14" with a resolution of 3024x1964.
 
-## Other Stuff
-
-### Keybinds 
-
-Keep in mind that these keybinds are used by me with Logitech G600 mouse.
-
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
-* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
-* [Rogue](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_rogue.pdf)
-* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
-
-### Macros
-
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Druid.txt)
-* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Mage.txt)
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Monk.txt)
-* [Rogue](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Rogue.txt)
-* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Shaman.txt)
-
-### Profiles
-
-* [PanzaUI-BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BlizzardUI.txt)
-* [PanzaUI-Details!](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
-* [PanzaUI-MouseoverActionSettings](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-MouseoverActionSettings.txt)
-* [PanzaUI-RSF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-RFS.txt)
-* [PanzaUI-SUF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
-* [PanzaUI-ThreatPlates](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-ThreatPlates.txt)
-
-### WeakAuras
-
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
-* [Dungeons & Raids](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-DungeonRaids.txt)
-* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
-* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
-* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
-
 ## Screenshots
 
 <p align="center">
@@ -138,3 +100,41 @@ Keep in mind that these keybinds are used by me with Logitech G600 mouse.
 ## Problems/Bugs?
 
 If you find bugs or any kind of problems, please open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues). Thanks!
+
+## Other Stuff
+
+### Keybinds 
+
+Keep in mind that these keybinds are used by me with Logitech G600 mouse.
+
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
+* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
+* [Rogue](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_rogue.pdf)
+* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
+
+### Macros
+
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Druid.txt)
+* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Mage.txt)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Monk.txt)
+* [Rogue](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Rogue.txt)
+* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Shaman.txt)
+
+### Profiles
+
+* [PanzaUI-BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BlizzardUI.txt)
+* [PanzaUI-Details!](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
+* [PanzaUI-MouseoverActionSettings](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-MouseoverActionSettings.txt)
+* [PanzaUI-RSF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-RFS.txt)
+* [PanzaUI-SUF](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
+* [PanzaUI-ThreatPlates](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-ThreatPlates.txt)
+
+### WeakAuras
+
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
+* [Dungeons & Raids](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-DungeonRaids.txt)
+* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
+* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
+* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
+* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
