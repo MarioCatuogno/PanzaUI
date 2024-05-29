@@ -108,15 +108,15 @@ addCheckbox("Configure Chat", "Cleanup the chat, hide unnecessary buttons and im
 yOffset = yOffset - 28
 addCheckbox("Configure Minimap", "Hide unnecessary elements and resize text.", "configMinimap", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Player Frame", "Hide power bars, hide combat animation and class colour frames.", "configPlayerFrame", yOffset)
+addCheckbox("Configure Player Frame", "Hide power bars, hide combat animation and class color frames.", "configPlayerFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Quest Tracker", "Resize Quest tracker.", "configQuestTracker", yOffset)
+addCheckbox("Configure Quest Tracker", "Resize Quest tracker and color text.", "configQuestTracker", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Raid & Party", "Resize and colour Role icons.", "configRaidFrames", yOffset)
+addCheckbox("Configure Raid & Party", "Resize and color Role icons.", "configRaidFrames", yOffset)
 yOffset = yOffset - 28
 addCheckbox("Configure Target Frame", "Hide background and remove buffs/debuffs on target.", "configTargetFrame", yOffset)
 yOffset = yOffset - 28
-addCheckbox("Configure Various frames", "Reskin Tooltip's Healthbar, etc.", "configVariousFrames", yOffset)
+addCheckbox("Configure Various frames", "Reskin Tooltips and Nameplate's healthbars.", "configVariousFrames", yOffset)
 yOffset = yOffset - 28
 
 createSectionHeader("Hide Frames", yOffset)
