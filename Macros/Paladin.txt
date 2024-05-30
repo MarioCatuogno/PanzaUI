@@ -1,0 +1,26 @@
+#showtooltip
+/startattack
+/use Crusader Strike
+
+#showtooltip
+/use [@mouseover,harm,nodead] Judgment; Judgment
+
+#showtooltip
+/use [@mouseover,harm,nodead] Avenger's Shield; Avenger's Shield
+
+#showtooltip
+/use [@player] Lay on Hands
+
+#showtooltip
+/use [@mouseover,harm,nodead] Hammer of Justice; Hammer of Justice
+
+#showtooltip
+/use [@player] Word of Glory
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus, exists] Rebuke; Rebuke
+
+#showtooltip
+/use [@focus,exists][@mouseover,harm,nodead] Hand of Reckoning; Hand of Reckoning
