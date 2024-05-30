@@ -1,7 +1,7 @@
 <p align="center">
 
   <a href="https://github.com/MarioCatuogno/PanzaUI">
-  <img width=800px src="https://github.com/MarioCatuogno/PanzaUI/blob/main/Images/panzaui_logo.png" alt="PanzaUI logo">
+  <img width=800px src="https://github.com/MarioCatuogno/PanzaUI/blob/main/Images/panzaui_logo.jpeg" alt="PanzaUI logo">
   </a>
 
 </p>
@@ -67,32 +67,32 @@ If you want to replicate my UI you can follow the steps [here](). Bare in mind t
 
 <p align="center">
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.png" alt="PanzaUI - Tank/Dps">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg" alt="PanzaUI - Blizzard Profile">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_02.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_02.png" alt="PanzaUI - Healer">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg" alt="PanzaUI - Combat Dummy">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.png" alt="PanzaUI - Combat Dummy">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.jpeg" alt="PanzaUI - Raid 01">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.png" alt="PanzaUI - Raid 01">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_02.jpeg" alt="PanzaUI - Raid 02">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.png" alt="PanzaUI - Party 01">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg" alt="PanzaUI - Party 01">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.png" alt="PanzaUI - Menu">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.jpeg" alt="PanzaUI - Menu">
   </a>
 
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.png">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.png" alt="PanzaUI - Shadowed Unit Frames">
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.jpeg" alt="PanzaUI - Shadowed Unit Frames">
   </a>
 
 </p>
