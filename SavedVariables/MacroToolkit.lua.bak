@@ -1,0 +1,38 @@
+
+MacroToolkitDB = {
+["char"] = {
+["Gelatino - Draenor"] = {
+["backups"] = {
+},
+},
+["Formaggino - Draenor"] = {
+["backups"] = {
+},
+},
+},
+["profileKeys"] = {
+["Pizzadino - Draenor"] = "profile",
+["Popletta - Draenor"] = "profile",
+["Gelatino - Draenor"] = "profile",
+["Polpetta - Draenor"] = "profile",
+["Friarielli - Draenor"] = "profile",
+["Sfilatino - Draenor"] = "profile",
+["Sfincione - Draenor"] = "profile",
+["Panzarotto - Draenor"] = "profile",
+["Panzarotto - Silvermoon"] = "profile",
+["Cannolo - Argent Dawn"] = "profile",
+["Formaggino - Draenor"] = "profile",
+["Sorbetto - Draenor"] = "profile",
+},
+["global"] = {
+["ebackups"] = {
+},
+["backups"] = {
+},
+},
+["profiles"] = {
+["profile"] = {
+["x"] = 604.8289794921875,
+},
+},
+}

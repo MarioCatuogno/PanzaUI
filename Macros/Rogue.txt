@@ -1,0 +1,31 @@
+#showtooltip
+/startattack
+/use [mod:shift] Shiv; Sinister Strike
+
+#showtooltip
+/use [@mouseover,exists,harm][] Pistol Shot
+
+#showtooltip
+/startattack
+/cast Between the Eyes
+
+#showtooltip
+/startattack
+/use Dispatch
+
+#showtooltip
+/startattack
+/cast Echoing Reprimand
+
+#showtooltip
+/use [mod:shift] Sprint; [@cursor] Grappling Hook
+
+#showtooltip
+/stopattack
+/cqs
+/use [combat] Vanish; Stealth
+
+#showtooltip
+/stopcasting
+/cqs
+/use [mod:shift] Kidney Shot; [@focus, exists] Kick; Kick

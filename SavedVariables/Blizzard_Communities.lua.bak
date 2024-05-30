@@ -1,3 +1,0 @@
-
-g_clubIdToSeenApplicants = {
-}

@@ -1,0 +1,43 @@
+#showtooltip
+/use Nature's Swiftness
+/use [mod:shift] Wrath; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Regrowth
+
+#showtooltip
+/use [mod:shift,@mouseover,exists,harm,nodead] Moonfire; [@mouseover,exists,help,nodead][@target,exists,help,nodead][] Rejuvenation
+
+#showtooltip
+/use [mod:shift,@mouseover,exists,harm,nodead] Sunfire; [@mouseover,exists,help,nodead][@target,exists,help,nodead][] Lifebloom
+
+#showtooltip
+/use [@mouseover,exists,help,nodead][@target,exists,help,nodead][] Wild Growth
+
+#showtooltip
+/use [@cursor] Efflorescence
+
+#showtooltip
+/use [mod:shift] Starsurge; Adaptive Swarm
+
+#showtooltip
+/startattack
+/use [@mouseover,exists,harm,nodead][] Starfire
+
+#showtooltip
+/use [mod:shift] Ironbark; Barkskin
+
+#showtooltip
+/use [mod:shift] Tiger Dash; Stampeding Roar
+
+#showtooltip
+/use [mod:shift] Typhoon; [@cursor] Ursol's Vortex
+
+#showtooltip
+/use [mod:shift] Renewal; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][@player] Swiftmend
+
+#showtooltip Incarnation: Tree of Life(Talent, Shapeshift)
+/use Nature's Vigil
+/use 13
+/use 14
+/use Incarnation: Tree of Life(Talent, Shapeshift)
+
+#showtooltip Nature's Cure
+/use [@mouseover,exists,help nodead][@target,exists,help,nodead][] Nature's Cure

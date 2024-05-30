@@ -8,7 +8,7 @@ local function createCheckbox(name, label, description, onClick)
   return checkbox
 end
 
-addonTable.panel = CreateFrame("FRAME", "PanzaUIOptions")
+addonTable.panel = CreateFrame("FRAME", "PanzaUIOptions", InterfaceOptionsFramePanelContainer)
 local addonTitle, addonVersion = GetAddOnInfo("PanzaUI")
 addonTable.panel.name = addonVersion
 
@@ -75,30 +75,70 @@ eventFrame:SetScript("OnEvent", OnEvent)
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("PLAYER_LOGOUT")
 
-
 -- Create checkboxes
 addonTable.checkboxes = {}
 
-local function addCheckbox(label, description, funcName, y)
+local function createSectionHeader(text, yOffset)
+  local header = addonTable.panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+  header:SetPoint("TOPLEFT", 16, yOffset)
+  header:SetText(text)
+  return header
+end
+
+local function addCheckbox(label, description, funcName, yOffset)
   local checkbox = createCheckbox("PanzaUI" .. funcName, label, description, function(self)
     if self:GetChecked() then
       addonTable.core[funcName]()
     end
   end)
-  checkbox:SetPoint("TOPLEFT", 16, y)
+  checkbox:SetPoint("TOPLEFT", 32, yOffset)
   table.insert(addonTable.checkboxes, checkbox)
 end
 
-addCheckbox("Auto Collapse Buff Frame", "Enable or disable auto-collapsing of the buff frame.", "autoCollapseBuffFrame", -40)
-addCheckbox("Class colored frames", "Enable or disable the class colored frames.", "configClassColorFrames", -64)
-addCheckbox("Configure Action bars", "Enable or disable the configuration of action bars.", "configActionBars", -88)
-addCheckbox("Configure Chat frame", "Enable or disable the configuration of chat frame.", "configChatFrame", -112)
-addCheckbox("Configure CVars", "Enable or disable the CVars.", "configCVars", -136)
-addCheckbox("Configure LFG Queue icon", "Enable or disable the configuration of LFG Queue icon.", "configQueueIcon", -160)
-addCheckbox("Configure Minimap", "Enable or disable the Minimap configuration.", "configMapElements", -184)
-addCheckbox("Configure Player frame", "Enable or disable the configuration of player frame.", "configPlayerFrame", -208)
-addCheckbox("Configure Quest tracker", "Enable or disable the configuration of Quest tracker.", "configQuestTracker", -232)
-addCheckbox("Configure Target frame", "Enable or disable the configuration of target frame.", "configTargetFrame", -256)
-addCheckbox("Hide Micro menu", "Enable or disable the Micro menu.", "hideMicroMenuAlerts", -280)
-addCheckbox("Hide Realm names", "Enable or disable Realm names in Raid frame.", "hideRealmNameFromRaidFrames", -304)
-addCheckbox("Hide various frames", "Enable or disable various frames (e.g. Pet, Totems, etc.).", "hideMultipleUIFrames", -328)
+-- Add sections and checkboxes
+local yOffset = -48
+
+createSectionHeader("Configure Frames", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Action Bars", "Remove interaction, blink and GCD animation.", "configActionBars", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Cast Bar", "Resize and reskin cast bar.", "configCastBar", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Chat", "Cleanup the chat, hide unnecessary buttons and improve scrolling.", "configChat", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Minimap", "Hide unnecessary elements and resize text.", "configMinimap", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Player Frame", "Hide power bars, hide combat animation and class color frames.", "configPlayerFrame", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Quest Tracker", "Resize Quest tracker and color text.", "configQuestTracker", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Raid & Party", "Resize and color Role icons.", "configRaidFrames", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Target Frame", "Hide background and remove buffs/debuffs on target.", "configTargetFrame", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Configure Various frames", "Reskin Tooltips and Nameplate's healthbars.", "configVariousFrames", yOffset)
+yOffset = yOffset - 28
+
+createSectionHeader("Hide Frames", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Hide Buffs Frame", "Auto collapse Buffs frame.", "hideCollapseBuffFrame", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Hide Micro Menu", "Hide Micro Menu alerts.", "hideMicroMenu", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Hide Realm names", "Hide Server names in Raid frame.", "hideRealmNames", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Hide Various frames", "Hide various frames (eg. Pet, Totems, etc.).", "hideVariousFrames", yOffset)
+yOffset = yOffset - 28
+
+createSectionHeader("Other", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Setup CVars", "Setup various CVars and add new commands (eg. Reload, Ready Check, etc.).", "setupCVars", yOffset)
+yOffset = yOffset - 28
+addCheckbox("Setup QOL Features", "Setup various Quality of Life features (eg. hide Talking Head, hide UI while taxi, etc.).", "setupQol", yOffset)
+
+-- Slash command to open the Addon panel
+SLASH_PANZAUI1 = "/panzaui"
+SlashCmdList["PANZAUI"] = function()
+    InterfaceOptionsFrame_OpenToCategory(addonTable.panel)
+    InterfaceOptionsFrame_OpenToCategory(addonTable.panel)
+end

@@ -1,0 +1,100 @@
+
+MouseoverActionSettingsDB = {
+["namespaces"] = {
+["LibDualSpec-1.0"] = {
+},
+},
+["profileKeys"] = {
+["Pizzadino - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Cannolo - Argent Dawn"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Salsiccio - Argent Dawn"] = "Default",
+["Sfilatino - Draenor"] = "Default",
+["Noiram - Argent Dawn"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Panzarotto - Draenor"] = "Default",
+["Sfincione - Draenor"] = "Default",
+["Ham - Nemesis"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Friarielli - Draenor"] = "Default",
+},
+["profiles"] = {
+["Default"] = {
+["MultiBarRight"] = {
+["enabled"] = false,
+},
+["PetActionBar"] = {
+["enabled"] = false,
+},
+["MultiBar5"] = {
+["enabled"] = false,
+},
+["TrackingBarContainer"] = {
+["enabled"] = false,
+},
+["MultiBarBottomLeft"] = {
+["enabled"] = false,
+},
+["TargetFrame"] = {
+["enabled"] = false,
+},
+["ChatFrame"] = {
+["enabled"] = false,
+},
+["BagsBar"] = {
+["enabled"] = false,
+},
+["Minimap"] = {
+["enabled"] = false,
+},
+["MultiBar6"] = {
+["enabled"] = false,
+},
+["MultiBarLeft"] = {
+["enabled"] = false,
+},
+["PlayerFrame"] = {
+["enabled"] = false,
+},
+["ActionBarConfig"] = {
+["Action"] = false,
+},
+["MainMenuBar"] = {
+["enabled"] = false,
+["RAID_UPDATE"] = false,
+["DRAGONRIDING_UPDATE"] = false,
+["COMBAT_UPDATE"] = false,
+},
+["MultiBar7"] = {
+["enabled"] = false,
+},
+["BuffFrame"] = {
+["enabled"] = false,
+},
+["MicroMenu"] = {
+["enabled"] = false,
+},
+["MiniMapButton"] = {
+["enabled"] = false,
+},
+["ObjectiveTracker"] = {
+["enabled"] = false,
+},
+["DebuffFrame"] = {
+["enabled"] = false,
+},
+["GlobalSettings"] = {
+["animationSpeed_Out"] = 0.1,
+["animationSpeed_In"] = 0.1,
+["delay"] = 0,
+},
+["MultiBarBottomRight"] = {
+["COMBAT_UPDATE"] = false,
+},
+["StanceBar"] = {
+["enabled"] = false,
+},
+},
+},
+}

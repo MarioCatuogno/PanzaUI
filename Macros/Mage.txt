@@ -1,0 +1,56 @@
+#showtooltip Frostbolt
+/use [known:12472] Icy Veins
+/startattack
+/petattack
+/use Frostbolt
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Ice Lance
+/startattack
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Flurry
+/startattack
+
+#showtooltip
+/castsequence reset=30 Comet Storm, Ice Nova
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Fire Blast
+/startattack
+
+#showtooltip
+/use [mod:shift] Arcane Explosion; [@cursor] Blizzard
+
+#showtooltip
+/stopcasting
+/cancelaura Ice Block
+/use Ice Block
+/use Cold Snap
+
+#showtooltip
+/use [known:212653] Shimmer; Blink
+
+#showtooltip
+/use [known:110959] Greater Invisibility; Invisibility
+
+#showtooltip
+/use [mod:shift] Cone of Cold; Frost Nova
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Counterspell
+
+#showtooltip
+/startattack
+/use Ray of Frost
+
+#showtooltip
+/use [@focus,exists][@mouseover,harm,nodead] Polymorph; Polymorph
