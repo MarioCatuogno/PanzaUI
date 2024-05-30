@@ -1,12 +1,14 @@
 ## 0.7.1-RELEASE
 
 ### ⌨️ Macros
+
 * Added a PDF containing keybinds and macros for Paladin (WIP)
 * Added a PDF containing keybinds and macros for Warrior (WIP)
 * Added macros for Paladin (WIP)
 * Added macros for Warrior (WIP)
 
 ### 👤 Profiles
+
 * BlizzUI - Added Stance Bar to layout
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
