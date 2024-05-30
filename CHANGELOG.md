@@ -75,11 +75,11 @@
 * WA Utilities - Added Arcane Intellect to Alerts to track missing buffs for Mage
 * WA Utilities - Added Cast Bars for Player and Target frames (SUF is mandatory)
 * WA Utilities - Added Cloak of Coordination to Alerts
-* WA Utilities - Added Skyriding bar and buffs
 * WA Utilities - Added for Blizzard Cast Bar to show an icon and the casting time
 * WA Utilities - Added Great Vault to Alerts
 * WA Utilities - Added Nameplates target arrows
 * WA Utilities - Added Poisons to Alerts to track missing poisons for Rogue
+* WA Utilities - Added Skyriding bar and buffs
 * WA Utilities - Added XP information in %
 * WA Utilities - Fixed loading condition for Alerts
 * WA Utilities - Hide Quest Tracker while in Raid/Party encounter
