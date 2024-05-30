@@ -12,6 +12,7 @@
 * BlizzUI - Added Stance Bar to layout
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
+* SUF - Removed Holy Power bar from Player frame
 * WA Paladin - Added a new Paladin profile (WIP)
 * WA Warrior - Added a new Warrior profile (WIP)
 
