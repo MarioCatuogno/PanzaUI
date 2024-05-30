@@ -1,30 +1,32 @@
 
 TomTomDB = {
 ["profileKeys"] = {
+["Panuozzo - Argent Dawn"] = "Default",
+["Friarielli - Draenor"] = "Default",
 ["Pizzadino - Draenor"] = "Default",
 ["Popletta - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
 ["Ham - Nemesis"] = "Default",
-["Panuozzo - Argent Dawn"] = "Default",
-["Salsiccio - Argent Dawn"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Sorbetto - Draenor"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
 ["Noiram - Argent Dawn"] = "Default",
-["Pizzadino - Argent Dawn"] = "Default",
+["Sfincione - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
 ["Panzarotto - Silvermoon"] = "Default",
-["Sfincione - Draenor"] = "Default",
+["Salsiccio - Argent Dawn"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Sorbetto - Draenor"] = "Default",
+["Cannolo - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["arrow"] = {
 ["position"] = {
-"CENTER",
+"LEFT",
 nil,
-"CENTER",
--243.1766815185547,
--87.3724594116211,
+"LEFT",
+382.5907592773438,
+-164.3524017333984,
 },
 ["showtta"] = false,
 },
@@ -59,41 +61,47 @@ nil,
 TomTomWaypoints = nil
 TomTomWaypointsM = {
 ["profileKeys"] = {
+["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
+["Friarielli - Draenor"] = "Friarielli - Draenor",
 ["Pizzadino - Draenor"] = "Pizzadino - Draenor",
 ["Popletta - Draenor"] = "Popletta - Draenor",
 ["Gelatino - Draenor"] = "Gelatino - Draenor",
 ["Ham - Nemesis"] = "Ham - Nemesis",
-["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
-["Salsiccio - Argent Dawn"] = "Salsiccio - Argent Dawn",
+["Pizzadino - Argent Dawn"] = "Pizzadino - Argent Dawn",
+["Sorbetto - Draenor"] = "Sorbetto - Draenor",
 ["Sfilatino - Draenor"] = "Sfilatino - Draenor",
 ["Noiram - Argent Dawn"] = "Noiram - Argent Dawn",
-["Pizzadino - Argent Dawn"] = "Pizzadino - Argent Dawn",
+["Sfincione - Draenor"] = "Sfincione - Draenor",
 ["Panzarotto - Draenor"] = "PanzaUI",
 ["Panzarotto - Silvermoon"] = "Panzarotto - Silvermoon",
-["Sfincione - Draenor"] = "Sfincione - Draenor",
+["Salsiccio - Argent Dawn"] = "Salsiccio - Argent Dawn",
 ["Formaggino - Draenor"] = "Formaggino - Draenor",
-["Sorbetto - Draenor"] = "Sorbetto - Draenor",
+["Cannolo - Argent Dawn"] = "Cannolo - Argent Dawn",
 },
 ["profiles"] = {
-["PanzaUI"] = {
-},
 ["Pizzadino - Draenor"] = {
 },
 ["Popletta - Draenor"] = {
 },
-["Gelatino - Draenor"] = {
+["Friarielli - Draenor"] = {
 },
 ["Ham - Nemesis"] = {
 },
-["Panuozzo - Argent Dawn"] = {
+["Sfincione - Draenor"] = {
 },
-["Salsiccio - Argent Dawn"] = {
+["PanzaUI"] = {
+},
+["Cannolo - Argent Dawn"] = {
+},
+["Gelatino - Draenor"] = {
+},
+["Sorbetto - Draenor"] = {
 },
 ["Sfilatino - Draenor"] = {
 },
 ["Noiram - Argent Dawn"] = {
 },
-["Pizzadino - Argent Dawn"] = {
+["Salsiccio - Argent Dawn"] = {
 },
 ["Panzarotto - Draenor"] = {
 [2112] = {
@@ -124,11 +132,11 @@ TomTomWaypointsM = {
 },
 ["Panzarotto - Silvermoon"] = {
 },
-["Sfincione - Draenor"] = {
+["Panuozzo - Argent Dawn"] = {
 },
 ["Formaggino - Draenor"] = {
 },
-["Sorbetto - Draenor"] = {
+["Pizzadino - Argent Dawn"] = {
 },
 },
 }

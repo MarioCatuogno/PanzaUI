@@ -1,10 +1,36 @@
 
 ThreatPlatesDB = {
 ["char"] = {
+["Pizzadino - Draenor"] = {
+["spec"] = {
+nil,
+true,
+false,
+},
+["welcome"] = true,
+},
+["Popletta - Draenor"] = {
+["welcome"] = true,
+["spec"] = {
+[3] = false,
+},
+},
+["Polpetta - Draenor"] = {
+["welcome"] = true,
+["spec"] = {
+[3] = true,
+},
+},
 ["Friarielli - Draenor"] = {
 ["welcome"] = true,
 },
-["Sfilatino - Draenor"] = {
+["Ham - Nemesis"] = {
+["spec"] = {
+[3] = false,
+},
+["welcome"] = true,
+},
+["Panuozzo - Argent Dawn"] = {
 ["welcome"] = true,
 ["spec"] = {
 nil,
@@ -13,15 +39,7 @@ true,
 false,
 },
 },
-["Pizzadino - Draenor"] = {
-["welcome"] = true,
-["spec"] = {
-nil,
-true,
-false,
-},
-},
-["Popletta - Draenor"] = {
+["Cannolo - Argent Dawn"] = {
 ["spec"] = {
 [3] = false,
 },
@@ -33,26 +51,56 @@ false,
 [3] = false,
 },
 },
-["Noiram - Argent Dawn"] = {
-["spec"] = {
-[3] = false,
-},
+["Salsiccio - Argent Dawn"] = {
 ["welcome"] = true,
-},
-["Polpetta - Draenor"] = {
 ["spec"] = {
 [3] = true,
 },
+},
+["Sfilatino - Draenor"] = {
+["spec"] = {
+nil,
+nil,
+true,
+false,
+},
 ["welcome"] = true,
 },
-["Sorbetto - Draenor"] = {
+["Pizzadino - Argent Dawn"] = {
 ["welcome"] = true,
+["spec"] = {
+nil,
+true,
+false,
+},
+},
+["Noiram - Argent Dawn"] = {
+["welcome"] = true,
+["spec"] = {
+[3] = false,
+},
+},
+["Panzarotto - Draenor"] = {
 ["spec"] = {
 true,
 [3] = false,
 },
+["welcome"] = true,
 },
-["Ham - Nemesis"] = {
+["Panzarotto - Silvermoon"] = {
+["welcome"] = true,
+["spec"] = {
+[3] = false,
+},
+},
+["Sorbetto - Draenor"] = {
+["spec"] = {
+true,
+[3] = false,
+},
+["welcome"] = true,
+},
+["Formaggino - Draenor"] = {
 ["spec"] = {
 [3] = false,
 },
@@ -64,313 +112,35 @@ true,
 [3] = false,
 },
 },
-["Pizzadino - Argent Dawn"] = {
-["spec"] = {
-nil,
-true,
-false,
-},
-["welcome"] = true,
-},
-["Panzarotto - Draenor"] = {
-["welcome"] = true,
-["spec"] = {
-true,
-[3] = false,
-},
-},
-["Panzarotto - Silvermoon"] = {
-["spec"] = {
-[3] = false,
-},
-["welcome"] = true,
-},
-["Panuozzo - Argent Dawn"] = {
-["spec"] = {
-nil,
-nil,
-true,
-false,
-},
-["welcome"] = true,
-},
-["Formaggino - Draenor"] = {
-["spec"] = {
-[3] = false,
-},
-["welcome"] = true,
-},
-["Salsiccio - Argent Dawn"] = {
-["spec"] = {
-[3] = true,
-},
-["welcome"] = true,
-},
 },
 ["profileKeys"] = {
-["Friarielli - Draenor"] = "PanzaUI",
-["Sfilatino - Draenor"] = "PanzaUI",
 ["Pizzadino - Draenor"] = "Default",
 ["Popletta - Draenor"] = "PanzaUI",
-["Gelatino - Draenor"] = "PanzaUI",
-["Noiram - Argent Dawn"] = "Default",
 ["Polpetta - Draenor"] = "PanzaUI",
-["Sorbetto - Draenor"] = "PanzaUI",
+["Friarielli - Draenor"] = "PanzaUI",
 ["Ham - Nemesis"] = "Default",
-["Sfincione - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Cannolo - Argent Dawn"] = "PanzaUI",
+["Gelatino - Draenor"] = "PanzaUI",
+["Salsiccio - Argent Dawn"] = "Default",
+["Sfilatino - Draenor"] = "PanzaUI",
 ["Pizzadino - Argent Dawn"] = "PanzaUI",
+["Noiram - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "PanzaUI",
 ["Panzarotto - Silvermoon"] = "Default",
-["Panuozzo - Argent Dawn"] = "Default",
+["Sorbetto - Draenor"] = "PanzaUI",
 ["Formaggino - Draenor"] = "PanzaUI",
-["Salsiccio - Argent Dawn"] = "Default",
+["Sfincione - Draenor"] = "Default",
 },
 ["namespaces"] = {
 ["LibDualSpec-1.0"] = {
 },
 },
 ["global"] = {
-["version"] = "11.2.7",
+["version"] = "11.2.11",
 },
 ["profiles"] = {
-["Bajheera - Sargeras"] = {
-["nameplate"] = {
-["toggle"] = {
-["TargetS"] = true,
-["TargetA"] = true,
-},
-["alpha"] = {
-["Target"] = 2,
-["NonTarget"] = 0.8499999999999999,
-},
-["scale"] = {
-["Minus"] = 1,
-["Tapped"] = 1,
-["Guardian"] = 1,
-["Totem"] = 0.9000000000000004,
-["Neutral"] = 1,
-["FriendlyPlayer"] = 1.5,
-["Pet"] = 1,
-["Target"] = 0.3500000000000003,
-},
-},
-["threat"] = {
-["ON"] = false,
-},
-["totemWidget"] = {
-["scale"] = 50,
-},
-["HeadlineView"] = {
-["useScaling"] = true,
-["name"] = {
-["size"] = 12,
-},
-},
-["FocusWidget"] = {
-["ON"] = false,
-},
-["AuraWidget"] = {
-["Debuffs"] = {
-["ShowBlizzardForFriendly"] = false,
-["ShowBoss"] = false,
-["ModeBar"] = {
-["IconSpacing"] = 1,
-},
-["ShowAllFriendly"] = true,
-["ShowDispellable"] = false,
-["ShowFriendly"] = true,
-["ModeIcon"] = {
-["Style"] = "custom",
-["IconWidth"] = 20,
-["StackCount"] = {
-["VerticalOffset"] = 2,
-},
-["Duration"] = {
-["VerticalOffset"] = 0,
-["Font"] = {
-["HorizontalAlignment"] = "LEFT",
-},
-},
-["IconHeight"] = 18,
-["RowSpacing"] = 6,
-},
-},
-["CrowdControl"] = {
-["NameMode"] = {
-["Anchor"] = "TOP",
-["HorizontalOffset"] = 0,
-["VerticalOffset"] = 35,
-},
-["HealthbarMode"] = {
-["Anchor"] = "TOP",
-["HorizontalOffset"] = 0,
-["VerticalOffset"] = 35,
-},
-["ModeBar"] = {
-["BarHeight"] = 14,
-},
-["ModeIcon"] = {
-["Columns"] = 5,
-["MaxAuras"] = 5,
-},
-},
-["Buffs"] = {
-["ModeBar"] = {
-["Enabled"] = true,
-},
-["ShowEnemy"] = false,
-["HideUnlimitedDuration"] = true,
-["ShowAllEnemy"] = true,
-["ShowDispellable"] = false,
-["AnchorTo"] = "Healthbar",
-["ShowOnEnemyNPCs"] = false,
-["HealthbarMode"] = {
-["Anchor"] = "RIGHT",
-},
-},
-},
-["totemSettings"] = {
-["T2"] = {
-["Style"] = "special",
-},
-["E1"] = {
-["Style"] = "special",
-},
-["T1"] = {
-["Style"] = "special",
-},
-["T6"] = {
-["Name"] = "Mana Spring Totem",
-},
-["O1"] = {
-["Style"] = "special",
-},
-["R4"] = {
-["Style"] = "special",
-},
-["P5"] = {
-["Style"] = "special",
-},
-["P4"] = {
-["Style"] = "special",
-},
-["P2"] = {
-["Style"] = "special",
-},
-["B1"] = {
-["Style"] = "special",
-},
-["P1"] = {
-["Style"] = "special",
-},
-},
-["settings"] = {
-["healthbar"] = {
-["height"] = 16,
-["width"] = 132,
-},
-["eliteicon"] = {
-["theme"] = "stddragon",
-},
-["name"] = {
-["flags"] = "OUTLINE",
-["y"] = 18,
-},
-["castbar"] = {
-["y"] = -20,
-},
-["frame"] = {
-["y"] = 12,
-["height"] = 59.925,
-["width"] = 170.8,
-},
-["level"] = {
-["show"] = false,
-},
-["skullicon"] = {
-["scale"] = 14,
-},
-["elitehealthborder"] = {
-["show"] = true,
-},
-},
-["NamePlateFriendlyClickThrough"] = true,
-["classWidget"] = {
-["ON"] = false,
-},
-["uniqueWidget"] = {
-["ON"] = false,
-},
-["Visibility"] = {
-["FriendlyMinus"] = {
-["Show"] = false,
-},
-["FriendlyPlayer"] = {
-["UseHeadlineView"] = true,
-},
-},
-["targetWidget"] = {
-["theme"] = "glow",
-},
-},
 ["Default"] = {
-["Visibility"] = {
-["HideFriendlyInCombat"] = true,
-["FriendlyMinus"] = {
-["UseHeadlineView"] = true,
-},
-["FriendlyPlayer"] = {
-["UseHeadlineView"] = true,
-},
-["NeutralMinus"] = {
-["Show"] = false,
-},
-["FriendlyNPC"] = {
-["UseHeadlineView"] = true,
-},
-},
-["HeadlineView"] = {
-["ShowFocusHighlight"] = false,
-["ForceFriendlyInCombat"] = "NAME",
-},
-["settings"] = {
-["spellicon"] = {
-["y"] = -12,
-["x"] = 75,
-},
-["healthbar"] = {
-["height"] = 12,
-["TargetUnit"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-["ShowOnlyInCombat"] = false,
-["ShowNotMyself"] = false,
-},
-["backdrop"] = "Solid",
-["texture"] = "Solid",
-},
-["castbar"] = {
-["CastTarget"] = {
-["Show"] = false,
-},
-["backdrop"] = "Solid",
-["texture"] = "Solid",
-},
-["threatborder"] = {
-["show"] = false,
-},
-["frame"] = {
-["y"] = -20,
-["height"] = 55.225,
-["width"] = 154,
-},
-},
-["Automation"] = {
-["FriendlyUnits"] = "HIDE_COMBAT",
-},
-},
-["Panzarotto - Draenor"] = {
 ["nameplate"] = {
 ["toggle"] = {
 ["CastingEnemyUnitAlpha"] = true,
@@ -383,8 +153,8 @@ false,
 },
 },
 ["ResourceWidget"] = {
-["Font"] = "Expressway",
 ["BarTexture"] = "Solid",
+["Font"] = "Expressway",
 ["ShowText"] = false,
 ["ShowBar"] = false,
 },
@@ -404,20 +174,31 @@ false,
 "Bonedust Brew",
 "Exploding Keg",
 "Weapons of Order",
+"Flame Shock",
+"Sunfire",
+"Moonfire",
+"Adaptive Swarm",
 "",
 },
+["ShowDispellable"] = false,
 ["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
+["BackgroundTexture"] = "ToxiUI Clean",
 ["Label"] = {
 ["Font"] = {
 ["Typeface"] = "Expressway",
 },
 },
+["Texture"] = "ToxiUI Clean",
 },
-["ShowDispellable"] = false,
 ["ModeIcon"] = {
-["Rows"] = 1,
+["Duration"] = {
+["Anchor"] = "TOP",
+["Font"] = {
+["Typeface"] = "Expressway",
+["HorizontalAlignment"] = "CENTER",
+["Size"] = 9,
+},
+},
 ["Style"] = "custom",
 ["IconWidth"] = 16,
 ["StackCount"] = {
@@ -428,19 +209,22 @@ false,
 ["Size"] = 9,
 },
 },
-["Duration"] = {
-["Anchor"] = "TOP",
-["Font"] = {
-["Typeface"] = "Expressway",
-["HorizontalAlignment"] = "CENTER",
-["Size"] = 9,
-},
-},
+["Rows"] = 1,
 ["IconHeight"] = 16,
 ["MaxAuras"] = 5,
 },
 },
 ["CrowdControl"] = {
+["ModeBar"] = {
+["BackgroundTexture"] = "ToxiUI Clean",
+["Label"] = {
+["Font"] = {
+["Typeface"] = "Expressway",
+},
+},
+["Texture"] = "ToxiUI Clean",
+},
+["ShowFriendly"] = false,
 ["ModeIcon"] = {
 ["Columns"] = 1,
 ["IconWidth"] = 25,
@@ -463,39 +247,35 @@ false,
 ["Size"] = 18,
 },
 },
-["IconHeight"] = 25,
 ["Style"] = "custom",
-},
-["ShowFriendly"] = false,
-["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
-["Label"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
+["IconHeight"] = 25,
 },
 },
 ["Buffs"] = {
-["ShowUnlimitedAlways"] = true,
+["ShowUnlimitedInInstances"] = false,
+["HideUnlimitedDuration"] = true,
+["ShowUnlimitedInCombat"] = false,
 ["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
+["BackgroundTexture"] = "Wglass",
 ["Label"] = {
 ["Font"] = {
 ["Typeface"] = "Expressway",
 },
 },
+["StackCount"] = {
+["Font"] = {
+["Typeface"] = "Expressway",
 },
-["ShowUnlimitedInCombat"] = false,
-["HideUnlimitedDuration"] = true,
+},
+["Duration"] = {
+["Font"] = {
+["Typeface"] = "Expressway",
+},
+},
+["Texture"] = "Wglass",
+},
 ["ModeIcon"] = {
-["MaxAuras"] = 5,
-["Rows"] = 1,
-["Style"] = "custom",
-["IconWidth"] = 20,
-["ColumnSpacing"] = 6,
+["IconHeight"] = 20,
 ["Duration"] = {
 ["Anchor"] = "TOP",
 ["Font"] = {
@@ -504,6 +284,10 @@ false,
 ["Size"] = 9,
 },
 },
+["Style"] = "custom",
+["IconWidth"] = 20,
+["ColumnSpacing"] = 6,
+["Rows"] = 1,
 ["StackCount"] = {
 ["Anchor"] = "BOTTOM",
 ["Font"] = {
@@ -512,40 +296,47 @@ false,
 ["Size"] = 9,
 },
 },
-["IconHeight"] = 20,
+["MaxAuras"] = 5,
 },
 ["ShowUnlimitedOnBosses"] = false,
 ["ShowOnEnemyNPCs"] = false,
-["ShowUnlimitedInInstances"] = false,
+["ShowUnlimitedAlways"] = true,
 },
-["ShowOmniCC"] = false,
 ["ShowTargetOnly"] = true,
+["ShowOmniCC"] = false,
 },
 ["ExperienceWidget"] = {
 ["Texture"] = "Solid",
 },
-["socialWidget"] = {
-["ShowFactionIcon"] = false,
-["ShowFriendIcon"] = false,
+["Automation"] = {
+["FriendlyUnits"] = "HIDE_COMBAT",
+["HideFriendlyUnitsInInstances"] = true,
+},
+["questWidget"] = {
+["scale"] = 18,
+["ModeHPBar"] = true,
+["ShowProgress"] = false,
 },
 ["targetWidget"] = {
 ["theme"] = "threat_glow",
 ["Size"] = 30,
 },
-["arenaWidget"] = {
-["ShowNumber"] = false,
-["ShowOrb"] = false,
+["threat"] = {
+["ON"] = false,
 },
 ["CVarsBackup"] = {
 ["nameplateMinAlpha"] = "0.6",
+["nameplateShowOnlyNames"] = "0",
 ["nameplateMaxAlpha"] = "1.0",
 },
 ["HeadlineView"] = {
 ["ShowFocusHighlight"] = false,
+["ShowMouseoverHighlight"] = false,
 ["FriendlySubtext"] = "ROLE",
+["name"] = {
+["y"] = 0,
+["size"] = 9,
 },
-["Automation"] = {
-["FriendlyUnits"] = "HIDE_COMBAT",
 },
 ["settings"] = {
 ["customtext"] = {
@@ -554,12 +345,15 @@ false,
 ["size"] = 8,
 },
 ["healthbar"] = {
-["texture"] = "Solid",
-["backdrop"] = "Solid",
 ["TargetUnit"] = {
+["Font"] = {
+["Typeface"] = "Expressway",
+},
 ["ShowOnlyInCombat"] = false,
 ["ShowNotMyself"] = false,
 },
+["backdrop"] = "Wglass",
+["texture"] = "Wglass",
 },
 ["eliteicon"] = {
 ["theme"] = "skullandcross",
@@ -574,9 +368,9 @@ false,
 ["show"] = false,
 },
 ["spellicon"] = {
-["y"] = -20,
-["x"] = -55,
-["scale"] = 12,
+["y"] = -14,
+["x"] = -45,
+["scale"] = 10,
 },
 ["name"] = {
 ["typeface"] = "Expressway",
@@ -585,25 +379,29 @@ false,
 ["AbbreviationForFriendlyUnits"] = "INITIALS",
 },
 ["spelltext"] = {
-["typeface"] = "Expressway",
 ["flags"] = "OUTLINE",
+["typeface"] = "Expressway",
+["height"] = 8,
+["size"] = 7,
 },
 ["castbar"] = {
-["y"] = -20,
+["y"] = -14,
+["texture"] = "Wglass",
+["SpellNameText"] = {
+["HorizontalOffset"] = 22,
+},
 ["CastTimeText"] = {
 ["HorizontalOffset"] = 0,
 },
-["SpellNameText"] = {
-["HorizontalOffset"] = 13,
-},
+["height"] = 8,
 ["CastTarget"] = {
 ["Show"] = false,
 ["Font"] = {
 ["Typeface"] = "Expressway",
 },
 },
-["backdrop"] = "Solid",
-["texture"] = "Solid",
+["backdrop"] = "Wglass",
+["width"] = 100,
 },
 ["level"] = {
 ["typeface"] = "Expressway",
@@ -612,316 +410,60 @@ false,
 },
 ["frame"] = {
 ["y"] = -20,
-["height"] = 52.875,
-["width"] = 154,
+["height"] = 61.6817726964263,
+["width"] = 144.5,
 },
 ["raidicon"] = {
 ["scale"] = 22,
 ["x"] = -60,
 ["hpColor"] = false,
-},
-},
-["totemSettings"] = {
-["hideHealthbar"] = true,
-},
-["FocusWidget"] = {
-["ON"] = false,
-},
-["BossModsWidget"] = {
-["Font"] = "Expressway",
-["ShowInHeadlineView"] = false,
-["ON"] = false,
-},
-["totemWidget"] = {
-["ON"] = false,
-},
-["classWidget"] = {
-["ShowInHeadlineView"] = true,
-["theme"] = "clean",
-},
-["Visibility"] = {
-["FriendlyPlayer"] = {
-["UseHeadlineView"] = true,
-},
-["FriendlyMinus"] = {
-["UseHeadlineView"] = true,
-},
-["FriendlyNPC"] = {
-["UseHeadlineView"] = true,
-},
-},
-["threat"] = {
-["ON"] = false,
-},
-},
-["Panzarotto - Draenor (1)"] = {
-["nameplate"] = {
-["toggle"] = {
-["CastingEnemyUnitAlpha"] = true,
-["OccludedUnits"] = true,
-["TargetS"] = true,
-},
-["alpha"] = {
-["NonTarget"] = 0.2999999999999998,
-["OccludedUnits"] = 0.04999999999999993,
-},
-},
-["ResourceWidget"] = {
-["Font"] = "Expressway",
-["BarTexture"] = "Solid",
-["ShowText"] = false,
-["ShowBar"] = false,
-},
-["BlizzardSettings"] = {
-["Names"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
-},
-["AuraWidget"] = {
-["Buffs"] = {
-["ShowUnlimitedAlways"] = true,
-["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
-["Label"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
-},
-["ShowUnlimitedInCombat"] = false,
-["HideUnlimitedDuration"] = true,
-["ModeIcon"] = {
-["MaxAuras"] = 5,
-["Rows"] = 1,
-["Style"] = "custom",
-["IconWidth"] = 20,
-["ColumnSpacing"] = 6,
-["Duration"] = {
-["Anchor"] = "TOP",
-["Font"] = {
-["Typeface"] = "Expressway",
-["HorizontalAlignment"] = "CENTER",
-["Size"] = 9,
-},
-},
-["StackCount"] = {
-["Anchor"] = "BOTTOM",
-["Font"] = {
-["Typeface"] = "Expressway",
-["HorizontalAlignment"] = "CENTER",
-["Size"] = 9,
-},
-},
-["IconHeight"] = 20,
-},
-["ShowUnlimitedOnBosses"] = false,
-["ShowOnEnemyNPCs"] = false,
-["ShowUnlimitedInInstances"] = false,
-},
-["Debuffs"] = {
-["FilterMode"] = "Allow",
-["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
-["Label"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
-},
-["ShowDispellable"] = false,
-["ModeIcon"] = {
-["Rows"] = 1,
-["Style"] = "custom",
-["IconWidth"] = 16,
-["StackCount"] = {
-["Anchor"] = "BOTTOM",
-["Font"] = {
-["Typeface"] = "Expressway",
-["HorizontalAlignment"] = "CENTER",
-["Size"] = 9,
-},
-},
-["Duration"] = {
-["Anchor"] = "TOP",
-["Font"] = {
-["Typeface"] = "Expressway",
-["HorizontalAlignment"] = "CENTER",
-["Size"] = 9,
-},
-},
-["IconHeight"] = 16,
-["MaxAuras"] = 5,
-},
-},
-["ShowTargetOnly"] = true,
-["CrowdControl"] = {
-["ModeIcon"] = {
-["Columns"] = 1,
-["IconWidth"] = 25,
-["StackCount"] = {
-["Anchor"] = "BOTTOM",
-["Font"] = {
-["HorizontalAlignment"] = "CENTER",
-["Transparency"] = 0,
-},
-},
-["Duration"] = {
-["Font"] = {
-["flags"] = "OUTLINE",
-["HorizontalAlignment"] = "CENTER",
-["Typeface"] = "Expressway",
-["Color"] = {
-["g"] = 0.05882353335618973,
-},
-["Size"] = 18,
-},
-},
-["IconHeight"] = 25,
-["Style"] = "custom",
-},
-["ShowFriendly"] = false,
-["ModeBar"] = {
-["BackgroundTexture"] = "Solid",
-["Texture"] = "Solid",
-["Label"] = {
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
-},
-},
-},
-["totemWidget"] = {
-["ON"] = false,
-},
-["Automation"] = {
-["FriendlyUnits"] = "HIDE_COMBAT",
-},
-["targetWidget"] = {
-["theme"] = "threat_glow",
-["Size"] = 30,
-},
-["threat"] = {
-["ON"] = false,
-},
-["HeadlineView"] = {
-["ShowFocusHighlight"] = false,
-["FriendlySubtext"] = "ROLE",
-},
-["socialWidget"] = {
-["ShowFactionIcon"] = false,
-["ShowFriendIcon"] = false,
-},
-["settings"] = {
-["customtext"] = {
-["typeface"] = "Expressway",
-["flags"] = "OUTLINE",
-["size"] = 8,
-},
-["healthbar"] = {
-["texture"] = "Solid",
-["backdrop"] = "Solid",
-["TargetUnit"] = {
-["ShowOnlyInCombat"] = false,
-["ShowNotMyself"] = false,
-},
-},
-["eliteicon"] = {
-["theme"] = "skullandcross",
-["x"] = 60,
-},
-["threatborder"] = {
-["show"] = false,
-},
-["skullicon"] = {
-["show"] = false,
-["x"] = 50,
-["scale"] = 20,
-},
-["spellicon"] = {
-["scale"] = 12,
-["x"] = -55,
-["y"] = -20,
-},
-["name"] = {
-["typeface"] = "Expressway",
-["flags"] = "OUTLINE",
-["AbbreviationForEnemyUnits"] = "INITIALS",
-["AbbreviationForFriendlyUnits"] = "INITIALS",
-},
-["spelltext"] = {
-["typeface"] = "Expressway",
-["flags"] = "OUTLINE",
-},
-["castbar"] = {
-["y"] = -20,
-["CastTimeText"] = {
-["HorizontalOffset"] = 0,
-},
-["SpellNameText"] = {
-["HorizontalOffset"] = 13,
-},
-["CastTarget"] = {
-["Show"] = false,
-["Font"] = {
-["Typeface"] = "Expressway",
-},
-},
-["backdrop"] = "Solid",
-["texture"] = "Solid",
-},
-["level"] = {
-["typeface"] = "Expressway",
-["flags"] = "OUTLINE",
-["size"] = 8,
-},
-["frame"] = {
-["y"] = -20,
-["height"] = 52.875,
-["width"] = 154,
-},
-["raidicon"] = {
-["scale"] = 22,
-["x"] = -60,
-["hpColor"] = false,
-},
-},
-["totemSettings"] = {
-["hideHealthbar"] = true,
-},
-["FocusWidget"] = {
-["ON"] = false,
-},
-["BossModsWidget"] = {
-["Font"] = "Expressway",
-["ShowInHeadlineView"] = false,
-["ON"] = false,
-},
-["ExperienceWidget"] = {
-["Texture"] = "Solid",
-},
-["classWidget"] = {
-["theme"] = "clean",
-["ShowInHeadlineView"] = true,
-},
-["Visibility"] = {
-["FriendlyPlayer"] = {
-["UseHeadlineView"] = true,
-},
-["FriendlyMinus"] = {
-["UseHeadlineView"] = true,
-},
-["FriendlyNPC"] = {
-["UseHeadlineView"] = true,
 },
 },
 ["arenaWidget"] = {
-["ShowNumber"] = false,
 ["ShowOrb"] = false,
+["ShowNumber"] = false,
+["NumberText"] = {
+["Font"] = {
+["Typeface"] = "Expressway",
+},
+},
+},
+["totemSettings"] = {
+["hideHealthbar"] = true,
+},
+["FocusWidget"] = {
+["ON"] = false,
+},
+["BossModsWidget"] = {
+["Font"] = "Expressway",
+["ShowInHeadlineView"] = false,
+["ON"] = false,
+},
+["socialWidget"] = {
+["ShowFriendIcon"] = false,
+["ShowFactionIcon"] = false,
+},
+["classWidget"] = {
+["y_hv"] = 0,
+["x_hv"] = -75,
+["y"] = 0,
+["theme"] = "cleanborder",
+["ShowInHeadlineView"] = true,
+["x"] = -75,
+},
+["Visibility"] = {
+["FriendlyPlayer"] = {
+["UseHeadlineView"] = true,
+},
+["FriendlyMinus"] = {
+["UseHeadlineView"] = true,
+},
+["FriendlyNPC"] = {
+["UseHeadlineView"] = true,
+},
+},
+["totemWidget"] = {
+["ON"] = false,
 },
 },
 ["PanzaUI"] = {
@@ -942,8 +484,8 @@ false,
 ["Font"] = "Expressway",
 ["ShowText"] = false,
 },
-["totemWidget"] = {
-["ON"] = false,
+["ExperienceWidget"] = {
+["Texture"] = "Wglass",
 },
 ["Automation"] = {
 ["FriendlyUnits"] = "HIDE_COMBAT",
@@ -956,11 +498,6 @@ false,
 },
 ["threat"] = {
 ["ON"] = false,
-},
-["CVarsBackup"] = {
-["nameplateMinAlpha"] = "0.6",
-["nameplateShowOnlyNames"] = "0",
-["nameplateMaxAlpha"] = "1.0",
 },
 ["FocusWidget"] = {
 ["ON"] = false,
@@ -980,15 +517,20 @@ false,
 ["AuraWidget"] = {
 ["Debuffs"] = {
 ["FilterBySpell"] = {
-"Keg Smash",
-"Breath of Fire",
-"Bonedust Brew",
-"Exploding Keg",
-"Weapons of Order",
-"Flame Shock",
-"Sunfire",
-"Moonfire",
-"Adaptive Swarm",
+"--Mage",
+"12486 --Blizzard",
+"205708 --Chilled",
+"212792 --Cone of Cold",
+"228354 --Flurry",
+"228358 --Winter's Chill",
+"289308 --Frozen Orb",
+"--436576 --Numbing Cold",
+"--Monk",
+"121253 --Keg Smash",
+"123725 --Breath of Fire",
+"325153 --Exploding Keg",
+"386276 --Bonedust Brew",
+"387179 --Weapons of Order",
 "",
 },
 ["FilterMode"] = "Allow",
@@ -1003,7 +545,7 @@ false,
 ["Anchor"] = "TOP",
 },
 ["Rows"] = 1,
-["Style"] = "custom",
+["MaxAuras"] = 5,
 ["IconHeight"] = 16,
 ["StackCount"] = {
 ["Font"] = {
@@ -1013,8 +555,9 @@ false,
 },
 ["Anchor"] = "BOTTOM",
 },
-["MaxAuras"] = 5,
+["Style"] = "custom",
 },
+["ShowDispellable"] = false,
 ["ModeBar"] = {
 ["BackgroundTexture"] = "ToxiUI Clean",
 ["Label"] = {
@@ -1024,8 +567,8 @@ false,
 },
 ["Texture"] = "ToxiUI Clean",
 },
-["ShowDispellable"] = false,
 },
+["ShowTargetOnly"] = true,
 ["CrowdControl"] = {
 ["ShowFriendly"] = false,
 ["ModeBar"] = {
@@ -1044,10 +587,10 @@ false,
 ["Font"] = {
 ["flags"] = "OUTLINE",
 ["HorizontalAlignment"] = "CENTER",
+["Typeface"] = "Expressway",
 ["Color"] = {
 ["g"] = 0.05882353335618973,
 },
-["Typeface"] = "Expressway",
 ["Size"] = 18,
 },
 },
@@ -1057,19 +600,17 @@ false,
 ["Font"] = {
 ["Transparency"] = 0,
 ["HorizontalAlignment"] = "CENTER",
-["Typeface"] = "Expressway",
 },
 ["Anchor"] = "BOTTOM",
 },
 },
 },
-["ShowTargetOnly"] = true,
-["ShowOmniCC"] = false,
 ["Buffs"] = {
 ["ShowUnlimitedInCombat"] = false,
 ["HideUnlimitedDuration"] = true,
 ["ShowUnlimitedOnBosses"] = false,
 ["ShowUnlimitedInInstances"] = false,
+["ShowEnemy"] = false,
 ["ShowOnEnemyNPCs"] = false,
 ["ModeIcon"] = {
 ["IconWidth"] = 20,
@@ -1084,8 +625,6 @@ false,
 ["Rows"] = 1,
 ["Style"] = "custom",
 ["IconHeight"] = 20,
-["ColumnSpacing"] = 6,
-["MaxAuras"] = 5,
 ["StackCount"] = {
 ["Font"] = {
 ["HorizontalAlignment"] = "CENTER",
@@ -1094,6 +633,8 @@ false,
 },
 ["Anchor"] = "BOTTOM",
 },
+["ColumnSpacing"] = 6,
+["MaxAuras"] = 5,
 },
 ["ModeBar"] = {
 ["BackgroundTexture"] = "Wglass",
@@ -1139,6 +680,7 @@ false,
 ["size"] = 7,
 },
 ["level"] = {
+["x"] = 40,
 ["typeface"] = "Expressway",
 ["flags"] = "OUTLINE",
 ["size"] = 8,
@@ -1177,9 +719,9 @@ false,
 ["show"] = false,
 },
 ["skullicon"] = {
-["show"] = false,
 ["x"] = 50,
 ["scale"] = 20,
+["show"] = false,
 },
 ["name"] = {
 ["typeface"] = "Expressway",
@@ -1188,9 +730,8 @@ false,
 ["AbbreviationForFriendlyUnits"] = "INITIALS",
 },
 ["frame"] = {
-["y"] = -20,
-["height"] = 52.875,
-["width"] = 154,
+["height"] = 61.6817726964263,
+["width"] = 144.5,
 },
 ["raidicon"] = {
 ["scale"] = 22,
@@ -1204,15 +745,15 @@ false,
 },
 ["HeadlineView"] = {
 ["ShowFocusHighlight"] = false,
+["FriendlySubtext"] = "ROLE",
 ["ShowMouseoverHighlight"] = false,
 ["name"] = {
 ["y"] = 0,
 ["size"] = 9,
 },
-["FriendlySubtext"] = "ROLE",
 },
-["ExperienceWidget"] = {
-["Texture"] = "Solid",
+["totemWidget"] = {
+["ON"] = false,
 },
 ["totemSettings"] = {
 ["hideHealthbar"] = true,
@@ -1226,8 +767,8 @@ false,
 ["x_hv"] = -75,
 ["y"] = 0,
 ["x"] = -75,
-["ShowInHeadlineView"] = true,
 ["theme"] = "cleanborder",
+["ShowInHeadlineView"] = true,
 },
 ["arenaWidget"] = {
 ["NumberText"] = {

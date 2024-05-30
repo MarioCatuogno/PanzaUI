@@ -5,22 +5,23 @@ RaidFrameSettingsDB = {
 },
 },
 ["profileKeys"] = {
-["Friarielli - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "PanzaUI",
 ["Pizzadino - Draenor"] = "Default",
 ["Popletta - Draenor"] = "Default",
-["Gelatino - Draenor"] = "Default",
-["Pizzadino - Argent Dawn"] = "Default",
 ["Polpetta - Draenor"] = "Default",
-["Sorbetto - Draenor"] = "Default",
+["Friarielli - Draenor"] = "PanzaUI",
 ["Ham - Nemesis"] = "PanzaUI",
-["Panuozzo - Argent Dawn"] = "Default",
+["Sfincione - Draenor"] = "PanzaUI",
+["Cannolo - Argent Dawn"] = "PanzaUI",
+["Gelatino - Draenor"] = "PanzaUI",
+["Salsiccio - Argent Dawn"] = "Default",
+["Sfilatino - Draenor"] = "PanzaUI",
 ["Noiram - Argent Dawn"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "PanzaUI",
 ["Panzarotto - Silvermoon"] = "Default",
-["Sfincione - Draenor"] = "PanzaUI",
+["Sorbetto - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "PanzaUI",
-["Salsiccio - Argent Dawn"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
 },
 ["global"] = {
 ["MinimapButton"] = {
@@ -36,16 +37,20 @@ RaidFrameSettingsDB = {
 ["profiles"] = {
 ["Default"] = {
 ["Fonts"] = {
-["StatusFont"] = "Expressway",
+["Status"] = {
+["fontsize"] = 12,
+["font"] = "Expressway",
+},
 ["NameFont"] = "Expressway",
 ["Name"] = {
 ["fontsize"] = 10,
 ["font"] = "Expressway",
 },
-["Status"] = {
-["fontsize"] = 12,
-["font"] = "Expressway",
+["StatusFont"] = "Expressway",
 },
+["Textures"] = {
+["BGTexture"] = "ToxiUI Clean",
+["FGTexture"] = "ToxiUI Clean",
 },
 ["HealthBars"] = {
 ["Textures"] = {
@@ -55,10 +60,6 @@ RaidFrameSettingsDB = {
 },
 },
 ["oldBlacklistsImported"] = true,
-["Textures"] = {
-["BGTexture"] = "ToxiUI Clean",
-["FGTexture"] = "ToxiUI Clean",
-},
 },
 ["PanzaUI"] = {
 ["Textures"] = {
@@ -72,21 +73,24 @@ RaidFrameSettingsDB = {
 ["Watchlist"] = false,
 },
 ["Blacklist"] = {
+["1459"] = true,
+["327942"] = true,
 ["1126"] = true,
 },
 ["Fonts"] = {
 ["NameSize"] = 10,
 ["Name"] = {
 ["font"] = "Expressway",
-["y_offset"] = -7,
-["fontsize"] = 10,
-["position"] = 2,
+["fontsize"] = 11,
+["y_offset"] = -4.5,
+["x_offset"] = 5,
+["position"] = 1,
 },
 ["StatusFont"] = "Expressway",
 ["NameFont"] = "Expressway",
 ["Status"] = {
 ["font"] = "Expressway",
-["fontsize"] = 12,
+["fontsize"] = 11,
 },
 },
 ["HealthBars"] = {
@@ -106,16 +110,17 @@ RaidFrameSettingsDB = {
 ["yOffsetFont"] = 0,
 ["font"] = "Expressway",
 ["relativePoint"] = 5,
+["fontSize"] = 11,
 ["point"] = 5,
 },
 ["BuffFramesDisplay"] = {
 ["xOffset"] = 2,
-["numBuffFrames"] = 4,
 ["yOffset"] = 2,
 ["height"] = 18,
 },
 ["StacksDisplay"] = {
 ["font"] = "Expressway",
+["fontSize"] = 11,
 },
 },
 ["CustomDebuff"] = {
@@ -123,6 +128,9 @@ RaidFrameSettingsDB = {
 ["width"] = 15,
 },
 ["MinorModules"] = {
+["RoleIcon"] = {
+["position"] = 2,
+},
 ["BuffSize"] = {
 ["height"] = 15,
 ["width"] = 15,

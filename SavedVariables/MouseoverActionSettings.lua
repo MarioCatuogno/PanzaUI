@@ -6,15 +6,18 @@ MouseoverActionSettingsDB = {
 },
 ["profileKeys"] = {
 ["Pizzadino - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Friarielli - Draenor"] = "Default",
+["Noiram - Argent Dawn"] = "Default",
 ["Salsiccio - Argent Dawn"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
-["Noiram - Argent Dawn"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
-["Panzarotto - Draenor"] = "Default",
-["Pizzadino - Argent Dawn"] = "Default",
-["Sfincione - Draenor"] = "Default",
-["Formaggino - Draenor"] = "Default",
 ["Ham - Nemesis"] = "Default",
+["Panzarotto - Draenor"] = "Default",
+["Sfincione - Draenor"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Cannolo - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
@@ -45,10 +48,7 @@ MouseoverActionSettingsDB = {
 ["Minimap"] = {
 ["enabled"] = false,
 },
-["MultiBar7"] = {
-["enabled"] = false,
-},
-["PlayerFrame"] = {
+["DebuffFrame"] = {
 ["enabled"] = false,
 },
 ["MainMenuBar"] = {
@@ -57,16 +57,22 @@ MouseoverActionSettingsDB = {
 ["DRAGONRIDING_UPDATE"] = false,
 ["COMBAT_UPDATE"] = false,
 },
-["MultiBarLeft"] = {
-["enabled"] = false,
-},
-["DebuffFrame"] = {
+["MultiBar7"] = {
 ["enabled"] = false,
 },
 ["BuffFrame"] = {
 ["enabled"] = false,
 },
+["MultiBarLeft"] = {
+["enabled"] = false,
+},
 ["MicroMenu"] = {
+["enabled"] = false,
+},
+["ActionBarConfig"] = {
+["Action"] = false,
+},
+["PlayerFrame"] = {
 ["enabled"] = false,
 },
 ["MiniMapButton"] = {

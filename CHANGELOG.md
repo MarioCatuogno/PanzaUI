@@ -89,7 +89,7 @@
 * WA Utilities - Removed mouse trails
 * WA Utilities - Removed old Events tracker
 
-### Various
+### 📏 Various
 
 * Added SUF auras list for buffs/debuffs
 * Updated SavedVariables
