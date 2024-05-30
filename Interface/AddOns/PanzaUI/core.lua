@@ -309,6 +309,8 @@ local function configQuestTracker()
       ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
       ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetTextColor(r, g, b)
       ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetTextColor(r, g, b)
+      ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
 
 end
 
