@@ -1,5 +1,7 @@
 #showtooltip
 /startattack
+/use [known:53595] Hammer of the Righteous
+/use [known:204019] Blessed Hammer
 /use Crusader Strike
 
 #showtooltip
@@ -8,11 +10,18 @@
 #showtooltip
 /use [@mouseover,harm,nodead] Avenger's Shield; Avenger's Shield
 
+#showtooltip Shield of the Righteous
+/use [known:378974] Bastion of Light
+/use Shield of the Righteous
+
 #showtooltip
 /use [@player] Lay on Hands
 
 #showtooltip
 /use [@mouseover,harm,nodead] Hammer of Justice; Hammer of Justice
+
+#showtooltip
+/use [mod:shift,@player] Blessing of Freedom; Divine Steed
 
 #showtooltip
 /use [@player] Word of Glory
