@@ -14,6 +14,10 @@
 /use [known:378974] Bastion of Light
 /use Shield of the Righteous
 
+#showtooltip Ardent Defender
+/use Guardian of Ancient Kings
+/use Ardent Defender
+
 #showtooltip
 /use [@player] Lay on Hands
 
