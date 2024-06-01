@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Cleaned up the code of core addon
 * Fixed blink of GCD on Stance Bar [[#36]](https://github.com/MarioCatuogno/PanzaUI/issues/36)
 
 ### ⌨️ Macros

@@ -241,7 +241,6 @@ local function configMinimap()
 
   -- Set Scale to Clock button
   LoadAddOn("Blizzard_TimeManager")
-  --local region = TimeManagerClockButton:GetRegions()
   HideFrameAndUnregisterEvents(TimeManagerClockButton)
 
   -- Set Garrison button scale
