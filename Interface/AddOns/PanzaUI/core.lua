@@ -98,7 +98,7 @@ local function configActionBars()
     end
   end
 
-  -- Avoid blink in action bars
+  -- Avoid blink in Action Bars
   local gdcbars = {
     "MainMenuBar",
     "ActionButton",
@@ -115,9 +115,27 @@ local function configActionBars()
       local button = _G[gdcbar..i]
       if button then
         button.cooldown:SetDrawBling(false)
+        button.cooldown:Hide()
       end
     end
   end
+
+  -- Avoid blink in Stance Bar
+  local stanceBar = "StanceButton"
+  for i = 1, 10 do
+    local button = _G[stanceBar..i]
+    if button and button.cooldown then
+      button.cooldown:SetDrawBling(false)
+      button.cooldown:Hide() -- This will hide the cooldown frame
+    end
+  end
+
+  -- Remove GCD animation to all icons (temporary until I fix the StanceBar problem)
+  --hooksecurefunc("CooldownFrame_Set", function(self, start, duration, enable, forceShowDrawEdge, modRate)
+  --  if enable and enable ~= 0 and start > 0 and duration <= 1.5 then
+  --    CooldownFrame_Clear(self)
+  --  end
+  --end)
 
 end
 
