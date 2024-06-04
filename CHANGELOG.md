@@ -19,6 +19,9 @@
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
 * SUF - Removed Holy Power bar from Player frame
+* WA Druid - Added a new Cooldown section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
+* WA Druid - Added a new Resources section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
+* WA Druid - Added a new Rotation section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
 
