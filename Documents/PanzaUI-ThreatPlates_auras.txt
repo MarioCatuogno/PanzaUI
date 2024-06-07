@@ -12,3 +12,5 @@
 325153 --Exploding Keg
 386276 --Bonedust Brew
 387179 --Weapons of Order
+--Priest
+589 --Shadow Word: Pain
