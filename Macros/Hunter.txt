@@ -1,0 +1,29 @@
+#showtooltip
+/petattack
+/use [@mouseover,exists,harm,nodead][] Barbed Shot
+
+#showtooltip
+/petattack
+/use Kill Command
+
+#showtooltip
+/startattack
+/petattack
+/use Multi-Shot
+
+#showtooltip
+/use [@mouseover,exists,harm,nodead][] Kill Shot
+
+#showtooltip
+/use [mod:shift] Aspect of the Turtle; Feign Death
+
+#showtooltip
+/use [mod:shift] Wing Clip; [@cursor] Freezing Trap
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Counter Shot
+
+#showtooltip
+/use [@mouseover,harm,nodead][] Hunter's Mark
