@@ -1,3 +1,5 @@
+--Hunter
+257284 -- Hunter's Mark
 --Mage
 12486 --Blizzard
 205708 --Chilled
