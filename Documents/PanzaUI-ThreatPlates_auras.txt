@@ -1,4 +1,6 @@
 --Hunter
+217200 --Barbed Shot
+321530 --Bloodshed
 257284 -- Hunter's Mark
 --Mage
 12486 --Blizzard
