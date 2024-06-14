@@ -7,9 +7,11 @@
 
 ### ⌨️ Macros
 
+* Added a PDF containing keybinds and macros for Hunter (WIP) [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * Added a PDF containing keybinds and macros for Paladin (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * Added a PDF containing keybinds and macros for Priest (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * Added a PDF containing keybinds and macros for Warrior (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
+* Added macros for Hunter (WIP) [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * Added macros for Paladin (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * Added macros for Priest (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * Added macros for Warrior (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
