@@ -37,6 +37,10 @@
 * WA Paladin - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
 
+### 📏 Various
+
+* Updated HOW TO INSTALL documentation
+
 ## 0.7.0-RELEASE
 
 ### 🛠️ Addon
