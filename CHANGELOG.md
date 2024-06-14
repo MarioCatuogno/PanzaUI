@@ -21,6 +21,7 @@
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
 * RFS - Added Priest filters
+* SUF - Added Pet frame [[#40]](https://github.com/MarioCatuogno/PanzaUI/issues/40)
 * SUF - Removed Holy Power bar from Player frame
 * Threat Plates - Added Priest debuffs
 * WA Druid - Added a new Cooldown section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
