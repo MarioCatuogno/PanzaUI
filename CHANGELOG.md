@@ -19,6 +19,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Added Stance Bar to layout
+* Details - Changed to auto-erase data
 * Details - Removed Encounter timer
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
