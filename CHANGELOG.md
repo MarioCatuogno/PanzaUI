@@ -18,6 +18,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Added Big Wigs profile
 * BlizzUI - Added Stance Bar to layout
 * Details - Changed to auto-erase data
 * Details - Removed Encounter timer
