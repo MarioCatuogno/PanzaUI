@@ -40,6 +40,7 @@
 * WA Druid - Added a new Cooldown section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
 * WA Druid - Added a new Resources section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
 * WA Druid - Added a new Rotation section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
+* WA Dungeons - Removed the WA profile
 * WA Hunter - Added a new Cooldown section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * WA Hunter - Added a new Resources section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * WA Hunter - Added a new Rotation section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
