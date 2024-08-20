@@ -26,6 +26,7 @@
 * Details - Changed to auto-erase data
 * Details - Removed Encounter timer
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
+* MouseoverActionSettings - Fixed some bugs
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
 * RFS - Added Priest filters
 * RFS - Fixed some bugs
