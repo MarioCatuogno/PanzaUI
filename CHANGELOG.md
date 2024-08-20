@@ -4,6 +4,7 @@
 
 * Cleaned up the code of core addon
 * Fixed blink of GCD on Stance Bar [[#36]](https://github.com/MarioCatuogno/PanzaUI/issues/36)
+* Hide alerts from default UI
 * Temporarely disabled many functions due to TWW patch
 * Update TOC to newest patch
 
