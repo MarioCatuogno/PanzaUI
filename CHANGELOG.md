@@ -42,6 +42,7 @@
 * WA Monk - Updated Monk buff section
 * WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * WA Paladin - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* WA Utilities - Fixed various bugs
 * WA Utilities - Updated Clock
 * WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
 
