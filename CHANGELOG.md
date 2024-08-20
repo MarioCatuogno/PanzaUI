@@ -31,6 +31,7 @@
 * SUF - Removed Holy Power bar from Player frame
 * Threat Plates - Added Hunter debuffs
 * Threat Plates - Added Priest debuffs
+* Threat Plates - Fixed some bugs
 * WA Druid - Added a new Cooldown section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
 * WA Druid - Added a new Resources section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
 * WA Druid - Added a new Rotation section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
