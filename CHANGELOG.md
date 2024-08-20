@@ -19,6 +19,7 @@
 ### 👤 Profiles
 
 * BigWigs - Added Big Wigs profile
+* BlizzUI - Added Action Bars for spell rotation
 * BlizzUI - Added Stance Bar to layout
 * Details - Changed to auto-erase data
 * Details - Removed Encounter timer
