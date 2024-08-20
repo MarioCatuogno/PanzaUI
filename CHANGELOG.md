@@ -38,7 +38,8 @@
 * WA Hunter - Added a new Rotation section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * WA Mage - Updated Mage buff section
 * WA Monk - Added a new Alert section
-* WA Monk - Updated Mage buff section
+* WA Monk - Removed Monk rotation section
+* WA Monk - Updated Monk buff section
 * WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * WA Paladin - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * WA Utilities - Updated Clock
