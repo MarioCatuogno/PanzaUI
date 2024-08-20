@@ -28,7 +28,6 @@
 * Details - Removed Encounter timer
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
 * MouseoverActionSettings - Fixed some bugs
-* WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
 * RFS - Added Priest filters
 * RFS - Fixed some bugs
 * RFS - Major overhaul of debuffs/buffs filter after last update of addon
@@ -45,12 +44,16 @@
 * WA Hunter - Added a new Cooldown section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * WA Hunter - Added a new Resources section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
 * WA Hunter - Added a new Rotation section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
-* WA Mage - Updated Mage buff section
+* WA Mage - Updated Buff section
 * WA Monk - Added a new Alert section
-* WA Monk - Removed Monk rotation section
-* WA Monk - Updated Monk buff section
+* WA Monk - Removed Rotation section
+* WA Monk - Updated Buff section
 * WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * WA Paladin - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* WA Shaman - Added a new Alerts section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Added a new Buffs section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Added a new Cooldown section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
 * WA Utilities - Fixed various bugs
 * WA Utilities - Updated Clock
 * WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
