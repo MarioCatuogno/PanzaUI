@@ -31,7 +31,8 @@
 * MouseoverActionSettings - Fixed some bugs
 * RFS - Added Priest filters
 * RFS - Fixed some bugs
-* RFS - Major overhaul of debuffs/buffs filter after last update of addon
+* RFS - Major overhaul of buffs/debuffs filter after last update of addon
+* RFS - Modified Role icon and buffs/debuffs fonts
 * SUF - Added Pet frame [[#40]](https://github.com/MarioCatuogno/PanzaUI/issues/40)
 * SUF - Fixed some bugs
 * SUF - Removed Holy Power bar from Player frame
