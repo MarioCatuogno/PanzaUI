@@ -56,6 +56,7 @@
 * WA Shaman - Added a new Buffs section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Added a new Cooldown section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
+* WA Utilities - Changed the max level to 80 to keep track of XP
 * WA Utilities - Fixed various bugs
 * WA Utilities - Updated Clock
 * WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
