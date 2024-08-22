@@ -24,6 +24,7 @@
 * BigWigs - Added Big Wigs profile
 * BlizzUI - Added Action Bars for spell rotation
 * BlizzUI - Added Stance Bar to layout
+* BlizzUI - Aligned Raid and Party frames
 * Details - Changed to auto-erase data
 * Details - Removed Encounter timer
 * MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
