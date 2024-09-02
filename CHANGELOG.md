@@ -15,6 +15,7 @@ IMPORTANT: Temporarely disabled many functions due to TWW patch.
 * Added a PDF containing keybinds and macros for Paladin (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
 * Added a PDF containing keybinds and macros for Priest (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * Added a PDF containing keybinds and macros for Warrior (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
+* Updated the PDF containing keybinds and macros for Restoration Shaman [[#41]](https://github.com/MarioCatuogno/PanzaUI/issues/41)
 * Updated the PDF containing keybinds and macros for Monk
 
 ### 👤 Profiles
