@@ -1,3 +1,73 @@
+#showtooltip 
+/use [mod:shift,@mouseover,help,nodead][mod:shift] Healing Surge; [@mouseover,help,nodead][] Chain Heal
+
+#showtooltip
+/startattack
+/use [mod:shift,@mouseover,harm,nodead][mod:shift,@target] Flame Shock; [@mouseover,harm,nodead][@target] Lava Burst
+
+
+#showtooltip
+/use Ancestral Swiftness
+/use Nature's Swiftness
+/use [@mouseover,help,nodead][@target,help,nodead][] Healing Wave
+
+
+#showtooltip
+/use [known:428332,mod:shift,@mouseover,nodead][known:428332,mod:shift,@target] Primordial Wave
+/use [@mouseover,help,nodead][@target,help,nodead][] Riptide
+
+
+#showtooltip
+/use [mod:shift, @cursor] Totemic Projection
+/use [known:444995,@cursor] Surging Totem
+/use [@cursor] Healing Rain
+
+#showtooltip
+/use [mod:shift] Healing Tide Totem; Healing Stream Totem
+
+#showtooltip
+/startattack
+/use [mod:shift] Lightning Bolt; Chain Lightning
+
+#showtooltip
+/use [mod:shift, @player] Water Shield; [@mouseover, nodead] Earth Shield
+
+#showtooltip
+/use [mod:shift] Spirit Walk; Ghost Wolf
+
+#showtooltip
+/cast [known:192077, mod:shift, @cursor] Wind Rush Totem; Spiritwalker's Grace
+/use [mod:alt] Rocket Jump(Racial)
+
+#showtooltip
+/cast [mod:shift, @player] Earthbind Totem; [@cursor] Capacitor Totem
+
+
+#showtooltip
+/use [mod:shift,@player] Poison Cleansing Totem
+/use [@cursor] Spirit Link Totem
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Wind Shear
+
+#showtooltip
+/use [@mouseover,help,nodead][@target,help,nodead][@player] Purify Spirit
+
+
+#showtooltip
+/use [mod:shift] Stone Bulwark Totem; Ascendance
+
+
+#showtooltip
+/use [@cursor] Far Sight
+
+
+#showtooltip
+/castsequence reset=10 Water Shield, Earth Shield, Earthliving Weapon, Skyfury, Tidecaller's Guard
+
+
 #showtooltip
 /startattack
 /use Stormstrike
@@ -8,55 +78,10 @@
 /use Lava Lash
 
 #showtooltip
-/startattack
-/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Frost Shock; [nomod,@mouseover,exists,harm,nodead][nomod] Flame Shock
-
-#showtooltip
 /castsequence reset=6 Ice Strike, Frost Shock, Frost Shock
 
-#showtooltip 
-/use [known:378081] Nature's Swiftness
-/use [mod:shift,@mouseover,exists,harm,nodead][mod:shift] Lightning Bolt; [nomod,@mouseover,exists,harm,nodead][nomod] Chain Lightning
-
 #showtooltip
-/startattack
-/use [@mouseover,exists,harm,nodead][] Primordial Wave
-
-#showtooltip
-/use [mod:shift,@mousover,exists,help,nodead] Earth Shield; [@player] Earth Shield
-
-#showtooltip
-/use [known:108281] Ancestral Guidance
-/use [known:384352] Doom Winds
-
-#showtooltip
-/use [mod:shift] Spirit Walk; Ghost Wolf
-
-#showtooltip
-/cast [@player] Wind Rush Totem
-
-#showtooltip
-/cast [mod:shift] Hex; [@player] Earthbind Totem
-
-#showtooltip 
-/use [mod:shift,@mouseover,exists,help,nodead][mod:shift] Chain Heal; [@mouseover,exists,heal,nodead][] Healing Surge
-
-#showtooltip
-/stopcasting
-/cqs
-/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][] Wind Shear
-
-#showtooltip
-/use [mod:shift] Windfury Totem; Healing Stream Totem
-
-#showtooltip
-/use [@cursor] Totemic Projection
-
-#showtooltip
-/use [@cursor] Far Sight
-
-#showtooltip
-/castsequence reset=10 Lightning Shield, Flametongue Weapon, Windfury Weapon
+/castsequence reset=10 Lightning Shield, Flametongue Weapon, Skyfury
 
 /click TotemFrameTotem1 RightButton
 /click TotemFrameTotem2 RightButton
@@ -65,3 +90,18 @@
 /click TotemFrameTotem5 RightButton
 /click TotemFrameTotem6 RightButton
 /petdismiss
+
+#showtooltip
+/startattack
+/use Lava Burst
+
+#showtooltip
+/startattack
+/use [@target] Earthquake
+
+#showtooltip
+/cast [mod:shift, nopet, known:198103] Earth Elemental; [known:198067, nopet] Fire Elemental
+
+#showtooltip
+/startattack
+/use [@target] Elemental Blast

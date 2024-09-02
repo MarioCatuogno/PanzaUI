@@ -4,7 +4,6 @@
 #showtooltip Rising Sun Kick
 /stopcasting
 /cqs
-/use [spec:2,known:116680] Thunder Focus Tea
 /use [harm,nodead] Rising Sun Kick
 /startattack
 
@@ -13,13 +12,14 @@
 
 #showtooltip
 /use [spec:1] Keg Smash
+/use [spec:2,known:116680] Thunder Focus Tea
 /use [spec:2,@mouseover,help,nodead][spec:2,@target,help,nodead] Renewing Mist; [spec:2,@player] Renewing Mist
 /use [spec:3] Fists of Fury
 /use 13
 /use 14
 
 #showtooltip
-/use [spec:1,mod:shift,@player] Exploding Keg; [spec:1,@player] Bonedust Brew
+/use [spec:1, @player] Exploding Keg
 /use [spec:2] Jadefire Stomp
 /use [spec:3] Whirling Dragon Punch
 
@@ -32,7 +32,6 @@
 /use [spec:1,mod:shift] Celestial Brew; [spec:1] Purifying Brew
 /use [spec:2,@mouseover,help,nodead][spec:2,@target,help,nodead] Sheilun's Gift; [spec:2,@player] Sheilun's Gift
 /use [spec:3] Storm, Earth, and Fire
-
 #showtooltip
 /use [spec:1, mod:shift] Fortifying Brew; [spec:1] Zen Meditation
 /use [spec:2, mod:shift] Fortifying Brew; [spec:2] Mana Tea
@@ -40,6 +39,12 @@
 
 #showtooltip
 /use [mod:shift] Dampen Harm; Diffuse Magic
+
+#showtooltip
+/startattack
+/use [spec:1] Weapons of Order
+/use [spec:2] Revival
+/use [spec:3] Touch of Karma
 
 #showtooltip
 /use [spec:3,mod:alt] Flying Serpent Kick; [mod:shift, @player] Tiger's Lust; [known:115008] Chi Torpedo; Roll
@@ -53,9 +58,9 @@
 /use [mod:shift,@cursor] Ring of Peace; Leg Sweep
 
 #showtooltip
-/use [mod:shift,@mouseover,help,nodead][mod:shift,@target,help,nodead] Life Cocoon; [mod:shift,@player] Life Cocoon; [spec:2] Expel Harm
-/use [spec:1] Expel Harm
-/use [spec:3] Expel Harm
+/use [spec:2,mod:shift,@mouseover,help,nodead][spec:2,mod:shift,@target,help,nodead] Life Cocoon; [spec:2,mod:shift,@player] Life Cocoon
+/use [spec:1/2] Expel Harm
+/use [spec:3,@mouseover,help,nodead][spec:3,@player] Vivify
 
 #showtooltip
 /use [spec:1,known:132578] Invoke Niuzao, the Black Ox
@@ -73,8 +78,7 @@
 /use [@mouseover,help,nodead,spec:2][@target,help,nodead,spec:2][@player,spec:2] Detox
 
 #showtooltip
-/use [known:123986] Chi Burst
-/use [known:115098] Chi Wave
+/use [@focus,exists][@mouseover,harm,nodead] Paralysis; Paralysis
 
 #showtooltip
-/use [@focus,exists][@mouseover,harm,nodead] Paralysis; Paralysis
+/use [@mouseover,nodead][@target] Crackling Jade Lightning
