@@ -57,6 +57,7 @@ IMPORTANT: Temporarely disabled many functions due to TWW patch.
 * WA Shaman - Added a new Buffs section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Added a new Cooldown section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
+* WA Utilities - Added Devotion Aura to Alerts to track missing buffs for Paladin
 * WA Utilities - Added various Alerts to track missing buffs for Shaman
 * WA Utilities - Changed the max level to 80 to keep track of XP
 * WA Utilities - Fixed various bugs
