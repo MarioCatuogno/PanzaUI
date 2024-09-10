@@ -50,7 +50,7 @@ IMPORTANT: Temporarely disabled many functions due to TWW patch.
 * WA Monk - Removed Rotation section
 * WA Monk - Updated Buff section
 * WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
-* WA Paladin - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* WA Priest - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
 * WA Shaman - Added a new Alerts section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Added a new Buffs section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Added a new Cooldown section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
