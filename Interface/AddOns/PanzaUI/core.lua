@@ -150,14 +150,14 @@ local function configCastBar()
 
     PlayerCastingBarFrame.StandardGlow:Hide()
     PlayerCastingBarFrame.TextBorder:Hide()
-    PlayerCastingBarFrame:SetSize(220, 10)
+    PlayerCastingBarFrame:SetSize(180, 10)
     PlayerCastingBarFrame.TextBorder:ClearAllPoints()
     PlayerCastingBarFrame.TextBorder:SetAlpha(0)
     PlayerCastingBarFrame.Text:ClearAllPoints()
-    PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -50)
+    PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -10)
     PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
     PlayerCastingBarFrame:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-    PlayerCastingBarFrame:Hide()
+    --PlayerCastingBarFrame:Hide()
 
     -- Color Player Cast Bar based on class
     local _, playerClass = UnitClass("player")
@@ -634,9 +634,9 @@ local function setupQol()
     showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
 
   -- Hide Talking Head
-  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
-    self:CloseImmediately()
-  end)
+--  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
+--    self:CloseImmediately()
+--  end)
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off

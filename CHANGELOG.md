@@ -1,6 +1,8 @@
 ## 0.7.2-RELEASE
 
 ### 👤 Profiles
+* BlizzUI - Added standard Cast Bar
+* SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Fixed the Skyfury alert for Shaman
 
