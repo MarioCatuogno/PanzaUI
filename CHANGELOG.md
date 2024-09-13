@@ -1,6 +1,11 @@
 ## 0.7.2-RELEASE
 
+### 🛠️ Addon
+
+* Fixed a bug on Nameplate texture
+
 ### 👤 Profiles
+
 * BlizzUI - Added standard Cast Bar
 * SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame

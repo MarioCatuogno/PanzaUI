@@ -150,7 +150,7 @@ local function configCastBar()
 
     PlayerCastingBarFrame.StandardGlow:Hide()
     PlayerCastingBarFrame.TextBorder:Hide()
-    PlayerCastingBarFrame:SetSize(180, 10)
+    PlayerCastingBarFrame:SetSize(200, 10)
     PlayerCastingBarFrame.TextBorder:ClearAllPoints()
     PlayerCastingBarFrame.TextBorder:SetAlpha(0)
     PlayerCastingBarFrame.Text:ClearAllPoints()
@@ -387,20 +387,20 @@ local function configVariousFrames()
   end
   SetHealthBarTexture()
 
-  -- Reskin the health bar of Nameplates
-  local function SetNameplateTexture()
-    for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
-        if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
-            nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-        end
-    end
-    hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
-      if frame and frame.healthBar then
-          frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-      end
-    end)
-  end
-  SetNameplateTexture()
+  ---- Reskin the health bar of Nameplates
+  --local function SetNameplateTexture()
+  --  for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
+  --      if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
+  --          nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+  --      end
+  --  end
+  --  hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
+  --    if frame and frame.healthBar then
+  --        frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+  --    end
+  --  end)
+  --end
+  --SetNameplateTexture()
 
 end
 
