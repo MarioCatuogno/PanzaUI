@@ -1,3 +1,9 @@
+--Hunter
+217200 --Barbed Shot
+321530 --Bloodshed
+375891 --Death Chakram
+187650 --Freezing Trap
+257284 -- Hunter's Mark
 --Mage
 12486 --Blizzard
 205708 --Chilled
@@ -12,3 +18,9 @@
 325153 --Exploding Keg
 386276 --Bonedust Brew
 387179 --Weapons of Order
+--Priest
+589 --Shadow Word: Pain
+--Shaman
+188389 --Flame Shock
+196840 --Frost Shock
+462620 --Earthquake

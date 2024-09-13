@@ -1,0 +1,46 @@
+#showtooltip
+/startattack
+/petattack
+/use Kill Command
+
+#showtooltip Barbed Shot
+/use [known:274738] Ancestral Call(Racial)
+/petattack
+/use [@mouseover,exists,harm,nodead][] Barbed Shot
+
+#showtooltip
+/startattack
+/petattack
+/use Dire Beast
+
+#showtooltip
+/startattack
+/petattack
+/use Multi-Shot
+
+#showtooltip
+/use [mod:shift] Feign Death; Aspect of the Turtle
+
+#showtooltip
+/use [@mouseover,exists,harm,nodead][] Kill Shot
+
+#showtooltip
+/use [mod:shift,@cursor] Binding Shot; [@cursor] Freezing Trap
+
+#showtooltip
+/use [mod:shift] Mend Pet; Exhilaration
+
+#showtooltip
+/use [@cursor] Tar Trap
+
+#showtooltip
+/stopcasting
+/cqs
+/use [mod:shift,@focus,harm,exists,nodead][mod:shift,@mouseover,harm,nodead][mod:shift] Tranquilizing Shot
+/use [@focus,harm,exists,nodead][@mouseover,harm,nodead][@target] Counter Shot
+
+#showtooltip
+/use [@mouseover,help,nodead][@focus,help,nodead][@pet][] Misdirection
+
+#showtooltip
+/use [@mouseover,harm,nodead][] Hunter's Mark

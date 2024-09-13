@@ -1,0 +1,27 @@
+#showtooltip
+/use Ignore Pain
+/use Shield Slam
+
+#showtooltip
+/use [mod:shift] Intimidating Shout; Demoralizing Shout
+
+#showtooltip
+/use [@mouseover,harm,nodead] Charge; Charge
+
+#showtooltip
+/use Victory Rush
+/use Impending Victory
+
+#showtooltip
+/stopcasting
+/cqs
+/use [@focus, exists] Pummel; Pummel
+
+#showtooltip
+/use [@focus,exists][@mouseover,harm,nodead] Taunt; Taunt
+
+#showtooltip
+/use [@mouseover,harm,nodead] Heroic Throw; Heroic Throw
+
+#showtooltip
+/cast [stance:2]!Defensive Stance; !Battle Stance

@@ -1,0 +1,29 @@
+#showtooltip
+/use [mod:shift] Mind Blast; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Flash Heal
+
+#showtooltip
+/use [mod:shift] Shadow Word: Pain; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Renew
+
+#showtooltip
+/use [mod:shift] Smite; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Prayer of Mending
+
+#showtooltip
+/use [mod:shift] Holy Word: Chastise; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Holy Word: Serenity
+
+#showtooltip
+/use [@mouseover,exists,help,nodead][@target,exists,help,nodead][] Power Word: Shield
+
+#showtooltip
+/use [mod:shift,@cursor] Holy Word: Sanctify; [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Prayer of Healing
+
+#showtooltip
+/use [mod:shift] Fade; Desperate Prayer
+
+#showtooltip
+/use [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Levitate
+
+#showtooltip
+/use [@mouseover,exists,harm,nodead][] Psychic Scream
+
+#showtooltip
+/use [@mouseover, exists, noharm, nodead][@target, exists, noharm, nodead][] Purify

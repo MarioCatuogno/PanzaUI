@@ -72,8 +72,8 @@ addonTable.core = {}
 local function configActionBars()
 
   -- Hide MainMenuBar
-  --MainMenuBar:SetAlpha(0)
-  --MainMenuBar:EnableMouse(false)
+  MainMenuBar:SetAlpha(0)
+  MainMenuBar:EnableMouse(false)
 
   -- Avoid interaction with action bars
   local bars = {
@@ -98,7 +98,7 @@ local function configActionBars()
     end
   end
 
-  -- Avoid blink in action bars
+  -- Avoid blink in Action Bars
   local gdcbars = {
     "MainMenuBar",
     "ActionButton",
@@ -115,9 +115,27 @@ local function configActionBars()
       local button = _G[gdcbar..i]
       if button then
         button.cooldown:SetDrawBling(false)
+        button.cooldown:Hide()
       end
     end
   end
+
+  -- Avoid blink in Stance Bar
+  local stanceBar = "StanceButton"
+  for i = 1, 10 do
+    local button = _G[stanceBar..i]
+    if button and button.cooldown then
+      button.cooldown:SetDrawBling(false)
+      button.cooldown:Hide() -- This will hide the cooldown frame
+    end
+  end
+
+  -- Remove GCD animation to all icons (temporary until I fix the StanceBar problem)
+  --hooksecurefunc("CooldownFrame_Set", function(self, start, duration, enable, forceShowDrawEdge, modRate)
+  --  if enable and enable ~= 0 and start > 0 and duration <= 1.5 then
+  --    CooldownFrame_Clear(self)
+  --  end
+  --end)
 
 end
 
@@ -207,10 +225,10 @@ end
 local function configMinimap()
 
   -- Set Alpha, Position and Scale
-  SetScaleForFrame(MinimapZoneText, 1.15)
-  MinimapZoneText:ClearAllPoints()
-  MinimapZoneText:SetPoint("LEFT", Minimap, "TOP", -55, 27.5)
-  MinimapZoneText:SetJustifyH("RIGHT")
+  --SetScaleForFrame(MinimapZoneText, 1.15)
+  --MinimapZoneText:ClearAllPoints()
+  --MinimapZoneText:SetPoint("LEFT", Minimap, "TOP", -55, 27.5)
+  --MinimapZoneText:SetJustifyH("RIGHT")
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
@@ -222,9 +240,8 @@ local function configMinimap()
   HideFrameAndUnregisterEvents(MinimapCluster.TrackingFrame)
 
   -- Set Scale to Clock button
-  LoadAddOn("Blizzard_TimeManager")
-  --local region = TimeManagerClockButton:GetRegions()
-  HideFrameAndUnregisterEvents(TimeManagerClockButton)
+  --LoadAddOn("Blizzard_TimeManager")
+  --HideFrameAndUnregisterEvents(TimeManagerClockButton)
 
   -- Set Garrison button scale
   SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
@@ -247,18 +264,18 @@ local function configPlayerFrame()
   hideRest:Hide()
 
   -- Hide Power Bars
-  ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
-  ClearAllPointsHideFrame(ComboPointPlayerFrame)
-  ClearAllPointsHideFrame(EssencePlayerFrame)
-  ClearAllPointsHideFrame(MageArcaneChargesFrame)
-  ClearAllPointsHideFrame(MonkHarmonyBarFrame)
-  ClearAllPointsHideFrame(MonkStaggerBar)
-  ClearAllPointsHideFrame(MonkStaggerBar.PowerBarMask)
-  ClearAllPointsHideFrame(PaladinPowerBarFrame)
-  ClearAllPointsHideFrame(PlayerFrameAlternateManaBar)
-  ClearAllPointsHideFrame(RogueComboPointBarFrame)
-  ClearAllPointsHideFrame(RuneFrame)
-  ClearAllPointsHideFrame(WarlockPowerFrame)
+  --ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
+  --ClearAllPointsHideFrame(ComboPointPlayerFrame)
+  --ClearAllPointsHideFrame(EssencePlayerFrame)
+  --ClearAllPointsHideFrame(MageArcaneChargesFrame)
+  --ClearAllPointsHideFrame(MonkHarmonyBarFrame)
+  --ClearAllPointsHideFrame(MonkStaggerBar)
+  --ClearAllPointsHideFrame(MonkStaggerBar.PowerBarMask)
+  --ClearAllPointsHideFrame(PaladinPowerBarFrame)
+  --ClearAllPointsHideFrame(PlayerFrameAlternateManaBar)
+  --ClearAllPointsHideFrame(RogueComboPointBarFrame)
+  --ClearAllPointsHideFrame(RuneFrame)
+  --ClearAllPointsHideFrame(WarlockPowerFrame)
 
   -- Remove damage and healing text in portraits
   COMBATFEEDBACK_FADEINTIME = 0
@@ -266,25 +283,24 @@ local function configPlayerFrame()
   COMBATFEEDBACK_FADEOUTTIME = 0
 
   -- Class Colour frames
-  local function UpdateHealthBarColor(self)
-    if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
-      local _, classToken = UnitClass(self.unit)
-      local classColor = RAID_CLASS_COLORS[classToken]
-      if classColor then
-        self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
-      else
-        self:SetStatusBarColor(0.5, 0.5, 0.5)
-      end
-    elseif UnitIsPlayer(self.unit) then
-      self:SetStatusBarColor(0.5, 0.5, 0.5)
-    else
-      self:SetStatusBarColor(0.0, 1.0, 0.0)
-    end
-    self:SetStatusBarDesaturated(true)
-  end
-
-  hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
-  hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
+  --local function UpdateHealthBarColor(self)
+  --  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
+  --    local _, classToken = UnitClass(self.unit)
+  --    local classColor = RAID_CLASS_COLORS[classToken]
+  --    if classColor then
+  --      self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
+  --    else
+  --      self:SetStatusBarColor(0.5, 0.5, 0.5)
+  --    end
+  --  elseif UnitIsPlayer(self.unit) then
+  --    self:SetStatusBarColor(0.5, 0.5, 0.5)
+  --  else
+  --    self:SetStatusBarColor(0.0, 1.0, 0.0)
+  --  end
+  --  self:SetStatusBarDesaturated(true)
+  --end
+  --hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
+  --hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
 
 end
 
@@ -301,16 +317,16 @@ local function configQuestTracker()
   --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.AchievementHeader.Background)
 
       -- Color Quest Tracker text based on class
-      local _, playerClass = UnitClass("player")
-      local r, g, b = GetClassColor(playerClass)
-      ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetTextColor(r, g, b)
-      ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetTextColor(r, g, b)
-      ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetTextColor(r, g, b)
-      ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetTextColor(r, g, b)
-      ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      --local _, playerClass = UnitClass("player")
+      --local r, g, b = GetClassColor(playerClass)
+      --ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetTextColor(r, g, b)
+      --ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      --ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetTextColor(r, g, b)
+      --ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      --ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetTextColor(r, g, b)
+      --ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
+      --ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetTextColor(r, g, b)
+      --ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
 
 end
 
@@ -339,13 +355,16 @@ local function configTargetFrame()
   TargetFrame.maxBuffs = 0
   TargetFrame.maxDebuffs = 0
 
+  FocusFrame.maxBuffs = 0
+  FocusFrame.maxDebuffs = 0
+
   -- Hide Reputation background for Target and Focus frames
-  if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor then
-    TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-  end
-  if FocusFrame.TargetFrameContent and FocusFrame.TargetFrameContent.TargetFrameContentMain and FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor then
-    FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-  end
+  --if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
+  --  TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
+  --end
+  --if FocusFrame.TargetFrameContent and FocusFrame.TargetFrameContent.TargetFrameContentMain and FocusFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
+  --  FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
+  --end
 
 end
 
@@ -464,7 +483,7 @@ local function setupCVars()
   C_CVar.SetCVar("lockActionBar", 1)
 
   -- Bags
-  C_CVar.SetCVar("combinedBags", 0)
+  C_CVar.SetCVar("combinedBags", 1)
 
   -- Combat
   C_CVar.SetCVar("autoSelfCast", 1)
@@ -563,11 +582,13 @@ local function setupCVars()
   C_CVar.SetCVar("autoDismountFlying", 0)
   C_CVar.SetCVar("autoLootDefault", 1)
   C_CVar.SetCVar("cursorSizePreferred", 0)
+  C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
   C_CVar.SetCVar("lootUnderMouse", 0)
   C_CVar.SetCVar("maxFPS", 60)
   C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
+  C_CVar.SetCVar("showNPETutorials", 0)
   C_CVar.SetCVar("showTutorials", 0)
   C_CVar.SetCVar("synchronizeBindings", 1)
   C_CVar.SetCVar("synchronizeConfig", 1)
@@ -626,40 +647,28 @@ end
 -- INITIALIZATION FUNCTION
 --------------------------------------------------------------------------------
 
-addonTable.core.configActionBars = configActionBars
-addonTable.core.configCastBar = configCastBar
-addonTable.core.configChat = configChat
-addonTable.core.configMinimap = configMinimap
-addonTable.core.configPlayerFrame = configPlayerFrame
-addonTable.core.configQuestTracker = configQuestTracker
-addonTable.core.configRaidFrames = configRaidFrames
-addonTable.core.configTargetFrame = configTargetFrame
-addonTable.core.configVariousFrames = configVariousFrames
-addonTable.core.hideCollapseBuffFrame = hideCollapseBuffFrame
-addonTable.core.hideMicroMenu = hideMicroMenu
-addonTable.core.hideRealmNames = hideRealmNames
-addonTable.core.hideVariousFrames = hideVariousFrames
-addonTable.core.setupCVars = setupCVars
-addonTable.core.setupQol = setupQol
+-- Initialize functions on login
+local function InitializeAddon()
 
-local function OnEvent(self, event, ...)
-  if event == "ADDON_LOADED" and ... == addonName then
-    if not PanzaUIDB then
-      PanzaUIDB = {}
-    end
-    self:UnregisterEvent("ADDON_LOADED")
-  else
-    return
-  end
+  configActionBars()
+  configCastBar()
+  configChat()
+  configMinimap()
+  configPlayerFrame()
+  configQuestTracker()
+  configTargetFrame()
+  configVariousFrames()
+  hideCollapseBuffFrame()
+  hideRealmNames()
+  hideMicroMenu()
+  hideVariousFrames()
+  setupCVars()
+  setupQol()
 
-  -- Apply saved settings
-  for key, value in pairs(PanzaUIDB) do
-    if addonTable.core[key] and value then
-      addonTable.core[key]()
-    end
-  end
 end
 
 local frame = CreateFrame("FRAME")
-frame:SetScript("OnEvent", OnEvent)
-frame:RegisterEvent("ADDON_LOADED")
+
+  frame:SetScript("OnEvent", OnEvent)
+  frame:RegisterEvent("ADDON_LOADED")
+  InitializeAddon()

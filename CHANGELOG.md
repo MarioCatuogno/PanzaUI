@@ -1,3 +1,72 @@
+## 0.7.1-RELEASE
+
+IMPORTANT: Temporarely disabled many functions due to TWW patch.
+
+### 🛠️ Addon
+
+* Cleaned up the code of core addon
+* Fixed blink of GCD on Stance Bar [[#36]](https://github.com/MarioCatuogno/PanzaUI/issues/36)
+* Hide alerts from default UI
+* Update TOC to newest patch
+
+### ⌨️ Macros
+
+* Added a PDF containing keybinds and macros for Hunter (WIP) [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* Added a PDF containing keybinds and macros for Paladin (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
+* Added a PDF containing keybinds and macros for Priest (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* Added a PDF containing keybinds and macros for Warrior (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
+* Updated the PDF containing keybinds and macros for Restoration Shaman [[#41]](https://github.com/MarioCatuogno/PanzaUI/issues/41)
+* Updated the PDF containing keybinds and macros for Monk
+
+### 👤 Profiles
+
+* BigWigs - Added Big Wigs profile
+* BlizzUI - Added Action Bars for spell rotation
+* BlizzUI - Added Stance Bar to layout
+* BlizzUI - Aligned Raid and Party frames
+* Details - Changed to auto-erase data
+* Details - Removed Encounter timer
+* MouseoverActionSettings - Added Stance Bar to mouseover, under the Player frame
+* MouseoverActionSettings - Fixed some bugs
+* RFS - Added Priest filters
+* RFS - Fixed some bugs
+* RFS - Major overhaul of buffs/debuffs filter after last update of addon
+* RFS - Modified Role icon and buffs/debuffs fonts
+* SUF - Added Pet frame [[#40]](https://github.com/MarioCatuogno/PanzaUI/issues/40)
+* SUF - Fixed some bugs
+* SUF - Removed Holy Power bar from Player frame
+* Threat Plates - Added Hunter debuffs
+* Threat Plates - Added Priest debuffs
+* Threat Plates - Fixed some bugs
+* WA Druid - Added a new Cooldown section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
+* WA Druid - Added a new Resources section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
+* WA Druid - Added a new Rotation section [[#30]](https://github.com/MarioCatuogno/PanzaUI/issues/30)
+* WA Dungeons - Removed the WA profile
+* WA Hunter - Added a new Cooldown section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* WA Hunter - Added a new Resources section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* WA Hunter - Added a new Rotation section [[#39]](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* WA Mage - Updated Buff section
+* WA Monk - Added a new Alert section
+* WA Monk - Removed Rotation section
+* WA Monk - Updated Buff section
+* WA Paladin - Added a new Paladin profile (WIP) [[#29]](https://github.com/MarioCatuogno/PanzaUI/issues/29)
+* WA Priest - Added a new Priest profile (WIP) [[#38]](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* WA Shaman - Added a new Alerts section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Added a new Buffs section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Added a new Cooldown section [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Added a new Healer section [[#41]](https://github.com/MarioCatuogno/PanzaUI/issues/41)
+* WA Utilities - Added Battle Shout to Alerts to track missing buffs for Warrior
+* WA Utilities - Added Devotion Aura to Alerts to track missing buffs for Paladin
+* WA Utilities - Added various Alerts to track missing buffs for Shaman
+* WA Utilities - Changed the max level to 80 to keep track of XP
+* WA Utilities - Fixed various bugs
+* WA Utilities - Updated Clock
+* WA Warrior - Added a new Warrior profile (WIP) [[#35]](https://github.com/MarioCatuogno/PanzaUI/issues/35)
+
+### 📏 Various
+
+* Updated HOW TO INSTALL documentation
+
 ## 0.7.0-RELEASE
 
 ### 🛠️ Addon

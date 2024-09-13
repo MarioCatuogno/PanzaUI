@@ -16,6 +16,15 @@
 
 ## Profiles and Other Stuff
 
+### Fully supported Specs
+
+* Druid: Restoration
+* Hunter: Beast Mastery
+* Mage: Frost
+* Monk: Brewmaster, Mistweaver, Windwalker
+* Paladin: Protection
+* Shaman: Enhancement
+
 ### Keybinds 
 
 Keep in mind that these keybinds are used by me with Logitech G600 mouse.
@@ -29,8 +38,11 @@ Keep in mind that these keybinds are used by me with Logitech G600 mouse.
 ### Macros
 
 * [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Druid.txt)
+* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Monk.txt)
+* [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Paladin.txt)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Priest.txt)
 * [Rogue](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Rogue.txt)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Macros/Shaman.txt)
 
