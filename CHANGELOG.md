@@ -13,6 +13,7 @@
 * WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the Cast Bar for SUF
 * WA Utilities - Fixed the Skyfury alert for Shaman
+* WA Utilities - Moved the Movement buff auras
 
 ## 0.7.1-RELEASE
 
