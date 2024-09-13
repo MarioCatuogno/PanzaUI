@@ -157,7 +157,7 @@ local function configCastBar()
     PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -10)
     PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
     PlayerCastingBarFrame:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-    --PlayerCastingBarFrame:Hide()
+    PlayerCastingBarFrame:Hide()
 
     -- Color Player Cast Bar based on class
     local _, playerClass = UnitClass("player")
