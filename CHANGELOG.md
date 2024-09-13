@@ -4,6 +4,7 @@
 * BlizzUI - Added standard Cast Bar
 * SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame
+* WA Utilities - Fixed the Cast Bar for SUF
 * WA Utilities - Fixed the Skyfury alert for Shaman
 
 ## 0.7.1-RELEASE
