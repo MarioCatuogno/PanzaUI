@@ -7,7 +7,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Added standard Cast Bar
-* Cell - Added a new Cell addon profile
+* Cell - Added two new Cell addon profiles, one for Party and one for Raid
 * SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Fixed the Cast Bar for SUF
