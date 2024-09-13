@@ -2,6 +2,7 @@
 
 ### 👤 Profiles
 * WA Shaman - Moved the Cooldowns frame
+* WA Utilities - Fixed the Skyfury alert for Shaman
 
 ## 0.7.1-RELEASE
 
