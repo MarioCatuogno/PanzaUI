@@ -10,6 +10,7 @@
 * Cell - Added two new Cell addon profiles, one for Party and one for Raid
 * SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame
+* WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the Cast Bar for SUF
 * WA Utilities - Fixed the Skyfury alert for Shaman
 
