@@ -1,3 +1,8 @@
+## 0.7.2-RELEASE
+
+### 👤 Profiles
+* WA Shaman - Moved the Cooldowns frame
+
 ## 0.7.1-RELEASE
 
 IMPORTANT: Temporarely disabled many functions due to TWW patch.
