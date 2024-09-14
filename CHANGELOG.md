@@ -10,6 +10,7 @@
 * Cell - Added two new Cell addon profiles, one for Party and one for Raid
 * SUF - Added Party frames configuration
 * WA Shaman - Moved the Cooldowns frame
+* WA Utilities - Added a crosshair icon for Skyriding races
 * WA Utilities - Added a new Skyriding Vigor charges aura
 * WA Utilities - Added a party Healer mana alert
 * WA Utilities - Disabled bottom clock
