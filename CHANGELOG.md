@@ -6,6 +6,7 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Increased the Chat frame size
 * BlizzUI - Moved various frames
 * Cell - Added two new Cell addon profiles, one for Party and one for Raid
 * SUF - Added Party frames configuration
