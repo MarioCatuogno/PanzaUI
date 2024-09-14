@@ -17,6 +17,7 @@
 * WA Utilities - Fixed the Cast Bar for SUF
 * WA Utilities - Fixed the Skyfury alert for Shaman
 * WA Utilities - Moved the Movement buff auras
+* WA Utilities - Updated Raid Ability Timeline aura
 
 ## 0.7.1-RELEASE
 
