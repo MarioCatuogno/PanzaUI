@@ -4,6 +4,10 @@
 
 * Fixed a bug on Nameplate texture
 
+### ⌨️ Macros
+
+* Update the Monk PDF with the new layout configuration of Action Bars (#45)
+
 ### 👤 Profiles
 
 * BlizzUI - Increased the Chat frame size
