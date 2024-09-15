@@ -7,6 +7,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Increased the Chat frame size
+* BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
 * BlizzUI - Moved various frames
 * Cell - Added two new Cell addon profiles, one for Party and one for Raid
 * SUF - Added Party frames configuration
