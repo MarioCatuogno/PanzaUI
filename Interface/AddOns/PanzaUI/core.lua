@@ -103,6 +103,7 @@ local function configActionBars()
     "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
+    "MultiBarRightButton",
     "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
     "MultiBar5Button",

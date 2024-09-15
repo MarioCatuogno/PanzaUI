@@ -3,6 +3,7 @@
 ### 🛠️ Addon
 
 * Fixed a bug on Nameplate texture
+* Fixed the blink for Action Bar 4
 
 ### ⌨️ Macros
 
