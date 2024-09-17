@@ -19,6 +19,7 @@
 * BlizzUI - Moved various frames
 * Cell - Added a new Cell addon profile
 * SUF - Resized Pet frame
+* Threat Plates - Fixed some settings
 * WA Monk - Added a Detox spell tracker to Healer group
 * WA Shaman - Added a Purify Spirit spell tracker to Healer group
 * WA Shaman - Moved the Cooldowns frame
