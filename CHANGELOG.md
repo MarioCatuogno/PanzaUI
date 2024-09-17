@@ -15,12 +15,12 @@
 
 * BigWigs - Updated settings for Nameplates for BigWigs
 * BlizzUI - Increased the Chat frame size
-* BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
 * BlizzUI - Moved various frames
+* BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
 * BlizzUI - Resized Quest Tracker frame
 * Cell - Added a new Cell addon profile
-* Details - Changed update interval to 1 second
 * Details - Changed automation rules
+* Details - Changed update interval to 1 second
 * Details - Reskin the panels using [TWW Details Skin](https://www.reddit.com/r/WowUI/comments/1ety8q0/addon_details_skin_the_war_within/) addon
 * SUF - Moved Boss frames
 * SUF - Resized Pet frame
@@ -37,8 +37,8 @@
 * WA Utilities - Added a party Healer mana alert
 * WA Utilities - Disabled bottom clock
 * WA Utilities - Fixed a bug with 2D portraits for Player and Target frames
-* WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the Cast Bar for SUF
+* WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the position and length of text on Player and Target cast bars
 * WA Utilities - Fixed the Skyfury alert for Shaman
 * WA Utilities - Moved the Movement buff auras
