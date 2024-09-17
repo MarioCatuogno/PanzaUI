@@ -21,6 +21,7 @@
 * SUF - Resized Pet frame
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Added a crosshair icon for Skyriding races
+* WA Utilities - Added a low mana alert for healers
 * WA Utilities - Added a new Skyriding Vigor charges aura
 * WA Utilities - Added a party Healer mana alert
 * WA Utilities - Disabled bottom clock
