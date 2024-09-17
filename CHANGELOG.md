@@ -20,6 +20,7 @@
 * Cell - Added a new Cell addon profile
 * SUF - Resized Pet frame
 * WA Monk - Added a Detox spell tracker to Healer group
+* WA Shaman - Added a Purify Spirit spell tracker to Healer group
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Added a crosshair icon for Skyriding races
 * WA Utilities - Added a low mana alert for healers
