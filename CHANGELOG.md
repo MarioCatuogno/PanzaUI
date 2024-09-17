@@ -22,6 +22,7 @@
 * Threat Plates - Fixed some settings
 * WA Monk - Added a Detox spell tracker to Healer group
 * WA Shaman - Added a Purify Spirit spell tracker to Healer group
+* WA Shaman - Fixed a bug with Healing Rain spell tracker
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Added a crosshair icon for Skyriding races
 * WA Utilities - Added a low mana alert for healers
