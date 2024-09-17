@@ -17,7 +17,7 @@
 * BlizzUI - Increased the Chat frame size
 * BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
 * BlizzUI - Moved various frames
-* Cell - Added two new Cell addon profiles, one for Party and one for Raid
+* Cell - Added a new Cell addon profile
 * SUF - Resized Pet frame
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Added a crosshair icon for Skyriding races
