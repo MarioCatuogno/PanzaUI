@@ -46,6 +46,10 @@
 * WA Utilities - Moved the Skyriding auras group under the SUF player frame
 * WA Utilities - Updated Raid Ability Timeline aura
 
+### 📏 Various
+
+* Removed Raid Frame Settings profile
+
 ## 0.7.1-RELEASE
 
 IMPORTANT: Temporarely disabled many functions due to TWW patch.
