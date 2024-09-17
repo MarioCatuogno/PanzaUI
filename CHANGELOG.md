@@ -39,6 +39,7 @@
 * WA Utilities - Fixed a bug with 2D portraits for Player and Target frames
 * WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the Cast Bar for SUF
+* WA Utilities - Fixed the position and length of text on Player and Target cast bars
 * WA Utilities - Fixed the Skyfury alert for Shaman
 * WA Utilities - Moved the Movement buff auras
 * WA Utilities - Moved the Skyriding auras group under the SUF player frame
