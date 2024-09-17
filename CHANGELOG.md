@@ -22,6 +22,7 @@
 * Details - Changed automation rules
 * Details - Changed update interval to 1 second
 * Details - Reskin the panels using [TWW Details Skin](https://www.reddit.com/r/WowUI/comments/1ety8q0/addon_details_skin_the_war_within/) addon
+* MouseoverActionSettings - Changed bar order
 * SUF - Moved Boss frames
 * SUF - Resized Pet frame
 * Threat Plates - Fixed some settings
