@@ -35,6 +35,7 @@
 * WA Utilities - Added a new Skyriding Vigor charges aura
 * WA Utilities - Added a party Healer mana alert
 * WA Utilities - Disabled bottom clock
+* WA Utilities - Fixed a bug with 2D portraits for Player and Target frames
 * WA Utilities - Fixed the memory leak for FPS aura
 * WA Utilities - Fixed the Cast Bar for SUF
 * WA Utilities - Fixed the Skyfury alert for Shaman
