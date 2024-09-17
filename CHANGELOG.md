@@ -18,6 +18,7 @@
 * BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
 * BlizzUI - Moved various frames
 * Cell - Added a new Cell addon profile
+* Details - Changed update interval to 1 second
 * SUF - Moved Boss frames
 * SUF - Resized Pet frame
 * Threat Plates - Fixed some settings
