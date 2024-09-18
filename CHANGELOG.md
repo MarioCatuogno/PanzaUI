@@ -34,6 +34,7 @@
 * WA Monk - Removed Alert group
 * WA Monk - Removed Rotation group
 * WA Paladin - Removed Alert group
+* WA Paladin - Removed Rotation group
 * WA Shaman - Added a Purify Spirit spell tracker to Healer group
 * WA Shaman - Fixed a bug with Healing Rain spell tracker
 * WA Shaman - Moved the Cooldowns frame
