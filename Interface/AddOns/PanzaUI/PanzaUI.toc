@@ -2,7 +2,7 @@
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft UI
 ## Author: Panzarotto
-## Version: 0.7.1
+## Version: 0.7.2
 ## SavedVariables: PanzaUIDB
 
 core.lua
