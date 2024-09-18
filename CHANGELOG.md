@@ -25,6 +25,7 @@
 * MouseoverActionSettings - Changed bar order
 * SUF - Moved Boss frames
 * SUF - Resized Pet frame
+* Threat Plates - Added missing Monk debuffs
 * Threat Plates - Changed layout for Debuffs aura on target
 * Threat Plates - Fixed some settings
 * WA Monk - Added a Detox spell tracker to Healer group
