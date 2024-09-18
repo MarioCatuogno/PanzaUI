@@ -38,6 +38,7 @@
 * WA Paladin - Removed Alert group
 * WA Paladin - Removed Rotation group
 * WA Shaman - Added a Purify Spirit spell tracker to Healer group
+* WA Shaman - Adjusted some WA appearances in Healer group
 * WA Shaman - Fixed a bug with Healing Rain spell tracker
 * WA Shaman - Moved the Cooldowns frame
 * WA Utilities - Added a crosshair icon for Skyriding races
