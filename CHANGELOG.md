@@ -31,6 +31,7 @@
 * Threat Plates - Fixed some settings
 * WA Monk - Added a Detox spell tracker to Healer group
 * WA Monk - Removed Alert group
+* WA Monk - Removed Rotation group
 * WA Paladin - Removed Alert group
 * WA Shaman - Added a Purify Spirit spell tracker to Healer group
 * WA Shaman - Fixed a bug with Healing Rain spell tracker
