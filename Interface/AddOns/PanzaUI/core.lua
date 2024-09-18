@@ -256,13 +256,13 @@ end
 local function configPlayerFrame()
 
   -- Hide combat flash and rest
-  local hideRest = CreateFrame("Frame")
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
-    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
-  hideRest:Hide()
+--  local hideRest = CreateFrame("Frame")
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
+--    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
+--  hideRest:Hide()
 
   -- Hide Power Bars
   --ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
@@ -338,11 +338,11 @@ end
 local function configRaidFrames()
 
   -- Reduce alpha for Role icon in Raid frames
-  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if frame.optionTable == DefaultCompactUnitFrameOptions then
-      frame.roleIcon:SetAlpha(0.3)
-    end
-  end)
+--  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+--    if frame.optionTable == DefaultCompactUnitFrameOptions then
+--      frame.roleIcon:SetAlpha(0.3)
+--    end
+--  end)
 
 end
 
@@ -353,11 +353,11 @@ end
 local function configTargetFrame()
 
   -- Remove buffs/debuffs from Target frame
-  TargetFrame.maxBuffs = 0
-  TargetFrame.maxDebuffs = 0
-
-  FocusFrame.maxBuffs = 0
-  FocusFrame.maxDebuffs = 0
+--  TargetFrame.maxBuffs = 0
+--  TargetFrame.maxDebuffs = 0
+--
+--  FocusFrame.maxBuffs = 0
+--  FocusFrame.maxDebuffs = 0
 
   -- Hide Reputation background for Target and Focus frames
   --if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
@@ -426,17 +426,17 @@ end
 local function hideRealmNames()
 
   -- Hide Realm names from Raid frames
-  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if frame and not frame:IsForbidden() then
-      local frame_name = frame:GetName()
-      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
-        local unit_name = GetUnitName(frame.unit, true)
-        if unit_name then
-          frame.name:SetText(unit_name:match("[^-]+"))
-        end
-      end
-    end
-  end)
+--  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+--    if frame and not frame:IsForbidden() then
+--      local frame_name = frame:GetName()
+--      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
+--        local unit_name = GetUnitName(frame.unit, true)
+--        if unit_name then
+--          frame.name:SetText(unit_name:match("[^-]+"))
+--        end
+--      end
+--    end
+--  end)
 
 end
 
