@@ -32,6 +32,7 @@
 * Threat Plates - Fixed some settings
 * WA Mage - Removed Rotation group
 * WA Monk - Added a Detox spell tracker to Healer group
+* WA Monk - Adjusted some WA in Healer group
 * WA Monk - Removed Alert group
 * WA Monk - Removed Rotation group
 * WA Paladin - Removed Alert group
