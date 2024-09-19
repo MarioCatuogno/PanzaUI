@@ -56,6 +56,7 @@
 * WA Utilities - Moved the Movement buff auras
 * WA Utilities - Moved the Skyriding auras group under the SUF player frame
 * WA Utilities - Updated Raid Ability Timeline aura
+* WA Utilities - Removed Cast Bar animation
 
 ### 📏 Various
 
