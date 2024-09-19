@@ -31,6 +31,7 @@
 * Threat Plates - Added missing Monk debuffs
 * Threat Plates - Changed layout for Debuffs aura on target
 * Threat Plates - Fixed some settings
+* WA - Modified the animation for all the profiles
 * WA Mage - Removed Rotation group
 * WA Monk - Added a Detox spell tracker to Healer group
 * WA Monk - Adjusted some WA appearances in Healer group
