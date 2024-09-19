@@ -33,6 +33,7 @@
 * Threat Plates - Changed layout for Debuffs aura on target
 * Threat Plates - Changed settings for Cast Bar
 * Threat Plates - Changed settings for Headline View
+* Threat Plates - Changed transparency settings for various nameplates
 * Threat Plates - Fixed some settings
 * WA - Modified the animation for all the profiles
 * WA Mage - Removed Rotation group
