@@ -1,6 +1,7 @@
 ## 0.7.3-RELEASE
 
 ### 🛠️ Addon
+* Added icon to PanzaUI addon
 * Code cleanup
 
 ### ⌨️ Macros
