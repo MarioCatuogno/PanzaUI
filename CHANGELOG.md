@@ -1,3 +1,14 @@
+## 0.7.3-RELEASE
+
+### 🛠️ Addon
+
+### ⌨️ Macros
+
+### 👤 Profiles
+
+### 📏 Various
+
+
 ## 0.7.2-RELEASE
 
 ### 🛠️ Addon
