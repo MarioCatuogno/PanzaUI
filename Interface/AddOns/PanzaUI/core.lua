@@ -135,13 +135,6 @@ local function configActionBars()
     end
   end
 
-  -- Remove GCD animation to all icons (temporary until I fix the StanceBar problem)
-  --hooksecurefunc("CooldownFrame_Set", function(self, start, duration, enable, forceShowDrawEdge, modRate)
-  --  if enable and enable ~= 0 and start > 0 and duration <= 1.5 then
-  --    CooldownFrame_Clear(self)
-  --  end
-  --end)
-
 end
 
 --------------------------------------------------------------------------------
@@ -229,11 +222,6 @@ end
 
 local function configMinimap()
 
-  -- Set Alpha, Position and Scale
-  --SetScaleForFrame(MinimapZoneText, 1.15)
-  --MinimapZoneText:ClearAllPoints()
-  --MinimapZoneText:SetPoint("LEFT", Minimap, "TOP", -55, 27.5)
-  --MinimapZoneText:SetJustifyH("RIGHT")
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
@@ -243,10 +231,6 @@ local function configMinimap()
   HideFrameAndUnregisterEvents(Minimap.ZoomIn)
   HideFrameAndUnregisterEvents(Minimap.ZoomOut)
   HideFrameAndUnregisterEvents(MinimapCluster.TrackingFrame)
-
-  -- Set Scale to Clock button
-  --LoadAddOn("Blizzard_TimeManager")
-  --HideFrameAndUnregisterEvents(TimeManagerClockButton)
 
   -- Set Garrison button scale
   SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
@@ -317,21 +301,6 @@ local function configQuestTracker()
 
   -- Set scale and hide header for Objective Tracker
   SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
-  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.QuestHeader.Background)
-  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Background)
-  --ClearAllPointsHideFrame(ObjectiveTrackerBlocksFrame.AchievementHeader.Background)
-
-      -- Color Quest Tracker text based on class
-      --local _, playerClass = UnitClass("player")
-      --local r, g, b = GetClassColor(playerClass)
-      --ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetTextColor(r, g, b)
-      --ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      --ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetTextColor(r, g, b)
-      --ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      --ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetTextColor(r, g, b)
-      --ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
-      --ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetTextColor(r, g, b)
-      --ObjectiveTrackerBlocksFrame.ScenarioHeader.Text:SetFont(STANDARD_TEXT_FONT, 15, "OUTLINE")
 
 end
 
@@ -469,10 +438,7 @@ local function hideVariousFrames()
   HideFrameAndUnregisterEvents(DurabilityFrame)
   HideFrameAndUnregisterEvents(EncounterBar)
   HideFrameAndUnregisterEvents(MicroMenu)
-  --HideFrameAndUnregisterEvents(PetActionBar)
-  --HideFrameAndUnregisterEvents(PetFrame)
   HideFrameAndUnregisterEvents(StatusTrackingBarManager)
-  --HideFrameAndUnregisterEvents(TotemFrame)
   HideFrameAndUnregisterEvents(UIErrorsFrame)
   HideFrameAndUnregisterEvents(VehicleSeatIndicator)
 
@@ -637,11 +603,6 @@ local function setupQol()
                 UIParent:Show();
     end)
     showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
-
-  -- Hide Talking Head
---  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
---    self:CloseImmediately()
---  end)
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off

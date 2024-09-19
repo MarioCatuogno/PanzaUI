@@ -1,6 +1,7 @@
 ## 0.7.3-RELEASE
 
 ### 🛠️ Addon
+* Code cleanup
 
 ### ⌨️ Macros
 
