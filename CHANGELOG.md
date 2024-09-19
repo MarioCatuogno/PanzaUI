@@ -5,6 +5,7 @@
 ### ⌨️ Macros
 
 ### 👤 Profiles
+* BigWigs - Moved Messages near the Target frame
 
 ### 📏 Various
 
