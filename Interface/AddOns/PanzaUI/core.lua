@@ -74,13 +74,17 @@ local function configActionBars()
   -- Hide MainMenuBar
   MainMenuBar:SetAlpha(0)
   MainMenuBar:EnableMouse(false)
+  MultiBarBottomLeft:SetAlpha(0)
+  MultiBarBottomLeft:EnableMouse(false)
+  MultiBarBottomRight:SetAlpha(0)
+  MultiBarBottomRight:EnableMouse(false)
 
   -- Avoid interaction with action bars
   local bars = {
     "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
---    "MultiBarBottomRightButton",
+    "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
     "MultiBar5Button",
     "MultiBar6Button",
