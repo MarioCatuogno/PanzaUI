@@ -12,12 +12,16 @@
 228358 --Winter's Chill
 289308 --Frozen Orb
 --Monk
+117952 --Crackling Jade Lightning
 121253 --Keg Smash
 122470 --Touch of Karma
 123725 --Breath of Fire
+228287 --Mark of the Crane
 325153 --Exploding Keg
 386276 --Bonedust Brew
 387179 --Weapons of Order
+451433 --Acclamation
+451582 --Gale Force
 --Priest
 589 --Shadow Word: Pain
 --Shaman
