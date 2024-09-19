@@ -2,10 +2,11 @@
 
 ### 🛠️ Addon
 
-* Reworked Action Bar configuration
+* Changed settings for Friendly Unit nameplates
 * Fixed a bug on Nameplate texture
 * Fixed LUA errors with unused frame
 * Fixed the blink for Action Bar 4
+* Reworked Action Bar configuration
 * Update TOC to newest patch
 
 ### ⌨️ Macros
