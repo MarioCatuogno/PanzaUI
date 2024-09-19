@@ -18,6 +18,7 @@ Hey there fellow WoW players! I've been playing WoW since beta in 2004 and over 
 
 ## Features
 
+⚠️ TWW break the Menu of the addon. The current settings can be enabled/disabled only editing the `core.lua` file.
 With __PanzaUI__ addon you can enable the following features:
 
 * __Configure Action Bars__: to remove interaction, blink and GCD animations on Action Bars.
@@ -44,7 +45,7 @@ My UI is based on __7__ mandatory components:
 2. __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
 3. __Weak Auras__: to apply ton of utilities and features to the UI. There are also WA for various classes.
 4. __Threat Plates__: to modify the enemy and friendly Nameplates.
-5. __Raid Frame Settings__: to modify the standard Blizzard Raid Frames.
+5. __Cell__: to replace the standard Blizzard Raid Frames.
 6. __Masque__: to skin icons and apply a consistent experience across the entire UI.
 7. __Hide Main Menu Bar__: to hide the Main Menu, Micro Menu and Bags bars.
 
@@ -59,7 +60,6 @@ There are also other optional components:
 * __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
 * __LS:Toasts__: to skin the toast notification frame with a better look.
 * __Simple Item Level__: to get more infos on items in bags and in equipment manager.
-* __Unlimited Map Distance__: to get unlimited distance on Map pins.
 
 If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md). Bare in mind that I play on a MacBook Pro 14" with a resolution of __3024x1964__.
 

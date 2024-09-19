@@ -1,3 +1,72 @@
+## 0.7.2-RELEASE
+
+### 🛠️ Addon
+
+* Changed settings for Friendly Unit nameplates
+* Fixed a bug on Nameplate texture
+* Fixed LUA errors with unused frame
+* Fixed the blink for Action Bar 4
+* Reworked Action Bar configuration
+* Update TOC to newest patch
+
+### ⌨️ Macros
+
+* Update the Monk PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Update the Shaman PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+
+### 👤 Profiles
+
+* BigWigs - Updated settings for Nameplates
+* BigWigs - Updated Voice settings
+* BlizzUI - Increased the Chat frame size
+* BlizzUI - Moved various frames
+* BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
+* BlizzUI - Resized Quest Tracker frame
+* Cell - Added a new Cell addon profile
+* Details - Changed automation rules
+* Details - Changed update interval to 1 second
+* Details - Reskin the windows to be more coherent with SUF frames and the rest of UI
+* MouseoverActionSettings - Changed bar order
+* SUF - Moved Boss frames
+* SUF - Resized Pet frame
+* Threat Plates - Added missing Monk debuffs
+* Threat Plates - Changed layout for Debuffs aura on target
+* Threat Plates - Changed settings for Cast Bar
+* Threat Plates - Changed settings for Headline View
+* Threat Plates - Changed transparency settings for various nameplates
+* Threat Plates - Fixed some settings
+* WA - Modified the animation for all the profiles
+* WA Mage - Removed Rotation group
+* WA Monk - Added a Detox spell tracker to Healer group
+* WA Monk - Adjusted some WA appearances in Healer group
+* WA Monk - Removed Alert group
+* WA Monk - Removed Rotation group
+* WA Paladin - Removed Alert group
+* WA Paladin - Removed Rotation group
+* WA Shaman - Added a Purify Spirit spell tracker to Healer group
+* WA Shaman - Adjusted some WA appearances in Healer group
+* WA Shaman - Fixed a bug with Healing Rain spell tracker
+* WA Shaman - Moved the Cooldowns frame
+* WA Utilities - Added a crosshair icon for Skyriding races
+* WA Utilities - Added a low mana alert for healers
+* WA Utilities - Added a new Skyriding Vigor charges aura
+* WA Utilities - Added a party Healer mana alert
+* WA Utilities - Disabled bottom clock
+* WA Utilities - Fixed a bug with 2D portraits for Player and Target frames
+* WA Utilities - Fixed the Cast Bar for SUF
+* WA Utilities - Fixed the memory leak for FPS aura
+* WA Utilities - Fixed the position and length of text on Player and Target cast bars
+* WA Utilities - Fixed the Skyfury alert for Shaman
+* WA Utilities - Moved the Movement buff auras
+* WA Utilities - Moved the Skyriding auras group under the SUF player frame
+* WA Utilities - Updated Raid Ability Timeline aura
+* WA Utilities - Removed Cast Bar animation
+
+### 📏 Various
+
+* Removed Raid Frame Settings profile
+
 ## 0.7.1-RELEASE
 
 IMPORTANT: Temporarely disabled many functions due to TWW patch.

@@ -74,13 +74,17 @@ local function configActionBars()
   -- Hide MainMenuBar
   MainMenuBar:SetAlpha(0)
   MainMenuBar:EnableMouse(false)
+  MultiBarBottomLeft:SetAlpha(0)
+  MultiBarBottomLeft:EnableMouse(false)
+  MultiBarBottomRight:SetAlpha(0)
+  MultiBarBottomRight:EnableMouse(false)
 
   -- Avoid interaction with action bars
   local bars = {
     "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
---    "MultiBarBottomRightButton",
+    "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
     "MultiBar5Button",
     "MultiBar6Button",
@@ -103,6 +107,7 @@ local function configActionBars()
     "MainMenuBar",
     "ActionButton",
     "MultiBarLeftButton",
+    "MultiBarRightButton",
     "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
     "MultiBar5Button",
@@ -150,11 +155,11 @@ local function configCastBar()
 
     PlayerCastingBarFrame.StandardGlow:Hide()
     PlayerCastingBarFrame.TextBorder:Hide()
-    PlayerCastingBarFrame:SetSize(220, 10)
+    PlayerCastingBarFrame:SetSize(200, 10)
     PlayerCastingBarFrame.TextBorder:ClearAllPoints()
     PlayerCastingBarFrame.TextBorder:SetAlpha(0)
     PlayerCastingBarFrame.Text:ClearAllPoints()
-    PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -50)
+    PlayerCastingBarFrame.Text:SetPoint("TOP", PlayerCastingBarFrame, "TOP", 0, -10)
     PlayerCastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
     PlayerCastingBarFrame:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
     PlayerCastingBarFrame:Hide()
@@ -255,13 +260,13 @@ end
 local function configPlayerFrame()
 
   -- Hide combat flash and rest
-  local hideRest = CreateFrame("Frame")
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
-    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
-    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
-  hideRest:Hide()
+--  local hideRest = CreateFrame("Frame")
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
+--    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
+--    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
+--  hideRest:Hide()
 
   -- Hide Power Bars
   --ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
@@ -337,11 +342,11 @@ end
 local function configRaidFrames()
 
   -- Reduce alpha for Role icon in Raid frames
-  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if frame.optionTable == DefaultCompactUnitFrameOptions then
-      frame.roleIcon:SetAlpha(0.3)
-    end
-  end)
+--  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+--    if frame.optionTable == DefaultCompactUnitFrameOptions then
+--      frame.roleIcon:SetAlpha(0.3)
+--    end
+--  end)
 
 end
 
@@ -352,11 +357,11 @@ end
 local function configTargetFrame()
 
   -- Remove buffs/debuffs from Target frame
-  TargetFrame.maxBuffs = 0
-  TargetFrame.maxDebuffs = 0
-
-  FocusFrame.maxBuffs = 0
-  FocusFrame.maxDebuffs = 0
+--  TargetFrame.maxBuffs = 0
+--  TargetFrame.maxDebuffs = 0
+--
+--  FocusFrame.maxBuffs = 0
+--  FocusFrame.maxDebuffs = 0
 
   -- Hide Reputation background for Target and Focus frames
   --if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
@@ -387,20 +392,20 @@ local function configVariousFrames()
   end
   SetHealthBarTexture()
 
-  -- Reskin the health bar of Nameplates
-  local function SetNameplateTexture()
-    for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
-        if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
-            nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-        end
-    end
-    hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
-      if frame and frame.healthBar then
-          frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-      end
-    end)
-  end
-  SetNameplateTexture()
+  ---- Reskin the health bar of Nameplates
+  --local function SetNameplateTexture()
+  --  for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
+  --      if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
+  --          nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+  --      end
+  --  end
+  --  hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
+  --    if frame and frame.healthBar then
+  --        frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+  --    end
+  --  end)
+  --end
+  --SetNameplateTexture()
 
 end
 
@@ -425,17 +430,17 @@ end
 local function hideRealmNames()
 
   -- Hide Realm names from Raid frames
-  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if frame and not frame:IsForbidden() then
-      local frame_name = frame:GetName()
-      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
-        local unit_name = GetUnitName(frame.unit, true)
-        if unit_name then
-          frame.name:SetText(unit_name:match("[^-]+"))
-        end
-      end
-    end
-  end)
+--  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+--    if frame and not frame:IsForbidden() then
+--      local frame_name = frame:GetName()
+--      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
+--        local unit_name = GetUnitName(frame.unit, true)
+--        if unit_name then
+--          frame.name:SetText(unit_name:match("[^-]+"))
+--        end
+--      end
+--    end
+--  end)
 
 end
 
@@ -464,10 +469,10 @@ local function hideVariousFrames()
   HideFrameAndUnregisterEvents(DurabilityFrame)
   HideFrameAndUnregisterEvents(EncounterBar)
   HideFrameAndUnregisterEvents(MicroMenu)
-  HideFrameAndUnregisterEvents(PetActionBar)
-  HideFrameAndUnregisterEvents(PetFrame)
+  --HideFrameAndUnregisterEvents(PetActionBar)
+  --HideFrameAndUnregisterEvents(PetFrame)
   HideFrameAndUnregisterEvents(StatusTrackingBarManager)
-  HideFrameAndUnregisterEvents(TotemFrame)
+  --HideFrameAndUnregisterEvents(TotemFrame)
   HideFrameAndUnregisterEvents(UIErrorsFrame)
   HideFrameAndUnregisterEvents(VehicleSeatIndicator)
 
@@ -533,7 +538,7 @@ local function setupCVars()
   --C_CVar.SetCVar("nameplateShowEnemies", 1)
   --C_CVar.SetCVar("nameplateShowEnemyPets", 1)
   --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
-  --C_CVar.SetCVar("nameplateShowOnlyNames", 0)
+  C_CVar.SetCVar("nameplateShowOnlyNames", 1)
   --C_CVar.SetCVar("nameplateShowSelf", 0)
   --C_CVar.SetCVar("nameplateTargetBehindMaxDistance", 5)
   --C_CVar.SetCVar("nameplateTargetRadialPosition", 0)
@@ -551,7 +556,7 @@ local function setupCVars()
   C_CVar.SetCVar("UnitNameFriendlyTotemName", 0)
   C_CVar.SetCVar("UnitNameGuildTitle", 0)
   C_CVar.SetCVar("UnitNameInteractiveNPC", 0)
-  C_CVar.SetCVar("UnitNameNPC", 0)
+  C_CVar.SetCVar("UnitNameNPC", 1)
   C_CVar.SetCVar("UnitNameOwn", 0)
   C_CVar.SetCVar("UnitNamePlayerGuild", 0)
   C_CVar.SetCVar("UnitNamePlayerPVPTitle", 0)
@@ -634,9 +639,9 @@ local function setupQol()
     showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
 
   -- Hide Talking Head
-  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
-    self:CloseImmediately()
-  end)
+--  hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
+--    self:CloseImmediately()
+--  end)
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off
