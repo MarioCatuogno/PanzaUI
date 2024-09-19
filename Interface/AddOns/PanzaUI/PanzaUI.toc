@@ -1,7 +1,7 @@
 ## Interface: 110002
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft UI
-## IconTexture: Interface\Icons\PandarenRacial_Bouncy
+## IconTexture: 572034
 ## Author: Panzarotto
 ## Version: 0.7.3
 
