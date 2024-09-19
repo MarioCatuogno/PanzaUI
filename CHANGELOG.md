@@ -17,7 +17,8 @@
 
 ### 👤 Profiles
 
-* BigWigs - Updated settings for Nameplates for BigWigs
+* BigWigs - Updated settings for Nameplates
+* BigWigs - Updated Voice settings
 * BlizzUI - Increased the Chat frame size
 * BlizzUI - Moved various frames
 * BlizzUI - Overhauled the Action Bar layout (check [here](https://github.com/MarioCatuogno/PanzaUI/issues/45) for the reason behind the new layout)
