@@ -3,6 +3,7 @@
 ### 🛠️ Addon
 * Added icon to PanzaUI addon
 * Code cleanup
+* Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
 

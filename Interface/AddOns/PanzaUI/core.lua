@@ -452,6 +452,7 @@ local function setupCVars()
 
   -- Action Bar
   C_CVar.SetCVar("lockActionBar", 1)
+  C_CVar.SetCVar("AutoPushSpellToActionBar",0)
 
   -- Bags
   C_CVar.SetCVar("combinedBags", 1)
