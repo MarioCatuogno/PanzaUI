@@ -8,6 +8,7 @@
 
 ### 👤 Profiles
 * BigWigs - Moved Messages near the Target frame
+* Threat Plates - Increased the text size for Headline View
 * WA Paladin - Changed the order of Buffs group
 
 ### 📏 Various
