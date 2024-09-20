@@ -6,6 +6,7 @@
 * Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
+* Updated Shaman macros for Restoration spec
 
 ### 👤 Profiles
 * BigWigs - Moved Messages near the Target frame
