@@ -8,6 +8,7 @@
 
 ### 👤 Profiles
 * BigWigs - Moved Messages near the Target frame
+* WA Paladin - Changed the order of Buffs group
 
 ### 📏 Various
 
