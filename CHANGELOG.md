@@ -9,7 +9,7 @@
 * Updated Shaman macros for Restoration spec
 
 ### 👤 Profiles
-* BigWigs - Moved Messages near the Target frame
+* BigWigs - Moved Messages frame
 * SUF - Adjusted Boss and Arena frames position and text size
 * Threat Plates - Increased the text size for Headline View
 * WA Paladin - Changed the order of Buffs group
