@@ -1,6 +1,7 @@
 ## 0.7.3-RELEASE
 
 ### 🛠️ Addon
+* Added an option to anchor tooltips to mouse cursor (disabled by default)
 * Added icon to PanzaUI addon
 * Code cleanup
 * Removed automatic spell addition to Action Bars

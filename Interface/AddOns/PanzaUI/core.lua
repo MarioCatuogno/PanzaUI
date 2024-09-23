@@ -361,6 +361,9 @@ local function configVariousFrames()
   end
   SetHealthBarTexture()
 
+  -- Anchor tooltips to mouse cursor
+  --hooksecurefunc("GameTooltip_SetDefaultAnchor", function(s,p) s:SetOwner(p,"ANCHOR_CURSOR") end)
+
   ---- Reskin the health bar of Nameplates
   --local function SetNameplateTexture()
   --  for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
