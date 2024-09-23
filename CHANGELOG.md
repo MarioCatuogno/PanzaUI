@@ -22,6 +22,7 @@
 * WA Utilities - Added an Interrupt Tracker (based on [this](https://wago.io/MInterruptTracker) WA)
 * WA Utilities - Added a central Cast Bar that shows only in combat
 * WA Utilities - Adjusted border size of various frames
+* WA Utilities - Fixed a bug with CR aura in Alert group
 
 ### 📏 Various
 
