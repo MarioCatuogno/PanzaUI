@@ -12,6 +12,7 @@
 
 ### 👤 Profiles
 * BigWigs - Moved Messages frame
+* SUF - Adjusted border size of various frames
 * SUF - Adjusted Boss and Arena frames position and text size
 * SUF - Disabled Focus cast bar
 * Threat Plates - Increased the text size for Headline View
