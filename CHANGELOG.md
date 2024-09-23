@@ -14,9 +14,10 @@
 * SUF - Adjusted Boss and Arena frames position and text size
 * Threat Plates - Increased the text size for Headline View
 * Threat Plates - Removed the automation to hide friendly Nameplates in combat
-* WA Mage - Added some new Cooldown auras
+* WA Mage - Added some new Cooldown auras for Frost specialization
 * WA Paladin - Changed the order of Buffs group
 * WA Utilities - Added an Interrupt Tracker (based on [this](https://wago.io/MInterruptTracker) WA)
+* WA Utilities - Added a central Cast Bar that shows only in combat
 
 ### 📏 Various
 
