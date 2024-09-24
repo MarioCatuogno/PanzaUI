@@ -9,6 +9,7 @@
 ### ⌨️ Macros
 * Updated Shaman macros for Restoration spec
 * Update the Mage PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 
 ### 👤 Profiles
 * BigWigs - Moved Messages frame
