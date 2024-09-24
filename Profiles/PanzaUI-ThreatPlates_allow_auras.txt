@@ -22,6 +22,13 @@
 387179 --Weapons of Order
 451433 --Acclamation
 451582 --Gale Force
+--Paladin
+197277 --Judgment
+204242 --Consecration
+343527 --Execution Sentence
+383346 --Expurgation
+403695 --Truth's Wake
+431380 --Dawnlight
 --Priest
 589 --Shadow Word: Pain
 --Shaman

@@ -16,6 +16,7 @@
 * SUF - Adjusted border size of various frames
 * SUF - Adjusted Boss and Arena frames position and text size
 * SUF - Disabled Focus cast bar
+* Threat Plates - Added Paladin debuffs for Retribution specialization
 * Threat Plates - Increased the text size for Headline View
 * Threat Plates - Removed the automation to hide friendly Nameplates in combat
 * WA Mage - Added some new Cooldown auras for Frost specialization
