@@ -13,6 +13,7 @@
 
 ### 👤 Profiles
 * BigWigs - Moved Messages frame
+* Plater - Added a new Plater profile (based on [this](https://quazii.com/the-war-within-plater-nameplates-profile/) one by Quazii)
 * SUF - Adjusted border size of various frames
 * SUF - Adjusted Boss and Arena frames position and text size
 * SUF - Disabled Focus cast bar
