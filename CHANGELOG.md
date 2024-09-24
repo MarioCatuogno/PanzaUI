@@ -18,6 +18,7 @@
 * Threat Plates - Increased the text size for Headline View
 * Threat Plates - Removed the automation to hide friendly Nameplates in combat
 * WA Mage - Added some new Cooldown auras for Frost specialization
+* WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
 * WA Paladin - Changed the order of Buffs group
 * WA Utilities - Added an Interrupt Tracker (based on [this](https://wago.io/MInterruptTracker) WA)
 * WA Utilities - Added a central Cast Bar that shows only in combat
