@@ -23,8 +23,9 @@
 * WA Mage - Added some new Cooldown auras for Frost specialization
 * WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
 * WA Paladin - Changed the order of Buffs group
-* WA Utilities - Added an Interrupt Tracker (based on [this](https://wago.io/MInterruptTracker) WA)
 * WA Utilities - Added a central Cast Bar that shows only in combat
+* WA Utilities - Added a text for Health on Nameplates
+* WA Utilities - Added an Elite/Boss/Rare icon on Nameplates
 * WA Utilities - Adjusted border size of various frames
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
