@@ -24,6 +24,7 @@
 * WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
 * WA Paladin - Changed the order of Buffs group
 * WA Utilities - Added a central Cast Bar that shows only in combat
+* WA Utilities - Added a text for Health on Boss frames
 * WA Utilities - Added a text for Health on Nameplates
 * WA Utilities - Added an Elite/Boss/Rare icon on Nameplates
 * WA Utilities - Adjusted border size of various frames
