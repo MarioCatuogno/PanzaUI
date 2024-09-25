@@ -12,6 +12,7 @@
 * Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 
 ### 👤 Profiles
+* BlizzUI - Moved various frames
 * BigWigs - Moved Messages frame
 * Plater - Added a new Plater profile (based on [this](https://quazii.com/the-war-within-plater-nameplates-profile/) one by Quazii)
 * SUF - Adjusted border size of various frames
