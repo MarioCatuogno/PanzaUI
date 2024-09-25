@@ -26,7 +26,8 @@
 * WA Utilities - Added a central Cast Bar that shows only in combat
 * WA Utilities - Added a text for Health on Boss frames
 * WA Utilities - Added a text for Health on Nameplates
-* WA Utilities - Added an Elite/Boss/Rare icon on Nameplates
+* WA Utilities - Added an Elite/Boss/Rare icon on Nameplate
+* WA Utilities - Added an Interrupt tracker based on [this](https://wago.io/MInterruptTracker)
 * WA Utilities - Adjusted border size of various frames
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
