@@ -18,9 +18,8 @@ Hey there fellow WoW players! I've been playing WoW since beta in 2004 and over 
 
 ## Features
 
-⚠️ __TWW break the Menu of the addon. I had to remove this feature which I plan to add again in the future.__ 
+⚠️ __TWW break the Menu of the addon. I had to remove this feature which I plan to add again in the future. The current settings can be enabled/disabled only editing the `core.lua` file.__
 
-The current settings can be enabled/disabled only editing the `core.lua` file.
 With __PanzaUI__ addon the following features are enabled:
 
 * __Configure Action Bars__: remove interaction, blink and GCD animations on Action Bars.
@@ -50,6 +49,7 @@ My UI is based on these mandatory components:
 5. __Cell__: to replace the standard Blizzard Raid Frames.
 6. __Masque__: to skin icons and apply a consistent experience across the entire UI.
 7. __MouseOverActionSettings__: to automatically hide/show action bars.
+8. __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
 
 There are also other optional components:
 
@@ -59,7 +59,6 @@ There are also other optional components:
 * __Details!__: to keep track of damages and healings in Raids and Dungeons.
 * __DialogueUI__: to skin the quest interface with a better look.
 * __idTip__: to provide additional information in tooltips.
-* __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
 * __LS:Toasts__: to skin the toast notification frame with a better look.
 * __Simple Item Level__: to get more infos on items in bags and in equipment manager.
 
