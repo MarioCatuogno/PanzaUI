@@ -59,7 +59,6 @@ There are also other optional components:
 * __idTip__: to provide additional information in tooltips.
 * __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
 * __LS:Toasts__: to skin the toast notification frame with a better look.
-
 * __Simple Item Level__: to get more infos on items in bags and in equipment manager.
 
 If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md). Bare in mind that I play on a MacBook Pro 14" with a resolution of __3024x1964__.
