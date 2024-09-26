@@ -7,9 +7,9 @@
 * Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
-* Updated Shaman macros for Restoration spec
 * Update the Mage PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 * Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Updated Shaman macros for Restoration spec
 
 ### 👤 Profiles
 * BigWigs - Moved Messages frame
@@ -35,8 +35,8 @@
 
 ### 📏 Various
 * Removed unnecessary files
-* Updated documentation to the latest version of UI
 * Updated all Saved Variables files
+* Updated documentation to the latest version of UI
 * Updated screenshots to the latest version of UI
 
 ## 0.7.2-RELEASE
