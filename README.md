@@ -39,7 +39,7 @@ With __PanzaUI__ addon you can enable the following features:
 
 ## My UI
 
-My UI is based on __7__ mandatory components:
+My UI is based on these mandatory components:
 
 1. __PanzaUI__: the main addon with features that I have personally developed to improve my gameplay.
 2. __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
