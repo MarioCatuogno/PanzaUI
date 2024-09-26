@@ -27,6 +27,7 @@
 * WA Utilities - Added a text for Health on Nameplates
 * WA Utilities - Added an Elite/Boss/Rare icon on Nameplate
 * WA Utilities - Added an Interrupt tracker based on [this](https://wago.io/MInterruptTracker)
+* WA Utilities - Added an automation to hide Quest Tracker while in combat in Party/Raid
 * WA Utilities - Adjusted border size of various frames
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
