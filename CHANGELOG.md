@@ -33,6 +33,7 @@
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
 ### 📏 Various
+* Updated documentation to the latest version of UI
 * Updated screenshots to the latest version of UI
 
 ## 0.7.2-RELEASE

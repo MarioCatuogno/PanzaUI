@@ -44,10 +44,9 @@ My UI is based on __7__ mandatory components:
 1. __PanzaUI__: the main addon with features that I have personally developed to improve my gameplay.
 2. __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
 3. __Weak Auras__: to apply ton of utilities and features to the UI. There are also WA for various classes.
-4. __Threat Plates__: to modify the enemy and friendly Nameplates.
+4. __Plater__: to modify the enemy and friendly Nameplates.
 5. __Cell__: to replace the standard Blizzard Raid Frames.
 6. __Masque__: to skin icons and apply a consistent experience across the entire UI.
-7. __Hide Main Menu Bar__: to hide the Main Menu, Micro Menu and Bags bars.
 
 There are also other optional components:
 
@@ -59,6 +58,7 @@ There are also other optional components:
 * __idTip__: to provide additional information in tooltips.
 * __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
 * __LS:Toasts__: to skin the toast notification frame with a better look.
+* __MouseOverActionSettings__: to automatically hide/show action bars.
 * __Simple Item Level__: to get more infos on items in bags and in equipment manager.
 
 If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md). Bare in mind that I play on a MacBook Pro 14" with a resolution of __3024x1964__.
@@ -87,10 +87,6 @@ If you want to see it in action check [here](https://raw.githubusercontent.com/M
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg" alt="PanzaUI - Party 01">
-  </a>
-
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.jpeg">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_menu.jpeg" alt="PanzaUI - Menu">
   </a>
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_suf.jpeg">
