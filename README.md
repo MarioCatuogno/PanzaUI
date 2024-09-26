@@ -65,8 +65,6 @@ There are also other optional components:
 
 If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md). Bare in mind that I play on a MacBook Pro 14" with a resolution of __3024x1964__.
 
-If you want to see it in action check [here](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_combat_01.gif), [here](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_combat_02.gif) and [here](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_skyriding_01.gif).
-
 ## Screenshots
 
 <p align="center">
