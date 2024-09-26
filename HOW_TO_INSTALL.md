@@ -30,6 +30,7 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
+* [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_paladin.pdf)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
 
 ### Profiles
