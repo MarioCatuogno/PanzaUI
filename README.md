@@ -18,8 +18,10 @@ Hey there fellow WoW players! I've been playing WoW since beta in 2004 and over 
 
 ## Features
 
-⚠️ TWW break the Menu of the addon. The current settings can be enabled/disabled only editing the `core.lua` file.
-With __PanzaUI__ addon you can enable the following features:
+⚠️ __TWW break the Menu of the addon. I had to remove this feature which I plan to add again in the future.__ 
+
+The current settings can be enabled/disabled only editing the `core.lua` file.
+With __PanzaUI__ addon the following features are enabled:
 
 * __Configure Action Bars__: remove interaction, blink and GCD animations on Action Bars.
 * __Configure Cast Bars__: resize and reskin cast bar. (actually it hides the Blizzard default Cast Bar to use the WA included in [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt))
