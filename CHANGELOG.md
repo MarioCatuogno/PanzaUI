@@ -33,6 +33,7 @@
 ### 📏 Various
 * Removed unnecessary files
 * Updated documentation to the latest version of UI
+* Updated all Saved Variables files
 * Updated screenshots to the latest version of UI
 
 ## 0.7.2-RELEASE
