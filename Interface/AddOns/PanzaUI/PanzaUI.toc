@@ -3,6 +3,6 @@
 ## Notes: World of Warcraft UI
 ## IconTexture: 572034
 ## Author: Panzarotto
-## Version: 0.7.3
+## Version: 0.8.0
 
 core.lua
