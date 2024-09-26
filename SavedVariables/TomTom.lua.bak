@@ -1,26 +1,33 @@
 
 TomTomDB = {
 ["profileKeys"] = {
+["Scaloppina - Draenor"] = "Default",
 ["Pizzadino - Draenor"] = "Default",
-["Sorbetto - Draenor"] = "Default",
-["Cannolo - Argent Dawn"] = "Default",
 ["Popletta - Draenor"] = "Default",
-["Gelatino - Draenor"] = "Default",
 ["Friarielli - Draenor"] = "Default",
-["Noiram - Argent Dawn"] = "Default",
-["Salsiccio - Argent Dawn"] = "Default",
-["Sfilatino - Draenor"] = "Default",
-["Pizzadino - Argent Dawn"] = "Default",
+["Ham - Nemesis"] = "Default",
 ["Sfincione - Draenor"] = "Default",
+["Polpettone - Draenor"] = "Default",
+["Panzarotto - Argent Dawn"] = "Default",
+["Cannolo - Argent Dawn"] = "Default",
+["Pelo - Argent Dawn"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Sorbetto - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
+["Noiram - Argent Dawn"] = "Default",
+["Marietto - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
 ["Panzarotto - Silvermoon"] = "Default",
-["Ham - Nemesis"] = "Default",
+["Salsiccio - Argent Dawn"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Panuozzo - Argent Dawn"] = "Default",
+["Ossosacro - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["arrow"] = {
+["distanceUnits"] = "yards",
 ["position"] = {
 "LEFT",
 nil,
@@ -34,6 +41,9 @@ nil,
 ["otherzone"] = false,
 ["tooltip"] = false,
 ["enable"] = false,
+},
+["persistence"] = {
+["savewaypoints"] = false,
 },
 ["mapcoords"] = {
 ["cursorenable"] = false,
@@ -61,24 +71,32 @@ nil,
 TomTomWaypoints = nil
 TomTomWaypointsM = {
 ["profileKeys"] = {
+["Scaloppina - Draenor"] = "Scaloppina - Draenor",
 ["Pizzadino - Draenor"] = "Pizzadino - Draenor",
-["Sorbetto - Draenor"] = "Sorbetto - Draenor",
-["Cannolo - Argent Dawn"] = "Cannolo - Argent Dawn",
 ["Popletta - Draenor"] = "Popletta - Draenor",
-["Gelatino - Draenor"] = "Gelatino - Draenor",
 ["Friarielli - Draenor"] = "Friarielli - Draenor",
-["Noiram - Argent Dawn"] = "Noiram - Argent Dawn",
-["Salsiccio - Argent Dawn"] = "Salsiccio - Argent Dawn",
-["Sfilatino - Draenor"] = "Sfilatino - Draenor",
-["Pizzadino - Argent Dawn"] = "Pizzadino - Argent Dawn",
+["Ham - Nemesis"] = "Ham - Nemesis",
 ["Sfincione - Draenor"] = "Sfincione - Draenor",
+["Polpettone - Draenor"] = "Polpettone - Draenor",
+["Panzarotto - Argent Dawn"] = "Panzarotto - Argent Dawn",
+["Cannolo - Argent Dawn"] = "Cannolo - Argent Dawn",
+["Pelo - Argent Dawn"] = "Pelo - Argent Dawn",
+["Gelatino - Draenor"] = "Gelatino - Draenor",
+["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
+["Pizzadino - Argent Dawn"] = "Pizzadino - Argent Dawn",
+["Sorbetto - Draenor"] = "Sorbetto - Draenor",
+["Sfilatino - Draenor"] = "Sfilatino - Draenor",
+["Noiram - Argent Dawn"] = "Noiram - Argent Dawn",
+["Marietto - Argent Dawn"] = "Marietto - Argent Dawn",
 ["Panzarotto - Draenor"] = "PanzaUI",
 ["Panzarotto - Silvermoon"] = "Panzarotto - Silvermoon",
-["Ham - Nemesis"] = "Ham - Nemesis",
+["Salsiccio - Argent Dawn"] = "Salsiccio - Argent Dawn",
 ["Formaggino - Draenor"] = "Formaggino - Draenor",
-["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
+["Ossosacro - Draenor"] = "Ossosacro - Draenor",
 },
 ["profiles"] = {
+["Scaloppina - Draenor"] = {
+},
 ["Pizzadino - Draenor"] = {
 },
 ["Popletta - Draenor"] = {
@@ -89,19 +107,29 @@ TomTomWaypointsM = {
 },
 ["Sfincione - Draenor"] = {
 },
+["Polpettone - Draenor"] = {
+},
+["Panzarotto - Argent Dawn"] = {
+},
 ["PanzaUI"] = {
 },
 ["Cannolo - Argent Dawn"] = {
 },
+["Pelo - Argent Dawn"] = {
+},
 ["Gelatino - Draenor"] = {
 },
-["Sorbetto - Draenor"] = {
-},
-["Sfilatino - Draenor"] = {
+["Panuozzo - Argent Dawn"] = {
 },
 ["Noiram - Argent Dawn"] = {
 },
+["Salsiccio - Argent Dawn"] = {
+},
+["Sfilatino - Draenor"] = {
+},
 ["Pizzadino - Argent Dawn"] = {
+},
+["Marietto - Argent Dawn"] = {
 },
 ["Panzarotto - Draenor"] = {
 [2112] = {
@@ -132,11 +160,11 @@ TomTomWaypointsM = {
 },
 ["Panzarotto - Silvermoon"] = {
 },
-["Panuozzo - Argent Dawn"] = {
+["Sorbetto - Draenor"] = {
 },
 ["Formaggino - Draenor"] = {
 },
-["Salsiccio - Argent Dawn"] = {
+["Ossosacro - Draenor"] = {
 },
 },
 }

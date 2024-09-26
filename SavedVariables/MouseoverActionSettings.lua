@@ -5,24 +5,29 @@ MouseoverActionSettingsDB = {
 },
 },
 ["profileKeys"] = {
+["Scaloppina - Draenor"] = "Default",
 ["Pizzadino - Draenor"] = "Default",
-["Gelatino - Draenor"] = "Default",
 ["Friarielli - Draenor"] = "Default",
-["Noiram - Argent Dawn"] = "Default",
+["Ham - Nemesis"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Polpettone - Draenor"] = "Default",
+["Cannolo - Argent Dawn"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Ossosacro - Draenor"] = "Default",
+["Pelo - Argent Dawn"] = "Default",
 ["Salsiccio - Argent Dawn"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
-["Panuozzo - Argent Dawn"] = "Default",
-["Ham - Nemesis"] = "Default",
+["Pizzadino - Argent Dawn"] = "Default",
+["Marietto - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
 ["Sfincione - Draenor"] = "Default",
-["Pizzadino - Argent Dawn"] = "Default",
+["Noiram - Argent Dawn"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Cannolo - Argent Dawn"] = "Default",
+["Panzarotto - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["MultiBarRight"] = {
-["enabled"] = false,
 },
 ["PetActionBar"] = {
 ["enabled"] = false,
@@ -48,8 +53,17 @@ MouseoverActionSettingsDB = {
 ["Minimap"] = {
 ["enabled"] = false,
 },
+["MultiBarLeft"] = {
+["enabled"] = false,
+},
 ["DebuffFrame"] = {
 ["enabled"] = false,
+},
+["PlayerFrame"] = {
+["enabled"] = false,
+},
+["ActionBarConfig"] = {
+["Action"] = false,
 },
 ["MainMenuBar"] = {
 ["enabled"] = false,
@@ -63,16 +77,7 @@ MouseoverActionSettingsDB = {
 ["BuffFrame"] = {
 ["enabled"] = false,
 },
-["MultiBarLeft"] = {
-["enabled"] = false,
-},
 ["MicroMenu"] = {
-["enabled"] = false,
-},
-["ActionBarConfig"] = {
-["Action"] = false,
-},
-["PlayerFrame"] = {
 ["enabled"] = false,
 },
 ["MiniMapButton"] = {
@@ -90,10 +95,8 @@ MouseoverActionSettingsDB = {
 ["delay"] = 0,
 },
 ["MultiBarBottomRight"] = {
-["COMBAT_UPDATE"] = false,
-},
-["StanceBar"] = {
 ["enabled"] = false,
+["COMBAT_UPDATE"] = false,
 },
 },
 },

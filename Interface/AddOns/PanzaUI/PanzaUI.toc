@@ -1,9 +1,8 @@
 ## Interface: 110002
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft UI
+## IconTexture: 572034
 ## Author: Panzarotto
-## Version: 0.7.2
-## SavedVariables: PanzaUIDB
+## Version: 0.8.0
 
 core.lua
-options.lua
