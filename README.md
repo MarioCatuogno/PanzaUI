@@ -89,6 +89,10 @@ If you want to see it in action check [here](https://raw.githubusercontent.com/M
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_02.jpeg" alt="PanzaUI - Party 02">
   </a>
 
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_03.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_03.jpeg" alt="PanzaUI - Party 03">
+  </a>
+
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg" alt="PanzaUI - Blizzard Profile">
   </a>
