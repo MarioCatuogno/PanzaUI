@@ -45,8 +45,6 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
-* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
