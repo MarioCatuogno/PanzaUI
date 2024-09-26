@@ -1,5 +1,0 @@
---Monk
-115804 --Mortal Wounds
-113746 --Mystical Touch
-392983 --Strike of the Windlord
-450342 --Crashing Momentum

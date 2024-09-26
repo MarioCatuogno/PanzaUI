@@ -18,9 +18,7 @@
 * SUF - Adjusted border size of various frames
 * SUF - Adjusted Boss and Arena frames position and text size
 * SUF - Disabled Focus cast bar
-* Threat Plates - Added Paladin debuffs for Retribution specialization
-* Threat Plates - Increased the text size for Headline View
-* Threat Plates - Removed the automation to hide friendly Nameplates in combat
+* Threat Plates - Removed the profile (switched to Plater)
 * WA Mage - Added some new Cooldown auras for Frost specialization
 * WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
 * WA Paladin - Changed the order of Buffs group
