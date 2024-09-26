@@ -16,6 +16,7 @@
 * BigWigs - Moved Messages frame
 * Cell - Moved Raid frame position
 * Plater - Added a new Plater profile (based on [this](https://quazii.com/the-war-within-plater-nameplates-profile/) one by Quazii)
+* SUF - Added a custom tag for health percentage for Player, Target and Boss frames
 * SUF - Adjusted border size of various frames
 * SUF - Adjusted Boss and Arena frames position and text size
 * SUF - Disabled Focus cast bar
@@ -24,7 +25,6 @@
 * WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
 * WA Paladin - Changed the order of Buffs group
 * WA Utilities - Added a central Cast Bar that shows only in combat
-* WA Utilities - Added a text for Health on Boss frames
 * WA Utilities - Added a text for Health on Nameplates
 * WA Utilities - Added an Elite/Boss/Rare icon on Nameplate
 * WA Utilities - Added an Interrupt tracker based on [this](https://wago.io/MInterruptTracker)
