@@ -31,6 +31,7 @@
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
 ### 📏 Various
+* Removed unnecessary files
 * Updated documentation to the latest version of UI
 * Updated screenshots to the latest version of UI
 
