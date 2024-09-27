@@ -1,17 +1,26 @@
+## 0.8.1-RELEASE
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 0.8.0-RELEASE
 
 ### 🛠️ Addon
+
 * Added an option to anchor tooltips to mouse cursor (disabled by default)
 * Added icon to PanzaUI addon
 * Code cleanup
 * Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
+
 * Update the Mage PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 * Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 * Updated Shaman macros for Restoration spec
 
 ### 👤 Profiles
+
 * BigWigs - Moved Messages frame
 * BlizzUI - Moved various frames
 * Cell - Moved Raid frame position
@@ -34,6 +43,7 @@
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
 ### 📏 Various
+
 * Removed unnecessary files
 * Updated all Saved Variables files
 * Updated documentation to the latest version of UI
