@@ -1,5 +1,11 @@
 ## 0.8.1-RELEASE
 
+### 🛠️ Addon
+
+### ⌨️ Macros
+
+### 👤 Profiles
+
 ### 📏 Various
 
 * Updated documentation to the latest version of UI
