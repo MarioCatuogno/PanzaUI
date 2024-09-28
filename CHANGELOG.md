@@ -5,6 +5,7 @@
 ### ⌨️ Macros
 
 ### 👤 Profiles
+* BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 
 ### 📏 Various
 
