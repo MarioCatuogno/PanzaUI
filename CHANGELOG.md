@@ -10,6 +10,7 @@
 * SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
+* WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
 
 ### 📏 Various
 
