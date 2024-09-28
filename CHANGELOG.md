@@ -8,6 +8,7 @@
 * BigWigs - Resized Messages frame
 * BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Plater - Changed size for Target nameplate
 * SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
