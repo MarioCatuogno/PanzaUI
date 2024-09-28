@@ -8,6 +8,7 @@
 * BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Adjusted size and position ot Interrupt tracker aura
 * WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
