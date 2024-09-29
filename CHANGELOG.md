@@ -19,6 +19,7 @@
 * WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Utilities - Added new Alerts for Delves (Brann's experience and number of Coffer Keys available)
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Adjusted size and position ot Interrupt tracker aura
 * WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
