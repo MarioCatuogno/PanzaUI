@@ -4,7 +4,7 @@
 
 ### ⌨️ Macros
 
-* Updated Shaman macros for Elemental spec
+* Updated Shaman macros for Elemental spec [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 
 ### 👤 Profiles
 
@@ -16,6 +16,7 @@
 * WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Adjusted size and position ot Interrupt tracker aura
