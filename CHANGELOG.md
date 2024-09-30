@@ -10,6 +10,7 @@
 
 * BigWigs - Resized Messages frame
 * BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* BigWigs - Removed all Nameplates icon auras for all TWW Dungeons
 * Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * Plater - Changed the size of Special Buff
 * Plater - Changed the size of Target nameplate
