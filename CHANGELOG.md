@@ -8,9 +8,9 @@
 
 ### 👤 Profiles
 
+* BigWigs - Removed all Nameplates icon auras for all TWW Dungeons
 * BigWigs - Resized Messages frame
 * BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
-* BigWigs - Removed all Nameplates icon auras for all TWW Dungeons
 * Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * Plater - Changed NPC Color profile from Quazii to Jundies (link [here](https://wago.io/ak3iS95aa))
 * Plater - Changed the size of Special Buff
@@ -21,10 +21,10 @@
 * WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Utilities - Added a Left Arrow to target Nameplate
 * WA Utilities - Added new Alerts for Delves to track Brann's experience and number of Coffer Keys available
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Utilities - Adjusted size and position ot Interrupt tracker aura
-* WA Utilities - Added a Left Arrow to target Nameplate
 * WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
 * WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
 
