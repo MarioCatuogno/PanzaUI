@@ -12,6 +12,7 @@
 * BigWigs - Resized Messages frame
 * BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Plater - Added arrows to Target nameplate
 * Plater - Adjusted Plater Top and Bottom lock to screen to 0.08
 * Plater - Changed NPC Color profile from Quazii to Jundies (link [here](https://wago.io/ak3iS95aa))
 * Plater - Changed the size of Special Buff
