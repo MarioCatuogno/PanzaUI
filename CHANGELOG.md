@@ -21,6 +21,7 @@
 * WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 * WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Utilities - Added a function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 * WA Utilities - Added a Left Arrow to target Nameplate
 * WA Utilities - Added new Alerts for Delves to track Brann's experience and number of Coffer Keys available
 * WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
