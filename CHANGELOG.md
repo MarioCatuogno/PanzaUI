@@ -17,6 +17,7 @@
 * Plater - Changed NPC Color profile from Quazii to Jundies (link [here](https://wago.io/ak3iS95aa))
 * Plater - Changed the size of Special Buff
 * Plater - Changed the size of Target nameplate
+* Plater - Removed Quest Icon on nameplates
 * SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
