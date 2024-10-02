@@ -32,6 +32,7 @@
 * WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
 * WA Utilities - Cleanup some unnecessary auras to improve performance
 * WA Utilities - Fixed cooldown text position in Movement tracker aura
+* WA Utilities - Fixed the trigger for Elite/Rares icon on nameplates
 * WA Utilities - Removed Health text for SUF frames (using custom Tag instead)
 * WA Utilities - Removed Right and Left arrow of Nameplates
 
