@@ -30,6 +30,7 @@
 * WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
 * WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
 * WA Utilities - Cleanup some unnecessary auras to improve performance
+* WA Utilities - Fixed cooldown text position in Movement tracker aura
 * WA Utilities - Removed Health text for SUF frames (using custom Tag instead)
 * WA Utilities - Removed Right and Left arrow of Nameplates
 
