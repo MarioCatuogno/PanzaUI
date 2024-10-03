@@ -4,6 +4,7 @@
 
 ### ⌨️ Macros
 
+* Updated Mage macros for Frost spec
 * Updated Shaman macros for Elemental spec [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 
 ### 👤 Profiles
