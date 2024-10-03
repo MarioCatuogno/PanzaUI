@@ -2,7 +2,11 @@
 
 ### ⌨️ Macros
 
+* Updated Priest macros for Holy spec [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
+
 ### 👤 Profiles
+
+* WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
 
 ### 📏 Various
 
