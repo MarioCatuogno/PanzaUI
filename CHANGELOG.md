@@ -1,7 +1,5 @@
 ## 0.8.1-RELEASE
 
-### 🛠️ Addon
-
 ### ⌨️ Macros
 
 * Updated Mage macros for Frost spec
