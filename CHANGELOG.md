@@ -20,6 +20,7 @@
 * Plater - Removed Quest Icon on nameplates
 * SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
 * WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Mage - Fixed some bugs in Buffs aura
 * WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
 * WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
