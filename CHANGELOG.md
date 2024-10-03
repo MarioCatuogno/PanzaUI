@@ -1,17 +1,62 @@
+## 0.8.1-RELEASE
+
+### ⌨️ Macros
+
+* Updated Mage macros for Frost spec
+* Updated Shaman macros for Elemental spec [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+
+### 👤 Profiles
+
+* BigWigs - Removed all Nameplates icon auras for all TWW Dungeons
+* BigWigs - Resized Messages frame
+* BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Plater - Added arrows to Target nameplate
+* Plater - Adjusted Plater Top and Bottom lock to screen to 0.08
+* Plater - Changed NPC Color profile from Quazii to Jundies (link [here](https://wago.io/ak3iS95aa))
+* Plater - Changed the size of Special Buff
+* Plater - Changed the size of Target nameplate
+* Plater - Removed Quest Icon on nameplates
+* SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Mage - Fixed some bugs in Buffs aura
+* WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
+* WA Utilities - Added a function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Added new Alerts for Delves to track Brann's experience and number of Coffer Keys available
+* WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* WA Utilities - Adjusted size and position ot Interrupt tracker aura
+* WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
+* WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
+* WA Utilities - Cleanup some unnecessary auras to improve performance
+* WA Utilities - Fixed cooldown text position in Movement tracker aura
+* WA Utilities - Fixed the trigger for Elite/Rares icon on nameplates
+* WA Utilities - Removed Health text for SUF frames (using custom Tag instead)
+* WA Utilities - Removed Right and Left arrow of Nameplates
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 0.8.0-RELEASE
 
 ### 🛠️ Addon
+
 * Added an option to anchor tooltips to mouse cursor (disabled by default)
 * Added icon to PanzaUI addon
 * Code cleanup
 * Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
+
 * Update the Mage PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 * Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
 * Updated Shaman macros for Restoration spec
 
 ### 👤 Profiles
+
 * BigWigs - Moved Messages frame
 * BlizzUI - Moved various frames
 * Cell - Moved Raid frame position
@@ -34,6 +79,7 @@
 * WA Utilities - Fixed a bug with CR aura in Alert group
 
 ### 📏 Various
+
 * Removed unnecessary files
 * Updated all Saved Variables files
 * Updated documentation to the latest version of UI

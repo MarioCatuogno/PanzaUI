@@ -1,9 +1,9 @@
 ## How to install
 
-1. Downaload and install last PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
+1. Downaload and install the latest version of PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
 2. Download the mandatory addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#my-ui).
-3. Unzip the file and copy the PanzaUI folder into WOW's Interface/Addons folder.
-4. Copy the Fonts folder into WOW's into WOW's folder.
+3. Unzip the file and copy the PanzaUI and SharedMedia_MyMedia folders into WOW's Interface/Addons folder.
+4. Copy the Fonts folder into WOW's folder.
 4. Run World of Warcraft and import:
   - BigWigs profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BigWigs.txt)
   - BlizzardUI profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
@@ -12,7 +12,6 @@
   - Plater profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Plater.txt)
   - SUF profile from [Github](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-SUF.txt)
   - WeakAuras profiles from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/WeakAuras) or from the list below
-5. Logout and copy the content of [SavedVariables](https://github.com/MarioCatuogno/PanzaUI/tree/main/SavedVariables) into your SavedVariables folder (into WTF folder)
 6. Login again and enjoy!
 
 ## Profiles and Other Stuff
@@ -22,7 +21,7 @@
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution
-* Shaman: Restoration
+* Shaman: Elemental, Restoration
 
 ### Keybinds 
 
