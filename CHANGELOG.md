@@ -6,6 +6,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Adjusted alpha to 0 for Nameplate icons
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
 
 ### 📏 Various
