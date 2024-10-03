@@ -45,14 +45,15 @@ The core addon adds the following features:
 
 My UI is based on these mandatory components:
 
-1. __PanzaUI__: the main addon with features that I have personally developed to improve my gameplay.
-2. __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
-3. __Weak Auras__: to apply ton of utilities and features to the UI. There are also WA for various classes.
-4. __Plater__: to modify the enemy and friendly Nameplates.
-5. __Cell__: to replace the standard Blizzard Raid Frames.
-6. __Masque__: to skin icons and apply a consistent experience across the entire UI.
-7. __MouseOverActionSettings__: to automatically hide/show action bars.
-8. __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
+* __Cell__: to replace the standard Blizzard Raid Frames.
+* __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
+* __Masque__: to skin icons and apply a consistent experience across the entire UI.
+* __MouseOverActionSettings__: to automatically hide/show action bars.
+* __PanzaUI__: the main addon with features that I have personally developed to improve my gameplay.
+* __Plater__: to modify the enemy and friendly Nameplates.
+* __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
+* __SharedMedia__: to change texture and fonts for various UI elements.
+* __Weak Auras__: to apply ton of utilities and features to the UI. There are also WA for various classes.
 
 There are also other optional components:
 
