@@ -3,6 +3,7 @@
 ### ⌨️ Macros
 
 * Added Priest macros for Holy spec [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
+* Update Shaman macros for Restoration spec
 
 ### 👤 Profiles
 
