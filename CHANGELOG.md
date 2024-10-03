@@ -9,6 +9,7 @@
 
 * BigWigs - Adjusted alpha to 0 for Nameplate icons
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 
 ### 📏 Various
 
