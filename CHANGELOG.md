@@ -15,6 +15,7 @@
 * WA Shaman - Fixed strata for Healer auras
 * WA Utilities - Added new alerts for Priest class
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
 
 ### 📏 Various
 
