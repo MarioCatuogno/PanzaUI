@@ -14,6 +14,7 @@
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
 * WA Shaman - Fixed strata for Healer auras
 * WA Utilities - Added new alerts for Priest class
+* WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 * WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
 
