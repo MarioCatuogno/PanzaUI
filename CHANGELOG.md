@@ -14,9 +14,10 @@
 * WA Monk - Fixed strata for Healer auras
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
 * WA Shaman - Fixed strata for Healer auras
-* WA Utilities - Added new alerts for Priest class
 * WA Utilities - Added a new Cast Bar aura for Bosses
 * WA Utilities - Added a tracker for Healthstones, Health and Mana potions
+* WA Utilities - Added new alerts for Priest class
+* WA Utilities - Added new movements for Priest class
 * WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed a bug with the Skyriding crosshair during races
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
