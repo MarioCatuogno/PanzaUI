@@ -20,6 +20,7 @@
 * WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 * WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
+* WA Utilities - Updated the Interrupt Tracker to the latest version of [this](https://wago.io/MInterruptTracker)
 
 ### 📏 Various
 
