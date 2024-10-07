@@ -16,6 +16,7 @@
 * WA Shaman - Fixed strata for Healer auras
 * WA Utilities - Added new alerts for Priest class
 * WA Utilities - Added a new Cast Bar aura for Bosses
+* WA Utilities - Added a tracker for Healthstones, Health and Mana potions
 * WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 * WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
