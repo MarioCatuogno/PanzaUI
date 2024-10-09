@@ -1,3 +1,35 @@
+## 0.8.2-RELEASE
+
+### ⌨️ Macros
+
+* Added Priest macros for Holy spec [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
+* Update Mage macros for Frost spec
+* Update Shaman macros for Restoration spec
+
+### 👤 Profiles
+
+* BigWigs - Adjusted alpha to 0 for Nameplate icons
+* BigWigs - Adjusted font settings for Messages
+* BlizzUI - Resized the Buffs/Debuffs frame
+* WA Mage - Fixed a bug with Icicles tracking aura
+* WA Monk - Fixed strata for Healer auras
+* WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
+* WA Shaman - Fixed strata for Healer auras
+* WA Utilities - Added a new Cast Bar aura for Bosses
+* WA Utilities - Added a tracker for Healthstones, Health and Mana potions
+* WA Utilities - Added new alerts for Priest class
+* WA Utilities - Added new movements for Priest class
+* WA Utilities - Fixed a bug with Combat Timer aura in Alert group
+* WA Utilities - Fixed a bug with the Skyriding crosshair during races
+* WA Utilities - Fixed some mispelling in Alert group
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
+* WA Utilities - Updated the Interrupt Tracker to the latest version of [this](https://wago.io/MInterruptTracker)
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 0.8.1-RELEASE
 
 ### ⌨️ Macros

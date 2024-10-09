@@ -21,6 +21,7 @@
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution
+* Priest: Holy
 * Shaman: Elemental, Restoration
 
 ### Keybinds 
@@ -47,5 +48,6 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
 * [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)

@@ -19,6 +19,7 @@ Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple,
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution
+* Priest: Holy
 * Shaman: Elemental, Restoration
 
 I'm not a LUA programmer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
