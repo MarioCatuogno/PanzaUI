@@ -2,6 +2,8 @@
 
 ### ⌨️ Macros
 
+* Update Priest macros for Holy spec
+
 ### 👤 Profiles
 
 ### 📏 Various
