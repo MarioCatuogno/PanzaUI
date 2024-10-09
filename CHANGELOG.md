@@ -1,3 +1,13 @@
+## 0.8.3-RELEASE
+
+### ⌨️ Macros
+
+### 👤 Profiles
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 0.8.2-RELEASE
 
 ### ⌨️ Macros
