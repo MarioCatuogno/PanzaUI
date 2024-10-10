@@ -6,6 +6,8 @@
 
 ### 👤 Profiles
 
+* WA Utilities - Added new movements for Hunter class
+
 ### 📏 Various
 
 * Updated documentation to the latest version of UI
