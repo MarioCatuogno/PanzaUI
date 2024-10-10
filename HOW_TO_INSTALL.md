@@ -18,6 +18,7 @@
 
 ### Fully supported Specs
 
+* Hunter: Beast Mastery
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution
@@ -28,9 +29,11 @@
 
 Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
+* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_paladin.pdf)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_priest.pdf)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
 
 ### Profiles
@@ -45,9 +48,10 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
+* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
-* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Priest.txt)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
 * [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
