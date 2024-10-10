@@ -2,6 +2,7 @@
 
 ### ⌨️ Macros
 
+* Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * Update Priest macros for Holy spec
 
 ### 👤 Profiles
