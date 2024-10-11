@@ -13,6 +13,7 @@
 
 ### 📏 Various
 
+* Reduced the size of all PDFs containing the macros of the various classes
 * Updated documentation to the latest version of UI
 
 ## 0.8.2-RELEASE
