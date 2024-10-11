@@ -9,6 +9,7 @@
 
 * WA Hunter - Added Buffs and Cooldowns group auras [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * WA Utilities - Added new movements for Hunter class
+* WA Utilities - Added a new Racing Timer for Skyriding races
 
 ### 📏 Various
 
