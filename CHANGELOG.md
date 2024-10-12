@@ -10,7 +10,8 @@
 * WA Hunter - Added Buffs and Cooldowns group auras [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * WA Utilities - Added new movements for Hunter class
 * WA Utilities - Added a new Racing Timer for Skyriding races
-WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Added Valorstone tracker
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 
 ### 📏 Various
 
