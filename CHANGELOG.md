@@ -1,5 +1,9 @@
 ## 0.8.3-RELEASE
 
+### 🛠️ Addon
+
+* Update TOC to newest patch
+
 ### ⌨️ Macros
 
 * Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
@@ -15,6 +19,7 @@
 * WA Utilities - Added a new Racing Timer for Skyriding races
 * WA Utilities - Added Valorstone tracker
 * WA Utilities - Adjusted the Movement group aura position
+* WA Utilities - Fixed a bug with the Boss cast bar
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
 
 ### 📏 Various

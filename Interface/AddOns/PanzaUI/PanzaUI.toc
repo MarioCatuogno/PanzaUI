@@ -1,4 +1,4 @@
-## Interface: 110002
+## Interface: 110005
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft UI
 ## IconTexture: 572034
