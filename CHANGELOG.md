@@ -7,16 +7,19 @@
 ### ⌨️ Macros
 
 * Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
+* Added Hunter macros for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
 * Update Priest macros for Holy spec
 
 ### 👤 Profiles
 
 * Cell - Reverted Party and Raid frames position from version 0.8.0 [[#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)]
 * WA All Classes - Adjusted the Cooldown group aura position
+* WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
+* WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
 * WA Monk - Fixed a bug with Combo Strike aura
-* WA Hunter - Added Buffs and Cooldowns group auras [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
-* WA Utilities - Added new movements for Hunter class
+* WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
 * WA Utilities - Added a new Racing Timer for Skyriding races
+* WA Utilities - Added new movements for Hunter class
 * WA Utilities - Added Valorstone tracker
 * WA Utilities - Adjusted the Movement group aura position
 * WA Utilities - Fixed a bug with the Boss cast bar
