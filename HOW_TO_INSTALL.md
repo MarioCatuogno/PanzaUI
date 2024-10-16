@@ -18,7 +18,7 @@
 
 ### Fully supported Specs
 
-* Hunter: Beast Mastery
+* Hunter: Beast Mastery, Marksmanship
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution

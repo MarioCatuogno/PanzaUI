@@ -16,7 +16,7 @@
 
 Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple, non intrusive and similar to the default UI. It works with any class but if you want to use my class Weakauras, at the moment the following one are supported:
 
-* Hunter: Beast Mastery
+* Hunter: Beast Mastery, Marksmanship
 * Mage: Frost
 * Monk: Brewmaster, Mistweaver, Windwalker
 * Paladin: Protection, Retribution
