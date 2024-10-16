@@ -13,6 +13,7 @@
 ### 👤 Profiles
 
 * Cell - Adjusted Raid Frame position
+* Details - Removed the end panel after M+
 * WA All Classes - Adjusted the Cooldown group aura position
 * WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
