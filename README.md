@@ -23,7 +23,7 @@ Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple,
 * Priest: Holy
 * Shaman: Elemental, Restoration
 
-I'm not a LUA programmer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
+I'm not a LUA developer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
 
 ## Features
 
