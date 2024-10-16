@@ -12,7 +12,7 @@
 
 ### 👤 Profiles
 
-* Cell - Reverted Party and Raid frames position from version 0.8.0 [[#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)]
+* Cell - Adjusted Raid Frame position
 * WA All Classes - Adjusted the Cooldown group aura position
 * WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
