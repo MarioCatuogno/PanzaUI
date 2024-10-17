@@ -8,6 +8,7 @@
 
 * Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * Added Hunter macros for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
+* Added Warrior macros for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
 * Update Priest macros for Holy spec
 
 ### 👤 Profiles
