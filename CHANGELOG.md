@@ -22,10 +22,12 @@
 * WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
 * WA Utilities - Added a new Racing Timer for Skyriding races
 * WA Utilities - Added new movements for Hunter class
+* WA Utilities - Added new movements for Warrior class
 * WA Utilities - Added Valorstone tracker
 * WA Utilities - Adjusted the Movement group aura position
 * WA Utilities - Fixed a bug with the Boss cast bar
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Warrior - Added Buffs and Cooldowns group auras for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
 
 ### 📏 Various
 
