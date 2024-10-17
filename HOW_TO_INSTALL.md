@@ -24,6 +24,7 @@
 * Paladin: Protection, Retribution
 * Priest: Holy
 * Shaman: Elemental, Restoration
+* Warrior: Protection
 
 ### Keybinds 
 
