@@ -15,6 +15,7 @@
 ### 👤 Profiles
 
 * Cell - Adjusted Raid Frame position
+* Details - Increased combat update to 2.5 seconds
 * Details - Removed the end panel after M+
 * WA All Classes - Adjusted the Cooldown group aura position
 * WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
@@ -29,7 +30,9 @@
 * WA Utilities - Added Valorstone tracker
 * WA Utilities - Adjusted the Movement group aura position
 * WA Utilities - Fixed a bug with the Boss cast bar
+* WA Utilities - Fixed a bug with the Low Mana alert
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Removed tracking for Health and Mana potions
 * WA Warrior - Added Buffs and Cooldowns group auras for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
 
 ### 📏 Various
