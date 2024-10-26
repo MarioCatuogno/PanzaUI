@@ -32,6 +32,7 @@
 * WA Utilities - Fixed a bug with the Boss cast bar
 * WA Utilities - Fixed a bug with the Low Mana alert
 * WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Removed animation for Boss cast bar
 * WA Utilities - Removed tracking for Health and Mana potions
 * WA Warrior - Added Buffs and Cooldowns group auras for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
 
