@@ -6,6 +6,7 @@
 
 ### ⌨️ Macros
 
+* Added Druid macros for Balance spec [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
 * Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * Added Hunter macros for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
 * Added Priest macros for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
