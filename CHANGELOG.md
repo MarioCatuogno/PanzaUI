@@ -54,6 +54,7 @@
 * BigWigs - Adjusted alpha to 0 for Nameplate icons
 * BigWigs - Adjusted font settings for Messages
 * BlizzUI - Resized the Buffs/Debuffs frame
+* WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
 * WA Mage - Fixed a bug with Icicles tracking aura
 * WA Monk - Fixed strata for Healer auras
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
