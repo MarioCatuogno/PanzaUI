@@ -18,6 +18,7 @@
 * Details - Increased combat update to 2.5 seconds
 * Details - Removed the end panel after M+
 * WA All Classes - Adjusted the Cooldown group aura position
+* WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
 * WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
 * WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
 * WA Monk - Added a Buff aura to track Ox Stance
@@ -25,6 +26,7 @@
 * WA Priest - Added Buffs and Cooldowns group auras for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
 * WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
 * WA Utilities - Added a new Racing Timer for Skyriding races
+* WA Utilities - Added new movements for Druid class
 * WA Utilities - Added new movements for Hunter class
 * WA Utilities - Added new movements for Warrior class
 * WA Utilities - Added Valorstone tracker
@@ -54,7 +56,6 @@
 * BigWigs - Adjusted alpha to 0 for Nameplate icons
 * BigWigs - Adjusted font settings for Messages
 * BlizzUI - Resized the Buffs/Debuffs frame
-* WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
 * WA Mage - Fixed a bug with Icicles tracking aura
 * WA Monk - Fixed strata for Healer auras
 * WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
@@ -62,7 +63,6 @@
 * WA Utilities - Added a new Cast Bar aura for Bosses
 * WA Utilities - Added a tracker for Healthstones, Health and Mana potions
 * WA Utilities - Added new alerts for Priest class
-* WA Utilities - Added new movements for Druid class
 * WA Utilities - Added new movements for Priest class
 * WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed a bug with the Skyriding crosshair during races
