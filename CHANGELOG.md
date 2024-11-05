@@ -61,6 +61,7 @@
 * WA Utilities - Added a new Cast Bar aura for Bosses
 * WA Utilities - Added a tracker for Healthstones, Health and Mana potions
 * WA Utilities - Added new alerts for Priest class
+* WA Utilities - Added new movements for Druid class
 * WA Utilities - Added new movements for Priest class
 * WA Utilities - Fixed a bug with Combat Timer aura in Alert group
 * WA Utilities - Fixed a bug with the Skyriding crosshair during races
