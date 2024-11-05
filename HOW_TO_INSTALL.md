@@ -18,6 +18,7 @@
 
 ### Fully supported Specs
 
+* __Druid__: Balance
 * __Hunter__: Beast Mastery, Marksmanship
 * __Mage__: Frost
 * __Monk__: Brewmaster, Mistweaver, Windwalker
@@ -30,6 +31,7 @@
 
 Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
 * [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
@@ -50,6 +52,7 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
 * [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
