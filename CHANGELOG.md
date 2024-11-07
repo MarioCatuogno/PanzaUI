@@ -18,6 +18,7 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Moved the Vehicle button
 * Cell - Adjusted Raid Frame position
 * Details - Increased combat update to 2.5 seconds
 * Details - Removed the end panel after M+
