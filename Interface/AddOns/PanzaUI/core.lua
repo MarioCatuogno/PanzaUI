@@ -590,23 +590,23 @@ local function setupQol()
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
 
-  -- Hide UI while using Taxi Service
-  local hideUiTaxiService = CreateFrame("Frame")
-  hideUiTaxiService:SetScript("OnEvent", function()
-    C_Timer.After(.05,function() 
-      if UnitOnTaxi("player") then
-          UIParent:Hide();
-          end
-      end)
-    end)
-  hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
+  ---- Hide UI while using Taxi Service
+  --local hideUiTaxiService = CreateFrame("Frame")
+  --hideUiTaxiService:SetScript("OnEvent", function()
+  --  C_Timer.After(.05,function() 
+  --    if UnitOnTaxi("player") then
+  --        UIParent:Hide();
+  --        end
+  --    end)
+  --  end)
+  --hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
 
-  -- Show UI after using Taxi Service
-  local showUiTaxiService = CreateFrame("Frame")
-  showUiTaxiService:SetScript("OnEvent", function()
-                UIParent:Show();
-    end)
-    showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
+  ---- Show UI after using Taxi Service
+  --local showUiTaxiService = CreateFrame("Frame")
+  --showUiTaxiService:SetScript("OnEvent", function()
+  --              UIParent:Show();
+  --  end)
+  --  showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off

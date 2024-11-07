@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Removed the "hide UI while taxing" feature
 * Update TOC to newest patch
 
 ### ⌨️ Macros
