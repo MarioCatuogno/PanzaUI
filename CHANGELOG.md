@@ -31,6 +31,7 @@
 * WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
 * WA Monk - Added a Buff aura to track Ox Stance
 * WA Monk - Adjusted order of some Buff auras
+* WA Monk - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
 * WA Monk - Fixed a bug with Combo Strike aura
 * WA Priest - Added Buffs and Cooldowns group auras for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
 * WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
