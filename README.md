@@ -21,7 +21,7 @@ Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple,
 * __Mage__: Frost
 * __Monk__: Brewmaster, Mistweaver, Windwalker
 * __Paladin__: Protection, Retribution
-* __Priest__: Holy
+* __Priest__: Discipline, Holy
 * __Shaman__: Elemental, Restoration
 * __Warrior__: Protection
 
