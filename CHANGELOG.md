@@ -23,6 +23,7 @@
 * Cell - Adjusted Raid Frame position
 * Details - Increased combat update to 2.5 seconds
 * Details - Removed the end panel after M+
+* Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
 * WA All Classes - Adjusted the Cooldown group aura position
 * WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
 * WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
