@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Fixed Action Bar behaviour after patch 11.0.5
 * Removed the "hide UI while taxing" feature
 * Update TOC to newest patch
 
