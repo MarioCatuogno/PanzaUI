@@ -73,6 +73,9 @@ local function configActionBars()
 
   -- Avoid interaction with action bars
   local bars = {
+    "ActionButton",
+    "MultiBarBottomLeftButton",
+    "MultiBarBottomRightButton",
     "MultiBarLeftButton",
     "MultiBar5Button"
   }
@@ -89,19 +92,19 @@ local function configActionBars()
   end
 
   -- Hide the main action bar and specified additional action bars at all times
-  MainMenuBar:Hide()
-  MultiBarBottomLeft:Hide()
-  MultiBarBottomRight:Hide()
+  MainMenuBar:SetAlpha(0)
+  MultiBarBottomLeft:SetAlpha(0)
+  MultiBarBottomRight:SetAlpha(0)
 
     local function HideSelectedActionBars()
         if MainMenuBar:IsShown() then
-            MainMenuBar:Hide()
+            MainMenuBar:SetAlpha(0)
         end
         if MultiBarBottomLeft:IsShown() then
-            MultiBarBottomLeft:Hide()
+            MultiBarBottomLeft:SetAlpha(0)
         end
         if MultiBarBottomRight:IsShown() then
-            MultiBarBottomRight:Hide()
+            MultiBarBottomRight:SetAlpha(0)
         end
     end
 
