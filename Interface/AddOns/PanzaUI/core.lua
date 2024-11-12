@@ -86,7 +86,6 @@ local function configActionBars()
       if button then
         button:SetScript("OnEnter", nil)
         button:SetScript("OnClick", nil)
-        button.cooldown:SetDrawBling(false)
       end
     end
   end
