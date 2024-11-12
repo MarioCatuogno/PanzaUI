@@ -71,24 +71,10 @@ addonTable.core = {}
 
 local function configActionBars()
 
-  -- Hide MainMenuBar
-  MainMenuBar:SetAlpha(0)
-  MainMenuBar:EnableMouse(false)
-  MultiBarBottomLeft:SetAlpha(0)
-  MultiBarBottomLeft:EnableMouse(false)
-  MultiBarBottomRight:SetAlpha(0)
-  MultiBarBottomRight:EnableMouse(false)
-
   -- Avoid interaction with action bars
   local bars = {
-    "MainMenuBar",
-    "ActionButton",
     "MultiBarLeftButton",
-    "MultiBarBottomRightButton",
-    "MultiBarBottomLeftButton",
-    "MultiBar5Button",
-    "MultiBar6Button",
-    "MultiBar7Button"
+    "MultiBar5Button"
   }
 
   for _, bar in pairs(bars) do
@@ -102,38 +88,25 @@ local function configActionBars()
     end
   end
 
-  -- Avoid blink in Action Bars
-  local gdcbars = {
-    "MainMenuBar",
-    "ActionButton",
-    "MultiBarLeftButton",
-    "MultiBarRightButton",
-    "MultiBarBottomRightButton",
-    "MultiBarBottomLeftButton",
-    "MultiBar5Button",
-    "MultiBar6Button",
-    "MultiBar7Button"
-  }
+  -- Hide the main action bar and specified additional action bars at all times
+  MainMenuBar:Hide()
+  MultiBarBottomLeft:Hide()
+  MultiBarBottomRight:Hide()
 
-  for _, gdcbar in pairs(gdcbars) do
-    for i = 1, 12 do
-      local button = _G[gdcbar..i]
-      if button then
-        button.cooldown:SetDrawBling(false)
-        button.cooldown:Hide()
-      end
+    local function HideSelectedActionBars()
+        if MainMenuBar:IsShown() then
+            MainMenuBar:Hide()
+        end
+        if MultiBarBottomLeft:IsShown() then
+            MultiBarBottomLeft:Hide()
+        end
+        if MultiBarBottomRight:IsShown() then
+            MultiBarBottomRight:Hide()
+        end
     end
-  end
 
-  -- Avoid blink in Stance Bar
-  local stanceBar = "StanceButton"
-  for i = 1, 10 do
-    local button = _G[stanceBar..i]
-    if button and button.cooldown then
-      button.cooldown:SetDrawBling(false)
-      button.cooldown:Hide() -- This will hide the cooldown frame
-    end
-  end
+  local f = CreateFrame("Frame")
+  f:SetScript("OnUpdate", HideSelectedActionBars)
 
 end
 
