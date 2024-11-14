@@ -34,6 +34,7 @@
 * WA Monk - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
 * WA Monk - Fixed a bug with Combo Strike aura
 * WA Priest - Added Buffs and Cooldowns group auras for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
+* WA Shaman - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
 * WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
 * WA Utilities - Added a new Racing Timer for Skyriding races
 * WA Utilities - Added new movements for Druid class
