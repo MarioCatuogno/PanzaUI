@@ -1,3 +1,61 @@
+## 0.9.0-RELEASE
+
+### 🛠️ Addon
+
+* Fixed Action Bar behaviour after patch 11.0.5
+* Removed the "hide UI while taxing" feature
+* Update TOC to newest patch
+
+### ⌨️ Macros
+
+* Added Druid macros for Balance spec [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
+* Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
+* Added Hunter macros for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
+* Added Priest macros for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
+* Added Warrior macros for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
+* Update Mage macros
+* Update Monk macros
+* Update Priest macros
+* Update Shaman macros
+
+### 👤 Profiles
+
+* BlizzUI - Moved the Vehicle button
+* Cell - Adjusted Raid Frame position
+* Details - Increased combat update to 2.5 seconds
+* Details - Removed the end panel after M+
+* Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
+* WA All Classes - Adjusted the Cooldown group aura position
+* WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
+* WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
+* WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
+* WA Monk - Added a Buff aura to track Flurry Strikes
+* WA Monk - Added a Buff aura to track Ox Stance
+* WA Monk - Adjusted order of some Buff auras
+* WA Monk - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
+* WA Monk - Fixed a bug with Combo Strike aura
+* WA Priest - Added Buffs and Cooldowns group auras for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
+* WA Shaman - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
+* WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
+* WA Utilities - Added a new Racing Timer for Skyriding races
+* WA Utilities - Added new movements for Druid class
+* WA Utilities - Added new movements for Hunter class
+* WA Utilities - Added new movements for Warrior class
+* WA Utilities - Added Valorstone tracker
+* WA Utilities - Adjusted the Movement group aura position
+* WA Utilities - Fixed a bug with the Boss cast bar
+* WA Utilities - Fixed a bug with the Low Mana alert
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
+* WA Utilities - Removed animation for Boss cast bar
+* WA Utilities - Removed tracking for Health and Mana potions
+* WA Warrior - Added Buffs and Cooldowns group auras for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
+
+### 📏 Various
+
+* Reduced the size of all PDFs containing the macros of the various classes
+* Updated documentation to the latest version of UI
+* Updated screenshots to the latest version of UI
+
 ## 0.8.2-RELEASE
 
 ### ⌨️ Macros

@@ -16,13 +16,16 @@
 
 Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple, non intrusive and similar to the default UI. It works with any class but if you want to use my class Weakauras, at the moment the following one are supported:
 
-* Mage: Frost
-* Monk: Brewmaster, Mistweaver, Windwalker
-* Paladin: Protection, Retribution
-* Priest: Holy
-* Shaman: Elemental, Restoration
+* __Druid__: Balance
+* __Hunter__: Beast Mastery, Marksmanship
+* __Mage__: Frost
+* __Monk__: Brewmaster, Mistweaver, Windwalker
+* __Paladin__: Protection, Retribution
+* __Priest__: Discipline, Holy
+* __Shaman__: Elemental, Restoration
+* __Warrior__: Protection
 
-I'm not a LUA programmer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
+I'm not a LUA developer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
 
 ## Features
 
@@ -95,6 +98,22 @@ If you want to replicate my UI you can follow the steps [here](https://github.co
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_03.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_03.jpeg" alt="PanzaUI - Party 03">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_04.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_04.jpeg" alt="PanzaUI - Party 04">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_05.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_05.jpeg" alt="PanzaUI - Party 05">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_06.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_06.jpeg" alt="PanzaUI - Party 06">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_07.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_07.jpeg" alt="PanzaUI - Party 07">
   </a>
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg">

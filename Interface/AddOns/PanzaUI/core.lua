@@ -71,24 +71,13 @@ addonTable.core = {}
 
 local function configActionBars()
 
-  -- Hide MainMenuBar
-  MainMenuBar:SetAlpha(0)
-  MainMenuBar:EnableMouse(false)
-  MultiBarBottomLeft:SetAlpha(0)
-  MultiBarBottomLeft:EnableMouse(false)
-  MultiBarBottomRight:SetAlpha(0)
-  MultiBarBottomRight:EnableMouse(false)
-
   -- Avoid interaction with action bars
   local bars = {
-    "MainMenuBar",
     "ActionButton",
-    "MultiBarLeftButton",
-    "MultiBarBottomRightButton",
     "MultiBarBottomLeftButton",
-    "MultiBar5Button",
-    "MultiBar6Button",
-    "MultiBar7Button"
+    "MultiBarBottomRightButton",
+    "MultiBarLeftButton",
+    "MultiBar5Button"
   }
 
   for _, bar in pairs(bars) do
@@ -97,43 +86,29 @@ local function configActionBars()
       if button then
         button:SetScript("OnEnter", nil)
         button:SetScript("OnClick", nil)
-        button.cooldown:SetDrawBling(false)
       end
     end
   end
 
-  -- Avoid blink in Action Bars
-  local gdcbars = {
-    "MainMenuBar",
-    "ActionButton",
-    "MultiBarLeftButton",
-    "MultiBarRightButton",
-    "MultiBarBottomRightButton",
-    "MultiBarBottomLeftButton",
-    "MultiBar5Button",
-    "MultiBar6Button",
-    "MultiBar7Button"
-  }
+  -- Hide the main action bar and specified additional action bars at all times
+  MainMenuBar:SetAlpha(0)
+  MultiBarBottomLeft:SetAlpha(0)
+  MultiBarBottomRight:SetAlpha(0)
 
-  for _, gdcbar in pairs(gdcbars) do
-    for i = 1, 12 do
-      local button = _G[gdcbar..i]
-      if button then
-        button.cooldown:SetDrawBling(false)
-        button.cooldown:Hide()
-      end
+    local function HideSelectedActionBars()
+        if MainMenuBar:IsShown() then
+            MainMenuBar:SetAlpha(0)
+        end
+        if MultiBarBottomLeft:IsShown() then
+            MultiBarBottomLeft:SetAlpha(0)
+        end
+        if MultiBarBottomRight:IsShown() then
+            MultiBarBottomRight:SetAlpha(0)
+        end
     end
-  end
 
-  -- Avoid blink in Stance Bar
-  local stanceBar = "StanceButton"
-  for i = 1, 10 do
-    local button = _G[stanceBar..i]
-    if button and button.cooldown then
-      button.cooldown:SetDrawBling(false)
-      button.cooldown:Hide() -- This will hide the cooldown frame
-    end
-  end
+  local f = CreateFrame("Frame")
+  f:SetScript("OnUpdate", HideSelectedActionBars)
 
 end
 
@@ -590,23 +565,23 @@ local function setupQol()
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
 
-  -- Hide UI while using Taxi Service
-  local hideUiTaxiService = CreateFrame("Frame")
-  hideUiTaxiService:SetScript("OnEvent", function()
-    C_Timer.After(.05,function() 
-      if UnitOnTaxi("player") then
-          UIParent:Hide();
-          end
-      end)
-    end)
-  hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
+  ---- Hide UI while using Taxi Service
+  --local hideUiTaxiService = CreateFrame("Frame")
+  --hideUiTaxiService:SetScript("OnEvent", function()
+  --  C_Timer.After(.05,function() 
+  --    if UnitOnTaxi("player") then
+  --        UIParent:Hide();
+  --        end
+  --    end)
+  --  end)
+  --hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
 
-  -- Show UI after using Taxi Service
-  local showUiTaxiService = CreateFrame("Frame")
-  showUiTaxiService:SetScript("OnEvent", function()
-                UIParent:Show();
-    end)
-    showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
+  ---- Show UI after using Taxi Service
+  --local showUiTaxiService = CreateFrame("Frame")
+  --showUiTaxiService:SetScript("OnEvent", function()
+  --              UIParent:Show();
+  --  end)
+  --  showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off

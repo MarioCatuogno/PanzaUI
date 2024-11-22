@@ -18,20 +18,27 @@
 
 ### Fully supported Specs
 
-* Mage: Frost
-* Monk: Brewmaster, Mistweaver, Windwalker
-* Paladin: Protection, Retribution
-* Priest: Holy
-* Shaman: Elemental, Restoration
+* __Druid__: Balance
+* __Hunter__: Beast Mastery, Marksmanship
+* __Mage__: Frost
+* __Monk__: Brewmaster, Mistweaver, Windwalker
+* __Paladin__: Protection, Retribution
+* __Priest__: Discipline, Holy
+* __Shaman__: Elemental, Restoration
+* __Warrior__: Protection
 
 ### Keybinds 
 
 Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
+* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_paladin.pdf)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_priest.pdf)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
+* [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_warrior.pdf)
 
 ### Profiles
 
@@ -45,9 +52,12 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
+* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
+* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
 * [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Monk.txt)
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
-* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
+* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Priest.txt)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
 * [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
+* [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Warrior.txt)
