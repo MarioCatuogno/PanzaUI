@@ -100,6 +100,22 @@ If you want to replicate my UI you can follow the steps [here](https://github.co
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_03.jpeg" alt="PanzaUI - Party 03">
   </a>
 
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_04.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_04.jpeg" alt="PanzaUI - Party 04">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_05.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_05.jpeg" alt="PanzaUI - Party 05">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_06.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_06.jpeg" alt="PanzaUI - Party 06">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_07.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_07.jpeg" alt="PanzaUI - Party 07">
+  </a>
+
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg" alt="PanzaUI - Blizzard Profile">
   </a>
