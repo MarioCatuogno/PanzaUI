@@ -7,6 +7,8 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Adjusted Arena frame position
+
 ### 🧮 Weak Auras
 
 * WA Monk - Added a cooldown tracker for trinkets
