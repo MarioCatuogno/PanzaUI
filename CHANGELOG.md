@@ -1,5 +1,10 @@
 ## 1.0-RELEASE
 
+### 🛠️ Addon
+
+* Cleaned the code
+* Fixed a problem with GCD blink showing on every cooldown on action bars
+
 ### 👤 Profiles
 
 ### 🧮 Weak Auras

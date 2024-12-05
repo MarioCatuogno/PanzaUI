@@ -95,22 +95,19 @@ local function configActionBars()
   MultiBarBottomLeft:SetAlpha(0)
   MultiBarBottomRight:SetAlpha(0)
 
-    local function HideSelectedActionBars()
-        if MainMenuBar:IsShown() then
-            MainMenuBar:SetAlpha(0)
-        end
-        if MultiBarBottomLeft:IsShown() then
-            MultiBarBottomLeft:SetAlpha(0)
-        end
-        if MultiBarBottomRight:IsShown() then
-            MultiBarBottomRight:SetAlpha(0)
-        end
+  -- Hide GCD blink on action bars
+  for k,v in pairs(_G) do
+    if type(v)=="table" and type(v.SetDrawBling)=="function" then
+        v:SetDrawBling(false)
     end
-
-  local f = CreateFrame("Frame")
-  f:SetScript("OnUpdate", HideSelectedActionBars)
+  end
+  hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', function(self)
+    self:SetDrawBling(false)
+  end)
 
 end
+
+
 
 --------------------------------------------------------------------------------
 -- CONFIGURE CAST BAR
@@ -218,53 +215,10 @@ end
 
 local function configPlayerFrame()
 
-  -- Hide combat flash and rest
---  local hideRest = CreateFrame("Frame")
---    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerRestLoop:SetParent(hideRest)
---    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:SetParent(hideRest)
---    PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon:SetParent(hideRest)
---    PlayerFrame.PlayerFrameContainer.FrameFlash:SetParent(hideRest)
---    TargetFrame.TargetFrameContainer.Flash:SetParent(hideRest)
---  hideRest:Hide()
-
-  -- Hide Power Bars
-  --ClearAllPointsHideFrame(ComboPointDruidPlayerFrame)
-  --ClearAllPointsHideFrame(ComboPointPlayerFrame)
-  --ClearAllPointsHideFrame(EssencePlayerFrame)
-  --ClearAllPointsHideFrame(MageArcaneChargesFrame)
-  --ClearAllPointsHideFrame(MonkHarmonyBarFrame)
-  --ClearAllPointsHideFrame(MonkStaggerBar)
-  --ClearAllPointsHideFrame(MonkStaggerBar.PowerBarMask)
-  --ClearAllPointsHideFrame(PaladinPowerBarFrame)
-  --ClearAllPointsHideFrame(PlayerFrameAlternateManaBar)
-  --ClearAllPointsHideFrame(RogueComboPointBarFrame)
-  --ClearAllPointsHideFrame(RuneFrame)
-  --ClearAllPointsHideFrame(WarlockPowerFrame)
-
   -- Remove damage and healing text in portraits
   COMBATFEEDBACK_FADEINTIME = 0
   COMBATFEEDBACK_HOLDTIME = 0
   COMBATFEEDBACK_FADEOUTTIME = 0
-
-  -- Class Colour frames
-  --local function UpdateHealthBarColor(self)
-  --  if UnitIsPlayer(self.unit) and UnitIsConnected(self.unit) then
-  --    local _, classToken = UnitClass(self.unit)
-  --    local classColor = RAID_CLASS_COLORS[classToken]
-  --    if classColor then
-  --      self:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
-  --    else
-  --      self:SetStatusBarColor(0.5, 0.5, 0.5)
-  --    end
-  --  elseif UnitIsPlayer(self.unit) then
-  --    self:SetStatusBarColor(0.5, 0.5, 0.5)
-  --  else
-  --    self:SetStatusBarColor(0.0, 1.0, 0.0)
-  --  end
-  --  self:SetStatusBarDesaturated(true)
-  --end
-  --hooksecurefunc("HealthBar_OnValueChanged", UpdateHealthBarColor)
-  --hooksecurefunc("UnitFrameHealthBar_Update", UpdateHealthBarColor)
 
 end
 
@@ -285,13 +239,6 @@ end
 
 local function configRaidFrames()
 
-  -- Reduce alpha for Role icon in Raid frames
---  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
---    if frame.optionTable == DefaultCompactUnitFrameOptions then
---      frame.roleIcon:SetAlpha(0.3)
---    end
---  end)
-
 end
 
 --------------------------------------------------------------------------------
@@ -299,21 +246,6 @@ end
 --------------------------------------------------------------------------------
 
 local function configTargetFrame()
-
-  -- Remove buffs/debuffs from Target frame
---  TargetFrame.maxBuffs = 0
---  TargetFrame.maxDebuffs = 0
---
---  FocusFrame.maxBuffs = 0
---  FocusFrame.maxDebuffs = 0
-
-  -- Hide Reputation background for Target and Focus frames
-  --if TargetFrame.TargetFrameContent and TargetFrame.TargetFrameContent.TargetFrameContentMain and TargetFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
-  --  TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-  --end
-  --if FocusFrame.TargetFrameContent and FocusFrame.TargetFrameContent.TargetFrameContentMain and FocusFrame.--TargetFrameContent.TargetFrameContentMain.ReputationColor then
-  --  FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetTexture(nil)
-  --end
 
 end
 
@@ -336,24 +268,6 @@ local function configVariousFrames()
   end
   SetHealthBarTexture()
 
-  -- Anchor tooltips to mouse cursor
-  --hooksecurefunc("GameTooltip_SetDefaultAnchor", function(s,p) s:SetOwner(p,"ANCHOR_CURSOR") end)
-
-  ---- Reskin the health bar of Nameplates
-  --local function SetNameplateTexture()
-  --  for _, nameplate in ipairs(C_NamePlate.GetNamePlates()) do
-  --      if nameplate.UnitFrame and nameplate.UnitFrame.healthBar then
-  --          nameplate.UnitFrame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-  --      end
-  --  end
-  --  hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(frame)
-  --    if frame and frame.healthBar then
-  --        frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-  --    end
-  --  end)
-  --end
-  --SetNameplateTexture()
-
 end
 
 --------------------------------------------------------------------------------
@@ -375,19 +289,6 @@ end
 --------------------------------------------------------------------------------
 
 local function hideRealmNames()
-
-  -- Hide Realm names from Raid frames
---  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
---    if frame and not frame:IsForbidden() then
---      local frame_name = frame:GetName()
---      if frame_name and frame_name:match("^CompactRaidFrame%d") and frame.unit and frame.name then
---        local unit_name = GetUnitName(frame.unit, true)
---        if unit_name then
---          frame.name:SetText(unit_name:match("[^-]+"))
---        end
---      end
---    end
---  end)
 
 end
 
@@ -467,27 +368,7 @@ local function setupCVars()
   C_CVar.SetCVar("minimapTrackingShowAll",1)
 
   -- Nameplates (Disabled whil using Threat Plates)
-  --C_CVar.SetCVar("NamePlateHorizontalScale", 1.3)
-  --C_CVar.SetCVar("nameplateLargeTopInset", 0.15)
-  --C_CVar.SetCVar("nameplateMaxDistance", 40)
-  --C_CVar.SetCVar("nameplateMinAlpha", 1)
-  --C_CVar.SetCVar("nameplateMinAlphaDistance", 10)
-  --C_CVar.SetCVar("nameplateMotion", 1)
-  --C_CVar.SetCVar("nameplateOccludedAlphaMult", 0.4)
-  --C_CVar.SetCVar("nameplateOtherBottomInset", 0.1)
-  --C_CVar.SetCVar("nameplateOtherTopInset", 0.15)
-  --C_CVar.SetCVar("nameplateOverlapH", 1)
-  --C_CVar.SetCVar("nameplateOverlapV", 0.5)
-  --C_CVar.SetCVar("NameplatePersonalShowAlways", 0)
-  --C_CVar.SetCVar("nameplateSelectedScale", 1.5)
-  --C_CVar.SetCVar("nameplateShowEnemies", 1)
-  --C_CVar.SetCVar("nameplateShowEnemyPets", 1)
-  --C_CVar.SetCVar("nameplateShowEnemyTotems", 1)
   C_CVar.SetCVar("nameplateShowOnlyNames", 1)
-  --C_CVar.SetCVar("nameplateShowSelf", 0)
-  --C_CVar.SetCVar("nameplateTargetBehindMaxDistance", 5)
-  --C_CVar.SetCVar("nameplateTargetRadialPosition", 0)
-  --C_CVar.SetCVar("NamePlateVerticalScale", 1.5)
 
   -- Unit Frames
   C_CVar.SetCVar("showTargetOfTarget", 1)
@@ -564,24 +445,6 @@ local function setupQol()
   -- Easyily delete items
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
   hooksecurefunc(StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"], "OnShow", function(deleteItems) deleteItems.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)
-
-  ---- Hide UI while using Taxi Service
-  --local hideUiTaxiService = CreateFrame("Frame")
-  --hideUiTaxiService:SetScript("OnEvent", function()
-  --  C_Timer.After(.05,function() 
-  --    if UnitOnTaxi("player") then
-  --        UIParent:Hide();
-  --        end
-  --    end)
-  --  end)
-  --hideUiTaxiService:RegisterEvent("PLAYER_CONTROL_LOST")
-
-  ---- Show UI after using Taxi Service
-  --local showUiTaxiService = CreateFrame("Frame")
-  --showUiTaxiService:SetScript("OnEvent", function()
-  --              UIParent:Show();
-  --  end)
-  --  showUiTaxiService:RegisterEvent("PLAYER_CONTROL_GAINED")
 
   -- Set Action Cam
   ConsoleExec( "ActionCam off" ); -- full/basic/off
