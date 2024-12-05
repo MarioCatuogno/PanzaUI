@@ -1,4 +1,4 @@
-## 1.9-RELEASE
+## 1.0-RELEASE
 
 ### 👤 Profiles
 
