@@ -1,3 +1,15 @@
+## 1.9-RELEASE
+
+### 👤 Profiles
+
+### 🧮 Weak Auras
+
+* WA Monk - Added a cooldown tracker for trinkets
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 0.9.0-RELEASE
 
 ### 🛠️ Addon
