@@ -12,6 +12,7 @@
 ### 🧮 Weak Auras
 
 * WA Monk - Added a cooldown tracker for trinkets
+* WA Utilities - Fixed an issue with Mana group tracker
 
 ### 📏 Various
 
