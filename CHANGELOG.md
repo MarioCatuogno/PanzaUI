@@ -14,6 +14,7 @@
 * WA Monk - Added a cooldown tracker for trinkets
 * WA Utilities - Added an alert for banquets or feasts
 * WA Utilities - Added an alert for flaks and potion cauldrons
+* WA Utilities - Changed the texture for Skyriding crosshair race target
 * WA Utilities - Fixed an issue with Mana group tracker
 
 ### 📏 Various
