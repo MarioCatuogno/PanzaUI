@@ -3,9 +3,14 @@
 ### 🛠️ Addon
 
 * Removed core.lua and PanzaUI.toc
-* WA Core - Cleaned the code
-* WA Core - Fixed a problem with GCD blink showing on every cooldown on action bars
-* WA Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Core - Cleaned the code
+* Core - Fixed a problem with GCD blink showing on every cooldown on action bars
+* Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Utilities - Added an alert for banquets or feasts
+* Utilities - Added an alert for flaks and potion cauldrons
+* Utilities - Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
+* Utilities - Changed the texture for Skyriding crosshair race target
+* Utilities - Fixed an issue with Mana group tracker
 
 ### 👤 Profiles
 
@@ -13,12 +18,7 @@
 
 ### 🧮 Weak Auras
 
-* WA Monk - Added a cooldown tracker for trinkets
-* WA Utilities - Added an alert for banquets or feasts
-* WA Utilities - Added an alert for flaks and potion cauldrons
-* WA Utilities - Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
-* WA Utilities - Changed the texture for Skyriding crosshair race target
-* WA Utilities - Fixed an issue with Mana group tracker
+* Monk - Added a cooldown tracker for trinkets
 
 ### 📏 Various
 
