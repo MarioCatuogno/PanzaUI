@@ -2,8 +2,10 @@
 
 ### 🛠️ Addon
 
-* Cleaned the code
-* Fixed a problem with GCD blink showing on every cooldown on action bars
+* Removed core.lua and PanzaUI.toc
+* WA Core - Cleaned the code
+* WA Core - Fixed a problem with GCD blink showing on every cooldown on action bars
+* WA Core - Moved all PanzaUI features from external addon to a new WA
 
 ### 👤 Profiles
 
