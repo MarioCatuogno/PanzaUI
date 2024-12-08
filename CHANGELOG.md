@@ -29,6 +29,7 @@
 
 ### 📏 Various
 
+* Added screenshots from previous versions of UI
 * Updated documentation to the latest version of UI
 
 ## 0.9.0-RELEASE
