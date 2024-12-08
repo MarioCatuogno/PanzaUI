@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Core - Changed icons for various WAs
 * Core - Cleaned the code
 * Core - Fixed a problem with GCD blink showing on every cooldown on action bars
 * Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
