@@ -18,6 +18,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Adjusted Arena frame position
+* Cell - Adjusted position of raid and party frames
 * SUF - Adjusted position of various frames
 
 ### 🧮 Weak Auras
