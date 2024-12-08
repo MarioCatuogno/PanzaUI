@@ -25,6 +25,7 @@
 
 ### 🧮 Weak Auras
 
+* Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
 * Monk - Adjusted Cooldowns tracker
 
 ### 📏 Various
