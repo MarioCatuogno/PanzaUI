@@ -19,7 +19,7 @@
 
 ### 🧮 Weak Auras
 
-* Monk - Added a cooldown tracker for trinkets
+* Monk - Adjusted Cooldowns tracker
 
 ### 📏 Various
 
