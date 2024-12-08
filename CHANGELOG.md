@@ -27,6 +27,7 @@
 
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
 * Monk - Adjusted Cooldowns tracker
+* Monk - Renamed all auras for better clarity
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
 
 ### 📏 Various
