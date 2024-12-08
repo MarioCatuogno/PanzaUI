@@ -18,7 +18,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Adjusted Arena frame position
-* SUF - Fixed position of various frames
+* SUF - Adjusted position of various frames
 
 ### 🧮 Weak Auras
 
