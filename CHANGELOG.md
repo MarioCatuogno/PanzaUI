@@ -2,10 +2,11 @@
 
 ### 🛠️ Addon
 
-* Removed core.lua and PanzaUI.toc
 * Core - Cleaned the code
 * Core - Fixed a problem with GCD blink showing on every cooldown on action bars
 * Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Removed core.lua and PanzaUI.toc
+* Removed Saved Variables folder
 * Utilities - Added an alert for banquets or feasts
 * Utilities - Added an alert for flaks and potion cauldrons
 * Utilities - Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
