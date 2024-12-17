@@ -22,6 +22,7 @@
 * Details - Fixed fonts size
 * Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
 * SUF - Adjusted position of various frames
+* SUF - Configured Player frame for Warlock class
 
 ### 🧮 Weak Auras
 
