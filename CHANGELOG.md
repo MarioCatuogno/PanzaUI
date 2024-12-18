@@ -18,6 +18,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Adjusted Arena frame position
+* BlizzUI - Adjusted Quest frame position
 * Cell - Adjusted position of raid and party frames
 * Details - Fixed fonts size
 * Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
