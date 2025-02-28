@@ -27,6 +27,8 @@
 * __Shaman__: Elemental, Restoration
 * __Warrior__: Protection
 
+If your spec is not listed above, you can configure your personal one using [this](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
+
 ### Keybinds 
 
 Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
@@ -52,6 +54,7 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
+* [Class Template](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-ClassTemplate.txt)
 * [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
 * [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
