@@ -28,6 +28,7 @@
 
 ### 🧮 Weak Auras
 
+* Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
 * Monk - Added Jade Empowerment buff tracker
 * Monk - Added Slicing Winds to Buffs tracker
