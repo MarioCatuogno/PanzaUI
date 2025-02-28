@@ -25,7 +25,7 @@ Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple,
 * __Shaman__: Elemental, Restoration
 * __Warrior__: Protection
 
-I'm not a LUA developer so if you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
+If you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
 
 ## Features
 
@@ -70,7 +70,9 @@ There are also other optional components:
 * __LS:Toasts__: to skin the toast notification frame with a better look.
 * __Simple Item Level__: to get more infos on items in bags and in equipment manager.
 
-If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md). Bare in mind that I play on a MacBook Pro 14" with a resolution of __3024x1964__.
+If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
+
+If your class is not covered by my WAs, you can configure your personal one using [this](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
 
 ## Screenshots
 
