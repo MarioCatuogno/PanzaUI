@@ -26,7 +26,7 @@
 * SUF - Adjusted position of various frames
 * SUF - Configured Player frame for Warlock class
 
-### 🧮 Weak Auras
+### 🧮 Class Weak Auras
 
 * Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
