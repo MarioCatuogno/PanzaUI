@@ -41,6 +41,7 @@
 * Added a new guide to configure personal Class WAs
 * Added screenshots from previous versions of UI [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Updated documentation to the latest version of UI
+* Updated screenshots to the latest version of UI
 
 ## 0.9.0-RELEASE
 
