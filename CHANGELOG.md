@@ -22,7 +22,7 @@
 * BlizzUI - Adjusted Quest frame position
 * Cell - Adjusted position of raid and party frames
 * Details - Fixed fonts size
-* Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
+* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * SUF - Adjusted position of various frames
 * SUF - Configured Player frame for Warlock class
 
