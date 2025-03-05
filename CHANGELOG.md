@@ -21,6 +21,7 @@
 * BlizzUI - Adjusted Arena frame position
 * BlizzUI - Adjusted Quest frame position
 * Cell - Adjusted position of raid and party frames
+* Cell - Fixed the Pet frame during solo content
 * Details - Fixed fonts size
 * Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * SUF - Adjusted position of various frames
