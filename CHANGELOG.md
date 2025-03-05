@@ -16,6 +16,7 @@
 * Utilities - Changed the texture for Skyriding crosshair race target
 * Utilities - Fixed an issue with Mana group tracker
 * Utilities - Moved some auras to Core WA
+* Utilities - Updated Interrupt Tracker to latest version of WA
 
 ### 👤 Profiles
 
