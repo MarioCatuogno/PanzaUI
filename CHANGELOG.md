@@ -33,8 +33,9 @@
 
 * Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
-* Monk - Added Jade Empowerment buff tracker
+* Monk - Added Jade Empowerment to Buffs tracker
 * Monk - Added Slicing Winds to Buffs tracker
+* Monk - Added The Emperor's Capacitor to Buffs tracker
 * Monk - Adjusted Cooldowns tracker
 * Monk - Renamed all auras for better clarity
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
