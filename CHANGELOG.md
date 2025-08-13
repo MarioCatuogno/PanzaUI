@@ -16,6 +16,7 @@
 * Utilities - Added an alert for Insanity bar in Visions of N'Zoth Revisited
 * Utilities - Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
 * Utilities - Changed the texture for Skyriding crosshair race target
+* Utilities - Fixed an issue with Low Supplies tracker
 * Utilities - Fixed an issue with Mana group tracker
 * Utilities - Moved some auras to Core WA
 * Utilities - Updated Interrupt Tracker to latest version of WA
