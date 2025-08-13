@@ -26,7 +26,6 @@
 * BlizzUI - Adjusted Quest frame position
 * Cell - Adjusted position of raid and party frames
 * Cell - Fixed frame visibility in Solo mode
-* Cell - Fixed the Pet frame during solo content
 * Details - Fixed fonts size
 * Details - Fixed windows position
 * Details - Removed second frame and addes some automation for spec/role
