@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Core - Added new CVars for Camera
 * Core - Changed icons for various WAs
 * Core - Cleaned the code
 * Core - Fixed a problem with alpha level of some scripts
