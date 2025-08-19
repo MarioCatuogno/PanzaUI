@@ -45,6 +45,7 @@
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
 * Death Knight - Adjusted Cooldowns tracker position
 * Druid - Adjusted Cooldowns tracker position
+* Hunter - Adjusted Cooldowns tracker position
 * Mage - Adjusted Cooldowns tracker
 * Mage - Renamed all auras for better clarity
 * Monk - Added Jade Empowerment to Buffs tracker
