@@ -46,7 +46,7 @@
 * Death Knight - Adjusted Cooldowns tracker position
 * Druid - Adjusted Cooldowns tracker position
 * Hunter - Adjusted Cooldowns tracker position
-* Mage - Adjusted Cooldowns tracker
+* Mage - Adjusted Cooldowns tracker position
 * Mage - Renamed all auras for better clarity
 * Monk - Added Jade Empowerment to Buffs tracker
 * Monk - Added Slicing Winds to Buffs tracker
