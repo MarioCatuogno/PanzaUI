@@ -26,6 +26,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Adjusted Messages frame position
 * BlizzUI - Adjusted Arena frame position
 * BlizzUI - Adjusted Quest frame position
 * Cell - Adjusted position of raid and party frames
