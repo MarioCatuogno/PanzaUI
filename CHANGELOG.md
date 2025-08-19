@@ -55,6 +55,7 @@
 * Monk - Removed unnecessary Buffs
 * Monk - Renamed all auras for better clarity
 * Paladin - Adjusted Cooldowns tracker position
+* Priest - Adjusted Cooldowns tracker position
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
 
 ### 📏 Various
