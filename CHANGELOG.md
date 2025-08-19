@@ -48,7 +48,7 @@
 * Monk - Added Jade Empowerment to Buffs tracker
 * Monk - Added Slicing Winds to Buffs tracker
 * Monk - Added The Emperor's Capacitor to Buffs tracker
-* Monk - Adjusted Cooldowns tracker
+* Monk - Adjusted Cooldowns tracker position
 * Monk - Removed unnecessary Buffs
 * Monk - Renamed all auras for better clarity
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
