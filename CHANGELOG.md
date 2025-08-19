@@ -57,6 +57,7 @@
 * Paladin - Adjusted Cooldowns tracker position
 * Priest - Adjusted Cooldowns tracker position
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
+* Rogue - Adjusted Cooldowns tracker position
 
 ### 📏 Various
 
