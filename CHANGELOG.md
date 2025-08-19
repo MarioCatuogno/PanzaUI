@@ -43,6 +43,7 @@
 
 * Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
+* Death Knight - Adjusted Cooldowns tracker position
 * Mage - Adjusted Cooldowns tracker
 * Mage - Renamed all auras for better clarity
 * Monk - Added Jade Empowerment to Buffs tracker
