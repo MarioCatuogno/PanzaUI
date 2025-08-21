@@ -43,6 +43,7 @@
 
 ### 🧮 Class Weak Auras
 
+* All Classes - Moved the Buff frame to better integrate the new Power Bar
 * Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
 * Class Template - Adjusted Cooldowns tracker position
 * Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
