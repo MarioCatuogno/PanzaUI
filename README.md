@@ -14,7 +14,9 @@
 
 </div>
 
-Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple, non intrusive and similar to the default UI. It works with any class but if you want to use my class Weakauras, at the moment the following one are supported because are the ones that I actively play:
+Hey there, fellow WoW players!
+
+PanzaUI is a clean, minimally intrusive UI designed to feel and behave similarly to the default Blizzard interface. It works with any class, but class-specific WeakAuras are only included for the specs I actively play:
 
 * __Death Knight__: Frost
 * __Druid__: Balance, Restoration
@@ -26,54 +28,56 @@ Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple,
 * __Shaman__: Elemental, Restoration
 * __Warrior__: Protection
 
-If you have problems, feel free to open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues), I will try to help as much as I can!
+If you run into problems, open an issue and I’ll help as much as I can: [link here](https://github.com/MarioCatuogno/PanzaUI/issues).
 
 ## Features
 
-The core addon have the following features:
+The core addon includes:
 
-* __Action Bars__: remove interaction, blink and GCD animations on Action Bars.
-* __Buffs Frame__: auto-collapse Buffs frame.
-* __Cast Bars__: resize and reskin cast bar. (actually it hides the Blizzard default Cast Bar to use the WA included in [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt))
-* __Chat__: cleanup the chat, hiding unnecessary buttons and improving scrolling.
-* __CVars__: setup CVars for PanzaUI.
-* __Micro Menu__: hide Micromenu.
-* __Minimap__: hide unnecessary elements and resize text.
-* __Player Frame__: add power bar, casting bar and hide combat animation.
-* __QOL Features__: setup various Quality of Life features (hide Talking Head, hide UI while taxi, etc.).
-* __Quest Tracker__: resize quest tracker.
-* __Raid & Party__: resize and color Role icons.
-* __Target Frame__: hide background and remove buffs/debuffs on target.
-* __Various Frames__: hide other frames (Pet, Totems. etc.), reskin Tooltips and Nameplate's healthbars, etc.
+* __Action Bars__: remove interaction, blink and GCD animations; hide the main action bar and other keybind bars.
+* __Buffs Frame__: automatically collapse the Buffs frame.
+* __Cast Bars__: resize and reskin the cast bar. It hides the Blizzard default cast bar and uses the WeakAura included in [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)).
+* __CVars__: configure recommended CVars for PanzaUI.
+* __Minimap__: hide unnecessary elements and resize the minimap text.
+* __Nameplates__: add health percentage and elite/rare icons on Plater nameplates.
+* __Player Frame__: add portrait, power bar, casting bar and disable combat animation.
+* __QOL Features__: various quality-of-life tweaks (hide Talking Head, hide MicroMenu, etc.).
+* __Quest Tracker__: resize the quest tracker for better readability.
+* __Target Frame__: simplify target frame (hide background and remove buffs/debuffs display).
+* __Tooltips__: reskin tooltip textures for a consistent look.
 
 ## My UI
 
-My UI is based on these mandatory components:
+PanzaUI uses the following required components:
 
-* __Cell__: to replace the standard Blizzard Raid Frames.
-* __LeatrixMaps/LeatrixPlus__: to add many cool features to various parts of the UI and to the default maps.
-* __Masque__: to skin icons and apply a consistent experience across the entire UI.
-* __MouseOverActionSettings__: to automatically hide/show action bars.
-* __PanzaUI__: the main addon with features that I have personally developed to improve my gameplay.
-* __Plater__: to modify the enemy and friendly Nameplates.
-* __Shadowed Unit Frames__: to changing Player, Target, Bosses, Focus, Arenas and Target of Target unit frames.
-* __SharedMedia__: to change texture and fonts for various UI elements.
-* __Weak Auras__: to apply ton of utilities and features to the UI. There are also WA for various classes.
+* __Cell__: replaces the default Blizzard raid frames.
+* __LeatrixMaps / LeatrixPlus__: adds UX improvements and map enhancements.
+* __Masque__: skins action buttons and provides consistent icon styling.
+* __MouseOverActionSettings__: handles auto-hide/show of action bars.
+* __Plater__: customizes enemy and friendly nameplates.
+* __Shadowed Unit Frames__: replaces player, target, boss, focus, arena and target-of-target frames.
+* __SharedMedia__: provides textures and fonts used across the UI.
+* __WeakAuras__: powers many utilities and class-specific displays.
 
-There are also other optional components:
+Optional addons I use / recommend:
 
-* __Advanced Interface Options__: to have access to CVars in-game.
-* __BigWigs/LittleWigs__: to keep track with boss encounters in Raids and Dungeons.
-* __Destroy Totems__: to dismiss Totems and Pets with the press of a macro.
-* __Details!__: to keep track of damages and healings in Raids and Dungeons.
-* __DialogueUI__: to skin the quest interface with a better look.
-* __idTip__: to provide additional information in tooltips.
-* __LS:Toasts__: to skin the toast notification frame with a better look.
-* __Simple Item Level__: to get more infos on items in bags and in equipment manager.
+* __Advanced Interface Options__: in-game access to CVars.
+* __Basic Chat Mod__: chat channel configuration.
+* __BigWigs / LittleWigs__: boss encounter timers for raids and dungeons.
+* __Destroy Totems__: macro to dismiss totems/pets.
+* __Details!__: detailed damage/healing meter.
+* __DialogueUI__: skins the quest/dialogue UI.
+* __FrameColor__: applies a dark skin to UI frames.
+* __idTip__: adds extra item info to tooltips.
+* __LS:Glass__: skins the chat frame.
+* __LS:Toasts__: skins toast notifications.
+* __Plumber__: a collection of QoL features.
+* __Simple Item Level__: shows item level in bags and equipment manager.
+* __WaypointUI__: enhanced waypoint info.
 
-If you want to replicate my UI you can follow the steps [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
+To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
-If your class is not covered by my WAs, you can configure your personal one using [this](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
+If your class/spec isn’t covered by the included WeakAuras, you can create your own using this guide: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
 
 ## Screenshots
 
