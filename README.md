@@ -14,11 +14,12 @@
 
 </div>
 
-Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple, non intrusive and similar to the default UI. It works with any class but if you want to use my class Weakauras, at the moment the following one are supported:
+Hey there fellow WoW players! This is my UI called "PanzaUI" built to be simple, non intrusive and similar to the default UI. It works with any class but if you want to use my class Weakauras, at the moment the following one are supported because are the ones that I actively play:
 
-* __Druid__: Balance
-* __Hunter__: Beast Mastery, Marksmanship
-* __Mage__: Frost
+* __Death Knight__: Frost
+* __Druid__: Balance, Restoration
+* __Hunter__: Beast Mastery
+* __Mage__: Fire, Frost
 * __Monk__: Brewmaster, Mistweaver, Windwalker
 * __Paladin__: Protection, Retribution
 * __Priest__: Discipline, Holy
@@ -29,7 +30,7 @@ If you have problems, feel free to open an issue [here](https://github.com/Mario
 
 ## Features
 
-The core addon adds the following features:
+The core addon have the following features:
 
 * __Action Bars__: remove interaction, blink and GCD animations on Action Bars.
 * __Buffs Frame__: auto-collapse Buffs frame.
@@ -38,9 +39,9 @@ The core addon adds the following features:
 * __CVars__: setup CVars for PanzaUI.
 * __Micro Menu__: hide Micromenu.
 * __Minimap__: hide unnecessary elements and resize text.
-* __Player Frame__: hide power bars and combat animation and to color class frames.
+* __Player Frame__: add power bar, casting bar and hide combat animation.
 * __QOL Features__: setup various Quality of Life features (hide Talking Head, hide UI while taxi, etc.).
-* __Quest Tracker__: resize quest text.
+* __Quest Tracker__: resize quest tracker.
 * __Raid & Party__: resize and color Role icons.
 * __Target Frame__: hide background and remove buffs/debuffs on target.
 * __Various Frames__: hide other frames (Pet, Totems. etc.), reskin Tooltips and Nameplate's healthbars, etc.
