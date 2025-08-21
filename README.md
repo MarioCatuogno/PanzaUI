@@ -62,6 +62,7 @@ PanzaUI uses the following required components:
 Optional addons I use / recommend:
 
 * __Advanced Interface Options__: in-game access to CVars.
+* __Baganator__: enhanced bags management.
 * __Basic Chat Mod__: chat channel configuration.
 * __BigWigs / LittleWigs__: boss encounter timers for raids and dungeons.
 * __Destroy Totems__: macro to dismiss totems/pets.
