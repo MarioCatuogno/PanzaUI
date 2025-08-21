@@ -2,6 +2,7 @@
 
 ### 🛠️ Addon
 
+* Core - Added a new Power Bar frame
 * Core - Added new CVars for Camera
 * Core - Added new CVars for Graphics
 * Core - Changed icons for various WAs
