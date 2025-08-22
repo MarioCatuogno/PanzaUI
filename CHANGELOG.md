@@ -29,6 +29,7 @@
 
 ### 👤 Profiles
 
+* Baganator - Added a new Baganator profile
 * BigWigs - Adjusted Messages frame position
 * BlizzUI - Adjusted Arena frame position
 * BlizzUI - Adjusted Quest frame position
