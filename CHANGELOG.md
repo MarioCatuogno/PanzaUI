@@ -2,9 +2,9 @@
 
 ### 🛠️ Addon
 
-* Core - Added a new Power Bar frame
-* Core - Added new CVars for Camera
-* Core - Added new CVars for Graphics
+* Core - Added a new Power Bar frame for player
+* Core - Added new CVars for Camera settings
+* Core - Added new CVars for Graphics settings
 * Core - Changed icons for various WAs
 * Core - Cleaned the code
 * Core - Fixed a problem with alpha level of some scripts
