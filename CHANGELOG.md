@@ -11,6 +11,7 @@
 * Core - Fixed a problem with GCD blink showing on every cooldown on action bars
 * Core - Fixed a problem with Player and Target frame not showing [[#75]](https://github.com/MarioCatuogno/PanzaUI/issues/75)
 * Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Core - Rewrite the code for the Quest Tracker WA
 * Core - Updated Raid Ability Timeline to latest version of WA
 * Removed core.lua and PanzaUI.toc
 * Removed Saved Variables folder
