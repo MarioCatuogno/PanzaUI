@@ -61,6 +61,7 @@
 * Monk - Added Slicing Winds to Buffs tracker
 * Monk - Added The Emperor's Capacitor to Buffs tracker
 * Monk - Adjusted Cooldowns tracker position
+* Monk - Fixed a problem with the Teaching of the Monastery buff
 * Monk - Removed unnecessary Buffs
 * Monk - Renamed all auras for better clarity
 * Paladin - Adjusted Cooldowns tracker position
