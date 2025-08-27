@@ -28,6 +28,7 @@
 * Utilities - Fixed an issue with Mana group tracker
 * Utilities - Moved some auras to Core WA
 * Utilities - Updated Interrupt Tracker to latest version of WA
+* Utilities - Removed unused alerts
 
 ### 👤 Profiles
 
