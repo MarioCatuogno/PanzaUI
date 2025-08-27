@@ -43,6 +43,7 @@
 * Details - Fixed windows position
 * Details - Removed second frame and added some automation for spec/role
 * Kui - Added a new Kui profile
+* MouseoverActionSettings - Fixed an event trigger for some action bars
 * Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * Plater - Adjusted the health bar and cast bar width and height
 * Plater - Updates scripts from Jundies
