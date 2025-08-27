@@ -1,34 +1,37 @@
 ## 1.0-RELEASE
 
-### 🛠️ Addon
+### 🛠️ Core
 
-* Core - Added a new Power Bar frame for player
-* Core - Added new CVars for Camera settings
-* Core - Added new CVars for Graphics settings
-* Core - Changed icons for various WAs
-* Core - Cleaned the code
-* Core - Fixed a problem with alpha level of some scripts
-* Core - Fixed a problem with GCD blink showing on every cooldown on action bars
-* Core - Fixed a problem with Player and Target frame not showing [[#75]](https://github.com/MarioCatuogno/PanzaUI/issues/75)
-* Core - Fixed frame strata level of Nameplates
-* Core - Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
-* Core - Rewrite the code for the Quest Tracker WA
-* Core - Updated Raid Ability Timeline to latest version of WA
+* Added a new Power Bar frame for player
+* Added new CVars for Camera settings
+* Added new CVars for Graphics settings
+* Changed icons for various WAs
+* Cleaned the code
+* Fixed a problem with alpha level of some scripts
+* Fixed a problem with GCD blink showing on every cooldown on action bars
+* Fixed a problem with Player and Target frame not showing [[#75]](https://github.com/MarioCatuogno/PanzaUI/issues/75)
+* Fixed frame strata level of Nameplates
+* Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
 * Removed core.lua and PanzaUI.toc
 * Removed Saved Variables folder
-* Utilities - Added an alert for banquets or feasts
-* Utilities - Added an alert for flaks and potion cauldrons
-* Utilities - Added an alert for Insanity bar in Visions of N'Zoth Revisited
-* Utilities - Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
-* Utilities - Added a mouse cursor glow animation
-* Utilities - Adjusted the Movement group aura position
-* Utilities - Changed the Crosshair to be always active during Skyriding
-* Utilities - Changed the texture for Skyriding crosshair race target
-* Utilities - Fixed an issue with Low Supplies tracker
-* Utilities - Fixed an issue with Mana group tracker
-* Utilities - Moved some auras to Core WA
-* Utilities - Updated Interrupt Tracker to latest version of WA
-* Utilities - Removed unused alerts
+* Rewrite the code for the Quest Tracker WA
+* Updated Raid Ability Timeline to latest version of WA
+
+### ⚙️ Utilities
+
+* Added a mouse cursor glow animation
+* Added an alert for banquets or feasts
+* Added an alert for flaks and potion cauldrons
+* Added an alert for Insanity bar in Visions of N'Zoth Revisited
+* Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
+* Adjusted the Movement group aura position
+* Changed the Crosshair to be always active during Skyriding
+* Changed the texture for Skyriding crosshair race target
+* Fixed an issue with Low Supplies tracker
+* Fixed an issue with Mana group tracker
+* Moved some auras to Core WA
+* Removed unused alerts
+* Updated Interrupt Tracker to latest version of WA
 
 ### 👤 Profiles
 
@@ -44,8 +47,8 @@
 * Details - Removed second frame and added some automation for spec/role
 * Kui - Added a new Kui profile
 * MouseoverActionSettings - Fixed an event trigger for some action bars
-* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * Plater - Adjusted the health bar and cast bar width and height
+* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * Plater - Updates scripts from Jundies
 * SUF - Adjusted position of various frames
 * SUF - Configured Player frame for Warlock class
