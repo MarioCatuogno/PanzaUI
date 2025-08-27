@@ -73,6 +73,7 @@
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
 * Rogue - Adjusted Cooldowns tracker position
 * Shaman - Adjusted Cooldowns tracker position
+* Warlock - Added a new WA for Warlock class (WIP)
 * Warrior - Adjusted Cooldowns tracker position
 
 ### 📏 Various
