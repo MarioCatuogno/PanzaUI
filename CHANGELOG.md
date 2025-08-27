@@ -71,6 +71,7 @@
 * Details - Fixed fonts size
 * Details - Fixed windows position
 * Details - Removed second frame and added some automation for spec/role
+* FrameColor - Added a new Frame Color profile
 * Kui - Added a new Kui profile
 * MouseoverActionSettings - Fixed an event trigger for some action bars
 * Plater - Adjusted the health bar and cast bar width and height
