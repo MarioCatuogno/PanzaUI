@@ -42,6 +42,7 @@
 * Details - Fixed windows position
 * Details - Removed second frame and added some automation for spec/role
 * Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
+* Plater - Adjusted the health bar and cast bar width and height
 * Plater - Updates scripts from Jundies
 * SUF - Adjusted position of various frames
 * SUF - Configured Player frame for Warlock class
