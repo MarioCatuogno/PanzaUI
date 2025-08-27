@@ -33,26 +33,6 @@
 * Removed unused alerts
 * Updated Interrupt Tracker to latest version of WA
 
-### 👤 Profiles
-
-* Baganator - Added a new Baganator profile
-* BigWigs - Adjusted Messages frame position
-* BlizzUI - Adjusted Arena frame position
-* BlizzUI - Adjusted Quest frame position
-* BlizzUI - Adjusted Tooltip frame position
-* Cell - Adjusted position of raid and party frames
-* Cell - Fixed frame visibility in Solo mode
-* Details - Fixed fonts size
-* Details - Fixed windows position
-* Details - Removed second frame and added some automation for spec/role
-* Kui - Added a new Kui profile
-* MouseoverActionSettings - Fixed an event trigger for some action bars
-* Plater - Adjusted the health bar and cast bar width and height
-* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
-* Plater - Updates scripts from Jundies
-* SUF - Adjusted position of various frames
-* SUF - Configured Player frame for Warlock class
-
 ### 🧮 Class Weak Auras
 
 * All Classes - Moved the Buff frame to better integrate the new Power Bar
@@ -78,6 +58,26 @@
 * Shaman - Adjusted Cooldowns tracker position
 * Warlock - Added a new WA for Warlock class (WIP)
 * Warrior - Adjusted Cooldowns tracker position
+
+### 👤 Profiles
+
+* Baganator - Added a new Baganator profile
+* BigWigs - Adjusted Messages frame position
+* BlizzUI - Adjusted Arena frame position
+* BlizzUI - Adjusted Quest frame position
+* BlizzUI - Adjusted Tooltip frame position
+* Cell - Adjusted position of raid and party frames
+* Cell - Fixed frame visibility in Solo mode
+* Details - Fixed fonts size
+* Details - Fixed windows position
+* Details - Removed second frame and added some automation for spec/role
+* Kui - Added a new Kui profile
+* MouseoverActionSettings - Fixed an event trigger for some action bars
+* Plater - Adjusted the health bar and cast bar width and height
+* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
+* Plater - Updates scripts from Jundies
+* SUF - Adjusted position of various frames
+* SUF - Configured Player frame for Warlock class
 
 ### 📏 Various
 
