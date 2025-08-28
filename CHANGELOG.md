@@ -44,6 +44,7 @@
 * Hunter - Adjusted Cooldowns tracker position
 * Mage - Adjusted Cooldowns tracker position
 * Mage - Renamed all auras for better clarity
+* Monk - Added Heart of the Jade Serpent to Buffs tracker
 * Monk - Added Jade Empowerment to Buffs tracker
 * Monk - Added Slicing Winds to Buffs tracker
 * Monk - Added The Emperor's Capacitor to Buffs tracker
