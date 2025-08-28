@@ -66,6 +66,7 @@
 * BlizzUI - Adjusted Arena frame position
 * BlizzUI - Adjusted Quest frame position
 * BlizzUI - Adjusted Tooltip frame position
+* Cell - Added a new Healer profile for raid frames
 * Cell - Adjusted position of raid and party frames
 * Cell - Fixed frame visibility in Solo mode
 * Details - Fixed fonts size
