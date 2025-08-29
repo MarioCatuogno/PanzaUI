@@ -73,6 +73,7 @@
 * Cell - Fixed frame visibility in Solo mode
 * Details - Fixed fonts size
 * Details - Fixed windows position
+* Details - Removed Scroll frame
 * Details - Removed second frame and added some automation for spec/role
 * FrameColor - Added a new Frame Color profile
 * Kui - Added a new Kui profile
