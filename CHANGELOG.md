@@ -52,6 +52,7 @@
 * Monk - Fixed a problem with the Teaching of the Monastery buff
 * Monk - Removed unnecessary Buffs
 * Monk - Renamed all auras for better clarity
+* Monk - Sorted the buffs in Buffs tracker
 * Paladin - Adjusted Cooldowns tracker position
 * Priest - Adjusted Cooldowns tracker position
 * Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
