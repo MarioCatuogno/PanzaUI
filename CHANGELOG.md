@@ -81,6 +81,7 @@
 * MouseoverActionSettings - Added the automation to hide Quest Tracker during combat in raid
 * MouseoverActionSettings - Fixed an event trigger for some action bars
 * Plater - Adjusted the health bar and cast bar width and height
+* Plater - Fixed CVars settings
 * Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
 * Plater - Updates scripts from Jundies
 * SUF - Adjusted position of various frames
