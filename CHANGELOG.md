@@ -12,6 +12,7 @@
 * Fixed a problem with Player and Target frame not showing [[#75]](https://github.com/MarioCatuogno/PanzaUI/issues/75)
 * Fixed frame strata level of Nameplates
 * Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Reordered CVars
 * Removed core.lua and PanzaUI.toc
 * Removed Saved Variables folder
 * Rewrite the code for the Quest Tracker WA
