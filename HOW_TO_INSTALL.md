@@ -18,14 +18,17 @@
 
 ### Fully supported Specs
 
-* __Druid__: Balance
-* __Hunter__: Beast Mastery, Marksmanship
-* __Mage__: Frost
+* __Death Knight__: Frost
+* __Druid__: Balance, Restoration
+* __Hunter__: Beast Mastery
+* __Mage__: Fire, Frost
 * __Monk__: Brewmaster, Mistweaver, Windwalker
 * __Paladin__: Protection, Retribution
 * __Priest__: Discipline, Holy
 * __Shaman__: Elemental, Restoration
 * __Warrior__: Protection
+
+If your class/spec isn’t covered by the included WeakAuras, you can create your own using this guide: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
 
 ### Keybinds 
 
@@ -52,6 +55,10 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
+* [Core](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Core.txt)
+* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
+
+* [Class Template](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-ClassTemplate.txt)
 * [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Druid.txt)
 * [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Hunter.txt)
 * [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Mage.txt)
@@ -59,5 +66,4 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 * [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Paladin.txt)
 * [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Priest.txt)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Shaman.txt)
-* [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
 * [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Warrior.txt)
