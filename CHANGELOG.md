@@ -1,3 +1,9 @@
+## 1.1-RELEASE
+
+### 📏 Various
+
+* Updated documentation to the latest version of UI
+
 ## 1.0-RELEASE
 
 ### 🛠️ Core
