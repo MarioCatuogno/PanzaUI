@@ -2,8 +2,7 @@
 
 1. Downaload and install the latest version of PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
 2. Download the mandatory addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#my-ui).
-3. Unzip the file and copy the PanzaUI and SharedMedia_MyMedia folders into WOW's Interface/Addons folder.
-4. Copy the Fonts folder into WOW's folder.
+3. Unzip the file and copy the Fonts folder into WOW's folder.
 4. Run World of Warcraft and import:
   - BigWigs profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BigWigs.txt)
   - BlizzardUI profile from [Github](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
@@ -55,7 +54,7 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 
 ### WeakAuras
 
-* [Core](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Core.txt)
+* [Core](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Core.txt) (⚠️ __Mandatory!!__ ⚠️)
 * [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)
 
 * [Class Template](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-ClassTemplate.txt)
