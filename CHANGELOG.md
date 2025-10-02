@@ -4,6 +4,10 @@
 
 * Updated documentation to the latest version of UI
 
+### ⚙️ Utilities
+
+* Adjusted quantities for the "Low Supplies" alert
+
 ## 1.0-RELEASE
 
 ### 🛠️ Core
