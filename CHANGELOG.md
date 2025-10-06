@@ -8,6 +8,10 @@
 
 * Adjusted quantities for the "Low Supplies" alert
 
+### 👤 Profiles
+
+* Created a new Better Blizzard Plates profile to try before Midnight [[#82]](https://github.com/MarioCatuogno/PanzaUI/issues/82)
+
 ## 1.0-RELEASE
 
 ### 🛠️ Core
