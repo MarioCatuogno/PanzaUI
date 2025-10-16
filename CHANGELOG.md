@@ -1,5 +1,7 @@
 ## 1.1-RELEASE
 
+⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
+
 ### 📏 Various
 
 * Updated documentation to the latest version of UI
