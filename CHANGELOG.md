@@ -4,6 +4,7 @@
 
 ### 📏 Various
 
+* Removed Baganator profile
 * Updated documentation to the latest version of UI
 
 ### ⚙️ Utilities
