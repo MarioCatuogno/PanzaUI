@@ -50,31 +50,18 @@ The core addon includes:
 
 PanzaUI uses the following required components:
 
-* __Cell__: replaces the default Blizzard raid frames.
-* __LeatrixMaps / LeatrixPlus__: adds UX improvements and map enhancements.
-* __Masque__: skins action buttons and provides consistent icon styling.
-* __MouseOverActionSettings__: handles auto-hide/show of action bars.
-* __Plater__: customizes enemy and friendly nameplates.
-* __Shadowed Unit Frames__: replaces player, target, boss, focus, arena and target-of-target frames.
-* __SharedMedia__: provides textures and fonts used across the UI.
-* __WeakAuras__: powers many utilities and class-specific displays.
-
-Optional addons I use / recommend:
-
 * __Advanced Interface Options__: in-game access to CVars.
-* __Baganator__: enhanced bags management.
-* __Basic Chat Mod__: chat channel configuration.
-* __BigWigs / LittleWigs__: boss encounter timers for raids and dungeons.
-* __Destroy Totems__: macro to dismiss totems/pets.
-* __Details!__: detailed damage/healing meter.
+* __Better Blizzard Frames__: replaces player, target, focus, arena and target-of-target frames.
+* __Chattynator__: skins the chat frame and enable chat channel configuration.
 * __DialogueUI__: skins the quest/dialogue UI.
-* __FrameColor__: applies a dark skin to UI frames.
-* __idTip__: adds extra item info to tooltips.
-* __LS:Glass__: skins the chat frame.
+* __LeatrixMaps / LeatrixPlus__: adds UX improvements and map enhancements.
 * __LS:Toasts__: skins toast notifications.
+* __Masque__: skins action buttons and provides consistent icon styling.
+* __Platynator__: customizes enemy and friendly nameplates.
 * __Plumber__: a collection of QoL features.
-* __Simple Item Level__: shows item level in bags and equipment manager.
+* __SharedMedia__: provides textures and fonts used across the UI.
 * __WaypointUI__: enhanced waypoint info.
+* __Wildu's Tools__: tidies and enhances the UI and also automates some gameplay tasks. 
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
