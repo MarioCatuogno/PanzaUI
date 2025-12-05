@@ -2,6 +2,10 @@
 
 ⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
 
+### 👤 Profiles
+
+* Added a new BetterBlizzardFrames profile (goodbye SUF :( )
+
 ### 📏 Various
 
 * Removed Baganator profile
