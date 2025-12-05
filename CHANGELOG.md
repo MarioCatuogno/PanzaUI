@@ -13,6 +13,7 @@
 
 ### 🧮 Class Weak Auras
 
+* Removed all class WA
 * Removed Class Template WA due to WA not being supported anymore in Midnight
 
 ### 👤 Profiles
