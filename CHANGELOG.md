@@ -24,6 +24,7 @@
 * Removed Baganator profile
 * Removed Big Wigs profile
 * Removed Details profile
+* Removed Frame Color profile
 * Removed SUF profile
 
 ### 📏 Various
