@@ -98,31 +98,26 @@ end
 --------------------------------------------------------------------------------
 
 local function configTooltips()
-    -- Set the status bar texture once during initialization.
+    -- Change the status bar texture once during initialization.
     GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Smooth")
 
-    -- Hook OnTooltipSetUnit to change color only when a unit is set on the tooltip.
-    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
-        local unitID = select(1, self:GetUnit())
-        if unitID and UnitPlayerControlled(unitID) then
-            local _, englishClass = UnitClass(unitID)
+    GameTooltip:HookScript("OnUpdate", function(self)
+        -- Check if the unit currently being moused over is a player.
+        if UnitIsPlayer("mouseover") then
+            local _, englishClass = UnitClass("mouseover")
             if englishClass then
                 local r, g, b = GetClassColor(englishClass)
                 GameTooltipStatusBarTexture:SetVertexColor(r, g, b)
             else
-                -- Reset to a default color (e.g., white) if class not found
-                GameTooltipStatusBarTexture:SetVertexColor(1.0, 1.0, 1.0)
+                -- Fallback to white if class cannot be determined for a player unit.
+                GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
             end
         else
-            -- Reset to a default color for non-player-controlled units or if no unit is present
-            GameTooltipStatusBarTexture:SetVertexColor(1.0, 1.0, 1.0)
+            -- If it's not a player, or no unit is moused over, reset to a default color.
+            GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
         end
     end)
 
-    -- Hook OnTooltipCleared to reset the color when the tooltip is no longer active or cleared.
-    GameTooltip:HookScript("OnTooltipCleared", function(self)
-        GameTooltipStatusBarTexture:SetVertexColor(1.0, 1.0, 1.0) -- Reset to default color
-    end)
 end
 
 --------------------------------------------------------------------------------
