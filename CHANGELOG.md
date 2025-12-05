@@ -5,7 +5,7 @@
 ### 🛠️ Core
 
 * Added auto-collapse functionality to Buffs frame
-* Added a Cvar section
+* Added a Cvar section with useful Cvars
 * Adjusted Quest Tracker frame size
 * Configured default minimap
 * Reskinned the health bar texture of the Blizzard default Tooltip
