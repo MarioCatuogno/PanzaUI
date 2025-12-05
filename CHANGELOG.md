@@ -10,11 +10,6 @@
 * Configured default minimap
 * Reskinned the health bar texture of the Blizzard default Tooltip
 
-### 🧮 Class Weak Auras
-
-* Removed all class WA
-* Removed Class Template WA due to WA not being supported anymore in Midnight
-
 ### 👤 Profiles
 
 * Added a new BetterBlizzardFrames profile (goodbye SUF :( )
@@ -29,6 +24,8 @@
 
 ### 📏 Various
 
+* Removed all class WA
+* Removed Class Template WA due to WA not being supported anymore in Midnight
 * Removed unnecessary documentation for Midnight
 * Updated documentation to the latest version of UI
 
