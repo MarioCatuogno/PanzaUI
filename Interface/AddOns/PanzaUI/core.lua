@@ -51,6 +51,20 @@ local function SetAlphaForFrame(frame, alpha)
 addonTable.core = {}
 
 --------------------------------------------------------------------------------
+-- CONFIGURE BUFFS AND DEBUFFS
+--------------------------------------------------------------------------------
+
+local function configBuffsDebuffs()
+
+  -- Auto collapse Buffs frame.
+  if not (BuffFrame and BuffFrame.CollapseAndExpandButton) then return end
+  BuffFrame.CollapseAndExpandButton:SetChecked(false)
+  BuffFrame.CollapseAndExpandButton:UpdateOrientation()
+  BuffFrame:SetBuffsExpandedState()
+
+end
+
+--------------------------------------------------------------------------------
 -- CONFIGURE MINIMAP
 --------------------------------------------------------------------------------
 
@@ -117,6 +131,7 @@ end
 
 -- Initialize functions on login
 local function InitializeAddon()
+    configBuffsDebuffs()
     configMinimap()
     configQuestTracker()
     configTooltips()
