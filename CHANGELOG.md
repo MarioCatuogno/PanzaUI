@@ -5,6 +5,7 @@
 ### 👤 Profiles
 
 * Added a new BetterBlizzardFrames profile (goodbye SUF :( )
+* Added a new Cooldown Manager Tweaks profile
 * Added a new Platynator profile
 * BlizzUI - Updated the entire UI for Midnight
 
