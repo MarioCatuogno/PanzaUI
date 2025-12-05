@@ -126,15 +126,34 @@ local function configTooltips()
 end
 
 --------------------------------------------------------------------------------
+-- SETUP CVARS
+--------------------------------------------------------------------------------
+
+local function setupCVars()
+
+  -- Create new commands
+  SlashCmdList["READYCHECK"] = function() DoReadyCheck() end
+  SLASH_READYCHECK1 = '/rc'
+  SlashCmdList["RELOADUI"] = function() ReloadUI() end
+  SLASH_RELOADUI1 = '/rl'
+  SlashCmdList["CHECKROLE"] = function() InitiateRolePoll() end
+  SLASH_CHECKROLE1 = '/cr'
+
+end
+
+--------------------------------------------------------------------------------
 -- INITIALIZATION FUNCTION
 --------------------------------------------------------------------------------
 
 -- Initialize functions on login
 local function InitializeAddon()
+
     configBuffsDebuffs()
     configMinimap()
     configQuestTracker()
     configTooltips()
+    setupCVars()
+
 end
 
 -- Create a local frame to manage addon events.

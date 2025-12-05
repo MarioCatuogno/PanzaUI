@@ -4,10 +4,11 @@
 
 ### 🛠️ Core
 
-* Add auto-collapse functionality to Buffs frame
-* Adjust Quest Tracker frame size
-* Configure default minimap
-* Reskin the health bar texture of the Blizzard default Tooltip
+* Added auto-collapse functionality to Buffs frame
+* Added a Cvar section
+* Adjusted Quest Tracker frame size
+* Configured default minimap
+* Reskinned the health bar texture of the Blizzard default Tooltip
 
 ### 🧮 Class Weak Auras
 
