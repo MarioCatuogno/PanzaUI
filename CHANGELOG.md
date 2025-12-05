@@ -2,10 +2,9 @@
 
 ⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
 
-### 📏 Various
+### 🛠️ Core
 
-* Removed unnecessary documentation for Midnight
-* Updated documentation to the latest version of UI
+* Reskin the health bar texture of the Blizzard default Tooltip
 
 ### ⚙️ Utilities
 
@@ -26,6 +25,11 @@
 * Removed Big Wigs profile
 * Removed Details profile
 * Removed SUF profile
+
+### 📏 Various
+
+* Removed unnecessary documentation for Midnight
+* Updated documentation to the latest version of UI
 
 ## 1.0-RELEASE
 
