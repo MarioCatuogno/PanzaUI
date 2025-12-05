@@ -2,6 +2,19 @@
 
 ⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
 
+### 📏 Various
+
+* Removed unnecessary documentation for Midnight
+* Updated documentation to the latest version of UI
+
+### ⚙️ Utilities
+
+* Adjusted quantities for the "Low Supplies" alert
+
+### 🧮 Class Weak Auras
+
+* Removed Class Template WA due to WA not being supported anymore in Midnight
+
 ### 👤 Profiles
 
 * Added a new BetterBlizzardFrames profile (goodbye SUF :( )
@@ -12,19 +25,6 @@
 * Removed Big Wigs profile
 * Removed Details profile
 * Removed SUF profile
-
-### 📏 Various
-
-* Removed unnecessary documentation for Midnight
-* Updated documentation to the latest version of UI
-
-### ⚙️ Utilities
-
-* Adjusted quantities for the "Low Supplies" alert
-
-### 👤 Profiles
-
-* Created a new Better Blizzard Plates profile to try before Midnight [[#82]](https://github.com/MarioCatuogno/PanzaUI/issues/82)
 
 ## 1.0-RELEASE
 
