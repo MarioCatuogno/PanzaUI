@@ -30,11 +30,43 @@ local function GetClassColor(class)
     if color then
         return color[1], color[2], color[3]
     end
-    -- Default to white if class is not found
+    -- Default to white if class is not found.
     return 1.0, 1.0, 1.0
 end
 
+-- Helper function to set frame scale.
+local function SetScaleForFrame(frame, scale)
+  if frame then
+    frame:SetScale(scale)
+  end
+end
+
+-- Helper function to set frame alpha.
+local function SetAlphaForFrame(frame, alpha)
+    if frame then
+      frame:SetAlpha(alpha)
+    end
+  end
+
 addonTable.core = {}
+
+--------------------------------------------------------------------------------
+-- CONFIGURE MINIMAP
+--------------------------------------------------------------------------------
+
+local function configMinimap()
+
+  -- Set scale for Minimap and its cluster.
+  SetScaleForFrame(Minimap, 1.0)
+  SetScaleForFrame(MinimapCluster, 1.0)
+  -- Set alpha for specific minimap elements to hide them.
+  SetAlphaForFrame(MinimapCluster.BorderTop, 0)
+  SetAlphaForFrame(AddonCompartmentFrame, 0)
+
+  -- Set Garrison button scale.
+  SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
+
+end
 
 --------------------------------------------------------------------------------
 -- CONFIGURE TOOLTIPS
@@ -74,6 +106,7 @@ end
 
 -- Initialize functions on login
 local function InitializeAddon()
+    configMinimap()
     configTooltips()
 end
 

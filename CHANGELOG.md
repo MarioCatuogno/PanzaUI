@@ -4,11 +4,8 @@
 
 ### 🛠️ Core
 
+* Configure default minimap
 * Reskin the health bar texture of the Blizzard default Tooltip
-
-### ⚙️ Utilities
-
-* Adjusted quantities for the "Low Supplies" alert
 
 ### 🧮 Class Weak Auras
 
