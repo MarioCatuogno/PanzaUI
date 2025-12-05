@@ -8,10 +8,14 @@
 * Added a new Cooldown Manager Tweaks profile
 * Added a new Platynator profile
 * BlizzUI - Updated the entire UI for Midnight
+* Removed Baganator profile
+* Removed Big Wigs profile
+* Removed Details profile
+* Removed SUF profile
 
 ### 📏 Various
 
-* Removed Baganator profile
+* Removed unnecessary documentation for Midnight
 * Updated documentation to the latest version of UI
 
 ### ⚙️ Utilities
