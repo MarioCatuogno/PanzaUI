@@ -69,6 +69,17 @@ local function configMinimap()
 end
 
 --------------------------------------------------------------------------------
+-- CONFIGURE QUEST TRACKER
+--------------------------------------------------------------------------------
+
+local function configQuestTracker()
+
+  -- Set scale for Objective Tracker.
+  SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
+
+end
+
+--------------------------------------------------------------------------------
 -- CONFIGURE TOOLTIPS
 --------------------------------------------------------------------------------
 
@@ -107,6 +118,7 @@ end
 -- Initialize functions on login
 local function InitializeAddon()
     configMinimap()
+    configQuestTracker()
     configTooltips()
 end
 

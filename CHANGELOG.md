@@ -4,6 +4,7 @@
 
 ### 🛠️ Core
 
+* Adjust Quest Tracker frame size
 * Configure default minimap
 * Reskin the health bar texture of the Blizzard default Tooltip
 
