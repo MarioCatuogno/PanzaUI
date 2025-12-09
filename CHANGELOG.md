@@ -18,6 +18,7 @@
 * BlizzUI - Updated the entire UI for Midnight
 * Removed Baganator profile
 * Removed Big Wigs profile
+* Removed Cell profile
 * Removed Details profile
 * Removed Frame Color profile
 * Removed SUF profile
