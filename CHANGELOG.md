@@ -21,6 +21,7 @@
 * Removed Cell profile
 * Removed Details profile
 * Removed Frame Color profile
+* Removed Plater profile
 * Removed SUF profile
 
 ### 📏 Various
