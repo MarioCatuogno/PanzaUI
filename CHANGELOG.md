@@ -23,6 +23,7 @@
 * Removed Cell profile
 * Removed Details profile
 * Removed Frame Color profile
+* Removed Mouseover Action Settings profile
 * Removed Plater profile
 * Removed SUF profile
 
