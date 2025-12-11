@@ -18,6 +18,7 @@
 * Added a new Sensei profile for secondary power bars
 * BlizzUI - Updated the entire UI for Midnight
 * Removed Baganator profile
+* Removed Better Blizzard Plates profile
 * Removed Big Wigs profile
 * Removed Cell profile
 * Removed Details profile
