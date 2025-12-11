@@ -1,5 +1,7 @@
 ## 1.1-RELEASE
 
+This is a complete overhaul of PanzaUI, ready for Midnight!
+
 ⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
 
 ### 🛠️ Core
