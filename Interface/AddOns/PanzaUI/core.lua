@@ -83,6 +83,16 @@ local function configMinimap()
 end
 
 --------------------------------------------------------------------------------
+-- CONFIGURE PLAYER FRAME
+--------------------------------------------------------------------------------
+
+local function configPlayerFrame()
+
+  --SetAlphaForFrame(PlayerFrame, 0)
+
+end
+
+--------------------------------------------------------------------------------
 -- CONFIGURE QUEST TRACKER
 --------------------------------------------------------------------------------
 
@@ -99,7 +109,7 @@ end
 
 local function configTooltips()
     -- Change the status bar texture once during initialization.
-    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Smooth")
+    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
 
     GameTooltip:HookScript("OnUpdate", function(self)
         -- Check if the unit currently being moused over is a player.
@@ -222,6 +232,7 @@ local function InitializeAddon()
 
     configBuffsDebuffs()
     configMinimap()
+    configPlayerFrame()
     configQuestTracker()
     configTooltips()
     setupCVars()
