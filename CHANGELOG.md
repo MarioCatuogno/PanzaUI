@@ -28,6 +28,7 @@
 
 ### 📏 Various
 
+* Added WTF variables for several addons
 * Removed all class WA
 * Removed Class Template WA due to WA not being supported anymore in Midnight
 * Removed Core and Utilities WA
