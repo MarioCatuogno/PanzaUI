@@ -1,3 +1,42 @@
+## 1.1-RELEASE
+
+This is a complete overhaul of PanzaUI, ready for Midnight!
+
+⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
+
+### 🛠️ Core
+
+* Added auto-collapse functionality to Buffs frame
+* Added a Cvar section with useful Cvars
+* Adjusted Quest Tracker frame size
+* Configured default minimap
+* Reskinned the health bar texture of the Blizzard default Tooltip
+
+### 👤 Profiles
+
+* Added a new BetterBlizzardFrames profile (goodbye SUF :( )
+* Added a new Platynator profile
+* Added a new Sensei profile for secondary power bars
+* BlizzUI - Updated the entire UI for Midnight
+* Removed Baganator profile
+* Removed Better Blizzard Plates profile
+* Removed Big Wigs profile
+* Removed Cell profile
+* Removed Details profile
+* Removed Frame Color profile
+* Removed Mouseover Action Settings profile
+* Removed Plater profile
+* Removed SUF profile
+
+### 📏 Various
+
+* Added WTF variables for several addons
+* Removed all class WA
+* Removed Class Template WA due to WA not being supported anymore in Midnight
+* Removed Core and Utilities WA
+* Removed unnecessary documentation for Midnight
+* Updated documentation to the latest version of UI
+
 ## 1.0-RELEASE
 
 ### 🛠️ Core
