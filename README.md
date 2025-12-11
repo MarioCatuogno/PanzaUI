@@ -16,37 +16,11 @@
 
 Hey there, fellow WoW players!
 
-PanzaUI is a clean, minimally intrusive UI designed to feel and behave similarly to the default Blizzard interface. It works with any class, but class-specific WeakAuras are only included for the specs I actively play:
-
-* __Death Knight__: Frost
-* __Druid__: Balance, Restoration
-* __Hunter__: Beast Mastery
-* __Mage__: Fire, Frost
-* __Monk__: Brewmaster, Mistweaver, Windwalker
-* __Paladin__: Protection, Retribution
-* __Priest__: Discipline, Holy
-* __Shaman__: Elemental, Restoration
-* __Warrior__: Protection
+PanzaUI is a clean, minimally intrusive UI designed to feel and behave similarly to the default Blizzard interface. It works with any class and it is built around the new Midnight addon restrictions.
 
 If you run into problems, open an issue and I’ll help as much as I can: [link here](https://github.com/MarioCatuogno/PanzaUI/issues).
 
-## Features
-
-The core addon includes:
-
-* __Action Bars__: remove interaction, blink and GCD animations; hide the main action bar and other keybind bars.
-* __Buffs Frame__: automatically collapse the Buffs frame.
-* __Cast Bars__: resize and reskin the cast bar. It hides the Blizzard default cast bar and uses the WeakAura included in [Utilities](https://github.com/MarioCatuogno/PanzaUI/blob/main/WeakAuras/PanzaUI-Utilities.txt)).
-* __CVars__: configure recommended CVars for PanzaUI.
-* __Minimap__: hide unnecessary elements and resize the minimap text.
-* __Nameplates__: add health percentage and elite/rare icons on Plater nameplates.
-* __Player Frame__: add portrait, power bar, casting bar and disable combat animation.
-* __QOL Features__: various quality-of-life tweaks (hide Talking Head, hide MicroMenu, etc.).
-* __Quest Tracker__: resize the quest tracker for better readability.
-* __Target Frame__: simplify target frame (hide background and remove buffs/debuffs display).
-* __Tooltips__: reskin tooltip textures for a consistent look.
-
-## My UI
+## Addon required
 
 PanzaUI uses the following required components:
 
@@ -54,18 +28,18 @@ PanzaUI uses the following required components:
 * __Better Blizzard Frames__: replaces player, target, focus, arena and target-of-target frames.
 * __Chattynator__: skins the chat frame and enable chat channel configuration.
 * __DialogueUI__: skins the quest/dialogue UI.
+* __EditModeTweaks__: add more features to default Edit mode.
 * __LeatrixMaps / LeatrixPlus__: adds UX improvements and map enhancements.
 * __LS:Toasts__: skins toast notifications.
 * __Masque__: skins action buttons and provides consistent icon styling.
 * __Platynator__: customizes enemy and friendly nameplates.
 * __Plumber__: a collection of QoL features.
 * __SharedMedia__: provides textures and fonts used across the UI.
+* __Sensei Class Resource Bar__: enhanced personal resource bar.
 * __WaypointUI__: enhanced waypoint info.
-* __Wildu's Tools__: tidies and enhances the UI and also automates some gameplay tasks. 
+* __Wildu's Tools__: tidies and enhances the UI and also automates some gameplay tasks.
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
-
-If your class/spec isn’t covered by the included WeakAuras, you can create your own using this guide: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/CONFIGURE_CLASS_WA_TEMPLATE.md) guide.
 
 ## Screenshots
 
