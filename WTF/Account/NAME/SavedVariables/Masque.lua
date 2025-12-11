@@ -4,6 +4,7 @@ MasqueDB = {
 },
 ["profileKeys"] = {
 ["Pulcinhell - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
 },
