@@ -4,9 +4,14 @@
 
 * Removed graphics settings in CVars
 
+### 👤 Profiles
+
+* Better Blizzard Frames - 
+
 ### 📏 Various
 
 * Updated WTF variables for several addons
+* Updated documentation to the latest version of UI
 
 ## 1.1-RELEASE
 
