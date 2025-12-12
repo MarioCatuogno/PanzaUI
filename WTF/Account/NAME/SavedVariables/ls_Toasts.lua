@@ -12,6 +12,12 @@ LS_TOASTS_GLOBAL_CONFIG = {
 ["profiles"] = {
 ["Default"] = {
 ["version"] = 11020701,
+["font"] = {
+["name"] = "Expressway",
+},
+["colors"] = {
+["name"] = true,
+},
 ["types"] = {
 ["loot_currency"] = {
 ["enabled"] = true,

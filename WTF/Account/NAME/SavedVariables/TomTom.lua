@@ -5,9 +5,9 @@ TomTomDB = {
 ["Scaloppina - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "Default",
 ["Cirus - Argent Dawn"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
@@ -47,9 +47,9 @@ TomTomWaypointsM = {
 ["Scaloppina - Draenor"] = "Scaloppina - Draenor",
 ["Gelatino - Draenor"] = "Gelatino - Draenor",
 ["Formaggino - Draenor"] = "Formaggino - Draenor",
-["Sfilatino - Draenor"] = "Sfilatino - Draenor",
 ["Cirus - Argent Dawn"] = "Cirus - Argent Dawn",
 ["Pulcinhell - Draenor"] = "Pulcinhell - Draenor",
+["Sfilatino - Draenor"] = "Sfilatino - Draenor",
 ["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
 ["Panzarotto - Draenor"] = "Panzarotto - Draenor",
 ["Giandora - Argent Dawn"] = "Giandora - Argent Dawn",
@@ -67,11 +67,11 @@ TomTomWaypointsM = {
 },
 ["Formaggino - Draenor"] = {
 },
-["Sfilatino - Draenor"] = {
-},
 ["Cirus - Argent Dawn"] = {
 },
 ["Pulcinhell - Draenor"] = {
+},
+["Sfilatino - Draenor"] = {
 },
 ["Panuozzo - Argent Dawn"] = {
 },
