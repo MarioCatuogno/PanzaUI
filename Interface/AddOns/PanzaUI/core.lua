@@ -167,7 +167,7 @@ local function setupCVars()
   C_CVar.SetCVar("floatingCombatTextReactives", 0)
 
   -- Graphics
-  C_CVar.SetCVar("renderscale", 0.760)
+  --C_CVar.SetCVar("renderscale", 0.760)
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
   -- Minimap
@@ -202,8 +202,8 @@ local function setupCVars()
   C_CVar.SetCVar("cursorSizePreferred", 0)
   C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
   C_CVar.SetCVar("lootUnderMouse", 0)
-  C_CVar.SetCVar("maxFPS", 60)
-  C_CVar.SetCVar("maxFPSBk", 8)
+  --C_CVar.SetCVar("maxFPS", 60)
+  --C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
   C_CVar.SetCVar("showNPETutorials", 0)

@@ -1,5 +1,9 @@
 ## 1.2-RELEASE
 
+### 🛠️ Core
+
+* Removed graphics settings in CVars
+
 ### 📏 Various
 
 * Updated WTF variables for several addons
