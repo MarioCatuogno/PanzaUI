@@ -1,3 +1,9 @@
+## 1.2-RELEASE
+
+### 📏 Various
+
+* Updated WTF variables for several addons
+
 ## 1.1-RELEASE
 
 This is a complete overhaul of PanzaUI, ready for Midnight!
