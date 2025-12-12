@@ -7,6 +7,7 @@
 ### 👤 Profiles
 
 * Better Blizzard Frames - Formatted health numbers
+* Better Blizzard Frames - Hide hit indicator on pet frame
 
 ### 📏 Various
 
