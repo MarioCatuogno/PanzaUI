@@ -6,7 +6,7 @@
 
 ### 👤 Profiles
 
-* Better Blizzard Frames - 
+* Better Blizzard Frames - Formatted health numbers
 
 ### 📏 Various
 
