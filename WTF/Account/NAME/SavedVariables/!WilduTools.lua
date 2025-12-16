@@ -3,12 +3,17 @@ WilduToolsDB = {
 ["profileKeys"] = {
 ["Pulcinhell - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
-["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
+["blizzUI_cleanupObjectiveTracker"] = true,
+["general_showMinimapButton"] = false,
+["automation_gossipEnabled"] = true,
+["blizzUI_changeFriendlyNamesFont"] = true,
+["automation_autoBuyDecorItemsEnabled"] = true,
 ["editMode"] = {
 ["playerCombat"] = {
 ["alpha"] = 1,
@@ -23,11 +28,6 @@ WilduToolsDB = {
 ["alpha"] = 1,
 },
 },
-["blizzUI_cleanupObjectiveTracker"] = true,
-["general_showMinimapButton"] = false,
-["automation_gossipEnabled"] = true,
-["automation_autoBuyDecorItemsEnabled"] = true,
-["blizzUI_changeFriendlyNamesFont"] = true,
 },
 },
 }

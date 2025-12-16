@@ -13,9 +13,9 @@ EditModeTweaksDB = {
 ["StanceBar"] = true,
 ["PetFrame"] = true,
 },
-["targetFrames"] = {
-},
 ["combatFrames"] = {
+},
+["targetFrames"] = {
 },
 },
 ["PanzaUI"] = {
@@ -25,12 +25,16 @@ EditModeTweaksDB = {
 ["MicroMenuContainer"] = true,
 ["UtilityCooldownViewer"] = false,
 ["MainStatusTrackingBarContainer"] = true,
-["PetFrame"] = true,
+["MainActionBar"] = true,
 ["MultiBar5"] = true,
 ["VehicleSeatIndicator"] = true,
 ["StanceBar"] = true,
 ["EditModeSystemSettingsDialog"] = false,
-["MainActionBar"] = true,
+["PetFrame"] = true,
+},
+["combatFrames"] = {
+["BuffIconCooldownViewer"] = false,
+["BuffBarCooldownViewer"] = true,
 },
 ["targetFrames"] = {
 ["MultiBarRight"] = false,
@@ -38,10 +42,6 @@ EditModeTweaksDB = {
 ["MultiBarLeft"] = false,
 ["EditModeSystemSettingsDialog"] = false,
 ["BuffBarCooldownViewer"] = true,
-},
-["combatFrames"] = {
-["BuffBarCooldownViewer"] = true,
-["BuffIconCooldownViewer"] = false,
 },
 },
 },
@@ -56,19 +56,19 @@ EditModeTweaksDB = {
 ["currentProfile"] = "PanzaUI",
 ["mouseOverFrames"] = {
 ["PetActionBar"] = true,
-["MultiBar5"] = true,
-["PetFrame"] = true,
+["MainActionBar"] = true,
+["MicroMenuContainer"] = true,
 ["UtilityCooldownViewer"] = false,
 ["MainStatusTrackingBarContainer"] = true,
-["MainActionBar"] = true,
+["PetFrame"] = true,
 ["SecondaryStatusTrackingBarContainer"] = true,
 ["VehicleSeatIndicator"] = true,
 ["StanceBar"] = true,
 ["EditModeSystemSettingsDialog"] = false,
-["MicroMenuContainer"] = true,
+["MultiBar5"] = true,
 },
 ["combatFrames"] = {
-["BuffIconCooldownViewer"] = false,
 ["BuffBarCooldownViewer"] = true,
+["BuffIconCooldownViewer"] = false,
 },
 }
