@@ -13,6 +13,7 @@
 
 * Updated WTF variables for several addons
 * Updated documentation to the latest version of UI
+* Updated documentation with links to external addons
 
 ## 1.1-RELEASE
 
