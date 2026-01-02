@@ -2,6 +2,7 @@
 
 ### 🛠️ Core
 
+* Cleaned up the code
 * Removed graphics settings in CVars
 
 ### 👤 Profiles

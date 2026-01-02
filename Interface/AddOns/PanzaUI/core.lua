@@ -73,6 +73,7 @@ local function configMinimap()
   -- Set scale for Minimap and its cluster.
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
+
   -- Set alpha for specific minimap elements to hide them.
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
   SetAlphaForFrame(AddonCompartmentFrame, 0)
