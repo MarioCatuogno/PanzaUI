@@ -12,6 +12,7 @@
 ### 📏 Various
 
 * Updated WTF variables for several addons
+* Updated documentation to include common issues
 * Updated documentation to the latest version of UI
 * Updated documentation with links to external addons
 

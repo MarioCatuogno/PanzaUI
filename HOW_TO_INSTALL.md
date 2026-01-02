@@ -8,7 +8,7 @@
   - BlizzardUI profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
   - Sensei profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
-5. Copy under your /WTF/Account/NAME/SavedVariables folder the .lua files in the WTF folder of PanzaUI.
+5. Logout and copy under your /WTF/Account/NAME/SavedVariables folder the .lua files in the WTF folder of PanzaUI.
 6. Login again and enjoy!
 
 ## Profiles and Other Stuff
@@ -22,7 +22,7 @@
 
 ### Keybinds 
 
-Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
+Keep in mind that these keybinds are used by me with __Razer Naga V2 Pro__ mouse.
 
 * [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
 * [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
@@ -32,3 +32,11 @@ Keep in mind that these keybinds are used by me with Razer Naga V2 Pro mouse.
 * [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_priest.pdf)
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
 * [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_warrior.pdf)
+
+## Common issues
+
+* __Why my UI is shifted?__ 
+  * Unfortunately, at the moment, there's no way to adapt the default Blizzard UI profile to different screen resolutions. I'm playing on a MacBook Pro M1 14" with a screen resolution of 3024x1964 so, unless you have the same resolution, you have to adjust the position of various frames (eg. action bars, player/target frames, map, quest, etc.). I'm planning to support, at least, 1440p screen resolution in near future. (For further info see [[#87](https://github.com/MarioCatuogno/PanzaUI/issues/87)] or [[#84](https://github.com/MarioCatuogno/PanzaUI/issues/84)]).
+
+* __Does it support WOW Classic?__
+  * If the addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required) work on classic than it should work. Let me know if you try the UI with this version of the game!
