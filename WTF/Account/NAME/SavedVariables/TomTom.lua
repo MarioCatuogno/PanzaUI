@@ -4,16 +4,16 @@ TomTomDB = {
 ["Panuozzo - Draenor"] = "Default",
 ["Scaloppina - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
-["Nutellone - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
 ["Cirus - Argent Dawn"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Branthar - Argent Dawn"] = "Default",
-["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
 ["Ossosacro - Draenor"] = "Default",
 },
 ["profiles"] = {
@@ -46,16 +46,16 @@ TomTomWaypointsM = {
 ["Panuozzo - Draenor"] = "Panuozzo - Draenor",
 ["Scaloppina - Draenor"] = "Scaloppina - Draenor",
 ["Gelatino - Draenor"] = "Gelatino - Draenor",
-["Nutellone - Draenor"] = "Nutellone - Draenor",
-["Sfilatino - Draenor"] = "Sfilatino - Draenor",
+["Formaggino - Draenor"] = "Formaggino - Draenor",
 ["Cirus - Argent Dawn"] = "Cirus - Argent Dawn",
 ["Pulcinhell - Draenor"] = "Pulcinhell - Draenor",
+["Sfilatino - Draenor"] = "Sfilatino - Draenor",
 ["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
-["Giandora - Argent Dawn"] = "Giandora - Argent Dawn",
 ["Panzarotto - Draenor"] = "Panzarotto - Draenor",
+["Giandora - Argent Dawn"] = "Giandora - Argent Dawn",
 ["Percoca - Draenor"] = "Percoca - Draenor",
 ["Branthar - Argent Dawn"] = "Branthar - Argent Dawn",
-["Formaggino - Draenor"] = "Formaggino - Draenor",
+["Nutellone - Draenor"] = "Nutellone - Draenor",
 ["Ossosacro - Draenor"] = "Ossosacro - Draenor",
 },
 ["profiles"] = {
@@ -65,25 +65,25 @@ TomTomWaypointsM = {
 },
 ["Gelatino - Draenor"] = {
 },
-["Nutellone - Draenor"] = {
-},
-["Sfilatino - Draenor"] = {
+["Formaggino - Draenor"] = {
 },
 ["Cirus - Argent Dawn"] = {
 },
 ["Pulcinhell - Draenor"] = {
 },
+["Sfilatino - Draenor"] = {
+},
 ["Panuozzo - Argent Dawn"] = {
 },
-["Giandora - Argent Dawn"] = {
-},
 ["Panzarotto - Draenor"] = {
+},
+["Giandora - Argent Dawn"] = {
 },
 ["Percoca - Draenor"] = {
 },
 ["Branthar - Argent Dawn"] = {
 },
-["Formaggino - Draenor"] = {
+["Nutellone - Draenor"] = {
 },
 ["Ossosacro - Draenor"] = {
 },
