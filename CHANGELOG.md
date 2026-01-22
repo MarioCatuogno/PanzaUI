@@ -7,6 +7,7 @@
 
 ### 👤 Profiles
 
+* Added new profiles for Cooldown Manager for Monk Windwalker
 * Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
 * Better Blizzard Frames - Formatted health numbers
 * Better Blizzard Frames - Hide hit indicator on pet frame
