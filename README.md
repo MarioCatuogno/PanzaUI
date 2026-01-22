@@ -24,7 +24,6 @@ If you run into problems, open an issue and I’ll help as much as I can: [link 
 
 PanzaUI uses the following required components:
 
-* [__Advanced Interface Options__](https://www.curseforge.com/wow/addons/advancedinterfaceoptions): in-game access to CVars.
 * [__Better Blizzard Frames__](https://www.curseforge.com/wow/addons/betterblizzframes): replaces player, target, focus, arena and target-of-target frames.
 * [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
 * [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
@@ -36,7 +35,6 @@ PanzaUI uses the following required components:
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 * [__SharedMedia__](https://www.curseforge.com/wow/addons/sharedmedia): provides textures and fonts used across the UI.
 * [__Sensei Class Resource Bar__](https://www.curseforge.com/wow/addons/senseiclassresourcebar): enhanced personal resource bar.
-* [__WaypointUI__](https://www.curseforge.com/wow/addons/waypointui): enhanced waypoint info.
 * [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
