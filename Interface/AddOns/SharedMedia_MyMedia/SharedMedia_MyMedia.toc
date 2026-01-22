@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 120000, 120001, 120002, 120005
 ## Title: SharedMedia_MyMedia
 ## Author: Panzarotto
 ## Dependencies: SharedMedia
