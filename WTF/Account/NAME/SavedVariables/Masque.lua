@@ -10,8 +10,8 @@ MasqueDB = {
 ["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
-["Nutellone - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {

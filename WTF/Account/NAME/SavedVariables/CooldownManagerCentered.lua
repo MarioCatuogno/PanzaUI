@@ -8,8 +8,8 @@ CooldownManagerCenteredDB = {
 ["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
-["Nutellone - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
@@ -110,6 +110,7 @@ CooldownManagerCenteredDB = {
 ["timestamp"] = 1767860640,
 },
 },
+["cooldownManager_stackFontName"] = "Roboto Condensed Bold",
 },
 },
 }

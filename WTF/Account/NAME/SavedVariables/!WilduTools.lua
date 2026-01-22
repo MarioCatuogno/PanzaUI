@@ -8,8 +8,8 @@ WilduToolsDB = {
 ["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
-["Nutellone - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
@@ -29,12 +29,17 @@ WilduToolsDB = {
 ["playerCombat"] = {
 ["alpha"] = 1,
 },
+["rangeMeleeIndicator"] = {
+["alpha"] = 1,
 },
+},
+["general_showMinimapButton"] = false,
 ["automation_gossipEnabled"] = true,
 ["blizzUI_changeFriendlyNamesFont"] = true,
+["blizzUI_betterSuperTracked"] = true,
+["addonsTweaks_bbf_boss_texture_change"] = true,
 ["blizzUI_cleanupObjectiveTracker"] = true,
 ["automation_autoBuyDecorItemsEnabled"] = true,
-["general_showMinimapButton"] = false,
 },
 },
 }
