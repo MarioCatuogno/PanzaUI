@@ -28,6 +28,7 @@
 
 ### ⌨️ Macros
 
+* Updated Mage macros
 * Updated Monk macros
 
 ## 1.1-RELEASE
