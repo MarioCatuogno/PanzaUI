@@ -8,7 +8,6 @@
 ### 👤 Profiles
 
 * Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
-* Better Blizzard Frames - Changed the texture to "Solid"
 * Better Blizzard Frames - Formatted health numbers
 * Better Blizzard Frames - Hide hit indicator on pet frame
 * Platynator - Changed the font to "Roboto Condensed Bold"
