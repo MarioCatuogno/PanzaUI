@@ -16,6 +16,7 @@
 
 ### 📏 Various
 
+* Changed the fonts to "Roboto Condensed Bold"
 * Updated WTF variables for several addons
 * Updated documentation to include common issues
 * Updated documentation to the latest version of UI
