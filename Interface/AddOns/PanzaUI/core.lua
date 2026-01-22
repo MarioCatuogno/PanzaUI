@@ -78,9 +78,6 @@ local function configMinimap()
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
   SetAlphaForFrame(AddonCompartmentFrame, 0)
 
-  -- Set Garrison button scale.
-  SetScaleForFrame(ExpansionLandingPageMinimapButton, 0.85)
-
 end
 
 --------------------------------------------------------------------------------

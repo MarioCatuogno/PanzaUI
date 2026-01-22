@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Cleaned up the code
+* Removed Garrison button scale
 * Removed graphics settings in CVars
 
 ### 👤 Profiles
