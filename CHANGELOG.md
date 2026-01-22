@@ -20,6 +20,7 @@
 * Updated documentation to include common issues
 * Updated documentation to the latest version of UI
 * Updated documentation with links to external addons
+* Update TOC to newest patch
 
 ## 1.1-RELEASE
 
