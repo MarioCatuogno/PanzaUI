@@ -1,30 +1,32 @@
 
 WilduToolsDB = {
 ["profileKeys"] = {
-["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Pulcinhell - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["editMode"] = {
-["gcdHistory"] = {
-["alpha"] = 1,
-},
-["playerCombat"] = {
-["alpha"] = 1,
-},
 ["rangeCheck"] = {
+["alpha"] = 1,
+},
+["targetCombat"] = {
+["alpha"] = 1,
+},
+["gcdHistory"] = {
 ["alpha"] = 1,
 },
 ["mountIcon"] = {
 ["alpha"] = 1,
 },
-["targetCombat"] = {
+["playerCombat"] = {
 ["alpha"] = 1,
 },
 },

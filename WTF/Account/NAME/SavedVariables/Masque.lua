@@ -3,16 +3,22 @@ MasqueDB = {
 ["namespaces"] = {
 },
 ["profileKeys"] = {
-["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Pulcinhell - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
+["LDB"] = {
+["hide"] = true,
+["position"] = 0,
+},
 ["Groups"] = {
 ["Blizzard Inventory_MailFrame"] = {
 ["Upgraded"] = true,
@@ -69,6 +75,10 @@ MasqueDB = {
 ["Cooldown Manager Tweaks_Custom Tracker"] = {
 ["Inherit"] = false,
 },
+["Blizzard Action Bars_UtilityCooldownViewer"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
 ["Blizzard Inventory_ContainerFrame1"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
@@ -89,6 +99,14 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
+["Blizzard Action Bars_EssentialCooldownViewer"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
+["Blizzard Inventory_EquipmentFlyoutFrame"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
 ["Blizzard Action Bars_PetBattleFrame"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
@@ -100,8 +118,7 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Blizzard Action Bars_MultiBarBottomLeft"] = {
-["Upgraded"] = true,
+["Cooldown Manager Tweaks_Essential Cooldowns"] = {
 ["Inherit"] = false,
 },
 ["Cooldown Manager Tweaks_Buff Tracker"] = {
@@ -111,7 +128,8 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Cooldown Manager Tweaks_Essential Cooldowns"] = {
+["Blizzard Action Bars_BuffIconCooldownViewer"] = {
+["Upgraded"] = true,
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_PetBar"] = {
@@ -122,7 +140,8 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Cooldown Manager Tweaks_Utility Cooldowns"] = {
+["Blizzard Action Bars_ExtraAbilityContainer"] = {
+["Upgraded"] = true,
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_PossessBar"] = {
@@ -137,8 +156,7 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Blizzard Action Bars_ExtraAbilityContainer"] = {
-["Upgraded"] = true,
+["Cooldown Manager Tweaks_Utility Cooldowns"] = {
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_MultiBarRight"] = {
@@ -152,14 +170,10 @@ MasqueDB = {
 ["Cooldown Manager Tweaks"] = {
 ["Inherit"] = false,
 },
-["Blizzard Inventory_EquipmentFlyoutFrame"] = {
+["Blizzard Action Bars_MultiBarBottomLeft"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-},
-["LDB"] = {
-["position"] = 0,
-["hide"] = true,
 },
 ["API_VERSION"] = 110210,
 },
