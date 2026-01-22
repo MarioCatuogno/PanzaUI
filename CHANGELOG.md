@@ -12,6 +12,7 @@
 * Better Blizzard Frames - Formatted health numbers
 * Better Blizzard Frames - Hide hit indicator on pet frame
 * Platynator - Changed the font to "Roboto Condensed Bold"
+* Sensei - Changed the font to "Roboto Condensed Bold"
 
 ### 📏 Various
 
