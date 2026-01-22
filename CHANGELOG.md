@@ -10,6 +10,7 @@
 * Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
 * Better Blizzard Frames - Formatted health numbers
 * Better Blizzard Frames - Hide hit indicator on pet frame
+* BlizzUI - Adjusted the entire UI for Midnight pre-patch
 * Platynator - Changed the font to "Roboto Condensed Bold"
 * Sensei - Changed the font to "Roboto Condensed Bold"
 
