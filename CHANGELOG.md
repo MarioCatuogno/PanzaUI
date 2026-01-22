@@ -10,6 +10,7 @@
 * Added new profiles for Cooldown Manager for Mage Frost
 * Added new profiles for Cooldown Manager for Monk Brewmaster
 * Added new profiles for Cooldown Manager for Monk Windwalker
+* Added new profiles for Cooldown Manager for Shaman Elemental
 * Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
 * Better Blizzard Frames - Formatted health numbers
 * Better Blizzard Frames - Hide hit indicator on pet frame
@@ -30,6 +31,7 @@
 
 * Updated Mage macros
 * Updated Monk macros
+* Updated Shaman macros
 
 ## 1.1-RELEASE
 
