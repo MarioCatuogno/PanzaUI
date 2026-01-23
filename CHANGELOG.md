@@ -9,6 +9,7 @@
 ### 👤 Profiles
 
 * Added a new Cooldown Manager Centered profile
+* Added new profiles for Cooldown Manager for Druid Feral
 * Added new profiles for Cooldown Manager for Mage Frost
 * Added new profiles for Cooldown Manager for Monk Brewmaster
 * Added new profiles for Cooldown Manager for Monk Windwalker
