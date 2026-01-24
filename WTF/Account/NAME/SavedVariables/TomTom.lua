@@ -4,21 +4,22 @@ TomTomDB = {
 ["Panuozzo - Draenor"] = "Default",
 ["Scaloppina - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
-["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
+["Pulcinhell - Draenor"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
 ["Cirus - Argent Dawn"] = "Default",
-["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
-["Panzarotto - Draenor"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Branthar - Argent Dawn"] = "Default",
-["Nutellone - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
 ["Ossosacro - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["arrow"] = {
+["distanceUnits"] = "humanyards",
 ["position"] = {
 "CENTER",
 nil,
@@ -46,16 +47,16 @@ TomTomWaypointsM = {
 ["Panuozzo - Draenor"] = "Panuozzo - Draenor",
 ["Scaloppina - Draenor"] = "Scaloppina - Draenor",
 ["Gelatino - Draenor"] = "Gelatino - Draenor",
-["Formaggino - Draenor"] = "Formaggino - Draenor",
+["Nutellone - Draenor"] = "Nutellone - Draenor",
+["Pulcinhell - Draenor"] = "Pulcinhell - Draenor",
 ["Sfilatino - Draenor"] = "Sfilatino - Draenor",
 ["Cirus - Argent Dawn"] = "Cirus - Argent Dawn",
-["Pulcinhell - Draenor"] = "Pulcinhell - Draenor",
 ["Panuozzo - Argent Dawn"] = "Panuozzo - Argent Dawn",
-["Panzarotto - Draenor"] = "Panzarotto - Draenor",
 ["Giandora - Argent Dawn"] = "Giandora - Argent Dawn",
+["Panzarotto - Draenor"] = "Panzarotto - Draenor",
 ["Percoca - Draenor"] = "Percoca - Draenor",
 ["Branthar - Argent Dawn"] = "Branthar - Argent Dawn",
-["Nutellone - Draenor"] = "Nutellone - Draenor",
+["Formaggino - Draenor"] = "Formaggino - Draenor",
 ["Ossosacro - Draenor"] = "Ossosacro - Draenor",
 },
 ["profiles"] = {
@@ -65,25 +66,151 @@ TomTomWaypointsM = {
 },
 ["Gelatino - Draenor"] = {
 },
-["Formaggino - Draenor"] = {
+["Nutellone - Draenor"] = {
+},
+["Pulcinhell - Draenor"] = {
 },
 ["Sfilatino - Draenor"] = {
 },
 ["Cirus - Argent Dawn"] = {
 },
-["Pulcinhell - Draenor"] = {
-},
 ["Panuozzo - Argent Dawn"] = {
 },
-["Panzarotto - Draenor"] = {
-},
 ["Giandora - Argent Dawn"] = {
+},
+["Panzarotto - Draenor"] = {
+[2214] = {
+["2214:649100000:560800000:7 Kobold Warning Sign - Northern wall in Tealloch"] = {
+2214,
+0.6491,
+0.5608,
+["arrivaldistance"] = 15,
+["crazy"] = true,
+["persistent"] = true,
+["desc"] = "7 Kobold Warning Sign - Northern wall in Tealloch",
+["silent"] = true,
+["cleardistance"] = 10,
+["title"] = "7 Kobold Warning Sign - Northern wall in Tealloch",
+["from"] = "TomTom/way",
+["callbacks"] = {
+["distance"] = {
+[10] = nil --[[ skipped inline function ]],
+[15] = nil --[[ skipped inline function ]],
+},
+["world"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+["minimap"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+},
+["minimap"] = true,
+["world"] = true,
+},
+["2214:515000000:723900000:8 Submerged Sign - In small pond"] = {
+2214,
+0.515,
+0.7239,
+["arrivaldistance"] = 15,
+["crazy"] = true,
+["persistent"] = true,
+["desc"] = "8 Submerged Sign - In small pond",
+["silent"] = true,
+["cleardistance"] = 10,
+["title"] = "8 Submerged Sign - In small pond",
+["from"] = "TomTom/way",
+["callbacks"] = {
+["distance"] = {
+[10] = nil --[[ skipped inline function ]],
+[15] = nil --[[ skipped inline function ]],
+},
+["world"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+["minimap"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+},
+["minimap"] = true,
+["world"] = true,
+},
+["2214:502000000:583200000:TomTom waypoint"] = {
+2214,
+0.502,
+0.5832,
+["arrivaldistance"] = 15,
+["crazy"] = true,
+["persistent"] = true,
+["desc"] = "TomTom waypoint",
+["silent"] = true,
+["cleardistance"] = 10,
+["title"] = "TomTom waypoint",
+["from"] = "TomTom/way",
+["callbacks"] = {
+["distance"] = {
+[10] = nil --[[ skipped inline function ]],
+[15] = nil --[[ skipped inline function ]],
+},
+["world"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+["minimap"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+},
+["minimap"] = true,
+["world"] = true,
+},
+["2214:502000000:583200000:6 Wax-Drenched Sign - Near rocks"] = {
+2214,
+0.502,
+0.5832,
+["arrivaldistance"] = 15,
+["crazy"] = true,
+["persistent"] = true,
+["desc"] = "6 Wax-Drenched Sign - Near rocks",
+["silent"] = true,
+["cleardistance"] = 10,
+["title"] = "6 Wax-Drenched Sign - Near rocks",
+["from"] = "TomTom/way",
+["callbacks"] = {
+["distance"] = {
+[10] = nil --[[ skipped inline function ]],
+[15] = nil --[[ skipped inline function ]],
+},
+["world"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+["minimap"] = {
+["onclick"] = nil --[[ skipped inline function ]],
+["tooltip_update"] = nil --[[ skipped inline function ]],
+["tooltip_show"] = nil --[[ skipped inline function ]],
+},
+},
+["minimap"] = true,
+["world"] = true,
+},
+},
 },
 ["Percoca - Draenor"] = {
 },
 ["Branthar - Argent Dawn"] = {
 },
-["Nutellone - Draenor"] = {
+["Formaggino - Draenor"] = {
 },
 ["Ossosacro - Draenor"] = {
 },

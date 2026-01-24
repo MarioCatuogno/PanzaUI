@@ -1,31 +1,45 @@
 
 WilduToolsDB = {
 ["profileKeys"] = {
+["Panuozzo - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
+["Panuozzo - Argent Dawn"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
+["Percoca - Draenor"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
 ["editMode"] = {
-["playerCombat"] = {
+["rangeCheck"] = {
 ["alpha"] = 1,
 },
-["rangeCheck"] = {
+["targetCombat"] = {
+["alpha"] = 1,
+},
+["gcdHistory"] = {
 ["alpha"] = 1,
 },
 ["mountIcon"] = {
 ["alpha"] = 1,
 },
-["targetCombat"] = {
+["playerCombat"] = {
+["alpha"] = 1,
+},
+["rangeMeleeIndicator"] = {
 ["alpha"] = 1,
 },
 },
 ["general_showMinimapButton"] = false,
 ["automation_gossipEnabled"] = true,
 ["blizzUI_changeFriendlyNamesFont"] = true,
+["blizzUI_betterSuperTracked"] = true,
+["addonsTweaks_bbf_boss_texture_change"] = true,
 ["blizzUI_cleanupObjectiveTracker"] = true,
+["automation_autoBuyDecorItemsEnabled"] = true,
 },
 },
 }

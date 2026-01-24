@@ -1,3 +1,43 @@
+## 1.2-RELEASE
+
+This last version is tested with Midnight pre-patch. Compared to the previous one I've switched to Blizzard Cooldown Manager to track abilities and utilities. I've also created CDM profiles for some classes and switched the font from Expressway to Roboto Condensed Bold.
+
+### 🛠️ Core
+
+* Cleaned up the code
+* Removed Garrison button scale
+* Removed graphics settings in CVars
+
+### 👤 Profiles
+
+* Added a new Cooldown Manager Centered profile
+* Added new profiles for Cooldown Manager for Druid Feral
+* Added new profiles for Cooldown Manager for Mage Frost
+* Added new profiles for Cooldown Manager for Monk Brewmaster
+* Added new profiles for Cooldown Manager for Monk Windwalker
+* Added new profiles for Cooldown Manager for Shaman Elemental
+* Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
+* Better Blizzard Frames - Formatted health numbers
+* Better Blizzard Frames - Hide hit indicator on pet frame
+* BlizzUI - Adjusted the entire UI for Midnight pre-patch
+* Platynator - Changed the font to "Roboto Condensed Bold"
+* Sensei - Changed the font to "Roboto Condensed Bold"
+
+### 📏 Various
+
+* Changed the fonts to "Roboto Condensed Bold"
+* Updated WTF variables for several addons
+* Updated documentation to include common issues
+* Updated documentation to the latest version of UI
+* Updated documentation with links to external addons
+* Updated TOC to newest patch
+
+### ⌨️ Macros
+
+* Updated Mage macros
+* Updated Monk macros
+* Updated Shaman macros
+
 ## 1.1-RELEASE
 
 This is a complete overhaul of PanzaUI, ready for Midnight!
