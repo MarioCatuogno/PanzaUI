@@ -1,5 +1,7 @@
 ## 1.2-RELEASE
 
+This last version is tested with Midnight pre-patch. Compared to the previous one I've switched to Blizzard Cooldown Manager to track abilities and utilities. I've also created CDM profiles for some classes and switched the font from Expressway to Roboto Condensed Bold.
+
 ### 🛠️ Core
 
 * Cleaned up the code
