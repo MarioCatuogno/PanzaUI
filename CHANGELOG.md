@@ -18,8 +18,8 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 
 ### 🧮 Class CDM
 
-* Monk Brewmaster - Modified the Essential Cooldown abilities list
-* Monk Windwalker - Modified the Essential Cooldown abilities list
+* Monk Brewmaster - Modified the Essential Cooldown abilities
+* Monk Windwalker - Modified the Essential Cooldown abilities
 
 ### 📏 Various
 
