@@ -14,6 +14,7 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 * BlizzUI - Adjusted the position of the Damage Meter
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Tooltips
+* Cooldown Manager Centered - Changed the font to "Roboto Condensed Bold"
 
 ### 📏 Various
 
