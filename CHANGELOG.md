@@ -16,6 +16,7 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 
 * Updated WTF variables for several addons
 * Updated documentation to the latest version of UI
+* Updated TOC to newest patch
 
 ## 1.2-RELEASE
 
