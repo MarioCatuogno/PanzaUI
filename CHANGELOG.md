@@ -9,8 +9,10 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 
 ### 👤 Profiles
 
-* Adjusted the position of the default Damage Meter
+* Adjusted the position of the Boss Timeline
+* Adjusted the position of the Damage Meter
 * Adjusted the position of the Micro Menu
+* Adjusted the position of the Tooltips
 
 ### 📏 Various
 
