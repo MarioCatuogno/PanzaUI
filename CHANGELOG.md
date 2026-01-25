@@ -16,6 +16,10 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 * BlizzUI - Adjusted the position of the Tooltips
 * Cooldown Manager Centered - Changed the font to "Roboto Condensed Bold"
 
+### 🧮 Class CDM
+
+* Monk Windwalker - Modified the Essential Cooldown abilities list
+
 ### 📏 Various
 
 * Updated WTF variables for several addons
