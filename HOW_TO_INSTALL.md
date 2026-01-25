@@ -9,7 +9,7 @@
   - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
   - Sensei profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
-5. Logout and copy under your /WTF/Account/NAME/SavedVariables folder the .lua files contained in the WTF folder of PanzaUI.
+5. Logout from the game and copy under the /WTF/Account/NAME/SavedVariables (NAME = your account name) folder all the .lua files contained in the WTF folder of PanzaUI.
 6. Login again and enjoy!
 
 ## Profiles and Other Stuff
