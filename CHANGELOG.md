@@ -7,6 +7,11 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 * Fixed a bug with the Buffs frame
 * Removed deprecated CVars wiht patch 12.0
 
+### 👤 Profiles
+
+* Adjusted the position of the default Damage Meter
+* Adjusted the position of the Micro Menu
+
 ### 📏 Various
 
 * Updated WTF variables for several addons
