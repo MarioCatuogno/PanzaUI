@@ -1,3 +1,32 @@
+## 1.3-RELEASE
+
+This is a minor release to fix some bugs with PanzaUI addon and to better explain the setup of the UI.
+
+### 🛠️ Core
+
+* Fixed a bug with the Buffs frame
+* Removed deprecated CVars wiht patch 12.0
+
+### 👤 Profiles
+
+* Better Blizzard Frames - Hidden XP and Reputation bars
+* BlizzUI - Adjusted the position of the Boss Timeline
+* BlizzUI - Adjusted the position of the Damage Meter
+* BlizzUI - Adjusted the position of the Micro Menu
+* BlizzUI - Adjusted the position of the Tooltips
+* Cooldown Manager Centered - Changed the font to "Roboto Condensed Bold"
+
+### 🧮 Class CDM
+
+* Monk Brewmaster - Modified the Essential Cooldown abilities
+* Monk Windwalker - Modified the Essential Cooldown abilities
+
+### 📏 Various
+
+* Updated WTF variables for several addons
+* Updated documentation to the latest version of UI
+* Updated TOC to newest patch
+
 ## 1.2-RELEASE
 
 This last version is tested with Midnight pre-patch. Compared to the previous one I've switched to Blizzard Cooldown Manager to track abilities and utilities. I've also created CDM profiles for some classes and switched the font from Expressway to Roboto Condensed Bold.

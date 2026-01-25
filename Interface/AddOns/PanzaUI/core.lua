@@ -46,7 +46,7 @@ local function SetAlphaForFrame(frame, alpha)
     if frame then
       frame:SetAlpha(alpha)
     end
-  end
+end
 
 addonTable.core = {}
 
@@ -55,12 +55,6 @@ addonTable.core = {}
 --------------------------------------------------------------------------------
 
 local function configBuffsDebuffs()
-
-  -- Auto collapse Buffs frame.
-  if not (BuffFrame and BuffFrame.CollapseAndExpandButton) then return end
-  BuffFrame.CollapseAndExpandButton:SetChecked(false)
-  BuffFrame.CollapseAndExpandButton:UpdateOrientation()
-  BuffFrame:SetBuffsExpandedState()
 
 end
 
@@ -85,8 +79,6 @@ end
 --------------------------------------------------------------------------------
 
 local function configPlayerFrame()
-
-  --SetAlphaForFrame(PlayerFrame, 0)
 
 end
 
@@ -138,11 +130,7 @@ local function setupCVars()
   C_CVar.SetCVar("lockActionBar", 1)
   C_CVar.SetCVar("AutoPushSpellToActionBar",0)
 
-  -- Bags
-  C_CVar.SetCVar("combinedBags", 1)
-
   -- Combat
-  C_CVar.SetCVar("autoSelfCast", 1)
   C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
   C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
@@ -158,14 +146,12 @@ local function setupCVars()
   C_CVar.SetCVar("chatMouseScroll", 1)
 
   -- Floating Combat Text
-  C_CVar.SetCVar("enableFloatingCombatText", 0)
   C_CVar.SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0)
   C_CVar.SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0)
   C_CVar.SetCVar("floatingCombatTextLowManaHealth", 0)
   C_CVar.SetCVar("floatingCombatTextReactives", 0)
 
   -- Graphics
-  --C_CVar.SetCVar("renderscale", 0.760)
   C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
 
   -- Minimap
@@ -175,7 +161,6 @@ local function setupCVars()
   -- Raid and Party frames
   C_CVar.SetCVar("findYourselfInRaid", 1)
   C_CVar.SetCVar("findYourselfInRaidOnlyInCombat", 1) 
-  C_CVar.SetCVar("useCompactPartyFrames", 1)
   C_CVar.SetCVar("raidFramesDisplayAggroHighlight", 1)
   C_CVar.SetCVar("raidFramesDisplayClassColor", 1)
   C_CVar.SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
@@ -204,20 +189,16 @@ local function setupCVars()
   --C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
-  C_CVar.SetCVar("showNPETutorials", 0)
-  C_CVar.SetCVar("showTutorials", 0)
   C_CVar.SetCVar("synchronizeBindings", 1)
   C_CVar.SetCVar("synchronizeConfig", 1)
   C_CVar.SetCVar("synchronizeMacros", 1)
   C_CVar.SetCVar("synchronizeSettings", 1)
 
   -- Create new commands
-  SlashCmdList["READYCHECK"] = function() DoReadyCheck() end
-  SLASH_READYCHECK1 = '/rc'
-  SlashCmdList["RELOADUI"] = function() ReloadUI() end
-  SLASH_RELOADUI1 = '/rl'
-  SlashCmdList["CHECKROLE"] = function() InitiateRolePoll() end
-  SLASH_CHECKROLE1 = '/cr'
+SLASH_RELOADUI1 = "/rl"
+SlashCmdList["RELOADUI"] = ReloadUI
+SLASH_READYCHECK1 = "/rc"
+SlashCmdList["READYCHECK"] = DoReadyCheck
 
 end
 
