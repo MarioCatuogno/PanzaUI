@@ -2,13 +2,14 @@
 
 1. Downaload and install the latest version of PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
 2. Download the mandatory addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required).
-3. Unzip the file and copy the Fonts folder into WOW's folder.
-4. Run World of Warcraft and import:
+3. Unzip the file and copy the Fonts folder into "Retail" WOW's folder.
+4. Run World of Warcraft and import the following profiles:
   - Better Blizzard Frame profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
   - BlizzardUI profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
+  - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
   - Sensei profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
-5. Logout and copy under your /WTF/Account/NAME/SavedVariables folder the .lua files in the WTF folder of PanzaUI.
+5. Logout and copy under your /WTF/Account/NAME/SavedVariables folder the .lua files contained in the WTF folder of PanzaUI.
 6. Login again and enjoy!
 
 ## Profiles and Other Stuff
@@ -17,6 +18,7 @@
 
 * [Better Blizzard Frames](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
 * [Blizzard UI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
+* [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
 * [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
 * [Sensei](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
 
