@@ -27,14 +27,13 @@ PanzaUI uses the following required components:
 * [__Better Blizzard Frames__](https://www.curseforge.com/wow/addons/betterblizzframes): replaces player, target, focus, arena and target-of-target frames.
 * [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
 * [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
-* [__EditModeTweaks__](https://www.curseforge.com/wow/addons/edit-mode-tweaks): add more features to default Edit mode.
+* [__Enhance QoL__](https://www.curseforge.com/wow/addons/eqol): add tons of QoL features to the UI.
 * [__LeatrixMaps__](https://www.curseforge.com/wow/addons/leatrix-maps) / [__LeatrixPlus__](https://www.curseforge.com/wow/addons/leatrix-plus): adds UX improvements and map enhancements.
 * [__LS:Toasts__](https://www.curseforge.com/wow/addons/ls-toasts): skins toast notifications.
 * [__Masque__](https://www.curseforge.com/wow/addons/masque): skins action buttons and provides consistent icon styling.
 * [__Platynator__](https://www.curseforge.com/wow/addons/platynator): customizes enemy and friendly nameplates.
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 * [__SharedMedia__](https://www.curseforge.com/wow/addons/sharedmedia): provides textures and fonts used across the UI.
-* [__Sensei Class Resource Bar__](https://www.curseforge.com/wow/addons/senseiclassresourcebar): enhanced personal resource bar.
 * [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
