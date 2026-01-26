@@ -24,6 +24,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 🧮 Class CDM
 
+* Mage Frost - Modified the Essential Cooldown abilities
 * Monk Brewmaster - Modified the Essential Cooldown abilities
 * Monk Windwalker - Modified the Essential Cooldown abilities
 
