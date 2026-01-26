@@ -13,24 +13,29 @@ EditModeTweaksDB = {
 ["StanceBar"] = true,
 ["PetFrame"] = true,
 },
-["targetFrames"] = {
-},
 ["combatFrames"] = {
+},
+["targetFrames"] = {
 },
 },
 ["PanzaUI"] = {
 ["mouseOverFrames"] = {
 ["PetActionBar"] = true,
-["SecondaryStatusTrackingBarContainer"] = true,
-["MicroMenuContainer"] = true,
+["MainActionBar"] = true,
+["MultiBarLeft"] = true,
 ["UtilityCooldownViewer"] = false,
 ["MainStatusTrackingBarContainer"] = true,
-["PetFrame"] = true,
 ["MultiBar5"] = true,
+["MicroMenuContainer"] = true,
+["SecondaryStatusTrackingBarContainer"] = true,
 ["VehicleSeatIndicator"] = true,
 ["StanceBar"] = true,
 ["EditModeSystemSettingsDialog"] = false,
-["MainActionBar"] = true,
+["PetFrame"] = true,
+},
+["combatFrames"] = {
+["BuffIconCooldownViewer"] = false,
+["BuffBarCooldownViewer"] = true,
 },
 ["targetFrames"] = {
 ["MultiBarRight"] = false,
@@ -38,10 +43,6 @@ EditModeTweaksDB = {
 ["MultiBarLeft"] = false,
 ["EditModeSystemSettingsDialog"] = false,
 ["BuffBarCooldownViewer"] = true,
-},
-["combatFrames"] = {
-["BuffBarCooldownViewer"] = true,
-["BuffIconCooldownViewer"] = false,
 },
 },
 },
@@ -57,18 +58,19 @@ EditModeTweaksDB = {
 ["mouseOverFrames"] = {
 ["PetActionBar"] = true,
 ["MultiBar5"] = true,
-["PetFrame"] = true,
+["MicroMenuContainer"] = true,
 ["UtilityCooldownViewer"] = false,
 ["MainStatusTrackingBarContainer"] = true,
+["PetFrame"] = true,
 ["MainActionBar"] = true,
 ["SecondaryStatusTrackingBarContainer"] = true,
 ["VehicleSeatIndicator"] = true,
 ["StanceBar"] = true,
 ["EditModeSystemSettingsDialog"] = false,
-["MicroMenuContainer"] = true,
+["MultiBarLeft"] = true,
 },
 ["combatFrames"] = {
-["BuffIconCooldownViewer"] = false,
 ["BuffBarCooldownViewer"] = true,
+["BuffIconCooldownViewer"] = false,
 },
 }
