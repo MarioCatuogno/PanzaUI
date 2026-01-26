@@ -78,7 +78,10 @@ end
 -- CONFIGURE PLAYER FRAME
 --------------------------------------------------------------------------------
 
-local function configPlayerFrame()
+local function configMicroMenu()
+
+  -- Hide Micro Menu frame.
+  SetAlphaForFrame(MicroMenu, 0)
 
 end
 
@@ -210,8 +213,8 @@ end
 local function InitializeAddon()
 
     configBuffsDebuffs()
+    configMicroMenu()
     configMinimap()
-    configPlayerFrame()
     configQuestTracker()
     configTooltips()
     setupCVars()
