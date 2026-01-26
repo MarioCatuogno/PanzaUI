@@ -15,7 +15,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Added Teleport panel to World Map
 * EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
 * EnhanceQoL - Hidden Micro Menu frame
-* Frogski's Cursor Trail - Added a new profile for this addon
 * Sensei - Removed profile and switched to EnhanceQoL addon
 
 ### 🧮 Class CDM
