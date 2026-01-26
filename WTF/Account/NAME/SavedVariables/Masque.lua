@@ -8,19 +8,15 @@ MasqueDB = {
 ["Gelatino - Draenor"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
-["Panzarotto - Draenor"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
-["Percoca - Draenor"] = "Default",
-["Nutellone - Draenor"] = "Default",
-["Formaggino - Draenor"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
+["Panzarotto - Draenor"] = "Default",
+["Percoca - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
-["LDB"] = {
-["hide"] = true,
-["position"] = 0,
-},
 ["Groups"] = {
 ["Blizzard Inventory_MailFrame"] = {
 ["Upgraded"] = true,
@@ -111,7 +107,7 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Blizzard Inventory_EquipmentFlyoutFrame"] = {
+["Blizzard Action Bars_MultiBarBottomLeft"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
@@ -144,7 +140,8 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Cooldown Manager Tweaks_Buff Tracker"] = {
+["Blizzard Inventory_GuildBankFrame"] = {
+["Upgraded"] = true,
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_MultiBar5"] = {
@@ -163,8 +160,7 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Blizzard Inventory_GuildBankFrame"] = {
-["Upgraded"] = true,
+["Cooldown Manager Tweaks_Buff Tracker"] = {
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_MultiBarRight"] = {
@@ -178,7 +174,7 @@ MasqueDB = {
 ["Cooldown Manager Tweaks"] = {
 ["Inherit"] = false,
 },
-["Blizzard Action Bars_MultiBarBottomLeft"] = {
+["Blizzard Inventory_EquipmentFlyoutFrame"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
@@ -186,6 +182,10 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
+},
+["LDB"] = {
+["position"] = 0,
+["hide"] = true,
 },
 ["API_VERSION"] = 110210,
 },
