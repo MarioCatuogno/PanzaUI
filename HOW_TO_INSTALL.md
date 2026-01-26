@@ -14,13 +14,23 @@
 
 ## Profiles and Other Stuff
 
-### Profiles
+### Addon Profiles
 
 * [Better Blizzard Frames](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
 * [Blizzard UI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
 * [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
+* [Enhanced QoL](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
 * [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-* [Sensei](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
+
+### CDM Profiles
+
+If you want, you can import Cooldown Manager class profiles (see below) but these are not mandatory to replicate the UI.
+
+* [Druid - Feral](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Feral.txt))
+* [Mage - Frost](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Mage-Frost.txt))
+* [Monk - Brewmaster](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Brewmaster.txt))
+* [Monk - Windwalker](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Windwalker.txt))
+* [Shaman - Elemental](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt))p
 
 ### Keybinds 
 
