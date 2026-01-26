@@ -1,5 +1,7 @@
 ## 1.4-RELEASE
 
+This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)!
+
 ### 🛠️ Core
 
 * Removed unnecessary stuff
