@@ -7,11 +7,11 @@ LS_TOASTS_GLOBAL_CONFIG = {
 ["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
