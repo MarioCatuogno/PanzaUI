@@ -75,17 +75,6 @@ local function configMinimap()
 end
 
 --------------------------------------------------------------------------------
--- CONFIGURE PLAYER FRAME
---------------------------------------------------------------------------------
-
-local function configMicroMenu()
-
-  -- Hide Micro Menu frame.
-  SetAlphaForFrame(MicroMenu, 0)
-
-end
-
---------------------------------------------------------------------------------
 -- CONFIGURE QUEST TRACKER
 --------------------------------------------------------------------------------
 
@@ -213,7 +202,6 @@ end
 local function InitializeAddon()
 
     configBuffsDebuffs()
-    configMicroMenu()
     configMinimap()
     configQuestTracker()
     configTooltips()

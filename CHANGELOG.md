@@ -2,7 +2,7 @@
 
 ### 🛠️ Core
 
-* Hidden the Micro Menu frame
+* Removed unnecessary stuff
 
 ### 👤 Profiles
 
