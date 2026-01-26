@@ -9,8 +9,7 @@
   - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
   - Enhance QoL profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-5. Logout from the game and copy under the /WTF/Account/NAME/SavedVariables (NAME = your account name) folder all the .lua files contained in the WTF folder of PanzaUI.
-6. Login again and enjoy!
+5. Enjoy!
 
 ## Profiles and Other Stuff
 
@@ -45,10 +44,10 @@ Keep in mind that these keybinds are used by me with __Razer Naga V2 Pro__ mouse
 * [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
 * [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_warrior.pdf)
 
-## Common issues
+## Common questions
 
 * __Why my UI is shifted?__ 
   * Unfortunately, at the moment, there's no way to adapt the default Blizzard UI profile to different screen resolutions. I'm playing on a MacBook Pro M1 14" with a screen resolution of 3024x1964 so, unless you have the same resolution, you have to adjust the position of various frames (eg. action bars, player/target frames, map, quest, etc.). I'm planning to support, at least, 1440p screen resolution in near future. (For further info see [[#87](https://github.com/MarioCatuogno/PanzaUI/issues/87)] or [[#84](https://github.com/MarioCatuogno/PanzaUI/issues/84)]).
 
 * __Does it support WOW Classic?__
-  * If the addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required) work on classic than it should work. Let me know if you try the UI with this version of the game!
+  * No, it only support the retail version of WOW!
