@@ -9,11 +9,11 @@ MasqueDB = {
 ["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
@@ -48,8 +48,14 @@ MasqueDB = {
 ["Blizzard Buffs"] = {
 ["Inherit"] = false,
 },
+["EnhanceQoL"] = {
+["Inherit"] = false,
+},
 ["Blizzard Inventory_ContainerFrames"] = {
 ["Upgraded"] = true,
+["Inherit"] = false,
+},
+["EnhanceQoL_Unit Frame Buffs/Debuffs"] = {
 ["Inherit"] = false,
 },
 ["Blizzard Inventory_ContainerFrameCombinedBags"] = {
@@ -119,7 +125,7 @@ MasqueDB = {
 ["Cooldown Manager Tweaks_Essential Cooldowns"] = {
 ["Inherit"] = false,
 },
-["Cooldown Manager Tweaks_Buff Tracker"] = {
+["Cooldown Manager Tweaks_Utility Cooldowns"] = {
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_OverrideActionBar"] = {
@@ -134,14 +140,7 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Cooldown Manager Tweaks_Utility Cooldowns"] = {
-["Inherit"] = false,
-},
-["Blizzard Action Bars_ExtraAbilityContainer"] = {
-["Upgraded"] = true,
-["Inherit"] = false,
-},
-["Blizzard Action Bars_PossessBar"] = {
+["Blizzard Inventory_GuildBankFrame"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
@@ -149,12 +148,19 @@ MasqueDB = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
+["Blizzard Action Bars_PossessBar"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
+["Blizzard Action Bars_ExtraAbilityContainer"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
 ["Blizzard Action Bars_CooldownViewer"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },
-["Blizzard Inventory_GuildBankFrame"] = {
-["Upgraded"] = true,
+["Cooldown Manager Tweaks_Buff Tracker"] = {
 ["Inherit"] = false,
 },
 ["Blizzard Action Bars_MultiBarRight"] = {
@@ -169,6 +175,10 @@ MasqueDB = {
 ["Inherit"] = false,
 },
 ["Blizzard Inventory_EquipmentFlyoutFrame"] = {
+["Upgraded"] = true,
+["Inherit"] = false,
+},
+["EnhanceQoL_CooldownPanels"] = {
 ["Upgraded"] = true,
 ["Inherit"] = false,
 },

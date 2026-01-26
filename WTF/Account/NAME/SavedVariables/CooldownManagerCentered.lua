@@ -7,11 +7,11 @@ CooldownManagerCenteredDB = {
 ["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
 ["Sfilatino - Draenor"] = "Default",
-["Panzarotto - Draenor"] = "Default",
+["Giandora - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
 ["Nutellone - Draenor"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
+["Panzarotto - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
