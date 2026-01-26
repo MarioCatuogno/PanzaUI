@@ -26,54 +26,53 @@ local CLASS_COLORS = {
 }
 
 local function GetClassColor(class)
+
     local color = CLASS_COLORS[class]
     if color then
         return color[1], color[2], color[3]
     end
     -- Default to white if class is not found.
     return 1.0, 1.0, 1.0
+
 end
 
 -- Helper function to set frame scale.
 local function SetScaleForFrame(frame, scale)
-  if frame then
-    frame:SetScale(scale)
-  end
+
+    if frame then
+      frame:SetScale(scale)
+    end
+
 end
 
 -- Helper function to set frame alpha.
 local function SetAlphaForFrame(frame, alpha)
+
     if frame then
       frame:SetAlpha(alpha)
     end
+
 end
 
 addonTable.core = {}
 
 --------------------------------------------------------------------------------
--- CONFIGURE MINIMAP
+-- CONFIGURE VARIOUS FRAMES
 --------------------------------------------------------------------------------
 
-local function configMinimap()
+local function configFrames()
 
-  -- Set scale for Minimap and its cluster.
+  -- Configure Minimap
   SetScaleForFrame(Minimap, 1.0)
   SetScaleForFrame(MinimapCluster, 1.0)
-
-  -- Set alpha for specific minimap elements to hide them.
   SetAlphaForFrame(MinimapCluster.BorderTop, 0)
   SetAlphaForFrame(AddonCompartmentFrame, 0)
 
-end
-
---------------------------------------------------------------------------------
--- CONFIGURE QUEST TRACKER
---------------------------------------------------------------------------------
-
-local function configQuestTracker()
-
-  -- Set scale for Objective Tracker.
+  -- Configure Quest Tracker
   SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
+
+  -- Configure Spell Overlay
+  SetScaleForFrame(SpellActivationOverlayFrame, 0.75)
 
 end
 
@@ -86,6 +85,7 @@ local function configTooltips()
     GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
 
     GameTooltip:HookScript("OnUpdate", function(self)
+
         -- Check if the unit currently being moused over is a player.
         if UnitIsPlayer("mouseover") then
             local _, englishClass = UnitClass("mouseover")
@@ -173,7 +173,7 @@ local function setupCVars()
   C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
   C_CVar.SetCVar("lootUnderMouse", 0)
   --C_CVar.SetCVar("maxFPS", 60)
-  --C_CVar.SetCVar("maxFPSBk", 8)
+  C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
   C_CVar.SetCVar("synchronizeBindings", 1)
@@ -196,8 +196,7 @@ end
 -- Initialize functions on login
 local function InitializeAddon()
 
-    configMinimap()
-    configQuestTracker()
+    configFrames()
     configTooltips()
     setupCVars()
 
@@ -208,6 +207,7 @@ local frame = CreateFrame("FRAME")
 
 -- Define the OnEvent handler for the frame.
 local function OnEvent(self, event, ...)
+
     if event == "ADDON_LOADED" then
         -- Check if the addon has finished loading before initializing.
         local loadedAddonName = select(1, ...)
@@ -217,6 +217,7 @@ local function OnEvent(self, event, ...)
             self:UnregisterEvent("ADDON_LOADED")
         end
     end
+
 end
 
 frame:SetScript("OnEvent", OnEvent)
