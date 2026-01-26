@@ -49,6 +49,10 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Updated documentation to the latest version of UI
 * Updated TOC to newest patch
 
+### ⌨️ Macros
+
+* Updated Druid macros
+
 ## 1.3-RELEASE
 
 This is a minor release to fix some bugs with PanzaUI addon and to better explain the setup of the UI.
