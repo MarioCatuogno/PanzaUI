@@ -51,14 +51,6 @@ end
 addonTable.core = {}
 
 --------------------------------------------------------------------------------
--- CONFIGURE BUFFS AND DEBUFFS
---------------------------------------------------------------------------------
-
-local function configBuffsDebuffs()
-
-end
-
---------------------------------------------------------------------------------
 -- CONFIGURE MINIMAP
 --------------------------------------------------------------------------------
 
@@ -201,7 +193,6 @@ end
 -- Initialize functions on login
 local function InitializeAddon()
 
-    configBuffsDebuffs()
     configMinimap()
     configQuestTracker()
     configTooltips()
