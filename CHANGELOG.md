@@ -22,6 +22,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 🧮 Class CDM
 
+* Monk Brewmaster - Modified the Essential Cooldown abilities
 * Monk Windwalker - Modified the Essential Cooldown abilities
 
 ### 📏 Various
