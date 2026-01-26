@@ -21,6 +21,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
 * EnhanceQoL - Hidden Micro Menu frame
 * Platynator - Changed the health bar color from Thread to Elite Type + Threat
+* Platynator - Changed the texture of the Cast Bar
 * Platynator - Changed the transparency for obscured targets
 * Platynator - Removed the option for Friendly Nameplates
 * Platynator - Removed the option for the Simplified Nameplates
