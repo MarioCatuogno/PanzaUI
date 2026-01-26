@@ -2,8 +2,12 @@
 
 ### 🛠️ Core
 
+* Hidden the Micro Menu frame
+
 ### 👤 Profiles
 
+* BlizzUI - Adjusted the position of the Micro Menu
+* BlizzUI - Adjusted the position of the Quest Tracker
 * Frogski's Cursor Trail - Added a new profile for this addon
 
 ### 🧮 Class CDM
