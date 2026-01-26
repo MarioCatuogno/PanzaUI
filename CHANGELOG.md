@@ -8,7 +8,11 @@
 
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Quest Tracker
+* EnhanceQoL - Added mouseover to Action Bar 5
+* EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
+* EnhanceQoL - Hidden Micro Menu frame
 * Frogski's Cursor Trail - Added a new profile for this addon
+* Sensei - Removed profile and switched to EnhanceQoL addon
 
 ### 🧮 Class CDM
 
