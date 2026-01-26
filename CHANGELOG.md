@@ -1,3 +1,19 @@
+## 1.4-RELEASE
+
+### 🛠️ Core
+
+### 👤 Profiles
+
+* Frogski's Cursor Trail - Added a new profile for this addon
+
+### 🧮 Class CDM
+
+### 📏 Various
+
+* Updated WTF variables for several addons
+* Updated documentation to the latest version of UI
+* Updated TOC to newest patch
+
 ## 1.3-RELEASE
 
 This is a minor release to fix some bugs with PanzaUI addon and to better explain the setup of the UI.
