@@ -21,6 +21,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Configured Boss frames
 * EnhanceQoL - Configured resource bar for Druid, Mage, Monk and Shaman (replaced Sensei bar)
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
+* EnhanceQoL - Enabled the option to fast auto-loot
 * EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
 * EnhanceQoL - Hidden Micro Menu frame
 * Platynator - Changed the alpha channel for non targeted nameplates
