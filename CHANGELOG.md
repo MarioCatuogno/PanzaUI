@@ -22,6 +22,8 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 🧮 Class CDM
 
+* Monk Windwalker - Modified the Essential Cooldown abilities
+
 ### 📏 Various
 
 * Updated WTF variables for several addons
