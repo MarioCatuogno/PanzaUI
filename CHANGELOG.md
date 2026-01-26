@@ -4,6 +4,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 🛠️ Core
 
+* Added a CVar to force friendly nameplates to show only the name
 * Removed unnecessary stuff
 
 ### 👤 Profiles

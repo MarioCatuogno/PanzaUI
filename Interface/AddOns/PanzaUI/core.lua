@@ -142,6 +142,9 @@ local function setupCVars()
   C_CVar.SetCVar("minimapInsideZoom", 2)
   C_CVar.SetCVar("minimapTrackingShowAll",1)
 
+  -- Nameplates
+  C_CVar.SetCVar("nameplateShowOnlyNameForFriendlyPlayerUnits", 1)
+
   -- Raid and Party frames
   C_CVar.SetCVar("findYourselfInRaid", 1)
   C_CVar.SetCVar("findYourselfInRaidOnlyInCombat", 1) 
