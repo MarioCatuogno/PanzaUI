@@ -8,6 +8,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 👤 Profiles
 
+* Better Blizzard Frames - Moved some settings to Enhance QoL
 * BlizzUI - Adjusted the position of the Buff Tracker of the Cooldown Manager
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Quest Tracker
