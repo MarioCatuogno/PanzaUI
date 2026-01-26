@@ -20,6 +20,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Configured resource bar for Druid, Mage, Monk and Shaman (replaced Sensei bar)
 * EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
 * EnhanceQoL - Hidden Micro Menu frame
+* Platynator - Removed the option for the Simplified Nameplates
 * Sensei - Removed profile and switched to EnhanceQoL addon
 
 ### 🧮 Class CDM
