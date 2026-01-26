@@ -20,6 +20,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Configured resource bar for Druid, Mage, Monk and Shaman (replaced Sensei bar)
 * EnhanceQoL - Hidden Action Bar 1. It will show only during Skyriding
 * EnhanceQoL - Hidden Micro Menu frame
+* Platynator - Changed the alpha channel for non targeted nameplates
 * Platynator - Changed the health bar color from Thread to Elite Type + Threat
 * Platynator - Changed the texture of the Cast Bar
 * Platynator - Changed the transparency for obscured targets
