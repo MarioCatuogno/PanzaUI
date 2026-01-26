@@ -7,8 +7,8 @@
   - Better Blizzard Frame profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
   - BlizzardUI profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
   - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
+  - Enhance QoL profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-  - Sensei profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
 5. Logout from the game and copy under the /WTF/Account/NAME/SavedVariables (NAME = your account name) folder all the .lua files contained in the WTF folder of PanzaUI.
 6. Login again and enjoy!
 
