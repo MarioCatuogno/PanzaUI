@@ -36,6 +36,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Platynator - Changed the texture of the Cast Bar to Solid (until Platynator supports Shared Media)
 * Platynator - Changed the texture of the Health Bar to Solid (until Platynator supports Shared Media)
 * Platynator - Changed the transparency for obscured targets
+* Platynator - Fixed the Debuffs frame to show every debuffs
 * Platynator - Removed the option for Friendly Nameplates
 * Platynator - Removed the option for the Simplified Nameplates
 * Sensei - Removed profile and switched to EnhanceQoL addon
