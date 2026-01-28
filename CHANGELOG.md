@@ -12,6 +12,8 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 👤 Profiles
 
+* Better Blizzard Frames - Changed the texture of the Player Frame to Solid (until Platynator supports Shared Media)
+* Better Blizzard Frames - Changed the texture of the Target Frame to Solid (until Platynator supports Shared Media)
 * Better Blizzard Frames - Moved some settings to Enhance QoL
 * Better Blizzard Frames - Moved the FPS frame
 * BlizzUI - Adjusted the position of the Buff Tracker of the Cooldown Manager
@@ -30,7 +32,8 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Hidden Micro Menu frame
 * Platynator - Changed the alpha channel for non targeted nameplates
 * Platynator - Changed the health bar color from Thread to Elite Type + Threat
-* Platynator - Changed the texture of the Cast Bar
+* Platynator - Changed the texture of the Cast Bar to Solid (until Platynator supports Shared Media)
+* Platynator - Changed the texture of the Health Bar to Solid (until Platynator supports Shared Media)
 * Platynator - Changed the transparency for obscured targets
 * Platynator - Removed the option for Friendly Nameplates
 * Platynator - Removed the option for the Simplified Nameplates
