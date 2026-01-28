@@ -22,6 +22,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Quest Tracker
 * BlizzUI - Increased the size of the Damage Meter bars
+* Details - Changed the texture to Solid (until Platynator supports Shared Media)
 * EnhanceQoL - Added mouse ring to cursor
 * EnhanceQoL - Added mouseover to Action Bar 5
 * EnhanceQoL - Added Teleport panel to World Map
