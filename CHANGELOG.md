@@ -5,6 +5,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 ### 🛠️ Core
 
 * Added a CVar to force friendly nameplates to show only the name
+* Changed the Tooltips health bar texture to Solid (until Platynator supports Shared Media)
 * Forced the max foreground FPS to 8
 * Removed unnecessary stuff
 * Resized the Spell Overlay frame to 75%

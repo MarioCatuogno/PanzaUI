@@ -82,7 +82,7 @@ end
 
 local function configTooltips()
     -- Change the status bar texture once during initialization.
-    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+    GameTooltipStatusBar:SetStatusBarTexture("Interface\\Buttons\\WHITE8X8")
 
     GameTooltip:HookScript("OnUpdate", function(self)
 
