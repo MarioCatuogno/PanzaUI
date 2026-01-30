@@ -13,6 +13,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 👤 Profiles
 
+* Better Blizzard Frames - Changed the font size of Party/Raid frames
 * Better Blizzard Frames - Changed the texture of the Cast Bar to default one
 * Better Blizzard Frames - Changed the texture of the Player Frame to Solid (until Platynator supports Shared Media)
 * Better Blizzard Frames - Changed the texture of the Target Frame to Solid (until Platynator supports Shared Media)
