@@ -15,6 +15,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 * Better Blizzard Frames - Changed the texture of the Player Frame to Solid (until Platynator supports Shared Media)
 * Better Blizzard Frames - Changed the texture of the Target Frame to Solid (until Platynator supports Shared Media)
+* Better Blizzard Frames - Increased the size of text for Player/Target frames
 * Better Blizzard Frames - Moved some settings to Enhance QoL
 * Better Blizzard Frames - Moved the FPS frame
 * BlizzUI - Adjusted the position of the Buff Tracker of the Cooldown Manager
