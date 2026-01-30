@@ -7,6 +7,7 @@
   - Better Blizzard Frame profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
   - BlizzardUI profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
   - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
+  - Details profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
   - Enhance QoL profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
   - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
 5. Enjoy!
@@ -18,6 +19,7 @@
 * [Better Blizzard Frames](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
 * [Blizzard UI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
 * [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
+* [Details](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Details.txt)
 * [Enhanced QoL](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
 * [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
 
