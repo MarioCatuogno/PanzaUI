@@ -29,14 +29,19 @@ PanzaUI uses the following required components:
 * [__Cooldown Manager Centered__](https://www.curseforge.com/wow/addons/cooldown-manager-centered): skins and configure the Cooldown Manager.
 * [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
 * [__Enhance QoL__](https://www.curseforge.com/wow/addons/eqol): add tons of QoL features to the UI.
-* [__LeatrixMaps__](https://www.curseforge.com/wow/addons/leatrix-maps) / [__LeatrixPlus__](https://www.curseforge.com/wow/addons/leatrix-plus): adds UX improvements and map enhancements.
 * [__Masque__](https://www.curseforge.com/wow/addons/masque): skins action buttons and provides consistent icon styling.
 * [__Platynator__](https://www.curseforge.com/wow/addons/platynator): customizes enemy and friendly nameplates.
-* [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 * [__SharedMedia__](https://www.curseforge.com/wow/addons/sharedmedia): provides textures and fonts used across the UI.
 * [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
+
+Other addons (not mandatory):
+
+* [__JiberishUI Icons__](https://www.curseforge.com/wow/addons/jiberish-fabled-icons): replaces the default class icons.
+* [__LeatrixMaps__](https://www.curseforge.com/wow/addons/leatrix-maps) / [__LeatrixPlus__](https://www.curseforge.com/wow/addons/leatrix-plus): adds UX improvements and map enhancements.
+* [__LS:Minimap__](https://www.curseforge.com/wow/addons/ls-minimap): reskin the default Minimap.
+* [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 
 ## Screenshots
 
