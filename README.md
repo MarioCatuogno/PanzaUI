@@ -39,7 +39,6 @@ To replicate my setup, follow the install steps: [link here](https://github.com/
 Other addons (not mandatory):
 
 * [__JiberishUI Icons__](https://www.curseforge.com/wow/addons/jiberish-fabled-icons): replaces the default class icons.
-* [__LeatrixMaps__](https://www.curseforge.com/wow/addons/leatrix-maps) / [__LeatrixPlus__](https://www.curseforge.com/wow/addons/leatrix-plus): adds UX improvements and map enhancements.
 * [__LS:Minimap__](https://www.curseforge.com/wow/addons/ls-minimap): reskin the default Minimap.
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 
