@@ -38,6 +38,7 @@ To replicate my setup, follow the install steps: [link here](https://github.com/
 
 Other addons (not mandatory):
 
+* [__Frogski's Instant Cast Bar__](https://www.curseforge.com/wow/addons/frogskis-instant-cast-bar): great addon that adds a blue timer bar that appears after the player uses an instant-cast spell.
 * [__JiberishUI Icons__](https://www.curseforge.com/wow/addons/jiberish-fabled-icons): replaces the default class icons.
 * [__LS:Minimap__](https://www.curseforge.com/wow/addons/ls-minimap): reskin the default Minimap.
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
