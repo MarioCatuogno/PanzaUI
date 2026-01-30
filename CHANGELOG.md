@@ -1,6 +1,6 @@
 ## 1.4-RELEASE
 
-This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following: Edit Mode Tweaks, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI.
+This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following: Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI.
 
 ### 🛠️ Core
 
