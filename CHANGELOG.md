@@ -59,6 +59,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Added a new Cooldown Manager profile for Druid Guardian
 * Mage Frost - Modified the Essential Cooldown abilities
 * Monk Brewmaster - Modified the Essential Cooldown abilities
+* Monk Windwalker - Added visual alerts for some Essential Cooldown abilities
 * Monk Windwalker - Modified the Essential Cooldown abilities
 
 ### 📏 Various
