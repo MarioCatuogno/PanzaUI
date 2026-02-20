@@ -58,6 +58,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 ### 🧮 Class CDM
 
 * Added a new Cooldown Manager profile for Druid Guardian
+* Added a new Cooldown Manager profile for Shaman Enhancement
 * Mage Frost - Modified the Essential Cooldown abilities
 * Monk Brewmaster - Added visual alerts for some Essential Cooldown abilities
 * Monk Brewmaster - Modified the Essential Cooldown abilities
