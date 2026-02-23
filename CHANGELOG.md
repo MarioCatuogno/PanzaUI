@@ -28,9 +28,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * BlizzUI - Adjusted the position of the Quest Tracker
 * BlizzUI - Increased the size of the Damage Meter bars
 * Cooldown Manager Centered - Changed the text size for Essentials and Utilities
-* Details - Automated hide/show during combat or in istance
-* Details - Changed the icons to JiberishUI
-* Details - Changed the texture to WGlass
 * EnhanceQoL - Added mouse ring to cursor
 * EnhanceQoL - Added mouseover to Action Bar 5
 * EnhanceQoL - Added Teleport panel to World Map
