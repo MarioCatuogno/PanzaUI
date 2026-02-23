@@ -70,9 +70,9 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 📏 Various
 
-* Updated WTF variables for several addons
 * Updated documentation to the latest version of UI
 * Updated TOC to newest patch
+* Updated WTF variables for several addons
 
 ### ⌨️ Macros
 
