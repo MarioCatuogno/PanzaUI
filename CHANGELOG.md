@@ -34,6 +34,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Added mouse ring to cursor
 * EnhanceQoL - Added mouseover to Action Bar 5
 * EnhanceQoL - Added Teleport panel to World Map
+* EnhanceQoL - Added the Combat alert frame
 * EnhanceQoL - Adjusted the position of the toast frame
 * EnhanceQoL - Configured Boss frames
 * EnhanceQoL - Configured resource bar for Druid, Mage, Monk and Shaman (replaced Sensei bar)
