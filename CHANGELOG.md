@@ -16,8 +16,8 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Better Blizzard Frames - Changed the font size of Party/Raid frames
 * Better Blizzard Frames - Changed the texture of the Cast Bar to default one
 * Better Blizzard Frames - Changed the texture of the Player, Target and Raid frames to WGlass
-* Better Blizzard Frames - Increased the size of text for Player/Target frames
 * Better Blizzard Frames - Disabled some settings and moved to Enhance QoL
+* Better Blizzard Frames - Increased the size of text for Player/Target frames
 * Better Blizzard Frames - Moved the FPS frame
 * Better Blizzard Frames - Removed the Level text from Player/Target frames
 * BlizzUI - Adjusted the position of the Buffs frame
