@@ -30,6 +30,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Cooldown Manager Centered - Changed the text size for Essentials and Utilities
 * EnhanceQoL - Added mouse ring to cursor
 * EnhanceQoL - Added mouseover to Action Bar 5
+* EnhanceQoL - Added Roboto Condensed Bold as global font
 * EnhanceQoL - Added Teleport panel to World Map
 * EnhanceQoL - Added the Combat alert frame
 * EnhanceQoL - Adjusted the position of the DPS meter
