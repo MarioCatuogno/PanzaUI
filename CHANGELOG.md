@@ -37,7 +37,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Adjusted the position of the DPS meter
 * EnhanceQoL - Adjusted the position of the toast frame
 * EnhanceQoL - Configured Boss frames
-* EnhanceQoL - Configured resource bar for Druid, Mage, Monk, Rogue and Shaman (replaced Sensei bar)
 * EnhanceQoL - Configured Tooltips frame
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
 * EnhanceQoL - Enabled the option to fast auto-loot
@@ -55,7 +54,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Platynator - Fixed the Debuffs frame to show every debuffs
 * Platynator - Removed the option for Friendly Nameplates
 * Platynator - Removed the option for the Simplified Nameplates
-* Sensei - Removed profile and switched to EnhanceQoL addon
+* Sensei - Adjusted the size and anchored to Cooldown Manager
 
 ### 🧮 Class CDM
 
