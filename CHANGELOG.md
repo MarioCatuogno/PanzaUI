@@ -65,6 +65,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Monk Brewmaster - Adjusted size to include Sensei Resource Bar
 * Monk Brewmaster - Modified the Essential Cooldown abilities
 * Monk Windwalker - Added visual alerts for some Essential Cooldown abilities
+* Monk Windwalker - Adjusted size to include Sensei Resource Bar
 * Monk Windwalker - Modified the Essential Cooldown abilities
 * Shaman Elemental - Added visual alerts for some Essential Cooldown abilities
 
