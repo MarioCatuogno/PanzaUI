@@ -42,6 +42,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Enabled the option to fast auto-loot
 * EnhanceQoL - Hidden Micro Menu frame
 * EnhanceQoL - Hidden Minimap addon button
+* EnhanceQoL - Hidden Realm names from friendly nameplates
 * Platynator - Added target role for friendly nameplates
 * Platynator - Adjusted the Simplified scale
 * Platynator - Changed the alpha channel for non targeted nameplates
