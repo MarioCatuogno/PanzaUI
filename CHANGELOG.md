@@ -38,6 +38,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Adjusted the position of the DPS meter
 * EnhanceQoL - Adjusted the position of the toast frame
 * EnhanceQoL - Configured Boss frames
+* EnhanceQoL - Configured Damage Meter frame
 * EnhanceQoL - Configured Tooltips frame
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
 * EnhanceQoL - Enabled the option to fast auto-loot
