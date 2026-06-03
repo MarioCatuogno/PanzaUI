@@ -29,7 +29,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * BlizzUI - Adjusted the position of the Quest Tracker
 * BlizzUI - Increased the size of the Damage Meter bars
 * Cooldown Manager Centered - Changed the text size for Essentials and Utilities
-* Details - Added a new Details profile based on Details! Skin Midnight
 * EnhanceQoL - Added mouse ring to cursor
 * EnhanceQoL - Added mouseover to Action Bar 5
 * EnhanceQoL - Added Roboto Condensed Bold as global font
