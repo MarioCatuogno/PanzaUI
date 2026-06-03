@@ -24,7 +24,6 @@ If you run into problems, open an issue and I’ll help as much as I can: [link 
 
 PanzaUI uses the following required components:
 
-* [__Better Blizzard Frames__](https://www.curseforge.com/wow/addons/betterblizzframes): replaces player, target, focus, arena and target-of-target frames.
 * [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
 * [__Cooldown Manager Centered__](https://www.curseforge.com/wow/addons/cooldown-manager-centered): skins and configure the Cooldown Manager.
 * [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
@@ -38,8 +37,6 @@ To replicate my setup, follow the install steps: [link here](https://github.com/
 
 Other addons (not mandatory):
 
-* [__Frogski's Instant Cast Bar__](https://www.curseforge.com/wow/addons/frogskis-instant-cast-bar): great addon that adds a blue timer bar that appears after the player uses an instant-cast spell.
-* [__LS:Minimap__](https://www.curseforge.com/wow/addons/ls-minimap): reskin the default Minimap.
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
 
 ## Screenshots
