@@ -1,6 +1,6 @@
 ## 1.4-RELEASE
 
-This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following: Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI.
+This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following: Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI. I've included also a Better Blizzard Frames profile even if I've switched to EQOL unit frames.
 
 ### 🛠️ Core
 
@@ -39,6 +39,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Adjusted the position of the toast frame
 * EnhanceQoL - Configured Boss frames
 * EnhanceQoL - Configured Damage Meter frame
+* EnhanceQoL - Configured Minimap frame
 * EnhanceQoL - Configured Tooltips frame
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
 * EnhanceQoL - Enabled the option to fast auto-loot
