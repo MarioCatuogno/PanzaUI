@@ -24,20 +24,20 @@ If you run into problems, open an issue and I’ll help as much as I can: [link 
 
 PanzaUI uses the following required components:
 
-* [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
 * [__Cooldown Manager Centered__](https://www.curseforge.com/wow/addons/cooldown-manager-centered): skins and configure the Cooldown Manager.
-* [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
 * [__Enhance QoL__](https://www.curseforge.com/wow/addons/eqol): add tons of QoL features to the UI.
-* [__Masque__](https://www.curseforge.com/wow/addons/masque): skins action buttons and provides consistent icon styling.
 * [__Platynator__](https://www.curseforge.com/wow/addons/platynator): customizes enemy and friendly nameplates.
 * [__SharedMedia__](https://www.curseforge.com/wow/addons/sharedmedia): provides textures and fonts used across the UI.
-* [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
 
 To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
 Other addons (not mandatory):
 
+* [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
+* [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
+* [__Masque__](https://www.curseforge.com/wow/addons/masque): skins action buttons and provides consistent icon styling.
 * [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
+* [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
 
 ## Screenshots
 

@@ -58,7 +58,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Platynator - Fixed the Debuffs frame to show every debuffs
 * Platynator - Removed the option for Friendly Nameplates
 * Platynator - Removed the option for the Simplified Nameplates
-* Sensei - Adjusted the size and anchored to Cooldown Manager
 
 ### 🧮 Class CDM
 
