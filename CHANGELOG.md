@@ -85,7 +85,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### ⌨️ Macros
 
-* Updated Druid macros
+* Removed macro's PDFs
 
 ## 1.3-RELEASE
 
