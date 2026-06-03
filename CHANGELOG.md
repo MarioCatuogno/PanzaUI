@@ -39,6 +39,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Adjusted the position of the DPS meter
 * EnhanceQoL - Adjusted the position of the toast frame
 * EnhanceQoL - Configured Boss frames
+* EnhanceQoL - Configured Cast Bars frames
 * EnhanceQoL - Configured Damage Meter frame
 * EnhanceQoL - Configured Minimap frame
 * EnhanceQoL - Configured Raid frames
