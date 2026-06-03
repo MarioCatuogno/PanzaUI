@@ -20,9 +20,9 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * Better Blizzard Frames - Increased the size of text for Player/Target frames
 * Better Blizzard Frames - Moved the FPS frame
 * Better Blizzard Frames - Removed the Level text from Player/Target frames
+* BlizzUI - Adjusted the position of all frames for EQOL Unit Frames
 * BlizzUI - Adjusted the position of the Buffs frame
 * BlizzUI - Adjusted the position of the Buffs Tracker of the Cooldown Manager
-* BlizzUI - Adjusted the position of central frames to include Sensei Resource Bar
 * BlizzUI - Adjusted the position of the Damage Meter frame
 * BlizzUI - Adjusted the position of the Loot Window
 * BlizzUI - Adjusted the position of the Micro Menu
