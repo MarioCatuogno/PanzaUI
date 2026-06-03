@@ -42,6 +42,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Configured Tooltips frame
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
 * EnhanceQoL - Enabled the option to fast auto-loot
+* EnhanceQoL - Enabled the UI cross-hair during combat
 * EnhanceQoL - Hidden Micro Menu frame
 * EnhanceQoL - Hidden Minimap addon button
 * EnhanceQoL - Hidden Realm names from friendly nameplates
