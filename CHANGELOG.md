@@ -41,6 +41,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Configured Boss frames
 * EnhanceQoL - Configured Damage Meter frame
 * EnhanceQoL - Configured Minimap frame
+* EnhanceQoL - Configured Raid frames
 * EnhanceQoL - Configured Tooltips frame
 * EnhanceQoL - Enabled the option to automatically repair and sell junk items
 * EnhanceQoL - Enabled the option to fast auto-loot
