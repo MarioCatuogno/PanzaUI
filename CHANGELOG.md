@@ -27,6 +27,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * BlizzUI - Adjusted the position of the Loot Window
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Quest Tracker
+* BlizzUI - Adjusted the position of the Tooltip window
 * BlizzUI - Increased the size of the Damage Meter bars
 * Cooldown Manager Centered - Changed the text size for Essentials and Utilities
 * EnhanceQoL - Added FPS counter in Minimap frame
