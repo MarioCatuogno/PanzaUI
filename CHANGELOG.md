@@ -1,6 +1,6 @@
 ## 1.4-RELEASE
 
-This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following: Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI. I've included also a Better Blizzard Frames profile even if I've switched to EQOL unit frames.
+This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following from the previous version: Better Blizz Frames, Details, Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS:Maps, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI.
 
 ### 🛠️ Core
 
@@ -13,13 +13,6 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 
 ### 👤 Profiles
 
-* Better Blizzard Frames - Changed the font size of Party/Raid frames
-* Better Blizzard Frames - Changed the texture of the Cast Bar to WGlass
-* Better Blizzard Frames - Changed the texture of the Player, Target and Raid frames to WGlass
-* Better Blizzard Frames - Disabled some settings and moved to Enhance QoL
-* Better Blizzard Frames - Increased the size of text for Player/Target frames
-* Better Blizzard Frames - Moved the FPS frame
-* Better Blizzard Frames - Removed the Level text from Player/Target frames
 * BlizzUI - Adjusted the position of all frames for EQOL Unit Frames
 * BlizzUI - Adjusted the position of the Buffs frame
 * BlizzUI - Adjusted the position of the Buffs Tracker of the Cooldown Manager
