@@ -24,23 +24,12 @@
 If you want, you can import Cooldown Manager class profiles (see below) but these are not mandatory to replicate the UI.
 
 * [Druid - Feral](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Feral.txt))
+* [Druid - Guardian](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Guardian.txt))
 * [Mage - Frost](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Mage-Frost.txt))
 * [Monk - Brewmaster](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Brewmaster.txt))
 * [Monk - Windwalker](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Windwalker.txt))
-* [Shaman - Elemental](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt))p
-
-### Keybinds 
-
-Keep in mind that these keybinds are used by me with __Razer Naga V2 Pro__ mouse.
-
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
-* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
-* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
-* [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_paladin.pdf)
-* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_priest.pdf)
-* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
-* [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_warrior.pdf)
+* [Shaman - Elemental](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt))
+* [Shaman - Enhancement](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Enhancement.txt))
 
 ## Common questions
 
