@@ -1,17 +1,23 @@
 
 WilduToolsDB = {
 ["profileKeys"] = {
-["Panuozzo - Draenor"] = "Default",
+["Scaloppina - Draenor"] = "Default",
 ["Pizzadino - Draenor"] = "Default",
-["Gelatino - Draenor"] = "Default",
-["Pulcinhell - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
+["Percoca - Draenor"] = "Default",
+["Panuozzo - Draenor"] = "Default",
+["Sporcaccione - Draenor"] = "Default",
+["Gelatino - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
+["Pulcinhell - Draenor"] = "Default",
+["Jammbell - Argent Dawn"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "Default",
-["Percoca - Draenor"] = "Default",
+["Tabbo - Argent Dawn"] = "Default",
+["Branthar - Argent Dawn"] = "Default",
 ["Nutellone - Draenor"] = "Default",
-["Formaggino - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "Default",
+["Ossosacro - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
@@ -19,7 +25,7 @@ WilduToolsDB = {
 ["rangeCheck"] = {
 ["alpha"] = 1,
 },
-["targetCombat"] = {
+["playerCombat"] = {
 ["alpha"] = 1,
 },
 ["gcdHistory"] = {
@@ -28,19 +34,22 @@ WilduToolsDB = {
 ["mountIcon"] = {
 ["alpha"] = 1,
 },
-["playerCombat"] = {
+["targetCombat"] = {
 ["alpha"] = 1,
 },
 ["rangeMeleeIndicator"] = {
 ["alpha"] = 1,
 },
 },
-["general_showMinimapButton"] = false,
 ["automation_gossipEnabled"] = true,
 ["blizzUI_betterSuperTracked"] = true,
-["addonsTweaks_bbf_boss_texture_change"] = true,
+["wilduUI_preyBar"] = true,
 ["blizzUI_cleanupObjectiveTracker"] = true,
 ["automation_autoBuyDecorItemsEnabled"] = true,
+["blizzUI_damageMeterTweaks"] = false,
+["general_showMinimapButton"] = false,
+["automation_dmgMeterAutoResetEnabled"] = false,
+["general_muteAllAddonPrints"] = true,
 },
 },
 }
