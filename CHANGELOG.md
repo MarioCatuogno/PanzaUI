@@ -7,6 +7,7 @@
 ### 👤 Profiles
 
 * EnhanceQoL - Changed the Minimap border texture
+* Platynator - Adjusted the text stack position on icons
 
 ### 🧮 Class CDM
 
