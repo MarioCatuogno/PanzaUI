@@ -48,6 +48,7 @@ Finally I've also adjusted the UI to work with 2560x1440 monitor!
 * EnhanceQoL - Hidden Minimap addon button
 * EnhanceQoL - Hidden Realm names from friendly nameplates
 * Platynator - Added target role for friendly nameplates
+* Platynator - Adjusted the UI to match 2560x1440 resolution
 * Platynator - Adjusted the Simplified scale
 * Platynator - Changed the alpha channel for non targeted nameplates
 * Platynator - Changed the border of targeted/mouseover nameplates
