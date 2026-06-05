@@ -5,6 +5,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 ### 🛠️ Core
 
 * Added a CVar to force friendly nameplates to show only the name
+* Added a new border based on Plusmouse Platynator called "platy_border" in SharedMedia
 * Changed the Tooltips health bar texture WGlass
 * Forced the max foreground FPS to 8
 * Removed unnecessary stuff
