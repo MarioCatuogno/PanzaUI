@@ -194,157 +194,157 @@ This is a complete overhaul of PanzaUI, ready for Midnight!
 
 ### 🛠️ Core
 
-* Added a new Power Bar frame for player
-* Added new CVars for Camera settings
-* Added new CVars for Graphics settings
-* Changed icons for various WAs
-* Cleaned the code
-* Fixed a problem with alpha level of some scripts
-* Fixed a problem with GCD blink showing on every cooldown on action bars
-* Fixed a problem with Player and Target frame not showing [[#75]](https://github.com/MarioCatuogno/PanzaUI/issues/75)
-* Fixed frame strata level of Nameplates
-* Increased size of Minimap Zone and Clock text
-* Moved all PanzaUI features from external addon to a new WA [[#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)]
+* Added a new Power Bar frame for the player
+* Added new CVars for camera settings
+* Added new CVars for graphics settings
+* Changed icons for various WeakAuras
+* Cleaned up the code
+* Fixed an issue with the alpha level of some scripts
+* Fixed an issue with the GCD blink showing on every cooldown on action bars
+* Fixed an issue with Player and Target frames not showing [#75](https://github.com/MarioCatuogno/PanzaUI/issues/75)
+* Fixed the frame strata level of nameplates
+* Increased the size of the Minimap Zone and Clock text
+* Moved all PanzaUI features from an external addon to a new WeakAura [#72](https://github.com/MarioCatuogno/PanzaUI/issues/72)
 * Reordered CVars
 * Removed core.lua and PanzaUI.toc
-* Removed Saved Variables folder
-* Rewrite the code for the Quest Tracker WA
-* Updated Raid Ability Timeline to latest version of WA
+* Removed the Saved Variables folder
+* Rewrote the code for the Quest Tracker WeakAura
+* Updated the Raid Ability Timeline to the latest WeakAura version
 
 ### ⚙️ Utilities
 
 * Added a mouse cursor glow animation
 * Added an alert for banquets or feasts
-* Added an alert for flaks and potion cauldrons
-* Added an alert for Insanity bar in Visions of N'Zoth Revisited
-* Added an alert for low supplies (eg. flasks, potions, mana oils, etc.) [[#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)]
+* Added an alert for flasks and potion cauldrons
+* Added an alert for the Insanity bar in Visions of N'Zoth Revisited
+* Added an alert for low supplies (e.g., flasks, potions, mana oils) [#73](https://github.com/MarioCatuogno/PanzaUI/issues/73)
 * Adjusted the Movement group aura position
-* Changed the Crosshair to be always active during Skyriding
-* Changed the texture for Skyriding crosshair race target
-* Fixed an issue with Low Supplies tracker
-* Fixed an issue with Mana group tracker
-* Moved some auras to Core WA
+* Changed the crosshair to always be active during Skyriding
+* Changed the texture for the Skyriding crosshair race target
+* Fixed an issue with the Low Supplies tracker
+* Fixed an issue with the Mana group tracker
+* Moved some auras to the Core WeakAura
 * Removed unused alerts
-* Updated Interrupt Tracker to latest version of WA
+* Updated the Interrupt Tracker to the latest WeakAura version
 
-### 🧮 Class Weak Auras
+### 🧮 Class WeakAuras
 
-* All Classes - Moved the Buff frame to better integrate the new Power Bar
-* Class Template - Added a new WA template to configure and tweaks your class/spec [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
-* Class Template - Adjusted Cooldowns tracker position
-* Death Knight - Added new auras for Frost spec [[#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)]
-* Death Knight - Adjusted Cooldowns tracker position
-* Druid - Adjusted Cooldowns tracker position
-* Hunter - Adjusted Cooldowns tracker position
-* Mage - Adjusted Cooldowns tracker position
+* All Classes - Moved the Buff frame to better integrate with the new Power Bar
+* Class Template - Added a new WeakAura template to configure and tweak your class/spec [#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)
+* Class Template - Adjusted the Cooldowns tracker position
+* Death Knight - Added new auras for the Frost spec [#70](https://github.com/MarioCatuogno/PanzaUI/issues/70)
+* Death Knight - Adjusted the Cooldowns tracker position
+* Druid - Adjusted the Cooldowns tracker position
+* Hunter - Adjusted the Cooldowns tracker position
+* Mage - Adjusted the Cooldowns tracker position
 * Mage - Renamed all auras for better clarity
-* Monk - Added Heart of the Jade Serpent to Buffs tracker
-* Monk - Added Jade Empowerment to Buffs tracker
-* Monk - Added Slicing Winds to Buffs tracker
-* Monk - Added The Emperor's Capacitor to Buffs tracker
-* Monk - Adjusted Cooldowns tracker position
-* Monk - Fixed a problem with the Teaching of the Monastery buff
-* Monk - Removed unnecessary Buffs
+* Monk - Added Heart of the Jade Serpent to the Buffs tracker
+* Monk - Added Jade Empowerment to the Buffs tracker
+* Monk - Added Slicing Winds to the Buffs tracker
+* Monk - Added The Emperor's Capacitor to the Buffs tracker
+* Monk - Adjusted the Cooldowns tracker position
+* Monk - Fixed an issue with the Teaching of the Monastery buff
+* Monk - Removed unnecessary buffs
 * Monk - Renamed all auras for better clarity
-* Monk - Sorted the buffs in Buffs tracker
-* Paladin - Adjusted Cooldowns tracker position
-* Priest - Adjusted Cooldowns tracker position
-* Rogue - Added new auras for Assassination spec [[#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)]
-* Rogue - Adjusted Cooldowns tracker position
-* Shaman - Adjusted Cooldowns tracker position
-* Warlock - Added a new WA for Warlock class (WIP)
-* Warrior - Adjusted Cooldowns tracker position
+* Monk - Sorted the buffs in the Buffs tracker
+* Paladin - Adjusted the Cooldowns tracker position
+* Priest - Adjusted the Cooldowns tracker position
+* Rogue - Added new auras for the Assassination spec [#74](https://github.com/MarioCatuogno/PanzaUI/issues/74)
+* Rogue - Adjusted the Cooldowns tracker position
+* Shaman - Adjusted the Cooldowns tracker position
+* Warlock - Added a new WeakAura for the Warlock class (WIP)
+* Warrior - Adjusted the Cooldowns tracker position
 
 ### 👤 Profiles
 
 * Baganator - Added a new Baganator profile
-* BigWigs - Adjusted Messages frame position
-* BlizzUI - Adjusted Arena frame position
-* BlizzUI - Adjusted Quest frame position
-* BlizzUI - Adjusted Tooltip frame position
+* BigWigs - Adjusted the Messages frame position
+* BlizzUI - Adjusted the Arena frame position
+* BlizzUI - Adjusted the Quest frame position
+* BlizzUI - Adjusted the Tooltip frame position
 * Cell - Added a new Healer profile for raid frames
-* Cell - Adjusted position of raid and party frames
+* Cell - Adjusted the position of raid and party frames
 * Cell - Fixed frame visibility in Solo mode
-* Details - Fixed fonts size
-* Details - Fixed windows position
-* Details - Removed Scroll frame
-* Details - Removed second frame and added some automation for spec/role
+* Details - Fixed the font sizes
+* Details - Fixed the window positions
+* Details - Removed the Scroll frame
+* Details - Removed the second frame and added some automation for spec/role
 * FrameColor - Added a new Frame Color profile
 * Kui - Added a new Kui profile
-* MouseoverActionSettings - Added the automation to hide Quest Tracker during combat in raid
+* MouseoverActionSettings - Added automation to hide the Quest Tracker during combat in raids
 * MouseoverActionSettings - Fixed an event trigger for some action bars
 * Plater - Adjusted the health bar and cast bar width and height
-* Plater - Fixed CVars settings
-* Plater - Updated NPC Color profile and scripts from Jundies (link [here](https://wago.io/ak3iS95aa)) [[#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)]
-* Plater - Updates scripts from Jundies
-* SUF - Adjusted position of various frames
-* SUF - Configured Player frame for Warlock class
+* Plater - Fixed CVar settings
+* Plater - Updated the NPC Color profile and scripts from Jundies ([link](https://wago.io/ak3iS95aa)) [#76](https://github.com/MarioCatuogno/PanzaUI/issues/76)
+* Plater - Updated scripts from Jundies
+* SUF - Adjusted the position of various frames
+* SUF - Configured the Player frame for the Warlock class
 
 ### 📏 Various
 
-* Added a new guide to configure personal Class WAs
-* Added screenshots from previous versions of UI [[#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)]
-* Updated documentation to the latest version of UI
-* Updated screenshots to the latest version of UI
+* Added a new guide to configure personal Class WeakAuras
+* Added screenshots from previous versions of the UI [#71](https://github.com/MarioCatuogno/PanzaUI/issues/71)
+* Updated documentation to the latest UI version
+* Updated screenshots to the latest UI version
 
 ## 0.9.0-RELEASE
 
 ### 🛠️ Addon
 
-* Fixed Action Bar behaviour after patch 11.0.5
-* Removed the "hide UI while taxing" feature
-* Update TOC to newest patch
+* Fixed Action Bar behavior after patch 11.0.5
+* Removed the "hide UI while taxiing" feature
+* Updated TOC to the newest patch
 
 ### ⌨️ Macros
 
-* Added Druid macros for Balance spec [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
-* Added Hunter macros for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
-* Added Hunter macros for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
-* Added Priest macros for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
-* Added Warrior macros for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
-* Update Mage macros
-* Update Monk macros
-* Update Priest macros
-* Update Shaman macros
+* Added Druid macros for the Balance spec [#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)
+* Added Hunter macros for the Beast Mastery spec [#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* Added Hunter macros for the Marksmanship spec [#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)
+* Added Priest macros for the Discipline spec [#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)
+* Added Warrior macros for the Protection spec [#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)
+* Updated Mage macros
+* Updated Monk macros
+* Updated Priest macros
+* Updated Shaman macros
 
 ### 👤 Profiles
 
 * BlizzUI - Moved the Vehicle button
-* Cell - Adjusted Raid Frame position
-* Details - Increased combat update to 2.5 seconds
+* Cell - Adjusted the Raid Frame position
+* Details - Increased the combat update interval to 2.5 seconds
 * Details - Removed the end panel after M+
 * Frame Color - Added a new Frame Color profile to darken the UI
-* Plater - Updated NPC Color profile from Jundies's profile (link [here](https://wago.io/ak3iS95aa))
+* Plater - Updated the NPC Color profile from Jundies's profile ([link](https://wago.io/ak3iS95aa))
 * WA All Classes - Adjusted the Cooldown group aura position
-* WA Druid - Added Buffs, Cooldowns and Healer group auras [[#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)]
-* WA Hunter - Added Buffs and Cooldowns group auras for Beast Mastery spec [[#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)]
-* WA Hunter - Added Buffs and Cooldowns group auras for Marksmanship spec [[#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)]
+* WA Druid - Added Buffs, Cooldowns, and Healer group auras [#67](https://github.com/MarioCatuogno/PanzaUI/issues/67)
+* WA Hunter - Added Buffs and Cooldowns group auras for the Beast Mastery spec [#39](https://github.com/MarioCatuogno/PanzaUI/issues/39)
+* WA Hunter - Added Buffs and Cooldowns group auras for the Marksmanship spec [#65](https://github.com/MarioCatuogno/PanzaUI/issues/65)
 * WA Monk - Added a Buff aura to track Flurry Strikes
 * WA Monk - Added a Buff aura to track Ox Stance
-* WA Monk - Adjusted order of some Buff auras
-* WA Monk - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
-* WA Monk - Fixed a bug with Combo Strike aura
-* WA Priest - Added Buffs and Cooldowns group auras for Discipline spec [[#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)]
-* WA Shaman - Changed the purpose of Cooldowns group auras. Now it tracks the cooldowns of abilities longer of 1 minute
-* WA Utilities - Added a new aura for Marksmanship Hunter to dismiss pet in case of Lone Wolf talent
+* WA Monk - Adjusted the order of some Buff auras
+* WA Monk - Changed the purpose of the Cooldowns group auras to track cooldowns of abilities longer than 1 minute
+* WA Monk - Fixed a bug with the Combo Strike aura
+* WA Priest - Added Buffs and Cooldowns group auras for the Discipline spec [#66](https://github.com/MarioCatuogno/PanzaUI/issues/66)
+* WA Shaman - Changed the purpose of the Cooldowns group auras to track cooldowns of abilities longer than 1 minute
+* WA Utilities - Added a new aura for Marksmanship Hunter to dismiss the pet when the Lone Wolf talent is active
 * WA Utilities - Added a new Racing Timer for Skyriding races
-* WA Utilities - Added new movements for Druid class
-* WA Utilities - Added new movements for Hunter class
-* WA Utilities - Added new movements for Warrior class
-* WA Utilities - Added Valorstone tracker
+* WA Utilities - Added new movement auras for the Druid class
+* WA Utilities - Added new movement auras for the Hunter class
+* WA Utilities - Added new movement auras for the Warrior class
+* WA Utilities - Added a Valorstone tracker
 * WA Utilities - Adjusted the Movement group aura position
 * WA Utilities - Fixed a bug with the Boss cast bar
 * WA Utilities - Fixed a bug with the Low Mana alert
-* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
-* WA Utilities - Removed animation for Boss cast bar
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames during combat in dungeons and raids
+* WA Utilities - Removed the animation for the Boss cast bar
 * WA Utilities - Removed tracking for Health and Mana potions
-* WA Warrior - Added Buffs and Cooldowns group auras for Protection spec [[#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)]
+* WA Warrior - Added Buffs and Cooldowns group auras for the Protection spec [#35](https://github.com/MarioCatuogno/PanzaUI/issues/35)
 
 ### 📏 Various
 
-* Reduced the size of all PDFs containing the macros of the various classes
-* Updated documentation to the latest version of UI
-* Updated screenshots to the latest version of UI
+* Reduced the size of all PDFs containing class macro documentation
+* Updated documentation to the latest UI version
+* Updated screenshots to the latest UI version
 
 ## 0.8.2-RELEASE
 
