@@ -2,6 +2,8 @@
 
 ### 🛠️ Core
 
+* Forced the max foreground FPS to 60
+
 ### 👤 Profiles
 
 ### 🧮 Class CDM
@@ -21,7 +23,7 @@ The UI has also been adjusted to support 2560×1440 monitors.
 * Added a CVar to force friendly nameplates to show only the name
 * Added a new border ("platy_border") to SharedMedia, based on Plusmouse's Platynator
 * Changed the tooltip health bar texture to WGlass
-* Forced the max foreground FPS to 8
+* Forced the max background FPS to 8
 * Removed unnecessary elements
 * Resized the Spell Overlay frame to 75%
 * Reworked the core addon code for easier maintenance
