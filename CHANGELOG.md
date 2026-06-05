@@ -1,6 +1,7 @@
 ## 1.4-RELEASE
 
 This is a major release that adds a lot of QoL features thanks to the amazing addon [Enhance QoL](https://www.curseforge.com/wow/addons/eqol)! This addon replace the following from the previous version: Better Blizz Frames, Details, Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS:Maps, LS: Toasts, Sensei Resource Bar, Tom Tom and Waypoint UI.
+Finally I've also adjusted the UI to work with 2560x1440 monitor! 
 
 ### 🛠️ Core
 
@@ -22,6 +23,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * BlizzUI - Adjusted the position of the Micro Menu
 * BlizzUI - Adjusted the position of the Quest Tracker
 * BlizzUI - Adjusted the position of the Tooltip window
+* BlizzUI - Adjusted the UI to match 2560x1440 resolution
 * BlizzUI - Increased the size of the Damage Meter bars
 * Cooldown Manager Centered - Changed the text size for Essentials and Utilities
 * EnhanceQoL - Added FPS counter in Minimap frame
@@ -32,6 +34,7 @@ This is a major release that adds a lot of QoL features thanks to the amazing ad
 * EnhanceQoL - Added the Combat alert frame
 * EnhanceQoL - Adjusted the position of the DPS meter
 * EnhanceQoL - Adjusted the position of the toast frame
+* EnhanceQoL - Adjusted the UI to match 2560x1440 resolution
 * EnhanceQoL - Configured Boss frames
 * EnhanceQoL - Configured Cast Bars frames
 * EnhanceQoL - Configured Damage Meter frame
