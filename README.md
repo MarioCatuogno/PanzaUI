@@ -14,30 +14,33 @@
 
 </div>
 
-Hey there, fellow WoW players!
+A clean, minimally intrusive UI that preserves the look and feel of the default Blizzard interface. Compatible with all classes and built around the new Midnight addon restrictions.
 
-PanzaUI is a clean, minimally intrusive UI designed to feel and behave similarly to the default Blizzard interface. It works with any class and it is built around the new Midnight addon restrictions.
+__Note__: Designed for 2560×1440. Works at other resolutions with minor adjustments.
 
-If you run into problems, open an issue and I’ll help as much as I can: [link here](https://github.com/MarioCatuogno/PanzaUI/issues).
+Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
-## Addon required
+## Required Addons
 
-PanzaUI uses the following required components:
+| Addon | Description |
+|---|---|
+| [Cooldown Manager Centered](https://www.curseforge.com/wow/addons/cooldown-manager-centered) | Skins and configures the Cooldown Manager |
+| [Enhance QoL](https://www.curseforge.com/wow/addons/eqol) | Adds quality-of-life features to the UI |
+| [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/PanzaUI) | Core addon with minimal functionality |
+| [Platynator](https://www.curseforge.com/wow/addons/platynator) | Customizes enemy and friendly nameplates |
+| [SharedMedia](https://www.curseforge.com/wow/addons/sharedmedia) | Provides textures and fonts used across the UI |
 
-* [__Cooldown Manager Centered__](https://www.curseforge.com/wow/addons/cooldown-manager-centered): skins and configure the Cooldown Manager.
-* [__Enhance QoL__](https://www.curseforge.com/wow/addons/eqol): add tons of QoL features to the UI.
-* [__Platynator__](https://www.curseforge.com/wow/addons/platynator): customizes enemy and friendly nameplates.
-* [__SharedMedia__](https://www.curseforge.com/wow/addons/sharedmedia): provides textures and fonts used across the UI.
+To replicate this setup, follow the [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
-To replicate my setup, follow the install steps: [link here](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
+## Optional Addons
 
-Other addons (not mandatory):
-
-* [__Chattynator__](https://www.curseforge.com/wow/addons/chattynator): skins the chat frame and enable chat channel configuration.
-* [__DialogueUI__](https://www.curseforge.com/wow/addons/dialogueui ): skins the quest/dialogue UI.
-* [__Masque__](https://www.curseforge.com/wow/addons/masque): skins action buttons and provides consistent icon styling.
-* [__Plumber__](https://www.curseforge.com/wow/addons/plumber): a collection of QoL features.
-* [__WilduTools__](https://www.curseforge.com/wow/addons/wildutools): tidies and enhances the UI and also automates some gameplay tasks.
+| Addon | Description |
+|---|---|
+| [Chattynator](https://www.curseforge.com/wow/addons/chattynator) | Skins the chat frame and enables chat channel configuration |
+| [DialogueUI](https://www.curseforge.com/wow/addons/dialogueui) | Skins the quest and dialogue UI |
+| [Masque](https://www.curseforge.com/wow/addons/masque) | Skins action buttons and provides consistent icon styling |
+| [Plumber](https://www.curseforge.com/wow/addons/plumber) | A collection of quality-of-life features |
+| [WilduTools](https://www.curseforge.com/wow/addons/wildutools) | Tidies and enhances the UI; automates some gameplay tasks |
 
 ## Screenshots
 
