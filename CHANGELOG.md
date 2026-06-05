@@ -1,3 +1,15 @@
+## 1.5-RELEASE
+
+### 🛠️ Core
+
+### 👤 Profiles
+
+### 🧮 Class CDM
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 1.4-RELEASE
 
 This is a major release that adds many quality-of-life features thanks to the amazing [Enhance QoL](https://www.curseforge.com/wow/addons/eqol) addon! It replaces the following addons from the previous version: Better Blizz Frames, Details, Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Maps, LS: Toasts, Sensei Resource Bar, TomTom, and Waypoint UI.
