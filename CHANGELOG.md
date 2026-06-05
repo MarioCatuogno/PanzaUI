@@ -113,37 +113,37 @@ This is a minor release that fixes some bugs in the PanzaUI addon and improves t
 
 ## 1.2-RELEASE
 
-This last version is tested with Midnight pre-patch. Compared to the previous one I've switched to Blizzard Cooldown Manager to track abilities and utilities. I've also created CDM profiles for some classes and switched the font from Expressway to Roboto Condensed Bold.
+This version is tested with the Midnight pre-patch. Compared to the previous release, it switches to the Blizzard Cooldown Manager for tracking abilities and utilities, adds CDM profiles for several classes, and changes the font from Expressway to Roboto Condensed Bold.
 
 ### 🛠️ Core
 
 * Cleaned up the code
 * Removed Garrison button scale
-* Removed graphics settings in CVars
+* Removed graphics settings from CVars
 
 ### 👤 Profiles
 
 * Added a new Cooldown Manager Centered profile
-* Added new profiles for Cooldown Manager for Druid Feral
-* Added new profiles for Cooldown Manager for Mage Frost
-* Added new profiles for Cooldown Manager for Monk Brewmaster
-* Added new profiles for Cooldown Manager for Monk Windwalker
-* Added new profiles for Cooldown Manager for Shaman Elemental
+* Added new Cooldown Manager profiles for Druid - Feral
+* Added new Cooldown Manager profiles for Mage - Frost
+* Added new Cooldown Manager profiles for Monk - Brewmaster
+* Added new Cooldown Manager profiles for Monk - Windwalker
+* Added new Cooldown Manager profiles for Shaman - Elemental
 * Better Blizzard Frames - Changed the font to "Roboto Condensed Bold"
 * Better Blizzard Frames - Formatted health numbers
-* Better Blizzard Frames - Hide hit indicator on pet frame
-* BlizzUI - Adjusted the entire UI for Midnight pre-patch
+* Better Blizzard Frames - Hidden hit indicator on pet frame
+* BlizzUI - Adjusted the entire UI for the Midnight pre-patch
 * Platynator - Changed the font to "Roboto Condensed Bold"
 * Sensei - Changed the font to "Roboto Condensed Bold"
 
 ### 📏 Various
 
-* Changed the fonts to "Roboto Condensed Bold"
+* Changed the font to "Roboto Condensed Bold"
 * Updated WTF variables for several addons
 * Updated documentation to include common issues
-* Updated documentation to the latest version of UI
+* Updated documentation to the latest UI version
 * Updated documentation with links to external addons
-* Updated TOC to newest patch
+* Updated TOC to the newest patch
 
 ### ⌨️ Macros
 
@@ -155,40 +155,40 @@ This last version is tested with Midnight pre-patch. Compared to the previous on
 
 This is a complete overhaul of PanzaUI, ready for Midnight!
 
-⚠️ Due to the changes to addons in Midnight, switched again to a proper addon, moving what is possible from Weakauras (sigh).
+⚠️ Due to Midnight's addon changes, the UI has switched back to a proper addon, migrating what was possible from WeakAuras.
 
 ### 🛠️ Core
 
-* Added auto-collapse functionality to Buffs frame
-* Added a Cvar section with useful Cvars
-* Adjusted Quest Tracker frame size
-* Configured default minimap
-* Reskinned the health bar texture of the Blizzard default Tooltip
+* Added auto-collapse functionality to the Buffs frame
+* Added a CVar section with useful CVars
+* Adjusted the Quest Tracker frame size
+* Configured the default minimap
+* Reskinned the health bar texture of the default Blizzard tooltip
 
 ### 👤 Profiles
 
-* Added a new BetterBlizzardFrames profile (goodbye SUF :( )
+* Added a new Better Blizzard Frames profile (goodbye SUF)
 * Added a new Platynator profile
 * Added a new Sensei profile for secondary power bars
 * BlizzUI - Updated the entire UI for Midnight
-* Removed Baganator profile
-* Removed Better Blizzard Plates profile
-* Removed Big Wigs profile
-* Removed Cell profile
-* Removed Details profile
-* Removed Frame Color profile
-* Removed Mouseover Action Settings profile
-* Removed Plater profile
-* Removed SUF profile
+* Removed the Baganator profile
+* Removed the Better Blizzard Plates profile
+* Removed the Big Wigs profile
+* Removed the Cell profile
+* Removed the Details profile
+* Removed the Frame Color profile
+* Removed the Mouseover Action Settings profile
+* Removed the Plater profile
+* Removed the SUF profile
 
 ### 📏 Various
 
 * Added WTF variables for several addons
-* Removed all class WA
-* Removed Class Template WA due to WA not being supported anymore in Midnight
-* Removed Core and Utilities WA
+* Removed all class WeakAuras
+* Removed Class Template WeakAuras due to WeakAuras no longer being supported in Midnight
+* Removed Core and Utilities WeakAuras
 * Removed unnecessary documentation for Midnight
-* Updated documentation to the latest version of UI
+* Updated documentation to the latest UI version
 
 ## 1.0-RELEASE
 
