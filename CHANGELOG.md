@@ -350,113 +350,113 @@ This is a complete overhaul of PanzaUI, ready for Midnight!
 
 ### ⌨️ Macros
 
-* Added Priest macros for Holy spec [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
-* Update Mage macros for Frost spec
-* Update Shaman macros for Restoration spec
+* Added Priest macros for the Holy spec [#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* Updated Mage macros for the Frost spec
+* Updated Shaman macros for the Restoration spec
 
 ### 👤 Profiles
 
 * BigWigs - Adjusted alpha to 0 for Nameplate icons
 * BigWigs - Adjusted font settings for Messages
 * BlizzUI - Resized the Buffs/Debuffs frame
-* WA Mage - Fixed a bug with Icicles tracking aura
-* WA Monk - Fixed strata for Healer auras
-* WA Priest - Added Buffs, Cooldowns and Healer group auras [[#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)]
-* WA Shaman - Fixed strata for Healer auras
+* WA Mage - Fixed a bug with the Icicles tracking aura
+* WA Monk - Fixed the strata for Healer auras
+* WA Priest - Added Buffs, Cooldowns, and Healer group auras [#38](https://github.com/MarioCatuogno/PanzaUI/issues/38)
+* WA Shaman - Fixed the strata for Healer auras
 * WA Utilities - Added a new Cast Bar aura for Bosses
-* WA Utilities - Added a tracker for Healthstones, Health and Mana potions
-* WA Utilities - Added new alerts for Priest class
-* WA Utilities - Added new movements for Priest class
-* WA Utilities - Fixed a bug with Combat Timer aura in Alert group
+* WA Utilities - Added a tracker for Healthstones, Health, and Mana potions
+* WA Utilities - Added new alerts for the Priest class
+* WA Utilities - Added new movement auras for the Priest class
+* WA Utilities - Fixed a bug with the Combat Timer aura in the Alert group
 * WA Utilities - Fixed a bug with the Skyriding crosshair during races
-* WA Utilities - Fixed some mispelling in Alert group
-* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
-* WA Utilities - Improved performance removing unnecessary Model from Cast Bar auras
+* WA Utilities - Fixed some misspellings in the Alert group
+* WA Utilities - Fixed the function to automatically hide some Quest Tracker frames during combat in dungeons and raids
+* WA Utilities - Improved performance by removing unnecessary Models from Cast Bar auras
 * WA Utilities - Updated the Interrupt Tracker to the latest version of [this](https://wago.io/MInterruptTracker)
 
 ### 📏 Various
 
-* Updated documentation to the latest version of UI
+* Updated documentation to the latest UI version
 
 ## 0.8.1-RELEASE
 
 ### ⌨️ Macros
 
-* Updated Mage macros for Frost spec
-* Updated Shaman macros for Elemental spec [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* Updated Mage macros for the Frost spec
+* Updated Shaman macros for the Elemental spec [#32](https://github.com/MarioCatuogno/PanzaUI/issues/32)
 
 ### 👤 Profiles
 
-* BigWigs - Removed all Nameplates icon auras for all TWW Dungeons
-* BigWigs - Resized Messages frame
-* BlizzUI - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
-* Cell - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
-* Plater - Added arrows to Target nameplate
-* Plater - Adjusted Plater Top and Bottom lock to screen to 0.08
-* Plater - Changed NPC Color profile from Quazii to Jundies (link [here](https://wago.io/ak3iS95aa))
+* BigWigs - Removed all Nameplate icon auras for all TWW Dungeons
+* BigWigs - Resized the Messages frame
+* BlizzUI - Adjusted frames to create more space in the center of the screen [#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Cell - Adjusted frames to create more space in the center of the screen [#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* Plater - Added arrows to the Target nameplate
+* Plater - Adjusted the Plater Top and Bottom screen lock to 0.08
+* Plater - Changed the NPC Color profile from Quazii to Jundies ([link](https://wago.io/ak3iS95aa))
 * Plater - Changed the size of Special Buff
-* Plater - Changed the size of Target nameplate
-* Plater - Removed Quest Icon on nameplates
-* SUF - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
-* WA Mage - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
-* WA Mage - Fixed some bugs in Buffs aura
-* WA Monk - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
-* WA Paladin - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
-* WA Shaman - Added auras for Elemental specialization [[#32]](https://github.com/MarioCatuogno/PanzaUI/issues/32)
-* WA Shaman - Changed anchor for Buffs aura (now it's anchored to Action Bar 5)
-* WA Utilities - Added a function to automatically hide some Quest Tracker frames while in combat in Dungeon/Raids
-* WA Utilities - Added new Alerts for Delves to track Brann's experience and number of Coffer Keys available
-* WA Utilities - Adjusted frames to get more space in the center of the screen [[#56]](https://github.com/MarioCatuogno/PanzaUI/issues/56)
-* WA Utilities - Adjusted size and position ot Interrupt tracker aura
-* WA Utilities - Changed anchor for Alert auras (should work with different monitor resolution)
-* WA Utilities - Changed anchor for Cast Bar auras (now it's anchored to Player Cast Bar frame)
-* WA Utilities - Cleanup some unnecessary auras to improve performance
-* WA Utilities - Fixed cooldown text position in Movement tracker aura
-* WA Utilities - Fixed the trigger for Elite/Rares icon on nameplates
-* WA Utilities - Removed Health text for SUF frames (using custom Tag instead)
-* WA Utilities - Removed Right and Left arrow of Nameplates
+* Plater - Changed the size of the Target nameplate
+* Plater - Removed the Quest Icon from nameplates
+* SUF - Adjusted frames to create more space in the center of the screen [#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* WA Mage - Changed the anchor for the Buffs aura (now anchored to Action Bar 5)
+* WA Mage - Fixed some bugs in the Buffs aura
+* WA Monk - Changed the anchor for the Buffs aura (now anchored to Action Bar 5)
+* WA Paladin - Changed the anchor for the Buffs aura (now anchored to Action Bar 5)
+* WA Shaman - Added auras for the Elemental specialization [#32](https://github.com/MarioCatuogno/PanzaUI/issues/32)
+* WA Shaman - Changed the anchor for the Buffs aura (now anchored to Action Bar 5)
+* WA Utilities - Added a function to automatically hide some Quest Tracker frames during combat in dungeons and raids
+* WA Utilities - Added new alerts for Delves to track Brann's experience and the number of available Coffer Keys
+* WA Utilities - Adjusted frames to create more space in the center of the screen [#56](https://github.com/MarioCatuogno/PanzaUI/issues/56)
+* WA Utilities - Adjusted the size and position of the Interrupt tracker aura
+* WA Utilities - Changed the anchor for Alert auras (should work with different monitor resolutions)
+* WA Utilities - Changed the anchor for Cast Bar auras (now anchored to the Player Cast Bar frame)
+* WA Utilities - Cleaned up some unnecessary auras to improve performance
+* WA Utilities - Fixed the cooldown text position in the Movement tracker aura
+* WA Utilities - Fixed the trigger for the Elite/Rare icon on nameplates
+* WA Utilities - Removed Health text for SUF frames (using a custom Tag instead)
+* WA Utilities - Removed the Right and Left arrows from Nameplates
 
 ### 📏 Various
 
-* Updated documentation to the latest version of UI
+* Updated documentation to the latest UI version
 
 ## 0.8.0-RELEASE
 
 ### 🛠️ Addon
 
-* Added an option to anchor tooltips to mouse cursor (disabled by default)
-* Added icon to PanzaUI addon
-* Code cleanup
+* Added an option to anchor tooltips to the mouse cursor (disabled by default)
+* Added an icon to the PanzaUI addon
+* Cleaned up the code
 * Removed automatic spell addition to Action Bars
 
 ### ⌨️ Macros
 
-* Update the Mage PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
-* Update the Paladin PDF with the new layout configuration of Action Bars [[#45]](https://github.com/MarioCatuogno/PanzaUI/issues/45)
-* Updated Shaman macros for Restoration spec
+* Updated the Mage PDF with the new Action Bar layout configuration [#45](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Updated the Paladin PDF with the new Action Bar layout configuration [#45](https://github.com/MarioCatuogno/PanzaUI/issues/45)
+* Updated Shaman macros for the Restoration spec
 
 ### 👤 Profiles
 
-* BigWigs - Moved Messages frame
+* BigWigs - Moved the Messages frame
 * BlizzUI - Moved various frames
-* Cell - Moved Raid frame position
+* Cell - Moved the Raid frame position
 * Plater - Added a new Plater profile (based on [this](https://quazii.com/the-war-within-plater-nameplates-profile/) one by Quazii)
-* SUF - Added a custom tag for health percentage for Player, Target and Boss frames
-* SUF - Adjusted border size of various frames
-* SUF - Adjusted Boss and Arena frames position and text size
-* SUF - Adjusted cast bar for Boss frames
-* SUF - Disabled Focus cast bar
+* SUF - Added a custom tag for health percentage for Player, Target, and Boss frames
+* SUF - Adjusted the border size of various frames
+* SUF - Adjusted the Boss and Arena frame positions and text size
+* SUF - Adjusted the cast bar for Boss frames
+* SUF - Disabled the Focus cast bar
 * Threat Plates - Removed the profile (switched to Plater)
-* WA Mage - Added some new Cooldown auras for Frost specialization
-* WA Paladin - Added Buffs and Cooldowns for Retribution specialization [[#48]](https://github.com/MarioCatuogno/PanzaUI/issues/48)
-* WA Paladin - Changed the order of Buffs group
+* WA Mage - Added some new Cooldown auras for the Frost specialization
+* WA Paladin - Added Buffs and Cooldowns for the Retribution specialization [#48](https://github.com/MarioCatuogno/PanzaUI/issues/48)
+* WA Paladin - Changed the order of the Buffs group
 * WA Utilities - Added a central Cast Bar that shows only in combat
-* WA Utilities - Added a text for Health on Nameplates
-* WA Utilities - Added an automation to hide Quest Tracker while in combat in Party/Raid
-* WA Utilities - Added an Elite/Boss/Rare icon on Nameplate
+* WA Utilities - Added Health text on Nameplates
+* WA Utilities - Added an automation to hide the Quest Tracker during combat in Party/Raid
+* WA Utilities - Added an Elite/Boss/Rare icon on Nameplates
 * WA Utilities - Added an Interrupt tracker based on [this](https://wago.io/MInterruptTracker)
-* WA Utilities - Adjusted border size of various frames
-* WA Utilities - Fixed a bug with CR aura in Alert group
+* WA Utilities - Adjusted the border size of various frames
+* WA Utilities - Fixed a bug with the CR aura in the Alert group
 
 ### 📏 Various
 
