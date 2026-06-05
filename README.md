@@ -40,7 +40,7 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 | [DialogueUI](https://www.curseforge.com/wow/addons/dialogueui) | Skins the quest and dialogue UI |
 | [Masque](https://www.curseforge.com/wow/addons/masque) | Skins action buttons and provides consistent icon styling (Using RetinaReborn for this UI) |
 | [Plumber](https://www.curseforge.com/wow/addons/plumber) | A collection of quality-of-life features |
-| [WilduTools](https://www.curseforge.com/wow/addons/wildutools) | Tidies and enhances the UI; automates some gameplay tasks |
+| [WilduTools](https://www.curseforge.com/wow/addons/wildutools) | Tidies and enhances the UI and automates some gameplay tasks |
 
 ## Screenshots
 
