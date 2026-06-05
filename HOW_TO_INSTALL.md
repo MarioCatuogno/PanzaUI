@@ -1,44 +1,46 @@
-## How to install
+## Installation
 
-1. Downaload and install the latest version of PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
-2. Download the mandatory addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required).
-3. Unzip the file and copy the Fonts folder into "Retail" WOW's folder.
-4. Run World of Warcraft and import the following profiles:
-  - Better Blizzard Frame profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
-  - BlizzardUI profile from [here](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
-  - Cooldown Manager Centered profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
-  - Platynator profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-  - Sensei profile from [here](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
-5. Logout from the game and copy under the /WTF/Account/NAME/SavedVariables (NAME = your account name) folder all the .lua files contained in the WTF folder of PanzaUI.
-6. Login again and enjoy!
+1. Download and install the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
+2. Download the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required).
+3. Unzip the archive and copy the `Fonts` folder into your World of Warcraft **Retail** directory.
+4. Launch World of Warcraft and import the following profiles:
+   - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
+   - [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
+   - [Enhance QoL](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
+   - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
+5. Enjoy!
 
-## Profiles and Other Stuff
+## Profiles
 
-### Profiles
+### Addon Profiles
 
-* [Better Blizzard Frames](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BetterBlizzardFrames.txt)
-* [Blizzard UI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
-* [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
-* [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-* [Sensei](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Sensei.txt)
+| Profile | Link |
+|---|---|
+| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt) |
+| Cooldown Manager Centered | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt) |
+| Enhance QoL | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt) |
+| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt) |
 
-### Keybinds 
+### Cooldown Manager Class Profiles
 
-Keep in mind that these keybinds are used by me with __Razer Naga V2 Pro__ mouse.
+Optional class-specific profiles for Cooldown Manager. These are not required to replicate the UI.
 
-* [Druid](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_druid.pdf)
-* [Hunter](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_hunter.pdf)
-* [Mage](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_mage.pdf)
-* [Monk](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_monk.pdf)
-* [Paladin](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_paladin.pdf)
-* [Priest](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_priest.pdf)
-* [Shaman](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_shaman.pdf)
-* [Warrior](https://github.com/MarioCatuogno/PanzaUI/blob/main/Documents/wow_keybinds_warrior.pdf)
+| Class / Spec | Link |
+|---|---|
+| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Feral.txt) |
+| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Guardian.txt) |
+| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Mage-Frost.txt) |
+| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Brewmaster.txt) |
+| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Windwalker.txt) |
+| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt) |
+| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Enhancement.txt) |
 
-## Common issues
+## FAQ
 
-* __Why my UI is shifted?__ 
-  * Unfortunately, at the moment, there's no way to adapt the default Blizzard UI profile to different screen resolutions. I'm playing on a MacBook Pro M1 14" with a screen resolution of 3024x1964 so, unless you have the same resolution, you have to adjust the position of various frames (eg. action bars, player/target frames, map, quest, etc.). I'm planning to support, at least, 1440p screen resolution in near future. (For further info see [[#87](https://github.com/MarioCatuogno/PanzaUI/issues/87)] or [[#84](https://github.com/MarioCatuogno/PanzaUI/issues/84)]).
+**Why is my UI shifted?**
 
-* __Does it support WOW Classic?__
-  * If the addons listed [here](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required) work on classic than it should work. Let me know if you try the UI with this version of the game!
+There is currently no way to adapt the default Blizzard UI profile to different screen resolutions. I play on 2560x1440 monitor, so unless your resolution matches, you'll need to manually reposition frames (action bars, player/target frames, minimap, quest tracker, etc.).
+
+**Does it support WoW Classic?**
+
+No — PanzaUI only supports the **Retail** version of World of Warcraft.

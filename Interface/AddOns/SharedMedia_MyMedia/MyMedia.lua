@@ -132,6 +132,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 --background:
 
 --border:
+LSM:Register("border", "Platy Border", [[Interface\Addons\SharedMedia_MyMedia\border\platy_border.tga]])
 
 --font:
 LSM:Register("font", "Expressway", [[Interface\Addons\SharedMedia_MyMedia\fonts\Expressway.ttf]])

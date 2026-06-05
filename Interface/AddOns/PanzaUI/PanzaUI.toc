@@ -1,8 +1,8 @@
-## Interface: 120000, 120001, 120002, 120005
+## Interface: 120000, 120001, 120002, 120005, 120007
 ## Title: |cff00FF98Panza|rUI
 ## Notes: World of Warcraft UI
 ## IconTexture: 572034
 ## Author: Panzarotto
-## Version: 1.3
+## Version: 1.4
 
 core.lua
