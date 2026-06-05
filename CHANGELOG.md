@@ -84,12 +84,12 @@ The UI has also been adjusted to support 2560×1440 monitors.
 
 ## 1.3-RELEASE
 
-This is a minor release to fix some bugs with PanzaUI addon and to better explain the setup of the UI.
+This is a minor release that fixes some bugs in the PanzaUI addon and improves the UI setup documentation.
 
 ### 🛠️ Core
 
 * Fixed a bug with the Buffs frame
-* Removed deprecated CVars wiht patch 12.0
+* Removed deprecated CVars from patch 12.0
 
 ### 👤 Profiles
 
@@ -102,14 +102,14 @@ This is a minor release to fix some bugs with PanzaUI addon and to better explai
 
 ### 🧮 Class CDM
 
-* Monk Brewmaster - Modified the Essential Cooldown abilities
-* Monk Windwalker - Modified the Essential Cooldown abilities
+* Monk - Brewmaster: Modified the Essential Cooldown abilities
+* Monk - Windwalker: Modified the Essential Cooldown abilities
 
 ### 📏 Various
 
 * Updated WTF variables for several addons
-* Updated documentation to the latest version of UI
-* Updated TOC to newest patch
+* Updated documentation to the latest UI version
+* Updated TOC to the newest patch
 
 ## 1.2-RELEASE
 
