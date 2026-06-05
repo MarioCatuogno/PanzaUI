@@ -16,64 +16,64 @@ The UI has also been adjusted to support 2560×1440 monitors.
 
 ### 👤 Profiles
 
-* BlizzUI — Adjusted the UI to match 2560×1440 resolution
-* BlizzUI — Adjusted the position of all frames for EQOL Unit Frames
-* BlizzUI — Adjusted the position of the Buffs frame
-* BlizzUI — Adjusted the position of the Buffs Tracker of the Cooldown Manager
-* BlizzUI — Adjusted the position of the Damage Meter frame
-* BlizzUI — Adjusted the position of the Loot Window
-* BlizzUI — Adjusted the position of the Micro Menu
-* BlizzUI — Adjusted the position of the Quest Tracker
-* BlizzUI — Adjusted the position of the Tooltip window
-* BlizzUI — Increased the size of the Damage Meter bars
-* Cooldown Manager Centered — Changed the text size for Essentials and Utilities
-* EnhanceQoL — Adjusted the UI to match 2560×1440 resolution
-* EnhanceQoL — Adjusted the position of the DPS meter
-* EnhanceQoL — Adjusted the position of the toast frame
-* EnhanceQoL — Added FPS counter in Minimap frame
-* EnhanceQoL — Added mouse ring to cursor
-* EnhanceQoL — Added mouseover to Action Bar 5
-* EnhanceQoL — Added Roboto Condensed Bold as global font
-* EnhanceQoL — Added Teleport panel to World Map
-* EnhanceQoL — Added the Combat alert frame
-* EnhanceQoL — Configured Boss frames
-* EnhanceQoL — Configured Cast Bars frames
-* EnhanceQoL — Configured Damage Meter frame
-* EnhanceQoL — Configured Minimap frame
-* EnhanceQoL — Configured Raid frames
-* EnhanceQoL — Configured Tooltips frame
-* EnhanceQoL — Enabled the option to automatically repair and sell junk items
-* EnhanceQoL — Enabled the option to fast auto-loot
-* EnhanceQoL — Enabled the UI crosshair during combat
-* EnhanceQoL — Hidden Micro Menu frame
-* EnhanceQoL — Hidden Minimap addon button
-* EnhanceQoL — Hidden realm names from friendly nameplates
-* Platynator — Adjusted the UI to match 2560×1440 resolution
-* Platynator — Adjusted the Simplified scale
-* Platynator — Added target role for friendly nameplates
-* Platynator — Changed the alpha channel for non-targeted nameplates
-* Platynator — Changed the border for targeted/mouseover nameplates
-* Platynator — Changed the color for enemy nameplates
-* Platynator — Changed the color for friendly nameplates
-* Platynator — Changed the health bar color from Threat to Elite Type + Threat
-* Platynator — Changed the Cast Bar texture to the default one
-* Platynator — Changed the texture to WGlass
-* Platynator — Changed the transparency for obscured targets
-* Platynator — Fixed the Debuffs frame to show all debuffs
-* Platynator — Removed options for Friendly Nameplates and Simplified Nameplates
+* BlizzUI - Adjusted the UI to match 2560×1440 resolution
+* BlizzUI - Adjusted the position of all frames for EQOL Unit Frames
+* BlizzUI - Adjusted the position of the Buffs frame
+* BlizzUI - Adjusted the position of the Buffs Tracker of the Cooldown Manager
+* BlizzUI - Adjusted the position of the Damage Meter frame
+* BlizzUI - Adjusted the position of the Loot Window
+* BlizzUI - Adjusted the position of the Micro Menu
+* BlizzUI - Adjusted the position of the Quest Tracker
+* BlizzUI - Adjusted the position of the Tooltip window
+* BlizzUI - Increased the size of the Damage Meter bars
+* Cooldown Manager Centered - Changed the text size for Essentials and Utilities
+* EnhanceQoL - Adjusted the UI to match 2560×1440 resolution
+* EnhanceQoL - Adjusted the position of the DPS meter
+* EnhanceQoL - Adjusted the position of the toast frame
+* EnhanceQoL - Added FPS counter in Minimap frame
+* EnhanceQoL - Added mouse ring to cursor
+* EnhanceQoL - Added mouseover to Action Bar 5
+* EnhanceQoL - Added Roboto Condensed Bold as global font
+* EnhanceQoL - Added Teleport panel to World Map
+* EnhanceQoL - Added the Combat alert frame
+* EnhanceQoL - Configured Boss frames
+* EnhanceQoL - Configured Cast Bars frames
+* EnhanceQoL - Configured Damage Meter frame
+* EnhanceQoL - Configured Minimap frame
+* EnhanceQoL - Configured Raid frames
+* EnhanceQoL - Configured Tooltips frame
+* EnhanceQoL - Enabled the option to automatically repair and sell junk items
+* EnhanceQoL - Enabled the option to fast auto-loot
+* EnhanceQoL - Enabled the UI crosshair during combat
+* EnhanceQoL - Hidden Micro Menu frame
+* EnhanceQoL - Hidden Minimap addon button
+* EnhanceQoL - Hidden realm names from friendly nameplates
+* Platynator - Adjusted the UI to match 2560×1440 resolution
+* Platynator - Adjusted the Simplified scale
+* Platynator - Added target role for friendly nameplates
+* Platynator - Changed the alpha channel for non-targeted nameplates
+* Platynator - Changed the border for targeted/mouseover nameplates
+* Platynator - Changed the color for enemy nameplates
+* Platynator - Changed the color for friendly nameplates
+* Platynator - Changed the health bar color from Threat to Elite Type + Threat
+* Platynator - Changed the Cast Bar texture to the default one
+* Platynator - Changed the texture to WGlass
+* Platynator - Changed the transparency for obscured targets
+* Platynator - Fixed the Debuffs frame to show all debuffs
+* Platynator - Removed options for Friendly Nameplates and Simplified Nameplates
 
 ### 🧮 Class CDM
 
-* Added a new Cooldown Manager profile for Druid — Guardian
-* Added a new Cooldown Manager profile for Shaman — Enhancement
-* Mage — Frost: Modified the Essential Cooldown abilities
-* Monk — Brewmaster: Added visual alerts for some Essential Cooldown abilities
-* Monk — Brewmaster: Adjusted size to include Sensei Resource Bar
-* Monk — Brewmaster: Modified the Essential Cooldown abilities
-* Monk — Windwalker: Added visual alerts for some Essential Cooldown abilities
-* Monk — Windwalker: Adjusted size to include Sensei Resource Bar
-* Monk — Windwalker: Modified the Essential Cooldown abilities
-* Shaman — Elemental: Added visual alerts for some Essential Cooldown abilities
+* Added a new Cooldown Manager profile for Druid - Guardian
+* Added a new Cooldown Manager profile for Shaman - Enhancement
+* Mage - Frost: Modified the Essential Cooldown abilities
+* Monk - Brewmaster: Added visual alerts for some Essential Cooldown abilities
+* Monk - Brewmaster: Adjusted size to include Sensei Resource Bar
+* Monk - Brewmaster: Modified the Essential Cooldown abilities
+* Monk - Windwalker: Added visual alerts for some Essential Cooldown abilities
+* Monk - Windwalker: Adjusted size to include Sensei Resource Bar
+* Monk - Windwalker: Modified the Essential Cooldown abilities
+* Shaman - Elemental: Added visual alerts for some Essential Cooldown abilities
 
 ### 📏 Various
 
