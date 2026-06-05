@@ -6,6 +6,8 @@
 
 ### 👤 Profiles
 
+* EnhanceQoL - Changed the Minimap border texture
+
 ### 🧮 Class CDM
 
 ### 📏 Various
