@@ -1,5 +1,7 @@
 ## 1.5-RELEASE
 
+This is a small release that fixes some bugs from previous version and enable some new features in EQoL.
+
 ### 🛠️ Core
 
 * Added a CVar to extend the camera distance
