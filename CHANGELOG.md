@@ -2,6 +2,7 @@
 
 ### 🛠️ Core
 
+* Added a CVar to extend the camera distance
 * Forced the max foreground FPS to 60
 
 ### 👤 Profiles
