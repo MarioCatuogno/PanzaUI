@@ -29,6 +29,7 @@ Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/Panza
 | [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/PanzaUI) | Core addon with minimal functionality |
 | [Platynator](https://www.curseforge.com/wow/addons/platynator) | Customizes enemy and friendly nameplates |
 | [SharedMedia](https://www.curseforge.com/wow/addons/sharedmedia) | Provides textures and fonts used across the UI |
+| [SharedMedia_MyMedia](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/SharedMedia_MyMedia) | Provides textures and fonts used specifically for this UI |
 
 To replicate this setup, follow the [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 

@@ -15,6 +15,7 @@
 
 ### 📏 Various
 
+* Added SharedMedia_MyMedia as required addon
 * Updated documentation to the latest UI version
 
 ## 1.4-RELEASE
