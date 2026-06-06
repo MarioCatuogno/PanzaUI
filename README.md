@@ -22,6 +22,12 @@ Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/Panza
 
 If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3) where you will find all these profiles.
 
+## Support
+
+I'll maintain it as long as I play the game — and considering I've been playing since 2004 (yeah, original Vanilla launch window), that's not changing anytime soon. This UI is in it for the long haul. If you enjoy the UI and want to offer me a beer, be my guest! But if not, that's totally cool too, the UI remains free for everyone, always.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V4D020XOPV)
+
 ## Required Addons
 
 | Addon | Description |
@@ -74,9 +80,3 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 ## Problems/Bugs?
 
 If you find bugs or any kind of problems, please open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues). Thanks!
-
-## Support
-
-I'll maintain it as long as I play the game — and considering I've been playing since 2004 (yeah, original Vanilla launch window), that's not changing anytime soon. This UI is in it for the long haul. If you enjoy the UI and want to offer me a beer, be my guest! But if not, that's totally cool too, the UI remains free for everyone, always.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V4D020XOPV)
