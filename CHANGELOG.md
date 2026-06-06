@@ -18,6 +18,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 ### 📏 Various
 
+* Added a new support button on Ko-Fi, totally optional since the UI will stay free forever!
 * Added SharedMedia_MyMedia as required addon
 * Added Wago links for those who wants to follow this UI on a proper WoW website
 * Disable the "Pulse" feature in Masque to avoid the bug with GCD blink

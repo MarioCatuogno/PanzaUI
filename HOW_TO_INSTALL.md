@@ -48,3 +48,9 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 **Where do I find the latest version of profiles?**
 
 You can find here on Github (see for the new releases or pre-releases) or on [Wago](https://wago.io/PO1A4B5V3).
+
+**Can I support your work?**
+
+If you enjoy the UI and want to offer me a beer, be my guest! But if not, that's totally cool too, the UI remains free for everyone, always.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V4D020XOPV)
