@@ -14,26 +14,26 @@
 
 ### Addon Profiles
 
-| Profile | Link |
-|---|---|
-| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt) |
-| Cooldown Manager Centered | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt) |
-| Enhance QoL | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt) |
-| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt) |
+| Profile | Github Link | Wago Link |
+|---|---|---|
+| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt) | [Import](https://wago.io/u-uPYMucI) |
+| Cooldown Manager Centered | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt) | [Import](https://wago.io/SlGU9D3xi) |
+| Enhance QoL | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt) | [Import](https://wago.io/Z4e9iEbm9) |
+| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
 
 ### Cooldown Manager Class Profiles
 
 Optional class-specific profiles for Cooldown Manager. These are not required to replicate the UI.
 
-| Class / Spec | Link |
-|---|---|
-| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Feral.txt) |
-| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Guardian.txt) |
-| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Mage-Frost.txt) |
-| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Brewmaster.txt) |
-| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Windwalker.txt) |
-| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt) |
-| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Enhancement.txt) |
+| Class / Spec | Github Link | Wago Link |
+|---|---|---|
+| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Feral.txt) | [Import](xxx) |
+| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Druid-Guardian.txt) | [Import](xxx) |
+| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Mage-Frost.txt) | [Import](xxx) |
+| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Brewmaster.txt) | [Import](https://wago.io/SC-WYrPjb) |
+| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Monk-Windwalker.txt) | [Import](https://wago.io/EE08tdX1t) |
+| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Elemental.txt) | [Import](xxx) |
+| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/Cooldown%20Manager/Shaman-Enhancement.txt) | [Import](xxx) |
 
 ## FAQ
 
@@ -47,11 +47,4 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 
 **Where do I find the latest version of profiles?**
 
-You can find here on Github (see for the new releases or pre-releases). With major releases I also upload the new profile on Wago:
-
-* [BlizzardUI](https://wago.io/u-uPYMucI)
-* [Cooldown Manager Centered](https://wago.io/SlGU9D3xi)
-* [Enhance QoL](https://wago.io/Z4e9iEbm9)
-* [Platynator](https://wago.io/UxWRLG-r_)
-
-If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3).
+You can find here on Github (see for the new releases or pre-releases) or on [Wago](https://wago.io/PO1A4B5V3).
