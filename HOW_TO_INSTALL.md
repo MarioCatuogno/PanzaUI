@@ -44,3 +44,14 @@ There is currently no way to adapt the default Blizzard UI profile to different 
 **Does it support WoW Classic?**
 
 No — PanzaUI only supports the **Retail** version of World of Warcraft.
+
+**Where do I find the latest version of profiles?**
+
+You can find here on Github (see for the new releases or pre-releases). With major releases I also upload the new profile on Wago:
+
+* [BlizzardUI](https://wago.io/u-uPYMucI)
+* [Cooldown Manager Centered](https://wago.io/SlGU9D3xi)
+* [Enhance QoL](https://wago.io/Z4e9iEbm9)
+* [Platynator](https://wago.io/UxWRLG-r_)
+
+If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3).

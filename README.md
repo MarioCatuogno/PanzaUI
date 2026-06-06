@@ -20,6 +20,8 @@ __Note__: Designed for 2560×1440. Works at other resolutions with minor adjustm
 
 Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
+If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3).
+
 ## Required Addons
 
 | Addon | Description |

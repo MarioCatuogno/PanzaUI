@@ -19,6 +19,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 ### 📏 Various
 
 * Added SharedMedia_MyMedia as required addon
+* Added Wago links for those who wants to follow this UI on a proper WoW website
 * Updated documentation to the latest UI version
 
 ## 1.4-RELEASE
