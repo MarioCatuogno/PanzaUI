@@ -9,6 +9,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 ### 👤 Profiles
 
+* EnhanceQoL - Added counter in Quest Tracker frame
 * EnhanceQoL - Changed the Minimap border texture
 * EnhanceQoL - Enabled healer mana indicator in Dungeons
 * EnhanceQoL - Enabled some features for Delves
