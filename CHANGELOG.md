@@ -5,6 +5,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 ### 🛠️ Core
 
 * Added a CVar to extend the camera distance
+* Changed default texture for border and status bar of PanzaUI
 * Forced the max foreground FPS to 60
 
 ### 👤 Profiles
