@@ -132,7 +132,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 --background:
 
 --border:
-LSM:Register("border", "PanzaUI Border", [[Interface\Addons\SharedMedia_MyMedia\border\PanzaUI_border.tga]])
+LSM:Register("border", "PanzaUI", [[Interface\Addons\SharedMedia_MyMedia\border\PanzaUI_border.tga]])
 
 --font:
 LSM:Register("font", "Expressway", [[Interface\Addons\SharedMedia_MyMedia\fonts\Expressway.ttf]])
@@ -141,6 +141,6 @@ LSM:Register("font", "Roboto Condensed", [[Interface\Addons\SharedMedia_MyMedia\
 --sound:
 
 --statusbar:
-LSM:Register("statusbar", "PanzaUI Bar", [[Interface\Addons\SharedMedia_MyMedia\statusbar\PanzaUI_bar.tga]])
+LSM:Register("statusbar", "PanzaUI", [[Interface\Addons\SharedMedia_MyMedia\statusbar\PanzaUI_bar.tga]])
 
 -- END of the section that you should be editing
