@@ -16,6 +16,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Enabled the auto-release feature in PVP
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
+* EnhanceQoL - Increased the refresh rate of the Damage Meter
 * EnhanceQoL - Increased the refresh rate of the Minimap coordinates
 * Platynator - Adjusted the text stack position on icons
 * Platynator - Changed the texture of the borders
