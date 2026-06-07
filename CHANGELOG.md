@@ -12,6 +12,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Changed the Minimap border texture
 * EnhanceQoL - Enabled healer mana indicator in Dungeons
 * EnhanceQoL - Enabled some features for Delves
+* EnhanceQoL - Enabled the auto-release feature in PVP
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
 * EnhanceQoL - Increased the refresh rate of the Minimap coordinates
