@@ -11,6 +11,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 * EnhanceQoL - Changed the Minimap border texture
 * EnhanceQoL - Enabled some features for Delves
+* EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * Platynator - Adjusted the text stack position on icons
 * Platynator - Changed the texture of the borders
 
