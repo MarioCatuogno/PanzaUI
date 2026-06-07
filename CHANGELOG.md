@@ -10,6 +10,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 ### 👤 Profiles
 
 * EnhanceQoL - Changed the Minimap border texture
+* EnhanceQoL - Enabled healer mana indicator in Dungeons
 * EnhanceQoL - Enabled some features for Delves
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
