@@ -12,9 +12,11 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 * EnhanceQoL - Added counter in Quest Tracker frame
 * EnhanceQoL - Changed the Minimap border texture
+* EnhanceQoL - Changed the border texture to PanzaUI to all the frames
 * EnhanceQoL - Enabled healer mana indicator in Dungeons
 * EnhanceQoL - Enabled some features for Delves
 * EnhanceQoL - Enabled the auto-release feature in PVP
+* EnhanceQoL - Fixed border texture issue in Damage Meter tooltips
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
 * EnhanceQoL - Increased the refresh rate of the Damage Meter
