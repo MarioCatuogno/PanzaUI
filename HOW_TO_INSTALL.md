@@ -1,14 +1,15 @@
 ## Installation
 
 1. Download and install the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases).
-2. Download the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required).
-3. Unzip the archive and copy the `Fonts` folder into your World of Warcraft **Retail** directory.
-4. Launch World of Warcraft and import the following profiles:
+2. Download the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#addon-required) and install them.
+3. Check the `core.lua` under the PanzaUI addon folder to remove unwanted CVars.
+4. Unzip the archive and copy the `Fonts` folder into your World of Warcraft **Retail** directory.
+5. Launch World of Warcraft and import the following profiles:
    - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Profiles/PanzaUI-BlizzardUI.txt)
    - [Cooldown Manager Centered](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-CooldownManagerCentered.txt)
    - [Enhance QoL](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-EnhanceQoL.txt)
    - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt)
-5. Enjoy!
+6. Enjoy!
 
 ## Profiles
 
