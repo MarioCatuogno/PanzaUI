@@ -50,6 +50,10 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 
 You can find here on Github (see for the new releases or pre-releases) or on [Wago](https://wago.io/PO1A4B5V3).
 
+**Why I can't see the Minimap?**
+
+Try to adjust/reduce the UI scale in WoW settings.
+
 **Can I support your work?**
 
 If you enjoy the UI and want to offer me a beer, be my guest! But if not, that's totally cool too, the UI remains free for everyone, always.
