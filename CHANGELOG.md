@@ -28,6 +28,8 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 ### 🧮 Class CDM
 
+* Monk - Windwalker: Reordered the Essential Cooldown abilities
+
 ### 📏 Various
 
 * Added a new support button on Ko-Fi, totally optional since the UI will stay free forever!
