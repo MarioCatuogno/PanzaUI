@@ -11,6 +11,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 ### 👤 Profiles
 
 * EnhanceQoL - Added counter in Quest Tracker frame
+* EnhanceQoL - Changed hide settings for Player, Target, ToT, Focus and Pet frames
 * EnhanceQoL - Changed the Minimap border texture
 * EnhanceQoL - Changed the border texture to PanzaUI to all the frames
 * EnhanceQoL - Enabled copy link in chat window
