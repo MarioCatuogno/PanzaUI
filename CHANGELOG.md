@@ -6,6 +6,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 * Added a CVar to extend the camera distance
 * Changed default texture for border and status bar of PanzaUI
+* Changed the texture of the Personal Resource Bar
 * Forced the max foreground FPS to 60
 
 ### 👤 Profiles
