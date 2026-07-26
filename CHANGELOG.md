@@ -22,6 +22,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Enabled some features for Delves
 * EnhanceQoL - Enabled the auto-release feature in PVP
 * EnhanceQoL - Fixed border color in various frames
+* EnhanceQoL - Fixed border in all frames after last update of EQOL addon
 * EnhanceQoL - Fixed border texture issue in Damage Meter tooltips
 * EnhanceQoL - Fixed border texture issue in Pet frame
 * EnhanceQoL - Fixed border texture issue in Raid frame
