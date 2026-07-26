@@ -11,6 +11,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 ### 👤 Profiles
 
+* BlizzUI - Fixed the UI to match 2560×1440 resolution
 * EUI - Added a very early WIP profile for EllesmereUI
 * EnhanceQoL - Added counter in Quest Tracker frame
 * EnhanceQoL - Changed hide settings for Player, Target, ToT, Focus and Pet frames
