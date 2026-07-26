@@ -29,6 +29,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Fixed the font size of Damage Meter tooltips
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
+* EnhanceQoL - Increased cursor ring size
 * EnhanceQoL - Increased the refresh rate of the Damage Meter
 * EnhanceQoL - Increased the refresh rate of the Minimap coordinates
 * EnhanceQoL - Updated the profile to the latest version of addon
