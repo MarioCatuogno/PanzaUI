@@ -1,6 +1,6 @@
 ## 1.5-RELEASE
 
-This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL.
+This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL. Added also a WIP "EllesmereUI" profile.
 
 ### 🛠️ Core
 
@@ -11,6 +11,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 
 ### 👤 Profiles
 
+* EUI - Added a very early WIP profile for EllesmereUI
 * EnhanceQoL - Added counter in Quest Tracker frame
 * EnhanceQoL - Changed hide settings for Player, Target, ToT, Focus and Pet frames
 * EnhanceQoL - Changed the Minimap border texture
