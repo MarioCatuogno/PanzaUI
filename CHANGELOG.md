@@ -46,6 +46,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Reskinned the Quest Tracker with same font's style of other parts of UI
 * Platynator - Adjusted the text stack position on icons
 * Platynator - Changed the texture of the borders
+* Platynator - Fixed the Simplified profile
 
 ### 🧮 Class CDM
 
