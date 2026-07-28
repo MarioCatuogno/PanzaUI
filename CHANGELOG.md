@@ -30,6 +30,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Fixed border texture issue in Damage Meter tooltips
 * EnhanceQoL - Fixed border texture issue in Pet frame
 * EnhanceQoL - Fixed border texture issue in Raid frame
+* EnhanceQoL - Fixed debuffs frame size and position
 * EnhanceQoL - Fixed the font size of Damage Meter tooltips
 * EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
 * EnhanceQoL - Hidden the Quick Join button in Social frame
