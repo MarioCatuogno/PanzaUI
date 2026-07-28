@@ -19,6 +19,7 @@ This is a small release that fixes some bugs from previous version, adds and fix
 * EnhanceQoL - Changed the border texture to PanzaUI to all the frames
 * EnhanceQoL - Changed the size and position of Raid Marker for Player, Focus, Target and Target of Target frames
 * EnhanceQoL - Changed the size, position and border of Cast bars
+* EnhanceQoL - Changed the size, position and border of Party frame
 * EnhanceQoL - Changed the size, position and border of Player frame
 * EnhanceQoL - Changed the size, position and border of Target frame
 * EnhanceQoL - Enabled copy link in chat window
