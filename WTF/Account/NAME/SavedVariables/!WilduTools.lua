@@ -8,8 +8,9 @@ WilduToolsDB = {
 ["Panuozzo - Draenor"] = "Default",
 ["Sporcaccione - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "Default",
+["Mortazza - Draenor"] = "Default",
 ["Formaggino - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
 ["Jammbell - Argent Dawn"] = "Default",
 ["Giandora - Argent Dawn"] = "Default",
@@ -21,17 +22,20 @@ WilduToolsDB = {
 },
 ["profiles"] = {
 ["Default"] = {
+["automation_dmgMeterAutoResetEnabled"] = false,
+["wilduUI_preyBar"] = true,
+["blizzUI_damageMeterTweaks"] = false,
 ["editMode"] = {
 ["rangeCheck"] = {
+["alpha"] = 1,
+},
+["mountIcon"] = {
 ["alpha"] = 1,
 },
 ["playerCombat"] = {
 ["alpha"] = 1,
 },
 ["gcdHistory"] = {
-["alpha"] = 1,
-},
-["mountIcon"] = {
 ["alpha"] = 1,
 },
 ["targetCombat"] = {
@@ -41,14 +45,7 @@ WilduToolsDB = {
 ["alpha"] = 1,
 },
 },
-["automation_gossipEnabled"] = true,
-["blizzUI_betterSuperTracked"] = true,
-["wilduUI_preyBar"] = true,
-["blizzUI_cleanupObjectiveTracker"] = true,
-["automation_autoBuyDecorItemsEnabled"] = true,
-["blizzUI_damageMeterTweaks"] = false,
 ["general_showMinimapButton"] = false,
-["automation_dmgMeterAutoResetEnabled"] = false,
 ["general_muteAllAddonPrints"] = true,
 },
 },
