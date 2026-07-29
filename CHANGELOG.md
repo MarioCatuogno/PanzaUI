@@ -1,3 +1,9 @@
+## 1.6-RELEASE
+
+### 👤 Profiles
+
+* EnhanceQoL - Changed the size and position of XP bar
+
 ## 1.5-RELEASE
 
 This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL. Added also a WIP "EllesmereUI" profile for testing purpose.
