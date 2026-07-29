@@ -1,26 +1,98 @@
 
 CooldownManagerCenteredDB = {
+["global"] = {
+["autoSwitchProfile1Spec2"] = "PanzaUI",
+["autoSwitchProfile1Spec3"] = "PanzaUI",
+["autoSwitchProfile1Spec1"] = "PanzaUI",
+},
 ["profileKeys"] = {
-["Scaloppina - Draenor"] = "Default",
+["Scaloppina - Draenor"] = "PanzaUI",
 ["Pizzadino - Draenor"] = "Default",
 ["Panuozzo - Argent Dawn"] = "Default",
 ["Percoca - Draenor"] = "Default",
 ["Panuozzo - Draenor"] = "Default",
 ["Sporcaccione - Draenor"] = "Default",
 ["Gelatino - Draenor"] = "Default",
-["Sfilatino - Draenor"] = "Default",
-["Formaggino - Draenor"] = "Default",
+["Mortazza - Draenor"] = "Default",
+["Nutellone - Draenor"] = "Default",
 ["Pulcinhell - Draenor"] = "Default",
+["Sfilatino - Draenor"] = "Default",
 ["Jammbell - Argent Dawn"] = "Default",
-["Giandora - Argent Dawn"] = "Default",
 ["Panzarotto - Draenor"] = "PanzaUI",
+["Giandora - Argent Dawn"] = "PanzaUI",
 ["Tabbo - Argent Dawn"] = "Default",
 ["Branthar - Argent Dawn"] = "Default",
-["Nutellone - Draenor"] = "Default",
+["Formaggino - Draenor"] = "Default",
 ["Ossosacro - Draenor"] = "Default",
 },
 ["profiles"] = {
 ["Default"] = {
+["editMode"] = {
+["tracker1"] = {
+["stackFontName"] = "Roboto Condensed Bold",
+["rectangularIconsPercent"] = 0.8,
+["cooldownFontName"] = "Roboto Condensed Bold",
+["cooldownFontFlags"] = {
+["OUTLINE"] = true,
+},
+["keybindAnchor"] = "TOPRIGHT",
+["stackAnchor"] = "BOTTOMRIGHT",
+["keybindOffsetX"] = -3,
+["keybindFontFlags"] = {
+["OUTLINE"] = true,
+},
+["stackFontFlags"] = {
+["OUTLINE"] = true,
+},
+["stackOffsetX"] = -1,
+["borderThickness"] = 1,
+["squareIcons"] = false,
+["keybindOffsetY"] = -3,
+["cooldownFontEnabled"] = false,
+["cooldownFontSize"] = "NIL",
+["rectangularIcons"] = false,
+["stackFontSize"] = 14,
+["iconZoom"] = 0.3,
+["cooldownTextOffsetY"] = 0,
+["cooldownTextOffsetX"] = 0,
+["keybindFontName"] = "Roboto Condensed Bold",
+["showKeybinds"] = false,
+["keybindFontSize"] = 10,
+["stackOffsetY"] = 1,
+},
+["tracker2"] = {
+["stackFontName"] = "Roboto Condensed Bold",
+["rectangularIconsPercent"] = 0.8,
+["cooldownFontName"] = "Roboto Condensed Bold",
+["cooldownFontFlags"] = {
+["OUTLINE"] = true,
+},
+["keybindAnchor"] = "TOPRIGHT",
+["stackAnchor"] = "BOTTOMRIGHT",
+["keybindOffsetX"] = -3,
+["keybindFontFlags"] = {
+["OUTLINE"] = true,
+},
+["stackFontFlags"] = {
+["OUTLINE"] = true,
+},
+["stackOffsetX"] = -1,
+["borderThickness"] = 1,
+["squareIcons"] = false,
+["keybindOffsetY"] = -3,
+["cooldownFontEnabled"] = false,
+["cooldownFontSize"] = "NIL",
+["rectangularIcons"] = false,
+["stackFontSize"] = 14,
+["iconZoom"] = 0.3,
+["cooldownTextOffsetY"] = 0,
+["cooldownTextOffsetX"] = 0,
+["keybindFontName"] = "Roboto Condensed Bold",
+["showKeybinds"] = false,
+["keybindFontSize"] = 10,
+["stackOffsetY"] = 1,
+},
+},
 ["cooldownManager_stackAnchorBuffIcons_enabled"] = true,
 ["cooldownManager_stackAnchorEssential_enabled"] = true,
 ["cooldownManager_alignBuffBars_growFromDirection"] = "TOP",
@@ -28,255 +100,168 @@ CooldownManagerCenteredDB = {
 ["cooldownManager_visibility_perViewer"] = {
 ["BuffIconCooldownViewer"] = {
 },
-["BuffBarCooldownViewer"] = {
-},
-["EssentialCooldownViewer"] = {
+["CMCTracker2"] = {
 },
 ["CMCTracker1"] = {
 },
 ["UtilityCooldownViewer"] = {
 },
-["CMCTracker2"] = {
+["EssentialCooldownViewer"] = {
+},
+["BuffBarCooldownViewer"] = {
 },
 },
+["_trackerStylePerTrackerMigrated"] = true,
 ["cooldownManager_stackFontSizeBuffIcons"] = 12,
 ["cooldownManager_stackAnchorUtility_enabled"] = true,
-["assistantCache"] = {
-["Draenor_Nutellone_0_1"] = {
-["data"] = {
-["UtilityCooldownViewer"] = {
-["1"] = {
-["inRotation"] = false,
-["spellName"] = "Dash",
-},
-["3"] = {
-["inRotation"] = false,
-["spellName"] = "Wild Charge",
-},
-["2"] = {
-["inRotation"] = false,
-["spellName"] = "Stampeding Roar",
-},
-},
-["EssentialCooldownViewer"] = {
-},
-},
-["timestamp"] = 1767859699,
-},
-["Draenor_Nutellone_104_6"] = {
-["data"] = {
-["UtilityCooldownViewer"] = {
-["1"] = {
-["inRotation"] = false,
-["spellName"] = "Dash",
-},
-["3"] = {
-["inRotation"] = false,
-["spellName"] = "Wild Charge",
-},
-["2"] = {
-["inRotation"] = false,
-["spellName"] = "Stampeding Roar",
-},
-},
-["EssentialCooldownViewer"] = {
-},
-},
-["timestamp"] = 1767860640,
-},
-},
+["cooldownManager_cooldownFontName"] = "Roboto Condensed Bold",
 ["cooldownManager_centerEssential_growFromDirection"] = "BOTTOM",
 ["_bug_warning_displayed"] = 20260305,
 ["cooldownManager_cooldownFontSizeUtility_enabled"] = true,
-["cooldownManager_cooldownFontSizeUtility"] = 12,
-["cooldownManager_cooldownFontSizeBuffIcons_enabled"] = true,
-["cooldownManager_cooldownFontName"] = "Roboto Condensed Bold",
-["cooldownManager_stackFontSizeEssential"] = 14,
 ["cooldownManager_cooldownFontSizeEssential_enabled"] = true,
-["cooldownManager_customSwipeColor_enabled"] = true,
-["cooldownManager_cooldownFontSizeEssential"] = 16,
-["keybindCache"] = {
-["Draenor_Nutellone_0_1"] = {
-["data"] = {
-["UtilityCooldownViewer"] = {
-["1"] = {
-["keybind"] = "A1",
-["spellName"] = "Dash",
-["spellID"] = 1850,
+["cooldownManager_keybindFontName"] = "Roboto Condensed Bold",
+["cooldownManager_stackFontSizeEssential"] = 12,
+["_trackerStylePerTrackerMigrationVersion"] = 1,
+["cooldownManager_cooldownFontSizeBuffIcons_enabled"] = true,
+["cooldownManager_cooldownFontSizeUtility"] = 12,
+["cooldownManager_cooldownFontSizeEssential"] = 14,
+["buffContainers"] = {
+["assignments"] = {
 },
-["3"] = {
-["keybind"] = "S1",
-["spellName"] = "Wild Charge",
-["spellID"] = 102401,
+["orders"] = {
 },
-["2"] = {
-["keybind"] = "S2",
-["spellName"] = "Stampeding Roar",
-["spellID"] = 106898,
-},
-},
-["EssentialCooldownViewer"] = {
-},
-},
-["timestamp"] = 1767859699,
-},
-["Draenor_Nutellone_104_6"] = {
-["data"] = {
-["UtilityCooldownViewer"] = {
-["1"] = {
-["keybind"] = "A1",
-["spellName"] = "Dash",
-["spellID"] = 1850,
-},
-["3"] = {
-["keybind"] = "S1",
-["spellName"] = "Wild Charge",
-["spellID"] = 102401,
-},
-["2"] = {
-["keybind"] = "S2",
-["spellName"] = "Stampeding Roar",
-["spellID"] = 106898,
-},
-},
-["EssentialCooldownViewer"] = {
-},
-},
-["timestamp"] = 1767860640,
+["customAuras"] = {
 },
 },
 ["cooldownManager_cooldownFontSizeBuffIcons"] = 14,
-["cooldownManager_keybindFontName"] = "Roboto Condensed Bold",
 ["cooldownManager_stackFontName"] = "Roboto Condensed Bold",
+["cooldownManager_customSwipeColor_enabled"] = true,
 },
 ["PanzaUI"] = {
+["editMode"] = {
+["tracker2"] = {
+["stackFontName"] = "Roboto Condensed Bold",
+["rectangularIconsPercent"] = 0.8,
+["cooldownFontName"] = "Roboto Condensed Bold",
+["cooldownFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+["keybindAnchor"] = "TOPRIGHT",
+["stackAnchor"] = "BOTTOMRIGHT",
+["keybindOffsetX"] = -3,
+["keybindFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+["stackOffsetY"] = 1,
+["keybindFontSize"] = 10,
+["showKeybinds"] = false,
+["keybindOffsetY"] = -3,
+["squareIcons"] = false,
+["cooldownFontEnabled"] = false,
+["cooldownFontSize"] = "NIL",
+["cooldownTextOffsetX"] = 0,
+["stackFontSize"] = 14,
+["cooldownTextOffsetY"] = 0,
+["iconZoom"] = 0.3,
+["rectangularIcons"] = false,
+["keybindFontName"] = "Roboto Condensed Bold",
+["borderThickness"] = 1,
+["stackOffsetX"] = -1,
+["stackFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+},
+["tracker1"] = {
+["stackFontName"] = "Roboto Condensed Bold",
+["rectangularIconsPercent"] = 0.8,
+["cooldownFontName"] = "Roboto Condensed Bold",
+["cooldownFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+["keybindAnchor"] = "TOPRIGHT",
+["stackAnchor"] = "BOTTOMRIGHT",
+["keybindOffsetX"] = -3,
+["keybindFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+["stackOffsetY"] = 1,
+["keybindFontSize"] = 10,
+["showKeybinds"] = false,
+["keybindOffsetY"] = -3,
+["squareIcons"] = false,
+["cooldownFontEnabled"] = false,
+["cooldownFontSize"] = "NIL",
+["cooldownTextOffsetX"] = 0,
+["stackFontSize"] = 14,
+["cooldownTextOffsetY"] = 0,
+["iconZoom"] = 0.3,
+["rectangularIcons"] = false,
+["keybindFontName"] = "Roboto Condensed Bold",
+["borderThickness"] = 1,
+["stackOffsetX"] = -1,
+["stackFontFlags"] = {
+["SLUG"] = true,
+["OUTLINE"] = true,
+},
+},
+},
 ["cooldownManager_stackAnchorBuffIcons_enabled"] = true,
-["cooldownManager_stackFontSizeBuffIcons"] = 12,
+["cooldownManager_centerEssential_growFromDirection"] = "BOTTOM",
 ["cooldownManager_stackAnchorUtility_enabled"] = true,
 ["cooldownManager_keybindFontName"] = "Roboto Condensed Bold",
-["cooldownManager_cooldownFontSizeBuffIcons"] = 14,
+["cooldownManager_cooldownFontSizeBuffIcons"] = 12,
+["cooldownManager_stackFontSizeBuffIcons"] = 10,
 ["cooldownManager_stackAnchorEssential_enabled"] = true,
-["assistantCache"] = {
-["Draenor_Nutellone_0_1"] = {
-["data"] = {
-["EssentialCooldownViewer"] = {
-},
-["UtilityCooldownViewer"] = {
-["1"] = {
-["inRotation"] = false,
-["spellName"] = "Dash",
-},
-["3"] = {
-["inRotation"] = false,
-["spellName"] = "Wild Charge",
-},
-["2"] = {
-["inRotation"] = false,
-["spellName"] = "Stampeding Roar",
-},
-},
-},
-["timestamp"] = 1767859699,
-},
-["Draenor_Nutellone_104_6"] = {
-["data"] = {
-["EssentialCooldownViewer"] = {
-},
-["UtilityCooldownViewer"] = {
-["1"] = {
-["inRotation"] = false,
-["spellName"] = "Dash",
-},
-["3"] = {
-["inRotation"] = false,
-["spellName"] = "Wild Charge",
-},
-["2"] = {
-["inRotation"] = false,
-["spellName"] = "Stampeding Roar",
-},
-},
-},
-["timestamp"] = 1767860640,
-},
-},
 ["cooldownManager_alignBuffBars_growFromDirection"] = "TOP",
-["cooldownManager_stackFontSizeEssential"] = 14,
+["_trackerStylePerTrackerMigrated"] = true,
+["cooldownManager_stackFontSizeEssential"] = 12,
 ["cooldownManager_cooldownFontName"] = "Roboto Condensed Bold",
 ["cooldownManager_cooldownFontSizeEssential_enabled"] = true,
-["keybindCache"] = {
-["Draenor_Nutellone_0_1"] = {
-["data"] = {
-["EssentialCooldownViewer"] = {
-},
-["UtilityCooldownViewer"] = {
-["1"] = {
-["spellID"] = 1850,
-["spellName"] = "Dash",
-["keybind"] = "A1",
-},
-["3"] = {
-["spellID"] = 102401,
-["spellName"] = "Wild Charge",
-["keybind"] = "S1",
-},
-["2"] = {
-["spellID"] = 106898,
-["spellName"] = "Stampeding Roar",
-["keybind"] = "S2",
-},
-},
-},
-["timestamp"] = 1767859699,
-},
-["Draenor_Nutellone_104_6"] = {
-["data"] = {
-["EssentialCooldownViewer"] = {
-},
-["UtilityCooldownViewer"] = {
-["1"] = {
-["spellID"] = 1850,
-["spellName"] = "Dash",
-["keybind"] = "A1",
-},
-["3"] = {
-["spellID"] = 102401,
-["spellName"] = "Wild Charge",
-["keybind"] = "S1",
-},
-["2"] = {
-["spellID"] = 106898,
-["spellName"] = "Stampeding Roar",
-["keybind"] = "S2",
-},
-},
-},
-["timestamp"] = 1767860640,
-},
-},
-["cooldownManager_centerEssential_growFromDirection"] = "BOTTOM",
-["cooldownManager_cooldownFontSizeUtility_enabled"] = true,
-["cooldownManager_cooldownFontSizeBuffIcons_enabled"] = true,
-["cooldownManager_customSwipeColor_enabled"] = true,
 ["cooldownManager_visibility_perViewer"] = {
 ["BuffIconCooldownViewer"] = {
 },
-["BuffBarCooldownViewer"] = {
-},
-["EssentialCooldownViewer"] = {
+["CMCTracker2"] = {
 },
 ["UtilityCooldownViewer"] = {
 },
 ["CMCTracker1"] = {
 },
-["CMCTracker2"] = {
+["EssentialCooldownViewer"] = {
+},
+["BuffBarCooldownViewer"] = {
 },
 },
+["cooldownManager_cooldownFontSizeBuffIcons_enabled"] = true,
+["cooldownManager_cooldownFontFlags"] = {
+["SLUG"] = true,
+},
+["cooldownManager_cooldownFontSizeUtility_enabled"] = true,
+["cooldownManager_keybindFontFlags"] = {
+["SLUG"] = true,
+},
+["cooldownManager_customSwipeColor_enabled"] = true,
 ["cooldownManager_stackFontSizeUtility"] = 10,
 ["cooldownManager_cooldownFontSizeUtility"] = 12,
+["buffContainers"] = {
+["assignments"] = {
+},
+["orders"] = {
+},
+["customAuras"] = {
+},
+},
 ["_bug_warning_displayed"] = 20260305,
 ["cooldownManager_stackFontName"] = "Roboto Condensed Bold",
-["cooldownManager_cooldownFontSizeEssential"] = 16,
+["_trackerStylePerTrackerMigrationVersion"] = 1,
+["cooldownManager_cooldownFontSizeEssential"] = 14,
+["cooldownManager_stackFontFlags"] = {
+["SLUG"] = true,
+},
 },
 },
 }

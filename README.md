@@ -20,6 +20,14 @@ __Note__: Designed for 2560×1440. Works at other resolutions with minor adjustm
 
 Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
+If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3) where you will find all these profiles.
+
+## Support
+
+I'll maintain it as long as I play the game — and considering I've been playing since 2004 (yeah, original Vanilla launch window), that's not changing anytime soon. This UI is in it for the long haul. If you enjoy the UI and want to offer me a beer, be my guest! But if not, that's totally cool too, the UI remains free for everyone, always.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V4D020XOPV)
+
 ## Required Addons
 
 | Addon | Description |
@@ -29,6 +37,7 @@ Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/Panza
 | [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/PanzaUI) | Core addon with minimal functionality |
 | [Platynator](https://www.curseforge.com/wow/addons/platynator) | Customizes enemy and friendly nameplates |
 | [SharedMedia](https://www.curseforge.com/wow/addons/sharedmedia) | Provides textures and fonts used across the UI |
+| [SharedMedia_MyMedia](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/SharedMedia_MyMedia) | Provides textures and fonts used specifically for this UI |
 
 To replicate this setup, follow the [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
@@ -38,9 +47,9 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 |---|---|
 | [Chattynator](https://www.curseforge.com/wow/addons/chattynator) | Skins the chat frame and enables chat channel configuration |
 | [DialogueUI](https://www.curseforge.com/wow/addons/dialogueui) | Skins the quest and dialogue UI |
-| [Masque](https://www.curseforge.com/wow/addons/masque) | Skins action buttons and provides consistent icon styling |
+| [Masque](https://www.curseforge.com/wow/addons/masque) | Skins action buttons and provides consistent icon styling (Using RetinaReborn for this UI) |
 | [Plumber](https://www.curseforge.com/wow/addons/plumber) | A collection of quality-of-life features |
-| [WilduTools](https://www.curseforge.com/wow/addons/wildutools) | Tidies and enhances the UI; automates some gameplay tasks |
+| [WilduTools](https://www.curseforge.com/wow/addons/wildutools) | Tidies and enhances the UI and automates some gameplay tasks |
 
 ## Screenshots
 
@@ -56,10 +65,6 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg" alt="PanzaUI - Party 01">
-  </a>
-
-  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_02.jpeg">
-  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_02.jpeg" alt="PanzaUI - Party 02">
   </a>
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_edit_01.jpeg">

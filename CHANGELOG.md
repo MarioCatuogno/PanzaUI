@@ -1,3 +1,67 @@
+## 1.5-RELEASE
+
+This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL. Added also a WIP "EllesmereUI" profile for testing purpose.
+
+### 🛠️ Core
+
+* Added a CVar to extend the camera distance
+* Changed default texture for border and status bar of PanzaUI
+* Changed the texture of the Personal Resource Bar
+* Forced the max foreground FPS to 60
+
+### 👤 Profiles
+
+* BlizzUI - Fixed the UI to match 2560×1440 resolution
+* EUI - Added a very early WIP profile for EllesmereUI
+* EnhanceQoL - Added counter in Quest Tracker frame
+* EnhanceQoL - Changed hide settings for Player, Target, ToT, Focus and Pet frames
+* EnhanceQoL - Changed the Minimap border texture
+* EnhanceQoL - Changed the border texture to PanzaUI to all the frames
+* EnhanceQoL - Changed the size and position of Raid Marker for Player, Focus, Target and Target of Target frames
+* EnhanceQoL - Changed the size, position and border of Boss frame
+* EnhanceQoL - Changed the size, position and border of Cast bars
+* EnhanceQoL - Changed the size, position and border of Party frame
+* EnhanceQoL - Changed the size, position and border of Player frame
+* EnhanceQoL - Changed the size, position and border of Raid frame
+* EnhanceQoL - Changed the size, position and border of Target frame
+* EnhanceQoL - Enabled copy link in chat window
+* EnhanceQoL - Enabled healer mana indicator in Dungeons
+* EnhanceQoL - Enabled some features for Delves
+* EnhanceQoL - Enabled the auto-release feature in PVP
+* EnhanceQoL - Fixed border color in various frames
+* EnhanceQoL - Fixed border in all frames after last update of EQOL addon
+* EnhanceQoL - Fixed border texture issue in Damage Meter tooltips
+* EnhanceQoL - Fixed border texture issue in Pet frame
+* EnhanceQoL - Fixed border texture issue in Raid frame
+* EnhanceQoL - Fixed debuffs frame size and position
+* EnhanceQoL - Fixed minimap border size
+* EnhanceQoL - Fixed Quest Tracker frame height
+* EnhanceQoL - Fixed the font size of Damage Meter tooltips
+* EnhanceQoL - Hidden CDM buffs and essential cooldowns tracker while flying/skyriding
+* EnhanceQoL - Hidden the Quick Join button in Social frame
+* EnhanceQoL - Increased cursor ring size
+* EnhanceQoL - Increased the refresh rate of the Damage Meter
+* EnhanceQoL - Increased the refresh rate of the Minimap coordinates
+* EnhanceQoL - Updated the profile to the latest version of addon
+* EnhanceQoL - Reskinned the Quest Tracker with same font's style of other parts of UI
+* Platynator - Adjusted the text stack position on icons
+* Platynator - Changed the texture of the borders
+* Platynator - Fixed the Simplified profile
+
+### 🧮 Class CDM
+
+* Monk - Windwalker: Reordered the Essential Cooldown abilities
+
+### 📏 Various
+
+* Added a new support button on Ko-Fi, totally optional since the UI will stay free forever!
+* Added SharedMedia_MyMedia as required addon
+* Added Wago links for those who wants to follow this UI on a proper WoW website
+* Disable the "Pulse" feature in Masque to avoid the bug with GCD blink
+* Updated documentation to the latest UI version
+* Updated images to the new 2560x1440 resolution
+* Updated WTF variables for several addons
+
 ## 1.4-RELEASE
 
 This is a major release that adds many quality-of-life features thanks to the amazing [Enhance QoL](https://www.curseforge.com/wow/addons/eqol) addon! It replaces the following addons from the previous version: Better Blizz Frames, Details, Edit Mode Tweaks, Leatrix Maps, Leatrix Plus, LS: Maps, LS: Toasts, Sensei Resource Bar, TomTom, and Waypoint UI.
@@ -9,7 +73,7 @@ The UI has also been adjusted to support 2560×1440 monitors.
 * Added a CVar to force friendly nameplates to show only the name
 * Added a new border ("platy_border") to SharedMedia, based on Plusmouse's Platynator
 * Changed the tooltip health bar texture to WGlass
-* Forced the max foreground FPS to 8
+* Forced the max background FPS to 8
 * Removed unnecessary elements
 * Resized the Spell Overlay frame to 75%
 * Reworked the core addon code for easier maintenance

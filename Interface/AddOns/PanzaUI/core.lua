@@ -77,6 +77,20 @@ local function configFrames()
 end
 
 --------------------------------------------------------------------------------
+-- CONFIGURE PERSONAL RESOURCE DISPLAY
+--------------------------------------------------------------------------------
+
+local function configPRD()
+    -- Change the status bar texture once during initialization.
+    PersonalResourceDisplayFrame.PowerBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
+
+    PersonalResourceDisplayFrame.PowerBar:HookScript("OnUpdate", function(self)
+
+    end)
+
+end
+
+--------------------------------------------------------------------------------
 -- CONFIGURE TOOLTIPS
 --------------------------------------------------------------------------------
 
@@ -169,10 +183,11 @@ local function setupCVars()
   C_CVar.SetCVar("autoClearAFK", 1)
   C_CVar.SetCVar("autoDismountFlying", 0)
   C_CVar.SetCVar("autoLootDefault", 1)
+  C_CVar.SetCVar("cameraDistanceMaxZoomFactor", 2.6)
   C_CVar.SetCVar("cursorSizePreferred", 0)
   C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
   C_CVar.SetCVar("lootUnderMouse", 0)
-  --C_CVar.SetCVar("maxFPS", 60)
+  C_CVar.SetCVar("maxFPS", 60)
   C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
@@ -197,6 +212,7 @@ end
 local function InitializeAddon()
 
     configFrames()
+    configPRD()
     configTooltips()
     setupCVars()
 
