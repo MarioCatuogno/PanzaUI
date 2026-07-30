@@ -5,6 +5,7 @@
 * BlizzUI - Fixed the buffs CDM frame position
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
+* EnhanceQoL - Removed text for Combo Points resource bar
 
 ### 🧮 Class CDM
 
