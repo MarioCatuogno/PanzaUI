@@ -2,6 +2,7 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Fixed the buffs CDM frame position
 * EnhanceQoL - Changed the size and position of XP bar
 
 ## 1.5-RELEASE
