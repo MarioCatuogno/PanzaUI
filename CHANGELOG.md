@@ -3,6 +3,7 @@
 ### 👤 Profiles
 
 * BlizzUI - Fixed the buffs CDM frame position
+* EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
 
 ### 🧮 Class CDM
