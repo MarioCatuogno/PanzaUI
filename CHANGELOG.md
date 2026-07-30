@@ -8,6 +8,7 @@
 
 ### 🧮 Class CDM
 
+* Rogue - Outlaw: Added a new Rogue Outlaw CDM profile
 * Mage - Frost: Reordered the Buffs abilities
 * Mage - Frost: Reordered the Essential Cooldown abilities
 
