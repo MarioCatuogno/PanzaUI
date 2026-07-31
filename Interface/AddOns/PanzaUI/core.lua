@@ -170,7 +170,6 @@ end
 local function InitializeAddon()
 
     configFrames()
-    configPRD()
     setupCVars()
 
 end
