@@ -91,34 +91,6 @@ local function configPRD()
 end
 
 --------------------------------------------------------------------------------
--- CONFIGURE TOOLTIPS
---------------------------------------------------------------------------------
-
-local function configTooltips()
-    -- Change the status bar texture once during initialization.
-    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-
-    GameTooltip:HookScript("OnUpdate", function(self)
-
-        -- Check if the unit currently being moused over is a player.
-        if UnitIsPlayer("mouseover") then
-            local _, englishClass = UnitClass("mouseover")
-            if englishClass then
-                local r, g, b = GetClassColor(englishClass)
-                GameTooltipStatusBarTexture:SetVertexColor(r, g, b)
-            else
-                -- Fallback to white if class cannot be determined for a player unit.
-                GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
-            end
-        else
-            -- If it's not a player, or no unit is moused over, reset to a default color.
-            GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
-        end
-    end)
-
-end
-
---------------------------------------------------------------------------------
 -- SETUP CVARS
 --------------------------------------------------------------------------------
 
@@ -213,7 +185,6 @@ local function InitializeAddon()
 
     configFrames()
     configPRD()
-    configTooltips()
     setupCVars()
 
 end

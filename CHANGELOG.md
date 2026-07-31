@@ -1,5 +1,10 @@
 ## 1.6-RELEASE
 
+### 🛠️ Core
+
+* Removed Personal Resource Display skinning to improve performance
+* Removed Tooltips Health bar skinning to improve performance
+
 ### 👤 Profiles
 
 * BlizzUI - Fixed the buffs CDM frame position
