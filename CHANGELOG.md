@@ -12,6 +12,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * BlizzUI - Fixed the buffs CDM frame position
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
+* EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 
 ### 🧮 Class CDM
