@@ -13,7 +13,6 @@
 * Mage - Frost: Reordered the Buffs abilities
 * Mage - Frost: Reordered the Essential Cooldown abilities
 
-
 ## 1.5-RELEASE
 
 This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL. Added also a WIP "EllesmereUI" profile for testing purpose.
