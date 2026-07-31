@@ -10,6 +10,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 ### 👤 Profiles
 
 * BlizzUI - Fixed the buffs CDM frame position
+* BlizzUI - Fixed the position of Quest Tracker and Damage Meter to be in line with Minimap
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
 * EnhanceQoL - Removed health bar from Tooltips
