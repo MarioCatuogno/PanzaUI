@@ -92,7 +92,7 @@ local function setupCVars()
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
-  C_CVar.SetCVar("displaySpellActivationOverlays", 0)
+  C_CVar.SetCVar("displaySpellActivationOverlays", 1)
 
   -- Chat
   C_CVar.SetCVar("colorChatNamesByClass", 1)
