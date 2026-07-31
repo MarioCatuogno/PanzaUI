@@ -1,5 +1,7 @@
 ## 1.6-RELEASE
 
+This is a small release that fixes some bugs and improve performance. Adds and fixes some CDM profiles and enable some new features in EQoL. It is compatible with WoW patch 12.1.
+
 ### 🛠️ Core
 
 * Removed Personal Resource Display skinning to improve performance
@@ -17,6 +19,10 @@
 * Rogue - Outlaw: Added a new Rogue Outlaw CDM profile
 * Mage - Frost: Reordered the Buffs abilities
 * Mage - Frost: Reordered the Essential Cooldown abilities
+
+### 📏 Various
+
+* Removed EllesmereUI profile. Will stick to EQOL suite.
 
 ## 1.5-RELEASE
 
