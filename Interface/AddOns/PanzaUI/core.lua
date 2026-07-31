@@ -77,20 +77,6 @@ local function configFrames()
 end
 
 --------------------------------------------------------------------------------
--- CONFIGURE PERSONAL RESOURCE DISPLAY
---------------------------------------------------------------------------------
-
-local function configPRD()
-    -- Change the status bar texture once during initialization.
-    PersonalResourceDisplayFrame.PowerBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-
-    PersonalResourceDisplayFrame.PowerBar:HookScript("OnUpdate", function(self)
-
-    end)
-
-end
-
---------------------------------------------------------------------------------
 -- SETUP CVARS
 --------------------------------------------------------------------------------
 
