@@ -15,10 +15,12 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * BlizzUI - Fixed the position of Quest Tracker and Damage Meter to be in line with Minimap
 * Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
 * EnhanceQoL - Added border to buffs/debuffs frames and action bars (Masque not necessary anymore)
+* EnhanceQoL - Added the EQOL Cooldown Manager (another addon that can be removed)
 * EnhanceQoL - Enabled and configured Bags module
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
 * EnhanceQoL - Changed the size of the Minimap border
+* EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 * EnhanceQoL - Removed text for Icicles resource bar
