@@ -12,6 +12,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 ### 👤 Profiles
 
 * BlizzUI - Fixed the buffs CDM frame position
+* BlizzUI - Fixed the position of Damage Meter
 * BlizzUI - Fixed the position of Quest Tracker and Damage Meter to be in line with Minimap
 * Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
 * EnhanceQoL - Added border to action bars
