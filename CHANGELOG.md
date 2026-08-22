@@ -16,6 +16,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
+* EnhanceQoL - Changed the size of the Minimap border
 * EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 * EnhanceQoL - Removed text for Icicles resource bar
