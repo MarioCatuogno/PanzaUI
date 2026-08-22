@@ -24,6 +24,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 * EnhanceQoL - Removed text for Icicles resource bar
+* Platynator - Fixed the position of Buffs icons
 
 ### 🧮 Class CDM
 
