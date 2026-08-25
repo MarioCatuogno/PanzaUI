@@ -34,6 +34,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * Mage - Frost: Reordered the Essential Cooldown abilities
 * Monk - Brewmaster: Added glow to some Buffs
 * Monk - Windwalker: Added glow to some Buffs
+* Monk - Windwalker: Removed racial abilities
 
 ### 📏 Various
 
