@@ -38,8 +38,8 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 
 ### 📏 Various
 
+* Removed EllesmereUI profile. Will stick to EQOL suite
 * Updated documentation to the latest UI version
-* Removed EllesmereUI profile. Will stick to EQOL suite.
 * Updated TOC to the newest patch
 
 ## 1.5-RELEASE
