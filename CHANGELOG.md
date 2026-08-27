@@ -22,6 +22,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed the size and position of XP bar
 * EnhanceQoL - Changed the size of the Minimap border
+* EnhanceQoL - Disabled Chat Bubbles in Party/Raid
 * EnhanceQoL - Enabled custom Buffs frame
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Removed health bar from Tooltips
