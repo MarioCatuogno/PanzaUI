@@ -1,6 +1,7 @@
-## Interface: 120000, 120001, 120002, 120005, 120007
+## Interface: 120100
 ## Title: SharedMedia_MyMedia
 ## Author: Panzarotto
 ## Dependencies: SharedMedia
+## Version: 1.6
 
 MyMedia.lua
