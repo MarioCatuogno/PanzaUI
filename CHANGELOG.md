@@ -5,6 +5,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 ### 🛠️ Core
 
 * Added "displaySpellActivationOverlays" to CVars
+* Added a new status texture for health/power and cast bars
 * Removed "maxFPS" from CVars
 * Removed Personal Resource Display skinning to improve performance
 * Removed Tooltips Health bar skinning to improve performance
