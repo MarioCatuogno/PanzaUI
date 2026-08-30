@@ -14,6 +14,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 
 * BigWigs - Added a new BigWigs profile
 * BlizzUI - Adjusted frames position to match BigWigs addon
+* BlizzUI - Changed the position of Party frame
 * BlizzUI - Fixed the buffs CDM frame position
 * BlizzUI - Fixed the position of Damage Meter
 * BlizzUI - Fixed the position of Quest Tracker and Damage Meter to be in line with Minimap
