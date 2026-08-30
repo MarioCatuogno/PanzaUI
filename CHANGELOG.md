@@ -21,16 +21,22 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
 * EnhanceQoL - Added border to action bars
 * EnhanceQoL - Changed Action Bars settings
+* EnhanceQoL - Changed background texture alpha for various unit frames
+* EnhanceQoL - Changed the position of Resource Bar to match Target frame's one
+* EnhanceQoL - Changed the position of Secondary Resource Bar
+* EnhanceQoL - Changed the position of Target's name
 * EnhanceQoL - Changed the texture for all the status bars
 * EnhanceQoL - Changed the size and position of XP bar
 * EnhanceQoL - Changed the size of the Minimap border
 * EnhanceQoL - Disabled Chat Bubbles in Party/Raid
 * EnhanceQoL - Enabled custom Buffs frame
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
+* EnhanceQoL - Fixed background texture for various unit frames
 * EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 * EnhanceQoL - Removed text for Icicles resource bar
 * Platynator - Centered enemies name and debuffs on target
+* Platynator - Changed background texture alpha for Enemies and Simplified nameplates
 * Platynator - Changed the texture for all the status bars
 * Platynator - Fixed the position of Buffs icons
 
