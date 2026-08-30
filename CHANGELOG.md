@@ -36,6 +36,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Changed the size of the Minimap border
 * EnhanceQoL - Disabled Chat Bubbles in Party/Raid
 * EnhanceQoL - Enabled custom Buffs frame
+* EnhanceQoL - Enabled Health macro
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Fixed background texture for various unit frames
 * EnhanceQoL - Removed health bar from Tooltips
