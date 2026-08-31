@@ -39,6 +39,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Enabled Health macro
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Fixed background texture for various unit frames
+* EnhanceQoL - Fixed some Damage Meter text issues
 * EnhanceQoL - Removed health bar from Tooltips
 * EnhanceQoL - Removed text for Combo Points resource bar
 * EnhanceQoL - Removed text for Icicles resource bar
