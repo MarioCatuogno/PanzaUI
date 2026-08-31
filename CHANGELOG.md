@@ -13,6 +13,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 ### 👤 Profiles
 
 * BigWigs - Added a new BigWigs profile
+* BlizzUI - Added a new action bar to track Skyriding
 * BlizzUI - Adjusted frames position to match BigWigs addon
 * BlizzUI - Adjusted the text size of Damage Meter header
 * BlizzUI - Changed the position of Party frame
@@ -25,6 +26,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * Chattynator - Added a new Chattynator profile
 * Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
 * Cooldown Manager Centered - Adjusted anchors for some frames
+* EnhanceQoL - Added a new action bar to track Skyriding
 * EnhanceQoL - Added border to action bars
 * EnhanceQoL - Changed Action Bars settings
 * EnhanceQoL - Changed background texture alpha for various unit frames
