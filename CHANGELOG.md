@@ -43,6 +43,7 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Enabled custom Buffs frame
 * EnhanceQoL - Enabled Health macro
 * EnhanceQoL - Fixed aura borders on Party and Raid frames
+* EnhanceQoL - Fixed border on Battle Res tracker frame
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Fixed background texture for various unit frames
 * EnhanceQoL - Fixed some Damage Meter text issues
