@@ -37,9 +37,12 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 * EnhanceQoL - Changed the texture for all the status bars
 * EnhanceQoL - Changed the size and position of XP bar
 * EnhanceQoL - Changed the size of the Minimap border
+* EnhanceQoL - Customized Buffs on Party and Raid frames for Healers
+* EnhanceQoL - Customized Defensives on Party and Raid frames for Healers
 * EnhanceQoL - Disabled Chat Bubbles in Party/Raid
 * EnhanceQoL - Enabled custom Buffs frame
 * EnhanceQoL - Enabled Health macro
+* EnhanceQoL - Fixed aura borders on Party and Raid frames
 * EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
 * EnhanceQoL - Fixed background texture for various unit frames
 * EnhanceQoL - Fixed some Damage Meter text issues
