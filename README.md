@@ -16,7 +16,7 @@
 
 A clean, minimally intrusive UI that preserves the look and feel of the default Blizzard interface. Compatible with all classes and built around the new Midnight addon restrictions.
 
-__Note__: Designed for 2560×1440. Works at other resolutions with minor adjustments.
+__Note__: Designed for 2560×1440 and 65% UI scale. Works at other resolutions with minor adjustments.
 
 Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
@@ -45,6 +45,7 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 
 | Addon | Description |
 |---|---|
+| [BigWigs](https://www.curseforge.com/wow/addons/bigwigs) | Boss encounter addon |
 | [Chattynator](https://www.curseforge.com/wow/addons/chattynator) | Skins the chat frame and enables chat channel configuration |
 | [DialogueUI](https://www.curseforge.com/wow/addons/dialogueui) | Skins the quest and dialogue UI |
 | [Masque](https://www.curseforge.com/wow/addons/masque) | Skins action buttons and provides consistent icon styling (Using RetinaReborn for this UI) |

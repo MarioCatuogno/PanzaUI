@@ -1,3 +1,74 @@
+## 1.6-RELEASE
+
+This is a small release that fixes some bugs and improve performance. Adds and fixes some CDM profiles and enable some new features in EQoL. It is compatible with WoW patch 12.1.
+
+### 🛠️ Core
+
+* Added "displaySpellActivationOverlays" to CVars
+* Added a new PanzaUI status bar texture
+* Added a new status texture for health/power and cast bars
+* Removed "maxFPS" from CVars
+* Removed Personal Resource Display skinning to improve performance
+* Removed Tooltips Health bar skinning to improve performance
+
+### 👤 Profiles
+
+* BigWigs - Added a new BigWigs profile
+* BlizzUI - Added a new action bar to track Skyriding
+* BlizzUI - Adjusted frames position to match BigWigs addon
+* BlizzUI - Adjusted the text size of Damage Meter header
+* BlizzUI - Changed the position of Party frame
+* BlizzUI - Changed the position of Pet and Stance action bars
+* BlizzUI - Changed the position of Raid frame
+* BlizzUI - Changed the position of Tooltips frame
+* BlizzUI - Fixed the buffs CDM frame position
+* BlizzUI - Fixed the position of Damage Meter
+* BlizzUI - Fixed the position of Quest Tracker and Damage Meter to be in line with Minimap
+* Chattynator - Added a new Chattynator profile
+* Cooldown Manager Centered - Added glow to many Buffs and Procs from various classes
+* Cooldown Manager Centered - Adjusted anchors for some frames
+* EnhanceQoL - Added a new action bar to track Skyriding
+* EnhanceQoL - Added border to action bars
+* EnhanceQoL - Changed Action Bars settings
+* EnhanceQoL - Changed background texture alpha for various unit frames
+* EnhanceQoL - Changed the position of Resource Bar to match Target frame's one
+* EnhanceQoL - Changed the position of Secondary Resource Bar
+* EnhanceQoL - Changed the position of Target's name
+* EnhanceQoL - Changed the texture for all the status bars
+* EnhanceQoL - Changed the size and position of XP bar
+* EnhanceQoL - Changed the size of the Minimap border
+* EnhanceQoL - Customized Buffs on Party and Raid frames for Healers
+* EnhanceQoL - Customized Defensives on Party and Raid frames for Healers
+* EnhanceQoL - Disabled Chat Bubbles in Party/Raid
+* EnhanceQoL - Enabled custom Buffs frame
+* EnhanceQoL - Enabled Health macro
+* EnhanceQoL - Fixed aura borders on Party and Raid frames
+* EnhanceQoL - Fixed border on Battle Res tracker frame
+* EnhanceQoL - Fixed the bar and icon border of Damage Meter frame
+* EnhanceQoL - Fixed background texture for various unit frames
+* EnhanceQoL - Fixed some Damage Meter text issues
+* EnhanceQoL - Removed health bar from Tooltips
+* EnhanceQoL - Removed text for Combo Points resource bar
+* EnhanceQoL - Removed text for Icicles resource bar
+* Platynator - Centered enemies name and debuffs on target
+* Platynator - Changed background texture alpha for Enemies and Simplified nameplates
+* Platynator - Changed the texture for all the status bars
+* Platynator - Fixed the position of Buffs icons
+
+### 🧮 Class CDM
+
+* Rogue - Outlaw: Added a new Rogue Outlaw CDM profile
+* Mage - Frost: Reordered the Buffs abilities
+* Mage - Frost: Reordered the Essential Cooldown abilities
+* Monk - Brewmaster: Added glow to some Buffs
+* Monk - Windwalker: Added glow to some Buffs
+* Monk - Windwalker: Removed racial abilities
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+* Updated TOC to the newest patch
+
 ## 1.5-RELEASE
 
 This is a small release that fixes some bugs from previous version, adds and fixes some CDM profiles and enable some new features in EQoL. Added also a WIP "EllesmereUI" profile for testing purpose.

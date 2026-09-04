@@ -77,48 +77,6 @@ local function configFrames()
 end
 
 --------------------------------------------------------------------------------
--- CONFIGURE PERSONAL RESOURCE DISPLAY
---------------------------------------------------------------------------------
-
-local function configPRD()
-    -- Change the status bar texture once during initialization.
-    PersonalResourceDisplayFrame.PowerBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-
-    PersonalResourceDisplayFrame.PowerBar:HookScript("OnUpdate", function(self)
-
-    end)
-
-end
-
---------------------------------------------------------------------------------
--- CONFIGURE TOOLTIPS
---------------------------------------------------------------------------------
-
-local function configTooltips()
-    -- Change the status bar texture once during initialization.
-    GameTooltipStatusBar:SetStatusBarTexture("Interface\\AddOns\\SharedMedia\\statusbar\\Wglass")
-
-    GameTooltip:HookScript("OnUpdate", function(self)
-
-        -- Check if the unit currently being moused over is a player.
-        if UnitIsPlayer("mouseover") then
-            local _, englishClass = UnitClass("mouseover")
-            if englishClass then
-                local r, g, b = GetClassColor(englishClass)
-                GameTooltipStatusBarTexture:SetVertexColor(r, g, b)
-            else
-                -- Fallback to white if class cannot be determined for a player unit.
-                GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
-            end
-        else
-            -- If it's not a player, or no unit is moused over, reset to a default color.
-            GameTooltipStatusBarTexture:SetVertexColor(0.0, 1.0, 0.0)
-        end
-    end)
-
-end
-
---------------------------------------------------------------------------------
 -- SETUP CVARS
 --------------------------------------------------------------------------------
 
@@ -134,6 +92,7 @@ local function setupCVars()
   C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
   C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
   C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
+  C_CVar.SetCVar("displaySpellActivationOverlays", 1)
 
   -- Chat
   C_CVar.SetCVar("colorChatNamesByClass", 1)
@@ -187,7 +146,7 @@ local function setupCVars()
   C_CVar.SetCVar("cursorSizePreferred", 0)
   C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
   C_CVar.SetCVar("lootUnderMouse", 0)
-  C_CVar.SetCVar("maxFPS", 60)
+  --C_CVar.SetCVar("maxFPS", 60)
   C_CVar.SetCVar("maxFPSBk", 8)
   C_CVar.SetCVar("movieSubtitle", 1)
   C_CVar.SetCVar("screenEdgeFlash", 0)
@@ -212,8 +171,6 @@ end
 local function InitializeAddon()
 
     configFrames()
-    configPRD()
-    configTooltips()
     setupCVars()
 
 end
