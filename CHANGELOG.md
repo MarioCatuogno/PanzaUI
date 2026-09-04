@@ -66,7 +66,6 @@ This is a small release that fixes some bugs and improve performance. Adds and f
 ### 📏 Various
 
 * Updated documentation to the latest UI version
-* Updated EllesmereUI profile (still a WIP, not sure if I will still work on it)
 * Updated TOC to the newest patch
 
 ## 1.5-RELEASE
