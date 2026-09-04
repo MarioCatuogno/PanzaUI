@@ -1,3 +1,9 @@
+## 1.7-RELEASE
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 1.6-RELEASE
 
 This is a small release that fixes some bugs and improve performance. Adds and fixes some CDM profiles and enable some new features in EQoL. It is compatible with WoW patch 12.1.
