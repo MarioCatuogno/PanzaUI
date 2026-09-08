@@ -1,5 +1,9 @@
 ## 1.7-RELEASE
 
+### 👤 Profiles
+
+* EnhanceQoL - Disabled Boss frame
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version
