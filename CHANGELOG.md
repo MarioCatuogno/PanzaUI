@@ -2,6 +2,7 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Adjusted frames position to match BigWigs addon
 * EnhanceQoL - Disabled Boss frame
 
 ### 📏 Various
