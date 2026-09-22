@@ -1,5 +1,7 @@
 ## 1.7-RELEASE
 
+This is a small release that fixes some bugs and improve performance. It is compatible with WoW patch 12.1.5.
+
 ### 👤 Profiles
 
 * BlizzUI - Adjusted frames position to match BigWigs addon
