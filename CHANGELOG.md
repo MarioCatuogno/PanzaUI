@@ -5,6 +5,7 @@
 * BlizzUI - Adjusted frames position to match BigWigs addon
 * EnhanceQoL - Disabled Boss frame
 * EnhanceQoL - Fixed the opacity of Damage Meter bars
+* EUI - Updated the EllesmereUI profile with the new Blizz-like style
 
 ### 📏 Various
 
