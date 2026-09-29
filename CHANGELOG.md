@@ -60,6 +60,7 @@ Here's a list of all the features included in this first release!
 
 * Personal Resource Display - Styles the bar text with the outlined font and centers it on the bars.
 Shows health and power as a simple percentage number.
+* Personal Resource Display - Always shows the health and power percentage, like the Player and Target frames.
 
 ### Minimap
 

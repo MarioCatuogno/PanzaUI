@@ -1,7 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Personal Resource Display
     Text style, centered text, percentage-only health/power text.
-    Bar text is shown when "Show Bar Text" is enabled in Edit Mode.
+    With percentage text on, the text is always shown (like Player/Target),
+    regardless of the Edit Mode "Show Bar Text" setting.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -17,7 +18,7 @@ local PRD = ns:RegisterModule("PersonalResource", {
         { key = "fontStyle",   label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the bar text. Requires Reload UI." },
         { key = "centerText",  label = "Center text",          tooltip = "Center the text on the bars. Requires Reload UI." },
         { header = "Features" },
-        { key = "percentText", label = "Percentage-only text", tooltip = "Show health and power as a plain percentage (no % symbol). Enable \"Show Bar Text\" in Edit Mode. Requires Reload UI." },
+        { key = "percentText", label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), like the Player and Target frames. Requires Reload UI." },
     },
 })
 
@@ -44,8 +45,8 @@ local function Setup(db)
 
     -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own text.
     if db.percentText then
-        ns.PercentText(health, false, "player", true)
-        ns.PercentText(power,  true,  "player", true)
+        ns.PercentText(health, false, "player")
+        ns.PercentText(power,  true,  "player")
     end
 end
 
