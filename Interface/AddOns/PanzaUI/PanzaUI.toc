@@ -1,8 +1,17 @@
-## Interface: 120100
+## Interface: 120100, 120005, 120001
 ## Title: |cff00FF98Panza|rUI
-## Notes: World of Warcraft UI
-## IconTexture: 572034
+## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
-## Version: 1.6
+## Version: 2.0.37
+## SavedVariables: PanzaUI_DB
 
 core.lua
+Module\Chat.lua
+Module\ActionBars.lua
+Module\QuestTracker.lua
+Module\UnitFrames.lua
+Module\PersonalResource.lua
+Module\Minimap.lua
+Module\Bags.lua
+Module\Tooltips.lua
+Module\Miscellaneous.lua

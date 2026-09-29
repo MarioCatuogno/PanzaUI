@@ -1,197 +1,265 @@
---------------------------------------------------------------------------------
--- PanzaUI
---------------------------------------------------------------------------------
+--[[----------------------------------------------------------------------------
+    PanzaUI - Core
+    Shared namespace, helpers, saved variables, module registry and the
+    settings panel (Options > AddOns > PanzaUI).
+------------------------------------------------------------------------------]]
+local addonName, ns = ...
+
+ns.modules    = {}                 -- ordered list of registered modules
+ns.IsSecret   = issecretvalue or function() return false end -- Midnight secret values
+ns.FONT_FLAGS = "OUTLINE, SLUG"    -- shared text style for every module
 
 --------------------------------------------------------------------------------
--- HELPER FUNCTIONS
+-- Shared helpers
 --------------------------------------------------------------------------------
 
-local addonName, addonTable = ...
+-- Hidden parent: frames reparented here disappear without hooking Show().
+ns.Hider = CreateFrame("Frame")
+ns.Hider:Hide()
 
--- Store class colors in a local table.
-local CLASS_COLORS = {
-    ["WARRIOR"] = {1.0, 0.78, 0.55},
-    ["PALADIN"] = {0.96, 0.55, 0.73},
-    ["HUNTER"] = {0.67, 0.83, 0.45},
-    ["ROGUE"] = {1.0, 0.96, 0.41},
-    ["PRIEST"] = {1.0, 1.0, 1.0},
-    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23},
-    ["SHAMAN"] = {0.0, 0.44, 0.87},
-    ["MAGE"] = {0.41, 0.8, 0.94},
-    ["WARLOCK"] = {0.58, 0.51, 0.79},
-    ["MONK"] = {0.0, 1.0, 0.59},
-    ["DRUID"] = {1.0, 0.49, 0.04},
-    ["DEMONHUNTER"] = {0.64, 0.19, 0.79},
-    ["EVOKER"] = {0.2, 0.58, 0.5},
-}
+function ns.Kill(frame)
+    if frame then frame:SetParent(ns.Hider) end
+end
 
-local function GetClassColor(class)
+-- Keeps the current font and size, only changes the flags.
+function ns.StyleFont(obj)
+    if not (obj and obj.GetFont) then return end
+    local font, size = obj:GetFont()
+    if font then obj:SetFont(font, size, ns.FONT_FLAGS) end
+end
 
-    local color = CLASS_COLORS[class]
-    if color then
-        return color[1], color[2], color[3]
+-- Chat message with the addon prefix.
+function ns.Print(msg)
+    print("|cff00FF98Panza|rUI: " .. msg)
+end
+
+-- Permanently hide a (non-secure) frame and stop its event processing.
+function ns.Disable(frame)
+    if not frame then return end
+    frame:UnregisterAllEvents()
+    frame:Hide()
+    frame:HookScript("OnShow", frame.Hide)
+end
+
+-- hooksecurefunc only if the function exists (API safety).
+-- ns.Hook("GlobalFunc", cb)  or  ns.Hook(object, "Method", cb)
+function ns.Hook(target, name, callback)
+    if type(target) == "string" then target, name, callback = _G, target, name end
+    if target and type(target[name]) == "function" then hooksecurefunc(target, name, callback) end
+end
+
+--------------------------------------------------------------------------------
+-- Action button look for any icon texture (rounded mask + action bar frame).
+-- Same proportions as ActionButtonTemplate (icon = 45x45 button): the mask
+-- keeps its native atlas size centered on the icon (it has transparent
+-- padding), the frame is 46x45 at the icon's top-left.
+-- Only widget calls, no Blizzard fields are written (taint-safe).
+--------------------------------------------------------------------------------
+local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
+local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
+
+function ns.StyleIcon(icon, parent)
+    if not (icon and icon.AddMaskTexture) then return end
+    parent = parent or icon:GetParent()
+
+    local w, h  = icon:GetSize()
+    local scale = w / 45
+    local info  = C_Texture.GetAtlasInfo(ICON_MASK)
+
+    local mask = parent:CreateMaskTexture()
+    mask:SetAtlas(ICON_MASK)
+    mask:SetPoint("CENTER", icon)
+    if info then mask:SetSize(info.width * scale, info.height * scale) else mask:SetAllPoints(icon) end
+    icon:AddMaskTexture(mask)
+
+    local frame = parent:CreateTexture(nil, "OVERLAY", nil, -1) -- below other overlays (dispel border, ...)
+    frame:SetAtlas(ICON_FRAME)
+    frame:SetPoint("TOPLEFT", icon)
+    frame:SetSize(w * 46 / 45, h)
+end
+
+-- Icon zoom: crop `percent`% of the texture on each side (0 = full icon).
+-- Texcoords survive SetTexture(), so this is applied once per change.
+function ns.ZoomIcon(icon, percent)
+    if not (icon and icon.SetTexCoord) then return end
+    local lo = (tonumber(percent) or 0) / 100
+    icon:SetTexCoord(lo, 1 - lo, lo, 1 - lo)
+end
+
+--------------------------------------------------------------------------------
+-- Status bar text helpers (TextStatusBar: TextString / LeftText / RightText)
+--------------------------------------------------------------------------------
+function ns.StyleBarText(bar)
+    if not bar then return end
+    ns.StyleFont(bar.TextString)
+    ns.StyleFont(bar.LeftText)
+    ns.StyleFont(bar.RightText)
+end
+
+-- Percentage-only text (no % symbol). Midnight: health/power are secret
+-- values, so the percentage comes from UnitHealthPercent/UnitPowerPercent and
+-- is passed straight to the FontString, never read or compared.
+-- Runs after Blizzard's UpdateTextString (post-hook: no taint on Blizzard code).
+local percentBars = {} -- bar -> { power = bool, unit = fallback unit, respect = bool }
+local IsSecret = ns.IsSecret
+
+local function ShowPercent(bar)
+    local info, text = percentBars[bar], bar.TextString
+    if not (info and text) then return end
+
+    -- respect: keep Blizzard's own visibility choice (e.g. an Edit Mode setting)
+    local visible = not info.respect or text:IsShown()
+        or (bar.LeftText and bar.LeftText:IsShown()) or (bar.RightText and bar.RightText:IsShown())
+    if bar.LeftText  then bar.LeftText:Hide()  end
+    if bar.RightText then bar.RightText:Hide() end
+
+    local unit = bar.unit or info.unit
+    local _, max = bar:GetMinMaxValues()
+    if not visible or not unit or (not IsSecret(max) and max <= 0) then
+        text:Hide()
+        return
     end
-    -- Default to white if class is not found.
-    return 1.0, 1.0, 1.0
 
+    -- No and/or shortcut: a secret value can't be tested for truthiness.
+    local curve = CurveConstants.ScaleTo100
+    local pct
+    if info.power then
+        pct = UnitPowerPercent(unit, bar.powerType, false, curve)
+    else
+        pct = UnitHealthPercent(unit, true, curve)
+    end
+    text:SetFormattedText("%.0f", pct)
+    text:Show()
 end
 
--- Helper function to set frame scale.
-local function SetScaleForFrame(frame, scale)
+function ns.PercentText(bar, isPower, unit, respectVisibility)
+    if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
+    percentBars[bar] = { power = isPower, unit = unit, respect = respectVisibility }
+    ns.Hook(bar, "UpdateTextString", ShowPercent)
+end
 
-    if frame then
-      frame:SetScale(scale)
+--------------------------------------------------------------------------------
+-- Module registry
+--   info = { title, defaults = { key = value, ... },
+--            options = { { header = "Section" }, { key, label, tooltip [, slider] }, ... } }
+--   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value)
+--------------------------------------------------------------------------------
+function ns:RegisterModule(key, info)
+    info.key = key
+    self.modules[#self.modules + 1] = info
+    return info
+end
+
+--------------------------------------------------------------------------------
+-- Saved variables: fill defaults, drop obsolete keys.
+--------------------------------------------------------------------------------
+local function InitDB()
+    PanzaUI_DB = PanzaUI_DB or {}
+    local known = {}
+    for _, m in ipairs(ns.modules) do known[m.key] = true end
+    for k in pairs(PanzaUI_DB) do
+        if not known[k] then PanzaUI_DB[k] = nil end -- removed/renamed modules
+    end
+    for _, m in ipairs(ns.modules) do
+        local db = PanzaUI_DB[m.key] or {}
+        for k in pairs(db) do
+            if m.defaults[k] == nil then db[k] = nil end
+        end
+        for k, v in pairs(m.defaults) do
+            if type(db[k]) ~= type(v) then db[k] = v end -- missing or type changed
+        end
+        PanzaUI_DB[m.key] = db
+        m.db = db
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Settings panel (modern Settings API)
+--------------------------------------------------------------------------------
+local function AddReloadButton(layout)
+    layout:AddInitializer(CreateSettingsButtonInitializer(
+        "", "Reload UI", ReloadUI, "Reload the interface to apply changes.", false))
+end
+
+-- Checkbox (boolean default) or slider (opt.slider = { min, max, step, suffix }).
+local function AddOption(category, m, opt)
+    local key = opt.key
+    local varType = opt.slider and Settings.VarType.Number or Settings.VarType.Boolean
+    local setting = Settings.RegisterAddOnSetting(category,
+        addonName .. "_" .. m.key .. "_" .. key, key, m.db,
+        varType, opt.label, m.defaults[key])
+
+    if m.OnOptionChanged then
+        setting:SetValueChangedCallback(function(_, value)
+            m.db[key] = value
+            m:OnOptionChanged(key, value)
+        end)
     end
 
+    if not opt.slider then
+        return Settings.CreateCheckbox(category, setting, opt.tooltip)
+    end
+    local sl = opt.slider
+    local sliderOptions = Settings.CreateSliderOptions(sl.min, sl.max, sl.step or 1)
+    sliderOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, function(value)
+        return value .. (sl.suffix or "")
+    end)
+    return Settings.CreateSlider(category, setting, sliderOptions, opt.tooltip)
 end
 
--- Helper function to set frame alpha.
-local function SetAlphaForFrame(frame, alpha)
+local function BuildSettings()
+    local category, layout = Settings.RegisterVerticalLayoutCategory(addonName)
+    local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(addonName .. " " .. version))
+    AddReloadButton(layout)
 
-    if frame then
-      frame:SetAlpha(alpha)
+    for _, m in ipairs(ns.modules) do
+        local sub, subLayout = Settings.RegisterVerticalLayoutSubcategory(category, m.title)
+
+        for _, opt in ipairs(m.options) do
+            if opt.header then
+                subLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer(opt.header))
+            else
+                AddOption(sub, m, opt)
+            end
+        end
+        AddReloadButton(subLayout)
     end
 
-end
-
-addonTable.core = {}
-
---------------------------------------------------------------------------------
--- CONFIGURE VARIOUS FRAMES
---------------------------------------------------------------------------------
-
-local function configFrames()
-
-  -- Configure Minimap
-  SetScaleForFrame(Minimap, 1.0)
-  SetScaleForFrame(MinimapCluster, 1.0)
-  SetAlphaForFrame(MinimapCluster.BorderTop, 0)
-  SetAlphaForFrame(AddonCompartmentFrame, 0)
-
-  -- Configure Quest Tracker
-  SetScaleForFrame(ObjectiveTrackerFrame, 0.95)
-
-  -- Configure Spell Overlay
-  SetScaleForFrame(SpellActivationOverlayFrame, 0.75)
-
+    Settings.RegisterAddOnCategory(category)
+    ns.category = category
 end
 
 --------------------------------------------------------------------------------
--- SETUP CVARS
+-- Boot
 --------------------------------------------------------------------------------
-
-local function setupCVars()
-
-  -- Action Bar
-  C_CVar.SetCVar("lockActionBar", 1)
-  C_CVar.SetCVar("AutoPushSpellToActionBar",0)
-
-  -- Combat
-  C_CVar.SetCVar("floatingCombatTextCombatHealing", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatDamage", 1)
-  C_CVar.SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0)
-  C_CVar.SetCVar("floatingCombatTextPetMeleeDamage", 0)
-  C_CVar.SetCVar("floatingCombatTextPetSpellDamage", 0)
-  C_CVar.SetCVar("displaySpellActivationOverlays", 1)
-
-  -- Chat
-  C_CVar.SetCVar("colorChatNamesByClass", 1)
-  C_CVar.SetCVar("chatClassColorOverride", 0)
-  C_CVar.SetCVar("guildMemberNotify", 1)
-  C_CVar.SetCVar("profanityFilter", 0)
-  C_CVar.SetCVar("spamFilter", 1)
-  C_CVar.SetCVar("chatMouseScroll", 1)
-
-  -- Floating Combat Text
-  C_CVar.SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0)
-  C_CVar.SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0)
-  C_CVar.SetCVar("floatingCombatTextLowManaHealth", 0)
-  C_CVar.SetCVar("floatingCombatTextReactives", 0)
-
-  -- Graphics
-  C_CVar.SetCVar("ResampleAlwaysSharpen", 1)
-
-  -- Minimap
-  C_CVar.SetCVar("minimapInsideZoom", 2)
-  C_CVar.SetCVar("minimapTrackingShowAll",1)
-
-  -- Nameplates
-  C_CVar.SetCVar("nameplateShowOnlyNameForFriendlyPlayerUnits", 1)
-
-  -- Raid and Party frames
-  C_CVar.SetCVar("findYourselfInRaid", 1)
-  C_CVar.SetCVar("findYourselfInRaidOnlyInCombat", 1) 
-  C_CVar.SetCVar("raidFramesDisplayAggroHighlight", 1)
-  C_CVar.SetCVar("raidFramesDisplayClassColor", 1)
-  C_CVar.SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
-  C_CVar.SetCVar("raidFramesDisplayHealthText", 0)
-  C_CVar.SetCVar("raidOptionDisplayMainTankAndAssist", 0)
-  C_CVar.SetCVar("raidOptionDisplayPets", 0)
-  C_CVar.SetCVar("raidFramesDisplayPowerBars", 0)
-  C_CVar.SetCVar("raidOptionKeepGroupsTogether", 1)
-
-  -- Toast
-  C_CVar.SetCVar("showToastBroadcast", 0)
-  C_CVar.SetCVar("showToastFriendRequest", 1)
-  C_CVar.SetCVar("showToastOffline", 0)
-  C_CVar.SetCVar("showToastOnline", 0)
-  C_CVar.SetCVar("showToastWindow", 0)
-
-  -- Various
-  C_CVar.SetCVar("alwaysCompareItems", 1)
-  C_CVar.SetCVar("autoClearAFK", 1)
-  C_CVar.SetCVar("autoDismountFlying", 0)
-  C_CVar.SetCVar("autoLootDefault", 1)
-  C_CVar.SetCVar("cameraDistanceMaxZoomFactor", 2.6)
-  C_CVar.SetCVar("cursorSizePreferred", 0)
-  C_CVar.SetCVar("hideAdventureJournalAlerts", 1)
-  C_CVar.SetCVar("lootUnderMouse", 0)
-  --C_CVar.SetCVar("maxFPS", 60)
-  C_CVar.SetCVar("maxFPSBk", 8)
-  C_CVar.SetCVar("movieSubtitle", 1)
-  C_CVar.SetCVar("screenEdgeFlash", 0)
-  C_CVar.SetCVar("synchronizeBindings", 1)
-  C_CVar.SetCVar("synchronizeConfig", 1)
-  C_CVar.SetCVar("synchronizeMacros", 1)
-  C_CVar.SetCVar("synchronizeSettings", 1)
-
-  -- Create new commands
-SLASH_RELOADUI1 = "/rl"
-SlashCmdList["RELOADUI"] = ReloadUI
-SLASH_READYCHECK1 = "/rc"
-SlashCmdList["READYCHECK"] = DoReadyCheck
-
-end
-
---------------------------------------------------------------------------------
--- INITIALIZATION FUNCTION
---------------------------------------------------------------------------------
-
--- Initialize functions on login
-local function InitializeAddon()
-
-    configFrames()
-    setupCVars()
-
-end
-
--- Create a local frame to manage addon events.
-local frame = CreateFrame("FRAME")
-
--- Define the OnEvent handler for the frame.
-local function OnEvent(self, event, ...)
-
+local loader = CreateFrame("Frame")
+loader:RegisterEvent("ADDON_LOADED")
+loader:RegisterEvent("PLAYER_LOGIN")  -- PLAYER_REGEN_ENABLED is used only as a fallback
+loader:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then
-        -- Check if the addon has finished loading before initializing.
-        local loadedAddonName = select(1, ...)
-        if loadedAddonName == addonName then
-            InitializeAddon()
-            -- Unregister the ADDON_LOADED event after initialization to save resources.
-            self:UnregisterEvent("ADDON_LOADED")
+        if arg1 ~= addonName then return end
+        self:UnregisterEvent(event)
+        InitDB()
+        BuildSettings()
+    else -- PLAYER_LOGIN: Blizzard frames exist, enable modules
+        self:UnregisterEvent(event)
+        -- Modules touch Blizzard unit/action frames: after a /reload in combat,
+        -- wait until combat ends to avoid blocked actions.
+        if InCombatLockdown() then
+            self:RegisterEvent("PLAYER_REGEN_ENABLED")
+            return
+        end
+        local handler = geterrorhandler()
+        for _, m in ipairs(ns.modules) do
+            if m.OnEnable then
+                xpcall(m.OnEnable, handler, m) -- one broken module can't stop the others
+            end
         end
     end
+end)
 
+SLASH_PANZAUI1, SLASH_PANZAUI2 = "/panza", "/pui"
+SlashCmdList.PANZAUI = function()
+    Settings.OpenToCategory(ns.category:GetID())
 end
-
-frame:SetScript("OnEvent", OnEvent)
-frame:RegisterEvent("ADDON_LOADED")

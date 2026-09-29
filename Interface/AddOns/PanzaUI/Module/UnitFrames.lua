@@ -1,0 +1,241 @@
+--[[----------------------------------------------------------------------------
+    PanzaUI - Unit Frames (Player, Target, Focus, Pet)
+    Status glow, hit text, class resources, text style, percentage text,
+    level / name, name background, auras.
+    All options are applied once at login (Requires Reload UI): nothing here
+    calls Blizzard update code, so no taint reaches secret-value handling.
+------------------------------------------------------------------------------]]
+local _, ns = ...
+
+local RELOAD = " Requires Reload UI."
+
+--------------------------------------------------------------------------------
+-- Options. Target and Focus share the same set, generated from one list
+-- (keys: <prefix><Key>, e.g. targetFontStyle, focusHideAuras).
+--------------------------------------------------------------------------------
+local defaults = {
+    playerFontStyle    = true,
+    playerHideLevel    = true,
+    playerPercentText  = true,
+    hideStatusGlow     = true,
+    hideHitText        = true,
+    hideClassResources = true,
+}
+
+local options = {
+    { header = "Player" },
+    { key = "playerFontStyle",    label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the Player text." .. RELOAD },
+    { key = "playerHideLevel",    label = "Hide level, center name", tooltip = "Remove the Player level and center the name above the health bar." .. RELOAD },
+    { key = "hideStatusGlow",     label = "Hide combat/rest glow",   tooltip = "Remove the combat and rest glow and the Zzz animation." .. RELOAD },
+    { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol)." .. RELOAD },
+    { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
+    { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc." .. RELOAD },
+}
+
+local TARGET_OPTIONS = {
+    { key = "FontStyle",          label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the %s text." },
+    { key = "HideLevel",          label = "Hide level, center name", tooltip = "Remove the %s level and center the name above the health bar." },
+    { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
+    { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol)." },
+    { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
+    { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
+}
+
+-- frame = global name, prefix = option key prefix, unit = menu section / text
+local TARGET_FRAMES = {
+    { frame = "TargetFrame", prefix = "target", unit = "Target" },
+    { frame = "FocusFrame",  prefix = "focus",  unit = "Focus" },
+}
+
+for _, t in ipairs(TARGET_FRAMES) do
+    options[#options + 1] = { header = t.unit }
+    for _, o in ipairs(TARGET_OPTIONS) do
+        local key = t.prefix .. o.key
+        defaults[key] = true
+        options[#options + 1] = {
+            key     = key,
+            label   = o.label,
+            tooltip = o.tooltip:gsub("%%s", t.unit, 1) .. RELOAD,
+        }
+    end
+end
+
+-- Focus only (appended right after the Focus section)
+defaults.focusHideCastBar = true
+options[#options + 1] = { key = "focusHideCastBar", label = "Hide cast bar", tooltip = "Hide the Focus cast bar." .. RELOAD }
+
+-- Pet
+local PET_OPTIONS = {
+    { header = "Pet" },
+    { key = "petFontStyle",   label = "Outline + Slug text",   tooltip = "Apply outline and slug rendering to the Pet text." .. RELOAD },
+    { key = "petPercentText", label = "Percentage-only text",  tooltip = "Show Pet health and power as a plain percentage (no % symbol)." .. RELOAD },
+    { key = "petHideHitText", label = "Hide damage/heal text", tooltip = "Hide the damage and healing numbers on the Pet portrait." .. RELOAD },
+    { key = "petHideAuras",   label = "Hide buffs/debuffs",    tooltip = "Hide buffs and debuffs on the Pet frame." .. RELOAD },
+}
+for _, o in ipairs(PET_OPTIONS) do
+    if o.key then defaults[o.key] = true end
+    options[#options + 1] = o
+end
+
+local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+
+-- Class resource bars (nil entries are simply skipped).
+local CLASS_RESOURCES = {
+    "RogueComboPointBarFrame", "DruidComboPointBarFrame", "MonkHarmonyBarFrame",
+    "MonkStaggerBar", "WarlockPowerFrame", "PaladinPowerBarFrame",
+    "MageArcaneChargesFrame", "EssencePlayerFrame", "EvokerEbonMightBar",
+    "RuneFrame", "DemonHunterSoulFragmentsBar",
+}
+
+--------------------------------------------------------------------------------
+-- Name centered above the health bar
+--------------------------------------------------------------------------------
+local function CenterName(name, bar)
+    name:ClearAllPoints()
+    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  0, 1)
+    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", 0, 1)
+    name:SetJustifyH("CENTER")
+end
+
+--------------------------------------------------------------------------------
+-- Player
+--------------------------------------------------------------------------------
+local function SetupPlayer(db)
+    local main = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain
+    local ctx  = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual
+    local health, power = main.HealthBarsContainer.HealthBar, main.ManaBarArea.ManaBar
+
+    if db.hideStatusGlow then
+        ns.Kill(main.StatusTexture)                          -- rest (yellow) / combat (red) pulse
+        ns.Kill(PlayerFrame.PlayerFrameContainer.FrameFlash) -- combat border flash
+        ns.Kill(ctx.PlayerRestLoop)                          -- Zzz animation
+    end
+
+    if db.hideHitText then
+        ns.Kill(main.HitIndicator)
+    end
+
+    if db.hideClassResources then
+        ns.Disable(PlayerFrame.classPowerBar)
+        for _, name in ipairs(CLASS_RESOURCES) do ns.Disable(_G[name]) end
+    end
+
+    if db.playerHideLevel then
+        ns.Kill(PlayerLevelText)
+        local bar = main.HealthBarsContainer
+        CenterName(PlayerName, bar)
+        -- Blizzard re-anchors the player name when entering/leaving vehicles.
+        ns.Hook("PlayerFrame_UpdatePlayerNameTextAnchor", function() CenterName(PlayerName, bar) end)
+    end
+
+    if db.playerFontStyle then
+        ns.StyleFont(PlayerName)
+        ns.StyleFont(PlayerLevelText)
+        ns.StyleBarText(health)
+        ns.StyleBarText(power)
+    end
+
+    if db.playerPercentText then
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Target-style frames (Target and Focus share TargetFrameMixin/template)
+--------------------------------------------------------------------------------
+
+-- Parts that Blizzard may re-anchor or re-texture (Focus "small size" mode):
+-- applied at login and again after FocusFrame:SetSmallSize().
+local function ApplyLayout(frame, db, p)
+    local main = frame.TargetFrameContent.TargetFrameContentMain
+    if db[p .. "HideLevel"] then CenterName(main.Name, main.HealthBarsContainer) end
+    -- Clear the texture instead of Kill()/SetAlpha(): Name and LevelText are
+    -- anchored to it (so it must stay in place), and Blizzard's
+    -- SetVertexColor(UnitSelectionColor()) resets the texture alpha.
+    if db[p .. "HideNameBackground"] then main.ReputationColor:SetTexture(nil) end
+end
+
+local function SetupTargetFrame(frame, db, p)
+    local main = frame.TargetFrameContent.TargetFrameContentMain
+    local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
+    local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
+
+    if db[p .. "HideAuras"] then
+        frame.maxBuffs   = 0
+        frame.maxDebuffs = 0
+    end
+
+    if db[p .. "HideLevel"] then
+        -- Kill() is safe: nothing is anchored to the level text except the
+        -- skull icon, which is a level indicator too. (SetAlpha would not
+        -- work: Blizzard's SetVertexColor resets it.)
+        ns.Kill(main.LevelText)
+        ns.Kill(ctx.HighLevelTexture)
+    end
+
+    if db[p .. "CastIconStyle"] then
+        local spellbar = frame.spellbar or _G[frame:GetName() .. "SpellBar"]
+        if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
+    end
+
+    ApplyLayout(frame, db, p)
+
+    if db[p .. "FontStyle"] then
+        ns.StyleFont(main.Name)
+        ns.StyleFont(main.LevelText)
+        ns.StyleBarText(health)
+        ns.StyleBarText(power)
+    end
+
+    if db[p .. "PercentText"] then
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Pet (bars are named globals; their TextString/LeftText/RightText fields are
+-- set by Blizzard at load, like the other unit frames)
+--------------------------------------------------------------------------------
+local function SetupPet(db)
+    if not PetFrame then return end
+    local health, power = PetFrameHealthBar, PetFrameManaBar
+
+    if db.petHideHitText then ns.Kill(PetHitIndicator) end
+    -- Auras live in their own container (pooled buttons): reparent it,
+    -- no Blizzard fields are touched.
+    if db.petHideAuras then ns.Kill(PetFrame.AuraFrameContainer) end
+
+    if db.petFontStyle then
+        ns.StyleFont(PetName)
+        ns.StyleBarText(health)
+        ns.StyleBarText(power)
+    end
+
+    if db.petPercentText then
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
+function UF:OnEnable()
+    local db = self.db
+    SetupPlayer(db)
+
+    for _, t in ipairs(TARGET_FRAMES) do
+        local frame = _G[t.frame]
+        if frame then SetupTargetFrame(frame, db, t.prefix) end
+    end
+
+    if FocusFrame then
+        ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
+        -- Hidden and events stopped: no casting updates at all (no CPU cost).
+        if db.focusHideCastBar then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
+    end
+
+    SetupPet(db)
+end
