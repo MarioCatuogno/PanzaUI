@@ -25,7 +25,7 @@ end
 function ns.StyleFont(obj)
     if not (obj and obj.GetFont) then return end
     local font, size = obj:GetFont()
-    if font then obj:SetFont(font, size, ns.FONT_FLAGS) end
+    if font and not ns.IsSecret(size) then obj:SetFont(font, size, ns.FONT_FLAGS) end
 end
 
 -- Chat message with the addon prefix.

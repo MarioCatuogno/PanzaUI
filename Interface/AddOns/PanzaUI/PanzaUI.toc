@@ -2,7 +2,7 @@
 ## Title: |cff00FF98Panza|rUI
 ## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
-## Version: 2.0.40
+## Version: 2.0.41
 ## SavedVariables: PanzaUI_DB
 
 core.lua
@@ -10,6 +10,7 @@ Module\Chat.lua
 Module\ActionBars.lua
 Module\QuestTracker.lua
 Module\UnitFrames.lua
+Module\GroupFrames.lua
 Module\PersonalResource.lua
 Module\Minimap.lua
 Module\Bags.lua

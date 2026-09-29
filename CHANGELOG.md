@@ -88,6 +88,10 @@ Shows health and power as a simple percentage number.
 * QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
 * Various - Hides the micro menu and the bag bar (keybindings still work).
 
+### Party & Raid Frames
+
+* Party & Raid Frames - Styles the names and status text with the outlined font.
+
 ## 👤 Profiles
 
 ## 📏 Various
