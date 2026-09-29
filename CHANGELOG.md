@@ -91,6 +91,7 @@ Shows health and power as a simple percentage number.
 ### Party & Raid Frames
 
 * Party & Raid Frames - Styles the names and status text with the outlined font.
+* Party & Raid Frames - Removes the server from player names.
 
 ## 👤 Profiles
 
