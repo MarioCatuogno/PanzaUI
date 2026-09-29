@@ -88,4 +88,4 @@ Shows health and power as a simple percentage number.
 
 ## 📏 Various
 
-* Updated documentation to the latest UI version
+* Updated documentation to the latest UI version.
