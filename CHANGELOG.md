@@ -1,3 +1,11 @@
+## 2.0-RELEASE
+
+Big update! This is a full rework of the PanzaUI switching from existing addons (eg. EQOL, Chattynator and Cooldown Manager Centered) to a new entire addon simply called "PanzaUI" which modify the default UI of World of Warcraft with many QoL features and improvements.
+
+Here's a list of all the features included in this first release!
+
+
+
 ## 1.7-RELEASE
 
 This is a small release that fixes some bugs and improve performance. It is compatible with WoW patch 12.1.5.
