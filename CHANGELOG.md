@@ -88,4 +88,5 @@ Shows health and power as a simple percentage number.
 
 ## 📏 Various
 
+* Sorted the modules alphabetically in the addon options menu.
 * Updated documentation to the latest UI version.

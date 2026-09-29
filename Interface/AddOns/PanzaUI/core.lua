@@ -213,7 +213,11 @@ local function BuildSettings()
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(addonName .. " " .. version))
     AddReloadButton(layout)
 
-    for _, m in ipairs(ns.modules) do
+    -- Menu pages in alphabetical order (load order of the modules is unchanged).
+    local sorted = CopyTable(ns.modules, true)
+    table.sort(sorted, function(a, b) return a.title < b.title end)
+
+    for _, m in ipairs(sorted) do
         local sub, subLayout = Settings.RegisterVerticalLayoutSubcategory(category, m.title)
 
         for _, opt in ipairs(m.options) do
