@@ -35,6 +35,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Player) - Shows health and power as a simple percentage number (no % sign).
 * Unit Frame (Player) - Hides the damage/healing numbers on the portrait.
 * Unit Frame (Player) - Hides class resources (combo points, chi, runes, shards, holy power, etc.).
+* Unit Frame (Player) - Colors the health bar with your class color.
 
 * Unit Frame (Target) - Styles the name and bar text with the outlined font.
 * Unit Frame (Target) - Removes the level and centers the name.
@@ -42,6 +43,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Target) - Shows health and power as a simple percentage number.
 * Unit Frame (Target) - Hides buffs and debuffs on the frame.
 * Unit Frame (Target) - Gives the cast bar spell icon the same rounded look as action buttons.
+* Unit Frame (Target) - Colors the health bar with the class color (players only).
 
 * Unit Frame (Focus) - Styles the name and bar text with the outlined font.
 * Unit Frame (Focus) - Removes the level and centers the name.
@@ -50,6 +52,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Focus) - Hides buffs and debuffs on the frame.
 * Unit Frame (Focus) - Gives the cast bar spell icon the same rounded look as action buttons.
 * Unit Frame (Focus) - Hides the cast bar entirely.
+* Unit Frame (Focus) - Colors the health bar with the class color (players only).
 
 * Unit Frame (Pet) - Styles the text, shows percentages, hides damage/healing numbers and hides buffs/debuffs.
 

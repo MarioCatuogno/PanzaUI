@@ -17,6 +17,7 @@ local defaults = {
     playerFontStyle    = true,
     playerHideLevel    = true,
     playerPercentText  = true,
+    playerClassColor   = true,
     hideStatusGlow     = true,
     hideHitText        = true,
     hideClassResources = true,
@@ -28,6 +29,7 @@ local options = {
     { key = "playerHideLevel",    label = "Hide level, center name", tooltip = "Remove the Player level and center the name above the health bar." .. RELOAD },
     { key = "hideStatusGlow",     label = "Hide combat/rest glow",   tooltip = "Remove the combat and rest glow and the Zzz animation." .. RELOAD },
     { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol)." .. RELOAD },
+    { key = "playerClassColor",   label = "Class colored health bar", tooltip = "Color the health bar with your class color." .. RELOAD },
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc." .. RELOAD },
 }
@@ -38,6 +40,7 @@ local TARGET_OPTIONS = {
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol)." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
+    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar with the class color (players only)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
 }
 
@@ -98,6 +101,33 @@ local function CenterName(name, bar)
 end
 
 --------------------------------------------------------------------------------
+-- Class colored health bars. Post-hook of Blizzard's UnitFrameHealthBar_Update
+-- (it resets the bar to green on every update): players get their class color
+-- on a desaturated texture, other units keep Blizzard's look.
+-- Secret values are skipped, never tested.
+--------------------------------------------------------------------------------
+local IsSecret = ns.IsSecret
+local classColorBars = {} -- health bar -> true
+
+local function ClassColorHealth(bar)
+    if not classColorBars[bar] or bar.disconnected then return end
+    local unit = bar.unit
+    if not unit or IsSecret(unit) then return end
+
+    local isPlayer = UnitIsPlayer(unit)
+    local _, class = UnitClass(unit)
+    local color = not IsSecret(isPlayer) and isPlayer and class and not IsSecret(class) and RAID_CLASS_COLORS[class]
+
+    local texture = bar:GetStatusBarTexture()
+    if color then
+        texture:SetDesaturated(true)
+        bar:SetStatusBarColor(color.r, color.g, color.b)
+    else
+        texture:SetDesaturated(false)
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Player
 --------------------------------------------------------------------------------
 local function SetupPlayer(db)
@@ -139,6 +169,8 @@ local function SetupPlayer(db)
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
+
+    if db.playerClassColor then classColorBars[health] = true end
 end
 
 --------------------------------------------------------------------------------
@@ -160,6 +192,8 @@ local function SetupTargetFrame(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
     local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
+
+    if db[p .. "ClassColor"] then classColorBars[health] = true end
 
     if db[p .. "HideAuras"] then
         frame.maxBuffs   = 0
@@ -238,4 +272,9 @@ function UF:OnEnable()
     end
 
     SetupPet(db)
+
+    if next(classColorBars) then
+        ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
+        for bar in pairs(classColorBars) do ClassColorHealth(bar) end
+    end
 end
