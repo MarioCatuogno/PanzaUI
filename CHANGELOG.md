@@ -91,7 +91,6 @@ Shows health and power as a simple percentage number.
 ### Party & Raid Frames
 
 * Party & Raid Frames - Styles the names and status text with the outlined font.
-* Party & Raid Frames - Uses the Player frame health bar texture for health and power bars.
 
 ## 👤 Profiles
 
