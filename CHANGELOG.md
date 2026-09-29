@@ -34,7 +34,8 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Player) - Removes the red combat / yellow resting glow and the "Zzz" animation.
 * Unit Frame (Player) - Shows health and power as a simple percentage number (no % sign).
 * Unit Frame (Player) - Hides the damage/healing numbers on the portrait.
-* Unit Frame (Player) - Hides class resources (combo points, chi, runes, shards, holy power, etc.).
+* Unit Frame (Player) - Hides class resources (combo points, chi, runes, shards, holy power, etc.) only on the Player frame, keeping them on the Personal Resource Display.
+* Unit Frame (Player) - Restores the normal Player frame art when a class resource with an extra bar (e.g. Stagger) is hidden.
 * Unit Frame (Player) - Colors the health bar with your class color.
 
 * Unit Frame (Target) - Styles the name and bar text with the outlined font.

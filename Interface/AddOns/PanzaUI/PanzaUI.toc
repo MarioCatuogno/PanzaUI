@@ -2,7 +2,7 @@
 ## Title: |cff00FF98Panza|rUI
 ## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
-## Version: 2.0.42
+## Version: 2.0.44
 ## SavedVariables: PanzaUI_DB
 
 core.lua

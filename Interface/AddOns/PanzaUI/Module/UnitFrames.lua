@@ -31,7 +31,7 @@ local options = {
     { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol)." .. RELOAD },
     { key = "playerClassColor",   label = "Class colored health bar", tooltip = "Color the health bar with your class color." .. RELOAD },
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
-    { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc." .. RELOAD },
+    { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
 }
 
 local TARGET_OPTIONS = {
@@ -89,6 +89,40 @@ local CLASS_RESOURCES = {
     "MageArcaneChargesFrame", "EssencePlayerFrame", "EvokerEbonMightBar",
     "RuneFrame", "DemonHunterSoulFragmentsBar",
 }
+local hiddenResources = {} -- frame -> true (disabled class resource bars)
+
+-- The Personal Resource Display builds its own class bars from the same
+-- templates (and they can end up in PlayerFrame.classPowerBar): never touch
+-- anything that lives inside the PRD, only the Player frame's bars.
+local function IsInPRD(frame)
+    local prd = PersonalResourceDisplayFrame
+    while frame and prd do
+        if frame == prd then return true end
+        frame = frame:GetParent()
+    end
+    return false
+end
+
+-- Some class resources (e.g. Monk Stagger, Evoker Ebon Might) are "alternate
+-- power bars": Blizzard then switches the Player frame to a taller art with
+-- an extra bar area. When that bar is hidden, restore the normal art right
+-- after PlayerFrame_ToPlayerArt (same values Blizzard uses without the bar).
+-- Only widget calls, no Blizzard fields written.
+local function RestorePlayerArt()
+    local altBar = PlayerFrame_GetAlternatePowerBar and PlayerFrame_GetAlternatePowerBar()
+    if not (altBar and hiddenResources[altBar]) or PlayerFrame.state ~= "player" or UNIT_FRAME_SHOW_HEALTH_ONLY then return end
+
+    local container = PlayerFrame.PlayerFrameContainer
+    container.FrameTexture:Show()
+    container.AlternatePowerFrameTexture:Hide()
+    container.FrameFlash:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-InCombat", TextureKitConstants.UseAtlasSize)
+    container.FrameFlash:SetPoint("CENTER", container.FrameFlash:GetParent(), "CENTER", -1.5, 1)
+    PlayerFrame_GetManaBar().ManaBarMask:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana-Mask", TextureKitConstants.UseAtlasSize)
+    PlayerFrameAlternatePowerBarArea:Hide()
+    if not InCombatLockdown() then
+        GetPlayerBottomManagedFrameContainer():SetPoint("TOP", PlayerFrame, "BOTTOM", 30, 25)
+    end
+end
 
 --------------------------------------------------------------------------------
 -- Name centered above the health bar
@@ -146,8 +180,17 @@ local function SetupPlayer(db)
     end
 
     if db.hideClassResources then
-        ns.Disable(PlayerFrame.classPowerBar)
-        for _, name in ipairs(CLASS_RESOURCES) do ns.Disable(_G[name]) end
+        local bars = { PlayerFrame.classPowerBar }
+        for i, name in ipairs(CLASS_RESOURCES) do bars[i + 1] = _G[name] end
+        for i = 1, #CLASS_RESOURCES + 1 do
+            local bar = bars[i]
+            if bar and not IsInPRD(bar) then
+                ns.Disable(bar)
+                hiddenResources[bar] = true
+            end
+        end
+        ns.Hook("PlayerFrame_ToPlayerArt", RestorePlayerArt)
+        RestorePlayerArt()
     end
 
     if db.playerHideLevel then
