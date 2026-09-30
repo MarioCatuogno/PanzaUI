@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames (Player, Target, Focus, Pet)
     Status glow, hit text, class resources, text style, percentage text,
-    level / name, name background, auras.
+    level / name, name background, auras, portrait redraw.
     All options are applied once at login (Requires Reload UI): nothing here
     calls Blizzard update code, so no taint reaches secret-value handling.
 ------------------------------------------------------------------------------]]
@@ -22,6 +22,7 @@ local defaults = {
     hideHitText        = true,
     hideClassResources = true,
     hideTotems         = true,
+    fixPortraits       = true,
 }
 
 local options = {
@@ -34,6 +35,7 @@ local options = {
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
+    { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
 
 local TARGET_OPTIONS = {
@@ -329,6 +331,42 @@ local function SetupPet(db)
 end
 
 --------------------------------------------------------------------------------
+-- Portrait redraw. The 2D portrait is a snapshot of the 3D model: taken
+-- before the model has loaded (loading screen, mount, transmog, shapeshift)
+-- it stays zoomed in until the next update. One second after the game
+-- updates a portrait, it is drawn again with the same API Blizzard uses.
+-- Bursts are merged into one redraw; the handler and the timer callback are
+-- created once (no garbage). Widget/API calls only, no Blizzard code called.
+--------------------------------------------------------------------------------
+local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
+local portraitPending = false
+
+local function RedrawPortraits()
+    portraitPending = false
+    for _, frame in ipairs({ PlayerFrame, TargetFrame, FocusFrame }) do
+        local portrait, unit = frame and frame.portrait, frame and frame.unit
+        if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit) then
+            SetPortraitTexture(portrait, unit)
+        end
+    end
+end
+
+local portraitEvents = CreateFrame("Frame")
+portraitEvents:SetScript("OnEvent", function(_, event, unit)
+    if unit and (IsSecret(unit) or not PORTRAIT_UNITS[unit]) then return end
+    if portraitPending then return end
+    portraitPending = true
+    C_Timer.After(1, RedrawPortraits)
+end)
+
+local function SetupPortraits()
+    for _, event in ipairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "PLAYER_ENTERING_WORLD",
+                             "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
+        portraitEvents:RegisterEvent(event)
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function UF:OnEnable()
@@ -347,6 +385,7 @@ function UF:OnEnable()
     end
 
     SetupPet(db)
+    if db.fixPortraits then SetupPortraits() end
 
     if next(classColorBars) then
         -- Anything that can change a cached color: recompute on next update.
