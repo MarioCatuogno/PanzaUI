@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Global health/power bar texture, from LibSharedMedia-3.0 (SharedMedia).
+    Health/power bar texture per frame group, from LibSharedMedia-3.0
+    (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -26,45 +27,67 @@ local function TextureList()
     return list
 end
 
-local GEN = ns:RegisterModule("General", {
-    title = "General",
-    main  = true,
-    defaults = {
-        barTexture = DEFAULT,
-    },
-    options = {
-        { header = "Textures" },
-        { key = "barTexture", label = "Health/Power bar texture", dropdown = TextureList,
-          tooltip = "Texture for health and power bars of Player, Target, Focus, Pet, Party, Raid, Boss frames and nameplates. Textures come from SharedMedia. Requires Reload UI." },
-    },
-})
+-- One texture option per frame group (menu order).
+local GROUPS = {
+    { key = "texPlayer", label = "Player" },
+    { key = "texTarget", label = "Target" },
+    { key = "texFocus",  label = "Focus" },
+    { key = "texPet",    label = "Pet" },
+    { key = "texBoss",   label = "Boss frames" },
+    { key = "texGroup",  label = "Party/Raid" },
+}
+
+local defaults = {}
+local options  = { { header = "Health/Power Bar Textures" } }
+for _, g in ipairs(GROUPS) do
+    defaults[g.key] = DEFAULT
+    options[#options + 1] = {
+        key = g.key, label = g.label, dropdown = TextureList,
+        tooltip = "Texture for the " .. g.label .. " health and power bars. Textures come from SharedMedia. Requires Reload UI.",
+    }
+end
+
+local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
+
+-- 2.0.49 had a single texture for every frame: keep it for each group.
+function GEN:Migrate(db)
+    if type(db.barTexture) == "string" then
+        for _, g in ipairs(GROUPS) do
+            if db[g.key] == nil then db[g.key] = db.barTexture end
+        end
+    end
+end
 
 --------------------------------------------------------------------------------
--- Applying the texture. Only widget calls, no Blizzard fields written;
--- forbidden (protected nameplate) frames are skipped.
+-- Applying textures. Only widget calls, no Blizzard fields written.
 --------------------------------------------------------------------------------
-local texturePath
-local powerBars = {} -- Blizzard unit frame power bars (re-textured on power type change)
+local powerBars = {} -- Blizzard unit frame power bar -> texture path
 
-local function SetTexture(bar)
-    if bar and bar.SetStatusBarTexture and not bar:IsForbidden() then
-        bar:SetStatusBarTexture(texturePath)
+local function TexturePath(key)
+    local name = GEN.db[key]
+    if name == DEFAULT then return end
+    return (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
+end
+
+local function SetTexture(bar, path)
+    if bar and path and bar.SetStatusBarTexture and not bar:IsForbidden() then
+        bar:SetStatusBarTexture(path)
     end
 end
 
 -- Blizzard unit frames color power bars with per-power atlases (white bar
 -- color): after its update, put our texture back and color it by power type.
 local function UpdatePowerBar(bar)
-    if not powerBars[bar] then return end
-    SetTexture(bar)
+    local path = powerBars[bar]
+    if not path then return end
+    SetTexture(bar, path)
     local token = bar.powerToken
     local info = bar.overrideInfo or (token and not ns.IsSecret(token) and PowerBarColor[token])
     if info and info.r then bar:SetStatusBarColor(info.r, info.g, info.b) end
 end
 
--- Health + power bar of a Blizzard unit frame (Player/Target/Focus/Boss/Party style).
+-- Health + power bar of a Blizzard unit frame (Target/Focus/Boss/Party style).
 local function UnitFrameBars(frame)
-    if not frame then return end
     local main = frame.TargetFrameContent and frame.TargetFrameContent.TargetFrameContentMain
     if main then return main.HealthBarsContainer.HealthBar, main.ManaBar end
     local container = frame.HealthBarContainer or frame.HealthBarsContainer
@@ -72,59 +95,48 @@ local function UnitFrameBars(frame)
     return health, frame.ManaBar or frame.manabar
 end
 
-local function SkinUnitFrame(health, power)
-    SetTexture(health)
+local function SkinBars(health, power, path)
+    if not path then return end
+    SetTexture(health, path)
     if power then
-        powerBars[power] = true
+        powerBars[power] = path
         UpdatePowerBar(power)
     end
-end
-
-local function SkinCompactFrame(frame)
-    if frame:IsForbidden() then return end
-    SetTexture(frame.healthBar)
-    SetTexture(frame.powerBar)
-end
-
-local function SkinNameplate(unit)
-    local plate = C_NamePlate.GetNamePlateForUnit(unit)
-    local uf = plate and not plate:IsForbidden() and plate.UnitFrame
-    if not uf then return end
-    local container = uf.HealthBarsContainer
-    SetTexture(uf.healthBar or (container and container.healthBar))
 end
 
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function GEN:OnEnable()
-    local name = self.db.barTexture
-    if name == DEFAULT then return end
-    texturePath = (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
-    if not texturePath then return end
+    local player, target, focus = TexturePath("texPlayer"), TexturePath("texTarget"), TexturePath("texFocus")
+    local pet, boss, group = TexturePath("texPet"), TexturePath("texBoss"), TexturePath("texGroup")
 
-    -- Player, Pet, Target, Focus, Boss 1-5, Party 1-4
-    SkinUnitFrame(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar())
-    SkinUnitFrame(PetFrameHealthBar, PetFrameManaBar)
-    local frames = {}
-    local function Add(frame) if frame then frames[#frames + 1] = frame end end
-    Add(TargetFrame)
-    Add(FocusFrame)
-    for i = 1, 5 do Add(_G["Boss" .. i .. "TargetFrame"]) end
-    for i = 1, 4 do Add(PartyFrame and PartyFrame["MemberFrame" .. i]) end
-    for _, frame in ipairs(frames) do SkinUnitFrame(UnitFrameBars(frame)) end
-    ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar)
+    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
+    SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
+    if target then SkinBars(UnitFrameBars(TargetFrame), target) end
+    if focus and FocusFrame then SkinBars(UnitFrameBars(FocusFrame), focus) end
+    if boss then
+        for i = 1, 5 do
+            local frame = _G["Boss" .. i .. "TargetFrame"]
+            if frame then SkinBars(UnitFrameBars(frame), boss) end
+        end
+    end
+    if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
 
-    -- Party / Raid (compact frames): Blizzard resets the textures in setup.
-    ns.ForEachCompactFrame(SkinCompactFrame)
-    ns.Hook("DefaultCompactUnitFrameSetup", SkinCompactFrame)
-    ns.Hook("DefaultCompactMiniFrameSetup", SkinCompactFrame)
-
-    -- Nameplates: re-skinned every time a plate is (re)used.
-    local events = CreateFrame("Frame")
-    events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    events:SetScript("OnEvent", function(_, _, unit) SkinNameplate(unit) end)
-    for _, plate in ipairs(C_NamePlate.GetNamePlates()) do
-        if plate.namePlateUnitToken then SkinNameplate(plate.namePlateUnitToken) end
+    if group then
+        -- Classic party frames
+        for i = 1, 4 do
+            local frame = PartyFrame and PartyFrame["MemberFrame" .. i]
+            if frame then SkinBars(UnitFrameBars(frame), group) end
+        end
+        -- Compact party/raid frames: Blizzard resets the textures in setup.
+        local function SkinCompact(frame)
+            if frame:IsForbidden() then return end
+            SetTexture(frame.healthBar, group)
+            SetTexture(frame.powerBar, group)
+        end
+        ns.ForEachCompactFrame(SkinCompact)
+        ns.Hook("DefaultCompactUnitFrameSetup", SkinCompact)
+        ns.Hook("DefaultCompactMiniFrameSetup", SkinCompact)
     end
 end
