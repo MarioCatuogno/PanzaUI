@@ -28,6 +28,7 @@ Here's a list of all the features included in this first release!
 * Combat (Personal Resource Display) - Styles the bar text with the outlined font and centers it on the bars.
 * Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
 * Core - Adds a texture option for the Achievement frame bars, including the progress bars of single achievements.
+* Core - Adds a texture option for the Cooldown Manager buff bars.
 * Core - Adds a texture option for the progress bars inside tooltips (e.g. world quests on the map).
 * Core - Adds a texture option for the Quest Tracker progress and timer bars.
 * Core - Adds a texture option for the Reputation panel bars and for the experience/reputation tracking bars.

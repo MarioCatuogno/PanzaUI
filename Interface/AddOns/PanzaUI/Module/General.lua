@@ -2,7 +2,8 @@
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
     Reputation panel bars, experience/reputation tracking bars, Achievement
-    window, Quest Tracker and tooltip bars, from LibSharedMedia-3.0 (SharedMedia).
+    window, Quest Tracker, tooltip and Cooldown Manager bars, from
+    LibSharedMedia-3.0 (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -63,6 +64,7 @@ local OTHER = {
     { key = "texAchievements", label = "Achievement frame",     tooltip = "Texture for the progress bars of the Achievements window (summary, categories and criteria)." },
     { key = "texQuestTracker", label = "Quest Tracker",         tooltip = "Texture for the progress and timer bars shown in the Quest Tracker (bonus objectives, world quests, scenarios...)." },
     { key = "texTooltips",     label = "Tooltips",              tooltip = "Texture for the progress bars shown inside tooltips (e.g. world quests on the map)." },
+    { key = "texCooldownBars", label = "Cooldown Manager bars",  tooltip = "Texture for the tracked buff bars of the Cooldown Manager." },
 }
 options[#options + 1] = { header = "Other Bar Textures" }
 for _, o in ipairs(OTHER) do
@@ -352,6 +354,25 @@ function GEN:OnEnable()
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
+    end
+
+    -- Cooldown Manager buff bars: items come from the viewer's pool, so the
+    -- bar of each item is tracked when acquired (and the ones already there).
+    local cooldownBars = TexturePath("texCooldownBars")
+    if cooldownBars then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function()
+            local viewer = BuffBarCooldownViewer
+            if not viewer then return end
+            local function TrackItem(item) if item then TrackTexture(item.Bar, cooldownBars) end end
+            local function TrackAll(v)
+                if v.GetItemFrames then
+                    for _, item in ipairs(v:GetItemFrames()) do TrackItem(item) end
+                end
+            end
+            TrackAll(viewer)
+            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) TrackItem(item) end)
+            ns.Hook(viewer, "RefreshLayout", TrackAll)
+        end)
     end
 
     -- Experience / reputation / honor tracking bars
