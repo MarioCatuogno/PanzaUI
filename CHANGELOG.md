@@ -23,6 +23,9 @@ Here's a list of all the features included in this first release!
 * Chat - Removes the chat window background that appears on mouseover.
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
+* Combat (Cooldown Manager) - Gives the Cooldown Manager icons the same rounded look as action buttons.
+* Combat (Personal Resource Display) - Always shows the health and power percentage, like the Player and Target frames.
+* Combat (Personal Resource Display) - Styles the bar text with the outlined font and centers it on the bars.
 * Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
 * Core - Adds a texture option for the Achievement frame bars, including the progress bars of single achievements.
 * Core - Adds a texture option for the progress bars inside tooltips (e.g. world quests on the map).
@@ -33,8 +36,6 @@ Here's a list of all the features included in this first release!
 * Minimap - Styles the zone name and clock with the outlined font.
 * Party & Raid Frames - Removes the server from player names.
 * Party & Raid Frames - Styles the names and status text with the outlined font.
-* Personal Resource Display - Always shows the health and power percentage, like the Player and Target frames.
-* Personal Resource Display - Styles the bar text with the outlined font and centers it on the bars.
 * QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
 * Quest Tracker - Automatically collapses the tracker during dungeon and raid boss fights, and reopens it afterwards.
 * Quest Tracker - Shows the number of quests in the log out of the maximum (e.g. 20/35) in the tracker header.
