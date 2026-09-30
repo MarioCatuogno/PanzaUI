@@ -2,9 +2,18 @@
     PanzaUI - Miscellaneous
     Buffs/Debuffs: action bar style, text style, icon zoom.
     Quality of Life: auto-repair.
-    Various: hide the Micro Menu and the Bag Bar.
+    Various: visibility of the Micro Menu, Bag Bar and XP/Reputation bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local VIS = ns.VIS
+
+-- Various: visibility entries (same modes as the action bars).
+-- frames = global names (nil ones skipped); buttons come from their children.
+local VISIBILITY = {
+    { key = "microMenu",   label = "Micro Menu",                frames = { "MicroMenuContainer" } },
+    { key = "bagBar",      label = "Bag Bar",                   frames = { "BagsBar" } },
+    { key = "statusBars",  label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
+}
 
 local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Miscellaneous",
@@ -13,8 +22,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         auraFontStyle = true,
         auraIconZoom  = 5,
         autoRepair    = true,
-        hideMicroMenu = true,
-        hideBagBar    = true,
+        microMenu     = VIS.DEFAULT,
+        bagBar        = VIS.DEFAULT,
+        statusBars    = VIS.DEFAULT,
     },
     options = {
         { header = "Buffs/Debuffs" },
@@ -25,10 +35,17 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { header = "Quality of Life" },
         { key = "autoRepair",    label = "Auto-repair",          tooltip = "Repair all items with your own gold when opening a merchant that can repair." },
         { header = "Various" },
-        { key = "hideMicroMenu", label = "Hide Micro Menu",      tooltip = "Hide the micro menu buttons (character, spellbook, talents, ...). Keybindings still work." },
-        { key = "hideBagBar",    label = "Hide Bag Bar",         tooltip = "Hide the backpack and bag slot buttons. Keybindings still work." },
+        { key = "microMenu",     label = "Micro Menu",           dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the micro menu (character, spellbook, talents, ...) is shown. Keybindings still work." },
+        { key = "bagBar",        label = "Bag Bar",              dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the backpack and bag slot buttons are shown. Keybindings still work." },
+        { key = "statusBars",    label = "Experience/Reputation bar", dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the experience, reputation and honor tracking bars are shown." },
     },
 })
+
+-- Old versions had "hide" toggles for the Micro Menu and Bag Bar.
+function Misc:Migrate(db)
+    if type(db.hideMicroMenu) == "boolean" then db.microMenu = db.hideMicroMenu and VIS.HIDDEN or VIS.DEFAULT end
+    if type(db.hideBagBar)    == "boolean" then db.bagBar    = db.hideBagBar    and VIS.HIDDEN or VIS.DEFAULT end
+end
 
 --------------------------------------------------------------------------------
 -- Buffs/Debuffs. Blizzard creates all aura buttons once at load
@@ -83,18 +100,29 @@ local function SetAutoRepair(on)
 end
 
 --------------------------------------------------------------------------------
--- Various: option key -> global frame name (both are children of UIParent).
--- Reparenting keeps Edit Mode positions (and anything anchored to these
--- frames, like the queue eye) intact, and is reversible without a reload.
+-- Various: shared visibility engine (core.lua). Alpha only, so Edit Mode
+-- positions and anything anchored to these frames (e.g. the queue eye) stay.
 --------------------------------------------------------------------------------
-local FRAMES = {
-    hideMicroMenu = "MicroMenuContainer",
-    hideBagBar    = "BagsBar",
-}
+local function ChildButtons(frame, list)
+    for _, child in ipairs({ frame:GetChildren() }) do
+        if child:IsMouseEnabled() then list[#list + 1] = child end
+        ChildButtons(child, list)
+    end
+    return list
+end
 
-local function ApplyFrame(key)
-    local frame = _G[FRAMES[key]]
-    if frame then frame:SetParent(Misc.db[key] and ns.Hider or UIParent) end
+local function SetupVisibility()
+    for _, v in ipairs(VISIBILITY) do
+        local frames, buttons = {}, {}
+        for _, name in ipairs(v.frames) do
+            local frame = _G[name]
+            if frame then
+                frames[#frames + 1] = frame
+                ChildButtons(frame, buttons)
+            end
+        end
+        ns.RegisterVisibility({ frames = frames, buttons = buttons, getMode = function() return Misc.db[v.key] end })
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -104,9 +132,7 @@ function Misc:OnEnable()
     local db = self.db
     EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function() SetupAuras(db) end)
     SetAutoRepair(db.autoRepair)
-    for key in pairs(FRAMES) do
-        if db[key] then ApplyFrame(key) end
-    end
+    SetupVisibility()
 end
 
 function Misc:OnOptionChanged(key, value)
@@ -114,7 +140,7 @@ function Misc:OnOptionChanged(key, value)
         ZoomAuras()
     elseif key == "autoRepair" then
         SetAutoRepair(value)
-    elseif FRAMES[key] then
-        ApplyFrame(key)
+    else
+        ns.RefreshVisibility()
     end
 end

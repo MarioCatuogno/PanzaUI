@@ -158,6 +158,183 @@ function ns.PercentText(bar, isPower, unit, respectVisibility)
 end
 
 --------------------------------------------------------------------------------
+-- Shared visibility engine (Action Bars, Micro Menu, Bag Bar, XP/Rep bars).
+-- An entry is { frames = {...}, buttons = {...}?, getMode = fn, grid = bool?,
+-- flyout = bool?, onRefresh = fn(mode)? }. Frames are faded with alpha
+-- (allowed in combat); buttons of entries that are not visible stop taking
+-- clicks (EnableMouse, applied out of combat only). A tiny watcher frame runs
+-- (throttled) only while a mouseover entry is shown.
+--------------------------------------------------------------------------------
+local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
+ns.VIS = VIS
+ns.VISIBILITY_OPTIONS = {
+    { VIS.DEFAULT,      "Default",        "Blizzard's normal behavior." },
+    { VIS.MOUSEOVER,    "Mouseover",      "Shown only while the mouse is over it." },
+    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Like Default, but hidden while Skyriding." },
+    { VIS.HIDDEN,       "Always hidden",  "Never shown (keybindings still work)." },
+}
+
+local visEntries   = {}
+local visShown     = {}    -- mouseover entries currently shown
+local forced       = {}    -- editMode / grid (dragging a spell)
+local skyriding    = false
+local mousePending = false
+local visWatcher   = CreateFrame("Frame")
+visWatcher:Hide()
+
+local function VisMode(e)
+    return e.getMode() or VIS.DEFAULT
+end
+
+local function IsForced(e)
+    return forced.editMode or (e.grid and forced.grid)
+end
+
+local function RestingAlpha(e)
+    local mode = VisMode(e)
+    if IsForced(e) or mode == VIS.DEFAULT then return 1 end
+    if mode == VIS.SKYRIDING then return skyriding and 1 or 0 end
+    if mode == VIS.NO_SKYRIDING then return skyriding and 0 or 1 end
+    return 0 -- MOUSEOVER, HIDDEN
+end
+
+local function SetEntryAlpha(e, alpha)
+    for _, f in ipairs(e.frames) do f:SetAlpha(alpha) end
+end
+
+local function IsHovered(e)
+    for _, f in ipairs(e.frames) do
+        if f:IsMouseOver() then return true end
+    end
+    return e.flyout and SpellFlyout and SpellFlyout:IsShown() and SpellFlyout:IsMouseOver()
+end
+
+local elapsed = 0
+visWatcher:SetScript("OnUpdate", function(self, dt)
+    elapsed = elapsed + dt
+    if elapsed < 0.2 then return end
+    elapsed = 0
+    for e in pairs(visShown) do
+        if not IsForced(e) and not IsHovered(e) then
+            SetEntryAlpha(e, RestingAlpha(e))
+            visShown[e] = nil
+        end
+    end
+    if not next(visShown) then self:Hide() end
+end)
+
+local function OnEnterEntry(e)
+    if VisMode(e) ~= VIS.MOUSEOVER then return end
+    SetEntryAlpha(e, 1)
+    visShown[e] = true
+    visWatcher:Show()
+end
+
+local function HookEntry(e)
+    if e.hooked then return end
+    e.hooked = true
+    local onEnter = function() OnEnterEntry(e) end
+    for _, f in ipairs(e.frames) do f:HookScript("OnEnter", onEnter) end
+    for _, b in ipairs(e.buttons or {}) do b:HookScript("OnEnter", onEnter) end
+end
+
+-- Clicks only where the entry can be seen (mouseover entries keep the mouse).
+-- Buttons are only touched once an entry has been hidden at least once.
+local function ApplyMouse()
+    if InCombatLockdown() then mousePending = true return end
+    mousePending = false
+    for _, e in ipairs(visEntries) do
+        if e.buttons then
+            local mode = VisMode(e)
+            local enabled = IsForced(e) or mode == VIS.DEFAULT or mode == VIS.MOUSEOVER
+                or (mode == VIS.SKYRIDING and skyriding) or (mode == VIS.NO_SKYRIDING and not skyriding)
+            if not enabled or e.mouseOff then
+                for _, b in ipairs(e.buttons) do b:EnableMouse(enabled) end
+                e.mouseOff = not enabled
+            end
+        end
+    end
+end
+
+local function RefreshEntry(e)
+    local mode = VisMode(e)
+    if mode == VIS.MOUSEOVER then HookEntry(e) end
+    -- Default entries are left alone unless we changed them before.
+    if mode ~= VIS.DEFAULT or e.alphaTouched then
+        if mode ~= VIS.MOUSEOVER or not visShown[e] then SetEntryAlpha(e, RestingAlpha(e)) end
+        e.alphaTouched = mode ~= VIS.DEFAULT
+    end
+    if mode ~= VIS.MOUSEOVER then visShown[e] = nil end
+    if e.onRefresh then e.onRefresh(mode) end
+end
+
+function ns.RefreshVisibility()
+    for _, e in ipairs(visEntries) do RefreshEntry(e) end
+    ApplyMouse()
+end
+
+local function SetForced(kind, on)
+    forced[kind] = on
+    ns.RefreshVisibility()
+    if not on then
+        -- Mouseover entries still under the cursor stay visible until left.
+        for _, e in ipairs(visEntries) do
+            if VisMode(e) == VIS.MOUSEOVER and IsHovered(e) then OnEnterEntry(e) end
+        end
+    end
+end
+
+local function ReadSkyriding()
+    local _, canGlide = C_PlayerInfo.GetGlidingInfo()
+    return not ns.IsSecret(canGlide) and canGlide and true or false -- secret-safe
+end
+
+local visInitialized = false
+local function InitVisibility()
+    visInitialized = true
+    skyriding = ReadSkyriding()
+
+    -- Everything is shown in Edit Mode; action bars also while dragging a spell.
+    EventRegistry:RegisterCallback("EditMode.Enter", function() SetForced("editMode", true) end, ns)
+    EventRegistry:RegisterCallback("EditMode.Exit",  function() SetForced("editMode", false) end, ns)
+
+    local events = CreateFrame("Frame")
+    events:RegisterEvent("ACTIONBAR_SHOWGRID")
+    events:RegisterEvent("ACTIONBAR_HIDEGRID")
+    events:RegisterEvent("PLAYER_REGEN_ENABLED")
+    events:RegisterEvent("PLAYER_ENTERING_WORLD")
+    events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+    pcall(events.RegisterEvent, events, "PLAYER_CAN_GLIDE_CHANGED")
+    events:SetScript("OnEvent", function(_, event)
+        if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
+            SetForced("grid", event == "ACTIONBAR_SHOWGRID")
+        elseif event == "PLAYER_REGEN_ENABLED" then
+            if mousePending then ApplyMouse() end
+        else
+            local now = ReadSkyriding()
+            if now ~= skyriding then
+                skyriding = now
+                ns.RefreshVisibility()
+            end
+        end
+    end)
+end
+
+-- Registers an entry (nil frames are skipped) and applies its mode.
+function ns.RegisterVisibility(e)
+    local frames = {}
+    for _, f in pairs(e.frames) do frames[#frames + 1] = f end
+    if #frames == 0 then return end
+    e.frames = frames
+    if not visInitialized then InitVisibility() end
+    visEntries[#visEntries + 1] = e
+    RefreshEntry(e)
+    ApplyMouse()
+    return e
+end
+
+--------------------------------------------------------------------------------
 -- Module registry
 --   info = { title, defaults = { key = value, ... },
 --            options = { { header = "Section" }, { key, label, tooltip [, slider | dropdown] }, ... } }

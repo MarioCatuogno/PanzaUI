@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest Tracker
-    Text style and auto-collapse during boss fights for the Objective Tracker.
+    Text style, auto-collapse during boss fights and quest count for the
+    Objective Tracker.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -9,12 +10,14 @@ local QT = ns:RegisterModule("QuestTracker", {
     defaults = {
         fontStyle      = true,
         combatCollapse = true,
+        questCount     = true,
     },
     options = {
         { header = "Style" },
         { key = "fontStyle",      label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to quest tracker text. Requires Reload UI." },
         { header = "Features" },
         { key = "combatCollapse", label = "Collapse during boss fights", tooltip = "Collapse the tracker during dungeon and raid boss encounters and expand it again when the encounter ends." },
+        { key = "questCount",     label = "Show quest count",    tooltip = "Show the number of quests in your log out of the maximum (e.g. 20/35) in the tracker header." },
     },
 })
 
@@ -68,7 +71,66 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Quest count (e.g. 20/35) in the "All Objectives" header, same font and
+-- color as its title, right before the minimize button. Only quests that
+-- count toward the log limit (no headers, hidden, world/bonus or bounty
+-- quests). Updated on quest log changes, only while the option is on.
+--------------------------------------------------------------------------------
+local countText
+local countEvents = CreateFrame("Frame")
+
+local function CountQuests()
+    local count = 0
+    for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+        local info = C_QuestLog.GetInfo(i)
+        if info and not (info.isHeader or info.isHidden or info.isTask or info.isBounty) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+-- Right before the minimize button, on the same line as the header title.
+local function PlaceCount()
+    local header = ObjectiveTrackerFrame.Header
+    local button = header.MinimizeButton or header
+    local _, textY = header.Text:GetCenter()
+    local _, buttonY = button:GetCenter()
+    local offsetY = (textY and buttonY) and (textY - buttonY) or 0
+    countText:ClearAllPoints()
+    countText:SetPoint("RIGHT", button, "LEFT", -6, offsetY)
+end
+
+local function UpdateCount()
+    if not countText then return end
+    PlaceCount()
+    countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
+end
+countEvents:SetScript("OnEvent", UpdateCount)
+
+local function SetQuestCount(on)
+    local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
+    if not (header and header.Text) then return end
+    if on and not countText then
+        countText = header:CreateFontString(nil, "OVERLAY")
+        countText:SetFontObject(header.Text:GetFontObject() or ObjectiveTrackerHeaderFont)
+        countText:SetTextColor(header.Text:GetTextColor())
+    end
+    if not countText then return end
+    countText:SetShown(on)
+    if on then
+        countEvents:RegisterEvent("QUEST_LOG_UPDATE")
+        UpdateCount()
+    else
+        countEvents:UnregisterAllEvents()
+    end
+end
+
 function QT:OnEnable()
+    if self.db.questCount then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
+    end
     if self.db.fontStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
             StyleFonts()
@@ -80,5 +142,9 @@ function QT:OnEnable()
 end
 
 function QT:OnOptionChanged(key, value)
-    if key == "combatCollapse" then SetCombatCollapse(value) end
+    if key == "combatCollapse" then
+        SetCombatCollapse(value)
+    elseif key == "questCount" then
+        SetQuestCount(value)
+    end
 end

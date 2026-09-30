@@ -37,6 +37,7 @@ Here's a list of all the features included in this first release!
 * Personal Resource Display - Styles the bar text with the outlined font and centers it on the bars.
 * QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
 * Quest Tracker - Automatically collapses the tracker during dungeon and raid boss fights, and reopens it afterwards.
+* Quest Tracker - Shows the number of quests in the log out of the maximum (e.g. 20/35) in the tracker header.
 * Quest Tracker - Styles the tracker text with the outlined font.
 * Tooltips - Colors player names with their class color.
 * Tooltips - Removes the health bar under unit tooltips.
@@ -68,7 +69,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Target) - Removes the level and centers the name.
 * Unit Frame (Target) - Shows health and power as a simple percentage number.
 * Unit Frame (Target) - Styles the name and bar text with the outlined font.
-* Various - Hides the micro menu and the bag bar (keybindings still work).
+* Various - Sets the visibility of the Micro Menu, Bag Bar and Experience/Reputation bar: default, mouseover, Skyriding only, no Skyriding or always hidden (keybindings still work).
 Shows health and power as a simple percentage number.
 
 ### 👤 Profiles
