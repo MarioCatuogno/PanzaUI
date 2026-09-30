@@ -6,91 +6,73 @@ Here's a list of all the features included in this first release!
 
 ### 🛠️ Core
 
-* Action Bars - Hides macro names and/or keybindings on buttons.
-* Action Bars - Sets the visibility of each bar (including pet and stance bars): default, mouseover, Skyriding only, no Skyriding or always hidden. Bars reappear in Edit Mode and while dragging a spell.
-* Action Bars - Styles keybinds, stack counts and macro names with the outlined font.
-* Action Bars - Zooms into icons (adjustable slider) to hide the old built-in borders of classic icons.
-* Bags - Shows the item level on equipment, colored by item quality.
-* Bags - Styles item counts and item levels with the outlined font.
-* Bags - Zooms into item icons (adjustable slider).
-* Buffs/Debuffs - Gives buff and debuff icons the same rounded look as action buttons.
-* Buffs/Debuffs - Styles their stack count and duration with the outlined font.
-* Buffs/Debuffs - Zooms into their icons (adjustable slider).
-* Chat - Adds a timestamp (hours:minutes) to every message.
-* Chat - Hides the Combat Log tab.
-* Chat - Hides the side buttons next to the chat (friends, channels, emotes, voice).
-* Chat - Removes the background art from chat tabs and shows tab names in full.
-* Chat - Removes the chat window background that appears on mouseover.
-* Chat - Removes the border around the chat input box.
-* Chat - Styles the chat text, tab names and input box with a crisp outlined font.
-* Combat (Cooldown Manager) - Gives the Cooldown Manager icons the same rounded look as action buttons.
-* Combat (Cooldown Manager) - Keeps tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up (garbage-free, no work while nothing changes).
-* Combat (Damage Meter) - Gives the Damage Meter icons (class/spec and spells) the same rounded look as action buttons.
-* Combat (Damage Meter) - Styles the names and values on the bars with the outlined font.
-* Combat (Personal Resource Display) - Always shows the health and power percentage, like the Player and Target frames.
-* Combat (Personal Resource Display) - Styles the bar text with the outlined font and centers it on the bars.
-* Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
-* Core - Adds a texture option for the Achievement frame bars, including the progress bars of single achievements.
-* Core - Adds a texture option for the Cooldown Manager buff bars.
-* Core - Adds a texture option for the Damage Meter bars.
-* Core - Adds a texture option for the progress bars inside tooltips (e.g. world quests on the map).
-* Core - Adds a texture option for the Quest Tracker progress and timer bars.
-* Core - Adds a texture option for the Reputation panel bars and for the experience/reputation tracking bars.
-* Core - Adds Blizzard's Cooldown Manager bar texture to the texture dropdowns.
-* Core - Adds shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer).
-* Core - Adds the PanzaUI bar texture (Media/Statusbar), selectable for every bar and registered in SharedMedia.
-* Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
-* Minimap - Styles the zone name and clock with the outlined font.
-* Party & Raid Frames - Removes the server from player names.
-* Party & Raid Frames - Styles the names and status text with the outlined font.
-* QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
-* QoL - Shows the item level on equipped items in the Character panel, colored by item quality.
-* Quest Tracker - Automatically collapses the tracker during dungeon and raid boss fights, and reopens it afterwards.
-* Quest Tracker - Shows the number of quests in the log out of the maximum (e.g. 20/35) in the tracker header.
-* Quest Tracker - Styles the tracker text with the outlined font.
-* Tooltips - Colors player names with their class color.
-* Tooltips - Removes the health bar under unit tooltips.
-* Tooltips - Shows a player's average item level (other players are inspected automatically).
-* Tooltips - Shows a player's Mythic+ rating, in the matching rating color.
-* Tooltips - Shows the ID of items and spells.
-* Unit Frame (Focus) - Colors the health bar with the class color (players and party members, including follower dungeon NPCs) or the reaction color (hostile red, neutral yellow, friendly green) for other units.
-* Unit Frame (Focus) - Gives the cast bar spell icon the same rounded look as action buttons.
-* Unit Frame (Focus) - Hides buffs and debuffs on the frame.
-* Unit Frame (Focus) - Hides the cast bar entirely.
-* Unit Frame (Focus) - Removes the colored background behind the name, matching the player frame.
-* Unit Frame (Focus) - Removes the level and centers the name.
-* Unit Frame (Focus) - Shows health and power as a simple percentage number.
-* Unit Frame (Focus) - Styles the name and bar text with the outlined font.
-* Unit Frame (Pet) - Styles the text, shows percentages, hides damage/healing numbers and hides buffs/debuffs.
-* Unit Frame (Player) - Colors the health bar with your class color.
-* Unit Frame (Player) - Hides class resources (combo points, chi, runes, shards, holy power, etc.) only on the Player frame, keeping them on the Personal Resource Display.
-* Unit Frame (Player) - Hides the damage/healing numbers on the portrait.
-* Unit Frame (Player) - Hides the totem icons under the Player frame (e.g. Shaman totems, Monk Niuzao).
-* Unit Frame (Player) - Removes the level and centers the name above the health bar.
-* Unit Frame (Player) - Removes the red combat / yellow resting glow and the "Zzz" animation.
-* Unit Frame (Player) - Restores the normal Player frame art when a class resource with an extra bar (e.g. Stagger) is hidden.
-* Unit Frame (Player) - Shows health and power as a simple percentage number (no % sign).
-* Unit Frame (Player) - Styles the name and bar text with the outlined font.
-* Unit Frame (Target) - Colors the health bar with the class color (players and party members, including follower dungeon NPCs) or the reaction color (hostile red, neutral yellow, friendly green) for other units.
-* Unit Frame (Target) - Gives the cast bar spell icon the same rounded look as action buttons.
-* Unit Frame (Target) - Hides buffs and debuffs on the frame.
-* Unit Frame (Target) - Removes the colored background behind the name, matching the player frame.
-* Unit Frame (Target) - Removes the level and centers the name.
-* Unit Frame (Target) - Shows health and power as a simple percentage number.
-* Unit Frame (Target) - Styles the name and bar text with the outlined font.
-* Various - Sets the visibility of the Micro Menu, Bag Bar and Experience/Reputation bar: default, mouseover, Skyriding only, no Skyriding or always hidden (keybindings still work).
-Shows health and power as a simple percentage number.
+* Action Bars - Added a visibility option for each bar, including Pet and Stance bars (default, mouseover, Skyriding only, no Skyriding or always hidden)
+* Action Bars - Added an icon zoom slider to hide the old borders of classic icons
+* Action Bars - Added an option to hide macro names and keybindings
+* Action Bars - Added the outlined font to keybindings, stack counts and macro names
+* Action Bars - Bars are always shown in Edit Mode and while dragging a spell
+* Bags - Added an icon zoom slider
+* Bags - Added the item level on equipment, colored by item quality
+* Bags - Added the outlined font to item counts and item levels
+* Buffs/Debuffs - Added an icon zoom slider
+* Buffs/Debuffs - Added the action bar style to buff and debuff icons
+* Buffs/Debuffs - Added the outlined font to stack counts and durations
+* Chat - Added the outlined font to chat text, tab names and input box
+* Chat - Added timestamps (hours:minutes) to every message
+* Chat - Hidden the Combat Log tab
+* Chat - Hidden the side buttons (friends, channels, emotes and voice)
+* Chat - Removed the background art from chat tabs, now showing tab names in full
+* Chat - Removed the border of the input box
+* Chat - Removed the chat window background shown on mouseover
+* Combat - Added the action bar style to Cooldown Manager icons
+* Combat - Added the action bar style to Damage Meter icons
+* Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
+* Combat - Added the outlined font to Damage Meter bars
+* Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
+* Combat - Personal Resource Display now always shows health and power as a percentage
+* Core - Added a texture option for Achievement, Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
+* Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
+* Core - Added Blizzard's Cooldown Manager bar texture to the texture list
+* Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
+* Core - Added the PanzaUI bar texture, also available in SharedMedia
+* Minimap - Added the outlined font to zone name and clock
+* Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
+* Party & Raid Frames - Added the outlined font to names and status text
+* Party & Raid Frames - Removed the server from player names
+* QoL - Added the auto-repair with personal gold
+* QoL - Added the item level on equipped items in the Character panel, colored by item quality
+* Quest Tracker - Added the outlined font to the tracker text
+* Quest Tracker - Added the quest counter (e.g. 20/35) in the tracker header
+* Quest Tracker - Collapsed the tracker during dungeon and raid boss fights, reopening it afterwards
+* Tooltips - Added the ID of items and spells
+* Tooltips - Added the item level of players (other players are inspected automatically)
+* Tooltips - Added the Mythic+ rating of players, in the rating color
+* Tooltips - Colored player names with their class color
+* Tooltips - Removed the health bar from unit tooltips
+* Unit Frames - Added class color to the health bar of Player, Target and Focus (reaction color for NPCs on Target and Focus)
+* Unit Frames - Added the action bar style to the cast bar icon of Target and Focus
+* Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus and Pet
+* Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage
+* Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
+* Unit Frames - Hidden damage/healing numbers on Player and Pet portraits
+* Unit Frames - Hidden the Focus cast bar
+* Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
+* Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation
+* Unit Frames - Hidden the totem icons under the Player frame
+* Unit Frames - Removed the colored name background from Target and Focus
+* Unit Frames - Removed the level from Player, Target and Focus, centering the name
+* Various - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden)
 
 ### 👤 Profiles
 
-* BlizzUI - Adjusted every frame position and size to match the new version of UI.
-* BigWigs - Adjusted every frame position and size to match the new version of UI.
+* BlizzUI - Adjusted every frame position and size to match the new version of UI
+* BigWigs - Adjusted every frame position and size to match the new version of UI
 
 ### 📏 Various
 
 * Removed old profiles from unused addons
-* Sorted the modules alphabetically in the addon options menu.
-* Updated documentation to the latest UI version.
+* Sorted the modules alphabetically in the addon options menu
+* Updated documentation to the latest UI version
 
 ## 1.7-RELEASE
 
