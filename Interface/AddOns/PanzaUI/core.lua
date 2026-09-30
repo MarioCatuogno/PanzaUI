@@ -80,21 +80,33 @@ local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
 function ns.StyleIcon(icon, parent)
     if not (icon and icon.AddMaskTexture) then return end
     parent = parent or icon:GetParent()
-
-    local w, h  = icon:GetSize()
-    local scale = w / 45
-    local info  = C_Texture.GetAtlasInfo(ICON_MASK)
+    local info = C_Texture.GetAtlasInfo(ICON_MASK)
 
     local mask = parent:CreateMaskTexture()
     mask:SetAtlas(ICON_MASK)
-    mask:SetPoint("CENTER", icon)
-    if info then mask:SetSize(info.width * scale, info.height * scale) else mask:SetAllPoints(icon) end
     icon:AddMaskTexture(mask)
 
     local frame = parent:CreateTexture(nil, "OVERLAY", nil, -1) -- below other overlays (dispel border, ...)
     frame:SetAtlas(ICON_FRAME)
     frame:SetPoint("TOPLEFT", icon)
-    frame:SetSize(w * 46 / 45, h)
+
+    -- Sizes follow the icon: icons created from pools can still be 0x0 here
+    -- (they get their size at layout) and some can be rescaled later (Edit
+    -- Mode), so this runs again whenever the parent changes size.
+    local function Resize()
+        local w, h = icon:GetSize()
+        mask:ClearAllPoints()
+        if w > 0 and info then
+            local scale = w / 45
+            mask:SetPoint("CENTER", icon)
+            mask:SetSize(info.width * scale, info.height * scale)
+        else
+            mask:SetAllPoints(icon) -- never hide the icon while its size is unknown
+        end
+        frame:SetSize(w * 46 / 45, h)
+    end
+    Resize()
+    parent:HookScript("OnSizeChanged", Resize)
 end
 
 -- Icon zoom: crop `percent`% of the texture on each side (0 = full icon).
