@@ -141,22 +141,22 @@ function ns.StyleIcon(icon, parent)
 
     -- Sizes follow the icon: icons created from pools can still be 0x0 here
     -- (they get their size at layout; the parent's size is used meanwhile)
-    -- and some can be rescaled later (Edit Mode), so this runs again whenever
-    -- the parent changes size, and on show until a real size is known.
-    -- Nothing is redone when the width did not change.
+    -- and some can be resized later (Edit Mode, Damage Meter bar height), so
+    -- this runs again whenever the parent changes size, and on show until a
+    -- real size is known. Width and height are handled separately (icons are
+    -- not always square). Nothing is redone when the size did not change.
     -- Midnight: in combat the geometry of frames showing secret data can be
     -- secret too; it can't be compared, so the last good size is kept.
-    local lastW = -1
+    local lastW, lastH = -1, -1
     local function Resize()
-        local w = icon:GetWidth()
-        if ns.IsSecret(w) or w <= 0 then w = parent:GetWidth() end
-        if ns.IsSecret(w) or w == lastW then return end
-        lastW = w
+        local w, h = icon:GetSize()
+        if ns.IsSecret(w) or ns.IsSecret(h) or w <= 0 or h <= 0 then w, h = parent:GetSize() end
+        if ns.IsSecret(w) or ns.IsSecret(h) or (w == lastW and h == lastH) then return end
+        lastW, lastH = w, h
         mask:ClearAllPoints()
-        if w > 0 and info then
-            local scale = w / 45
+        if w > 0 and h > 0 and info then
             mask:SetPoint("CENTER", icon)
-            mask:SetSize(info.width * scale, info.height * scale)
+            mask:SetSize(info.width * w / 45, info.height * h / 45)
         else
             mask:SetAllPoints(icon) -- never hide the icon while its size is unknown
         end
@@ -174,6 +174,64 @@ function ns.ZoomIcon(icon, percent)
     if not (icon and icon.SetTexCoord) then return end
     local lo = (tonumber(percent) or 0) / 100
     icon:SetTexCoord(lo, 1 - lo, lo, 1 - lo)
+end
+
+--------------------------------------------------------------------------------
+-- Damage Meter entries (shared by every module that styles them). Entries
+-- come from the scroll boxes of each session window and of its source
+-- (spell breakdown) window, plus each window's pinned local player row: each
+-- scroll box gets one acquired + initialized callback (existing entries
+-- included), windows made later are caught by
+-- hooking SetupSessionWindow. Every registered function runs once per entry,
+-- when Blizzard first acquires it (before any secret text is set).
+--------------------------------------------------------------------------------
+local dmFuncs, dmEntries, dmHooked = {}, {}, {}
+
+local function OnDamageMeterEntry(_, entry)
+    if not entry or dmEntries[entry] then return end
+    dmEntries[entry] = true
+    for _, func in ipairs(dmFuncs) do func(entry) end
+end
+
+local function HookDamageMeterBox(box)
+    if not box or dmHooked[box] then return end
+    dmHooked[box] = true
+    ScrollUtil.AddAcquiredFrameCallback(box, OnDamageMeterEntry, ns, true)
+    ScrollUtil.AddInitializedFrameCallback(box, OnDamageMeterEntry, ns, true)
+end
+
+local function HookDamageMeterSource(window)
+    local source = window.GetSourceWindow and window:GetSourceWindow()
+    if source and source.GetScrollBox then HookDamageMeterBox(source:GetScrollBox()) end
+end
+
+local function HookDamageMeterWindow(window)
+    if not window or dmHooked[window] then return end
+    dmHooked[window] = true
+    if window.GetScrollBox then HookDamageMeterBox(window:GetScrollBox()) end
+    -- The local player's row pinned under the list is its own frame, not
+    -- one from the scroll box.
+    if window.GetLocalPlayerEntry then OnDamageMeterEntry(nil, window:GetLocalPlayerEntry()) end
+    HookDamageMeterSource(window)
+    ns.Hook(window, "ShowSourceWindow", HookDamageMeterSource) -- in case it is made on demand
+end
+
+local function SetupDamageMeter()
+    if not ScrollUtil then return end
+    for i = 1, 10 do HookDamageMeterWindow(_G["DamageMeterSessionWindow" .. i]) end
+    ns.Hook(DamageMeter, "SetupSessionWindow", function(_, index)
+        HookDamageMeterWindow(_G["DamageMeterSessionWindow" .. tostring(index)])
+    end)
+end
+
+-- func(entry): entry.Icon.Icon is the icon texture, entry.StatusBar the bar
+-- (with .Name and .Value). Entries seen before registering get it too.
+function ns.OnDamageMeterEntry(func)
+    dmFuncs[#dmFuncs + 1] = func
+    for entry in pairs(dmEntries) do func(entry) end
+    if #dmFuncs == 1 then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -491,9 +549,10 @@ local function AddOption(category, m, opt)
 end
 
 local function BuildSettings()
-    local category, layout = Settings.RegisterVerticalLayoutCategory(addonName)
+    -- Title colored like the .toc; the page header shows the version.
+    local category, layout = Settings.RegisterVerticalLayoutCategory("|cff00FF98Panza|rUI")
     local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
-    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(addonName .. " " .. version))
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Version: " .. version))
 
     local function AddOptions(cat, lay, m)
         for _, opt in ipairs(m.options) do

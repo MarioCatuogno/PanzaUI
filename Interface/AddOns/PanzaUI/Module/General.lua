@@ -2,7 +2,7 @@
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
     Reputation panel bars, experience/reputation tracking bars, Achievement
-    window, Quest Tracker, tooltip and Cooldown Manager bars, from
+    window, Quest Tracker, tooltip, Cooldown Manager and Damage Meter bars, from
     LibSharedMedia-3.0 (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -78,6 +78,7 @@ local OTHER = {
     { key = "texQuestTracker", label = "Quest Tracker",         tooltip = "Texture for the progress and timer bars shown in the Quest Tracker (bonus objectives, world quests, scenarios...)." },
     { key = "texTooltips",     label = "Tooltips",              tooltip = "Texture for the progress bars shown inside tooltips (e.g. world quests on the map)." },
     { key = "texCooldownBars", label = "Cooldown Manager bars",  tooltip = "Texture for the tracked buff bars of the Cooldown Manager." },
+    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter (including the spell breakdown)." },
 }
 options[#options + 1] = { header = "Other Bar Textures" }
 for _, o in ipairs(OTHER) do
@@ -397,6 +398,13 @@ function GEN:OnEnable()
             ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) TrackItem(item) end)
             ns.Hook(viewer, "RefreshLayout", TrackAll)
         end)
+    end
+
+    -- Damage Meter bars (session and spell breakdown windows): shaped like
+    -- Blizzard's atlas, which also follows the Edit Mode size and scale.
+    local damageMeter = TexturePath("texDamageMeter")
+    if damageMeter then
+        ns.OnDamageMeterEntry(function(entry) TrackTexture(entry.StatusBar, damageMeter) end)
     end
 
     -- Experience / reputation / honor tracking bars

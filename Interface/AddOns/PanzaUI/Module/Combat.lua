@@ -206,16 +206,11 @@ local function SetupDynamicLayout()
 end
 
 --------------------------------------------------------------------------------
--- Damage Meter icons. Entries come from the scroll boxes of each session
--- window and of its source (spell breakdown) window: every scroll box gets
--- one initialized-frame callback (existing entries included), windows made
--- later are caught by hooking SetupSessionWindow. Each entry is styled once:
--- icon frame (follows Blizzard's "show bar icons" setting) and/or outlined
--- text (re-applied when Blizzard changes the bar style or text scale).
+-- Damage Meter: each entry (session and spell breakdown windows, from the
+-- shared registry in core.lua) is styled once: icon frame (follows
+-- Blizzard's "show bar icons" setting) and/or outlined text.
 -- Widget calls only, no Blizzard fields written.
 --------------------------------------------------------------------------------
-local styledEntries, hookedBoxes = {}, {}
-
 local function StyleEntryIcon(entry)
     local holder = entry.Icon
     local icon = holder and holder.Icon
@@ -239,44 +234,6 @@ local function StyleEntryText(entry)
     if bar.Value then bar.Value:SetFontObject(font) end
 end
 
-local function StyleEntry(entry)
-    if not entry or styledEntries[entry] then return end
-    styledEntries[entry] = true
-    if CB.db.dmIconStyle then StyleEntryIcon(entry) end
-    if CB.db.dmFontStyle then StyleEntryText(entry) end
-end
-
-local function OnEntryInitialized(_, entry) StyleEntry(entry) end
-
-local function HookScrollBox(box)
-    if not box or hookedBoxes[box] then return end
-    hookedBoxes[box] = true
-    -- Acquired runs before Blizzard fills the entry (before any secret text).
-    ScrollUtil.AddAcquiredFrameCallback(box, OnEntryInitialized, CB, true)
-    ScrollUtil.AddInitializedFrameCallback(box, OnEntryInitialized, CB, true)
-end
-
-local function HookSource(window)
-    local source = window.GetSourceWindow and window:GetSourceWindow()
-    if source and source.GetScrollBox then HookScrollBox(source:GetScrollBox()) end
-end
-
-local function HookWindow(window)
-    if not window or hookedBoxes[window] then return end
-    hookedBoxes[window] = true
-    if window.GetScrollBox then HookScrollBox(window:GetScrollBox()) end
-    HookSource(window)
-    ns.Hook(window, "ShowSourceWindow", HookSource) -- in case it is made on demand
-end
-
-local function SetupDamageMeter()
-    if not ScrollUtil then return end
-    for i = 1, 10 do HookWindow(_G["DamageMeterSessionWindow" .. i]) end
-    ns.Hook(DamageMeter, "SetupSessionWindow", function(_, index)
-        HookWindow(_G["DamageMeterSessionWindow" .. tostring(index)])
-    end)
-end
-
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -295,7 +252,6 @@ function CB:OnEnable()
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
-    if db.dmIconStyle or db.dmFontStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
-    end
+    if db.dmIconStyle then ns.OnDamageMeterEntry(StyleEntryIcon) end
+    if db.dmFontStyle then ns.OnDamageMeterEntry(StyleEntryText) end
 end
