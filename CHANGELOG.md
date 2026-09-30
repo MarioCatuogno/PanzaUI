@@ -23,7 +23,7 @@ Here's a list of all the features included in this first release!
 * Chat - Removes the chat window background that appears on mouseover.
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
-* Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss and Party/Raid frames), chosen from SharedMedia in the main options page.
+* Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
 * Core - Adds shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer).
 * Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
 * Minimap - Styles the zone name and clock with the outlined font.

@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Health/power bar texture per frame group, from LibSharedMedia-3.0
+    Health/power bar texture per frame group (incl. Personal Resource Display),
+    from LibSharedMedia-3.0
     (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -35,6 +36,7 @@ local GROUPS = {
     { key = "texPet",    label = "Pet" },
     { key = "texBoss",   label = "Boss frames" },
     { key = "texGroup",  label = "Party/Raid" },
+    { key = "texPRD",    label = "Personal Resource Display" },
 }
 
 local defaults = {}
@@ -75,6 +77,18 @@ local function SetTexture(bar, path)
     end
 end
 
+-- Some frames put their atlas back on the bar texture object (e.g. Target,
+-- Focus and Boss frames on every target change, in CheckClassification):
+-- re-apply our texture right after. The hook fires only for Lua SetAtlas
+-- calls, so our own SetStatusBarTexture can't loop.
+local keptTextures = {}
+local function KeepTexture(bar, path)
+    local texture = bar and path and bar.GetStatusBarTexture and bar:GetStatusBarTexture()
+    if not texture or keptTextures[texture] then return end
+    keptTextures[texture] = true
+    hooksecurefunc(texture, "SetAtlas", function() bar:SetStatusBarTexture(path) end)
+end
+
 -- Blizzard unit frames color power bars with per-power atlases (white bar
 -- color): after its update, put our texture back and color it by power type.
 local function UpdatePowerBar(bar)
@@ -98,6 +112,7 @@ end
 local function SkinBars(health, power, path)
     if not path then return end
     SetTexture(health, path)
+    KeepTexture(health, path)
     if power then
         powerBars[power] = path
         UpdatePowerBar(power)
@@ -122,6 +137,24 @@ function GEN:OnEnable()
         end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
+
+    local prd = TexturePath("texPRD")
+    if prd then
+        local function SkinPRD()
+            local frame = PersonalResourceDisplayFrame
+            if not frame then return end
+            local container = frame.HealthBarsContainer
+            for _, bar in ipairs({ container and (container.healthBar or container.HealthBar), frame.PowerBar, frame.AlternatePowerBar }) do
+                SetTexture(bar, prd)
+                KeepTexture(bar, prd)
+            end
+        end
+        if PersonalResourceDisplayFrame then
+            SkinPRD()
+        else
+            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", SkinPRD)
+        end
+    end
 
     if group then
         -- Classic party frames
