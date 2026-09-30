@@ -13,12 +13,14 @@ local Chat = ns:RegisterModule("Chat", {
         hideTabArt    = true,
         hideButtons   = true,
         hideEditBoxArt = true,
+        hideBackground = true,
     },
     options = {
         { header = "Style" },
         { key = "fontStyle",     label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to chat, tab and input box text. Requires Reload UI." },
         { key = "hideTabArt",    label = "Hide tab art",        tooltip = "Remove the background textures of chat tabs. Requires Reload UI." },
         { key = "hideEditBoxArt", label = "Hide input box border", tooltip = "Remove the border of the chat input box. Requires Reload UI." },
+        { key = "hideBackground", label = "Hide background",       tooltip = "Remove the chat window background that appears on mouseover. Requires Reload UI." },
         { header = "Features" },
         { key = "timestamps",    label = "Timestamps (HH:MM)",    tooltip = "Show the time in front of every chat message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",   tooltip = "Close the Combat Log window and its tab." },
@@ -36,6 +38,13 @@ local TAB_TEXTURES = {
 
 -- Chat input box border (normal + focused), as <EditBoxName><suffix> globals.
 local EDITBOX_TEXTURES = { "Left", "Mid", "Right", "FocusLeft", "FocusMid", "FocusRight" }
+
+-- Chat window background (faded in by Blizzard on mouseover), as
+-- <ChatFrameName><suffix> globals. Blizzard's own list is used when available.
+local BACKGROUND_TEXTURES = CHAT_FRAME_TEXTURES or {
+    "Background", "TopLeftTexture", "BottomLeftTexture", "TopRightTexture", "BottomRightTexture",
+    "LeftTexture", "RightTexture", "BottomTexture", "TopTexture",
+}
 
 local SIDE_BUTTONS = {
     "QuickJoinToastButton",            -- friends / social
@@ -122,6 +131,14 @@ local function SetupFrame(frame)
             if tex then tex:SetTexture(nil) end
         end
     end
+
+    if db.hideBackground then
+        -- Clear the textures: Blizzard keeps fading their alpha in and out.
+        for _, suffix in ipairs(BACKGROUND_TEXTURES) do
+            local tex = _G[name .. suffix]
+            if tex and tex.SetTexture then tex:SetTexture(nil) end
+        end
+    end
 end
 
 local function SetupAllFrames()
@@ -143,7 +160,7 @@ function Chat:OnEnable()
         for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
     end
 
-    if db.fontStyle or db.hideTabArt or db.hideButtons or db.hideEditBoxArt then
+    if db.fontStyle or db.hideTabArt or db.hideButtons or db.hideEditBoxArt or db.hideBackground then
         SetupAllFrames()
         ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
     end

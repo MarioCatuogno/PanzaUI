@@ -20,6 +20,7 @@ Here's a list of all the features included in this first release!
 * Chat - Hides the Combat Log tab.
 * Chat - Hides the side buttons next to the chat (friends, channels, emotes, voice).
 * Chat - Removes the background art from chat tabs.
+* Chat - Removes the chat window background that appears on mouseover.
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
 * Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
