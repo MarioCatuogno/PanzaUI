@@ -119,6 +119,13 @@ local function SkinBars(health, power, path)
     end
 end
 
+-- Note: UnitFrameBars() returns two values, so it must be the last argument.
+local function SkinFrame(frame, path)
+    if not (frame and path) then return end
+    local health, power = UnitFrameBars(frame)
+    SkinBars(health, power, path)
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -128,12 +135,12 @@ function GEN:OnEnable()
 
     SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
     SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
-    if target then SkinBars(UnitFrameBars(TargetFrame), target) end
-    if focus and FocusFrame then SkinBars(UnitFrameBars(FocusFrame), focus) end
+    if target then SkinFrame(TargetFrame, target) end
+    if focus and FocusFrame then SkinFrame(FocusFrame, focus) end
     if boss then
         for i = 1, 5 do
             local frame = _G["Boss" .. i .. "TargetFrame"]
-            if frame then SkinBars(UnitFrameBars(frame), boss) end
+            if frame then SkinFrame(frame, boss) end
         end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
@@ -160,7 +167,7 @@ function GEN:OnEnable()
         -- Classic party frames
         for i = 1, 4 do
             local frame = PartyFrame and PartyFrame["MemberFrame" .. i]
-            if frame then SkinBars(UnitFrameBars(frame), group) end
+            if frame then SkinFrame(frame, group) end
         end
         -- Compact party/raid frames: Blizzard resets the textures in setup.
         local function SkinCompact(frame)
