@@ -50,6 +50,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Player) - Colors the health bar with your class color.
 * Unit Frame (Player) - Hides class resources (combo points, chi, runes, shards, holy power, etc.) only on the Player frame, keeping them on the Personal Resource Display.
 * Unit Frame (Player) - Hides the damage/healing numbers on the portrait.
+* Unit Frame (Player) - Hides the totem icons under the Player frame (e.g. Shaman totems, Monk Niuzao).
 * Unit Frame (Player) - Removes the level and centers the name above the health bar.
 * Unit Frame (Player) - Removes the red combat / yellow resting glow and the "Zzz" animation.
 * Unit Frame (Player) - Restores the normal Player frame art when a class resource with an extra bar (e.g. Stagger) is hidden.

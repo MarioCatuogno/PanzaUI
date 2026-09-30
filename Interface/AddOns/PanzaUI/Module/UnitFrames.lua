@@ -21,6 +21,7 @@ local defaults = {
     hideStatusGlow     = true,
     hideHitText        = true,
     hideClassResources = true,
+    hideTotems         = true,
 }
 
 local options = {
@@ -31,6 +32,7 @@ local options = {
     { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol)." .. RELOAD },
     { key = "playerClassColor",   label = "Class colored health bar", tooltip = "Color the health bar with your class color." .. RELOAD },
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
+    { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
 }
 
@@ -178,6 +180,10 @@ local function SetupPlayer(db)
     if db.hideHitText then
         ns.Kill(main.HitIndicator)
     end
+
+    -- Totems (not secure): hidden and events stopped, so the frame below the
+    -- Player frame collapses and no totem updates run.
+    if db.hideTotems then ns.Disable(TotemFrame) end
 
     if db.hideClassResources then
         local bars = { PlayerFrame.classPowerBar }
