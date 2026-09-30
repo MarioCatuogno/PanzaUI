@@ -127,8 +127,11 @@ local function Reflow(viewer, anchor)
     if n > 1 then table.sort(shown, ByLayoutIndex) end
 
     local vertical = anchor == "BOTTOM" or viewer.isHorizontal == false
-    local pad  = (vertical and viewer.childYPadding or viewer.childXPadding) or 0
-    local size = vertical and shown[1]:GetHeight() or shown[1]:GetWidth()
+    -- Offsets are in the item's own scale (Icon Size), Blizzard's padding is
+    -- in the viewer's: convert it, so spacing matches Blizzard's exactly.
+    local first = shown[1]
+    local pad  = ((vertical and viewer.childYPadding or viewer.childXPadding) or 0) / first:GetScale()
+    local size = vertical and first:GetHeight() or first:GetWidth()
     local step = size + pad
     local start = anchor == "BOTTOM" and 0 or -(n - 1) * step / 2
 
@@ -178,8 +181,15 @@ local function SetupDynamicLayout()
                 end
             end
             ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) AddItem(item); Queue() end)
-            -- Blizzard's layout just ran: re-pack now, no one-frame jump.
-            ns.Hook(viewer, "RefreshLayout", function() Reflow(viewer, anchor) end)
+            -- Blizzard's grid layout just put every item back in its fixed
+            -- slot (the viewer is its own layout container): re-pack at once,
+            -- whatever triggered it (RefreshLayout, Edit Mode, settings).
+            local function Repack() Reflow(viewer, anchor) end
+            if viewer.Layout then
+                ns.Hook(viewer, "Layout", Repack)
+            else
+                ns.Hook(viewer, "RefreshLayout", Repack)
+            end
             Queue()
         end
     end
