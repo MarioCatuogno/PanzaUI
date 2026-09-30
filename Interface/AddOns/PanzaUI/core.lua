@@ -86,15 +86,19 @@ function ns.StyleIcon(icon, parent)
     mask:SetAtlas(ICON_MASK)
     icon:AddMaskTexture(mask)
 
+    -- Anchored by two corners, so it always follows the icon (a size-only
+    -- texture with one anchor stretches wildly while the size is unknown).
     local frame = parent:CreateTexture(nil, "OVERLAY", nil, -1) -- below other overlays (dispel border, ...)
     frame:SetAtlas(ICON_FRAME)
     frame:SetPoint("TOPLEFT", icon)
 
     -- Sizes follow the icon: icons created from pools can still be 0x0 here
-    -- (they get their size at layout) and some can be rescaled later (Edit
-    -- Mode), so this runs again whenever the parent changes size.
+    -- (they get their size at layout; the parent's size is used meanwhile)
+    -- and some can be rescaled later (Edit Mode), so this runs again whenever
+    -- the parent is shown or changes size.
     local function Resize()
-        local w, h = icon:GetSize()
+        local w = icon:GetWidth()
+        if w <= 0 then w = parent:GetWidth() end
         mask:ClearAllPoints()
         if w > 0 and info then
             local scale = w / 45
@@ -103,10 +107,11 @@ function ns.StyleIcon(icon, parent)
         else
             mask:SetAllPoints(icon) -- never hide the icon while its size is unknown
         end
-        frame:SetSize(w * 46 / 45, h)
+        frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w > 0 and w / 45 or 0, 0) -- 46x45 like action buttons
     end
     Resize()
     parent:HookScript("OnSizeChanged", Resize)
+    parent:HookScript("OnShow", Resize)
 end
 
 -- Icon zoom: crop `percent`% of the texture on each side (0 = full icon).
