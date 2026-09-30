@@ -26,14 +26,9 @@ local function StyleFrame(frame)
     ns.StyleFont(frame.statusText)
 end
 
--- Frames already created before login: party members, flat raid list and
--- raid groups (nil names are simply skipped).
+-- Frames already created before login.
 local function StyleExisting()
-    for i = 1, 5 do StyleFrame(_G["CompactPartyFrameMember" .. i]) end
-    for i = 1, 40 do StyleFrame(_G["CompactRaidFrame" .. i]) end
-    for g = 1, 8 do
-        for m = 1, 5 do StyleFrame(_G["CompactRaidGroup" .. g .. "Member" .. m]) end
-    end
+    ns.ForEachCompactFrame(StyleFrame)
     local title = CompactPartyFrame and CompactPartyFrame.title
     if title and title.GetFontString then ns.StyleFont(title:GetFontString()) end
 end

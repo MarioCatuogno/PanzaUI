@@ -28,6 +28,25 @@ function ns.StyleFont(obj)
     if font and not ns.IsSecret(size) then obj:SetFont(font, size, ns.FONT_FLAGS) end
 end
 
+-- Every compact party/raid frame already created (party members, flat raid
+-- list, raid groups); nil names are simply skipped.
+function ns.ForEachCompactFrame(func)
+    for i = 1, 5 do
+        local f = _G["CompactPartyFrameMember" .. i]
+        if f then func(f) end
+    end
+    for i = 1, 40 do
+        local f = _G["CompactRaidFrame" .. i]
+        if f then func(f) end
+    end
+    for g = 1, 8 do
+        for m = 1, 5 do
+            local f = _G["CompactRaidGroup" .. g .. "Member" .. m]
+            if f then func(f) end
+        end
+    end
+end
+
 -- Chat message with the addon prefix.
 function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
@@ -142,6 +161,7 @@ end
 -- Module registry
 --   info = { title, defaults = { key = value, ... },
 --            options = { { header = "Section" }, { key, label, tooltip [, slider | dropdown] }, ... } }
+--   info.main = true puts the options on the main page instead of a sub-page.
 --   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value),
 --                     module:Migrate(db) (convert old saved values at load)
 --------------------------------------------------------------------------------
@@ -184,10 +204,13 @@ local function AddReloadButton(layout)
 end
 
 -- Checkbox (boolean default), slider (opt.slider = { min, max, step, suffix })
--- or dropdown (opt.dropdown = { { value, label [, tooltip] }, ... }).
+-- or dropdown (opt.dropdown = { { value, label [, tooltip] }, ... } or a
+-- function returning that list, rebuilt each time the menu opens).
+-- The setting type (boolean / number / string) follows the default value.
 local function AddOption(category, m, opt)
     local key = opt.key
-    local varType = (opt.slider or opt.dropdown) and Settings.VarType.Number or Settings.VarType.Boolean
+    local VAR_TYPES = { boolean = Settings.VarType.Boolean, number = Settings.VarType.Number, string = Settings.VarType.String }
+    local varType = VAR_TYPES[type(m.defaults[key])]
     local setting = Settings.RegisterAddOnSetting(category,
         addonName .. "_" .. m.key .. "_" .. key, key, m.db,
         varType, opt.label, m.defaults[key])
@@ -202,7 +225,8 @@ local function AddOption(category, m, opt)
     if opt.dropdown then
         local function GetOptions()
             local container = Settings.CreateControlTextContainer()
-            for _, o in ipairs(opt.dropdown) do container:Add(o[1], o[2], o[3]) end
+            local list = type(opt.dropdown) == "function" and opt.dropdown() or opt.dropdown
+            for _, o in ipairs(list) do container:Add(o[1], o[2], o[3]) end
             return container:GetData()
         end
         return Settings.CreateDropdown(category, setting, GetOptions, opt.tooltip)
@@ -222,22 +246,29 @@ local function BuildSettings()
     local category, layout = Settings.RegisterVerticalLayoutCategory(addonName)
     local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(addonName .. " " .. version))
-    AddReloadButton(layout)
 
-    -- Menu pages in alphabetical order (load order of the modules is unchanged).
-    local sorted = CopyTable(ns.modules, true)
+    local function AddOptions(cat, lay, m)
+        for _, opt in ipairs(m.options) do
+            if opt.header then
+                lay:AddInitializer(CreateSettingsListSectionHeaderInitializer(opt.header))
+            else
+                AddOption(cat, m, opt)
+            end
+        end
+    end
+
+    -- Global modules (main = true) live on the main page, the others get
+    -- their own page, in alphabetical order (module load order is unchanged).
+    local sorted = {}
+    for _, m in ipairs(ns.modules) do
+        if m.main then AddOptions(category, layout, m) else sorted[#sorted + 1] = m end
+    end
+    AddReloadButton(layout)
     table.sort(sorted, function(a, b) return a.title < b.title end)
 
     for _, m in ipairs(sorted) do
         local sub, subLayout = Settings.RegisterVerticalLayoutSubcategory(category, m.title)
-
-        for _, opt in ipairs(m.options) do
-            if opt.header then
-                subLayout:AddInitializer(CreateSettingsListSectionHeaderInitializer(opt.header))
-            else
-                AddOption(sub, m, opt)
-            end
-        end
+        AddOptions(sub, subLayout, m)
         AddReloadButton(subLayout)
     end
 

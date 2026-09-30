@@ -2,10 +2,12 @@
 ## Title: |cff00FF98Panza|rUI
 ## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
-## Version: 2.0.48
+## Version: 2.0.49
 ## SavedVariables: PanzaUI_DB
+## OptionalDeps: LibSharedMedia-3.0, SharedMedia, SharedMedia_MyMedia
 
 core.lua
+Module\General.lua
 Module\Chat.lua
 Module\ActionBars.lua
 Module\QuestTracker.lua
