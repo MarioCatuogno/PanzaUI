@@ -145,10 +145,24 @@ end
 local IsSecret = ns.IsSecret
 local classColorBars = {} -- health bar -> true
 
+-- Blizzard runs this on every health update (many times per second in
+-- combat), but the color only changes with the unit, its reaction/tap state
+-- or the group: it is computed once and reused until one of those changes
+-- (flat tables, no garbage per update).
+local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- colorValid: bar -> unit token it was computed for
+local colorEvents = CreateFrame("Frame")
+colorEvents:SetScript("OnEvent", function() wipe(colorValid) end)
+
 local function ClassColorHealth(bar)
     if not classColorBars[bar] or bar.disconnected then return end
     local unit = bar.unit
     if not unit or IsSecret(unit) then return end
+
+    bar:GetStatusBarTexture():SetDesaturated(true)
+    if colorValid[bar] == unit then -- same unit token (e.g. not switched to a vehicle)
+        bar:SetStatusBarColor(colorR[bar], colorG[bar], colorB[bar])
+        return
+    end
 
     -- Players and party members (including follower dungeon NPCs) get their
     -- class color; every other unit gets its reaction color (hostile red,
@@ -160,17 +174,19 @@ local function ClassColorHealth(bar)
     local _, class = UnitClass(unit)
     local color = classed and class and not IsSecret(class) and RAID_CLASS_COLORS[class]
 
-    bar:GetStatusBarTexture():SetDesaturated(true)
+    local r, g, b
     if color then
-        bar:SetStatusBarColor(color.r, color.g, color.b)
-        return
-    end
-    local tapped = UnitIsTapDenied(unit)
-    if not IsSecret(tapped) and tapped then
-        bar:SetStatusBarColor(0.5, 0.5, 0.5)
+        r, g, b = color.r, color.g, color.b
     else
-        bar:SetStatusBarColor(UnitSelectionColor(unit))
+        local tapped = UnitIsTapDenied(unit)
+        if not IsSecret(tapped) and tapped then
+            r, g, b = 0.5, 0.5, 0.5
+        else
+            r, g, b = UnitSelectionColor(unit) -- stored and passed on, never tested
+        end
     end
+    colorR[bar], colorG[bar], colorB[bar], colorValid[bar] = r, g, b, unit
+    bar:SetStatusBarColor(r, g, b)
 end
 
 --------------------------------------------------------------------------------
@@ -333,6 +349,11 @@ function UF:OnEnable()
     SetupPet(db)
 
     if next(classColorBars) then
+        -- Anything that can change a cached color: recompute on next update.
+        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE",
+                                 "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE", "PLAYER_ENTERING_WORLD" }) do
+            colorEvents:RegisterEvent(event)
+        end
         ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
         for bar in pairs(classColorBars) do ClassColorHealth(bar) end
     end

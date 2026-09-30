@@ -90,12 +90,27 @@ end
 --------------------------------------------------------------------------------
 -- M+ rating
 --------------------------------------------------------------------------------
-local function AddMythicRating(tooltip, unit)
-    local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
-    local score = summary and summary.currentSeasonScore
-    if not score or IsSecret(score) or score <= 0 then return end
-    local color = C_ChallengeMode.GetDungeonScoreRarityColor(score) or HIGHLIGHT_FONT_COLOR
-    AddLine(tooltip, "M+ Rating", score, color:GetRGB())
+-- The summary is a big table (every dungeon run) and tooltips refresh
+-- several times per second while hovering: the score and its color are read
+-- once per player per minute and reused (flat tables, no garbage per refresh).
+local RATING_CACHE_TIME = 60
+local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
+
+local function AddMythicRating(tooltip, unit, guid)
+    local now = GetTime()
+    if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
+        local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
+        local score = summary and summary.currentSeasonScore
+        if not score or IsSecret(score) then return end -- not cached: read again next time
+        ratingScore[guid], ratingTime[guid] = score, now
+        if score > 0 then
+            local color = C_ChallengeMode.GetDungeonScoreRarityColor(score) or HIGHLIGHT_FONT_COLOR
+            ratingR[guid], ratingG[guid], ratingB[guid] = color:GetRGB()
+        end
+    end
+    local score = ratingScore[guid]
+    if score <= 0 then return end
+    AddLine(tooltip, "M+ Rating", score, ratingR[guid], ratingG[guid], ratingB[guid])
 end
 
 --------------------------------------------------------------------------------
@@ -124,7 +139,7 @@ local function OnUnit(tooltip)
     local guid = UnitGUID(unit)
     if not guid or IsSecret(guid) then return end
 
-    if db.showMythicRating then AddMythicRating(tooltip, unit) end
+    if db.showMythicRating then AddMythicRating(tooltip, unit, guid) end
     if db.showItemLevel    then AddItemLevel(tooltip, unit, guid) end
 end
 
