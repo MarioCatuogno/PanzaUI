@@ -117,6 +117,14 @@ driver:Hide()
 
 local function ByLayoutIndex(a, b) return (a.layoutIndex or 0) < (b.layoutIndex or 0) end
 
+-- Midnight: in combat the geometry of these items can be secret (it can't be
+-- compared or used in math), so sizes come from the last readable value.
+local IsSecret, itemSize = ns.IsSecret, {}
+local function Readable(value, fallback)
+    if value == nil or IsSecret(value) then return fallback end
+    return value
+end
+
 local function Reflow(viewer, anchor)
     local n = 0
     for _, item in ipairs(items[viewer]) do
@@ -130,21 +138,23 @@ local function Reflow(viewer, anchor)
     -- Offsets are in the item's own scale (Icon Size), Blizzard's padding is
     -- in the viewer's: convert it, so spacing matches Blizzard's exactly.
     local first = shown[1]
-    local pad  = ((vertical and viewer.childYPadding or viewer.childXPadding) or 0) / first:GetScale()
-    local size = vertical and first:GetHeight() or first:GetWidth()
+    local size -- no and/or here: a secret value can't be tested for truthiness
+    if vertical then size = first:GetHeight() else size = first:GetWidth() end
+    size = Readable(size, itemSize[viewer] or 40)
+    itemSize[viewer] = size
+    local scale = Readable(first:GetScale(), 1)
+    local pad  = Readable((vertical and viewer.childYPadding or viewer.childXPadding), 0) / scale
     local step = size + pad
     local start = anchor == "BOTTOM" and 0 or -(n - 1) * step / 2
 
     for i = 1, n do
         local offset = start + (i - 1) * step
-        local x, y = 0, offset
-        if not vertical then x, y = offset, 0 end
         local item = shown[i]
-        local point, rel, _, px, py = item:GetPoint(1)
-        -- Skip items already in place (no layout work when nothing moved).
-        if item:GetNumPoints() ~= 1 or point ~= anchor or rel ~= viewer or px ~= x or py ~= y then
-            item:ClearAllPoints()
-            item:SetPoint(anchor, viewer, anchor, x, y)
+        item:ClearAllPoints()
+        if vertical then
+            item:SetPoint(anchor, viewer, anchor, 0, offset)
+        else
+            item:SetPoint(anchor, viewer, anchor, offset, 0)
         end
     end
 end

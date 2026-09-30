@@ -96,9 +96,12 @@ function ns.StyleIcon(icon, parent)
     -- (they get their size at layout; the parent's size is used meanwhile)
     -- and some can be rescaled later (Edit Mode), so this runs again whenever
     -- the parent is shown or changes size.
+    -- Midnight: in combat the geometry of frames showing secret data can be
+    -- secret too; it can't be compared, so the last good size is kept.
     local function Resize()
         local w = icon:GetWidth()
-        if w <= 0 then w = parent:GetWidth() end
+        if ns.IsSecret(w) or w <= 0 then w = parent:GetWidth() end
+        if ns.IsSecret(w) then return end
         mask:ClearAllPoints()
         if w > 0 and info then
             local scale = w / 45
