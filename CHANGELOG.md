@@ -7,7 +7,7 @@ Here's a list of all the features included in this first release!
 ### 🛠️ Core
 
 * Action Bars - Hides macro names and/or keybindings on buttons.
-* Action Bars - Sets the visibility of each bar (including pet and stance bars): default, mouseover, Skyriding only or always hidden. Bars reappear in Edit Mode and while dragging a spell.
+* Action Bars - Sets the visibility of each bar (including pet and stance bars): default, mouseover, Skyriding only, no Skyriding or always hidden. Bars reappear in Edit Mode and while dragging a spell.
 * Action Bars - Styles keybinds, stack counts and macro names with the outlined font.
 * Action Bars - Zooms into icons (adjustable slider) to hide the old built-in borders of classic icons.
 * Bags - Shows the item level on equipment, colored by item quality.

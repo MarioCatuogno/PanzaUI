@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Action Bars
-    Per-bar visibility (mouseover, Skyriding only, hidden), text style,
+    Per-bar visibility (mouseover, Skyriding only / not Skyriding, hidden), text style,
     macro names, keybindings, icon zoom.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -20,11 +20,12 @@ local BARS = {
 }
 
 -- Visibility modes (dropdown values)
-local DEFAULT, MOUSEOVER, SKYRIDING, HIDDEN = 0, 1, 2, 3
+local DEFAULT, MOUSEOVER, SKYRIDING, HIDDEN, NO_SKYRIDING = 0, 1, 2, 3, 4
 local VISIBILITY = {
     { DEFAULT,   "Default",        "Blizzard's normal behavior." },
     { MOUSEOVER, "Mouseover",      "Shown only while the mouse is over the bar." },
     { SKYRIDING, "Skyriding only", "Shown only while Skyriding." },
+    { NO_SKYRIDING, "No Skyriding", "Like Default, but hidden while Skyriding." },
     { HIDDEN,    "Always hidden",  "Never shown (keybindings still work)." },
 }
 
@@ -93,6 +94,7 @@ local function RestingAlpha(bar)
     local mode = Mode(bar)
     if forceShow or mode == DEFAULT then return 1 end
     if mode == SKYRIDING then return skyriding and 1 or 0 end
+    if mode == NO_SKYRIDING then return skyriding and 0 or 1 end
     return 0 -- MOUSEOVER, HIDDEN
 end
 
@@ -139,7 +141,8 @@ local function ApplyMouse()
     for _, bar in ipairs(BARS) do
         if bar.frame then
             local mode = Mode(bar)
-            local enabled = forceShow or mode == DEFAULT or mode == MOUSEOVER or (mode == SKYRIDING and skyriding)
+            local enabled = forceShow or mode == DEFAULT or mode == MOUSEOVER
+                or (mode == SKYRIDING and skyriding) or (mode == NO_SKYRIDING and not skyriding)
             for _, btn in ipairs(bar.buttons) do btn:EnableMouse(enabled) end
         end
     end
