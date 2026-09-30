@@ -235,16 +235,15 @@ local function StyleEntryIcon(entry)
     ns.Hook(entry, "SetupSharedStyleIconVisibility", SyncBorder)
 end
 
+-- Entry texts are secret in combat (their font can't be read back), so they
+-- get an outlined copy of their template font (NumberFontNormal) directly.
+-- Text scale is a separate property and stays Blizzard's.
 local function StyleEntryText(entry)
     local bar = entry.StatusBar
-    if not bar then return end
-    local function Apply()
-        ns.StyleFont(bar.Name)
-        ns.StyleFont(bar.Value)
-    end
-    Apply()
-    ns.Hook(entry, "SetStyle", Apply)
-    ns.Hook(entry, "SetTextScale", Apply)
+    local font = ns.OutlinedFont(NumberFontNormal)
+    if not (bar and font) then return end
+    if bar.Name  then bar.Name:SetFontObject(font)  end
+    if bar.Value then bar.Value:SetFontObject(font) end
 end
 
 local function StyleEntry(entry)
@@ -259,6 +258,8 @@ local function OnEntryInitialized(_, entry) StyleEntry(entry) end
 local function HookScrollBox(box)
     if not box or hookedBoxes[box] then return end
     hookedBoxes[box] = true
+    -- Acquired runs before Blizzard fills the entry (before any secret text).
+    ScrollUtil.AddAcquiredFrameCallback(box, OnEntryInitialized, CB, true)
     ScrollUtil.AddInitializedFrameCallback(box, OnEntryInitialized, CB, true)
 end
 

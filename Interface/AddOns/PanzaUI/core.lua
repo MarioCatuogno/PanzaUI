@@ -21,11 +21,37 @@ function ns.Kill(frame)
     if frame then frame:SetParent(ns.Hider) end
 end
 
--- Keeps the current font and size, only changes the flags.
+-- Outlined copy of a font object, made once per base font and reused.
+local outlinedFonts, fontCount = {}, 0
+function ns.OutlinedFont(base)
+    if not base then return end
+    local copy = outlinedFonts[base]
+    if not copy then
+        local font, size = base:GetFont()
+        if not font then return end
+        fontCount = fontCount + 1
+        copy = CreateFont("PanzaUIFont" .. fontCount)
+        copy:CopyFontObject(base)
+        copy:SetFont(font, size, ns.FONT_FLAGS)
+        outlinedFonts[base] = copy
+    end
+    return copy
+end
+
+-- Keeps the current font and size, only changes the flags. Midnight: a font
+-- string showing secret text (e.g. Damage Meter values) returns secret font
+-- data, so it gets an outlined copy of its font object instead.
 function ns.StyleFont(obj)
     if not (obj and obj.GetFont) then return end
     local font, size = obj:GetFont()
-    if font and not ns.IsSecret(size) then obj:SetFont(font, size, ns.FONT_FLAGS) end
+    if not ns.IsSecret(font) and not ns.IsSecret(size) then
+        if font then obj:SetFont(font, size, ns.FONT_FLAGS) end
+        return
+    end
+    local base = obj.GetFontObject and obj:GetFontObject()
+    if ns.IsSecret(base) then return end -- test secret before truthiness
+    local copy = ns.OutlinedFont(base)
+    if copy then obj:SetFontObject(copy) end
 end
 
 -- Every compact party/raid frame already created (party members, flat raid
