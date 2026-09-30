@@ -64,6 +64,11 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name
 * Various - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden)
 
+### 🧮 Class CDM
+
+* Monk - Brewmaster: Adjusted buffs and tracked bars to match the new version of UI
+* Monk - Windwalker: Adjusted buffs and tracked bars to match the new version of UI
+
 ### 👤 Profiles
 
 * BlizzUI - Adjusted every frame position and size to match the new version of UI
