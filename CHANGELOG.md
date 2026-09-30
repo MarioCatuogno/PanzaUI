@@ -83,6 +83,9 @@ Shows health and power as a simple percentage number.
 
 ### 👤 Profiles
 
+* BlizzUI - Adjusted every frame position and size to match the new version of UI.
+* BigWigs - Adjusted every frame position and size to match the new version of UI.
+
 ### 📏 Various
 
 * Removed old profiles from unused addons
