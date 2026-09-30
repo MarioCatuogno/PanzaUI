@@ -21,6 +21,27 @@ function ns.Kill(frame)
     if frame then frame:SetParent(ns.Hider) end
 end
 
+-- Run a function once on the next frame, however many times it is asked for
+-- in the meantime (coalesces bursts of events/hooks). No timers or closures
+-- per call: one hidden frame and two reused sets (swapped, so functions
+-- deferred while running wait for the next frame).
+local pending, running = {}, {}
+local deferFrame = CreateFrame("Frame")
+deferFrame:Hide()
+deferFrame:SetScript("OnUpdate", function(self)
+    self:Hide()
+    pending, running = running, pending
+    for func in pairs(running) do
+        running[func] = nil
+        func()
+    end
+end)
+
+function ns.Defer(func)
+    pending[func] = true
+    deferFrame:Show()
+end
+
 -- Outlined copy of a font object, made once per base font and reused.
 local outlinedFonts, fontCount = {}, 0
 function ns.OutlinedFont(base)
@@ -121,13 +142,16 @@ function ns.StyleIcon(icon, parent)
     -- Sizes follow the icon: icons created from pools can still be 0x0 here
     -- (they get their size at layout; the parent's size is used meanwhile)
     -- and some can be rescaled later (Edit Mode), so this runs again whenever
-    -- the parent is shown or changes size.
+    -- the parent changes size, and on show until a real size is known.
+    -- Nothing is redone when the width did not change.
     -- Midnight: in combat the geometry of frames showing secret data can be
     -- secret too; it can't be compared, so the last good size is kept.
+    local lastW = -1
     local function Resize()
         local w = icon:GetWidth()
         if ns.IsSecret(w) or w <= 0 then w = parent:GetWidth() end
-        if ns.IsSecret(w) then return end
+        if ns.IsSecret(w) or w == lastW then return end
+        lastW = w
         mask:ClearAllPoints()
         if w > 0 and info then
             local scale = w / 45
@@ -140,7 +164,7 @@ function ns.StyleIcon(icon, parent)
     end
     Resize()
     parent:HookScript("OnSizeChanged", Resize)
-    parent:HookScript("OnShow", Resize)
+    parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
     return frame, mask
 end
 

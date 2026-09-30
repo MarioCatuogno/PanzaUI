@@ -107,7 +107,8 @@ local function UpdateCount()
     PlaceCount()
     countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
 end
-countEvents:SetScript("OnEvent", UpdateCount)
+-- QUEST_LOG_UPDATE comes in bursts: count once, on the next frame.
+countEvents:SetScript("OnEvent", function() ns.Defer(UpdateCount) end)
 
 local function SetQuestCount(on)
     local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header

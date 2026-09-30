@@ -113,26 +113,26 @@ end
 -- slot and only hides the inactive ones; the shown items are re-anchored with
 -- no gaps: icons centered on the viewer, bars stacked from its bottom.
 -- Zero garbage: items are cached once when acquired (GetItemFrames builds a
--- new table on every call), show/hide only flags the viewer, and one hidden
--- driver frame does the work on the next frame, then sleeps again.
+-- new table on every call), show/hide only asks for one reflow on the next
+-- frame (ns.Defer). Item size and scale are measured after Blizzard's layout
+-- (settings change) and reused for every show/hide.
 -- Widget calls only (SetPoint), no Blizzard fields written.
 --------------------------------------------------------------------------------
 local DYNAMIC = { BuffIconCooldownViewer = "CENTER", BuffBarCooldownViewer = "BOTTOM" }
-local anchors, items, known, dirty, shown = {}, {}, {}, {}, {} -- anchors: viewer -> point
-local driver = CreateFrame("Frame")
-driver:Hide()
+local items, known, shown = {}, {}, {}
+local itemSize, itemScale = {}, {} -- viewer -> last readable size / scale
 
 local function ByLayoutIndex(a, b) return (a.layoutIndex or 0) < (b.layoutIndex or 0) end
 
 -- Midnight: in combat the geometry of these items can be secret (it can't be
--- compared or used in math), so sizes come from the last readable value.
-local IsSecret, itemSize = ns.IsSecret, {}
+-- compared or used in math), so the last readable value is kept.
+local IsSecret = ns.IsSecret
 local function Readable(value, fallback)
     if value == nil or IsSecret(value) then return fallback end
     return value
 end
 
-local function Reflow(viewer, anchor)
+local function Reflow(viewer, anchor, measure)
     local n = 0
     for _, item in ipairs(items[viewer]) do
         if item:IsShown() then n = n + 1; shown[n] = item end
@@ -144,14 +144,16 @@ local function Reflow(viewer, anchor)
     local vertical = anchor == "BOTTOM" or viewer.isHorizontal == false
     -- Offsets are in the item's own scale (Icon Size), Blizzard's padding is
     -- in the viewer's: convert it, so spacing matches Blizzard's exactly.
-    local first = shown[1]
-    local size -- no and/or here: a secret value can't be tested for truthiness
-    if vertical then size = first:GetHeight() else size = first:GetWidth() end
-    size = Readable(size, itemSize[viewer] or 40)
-    itemSize[viewer] = size
-    local scale = Readable(first:GetScale(), 1)
+    -- Only readable values are cached: while unknown, it is read again.
+    if measure or not itemSize[viewer] then
+        local first, size = shown[1], nil -- no and/or: a secret can't be tested
+        if vertical then size = first:GetHeight() else size = first:GetWidth() end
+        itemSize[viewer]  = Readable(size, itemSize[viewer])
+        itemScale[viewer] = Readable(first:GetScale(), itemScale[viewer])
+    end
+    local scale = itemScale[viewer] or 1
     local pad  = Readable((vertical and viewer.childYPadding or viewer.childXPadding), 0) / scale
-    local step = size + pad
+    local step = (itemSize[viewer] or 40) + pad
     local start = anchor == "BOTTOM" and 0 or -(n - 1) * step / 2
 
     for i = 1, n do
@@ -166,22 +168,13 @@ local function Reflow(viewer, anchor)
     end
 end
 
-driver:SetScript("OnUpdate", function(self)
-    self:Hide()
-    for viewer, anchor in pairs(anchors) do
-        if dirty[viewer] then
-            dirty[viewer] = nil
-            Reflow(viewer, anchor)
-        end
-    end
-end)
-
 local function SetupDynamicLayout()
     for name, anchor in pairs(DYNAMIC) do
         local viewer = _G[name]
         if viewer then
-            anchors[viewer], items[viewer] = anchor, {}
-            local function Queue() dirty[viewer] = true; driver:Show() end
+            items[viewer] = {}
+            local function Run() Reflow(viewer, anchor) end
+            local function Queue() ns.Defer(Run) end
             local function AddItem(item)
                 if not item or known[item] then return end
                 known[item] = true
@@ -201,7 +194,7 @@ local function SetupDynamicLayout()
             -- Blizzard's grid layout just put every item back in its fixed
             -- slot (the viewer is its own layout container): re-pack at once,
             -- whatever triggered it (RefreshLayout, Edit Mode, settings).
-            local function Repack() Reflow(viewer, anchor) end
+            local function Repack() Reflow(viewer, anchor, true) end
             if viewer.Layout then
                 ns.Hook(viewer, "Layout", Repack)
             else

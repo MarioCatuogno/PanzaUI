@@ -30,7 +30,7 @@ local IsSecret = ns.IsSecret
 local ILVL_CACHE_TIME  = 300 -- seconds before a player is inspected again
 local INSPECT_THROTTLE = 1.5 -- min seconds between inspect requests
 
-local ilvlCache = {}         -- guid -> { ilvl = n, time = t }
+local ilvlCache, ilvlTime = {}, {} -- guid -> item level / GetTime() of the inspect
 
 local lastInspect, pendingGUID = 0, nil
 
@@ -65,13 +65,13 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     if not ilvl or IsSecret(ilvl) or ilvl <= 0 then return end
 
     local hadValue = ilvlCache[guid] ~= nil
-    ilvlCache[guid] = { ilvl = floor(ilvl + 0.5), time = GetTime() }
+    ilvlCache[guid], ilvlTime[guid] = floor(ilvl + 0.5), GetTime()
 
     -- Still hovering the same player and no value shown yet: add it now.
     local _, ttUnit = GameTooltip:GetUnit()
     if not hadValue and TT.db.showItemLevel and GameTooltip:IsShown()
         and ttUnit and not IsSecret(ttUnit) and UnitGUID(ttUnit) == guid then
-        AddLine(GameTooltip, "Item Level", ilvlCache[guid].ilvl)
+        AddLine(GameTooltip, "Item Level", ilvlCache[guid])
         GameTooltip:Show() -- resize
     end
 end)
@@ -83,8 +83,8 @@ local function AddItemLevel(tooltip, unit, guid)
         return
     end
     local cached = ilvlCache[guid]
-    if cached then AddLine(tooltip, "Item Level", cached.ilvl) end
-    if not cached or GetTime() - cached.time > ILVL_CACHE_TIME then RequestInspect(unit, guid) end
+    if cached then AddLine(tooltip, "Item Level", cached) end
+    if not cached or GetTime() - ilvlTime[guid] > ILVL_CACHE_TIME then RequestInspect(unit, guid) end
 end
 
 --------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ end
 local function ColorName(tooltip, unit)
     local _, class = UnitClass(unit)
     local color = class and not IsSecret(class) and RAID_CLASS_COLORS[class]
-    local line = color and _G[tooltip:GetName() .. "TextLeft1"]
+    local line = color and GameTooltipTextLeft1 -- only GameTooltip gets here
     if line then line:SetTextColor(color.r, color.g, color.b) end
 end
 

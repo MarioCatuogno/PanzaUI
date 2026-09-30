@@ -23,7 +23,7 @@ local Bags = ns:RegisterModule("Bags", {
 
 --------------------------------------------------------------------------------
 -- Item level of a bag slot (weapons, armor, profession gear only).
--- One reused ItemLocation: no garbage per update.
+-- One reused ItemLocation and no info tables: no garbage per update.
 --------------------------------------------------------------------------------
 local EQUIPMENT = {
     [Enum.ItemClass.Weapon]     = true,
@@ -34,15 +34,16 @@ local SKIP_SLOTS = { [""] = true, INVTYPE_NON_EQUIP_IGNORE = true, INVTYPE_BODY 
 local location = ItemLocation:CreateEmpty()
 
 local function GetItemLevel(bag, slot)
-    local info = C_Container.GetContainerItemInfo(bag, slot)
-    if not info then return end
-    local _, _, _, equipLoc, _, classID = C_Item.GetItemInfoInstant(info.itemID)
+    local itemID = C_Container.GetContainerItemID(bag, slot)
+    if not itemID then return end
+    local _, _, _, equipLoc, _, classID = C_Item.GetItemInfoInstant(itemID)
     if not EQUIPMENT[classID] or SKIP_SLOTS[equipLoc] then return end
 
     location:SetBagAndSlot(bag, slot)
-    local ilvl = C_Item.DoesItemExist(location) and C_Item.GetCurrentItemLevel(location)
+    if not C_Item.DoesItemExist(location) then return end
+    local ilvl = C_Item.GetCurrentItemLevel(location)
     if not ilvl or ilvl <= 1 then return end
-    return ilvl, ITEM_QUALITY_COLORS[info.quality]
+    return ilvl, ITEM_QUALITY_COLORS[C_Item.GetItemQuality(location)]
 end
 
 --------------------------------------------------------------------------------

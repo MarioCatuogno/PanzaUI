@@ -149,13 +149,21 @@ local ATLAS_COLORS = { -- order matters: first match wins
     { "experience", 0.58, 0.00, 0.55 },
 }
 
+-- Results are cached per atlas name (a handful of names): the string work
+-- runs once per atlas, not on every Blizzard update.
+local atlasColors = {} -- atlas -> color entry or false
 local function AtlasColor(atlas)
     if type(atlas) ~= "string" then return end
-    atlas = atlas:lower()
-    local name = atlas:match("fill%-(.+)") or atlas
+    local cached = atlasColors[atlas]
+    if cached ~= nil then return cached or nil end
+    local name = atlas:lower()
+    name = name:match("fill%-(.+)") or name
+    local found = false
     for _, c in ipairs(ATLAS_COLORS) do
-        if name:find(c[1], 1, true) then return c end
+        if name:find(c[1], 1, true) then found = c break end
     end
+    atlasColors[atlas] = found
+    return found or nil
 end
 
 -- Blizzard's fill atlas has shaped (angled/rounded) ends that fit the bar
@@ -318,7 +326,9 @@ function GEN:OnEnable()
             -- Criteria bars of an expanded achievement come from a pool on the
             -- objectives frame (AchievementsObjectivesMixin:GetProgressBar).
             ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
-                for _, bar in pairs(objectives.progressBars or {}) do
+                local bars = objectives.progressBars
+                if not bars then return end
+                for _, bar in pairs(bars) do
                     if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
                         TrackTexture(bar, achievements, 2)
                     end
@@ -333,7 +343,8 @@ function GEN:OnEnable()
     local questTracker = TexturePath("texQuestTracker")
     if questTracker then
         local function TrackPool(pool)
-            for _, bar in pairs(pool or {}) do
+            if not pool then return end
+            for _, bar in pairs(pool) do
                 if type(bar) == "table" then TrackTexture(bar.Bar or bar, questTracker) end
             end
         end
@@ -391,16 +402,20 @@ function GEN:OnEnable()
     -- Experience / reputation / honor tracking bars
     local tracking = TexturePath("texTracking")
     if tracking then
+        local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
         local function ScanTracking()
-            for _, container in ipairs({ MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }) do
-                for _, bar in pairs(container.bars or {}) do
-                    if type(bar) == "table" then TrackTexture(bar.StatusBar, tracking) end
+            for _, container in ipairs(containers) do
+                local bars = container.bars
+                if bars then
+                    for _, bar in pairs(bars) do
+                        if type(bar) == "table" then TrackTexture(bar.StatusBar, tracking) end
+                    end
                 end
             end
         end
         ScanTracking()
         -- Bars may be created later: rescan when Blizzard updates the containers.
-        for _, container in ipairs({ MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }) do
+        for _, container in ipairs(containers) do
             ns.Hook(container, "UpdateBarsShown", ScanTracking)
         end
     end
