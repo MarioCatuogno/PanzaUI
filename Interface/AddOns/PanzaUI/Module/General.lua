@@ -1,9 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
-    reputation panel bars and experience/reputation tracking bars, from
-    LibSharedMedia-3.0
-    (SharedMedia).
+    Reputation panel bars, experience/reputation tracking bars, Achievement
+    window, Quest Tracker and tooltip bars, from LibSharedMedia-3.0 (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -54,6 +53,9 @@ end
 local OTHER = {
     { key = "texRepPanel", label = "Reputation panel",          tooltip = "Texture for the bars in the Reputation panel of the character window." },
     { key = "texTracking", label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor tracking bars." },
+    { key = "texAchievements", label = "Achievement frame",     tooltip = "Texture for the progress bars of the Achievements window (summary, categories and criteria)." },
+    { key = "texQuestTracker", label = "Quest Tracker",         tooltip = "Texture for the progress and timer bars shown in the Quest Tracker (bonus objectives, world quests, scenarios...)." },
+    { key = "texTooltips",     label = "Tooltips",              tooltip = "Texture for the progress bars shown inside tooltips (e.g. world quests on the map)." },
 }
 options[#options + 1] = { header = "Other Bar Textures" }
 for _, o in ipairs(OTHER) do
@@ -137,36 +139,52 @@ end
 -- Blizzard's fill atlas has shaped (angled/rounded) ends that fit the bar
 -- border; a plain texture would spill over them. The original atlas is used
 -- as a mask over the whole bar, so the new texture keeps the same shape.
+-- Bars with a plain (non-atlas) texture inside a separate border, like the
+-- Reputation panel bars, get a square mask inset by `inset` pixels instead,
+-- applied to the fill and to the black background, so nothing shows outside
+-- the border.
 local trackedBars = {}
-local function TrackTexture(bar, path)
+local function TrackTexture(bar, path, inset)
     if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] then return end
     trackedBars[bar] = true
 
-    local texture = bar:GetStatusBarTexture()
-    local original = texture and texture.GetAtlas and texture:GetAtlas()
-    local mask
-    if original then
+    -- The mask is created from the first Blizzard atlas seen: at tracking time
+    -- or later (reused list entries can get their atlas after we hook them).
+    local mask, masked = nil, {}
+    if inset then
         mask = bar:CreateMaskTexture()
-        mask:SetAtlas(original)
-        mask:SetAllPoints(bar)
+        mask:SetTexture([[Interface\Buttons\WHITE8X8]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetPoint("TOPLEFT", inset, -inset)
+        mask:SetPoint("BOTTOMRIGHT", -inset, inset)
+        if bar.Background then bar.Background:AddMaskTexture(mask) end
     end
-    local masked = {}
-
-    local busy
-    local function Reapply(atlas)
-        if busy then return end
-        busy = true
-        bar:SetStatusBarTexture(path)
+    local function EnsureMask(atlas)
+        if not mask and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
+            mask = bar:CreateMaskTexture()
+            mask:SetAtlas(atlas)
+            mask:SetAllPoints(bar)
+        end
         local fill = bar:GetStatusBarTexture()
         if mask and fill and not masked[fill] then
             fill:AddMaskTexture(mask)
             masked[fill] = true
         end
+    end
+
+    local busy
+    local function Reapply(atlas)
+        if busy then return end
+        busy = true
+        EnsureMask(atlas)
+        bar:SetStatusBarTexture(path)
+        EnsureMask()
         local c = AtlasColor(atlas)
         if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
         busy = false
     end
-    Reapply(original)
+
+    local texture = bar:GetStatusBarTexture()
+    Reapply(texture and texture.GetAtlas and texture:GetAtlas())
     hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
@@ -251,8 +269,74 @@ function GEN:OnEnable()
     if repPanel and scrollBox and ScrollUtil then
         ScrollUtil.AddInitializedFrameCallback(scrollBox, function(_, entry)
             local content = entry.Content or entry
-            TrackTexture(content.ReputationBar or entry.ReputationBar, repPanel)
+            TrackTexture(content.ReputationBar or entry.ReputationBar, repPanel, 2)
         end, self, true)
+    end
+
+    -- Achievement window (load-on-demand): every status bar inside it, scanned
+    -- when the window opens, plus the criteria bars of expanded achievements.
+    local achievements = TexturePath("texAchievements")
+    if achievements then
+        local function Scan(frame)
+            for _, child in ipairs({ frame:GetChildren() }) do
+                if child:IsObjectType("StatusBar") then TrackTexture(child, achievements, 2) end
+                Scan(child)
+            end
+        end
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_AchievementUI", function()
+            AchievementFrame:HookScript("OnShow", Scan)
+            -- Criteria bars of an expanded achievement come from a pool on the
+            -- objectives frame (AchievementsObjectivesMixin:GetProgressBar).
+            ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
+                for _, bar in pairs(objectives.progressBars or {}) do
+                    if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
+                        TrackTexture(bar, achievements, 2)
+                    end
+                end
+            end)
+            if AchievementFrame:IsShown() then Scan(AchievementFrame) end
+        end)
+    end
+
+    -- Quest Tracker: progress/timer bars come from each module's pool
+    -- (ObjectiveTrackerModuleMixin:GetProgressBar / GetTimerBar).
+    local questTracker = TexturePath("texQuestTracker")
+    if questTracker then
+        local function TrackPool(pool)
+            for _, bar in pairs(pool or {}) do
+                if type(bar) == "table" then TrackTexture(bar.Bar or bar, questTracker) end
+            end
+        end
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
+            for _, name in ipairs({
+                "ScenarioObjectiveTracker", "UIWidgetObjectiveTracker", "CampaignQuestObjectiveTracker",
+                "QuestObjectiveTracker", "AdventureObjectiveTracker", "AchievementObjectiveTracker",
+                "MonthlyActivitiesObjectiveTracker", "InitiativeTasksObjectiveTracker",
+                "ProfessionsRecipeTracker", "BonusObjectiveTracker", "WorldQuestObjectiveTracker",
+            }) do
+                local module = _G[name]
+                if module then
+                    TrackPool(module.usedProgressBars)
+                    TrackPool(module.usedTimerBars)
+                    ns.Hook(module, "GetProgressBar", function(m) TrackPool(m.usedProgressBars) end)
+                    ns.Hook(module, "GetTimerBar",    function(m) TrackPool(m.usedTimerBars) end)
+                end
+            end
+        end)
+    end
+
+    -- Tooltips: progress/status bars come from pools on each tooltip
+    -- (GameTooltip_ShowProgressBar / GameTooltip_ShowStatusBar).
+    local tooltips = TexturePath("texTooltips")
+    if tooltips then
+        local function TrackTooltipPool(tooltip, poolKey)
+            local pool = tooltip and tooltip[poolKey]
+            if not (pool and pool.EnumerateActive) then return end
+            -- Plain texture inside a separate rounded border: inset square mask.
+            for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 2) end
+        end
+        ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
+        ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
     end
 
     -- Experience / reputation / honor tracking bars

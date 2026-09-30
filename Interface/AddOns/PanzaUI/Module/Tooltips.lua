@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Health bar, M+ rating and item level of players, item/spell IDs.
+    Health bar, class colored player names, M+ rating and item level of
+    players, item/spell IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -8,6 +9,7 @@ local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
     defaults = {
         hideHealthBar    = true,
+        classColorNames  = true,
         showMythicRating = true,
         showItemLevel    = true,
         showIDs          = true,
@@ -15,6 +17,7 @@ local TT = ns:RegisterModule("Tooltips", {
     options = {
         { header = "Style" },
         { key = "hideHealthBar",    label = "Hide health bar",       tooltip = "Remove the health bar under unit tooltips. Requires Reload UI." },
+        { key = "classColorNames",  label = "Class colored names",   tooltip = "Color player names in unit tooltips with their class color." },
         { header = "Features" },
         { key = "showMythicRating", label = "Show M+ rating",        tooltip = "Show the Mythic+ rating of players." },
         { key = "showItemLevel",    label = "Show item level",       tooltip = "Show the average equipped item level of players (other players are inspected when possible)." },
@@ -100,14 +103,24 @@ end
 -- they apply live). Secret values (restricted combat/instance data) are
 -- skipped, never read.
 --------------------------------------------------------------------------------
+-- Player name (first line) in the class color.
+local function ColorName(tooltip, unit)
+    local _, class = UnitClass(unit)
+    local color = class and not IsSecret(class) and RAID_CLASS_COLORS[class]
+    local line = color and _G[tooltip:GetName() .. "TextLeft1"]
+    if line then line:SetTextColor(color.r, color.g, color.b) end
+end
+
 local function OnUnit(tooltip)
     local db = TT.db
-    if tooltip ~= GameTooltip or not (db.showMythicRating or db.showItemLevel) then return end
+    if tooltip ~= GameTooltip or not (db.showMythicRating or db.showItemLevel or db.classColorNames) then return end
 
     local _, unit = tooltip:GetUnit()
     if not unit or IsSecret(unit) then return end
     local isPlayer = UnitIsPlayer(unit)
     if IsSecret(isPlayer) or not isPlayer then return end
+    if db.classColorNames then ColorName(tooltip, unit) end
+
     local guid = UnitGUID(unit)
     if not guid or IsSecret(guid) then return end
 

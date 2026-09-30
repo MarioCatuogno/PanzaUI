@@ -24,6 +24,9 @@ Here's a list of all the features included in this first release!
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
 * Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
+* Core - Adds a texture option for the Achievement frame bars, including the progress bars of single achievements.
+* Core - Adds a texture option for the progress bars inside tooltips (e.g. world quests on the map).
+* Core - Adds a texture option for the Quest Tracker progress and timer bars.
 * Core - Adds a texture option for the Reputation panel bars and for the experience/reputation tracking bars.
 * Core - Adds shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer).
 * Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
@@ -35,6 +38,7 @@ Here's a list of all the features included in this first release!
 * QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
 * Quest Tracker - Automatically collapses the tracker during dungeon and raid boss fights, and reopens it afterwards.
 * Quest Tracker - Styles the tracker text with the outlined font.
+* Tooltips - Colors player names with their class color.
 * Tooltips - Removes the health bar under unit tooltips.
 * Tooltips - Shows a player's average item level (other players are inspected automatically).
 * Tooltips - Shows a player's Mythic+ rating, in the matching rating color.
