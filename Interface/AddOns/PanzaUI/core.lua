@@ -141,8 +141,9 @@ end
 --------------------------------------------------------------------------------
 -- Module registry
 --   info = { title, defaults = { key = value, ... },
---            options = { { header = "Section" }, { key, label, tooltip [, slider] }, ... } }
---   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value)
+--            options = { { header = "Section" }, { key, label, tooltip [, slider | dropdown] }, ... } }
+--   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value),
+--                     module:Migrate(db) (convert old saved values at load)
 --------------------------------------------------------------------------------
 function ns:RegisterModule(key, info)
     info.key = key
@@ -162,6 +163,7 @@ local function InitDB()
     end
     for _, m in ipairs(ns.modules) do
         local db = PanzaUI_DB[m.key] or {}
+        if m.Migrate then m:Migrate(db) end -- convert old saved values first
         for k in pairs(db) do
             if m.defaults[k] == nil then db[k] = nil end
         end
@@ -181,10 +183,11 @@ local function AddReloadButton(layout)
         "", "Reload UI", ReloadUI, "Reload the interface to apply changes.", false))
 end
 
--- Checkbox (boolean default) or slider (opt.slider = { min, max, step, suffix }).
+-- Checkbox (boolean default), slider (opt.slider = { min, max, step, suffix })
+-- or dropdown (opt.dropdown = { { value, label [, tooltip] }, ... }).
 local function AddOption(category, m, opt)
     local key = opt.key
-    local varType = opt.slider and Settings.VarType.Number or Settings.VarType.Boolean
+    local varType = (opt.slider or opt.dropdown) and Settings.VarType.Number or Settings.VarType.Boolean
     local setting = Settings.RegisterAddOnSetting(category,
         addonName .. "_" .. m.key .. "_" .. key, key, m.db,
         varType, opt.label, m.defaults[key])
@@ -196,6 +199,14 @@ local function AddOption(category, m, opt)
         end)
     end
 
+    if opt.dropdown then
+        local function GetOptions()
+            local container = Settings.CreateControlTextContainer()
+            for _, o in ipairs(opt.dropdown) do container:Add(o[1], o[2], o[3]) end
+            return container:GetData()
+        end
+        return Settings.CreateDropdown(category, setting, GetOptions, opt.tooltip)
+    end
     if not opt.slider then
         return Settings.CreateCheckbox(category, setting, opt.tooltip)
     end
