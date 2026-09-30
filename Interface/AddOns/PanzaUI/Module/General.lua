@@ -23,15 +23,28 @@ local BUILTIN = {
     ["Solid"]    = [[Interface\Buttons\WHITE8X8]],
 }
 
+-- Blizzard atlases usable as bar textures (StatusBar:SetStatusBarTexture
+-- takes atlas names). Not registered in SharedMedia: other addons expect
+-- file paths there.
+local ATLASES = {
+    ["Blizzard Cooldown Manager"] = "UI-HUD-CoolDownManager-Bar",
+}
+
 -- Dropdown list, rebuilt each time it opens (new SharedMedia textures appear).
+-- LSM's list is copied, never modified.
 local function TextureList()
-    local list = { { DEFAULT, "Blizzard UI (unchanged)" } }
-    local names = LSM and LSM:List("statusbar")
-    if not names then
-        names = {}
+    local names = {}
+    if LSM then
+        for _, name in ipairs(LSM:List("statusbar")) do names[#names + 1] = name end
+    else
         for name in pairs(BUILTIN) do names[#names + 1] = name end
-        table.sort(names)
     end
+    for name, atlas in pairs(ATLASES) do
+        if C_Texture.GetAtlasInfo(atlas) then names[#names + 1] = name end
+    end
+    table.sort(names)
+
+    local list = { { DEFAULT, "Blizzard UI (unchanged)" } }
     for _, name in ipairs(names) do list[#list + 1] = { name, name } end
     return list
 end
@@ -92,7 +105,7 @@ local powerBars = {} -- Blizzard unit frame power bar -> texture path
 local function TexturePath(key)
     local name = GEN.db[key]
     if name == DEFAULT then return end
-    return (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
+    return ATLASES[name] or (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
 end
 
 local function SetTexture(bar, path)
