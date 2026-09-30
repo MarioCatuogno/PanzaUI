@@ -24,6 +24,7 @@ Here's a list of all the features included in this first release!
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
 * Combat (Cooldown Manager) - Gives the Cooldown Manager icons the same rounded look as action buttons.
+* Combat (Cooldown Manager) - Keeps tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up.
 * Combat (Personal Resource Display) - Always shows the health and power percentage, like the Player and Target frames.
 * Combat (Personal Resource Display) - Styles the bar text with the outlined font and centers it on the bars.
 * Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.

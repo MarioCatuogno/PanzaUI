@@ -3,7 +3,8 @@
     Personal Resource Display: text style, centered text, percentage-only
     health/power text (always shown, like Player/Target, regardless of the
     Edit Mode "Show Bar Text" setting).
-    Cooldown Manager: action bar style for the icons of every viewer.
+    Cooldown Manager: action bar style for the icons of every viewer, dynamic
+    layout for tracked buffs (centered) and tracked bars (bottom-up).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -16,6 +17,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         centerText    = true,
         percentText   = true,
         cdmIconStyle  = true,
+        cdmDynamic    = true,
     },
     options = {
         { header = "Personal Resource Display" },
@@ -24,6 +26,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { key = "percentText",  label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), like the Player and Target frames. Requires Reload UI." },
         { header = "Cooldown Manager" },
         { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
+        { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },
     },
 })
 
@@ -99,6 +102,76 @@ local function SetupCooldownManager()
 end
 
 --------------------------------------------------------------------------------
+-- Dynamic layout for tracked buffs and bars. Blizzard gives every item a fixed
+-- slot and only hides the inactive ones; after each Blizzard layout (and on
+-- every item show/hide) the shown items are re-anchored with no gaps: icons
+-- centered on the viewer, bars stacked from its bottom. Reflows are batched
+-- to one per frame. Widget calls only (SetPoint), no Blizzard fields written.
+--------------------------------------------------------------------------------
+local DYNAMIC = { BuffIconCooldownViewer = "CENTER", BuffBarCooldownViewer = "BOTTOM" }
+local hookedItems, pending = {}, {}
+local shown = {}
+
+local function Reflow(viewer, anchor)
+    pending[viewer] = nil
+    if not viewer.GetItemFrames then return end
+    wipe(shown)
+    for _, item in ipairs(viewer:GetItemFrames()) do
+        if item:IsShown() then shown[#shown + 1] = item end
+    end
+    local n = #shown
+    if n == 0 then return end
+
+    local vertical = anchor == "BOTTOM" or viewer.isHorizontal == false
+    local pad  = (vertical and viewer.childYPadding or viewer.childXPadding) or 0
+    local size = vertical and shown[1]:GetHeight() or shown[1]:GetWidth()
+    local step = size + pad
+    local start = anchor == "BOTTOM" and 0 or -(n - 1) * step / 2
+
+    for i = 1, n do
+        local offset = start + (i - 1) * step
+        local item = shown[i]
+        item:ClearAllPoints()
+        if vertical then
+            item:SetPoint(anchor, viewer, anchor, 0, offset)
+        else
+            item:SetPoint(anchor, viewer, anchor, offset, 0)
+        end
+    end
+end
+
+local function QueueReflow(viewer, anchor)
+    if pending[viewer] then return end
+    pending[viewer] = true
+    C_Timer.After(0, function() Reflow(viewer, anchor) end)
+end
+
+local function SetupDynamicLayout()
+    for name, anchor in pairs(DYNAMIC) do
+        local viewer = _G[name]
+        if viewer then
+            local function Queue() QueueReflow(viewer, anchor) end
+            local function HookItem(item)
+                if not item or hookedItems[item] then return end
+                hookedItems[item] = true
+                item:HookScript("OnShow", Queue)
+                item:HookScript("OnHide", Queue)
+            end
+            local function HookAll()
+                if viewer.GetItemFrames then
+                    for _, item in ipairs(viewer:GetItemFrames()) do HookItem(item) end
+                end
+                Queue()
+            end
+            HookAll()
+            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) HookItem(item); Queue() end)
+            ns.Hook(viewer, "RefreshLayout", HookAll)
+            ns.Hook(viewer, "Layout", Queue)
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function CB:OnEnable()
@@ -112,5 +185,8 @@ function CB:OnEnable()
     end
     if db.cdmIconStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupCooldownManager)
+    end
+    if db.cdmDynamic then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
 end
