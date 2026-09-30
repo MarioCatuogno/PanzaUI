@@ -18,7 +18,7 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { header = "Style" },
         { key = "fontStyle",     label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to chat, tab and input box text. Requires Reload UI." },
-        { key = "hideTabArt",    label = "Hide tab art",        tooltip = "Remove the background textures of chat tabs. Requires Reload UI." },
+        { key = "hideTabArt",    label = "Hide tab art",        tooltip = "Remove the background textures of chat tabs and show tab names in full. Requires Reload UI." },
         { key = "hideEditBoxArt", label = "Hide input box border", tooltip = "Remove the border of the chat input box. Requires Reload UI." },
         { key = "hideBackground", label = "Hide background",       tooltip = "Remove the chat window background that appears on mouseover. Requires Reload UI." },
         { header = "Features" },
@@ -90,6 +90,16 @@ end
 --------------------------------------------------------------------------------
 local processed = {}
 
+-- Tab names: Blizzard sizes the name to the tab with the font it had at that
+-- moment (before our outline), so the first tab can show "Gene...". Without
+-- tab art the name may simply use its full width: done now and after every
+-- Blizzard tab resize.
+local chatTabs = {}
+local function FitTabText(tab)
+    local text = chatTabs[tab]
+    if text then text:SetWidth(text:GetUnboundedStringWidth() + 2) end
+end
+
 -- Messages + input box (typed text and "Say:" header).
 local function StyleText(frame)
     local editName = frame:GetName() .. "EditBox"
@@ -117,6 +127,7 @@ local function SetupFrame(frame)
             local tex = tab[key]
             if tex then tex:SetAlpha(0) end
         end
+        chatTabs[tab] = tab.Text or _G[name .. "TabText"]
     end
 
     if db.hideButtons then
@@ -163,6 +174,10 @@ function Chat:OnEnable()
     if db.fontStyle or db.hideTabArt or db.hideButtons or db.hideEditBoxArt or db.hideBackground then
         SetupAllFrames()
         ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
+        if db.hideTabArt then
+            for tab in pairs(chatTabs) do FitTabText(tab) end
+            ns.Hook("PanelTemplates_TabResize", FitTabText)
+        end
     end
 
     if db.fontStyle then

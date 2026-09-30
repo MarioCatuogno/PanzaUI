@@ -171,12 +171,20 @@ local function TrackTexture(bar, path, inset)
         end
     end
 
+    -- Keep the fill on Blizzard's original draw layer, so overlays like the
+    -- tick separators of tooltip bars stay on top of it.
+    local original = bar:GetStatusBarTexture()
+    local layer, sublevel
+    if original then layer, sublevel = original:GetDrawLayer() end
+
     local busy
     local function Reapply(atlas)
         if busy then return end
         busy = true
         EnsureMask(atlas)
         bar:SetStatusBarTexture(path)
+        local fill = bar:GetStatusBarTexture()
+        if fill and layer then fill:SetDrawLayer(layer, sublevel) end
         EnsureMask()
         local c = AtlasColor(atlas)
         if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
@@ -333,7 +341,7 @@ function GEN:OnEnable()
             local pool = tooltip and tooltip[poolKey]
             if not (pool and pool.EnumerateActive) then return end
             -- Plain texture inside a separate rounded border: inset square mask.
-            for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 2) end
+            for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 1) end
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
