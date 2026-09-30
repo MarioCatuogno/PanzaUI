@@ -40,29 +40,14 @@ local function GetItemLevel(bag, slot)
     if not EQUIPMENT[classID] or SKIP_SLOTS[equipLoc] then return end
 
     location:SetBagAndSlot(bag, slot)
-    if not C_Item.DoesItemExist(location) then return end
-    local ilvl = C_Item.GetCurrentItemLevel(location)
-    if not ilvl or ilvl <= 1 then return end
-    return ilvl, ITEM_QUALITY_COLORS[C_Item.GetItemQuality(location)]
+    return ns.LocationItemLevel(location)
 end
 
 --------------------------------------------------------------------------------
 -- Item buttons. Our own data lives in local tables (no fields written on
--- Blizzard buttons: taint-safe).
+-- Blizzard buttons: taint-safe). Item level text: shared helper (core.lua).
 --------------------------------------------------------------------------------
-local ilvlTexts = {} -- button -> FontString
-local styled    = {} -- button -> true
-
-local function GetItemLevelText(button)
-    local text = ilvlTexts[button]
-    if not text then
-        text = button:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
-        text:SetPoint("TOP", 0, -2)
-        if Bags.db.fontStyle then ns.StyleFont(text) end
-        ilvlTexts[button] = text
-    end
-    return text
-end
+local styled = {} -- button -> true
 
 local function UpdateButton(button)
     local db = Bags.db
@@ -75,14 +60,7 @@ local function UpdateButton(button)
 
     local ilvl, color
     if db.showItemLevel then ilvl, color = GetItemLevel(button:GetBagID(), button:GetID()) end
-    if ilvl then
-        local text = GetItemLevelText(button)
-        text:SetText(ilvl)
-        if color then text:SetTextColor(color.r, color.g, color.b) else text:SetTextColor(1, 1, 1) end
-        text:Show()
-    elseif ilvlTexts[button] then
-        ilvlTexts[button]:Hide()
-    end
+    ns.ItemLevelText(button, ilvl, color, db.fontStyle)
 end
 
 -- Runs after Blizzard's UpdateItems (bags opened, items changed).

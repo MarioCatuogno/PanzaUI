@@ -247,6 +247,39 @@ function ns.OnDamageMeterEntry(func)
 end
 
 --------------------------------------------------------------------------------
+-- Item level on item buttons (Bags, Character panel). The level and quality
+-- come from an ItemLocation (reused by the caller: no garbage). The text is
+-- our own FontString, kept in a local table (no fields written on Blizzard
+-- buttons: taint-safe).
+--------------------------------------------------------------------------------
+function ns.LocationItemLevel(location)
+    if not C_Item.DoesItemExist(location) then return end
+    local ilvl = C_Item.GetCurrentItemLevel(location)
+    if not ilvl or ilvl <= 1 then return end
+    return ilvl, ITEM_QUALITY_COLORS[C_Item.GetItemQuality(location)]
+end
+
+local ilvlTexts = {} -- button -> FontString
+-- Shows ilvl at the top of the button, in the quality color; hides it when
+-- ilvl is nil. outline: style the text with the shared font flags.
+function ns.ItemLevelText(button, ilvl, color, outline)
+    local text = ilvlTexts[button]
+    if not ilvl then
+        if text then text:Hide() end
+        return
+    end
+    if not text then
+        text = button:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
+        text:SetPoint("TOP", 0, -2)
+        if outline then ns.StyleFont(text) end
+        ilvlTexts[button] = text
+    end
+    text:SetText(ilvl)
+    if color then text:SetTextColor(color.r, color.g, color.b) else text:SetTextColor(1, 1, 1) end
+    text:Show()
+end
+
+--------------------------------------------------------------------------------
 -- Status bar text helpers (TextStatusBar: TextString / LeftText / RightText)
 --------------------------------------------------------------------------------
 function ns.StyleBarText(bar)

@@ -44,6 +44,7 @@ Here's a list of all the features included in this first release!
 * Party & Raid Frames - Removes the server from player names.
 * Party & Raid Frames - Styles the names and status text with the outlined font.
 * QoL - Automatically repairs your gear with your own gold at any merchant that can repair.
+* QoL - Shows the item level on equipped items in the Character panel, colored by item quality.
 * Quest Tracker - Automatically collapses the tracker during dungeon and raid boss fights, and reopens it afterwards.
 * Quest Tracker - Shows the number of quests in the log out of the maximum (e.g. 20/35) in the tracker header.
 * Quest Tracker - Styles the tracker text with the outlined font.

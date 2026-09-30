@@ -3,7 +3,7 @@
 ## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
 ## IconTexture: 572034
-## Version: 2.0.93
+## Version: 2.0.94
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, SharedMedia_MyMedia
 
