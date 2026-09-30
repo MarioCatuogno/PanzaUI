@@ -9,7 +9,7 @@ local _, ns = ...
 
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 local DEFAULT = ""        -- keep Blizzard's own textures
-local PANZA   = "PanzaUI" -- PanzaUI's own bar texture (default for every bar)
+local PANZA   = "PanzaUI" -- PanzaUI's own bar texture (selectable, not a default)
 
 -- Bundled with the addon; also registered in SharedMedia so other addons can
 -- use it (if a same-named texture is already registered, that one is kept).
@@ -63,7 +63,7 @@ local GROUPS = {
 local defaults = {}
 local options  = { { header = "Health/Power Bar Textures" } }
 for _, g in ipairs(GROUPS) do
-    defaults[g.key] = PANZA
+    defaults[g.key] = DEFAULT
     options[#options + 1] = {
         key = g.key, label = g.label, dropdown = TextureList,
         tooltip = "Texture for the " .. g.label .. " health and power bars. Textures come from SharedMedia. Requires Reload UI.",
@@ -81,7 +81,7 @@ local OTHER = {
 }
 options[#options + 1] = { header = "Other Bar Textures" }
 for _, o in ipairs(OTHER) do
-    defaults[o.key] = PANZA
+    defaults[o.key] = DEFAULT
     options[#options + 1] = { key = o.key, label = o.label, dropdown = TextureList,
         tooltip = o.tooltip .. " Textures come from SharedMedia. Requires Reload UI." }
 end
