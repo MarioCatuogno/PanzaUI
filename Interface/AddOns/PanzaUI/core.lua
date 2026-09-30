@@ -115,6 +115,7 @@ function ns.StyleIcon(icon, parent)
     Resize()
     parent:HookScript("OnSizeChanged", Resize)
     parent:HookScript("OnShow", Resize)
+    return frame, mask
 end
 
 -- Icon zoom: crop `percent`% of the texture on each side (0 = full icon).

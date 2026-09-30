@@ -5,6 +5,8 @@
     Edit Mode "Show Bar Text" setting).
     Cooldown Manager: action bar style for the icons of every viewer, dynamic
     layout for tracked buffs (centered) and tracked bars (bottom-up).
+    Damage Meter: action bar style for the class/spec and spell icons,
+    outlined text on the bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -18,6 +20,8 @@ local CB = ns:RegisterModule("PersonalResource", {
         percentText   = true,
         cdmIconStyle  = true,
         cdmDynamic    = true,
+        dmIconStyle   = true,
+        dmFontStyle   = true,
     },
     options = {
         { header = "Personal Resource Display" },
@@ -27,6 +31,9 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Cooldown Manager" },
         { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
         { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },
+        { header = "Damage Meter" },
+        { key = "dmIconStyle",  label = "Action bar style",     tooltip = "Give the Damage Meter icons (class/spec and spells) the same rounded frame as action buttons. Requires Reload UI." },
+        { key = "dmFontStyle",  label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the names and values on the Damage Meter bars. Requires Reload UI." },
     },
 })
 
@@ -206,6 +213,77 @@ local function SetupDynamicLayout()
 end
 
 --------------------------------------------------------------------------------
+-- Damage Meter icons. Entries come from the scroll boxes of each session
+-- window and of its source (spell breakdown) window: every scroll box gets
+-- one initialized-frame callback (existing entries included), windows made
+-- later are caught by hooking SetupSessionWindow. Each entry is styled once:
+-- icon frame (follows Blizzard's "show bar icons" setting) and/or outlined
+-- text (re-applied when Blizzard changes the bar style or text scale).
+-- Widget calls only, no Blizzard fields written.
+--------------------------------------------------------------------------------
+local styledEntries, hookedBoxes = {}, {}
+
+local function StyleEntryIcon(entry)
+    local holder = entry.Icon
+    local icon = holder and holder.Icon
+    if not (icon and icon.AddMaskTexture) then return end
+
+    local border = ns.StyleIcon(icon, holder)
+    local function SyncBorder() border:SetShown(icon:IsShown()) end
+    SyncBorder()
+    ns.Hook(entry, "SetShowBarIcons", SyncBorder)
+    ns.Hook(entry, "SetupSharedStyleIconVisibility", SyncBorder)
+end
+
+local function StyleEntryText(entry)
+    local bar = entry.StatusBar
+    if not bar then return end
+    local function Apply()
+        ns.StyleFont(bar.Name)
+        ns.StyleFont(bar.Value)
+    end
+    Apply()
+    ns.Hook(entry, "SetStyle", Apply)
+    ns.Hook(entry, "SetTextScale", Apply)
+end
+
+local function StyleEntry(entry)
+    if not entry or styledEntries[entry] then return end
+    styledEntries[entry] = true
+    if CB.db.dmIconStyle then StyleEntryIcon(entry) end
+    if CB.db.dmFontStyle then StyleEntryText(entry) end
+end
+
+local function OnEntryInitialized(_, entry) StyleEntry(entry) end
+
+local function HookScrollBox(box)
+    if not box or hookedBoxes[box] then return end
+    hookedBoxes[box] = true
+    ScrollUtil.AddInitializedFrameCallback(box, OnEntryInitialized, CB, true)
+end
+
+local function HookSource(window)
+    local source = window.GetSourceWindow and window:GetSourceWindow()
+    if source and source.GetScrollBox then HookScrollBox(source:GetScrollBox()) end
+end
+
+local function HookWindow(window)
+    if not window or hookedBoxes[window] then return end
+    hookedBoxes[window] = true
+    if window.GetScrollBox then HookScrollBox(window:GetScrollBox()) end
+    HookSource(window)
+    ns.Hook(window, "ShowSourceWindow", HookSource) -- in case it is made on demand
+end
+
+local function SetupDamageMeter()
+    if not ScrollUtil then return end
+    for i = 1, 10 do HookWindow(_G["DamageMeterSessionWindow" .. i]) end
+    ns.Hook(DamageMeter, "SetupSessionWindow", function(_, index)
+        HookWindow(_G["DamageMeterSessionWindow" .. tostring(index)])
+    end)
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function CB:OnEnable()
@@ -222,5 +300,8 @@ function CB:OnEnable()
     end
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
+    end
+    if db.dmIconStyle or db.dmFontStyle then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
     end
 end
