@@ -278,3 +278,13 @@ SLASH_PANZAUI1, SLASH_PANZAUI2 = "/panza", "/pui"
 SlashCmdList.PANZAUI = function()
     Settings.OpenToCategory(ns.category:GetID())
 end
+
+-- Shortcuts: /rl = Reload UI, /rc = ready check, /pl = 10 second pull timer.
+SLASH_PANZAUI_RL1 = "/rl"
+SlashCmdList.PANZAUI_RL = ReloadUI
+
+SLASH_PANZAUI_RC1 = "/rc"
+SlashCmdList.PANZAUI_RC = function() DoReadyCheck() end
+
+SLASH_PANZAUI_PL1 = "/pl"
+SlashCmdList.PANZAUI_PL = function() C_PartyInfo.DoCountdown(10) end
