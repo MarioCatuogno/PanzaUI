@@ -42,7 +42,7 @@ local TARGET_OPTIONS = {
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol)." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
-    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar with the class color (players only)." },
+    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
 }
 
@@ -150,16 +150,26 @@ local function ClassColorHealth(bar)
     local unit = bar.unit
     if not unit or IsSecret(unit) then return end
 
+    -- Players and party members (including follower dungeon NPCs) get their
+    -- class color; every other unit gets its reaction color (hostile red,
+    -- neutral yellow, friendly green), grey when tapped by someone else.
+    -- UnitSelectionColor's values go straight to the bar, never tested.
     local isPlayer = UnitIsPlayer(unit)
+    local inParty  = UnitInParty(unit)
+    local classed  = (not IsSecret(isPlayer) and isPlayer) or (not IsSecret(inParty) and inParty)
     local _, class = UnitClass(unit)
-    local color = not IsSecret(isPlayer) and isPlayer and class and not IsSecret(class) and RAID_CLASS_COLORS[class]
+    local color = classed and class and not IsSecret(class) and RAID_CLASS_COLORS[class]
 
-    local texture = bar:GetStatusBarTexture()
+    bar:GetStatusBarTexture():SetDesaturated(true)
     if color then
-        texture:SetDesaturated(true)
         bar:SetStatusBarColor(color.r, color.g, color.b)
+        return
+    end
+    local tapped = UnitIsTapDenied(unit)
+    if not IsSecret(tapped) and tapped then
+        bar:SetStatusBarColor(0.5, 0.5, 0.5)
     else
-        texture:SetDesaturated(false)
+        bar:SetStatusBarColor(UnitSelectionColor(unit))
     end
 end
 

@@ -24,6 +24,7 @@ Here's a list of all the features included in this first release!
 * Chat - Removes the border around the chat input box.
 * Chat - Styles the chat text, tab names and input box with a crisp outlined font.
 * Core - Adds a health and power bar texture for each frame (Player, Target, Focus, Pet, Boss, Party/Raid frames and Personal Resource Display), chosen from SharedMedia in the main options page.
+* Core - Adds a texture option for the Reputation panel bars and for the experience/reputation tracking bars.
 * Core - Adds shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer).
 * Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
 * Minimap - Styles the zone name and clock with the outlined font.
@@ -38,7 +39,7 @@ Here's a list of all the features included in this first release!
 * Tooltips - Shows a player's average item level (other players are inspected automatically).
 * Tooltips - Shows a player's Mythic+ rating, in the matching rating color.
 * Tooltips - Shows the ID of items and spells.
-* Unit Frame (Focus) - Colors the health bar with the class color (players only).
+* Unit Frame (Focus) - Colors the health bar with the class color (players and party members, including follower dungeon NPCs) or the reaction color (hostile red, neutral yellow, friendly green) for other units.
 * Unit Frame (Focus) - Gives the cast bar spell icon the same rounded look as action buttons.
 * Unit Frame (Focus) - Hides buffs and debuffs on the frame.
 * Unit Frame (Focus) - Hides the cast bar entirely.
@@ -56,7 +57,7 @@ Here's a list of all the features included in this first release!
 * Unit Frame (Player) - Restores the normal Player frame art when a class resource with an extra bar (e.g. Stagger) is hidden.
 * Unit Frame (Player) - Shows health and power as a simple percentage number (no % sign).
 * Unit Frame (Player) - Styles the name and bar text with the outlined font.
-* Unit Frame (Target) - Colors the health bar with the class color (players only).
+* Unit Frame (Target) - Colors the health bar with the class color (players and party members, including follower dungeon NPCs) or the reaction color (hostile red, neutral yellow, friendly green) for other units.
 * Unit Frame (Target) - Gives the cast bar spell icon the same rounded look as action buttons.
 * Unit Frame (Target) - Hides buffs and debuffs on the frame.
 * Unit Frame (Target) - Removes the colored background behind the name, matching the player frame.

@@ -1,7 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
-    from LibSharedMedia-3.0
+    reputation panel bars and experience/reputation tracking bars, from
+    LibSharedMedia-3.0
     (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -49,6 +50,18 @@ for _, g in ipairs(GROUPS) do
     }
 end
 
+-- Other bars (not health/power)
+local OTHER = {
+    { key = "texRepPanel", label = "Reputation panel",          tooltip = "Texture for the bars in the Reputation panel of the character window." },
+    { key = "texTracking", label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor tracking bars." },
+}
+options[#options + 1] = { header = "Other Bar Textures" }
+for _, o in ipairs(OTHER) do
+    defaults[o.key] = DEFAULT
+    options[#options + 1] = { key = o.key, label = o.label, dropdown = TextureList,
+        tooltip = o.tooltip .. " Textures come from SharedMedia. Requires Reload UI." }
+end
+
 local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
 
 -- 2.0.49 had a single texture for every frame: keep it for each group.
@@ -87,6 +100,75 @@ local function KeepTexture(bar, path)
     if not texture or keptTextures[texture] then return end
     keptTextures[texture] = true
     hooksecurefunc(texture, "SetAtlas", function() bar:SetStatusBarTexture(path) end)
+end
+
+--------------------------------------------------------------------------------
+-- Bars colored by their atlas (experience, reputation, honor...): when
+-- Blizzard sets an atlas, our texture replaces it and the bar is tinted with
+-- the color that atlas stood for (read from its name). Bars colored with
+-- SetStatusBarColor keep Blizzard's color. A busy flag stops our own
+-- SetStatusBarTexture from re-entering the hook.
+--------------------------------------------------------------------------------
+local ATLAS_COLORS = { -- order matters: first match wins
+    { "rested",   0.00, 0.39, 0.88 },
+    { "renown",   0.00, 0.55, 0.90 },
+    { "red",      0.80, 0.13, 0.13 },
+    { "orange",   0.93, 0.45, 0.10 },
+    { "yellow",   0.95, 0.80, 0.10 },
+    { "green",    0.00, 0.70, 0.20 },
+    { "blue",     0.20, 0.50, 0.95 },
+    { "purple",   0.60, 0.30, 0.90 },
+    { "honor",    1.00, 0.24, 0.00 },
+    { "artifact", 0.90, 0.80, 0.50 },
+    { "azerite",  0.90, 0.80, 0.50 },
+    { "xp",       0.58, 0.00, 0.55 },
+    { "experience", 0.58, 0.00, 0.55 },
+}
+
+local function AtlasColor(atlas)
+    if type(atlas) ~= "string" then return end
+    atlas = atlas:lower()
+    local name = atlas:match("fill%-(.+)") or atlas
+    for _, c in ipairs(ATLAS_COLORS) do
+        if name:find(c[1], 1, true) then return c end
+    end
+end
+
+-- Blizzard's fill atlas has shaped (angled/rounded) ends that fit the bar
+-- border; a plain texture would spill over them. The original atlas is used
+-- as a mask over the whole bar, so the new texture keeps the same shape.
+local trackedBars = {}
+local function TrackTexture(bar, path)
+    if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] then return end
+    trackedBars[bar] = true
+
+    local texture = bar:GetStatusBarTexture()
+    local original = texture and texture.GetAtlas and texture:GetAtlas()
+    local mask
+    if original then
+        mask = bar:CreateMaskTexture()
+        mask:SetAtlas(original)
+        mask:SetAllPoints(bar)
+    end
+    local masked = {}
+
+    local busy
+    local function Reapply(atlas)
+        if busy then return end
+        busy = true
+        bar:SetStatusBarTexture(path)
+        local fill = bar:GetStatusBarTexture()
+        if mask and fill and not masked[fill] then
+            fill:AddMaskTexture(mask)
+            masked[fill] = true
+        end
+        local c = AtlasColor(atlas)
+        if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
+        busy = false
+    end
+    Reapply(original)
+    hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
+    if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
 
 -- Blizzard unit frames color power bars with per-power atlases (white bar
@@ -160,6 +242,33 @@ function GEN:OnEnable()
             SkinPRD()
         else
             EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", SkinPRD)
+        end
+    end
+
+    -- Reputation panel (scrolling list: entries are created/reused on scroll)
+    local repPanel = TexturePath("texRepPanel")
+    local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
+    if repPanel and scrollBox and ScrollUtil then
+        ScrollUtil.AddInitializedFrameCallback(scrollBox, function(_, entry)
+            local content = entry.Content or entry
+            TrackTexture(content.ReputationBar or entry.ReputationBar, repPanel)
+        end, self, true)
+    end
+
+    -- Experience / reputation / honor tracking bars
+    local tracking = TexturePath("texTracking")
+    if tracking then
+        local function ScanTracking()
+            for _, container in ipairs({ MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }) do
+                for _, bar in pairs(container.bars or {}) do
+                    if type(bar) == "table" then TrackTexture(bar.StatusBar, tracking) end
+                end
+            end
+        end
+        ScanTracking()
+        -- Bars may be created later: rescan when Blizzard updates the containers.
+        for _, container in ipairs({ MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }) do
+            ns.Hook(container, "UpdateBarsShown", ScanTracking)
         end
     end
 
