@@ -32,6 +32,7 @@ Here's a list of all the features included in this first release!
 * Core - Adds a texture option for the Quest Tracker progress and timer bars.
 * Core - Adds a texture option for the Reputation panel bars and for the experience/reputation tracking bars.
 * Core - Adds shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer).
+* Core - Adds the PanzaUI bar texture (Media/Statusbar), used by default for every bar and registered in SharedMedia.
 * Minimap - Removes the backgrounds behind the zone name, tracking button and calendar button.
 * Minimap - Styles the zone name and clock with the outlined font.
 * Party & Raid Frames - Removes the server from player names.
