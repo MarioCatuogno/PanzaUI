@@ -103,24 +103,28 @@ end
 
 --------------------------------------------------------------------------------
 -- Dynamic layout for tracked buffs and bars. Blizzard gives every item a fixed
--- slot and only hides the inactive ones; after each Blizzard layout (and on
--- every item show/hide) the shown items are re-anchored with no gaps: icons
--- centered on the viewer, bars stacked from its bottom. Reflows are batched
--- to one per frame. Widget calls only (SetPoint), no Blizzard fields written.
+-- slot and only hides the inactive ones; the shown items are re-anchored with
+-- no gaps: icons centered on the viewer, bars stacked from its bottom.
+-- Zero garbage: items are cached once when acquired (GetItemFrames builds a
+-- new table on every call), show/hide only flags the viewer, and one hidden
+-- driver frame does the work on the next frame, then sleeps again.
+-- Widget calls only (SetPoint), no Blizzard fields written.
 --------------------------------------------------------------------------------
 local DYNAMIC = { BuffIconCooldownViewer = "CENTER", BuffBarCooldownViewer = "BOTTOM" }
-local hookedItems, pending = {}, {}
-local shown = {}
+local anchors, items, known, dirty, shown = {}, {}, {}, {}, {} -- anchors: viewer -> point
+local driver = CreateFrame("Frame")
+driver:Hide()
+
+local function ByLayoutIndex(a, b) return (a.layoutIndex or 0) < (b.layoutIndex or 0) end
 
 local function Reflow(viewer, anchor)
-    pending[viewer] = nil
-    if not viewer.GetItemFrames then return end
-    wipe(shown)
-    for _, item in ipairs(viewer:GetItemFrames()) do
-        if item:IsShown() then shown[#shown + 1] = item end
+    local n = 0
+    for _, item in ipairs(items[viewer]) do
+        if item:IsShown() then n = n + 1; shown[n] = item end
     end
-    local n = #shown
+    for i = #shown, n + 1, -1 do shown[i] = nil end
     if n == 0 then return end
+    if n > 1 then table.sort(shown, ByLayoutIndex) end
 
     local vertical = anchor == "BOTTOM" or viewer.isHorizontal == false
     local pad  = (vertical and viewer.childYPadding or viewer.childXPadding) or 0
@@ -130,43 +134,53 @@ local function Reflow(viewer, anchor)
 
     for i = 1, n do
         local offset = start + (i - 1) * step
+        local x, y = 0, offset
+        if not vertical then x, y = offset, 0 end
         local item = shown[i]
-        item:ClearAllPoints()
-        if vertical then
-            item:SetPoint(anchor, viewer, anchor, 0, offset)
-        else
-            item:SetPoint(anchor, viewer, anchor, offset, 0)
+        local point, rel, _, px, py = item:GetPoint(1)
+        -- Skip items already in place (no layout work when nothing moved).
+        if item:GetNumPoints() ~= 1 or point ~= anchor or rel ~= viewer or px ~= x or py ~= y then
+            item:ClearAllPoints()
+            item:SetPoint(anchor, viewer, anchor, x, y)
         end
     end
 end
 
-local function QueueReflow(viewer, anchor)
-    if pending[viewer] then return end
-    pending[viewer] = true
-    C_Timer.After(0, function() Reflow(viewer, anchor) end)
-end
+driver:SetScript("OnUpdate", function(self)
+    self:Hide()
+    for viewer, anchor in pairs(anchors) do
+        if dirty[viewer] then
+            dirty[viewer] = nil
+            Reflow(viewer, anchor)
+        end
+    end
+end)
 
 local function SetupDynamicLayout()
     for name, anchor in pairs(DYNAMIC) do
         local viewer = _G[name]
         if viewer then
-            local function Queue() QueueReflow(viewer, anchor) end
-            local function HookItem(item)
-                if not item or hookedItems[item] then return end
-                hookedItems[item] = true
+            anchors[viewer], items[viewer] = anchor, {}
+            local function Queue() dirty[viewer] = true; driver:Show() end
+            local function AddItem(item)
+                if not item or known[item] then return end
+                known[item] = true
+                local list = items[viewer]
+                list[#list + 1] = item
                 item:HookScript("OnShow", Queue)
                 item:HookScript("OnHide", Queue)
             end
-            local function HookAll()
-                if viewer.GetItemFrames then
-                    for _, item in ipairs(viewer:GetItemFrames()) do HookItem(item) end
+            -- Items already there, hidden ones included (one-time scan).
+            local container = viewer.GetItemContainerFrame and viewer:GetItemContainerFrame()
+            if container then
+                for _, child in ipairs({ container:GetChildren() }) do
+                    if child.SetHideWhenInactive then AddItem(child) end
                 end
-                Queue()
             end
-            HookAll()
-            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) HookItem(item); Queue() end)
-            ns.Hook(viewer, "RefreshLayout", HookAll)
-            ns.Hook(viewer, "Layout", Queue)
+            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) AddItem(item); Queue() end)
+            -- Blizzard's layout just ran: re-pack now, no one-frame jump.
+            ns.Hook(viewer, "RefreshLayout", function() Reflow(viewer, anchor) end)
+            Queue()
         end
     end
 end
