@@ -306,10 +306,10 @@ function GEN:OnEnable()
     local repPanel = TexturePath("texRepPanel")
     local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
     if repPanel and scrollBox and ScrollUtil then
-        ScrollUtil.AddInitializedFrameCallback(scrollBox, function(_, entry)
+        ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
             local content = entry.Content or entry
             TrackTexture(content.ReputationBar or entry.ReputationBar, repPanel, 2)
-        end, self, true)
+        end), self, true)
     end
 
     -- Achievement window (load-on-demand): every status bar inside it, scanned

@@ -177,6 +177,17 @@ function ns.ZoomIcon(icon, percent)
 end
 
 --------------------------------------------------------------------------------
+-- ScrollBox frame callback: ScrollUtil calls it as (owner, frame, ...) for new
+-- frames but as (frame, elementData) for the frames already there
+-- (iterateExisting). Returns a callback that always gets the frame.
+--------------------------------------------------------------------------------
+function ns.ScrollFrameCallback(func)
+    return function(a, b)
+        if type(a) == "table" and a.GetObjectType then func(a) else func(b) end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Damage Meter entries (shared by every module that styles them). Entries
 -- come from the scroll boxes of each session window and of its source
 -- (spell breakdown) window, plus each window's pinned local player row: each
@@ -187,17 +198,18 @@ end
 --------------------------------------------------------------------------------
 local dmFuncs, dmEntries, dmHooked = {}, {}, {}
 
-local function OnDamageMeterEntry(_, entry)
+local function OnDamageMeterEntry(entry)
     if not entry or dmEntries[entry] then return end
     dmEntries[entry] = true
     for _, func in ipairs(dmFuncs) do func(entry) end
 end
 
+local OnDamageMeterFrame = ns.ScrollFrameCallback(OnDamageMeterEntry)
 local function HookDamageMeterBox(box)
     if not box or dmHooked[box] then return end
     dmHooked[box] = true
-    ScrollUtil.AddAcquiredFrameCallback(box, OnDamageMeterEntry, ns, true)
-    ScrollUtil.AddInitializedFrameCallback(box, OnDamageMeterEntry, ns, true)
+    ScrollUtil.AddAcquiredFrameCallback(box, OnDamageMeterFrame, ns, true)
+    ScrollUtil.AddInitializedFrameCallback(box, OnDamageMeterFrame, ns, true)
 end
 
 local function HookDamageMeterSource(window)
@@ -211,7 +223,7 @@ local function HookDamageMeterWindow(window)
     if window.GetScrollBox then HookDamageMeterBox(window:GetScrollBox()) end
     -- The local player's row pinned under the list is its own frame, not
     -- one from the scroll box.
-    if window.GetLocalPlayerEntry then OnDamageMeterEntry(nil, window:GetLocalPlayerEntry()) end
+    if window.GetLocalPlayerEntry then OnDamageMeterEntry(window:GetLocalPlayerEntry()) end
     HookDamageMeterSource(window)
     ns.Hook(window, "ShowSourceWindow", HookDamageMeterSource) -- in case it is made on demand
 end
