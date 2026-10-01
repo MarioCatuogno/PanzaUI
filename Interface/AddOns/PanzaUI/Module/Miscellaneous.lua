@@ -39,6 +39,7 @@ local function StyleAuraFrame(frame)
     if not ns.StyleIcon(frame.Icon, frame, true) then return end
     styledAuras[frame] = true
     if frame.Border then frame.Border:SetAlpha(0) end -- Platynator's square 1px border
+    ns.RoundSwipe(frame.Cooldown)                     -- no dark square corners
 end
 
 -- The count is updated before styling, so a failing frame is never retried.

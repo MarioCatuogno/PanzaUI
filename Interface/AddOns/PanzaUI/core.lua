@@ -183,6 +183,17 @@ function ns.StyleIcon(icon, parent, followIcon)
     return frame, mask
 end
 
+-- Rounded cooldown swipe for icons styled with ns.StyleIcon: the default
+-- swipe is a square and darkens the corners outside the rounded mask; this
+-- one has the same rounded shape (white, tinted by the swipe color).
+local ICON_SWIPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconswipe.tga]]
+
+function ns.RoundSwipe(cooldown)
+    if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then
+        cooldown:SetSwipeTexture(ICON_SWIPE)
+    end
+end
+
 -- Icon zoom: crop `percent`% of the texture on each side (0 = full icon).
 -- Texcoords survive SetTexture(), so this is applied once per change.
 function ns.ZoomIcon(icon, percent)
