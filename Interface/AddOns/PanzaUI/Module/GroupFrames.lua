@@ -1,8 +1,9 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
     Text style, server-less names and percentage-only health text for the
-    compact party/raid frames. Role icons: optional HD icons, and hidden icons
-    shown again when the role becomes known (Blizzard misses it on reload).
+    compact party/raid frames. PanzaUI absorb texture and aggro border.
+    Role icons: optional HD icons, and hidden icons shown again when the role
+    becomes known (Blizzard misses it on reload).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -14,6 +15,8 @@ local GF = ns:RegisterModule("GroupFrames", {
         percentText = true,
         hideServer  = true,
         hdRoleIcons = true,
+        absorbTexture = true,
+        aggroBorder   = true,
     },
     options = {
         { header = "Style" },
@@ -21,6 +24,8 @@ local GF = ns:RegisterModule("GroupFrames", {
         { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain white percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
         { header = "Features" },
         { key = "hdRoleIcons", label = "HD role icons", tooltip = "Use Blizzard's large, high-resolution role icons (like the dungeon finder ready popup) on party and raid frames. Requires Reload UI." },
+        { key = "absorbTexture", label = "PanzaUI absorb texture", tooltip = "Show shields/absorbs on party and raid health bars with PanzaUI's own texture instead of Blizzard's striped one. Requires Reload UI." },
+        { key = "aggroBorder",   label = "PanzaUI aggro border",   tooltip = "Replace the aggro (threat) border of party and raid frames with a thinner PanzaUI border, colored by threat like Blizzard's. Requires Reload UI." },
         { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name on party and raid frames: no server, and no * mark on NPC followers. Requires Reload UI." },
     },
 })
@@ -134,7 +139,38 @@ roleEvents:SetScript("OnEvent", function()
     C_Timer.After(1, FixRoleIcons) -- one pending check at a time
 end)
 
+-- Absorb fill and aggro border. Blizzard sets the absorb atlases in
+-- DefaultCompactUnitFrameSetup (re-applied after it) and the aggro border in
+-- the frame template; afterwards it only shows/hides and colors them, so our
+-- textures keep Blizzard's sizing and threat colors. The aggro border is
+-- 9-sliced: constant thickness whatever the frame size. Widget calls only.
+local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local useAbsorb, useAggro
+
+local function StyleExtras(frame)
+    if not frame or frame:IsForbidden() then return end
+    if useAbsorb and frame.totalAbsorb then
+        frame.totalAbsorb:SetTexture(MEDIA .. "PanzaUI_absorb.tga", "CLAMP", "CLAMP")
+        frame.totalAbsorb:SetTexCoord(0, 1, 0, 1)
+        if frame.totalAbsorbOverlay then frame.totalAbsorbOverlay:SetAlpha(0) end -- stripes
+    end
+    local aggro = useAggro and frame.aggroHighlight
+    if aggro then
+        aggro:SetTexture(MEDIA .. "PanzaUI_aggro.tga")
+        aggro:SetTexCoord(0, 1, 0, 1)
+        if aggro.SetTextureSliceMargins then
+            aggro:SetTextureSliceMargins(16, 16, 16, 16)
+            aggro:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
+        end
+    end
+end
+
 function GF:OnEnable()
+    useAbsorb, useAggro = self.db.absorbTexture, self.db.aggroBorder
+    if useAbsorb or useAggro then
+        ns.ForEachCompactFrame(StyleExtras)
+        ns.Hook("DefaultCompactUnitFrameSetup", StyleExtras)
+    end
     roleEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
     roleEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
     roleEvents:RegisterEvent("PLAYER_ROLES_ASSIGNED")
