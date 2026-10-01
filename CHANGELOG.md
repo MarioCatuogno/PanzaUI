@@ -41,6 +41,7 @@ Here's a list of all the features included in this first release!
 * Party & Raid Frames - Health now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Removed the server from player names
 * QoL - Added the auto-repair with personal gold
+* QoL - Added the auto-sell of junk items at merchants
 * QoL - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
 * Quest Tracker - Added the outlined font to the tracker text
 * Quest Tracker - Added the quest counter (e.g. 20/35) in the tracker header

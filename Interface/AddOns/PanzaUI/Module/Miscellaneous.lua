@@ -1,7 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Miscellaneous
     Buffs/Debuffs: action bar style, text style, icon zoom.
-    Quality of Life: auto-repair, item level in the Character and Inspect panels.
+    Quality of Life: auto-repair, auto-sell junk, item level in the Character
+    and Inspect panels.
     Various: visibility of the Micro Menu, Bag Bar and XP/Reputation bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -22,6 +23,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         auraFontStyle = true,
         auraIconZoom  = 5,
         autoRepair    = true,
+        autoSellJunk  = true,
         charItemLevel = true,
         microMenu     = VIS.DEFAULT,
         bagBar        = VIS.DEFAULT,
@@ -35,6 +37,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { header = "Quality of Life" },
         { key = "autoRepair",    label = "Auto-repair",          tooltip = "Repair all items with your own gold when opening a merchant that can repair." },
+        { key = "autoSellJunk",  label = "Auto-sell junk",       tooltip = "Sell all junk (grey) items when opening a merchant, like Blizzard's \"Sell All Junk\" button." },
         { key = "charItemLevel", label = "Character item level", tooltip = "Show the item level at the top of the equipped items in the Character panel and in the Inspect panel of other players, colored by item quality." },
         { header = "Various" },
         { key = "microMenu",     label = "Micro Menu",           dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the micro menu (character, spellbook, talents, ...) is shown. Keybindings still work." },
@@ -81,11 +84,22 @@ local function SetupAuras(db)
 end
 
 --------------------------------------------------------------------------------
--- Quality of Life: auto-repair (personal gold). The event is registered only
--- while the option is on.
+-- Quality of Life: auto-sell junk and auto-repair (personal gold) when a
+-- merchant opens. Junk is sold with Blizzard's own "Sell All Junk". The
+-- repair uses the gold you have when the merchant opens (the junk gold
+-- arrives a moment later). MERCHANT_SHOW is registered only while at least
+-- one of the two options is on.
 --------------------------------------------------------------------------------
-local repairEvents = CreateFrame("Frame")
-repairEvents:SetScript("OnEvent", function()
+local merchantEvents = CreateFrame("Frame")
+
+local function SellJunk()
+    local count = C_MerchantFrame.GetNumJunkItems and C_MerchantFrame.GetNumJunkItems() or 0
+    if count <= 0 then return end
+    C_MerchantFrame.SellAllJunkItems()
+    ns.Print(("sold %d junk item%s."):format(count, count == 1 and "" or "s"))
+end
+
+local function Repair()
     if not CanMerchantRepair() then return end
     local cost, canRepair = GetRepairAllCost()
     if not canRepair or cost <= 0 then return end
@@ -95,10 +109,19 @@ repairEvents:SetScript("OnEvent", function()
     end
     RepairAllItems(false)
     ns.Print("repaired for " .. GetCoinTextureString(cost) .. ".")
+end
+
+merchantEvents:SetScript("OnEvent", function()
+    if Misc.db.autoSellJunk and C_MerchantFrame and C_MerchantFrame.SellAllJunkItems then SellJunk() end
+    if Misc.db.autoRepair then Repair() end
 end)
 
-local function SetAutoRepair(on)
-    if on then repairEvents:RegisterEvent("MERCHANT_SHOW") else repairEvents:UnregisterAllEvents() end
+local function UpdateMerchantEvents()
+    if Misc.db.autoRepair or Misc.db.autoSellJunk then
+        merchantEvents:RegisterEvent("MERCHANT_SHOW")
+    else
+        merchantEvents:UnregisterAllEvents()
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -183,7 +206,7 @@ end
 function Misc:OnEnable()
     local db = self.db
     EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function() SetupAuras(db) end)
-    SetAutoRepair(db.autoRepair)
+    UpdateMerchantEvents()
     -- Hooked always (cheap), so the option can be turned on and off live.
     ns.Hook("PaperDollItemSlotButton_Update", UpdateCharSlot)
     -- The Inspect panel is load-on-demand.
@@ -197,8 +220,8 @@ end
 function Misc:OnOptionChanged(key, value)
     if key == "auraIconZoom" then
         ZoomAuras()
-    elseif key == "autoRepair" then
-        SetAutoRepair(value)
+    elseif key == "autoRepair" or key == "autoSellJunk" then
+        UpdateMerchantEvents()
     elseif key == "charItemLevel" then
         UpdateCharSlots()
     else
