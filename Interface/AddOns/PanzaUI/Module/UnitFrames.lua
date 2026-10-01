@@ -1,101 +1,88 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames (Player, Target, Focus, Pet)
-    Status glow, hit text, class resources, text style, percentage text,
-    level / name, name background, auras (Focus: debuffs only), portrait redraw.
+    Per frame: refined style (outlined text, centered name, health and power
+    as a percentage, portrait redraw...), class colors and hidden clutter
+    (minor icons, glows, numbers, auras; Player: totems and class resources;
+    Focus: cast bar). Focus refined style shows only 4 debuffs.
     All options are applied once at login (Requires Reload UI): nothing here
     calls Blizzard update code, so no taint reaches secret-value handling.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
-local RELOAD = " Requires Reload UI."
-
 --------------------------------------------------------------------------------
--- Options. Target and Focus share the same set, generated from one list
--- (keys: <prefix><Key>, e.g. targetFontStyle, focusHideAuras).
+-- Options. Target and Focus share most entries (keys <prefix><Key>, e.g.
+-- targetStyle, focusHideClutter). Every option is on by default.
 --------------------------------------------------------------------------------
-local defaults = {
-    playerFontStyle    = true,
-    playerHideLevel    = true,
-    playerPercentText  = true,
-    playerClassColor   = true,
-    hideStatusGlow     = true,
-    hideHitText        = true,
-    hideClassResources = true,
-    hideTotems         = true,
-    fixPortraits       = true,
-    hideGroupNumber    = true,
-    playerHidePvpIcon  = true,
-    playerHideLeaderIcon = true,
-}
-
-local options = {
-    { header = "Player" },
-    { key = "playerFontStyle",    label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the Player text." .. RELOAD },
-    { key = "playerHideLevel",    label = "Hide level, center name", tooltip = "Remove the Player level and center the name above the health bar." .. RELOAD },
-    { key = "hideStatusGlow",     label = "Hide combat/rest glow",   tooltip = "Remove the combat and rest glow and the Zzz animation." .. RELOAD },
-    { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." .. RELOAD },
-    { key = "playerClassColor",   label = "Class colored health bar", tooltip = "Color the health bar with your class color." .. RELOAD },
-    { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
-    { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
-    { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
-    { key = "playerHidePvpIcon",  label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the Player portrait (and its PvP timer)." .. RELOAD },
-    { key = "playerHideLeaderIcon", label = "Hide leader icon",      tooltip = "Hide the group leader (crown) and guide icons above the Player portrait." .. RELOAD },
-    { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
-    { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
-}
-
-local TARGET_OPTIONS = {
-    { key = "FontStyle",          label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the %s text." },
-    { key = "HideLevel",          label = "Hide level, center name", tooltip = "Remove the %s level and center the name above the health bar." },
-    { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
-    { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
-    { key = "HidePvpIcon",        label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the %s portrait." },
-    { key = "HideLeaderIcon",     label = "Hide leader icon",        tooltip = "Hide the group leader (crown) and guide icons above the %s portrait." },
-    { key = "HideFollowerMark",   label = "Hide follower * mark",    tooltip = "Remove the * that Blizzard puts before the names of NPC followers (follower dungeons, delves) on the %s frame and its Target of Target." },
-    { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
-    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar (and its Target of Target) with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
-    { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
-}
-
--- frame = global name, prefix = option key prefix, unit = menu section / text
+-- frame = global name, prefix = option key prefix, unit = section / text
 local TARGET_FRAMES = {
     { frame = "TargetFrame", prefix = "target", unit = "Target" },
     { frame = "FocusFrame",  prefix = "focus",  unit = "Focus" },
 }
 
+local options = {
+    { header = "Player" },
+    { key = "playerStyle", label = "Refined style",
+      tooltip = "Polish the look of the Player frame.",
+      bullets = { "Outlined text", "Centered name, no level", "Health and power as a percentage", "Portrait redrawn when it stays zoomed in" } },
+    { key = "playerClassColor", label = "Class colors",
+      tooltip = "Color the health bar by class." },
+    { key = "playerHideClutter", label = "Hide clutter",
+      tooltip = "Hide minor elements of the Player frame.",
+      bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems", "Class resources (shown on the Personal Resource Display)" } },
+}
+
 for _, t in ipairs(TARGET_FRAMES) do
+    local p = t.prefix
+    local styleBullets = { "Outlined text", "Centered name, no level or name background", "Health and power as a percentage",
+                           "Rounded cast bar icon border", "Portrait redrawn when it stays zoomed in" }
+    local clutterBullets = { "PvP and leader icons", "Buffs and debuffs" }
+    if p == "focus" then
+        styleBullets[#styleBullets + 1] = "Only 4 debuffs, with rounded borders"
+        clutterBullets = { "PvP and leader icons", "Cast bar", "Buffs and debuffs (Refined style keeps 4 debuffs)" }
+    end
     options[#options + 1] = { header = t.unit }
-    for _, o in ipairs(TARGET_OPTIONS) do
-        local key = t.prefix .. o.key
-        defaults[key] = true
-        options[#options + 1] = {
-            key     = key,
-            label   = o.label,
-            tooltip = o.tooltip:gsub("%%s", t.unit, 1) .. RELOAD,
-        }
+    options[#options + 1] = { key = p .. "Style", label = "Refined style",
+        tooltip = "Polish the look of the " .. t.unit .. " frame.", bullets = styleBullets }
+    options[#options + 1] = { key = p .. "ClassColor", label = "Class colors",
+        tooltip = "Color the health bar by class or reaction.",
+        bullets = { "Also on its Target of Target" } }
+    options[#options + 1] = { key = p .. "HideClutter", label = "Hide clutter",
+        tooltip = "Hide minor elements of the " .. t.unit .. " frame.", bullets = clutterBullets }
+end
+
+options[#options + 1] = { header = "Pet" }
+options[#options + 1] = { key = "petStyle", label = "Refined style",
+    tooltip = "Polish the look of the Pet frame.",
+    bullets = { "Outlined text", "Health and power as a percentage" } }
+options[#options + 1] = { key = "petHideClutter", label = "Hide clutter",
+    tooltip = "Hide minor elements of the Pet frame.",
+    bullets = { "Damage and healing numbers", "Buffs and debuffs" } }
+
+local defaults = {}
+for _, o in ipairs(options) do
+    if o.key then
+        defaults[o.key] = true
+        o.reload = true
     end
 end
 
--- Focus only (appended right after the Focus section)
-defaults.focusHideCastBar = true
-defaults.focusDebuffsOnly = true
-options[#options + 1] = { key = "focusHideCastBar", label = "Hide cast bar", tooltip = "Hide the Focus cast bar." .. RELOAD }
-options[#options + 1] = { key = "focusDebuffsOnly", label = "Debuffs only (max 4)", tooltip = "Show only debuffs on the Focus frame, at most 4, with the same rounded frame as action buttons. \"Hide buffs/debuffs\" takes priority." .. RELOAD }
-
--- Pet
-local PET_OPTIONS = {
-    { header = "Pet" },
-    { key = "petFontStyle",   label = "Outline + Slug text",   tooltip = "Apply outline and slug rendering to the Pet text." .. RELOAD },
-    { key = "petPercentText", label = "Percentage-only text",  tooltip = "Show Pet health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." .. RELOAD },
-    { key = "petHideHitText", label = "Hide damage/heal text", tooltip = "Hide the damage and healing numbers on the Pet portrait." .. RELOAD },
-    { key = "petHideAuras",   label = "Hide buffs/debuffs",    tooltip = "Hide buffs and debuffs on the Pet frame." .. RELOAD },
-}
-for _, o in ipairs(PET_OPTIONS) do
-    if o.key then defaults[o.key] = true end
-    options[#options + 1] = o
-end
-
 local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+
+-- Old saved values: one option per detail (several versions).
+function UF:Migrate(db)
+    local Merge = ns.MergeOptions
+    Merge(db, "playerStyle", db, "playerFontStyle", "playerHideLevel", "playerPercentText", "fixPortraits")
+    Merge(db, "playerHideClutter", db, "hideStatusGlow", "hideHitText", "playerHidePvpIcon", "playerHideLeaderIcon",
+        "hideGroupNumber", "hideTotems", "hideClassResources", "playerHideTotems", "playerHideClassResources")
+    for _, t in ipairs(TARGET_FRAMES) do
+        local p = t.prefix
+        Merge(db, p .. "Style", db, p .. "FontStyle", p .. "HideLevel", p .. "HideNameBackground",
+            p .. "PercentText", p .. "HideFollowerMark", p .. "CastIconStyle", "fixPortraits")
+        Merge(db, p .. "HideClutter", db, p .. "HidePvpIcon", p .. "HideLeaderIcon", p .. "HideAuras", p .. "HideCastBar")
+    end
+    Merge(db, "petStyle", db, "petFontStyle", "petPercentText")
+    Merge(db, "petHideClutter", db, "petHideHitText", "petHideAuras")
+end
 
 -- Class resource bars (nil entries are simply skipped).
 local CLASS_RESOURCES = {
@@ -230,34 +217,23 @@ local function SetupPlayer(db)
     local ctx  = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBarArea.ManaBar
 
-    if db.hideStatusGlow then
+    if db.playerHideClutter then
         ns.Kill(main.StatusTexture)                          -- rest (yellow) / combat (red) pulse
         ns.Kill(PlayerFrame.PlayerFrameContainer.FrameFlash) -- combat border flash
         ns.Kill(ctx.PlayerRestLoop)                          -- Zzz animation
-    end
-
-    if db.hideHitText then
-        ns.Kill(main.HitIndicator)
-    end
-
-    if db.playerHidePvpIcon then
+        ns.Kill(main.HitIndicator)                           -- damage / healing numbers
         HidePvpIcon(ctx)
         ns.Kill(PlayerPVPTimerText)
-    end
-
-    if db.playerHideLeaderIcon then HideLeaderIcon(ctx) end
-
-    -- Raid group indicator ("Group 5" + its background): Blizzard keeps
-    -- showing/hiding it, so it is moved under the hidden parent.
-    if db.hideGroupNumber then
+        HideLeaderIcon(ctx)
+        -- Raid group indicator ("Group 5" + its background): Blizzard keeps
+        -- showing/hiding it, so it is moved under the hidden parent.
         ns.Kill(ctx.GroupIndicator or PlayerFrameGroupIndicator)
-    end
 
-    -- Totems (not secure): hidden and events stopped, so the frame below the
-    -- Player frame collapses and no totem updates run.
-    if db.hideTotems then ns.Disable(TotemFrame) end
+        -- Totems (not secure): hidden and events stopped, so the frame below
+        -- the Player frame collapses and no totem updates run.
+        ns.Disable(TotemFrame)
 
-    if db.hideClassResources then
+        -- Class resources (the Personal Resource Display keeps its own).
         local bars = { PlayerFrame.classPowerBar }
         for i, name in ipairs(CLASS_RESOURCES) do bars[i + 1] = _G[name] end
         for i = 1, #CLASS_RESOURCES + 1 do
@@ -271,22 +247,17 @@ local function SetupPlayer(db)
         RestorePlayerArt()
     end
 
-    if db.playerHideLevel then
+    if db.playerStyle then
         ns.Kill(PlayerLevelText)
         local bar = main.HealthBarsContainer
         CenterName(PlayerName, bar)
         -- Blizzard re-anchors the player name when entering/leaving vehicles.
         ns.Hook("PlayerFrame_UpdatePlayerNameTextAnchor", function() CenterName(PlayerName, bar) end)
-    end
 
-    if db.playerFontStyle then
         ns.StyleFont(PlayerName)
         ns.StyleFont(PlayerLevelText)
         ns.StyleBarText(health)
         ns.StyleBarText(power)
-    end
-
-    if db.playerPercentText then
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
@@ -324,16 +295,20 @@ end
 local function ApplyLayout(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
     -- Aura limits (Blizzard's own fields, also reset by SetSmallSize).
-    if db[p .. "HideAuras"] then
-        frame.maxBuffs, frame.maxDebuffs = 0, 0
-    elseif p == "focus" and db.focusDebuffsOnly then
+    -- Focus refined style: 4 debuffs, no buffs. Otherwise hidden clutter
+    -- hides every aura.
+    if p == "focus" and db.focusStyle then
         frame.maxBuffs, frame.maxDebuffs = 0, 4
+    elseif db[p .. "HideClutter"] then
+        frame.maxBuffs, frame.maxDebuffs = 0, 0
     end
-    if db[p .. "HideLevel"] then CenterName(main.Name, main.HealthBarsContainer) end
-    -- Clear the texture instead of Kill()/SetAlpha(): Name and LevelText are
-    -- anchored to it (so it must stay in place), and Blizzard's
-    -- SetVertexColor(UnitSelectionColor()) resets the texture alpha.
-    if db[p .. "HideNameBackground"] then main.ReputationColor:SetTexture(nil) end
+    if db[p .. "Style"] then
+        CenterName(main.Name, main.HealthBarsContainer)
+        -- Clear the texture instead of Kill()/SetAlpha(): Name and LevelText
+        -- are anchored to it (so it must stay in place), and Blizzard's
+        -- SetVertexColor(UnitSelectionColor()) resets the texture alpha.
+        main.ReputationColor:SetTexture(nil)
+    end
 end
 
 local function SetupTargetFrame(frame, db, p)
@@ -341,13 +316,9 @@ local function SetupTargetFrame(frame, db, p)
     local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
 
-    if db[p .. "HidePvpIcon"] then HidePvpIcon(ctx) end
-    if db[p .. "HideLeaderIcon"] then HideLeaderIcon(ctx) end
-
-    if db[p .. "HideFollowerMark"] then
-        HideFollowerMark(main.Name, frame)
-        local tot = frame.totFrame
-        if tot then HideFollowerMark(tot.name or tot.Name, tot) end
+    if db[p .. "HideClutter"] then
+        HidePvpIcon(ctx)
+        HideLeaderIcon(ctx)
     end
 
     if db[p .. "ClassColor"] then
@@ -358,30 +329,27 @@ local function SetupTargetFrame(frame, db, p)
         if totHealth then classColorBars[totHealth] = true end
     end
 
+    ApplyLayout(frame, db, p)
 
-    if db[p .. "HideLevel"] then
+    if db[p .. "Style"] then
         -- Kill() is safe: nothing is anchored to the level text except the
         -- skull icon, which is a level indicator too. (SetAlpha would not
         -- work: Blizzard's SetVertexColor resets it.)
         ns.Kill(main.LevelText)
         ns.Kill(ctx.HighLevelTexture)
-    end
 
-    if db[p .. "CastIconStyle"] then
+        -- NPC follower names without "*" (the frame and its Target of Target).
+        HideFollowerMark(main.Name, frame)
+        local tot = frame.totFrame
+        if tot then HideFollowerMark(tot.name or tot.Name, tot) end
+
         local spellbar = frame.spellbar or _G[frame:GetName() .. "SpellBar"]
         if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
-    end
 
-    ApplyLayout(frame, db, p)
-
-    if db[p .. "FontStyle"] then
         ns.StyleFont(main.Name)
         ns.StyleFont(main.LevelText)
         ns.StyleBarText(health)
         ns.StyleBarText(power)
-    end
-
-    if db[p .. "PercentText"] then
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
@@ -395,18 +363,17 @@ local function SetupPet(db)
     if not PetFrame then return end
     local health, power = PetFrameHealthBar, PetFrameManaBar
 
-    if db.petHideHitText then ns.Kill(PetHitIndicator) end
-    -- Auras live in their own container (pooled buttons): reparent it,
-    -- no Blizzard fields are touched.
-    if db.petHideAuras then ns.Kill(PetFrame.AuraFrameContainer) end
+    if db.petHideClutter then
+        ns.Kill(PetHitIndicator)
+        -- Auras live in their own container (pooled buttons): reparent it,
+        -- no Blizzard fields are touched.
+        ns.Kill(PetFrame.AuraFrameContainer)
+    end
 
-    if db.petFontStyle then
+    if db.petStyle then
         ns.StyleFont(PetName)
         ns.StyleBarText(health)
         ns.StyleBarText(power)
-    end
-
-    if db.petPercentText then
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
@@ -423,11 +390,11 @@ end
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
 
-local PORTRAIT_FRAMES = { PlayerFrame, TargetFrame, FocusFrame } -- made once; pairs skips missing ones
+local PORTRAIT_FRAMES = {} -- frames whose refined style is on (filled at login)
 
 local function RedrawPortraits()
     portraitPending = false
-    for _, frame in pairs(PORTRAIT_FRAMES) do
+    for _, frame in ipairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame and frame.portrait, frame and frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
             -- Blizzard can show a class icon instead of the portrait: leave it.
@@ -448,7 +415,14 @@ portraitEvents:SetScript("OnEvent", function(_, event, unit)
     C_Timer.After(1, RedrawPortraits)
 end)
 
-local function SetupPortraits()
+-- Redraws the portraits of the frames whose refined style is on.
+local function SetupPortraits(db)
+    if db.playerStyle then PORTRAIT_FRAMES[#PORTRAIT_FRAMES + 1] = PlayerFrame end
+    for _, t in ipairs(TARGET_FRAMES) do
+        local frame = _G[t.frame]
+        if frame and db[t.prefix .. "Style"] then PORTRAIT_FRAMES[#PORTRAIT_FRAMES + 1] = frame end
+    end
+    if #PORTRAIT_FRAMES == 0 then return end
     for _, event in ipairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "PLAYER_ENTERING_WORLD",
                              "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
         portraitEvents:RegisterEvent(event)
@@ -456,7 +430,7 @@ local function SetupPortraits()
 end
 
 --------------------------------------------------------------------------------
--- Focus debuffs: action bar style. Debuff buttons come from the frame's aura
+-- Focus debuffs (refined style): rounded icon borders. Debuff buttons come from the frame's aura
 -- pool: after each aura update the active ones are styled (once each).
 --------------------------------------------------------------------------------
 local styledAuras = {}
@@ -486,16 +460,16 @@ function UF:OnEnable()
 
     if FocusFrame then
         ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
-        -- Hidden and events stopped: no casting updates at all (no CPU cost).
-        if db.focusHideCastBar then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
-        if db.focusDebuffsOnly and not db.focusHideAuras then
+        -- Cast bar hidden and events stopped: no casting updates at all.
+        if db.focusHideClutter then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
+        if db.focusStyle then
             ns.Hook(FocusFrame, "UpdateAuras", StyleFocusDebuffs)
             StyleFocusDebuffs(FocusFrame)
         end
     end
 
     SetupPet(db)
-    if db.fixPortraits then SetupPortraits() end
+    SetupPortraits(db)
 
     if next(classColorBars) then
         -- Anything that can change a cached color: recompute on next update.

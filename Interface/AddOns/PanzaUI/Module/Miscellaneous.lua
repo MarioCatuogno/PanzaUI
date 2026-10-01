@@ -1,230 +1,149 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Miscellaneous
-    Buffs/Debuffs: action bar style, text style, icon zoom.
-    Quality of Life: auto-repair, auto-sell junk, item level in the Character
-    and Inspect panels.
-    Various: visibility of the Micro Menu, Bag Bar and XP/Reputation bars.
+    Other Addons: refined style for Platynator nameplates (rounded borders on
+    aura and cast icons).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
-local VIS = ns.VIS
-
--- Various: visibility entries (same modes as the action bars).
--- frames = global names (nil ones skipped); buttons come from their children.
-local VISIBILITY = {
-    { key = "microMenu",   label = "Micro Menu",                frames = { "MicroMenuContainer" } },
-    { key = "bagBar",      label = "Bag Bar",                   frames = { "BagsBar" } },
-    { key = "statusBars",  label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
-}
 
 local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Miscellaneous",
     defaults = {
-        auraIconStyle = true,
-        auraFontStyle = true,
-        auraIconZoom  = 5,
-        autoRepair    = true,
-        autoSellJunk  = true,
-        charItemLevel = true,
-        microMenu     = VIS.DEFAULT,
-        bagBar        = VIS.DEFAULT,
-        statusBars    = VIS.DEFAULT,
+        platynatorStyle = true,
     },
     options = {
-        { header = "Buffs/Debuffs" },
-        { key = "auraIconStyle", label = "Action bar style",     tooltip = "Give buff and debuff icons the same rounded frame as action buttons. Requires Reload UI." },
-        { key = "auraFontStyle", label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to buff and debuff stacks and duration. Requires Reload UI." },
-        { key = "auraIconZoom",  label = "Icon zoom",            tooltip = "Crop the edges of buff and debuff icons (percent per side) to hide the built-in border of older icons. 0 = off.",
-          slider = { min = 0, max = 15, step = 1, suffix = "%" } },
-        { header = "Quality of Life" },
-        { key = "autoRepair",    label = "Auto-repair",          tooltip = "Repair all items with your own gold when opening a merchant that can repair." },
-        { key = "autoSellJunk",  label = "Auto-sell junk",       tooltip = "Sell all junk (grey) items when opening a merchant, like Blizzard's \"Sell All Junk\" button." },
-        { key = "charItemLevel", label = "Character item level", tooltip = "Show the item level at the top of the equipped items in the Character panel and in the Inspect panel of other players, colored by item quality." },
-        { header = "Various" },
-        { key = "microMenu",     label = "Micro Menu",           dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the micro menu (character, spellbook, talents, ...) is shown. Keybindings still work." },
-        { key = "bagBar",        label = "Bag Bar",              dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the backpack and bag slot buttons are shown. Keybindings still work." },
-        { key = "statusBars",    label = "Experience/Reputation bar", dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the experience, reputation and honor tracking bars are shown." },
+        { header = "Other Addons" },
+        { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
+          tooltip = "Polish the look of Platynator nameplates.",
+          bullets = { "Rounded aura icon borders", "Rounded cast icon border", "Only when Platynator is installed" } },
     },
 })
 
--- Old versions had "hide" toggles for the Micro Menu and Bag Bar.
-function Misc:Migrate(db)
-    if type(db.hideMicroMenu) == "boolean" then db.microMenu = db.hideMicroMenu and VIS.HIDDEN or VIS.DEFAULT end
-    if type(db.hideBagBar)    == "boolean" then db.bagBar    = db.hideBagBar    and VIS.HIDDEN or VIS.DEFAULT end
+--------------------------------------------------------------------------------
+-- Platynator aura icons. Each nameplate display has an AurasManager with
+-- three aura containers (buffs, debuffs, crowd control); their icon frames
+-- are created on demand and appended to container.frames (a reused frame
+-- can be appended again). New entries are checked shortly after a nameplate
+-- is added or an aura changes: one deferred scan per frame, from the last
+-- position seen; each frame is styled once (no garbage, a few table reads).
+-- The buttons have secret aspects (their scripts can't be hooked): the icon
+-- border follows the icon's own SetSize. Forbidden buttons are skipped.
+--------------------------------------------------------------------------------
+local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
+local containers = {}  -- aura container -> number of frames already handled
+local styledAuras = {} -- aura frame -> true (each one is styled only once)
+
+local function StyleAuraFrame(frame)
+    if not frame or styledAuras[frame] or frame:IsForbidden() then return end
+    styledAuras[frame] = true
+    if ns.StyleIcon(frame.Icon, frame, true) and frame.Border then
+        frame.Border:SetAlpha(0) -- Platynator's square 1px border
+    end
 end
 
---------------------------------------------------------------------------------
--- Buffs/Debuffs. Blizzard creates all aura buttons once at load
--- (BuffFrame/DebuffFrame.auraFrames), so they are styled once: no hooks.
--- Only widget calls on the buttons, no Blizzard fields are written (taint-safe).
---------------------------------------------------------------------------------
-local function ForEachAuraButton(func)
-    for _, container in ipairs({ BuffFrame, DebuffFrame }) do
-        for _, button in ipairs(container.auraFrames or {}) do
-            -- Skip private-aura anchors (isAuraAnchor): their Icon is a Frame, not a texture.
-            local icon = button.Icon
-            if not button.isAuraAnchor and icon and icon.AddMaskTexture then func(button, icon) end
+-- The count is updated before styling, so a failing frame is never retried.
+local function ScanContainers()
+    for container, handled in pairs(containers) do
+        local frames = container.frames
+        local count = #frames
+        if count > handled then
+            containers[container] = count
+            for i = handled + 1, count do StyleAuraFrame(frames[i]) end
         end
     end
 end
 
-local function ZoomAuras()
-    local percent = Misc.db.auraIconZoom
-    ForEachAuraButton(function(_, icon) ns.ZoomIcon(icon, percent) end)
-end
+--------------------------------------------------------------------------------
+-- Platynator cast icon. Markers come from a shared pool and can be reused
+-- for another kind (quest, elite, raid...) after a design change, so the
+-- border is shown and the icon masked only while the marker is a cast icon,
+-- checked after each Init (hooked once per marker).
+--------------------------------------------------------------------------------
+local markerBorder, markerMask, markerMasked = {}, {}, {}
 
-local function SetupAuras(db)
-    ForEachAuraButton(function(button, icon)
-        if db.auraIconStyle then ns.StyleIcon(icon, button) end
-        if db.auraFontStyle then
-            ns.StyleFont(button.Count)
-            ns.StyleFont(button.Duration)
+local function UpdateMarker(marker)
+    local isCast = marker.details and marker.details.kind == "castIcon"
+    local icon = marker.marker
+    if isCast and not markerBorder[marker] then
+        markerBorder[marker], markerMask[marker] = ns.StyleIcon(icon, marker)
+        markerMasked[marker] = true
+    elseif markerBorder[marker] then
+        markerBorder[marker]:SetShown(isCast)
+        if isCast ~= markerMasked[marker] then
+            if isCast then icon:AddMaskTexture(markerMask[marker]) else icon:RemoveMaskTexture(markerMask[marker]) end
+            markerMasked[marker] = isCast
         end
-    end)
-    ZoomAuras()
-end
-
---------------------------------------------------------------------------------
--- Quality of Life: auto-sell junk and auto-repair (personal gold) when a
--- merchant opens. Junk is sold with Blizzard's own "Sell All Junk". The
--- repair uses the gold you have when the merchant opens (the junk gold
--- arrives a moment later). MERCHANT_SHOW is registered only while at least
--- one of the two options is on.
---------------------------------------------------------------------------------
-local merchantEvents = CreateFrame("Frame")
-
-local function SellJunk()
-    local count = C_MerchantFrame.GetNumJunkItems and C_MerchantFrame.GetNumJunkItems() or 0
-    if count <= 0 then return end
-    C_MerchantFrame.SellAllJunkItems()
-    ns.Print(("sold %d junk item%s."):format(count, count == 1 and "" or "s"))
-end
-
-local function Repair()
-    if not CanMerchantRepair() then return end
-    local cost, canRepair = GetRepairAllCost()
-    if not canRepair or cost <= 0 then return end
-    if GetMoney() < cost then
-        ns.Print("not enough gold to repair (" .. GetCoinTextureString(cost) .. ").")
-        return
     end
-    RepairAllItems(false)
-    ns.Print("repaired for " .. GetCoinTextureString(cost) .. ".")
+    if isCast and marker.background then marker.background:SetAlpha(0) end -- square backdrop
 end
 
-merchantEvents:SetScript("OnEvent", function()
-    if Misc.db.autoSellJunk and C_MerchantFrame and C_MerchantFrame.SellAllJunkItems then SellJunk() end
-    if Misc.db.autoRepair then Repair() end
+local hookedMarkers = {}
+
+local function HookMarkers(display)
+    for _, widget in ipairs(display.widgets or {}) do
+        if widget.marker and widget.Init and not hookedMarkers[widget] then
+            hookedMarkers[widget] = true
+            hooksecurefunc(widget, "Init", UpdateMarker)
+            UpdateMarker(widget)
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Displays: Platynator parents its display frame to the nameplate when a
+-- unit is added. Nameplates added in the same frame are handled together on
+-- the next one (after Platynator's own handler), with varargs (no tables).
+--------------------------------------------------------------------------------
+local pendingUnits = {}
+
+local function RegisterDisplays(...)
+    for i = 1, select("#", ...) do
+        local display = select(i, ...)
+        local manager = not display:IsForbidden() and display.AurasManager
+        if manager then
+            for _, kind in ipairs(AURA_KINDS) do
+                local container = manager[kind]
+                if container and container.frames and not containers[container] then containers[container] = 0 end
+            end
+            HookMarkers(display)
+        end
+    end
+end
+
+local function UpdatePending()
+    for unit in pairs(pendingUnits) do
+        pendingUnits[unit] = nil
+        local plate = C_NamePlate.GetNamePlateForUnit(unit)
+        if plate and not plate:IsForbidden() then RegisterDisplays(plate:GetChildren()) end
+    end
+    ScanContainers()
+end
+
+local events = CreateFrame("Frame")
+events:SetScript("OnEvent", function(_, event, unit)
+    if event == "NAME_PLATE_UNIT_ADDED" then
+        if not unit or ns.IsSecret(unit) then return end
+        pendingUnits[unit] = true
+        ns.Defer(UpdatePending)
+    elseif next(containers) then -- UNIT_AURA
+        ns.Defer(ScanContainers)
+    end
 end)
 
-local function UpdateMerchantEvents()
-    if Misc.db.autoRepair or Misc.db.autoSellJunk then
-        merchantEvents:RegisterEvent("MERCHANT_SHOW")
-    else
-        merchantEvents:UnregisterAllEvents()
+local function SetupPlatynator()
+    events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    events:RegisterEvent("UNIT_AURA")
+    -- Nameplates already shown (e.g. after a reload).
+    for _, plate in ipairs(C_NamePlate.GetNamePlates()) do
+        if not plate:IsForbidden() then RegisterDisplays(plate:GetChildren()) end
     end
-end
-
---------------------------------------------------------------------------------
--- Quality of Life: item level in the Character panel and in the Inspect panel
--- (same look as in the bags, shared helper in core.lua). Post-hooks of
--- Blizzard's slot updates. Own items: one reused ItemLocation. Inspected
--- player: the item link of the slot (no ItemLocation for other units).
--- Shirt and tabard have no meaningful item level.
---------------------------------------------------------------------------------
-local CHAR_SLOTS = {
-    "Head", "Neck", "Shoulder", "Back", "Chest", "Wrist", "Hands", "Waist", "Legs", "Feet",
-    "Finger0", "Finger1", "Trinket0", "Trinket1", "MainHand", "SecondaryHand",
-}
-local NO_ILVL = { [INVSLOT_BODY or 4] = true, [INVSLOT_TABARD or 19] = true }
-local charLocation = ItemLocation:CreateEmpty()
-
-local function UpdateCharSlot(button)
-    local slot = button:GetID()
-    local ilvl, color
-    if Misc.db.charItemLevel and not NO_ILVL[slot] then
-        charLocation:SetEquipmentSlot(slot)
-        ilvl, color = ns.LocationItemLevel(charLocation)
-    end
-    ns.ItemLevelText(button, ilvl, color, true)
-end
-
-local function UpdateInspectSlot(button)
-    local slot = button:GetID()
-    local unit = InspectFrame and InspectFrame.unit
-    local ilvl, color
-    if Misc.db.charItemLevel and unit and not NO_ILVL[slot] then
-        local link = GetInventoryItemLink(unit, slot)
-        if link and not ns.IsSecret(link) then
-            ilvl = C_Item.GetDetailedItemLevelInfo(link)
-            if ilvl and ilvl <= 1 then ilvl = nil end
-            local quality = ilvl and C_Item.GetItemQualityByID(link)
-            color = quality and ITEM_QUALITY_COLORS[quality]
-        end
-    end
-    ns.ItemLevelText(button, ilvl, color, true)
-end
-
--- Every slot at once (option toggled live).
-local function UpdateCharSlots()
-    for _, name in ipairs(CHAR_SLOTS) do
-        local button = _G["Character" .. name .. "Slot"]
-        if button then UpdateCharSlot(button) end
-        button = _G["Inspect" .. name .. "Slot"]
-        if button then UpdateInspectSlot(button) end
-    end
-end
-
---------------------------------------------------------------------------------
--- Various: shared visibility engine (core.lua). Alpha only, so Edit Mode
--- positions and anything anchored to these frames (e.g. the queue eye) stay.
---------------------------------------------------------------------------------
-local function ChildButtons(frame, list)
-    for _, child in ipairs({ frame:GetChildren() }) do
-        if child:IsMouseEnabled() then list[#list + 1] = child end
-        ChildButtons(child, list)
-    end
-    return list
-end
-
-local function SetupVisibility()
-    for _, v in ipairs(VISIBILITY) do
-        local frames, buttons = {}, {}
-        for _, name in ipairs(v.frames) do
-            local frame = _G[name]
-            if frame then
-                frames[#frames + 1] = frame
-                ChildButtons(frame, buttons)
-            end
-        end
-        ns.RegisterVisibility({ frames = frames, buttons = buttons, getMode = function() return Misc.db[v.key] end })
-    end
+    ScanContainers()
 end
 
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+-- Other addons load before PLAYER_LOGIN (when modules are enabled): if they
+-- are not loaded by now, they are not installed or are disabled.
 function Misc:OnEnable()
-    local db = self.db
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function() SetupAuras(db) end)
-    UpdateMerchantEvents()
-    -- Hooked always (cheap), so the option can be turned on and off live.
-    ns.Hook("PaperDollItemSlotButton_Update", UpdateCharSlot)
-    -- The Inspect panel is load-on-demand.
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
-        ns.Hook("InspectPaperDollItemSlotButton_Update", UpdateInspectSlot)
-    end)
-    if db.charItemLevel then UpdateCharSlots() end
-    SetupVisibility()
-end
-
-function Misc:OnOptionChanged(key, value)
-    if key == "auraIconZoom" then
-        ZoomAuras()
-    elseif key == "autoRepair" or key == "autoSellJunk" then
-        UpdateMerchantEvents()
-    elseif key == "charItemLevel" then
-        UpdateCharSlots()
-    else
-        ns.RefreshVisibility()
-    end
+    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
 end

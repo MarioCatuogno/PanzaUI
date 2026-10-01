@@ -62,43 +62,40 @@ local function TextureList()
     return list
 end
 
--- One texture option per frame group (menu order).
-local GROUPS = {
-    { key = "texPlayer", label = "Player" },
-    { key = "texTarget", label = "Target" },
-    { key = "texFocus",  label = "Focus" },
-    { key = "texPet",    label = "Pet" },
-    { key = "texBoss",   label = "Boss frames" },
-    { key = "texGroup",  label = "Party/Raid" },
-    { key = "texPRD",    label = "Personal Resource Display" },
+--------------------------------------------------------------------------------
+-- Options: one texture per bar group (listed alphabetically by the core).
+--------------------------------------------------------------------------------
+local UNIT_BARS = {
+    { key = "texBoss",   label = "Boss frames",               tooltip = "Texture for the Boss health and power bars." },
+    { key = "texFocus",  label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
+    { key = "texGroup",  label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
+    { key = "texPRD",    label = "Personal Resource Display", tooltip = "Texture for the Personal Resource Display bars." },
+    { key = "texPet",    label = "Pet",                       tooltip = "Texture for the Pet health and power bars." },
+    { key = "texPlayer", label = "Player",                    tooltip = "Texture for the Player health and power bars." },
+    { key = "texTarget", label = "Target",                    tooltip = "Texture for the Target health and power bars." },
 }
 
-local defaults = {}
-local options  = { { header = "Health/Power Bar Textures" } }
-for _, g in ipairs(GROUPS) do
-    defaults[g.key] = DEFAULT
-    options[#options + 1] = {
-        key = g.key, label = g.label, dropdown = TextureList,
-        tooltip = "Texture for the " .. g.label .. " health and power bars. Textures come from SharedMedia. Requires Reload UI.",
-    }
-end
-
--- Other bars (not health/power)
-local OTHER = {
-    { key = "texRepPanel", label = "Reputation panel",          tooltip = "Texture for the bars in the Reputation panel of the character window." },
-    { key = "texTracking", label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor tracking bars." },
-    { key = "texAchievements", label = "Achievement frame",     tooltip = "Texture for the progress bars of the Achievements window (summary, categories and criteria)." },
-    { key = "texQuestTracker", label = "Quest Tracker",         tooltip = "Texture for the progress and timer bars shown in the Quest Tracker (bonus objectives, world quests, scenarios...)." },
-    { key = "texTooltips",     label = "Tooltips",              tooltip = "Texture for the progress bars shown inside tooltips (e.g. world quests on the map)." },
-    { key = "texCooldownBars", label = "Cooldown Manager bars",  tooltip = "Texture for the tracked buff bars of the Cooldown Manager." },
-    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter (including the spell breakdown)." },
+local OTHER_BARS = {
+    { key = "texAchievements", label = "Achievements",              tooltip = "Texture for the Achievements window bars." },
+    { key = "texCooldownBars", label = "Cooldown Manager",          tooltip = "Texture for the Cooldown Manager tracked bars." },
+    { key = "texDamageMeter",  label = "Damage Meter",              tooltip = "Texture for the Damage Meter bars." },
+    { key = "texTracking",     label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor bars." },
+    { key = "texQuestTracker", label = "Quest Tracker",             tooltip = "Texture for the Quest Tracker progress bars." },
+    { key = "texRepPanel",     label = "Reputation panel",          tooltip = "Texture for the Reputation panel bars." },
+    { key = "texTooltips",     label = "Tooltips",                  tooltip = "Texture for the progress bars inside tooltips." },
 }
-options[#options + 1] = { header = "Other Bar Textures" }
-for _, o in ipairs(OTHER) do
-    defaults[o.key] = DEFAULT
-    options[#options + 1] = { key = o.key, label = o.label, dropdown = TextureList,
-        tooltip = o.tooltip .. " Textures come from SharedMedia. Requires Reload UI." }
+
+local defaults, options = {}, {}
+local function AddTextureOptions(header, list)
+    options[#options + 1] = { header = header }
+    for _, o in ipairs(list) do
+        defaults[o.key] = DEFAULT
+        options[#options + 1] = { key = o.key, label = o.label, tooltip = o.tooltip,
+            dropdown = TextureList, reload = true }
+    end
 end
+AddTextureOptions("Unit Frame Bars", UNIT_BARS)
+AddTextureOptions("Other Bars", OTHER_BARS)
 
 local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
 
@@ -106,7 +103,7 @@ local GEN = ns:RegisterModule("General", { title = "General", main = true, defau
 -- Up to 2.0.110 the only own texture was "PanzaUI": now "PanzaUI - Glass".
 function GEN:Migrate(db)
     if type(db.barTexture) == "string" then
-        for _, g in ipairs(GROUPS) do
+        for _, g in ipairs(UNIT_BARS) do
             if db[g.key] == nil then db[g.key] = db.barTexture end
         end
     end

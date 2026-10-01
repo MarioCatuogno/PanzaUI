@@ -1,29 +1,33 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Health bar, class colored player names, M+ rating and item level of
-    players, item/spell IDs.
+    Refined style (no health bar, class colored names), player info (M+
+    rating, item level) and item/spell IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
 local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
     defaults = {
-        hideHealthBar    = true,
-        classColorNames  = true,
-        showMythicRating = true,
-        showItemLevel    = true,
-        showIDs          = true,
+        style      = true,
+        playerInfo = true,
+        showIDs    = true,
     },
     options = {
-        { header = "Style" },
-        { key = "hideHealthBar",    label = "Hide health bar",       tooltip = "Remove the health bar under unit tooltips. Requires Reload UI." },
-        { key = "classColorNames",  label = "Class colored names",   tooltip = "Color player names in unit tooltips with their class color." },
-        { header = "Features" },
-        { key = "showMythicRating", label = "Show M+ rating",        tooltip = "Show the Mythic+ rating of players." },
-        { key = "showItemLevel",    label = "Show item level",       tooltip = "Show the average equipped item level of players (other players are inspected when possible)." },
-        { key = "showIDs",          label = "Show item/spell ID",    tooltip = "Show the ID of items and spells." },
+        { key = "style", label = "Refined style", reload = true,
+          tooltip = "Polish the look of unit tooltips.",
+          bullets = { "No health bar", "Class colored player names" } },
+        { key = "playerInfo", label = "Player info",
+          tooltip = "Show more information about players.",
+          bullets = { "Mythic+ rating", "Equipped item level" } },
+        { key = "showIDs", label = "Show IDs",
+          tooltip = "Show the ID of items and spells." },
     },
 })
+
+function TT:Migrate(db)
+    ns.MergeOptions(db, "style", db, "hideHealthBar", "classColorNames")
+    ns.MergeOptions(db, "playerInfo", db, "showMythicRating", "showItemLevel")
+end
 
 local IsSecret = ns.IsSecret
 
@@ -74,7 +78,7 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
 
     -- Still hovering the same player and no value shown yet: add it now.
     local _, ttUnit = GameTooltip:GetUnit()
-    if not hadValue and TT.db.showItemLevel and GameTooltip:IsShown()
+    if not hadValue and TT.db.playerInfo and GameTooltip:IsShown()
         and ttUnit and not IsSecret(ttUnit) and UnitGUID(ttUnit) == guid then
         AddLine(GameTooltip, "Item Level", ilvlCache[guid])
         GameTooltip:Show() -- resize
@@ -140,19 +144,19 @@ end
 
 local function OnUnit(tooltip)
     local db = TT.db
-    if tooltip ~= GameTooltip or not (db.showMythicRating or db.showItemLevel or db.classColorNames) then return end
+    if tooltip ~= GameTooltip or not (db.playerInfo or db.style) then return end
 
     local _, unit = tooltip:GetUnit()
     if not unit or IsSecret(unit) then return end
     local isPlayer = UnitIsPlayer(unit)
     if IsSecret(isPlayer) or not isPlayer then return end
-    if db.classColorNames then ColorName(tooltip, unit) end
+    if db.style then ColorName(tooltip, unit) end
 
+    if not db.playerInfo then return end
     local guid = UnitGUID(unit)
     if not guid or IsSecret(guid) then return end
-
-    if db.showMythicRating then AddMythicRating(tooltip, unit, guid) end
-    if db.showItemLevel    then AddItemLevel(tooltip, unit, guid) end
+    AddMythicRating(tooltip, unit, guid)
+    AddItemLevel(tooltip, unit, guid)
 end
 
 local function IDLine(label)
@@ -167,7 +171,7 @@ end
 -- Module API
 --------------------------------------------------------------------------------
 function TT:OnEnable()
-    if self.db.hideHealthBar then
+    if self.db.style then
         -- Hidden (not reparented): the tooltip then sees the bar as not shown
         -- and leaves no empty space for it at the bottom.
         ns.Disable(GameTooltip.StatusBar or GameTooltipStatusBar)

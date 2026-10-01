@@ -1,32 +1,31 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Chat
-    Timestamps, Combat Log tab, text style, tab art, side buttons.
+    Refined style (outlined text, no tab art, input box border, background or
+    side buttons), timestamps and the Combat Log tab.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
 local Chat = ns:RegisterModule("Chat", {
     title = "Chat",
     defaults = {
+        style         = true,
         timestamps    = true,
         hideCombatLog = true,
-        fontStyle     = true,
-        hideTabArt    = true,
-        hideButtons   = true,
-        hideEditBoxArt = true,
-        hideBackground = true,
     },
     options = {
-        { header = "Style" },
-        { key = "fontStyle",     label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to chat, tab and input box text. Requires Reload UI." },
-        { key = "hideTabArt",    label = "Hide tab art",        tooltip = "Remove the background textures of chat tabs and show tab names in full. Requires Reload UI." },
-        { key = "hideEditBoxArt", label = "Hide input box border", tooltip = "Remove the border of the chat input box. Requires Reload UI." },
-        { key = "hideBackground", label = "Hide background",       tooltip = "Remove the chat window background that appears on mouseover. Requires Reload UI." },
-        { header = "Features" },
-        { key = "timestamps",    label = "Timestamps (HH:MM)",    tooltip = "Show the time in front of every chat message." },
-        { key = "hideCombatLog", label = "Hide Combat Log tab",   tooltip = "Close the Combat Log window and its tab." },
-        { key = "hideButtons",   label = "Hide side buttons",   tooltip = "Hide the side buttons (social, channels, emotes, voice, scroll). Requires Reload UI." },
+        { key = "style", label = "Refined style", reload = true,
+          tooltip = "Polish the look of chat windows.",
+          bullets = { "Outlined text", "Cleaner tabs and input box", "No background or side buttons" } },
+        { key = "timestamps", label = "Timestamps",
+          tooltip = "Show the time in front of every message." },
+        { key = "hideCombatLog", label = "Hide Combat Log tab",
+          tooltip = "Close the Combat Log window and its tab." },
     },
 })
+
+function Chat:Migrate(db)
+    ns.MergeOptions(db, "style", db, "fontStyle", "hideTabArt", "hideButtons", "hideEditBoxArt", "hideBackground")
+end
 
 local TIMESTAMP_FORMAT = "%H:%M "  -- Blizzard's native HH:MM format (TIMESTAMP_FORMAT_HHMM)
 
@@ -113,42 +112,37 @@ local function SetupFrame(frame)
     if not frame or processed[frame] then return end
     processed[frame] = true
 
-    local db   = Chat.db
     local name = frame:GetName()
     local tab  = _G[name .. "Tab"]
 
-    if db.fontStyle then
-        StyleText(frame)
-        if tab then ns.StyleFont(tab.Text or _G[name .. "TabText"]) end
-    end
-
-    if db.hideTabArt and tab then
+    -- Text: messages, input box and tab name.
+    StyleText(frame)
+    if tab then
+        local tabText = tab.Text or _G[name .. "TabText"]
+        ns.StyleFont(tabText)
+        -- Tab art hidden (alpha), the name may use its full width.
         for _, key in ipairs(TAB_TEXTURES) do
             local tex = tab[key]
             if tex then tex:SetAlpha(0) end
         end
-        chatTabs[tab] = tab.Text or _G[name .. "TabText"]
+        chatTabs[tab] = tabText
     end
 
-    if db.hideButtons then
-        ns.Kill(frame.buttonFrame or _G[name .. "ButtonFrame"])
+    -- Side button column of the window.
+    ns.Kill(frame.buttonFrame or _G[name .. "ButtonFrame"])
+
+    -- Input box border: textures cleared, Blizzard shows/hides the focus
+    -- border itself.
+    local editName = name .. "EditBox"
+    for _, suffix in ipairs(EDITBOX_TEXTURES) do
+        local tex = _G[editName .. suffix]
+        if tex then tex:SetTexture(nil) end
     end
 
-    if db.hideEditBoxArt then
-        -- Clear the textures: Blizzard shows/hides the focus border itself.
-        local editName = name .. "EditBox"
-        for _, suffix in ipairs(EDITBOX_TEXTURES) do
-            local tex = _G[editName .. suffix]
-            if tex then tex:SetTexture(nil) end
-        end
-    end
-
-    if db.hideBackground then
-        -- Clear the textures: Blizzard keeps fading their alpha in and out.
-        for _, suffix in ipairs(BACKGROUND_TEXTURES) do
-            local tex = _G[name .. suffix]
-            if tex and tex.SetTexture then tex:SetTexture(nil) end
-        end
+    -- Window background: textures cleared, Blizzard keeps fading their alpha.
+    for _, suffix in ipairs(BACKGROUND_TEXTURES) do
+        local tex = _G[name .. suffix]
+        if tex and tex.SetTexture then tex:SetTexture(nil) end
     end
 end
 
@@ -167,20 +161,12 @@ function Chat:OnEnable()
     if db.timestamps    then SetTimestamps(true) end
     if db.hideCombatLog then SetCombatLog(false) end
 
-    if db.hideButtons then
+    if db.style then
         for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
-    end
-
-    if db.fontStyle or db.hideTabArt or db.hideButtons or db.hideEditBoxArt or db.hideBackground then
         SetupAllFrames()
         ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
-        if db.hideTabArt then
-            for tab in pairs(chatTabs) do FitTabText(tab) end
-            ns.Hook("PanelTemplates_TabResize", FitTabText)
-        end
-    end
-
-    if db.fontStyle then
+        for tab in pairs(chatTabs) do FitTabText(tab) end
+        ns.Hook("PanelTemplates_TabResize", FitTabText)
         -- Changing the font size from the tab menu must keep our flags.
         ns.Hook("FCF_SetChatWindowFontSize", function(_, frame)
             StyleText(frame or FCF_GetCurrentChatFrame())

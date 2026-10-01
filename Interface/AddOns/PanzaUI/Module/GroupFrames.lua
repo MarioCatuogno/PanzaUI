@@ -1,10 +1,11 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
-    Text style, server-less names and percentage-only health text for the
-    compact party/raid frames. PanzaUI absorb, heal prediction and aggro
-    border textures, optional over-absorb glow. Group border fitted at the bottom.
-    Role icons: optional HD icons, and hidden icons shown again when the role
-    becomes known (Blizzard misses it on reload).
+    Refined style (outlined text, clean names, health as a percentage),
+    refined overlays (absorb, heal prediction and aggro border textures, no
+    over-absorb glow) and HD role icons (also on the Player frame) for the
+    compact party/raid frames.
+    Always on: hidden role icons shown again when the role becomes known
+    (Blizzard misses it on reload), group border fitted at the bottom.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -12,28 +13,31 @@ local IsSecret = ns.IsSecret
 local GF = ns:RegisterModule("GroupFrames", {
     title = "Party & Raid Frames",
     defaults = {
-        fontStyle   = true,
-        percentText = true,
-        hideServer  = true,
+        style       = true,
+        overlays    = true,
         hdRoleIcons = true,
-        absorbTexture = true,
-        aggroBorder   = true,
-        healPredTexture = true,
-        hideOverAbsorb  = true,
     },
     options = {
-        { header = "Style" },
-        { key = "fontStyle", label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to names and status text (Dead, Offline, ...) on party and raid frames. Requires Reload UI." },
-        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain white percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
-        { header = "Features" },
-        { key = "hdRoleIcons", label = "HD role icons", tooltip = "Use Blizzard's large, high-resolution role icons (like the dungeon finder ready popup) on party and raid frames. Requires Reload UI." },
-        { key = "absorbTexture", label = "PanzaUI absorb texture", tooltip = "Show shields/absorbs on party and raid health bars with PanzaUI's own texture instead of Blizzard's striped one. Requires Reload UI." },
-        { key = "aggroBorder",   label = "PanzaUI aggro border",   tooltip = "Replace the aggro (threat) border of party and raid frames with a thinner PanzaUI border, colored by threat like Blizzard's. Requires Reload UI." },
-        { key = "healPredTexture", label = "PanzaUI heal prediction", tooltip = "Show incoming heals on party and raid health bars with the PanzaUI texture, in Blizzard's colors. Requires Reload UI." },
-        { key = "hideOverAbsorb",  label = "Hide over-absorb glow",   tooltip = "Hide the bright glow at the end of party and raid health bars shown when shields exceed the missing health. Requires Reload UI." },
-        { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name on party and raid frames: no server, and no * mark on NPC followers. Requires Reload UI." },
+        { key = "style", label = "Refined style", reload = true,
+          tooltip = "Polish the look of party and raid frames.",
+          bullets = { "Outlined text", "Names without server", "Health as a simple percentage" } },
+        { key = "overlays", label = "Refined overlays", reload = true,
+          tooltip = "Use cleaner textures on party and raid health bars.",
+          bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
+        { key = "hdRoleIcons", label = "HD role icons", reload = true,
+          tooltip = "Use Blizzard's high-resolution role icons.",
+          bullets = { "Party and raid frames", "Player frame" } },
     },
 })
+
+function GF:Migrate(db)
+    ns.MergeOptions(db, "style", db, "fontStyle", "percentText", "hideServer")
+    ns.MergeOptions(db, "overlays", db, "absorbTexture", "aggroBorder", "healPredTexture", "hideOverAbsorb")
+end
+
+--------------------------------------------------------------------------------
+-- Refined style: outlined name and status text, clean names, percentage text.
+--------------------------------------------------------------------------------
 
 -- Name + status text of one compact frame (member or pet).
 local function StyleFrame(frame)
@@ -84,6 +88,7 @@ local function UpdateStatusText(frame)
     ns.SetPercentText(text, unit, false)
 end
 
+--------------------------------------------------------------------------------
 -- Role icons. Blizzard sets them only on a full frame update or on
 -- PLAYER_ROLES_ASSIGNED: when the role isn't known yet at that moment (reload,
 -- joining a group, roster changes) the icon stays hidden, and after a reload
@@ -92,6 +97,7 @@ end
 -- "HD role icons" Blizzard's large icons (GetIconForRole) replace the small
 -- ones after each Blizzard update. Vehicle / main tank icons are left alone,
 -- Blizzard's "Display role icon" setting is respected, secret roles skipped.
+--------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
 local hdRoles
 
@@ -118,6 +124,21 @@ local function UpdateRoleIcon(frame)
     if not (icon and icon:IsShown()) then return end
     local role = KnownRole(frame)
     if role and icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
+end
+
+-- Player frame role icon (PlayerFrame_UpdateRolesAssigned sets a "tiny"
+-- atlas per role): replaced with the HD one right after.
+local TINY_ROLE_ATLASES = {
+    ["roleicon-tiny-tank"]   = "TANK",
+    ["roleicon-tiny-healer"] = "HEALER",
+    ["roleicon-tiny-dps"]    = "DAMAGER",
+}
+
+local function UpdatePlayerRoleIcon()
+    local icon = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.RoleIcon
+    if not (icon and icon:IsShown() and GetIconForRole) then return end
+    local role = TINY_ROLE_ATLASES[icon:GetAtlas()]
+    if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
 end
 
 -- Icon size: Blizzard reuses the icon's current height (GetHeight). Right
@@ -161,13 +182,15 @@ roleEvents:SetScript("OnEvent", function()
     C_Timer.After(1, FixRoleIcons) -- one pending check at a time
 end)
 
--- Absorb fill and aggro border. Blizzard sets the absorb atlases in
--- DefaultCompactUnitFrameSetup (re-applied after it) and the aggro border in
--- the frame template; afterwards it only shows/hides and colors them, so our
--- textures keep Blizzard's sizing and threat colors. The aggro border is
--- 9-sliced: constant thickness whatever the frame size. Widget calls only.
+--------------------------------------------------------------------------------
+-- Refined overlays: absorb fill, heal prediction, aggro border, over-absorb
+-- glow. Blizzard sets the absorb atlases in DefaultCompactUnitFrameSetup
+-- (re-applied after it) and the aggro border in the frame template;
+-- afterwards it only shows/hides and colors them, so our textures keep
+-- Blizzard's sizing and threat colors. The aggro border is 9-sliced:
+-- constant thickness whatever the frame size. Widget calls only.
+--------------------------------------------------------------------------------
 local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
-local useAbsorb, useAggro, useHealPred, hideOverAbsorb
 local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
 
 -- Heal prediction: Blizzard uses plain color fills (set in the setup): our
@@ -179,20 +202,18 @@ local function StyleHealPrediction(bar, color)
     bar:SetVertexColor(color:GetRGBA())
 end
 
-local function StyleExtras(frame)
+local function StyleOverlays(frame)
     if not frame or frame:IsForbidden() then return end
-    if useAbsorb and frame.totalAbsorb then
+    if frame.totalAbsorb then
         frame.totalAbsorb:SetTexture(MEDIA .. "PanzaUI_absorb.tga", "CLAMP", "CLAMP")
         frame.totalAbsorb:SetTexCoord(0, 1, 0, 1)
         if frame.totalAbsorbOverlay then frame.totalAbsorbOverlay:SetAlpha(0) end -- stripes
     end
-    if useHealPred then
-        StyleHealPrediction(frame.myHealPrediction, CUF_MY_HEAL_PREDICTION_COLOR)
-        StyleHealPrediction(frame.otherHealPrediction, CUF_OTHER_HEAL_PREDICTION_COLOR)
-    end
+    StyleHealPrediction(frame.myHealPrediction, CUF_MY_HEAL_PREDICTION_COLOR)
+    StyleHealPrediction(frame.otherHealPrediction, CUF_OTHER_HEAL_PREDICTION_COLOR)
     -- Over-absorb glow: Blizzard only shows/hides it, alpha 0 keeps it hidden.
-    if hideOverAbsorb and frame.overAbsorbGlow then frame.overAbsorbGlow:SetAlpha(0) end
-    local aggro = useAggro and frame.aggroHighlight
+    if frame.overAbsorbGlow then frame.overAbsorbGlow:SetAlpha(0) end
+    local aggro = frame.aggroHighlight
     if aggro then
         aggro:SetTexture(MEDIA .. "PanzaUI_aggro.tga")
         aggro:SetTexCoord(0, 1, 0, 1)
@@ -203,10 +224,12 @@ local function StyleExtras(frame)
     end
 end
 
+--------------------------------------------------------------------------------
 -- Group border (party frame and raid groups, Edit Mode "Display Border"):
 -- Blizzard's panel reaches 5 px below the last member, leaving a visible gap
 -- at the bottom. Its texture (not the frame: combat-safe) is pulled up 0.6 px
 -- (more uncovers the bottom corners of the last member).
+--------------------------------------------------------------------------------
 local function FitGroupBorder(group)
     local border = group and group.borderFrame
     local bg = border and border.Background
@@ -223,28 +246,35 @@ local function SetupGroupBorders()
     ns.Hook("CompactRaidGroup_GenerateForGroup", function(index) FitGroupBorder(_G["CompactRaidGroup" .. tostring(index)]) end)
 end
 
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
 function GF:OnEnable()
-    SetupGroupBorders()
     local db = self.db
-    useAbsorb, useAggro, useHealPred, hideOverAbsorb = db.absorbTexture, db.aggroBorder, db.healPredTexture, db.hideOverAbsorb
-    if useAbsorb or useAggro or useHealPred or hideOverAbsorb then
-        ns.ForEachCompactFrame(StyleExtras)
-        ns.Hook("DefaultCompactUnitFrameSetup", StyleExtras)
-    end
+    SetupGroupBorders()
+
     roleEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
     roleEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
     roleEvents:RegisterEvent("PLAYER_ROLES_ASSIGNED")
-    if self.db.hdRoleIcons then
+    if db.hdRoleIcons then
         hdRoles = true
         ns.Hook("CompactUnitFrame_UpdateRoleIcon", UpdateRoleIcon)
         ns.ForEachCompactFrame(UpdateRoleIcon)
+        ns.Hook("PlayerFrame_UpdateRolesAssigned", UpdatePlayerRoleIcon)
+        UpdatePlayerRoleIcon()
     end
-    if self.db.hideServer then ns.Hook("CompactUnitFrame_UpdateName", UpdateName) end
-    if self.db.percentText and CurveConstants and UnitHealthPercent then
+
+    if db.overlays then
+        ns.ForEachCompactFrame(StyleOverlays)
+        ns.Hook("DefaultCompactUnitFrameSetup", StyleOverlays)
+    end
+
+    if not db.style then return end
+    ns.Hook("CompactUnitFrame_UpdateName", UpdateName)
+    if CurveConstants and UnitHealthPercent then
         ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)
         ns.ForEachCompactFrame(UpdateStatusText)
     end
-    if not self.db.fontStyle then return end
     -- Blizzard (re)applies fonts in these setup functions (new frames and
     -- option changes): restyle right after. Only widget calls, no fields
     -- written, secret sizes skipped (taint-safe).

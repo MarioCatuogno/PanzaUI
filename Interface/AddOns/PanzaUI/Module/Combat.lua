@@ -1,52 +1,94 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Combat
-    Personal Resource Display: text style, centered text, percentage-only
-    health/power text (always shown, like Player/Target, regardless of the
-    Edit Mode "Show Bar Text" setting); alternate power bar text (stagger,
-    ebon might, mana in forms...) always shown too.
-    Cooldown Manager: action bar style for the icons of every viewer, outlined
-    text, dynamic layout for tracked buffs (centered) and tracked bars
-    (bottom-up).
-    Damage Meter: action bar style for the class/spec and spell icons,
-    outlined text on the bars.
+    Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
+    icon zoom of the player's auras.
+    Cooldown Manager: refined style (rounded icon borders, outlined text),
+    dynamic layout of tracked buffs (centered) and bars (bottom-up).
+    Damage Meter: refined style (rounded icon borders, outlined text).
+    Personal Resource Display: refined style (outlined, centered text, health
+    and power as a percentage, alternate bar value always shown).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
--- Module key kept from the old "Personal Resource Display" module, so saved
--- settings stay.
+-- Module key kept from the old "Personal Resource Display" module (saved
+-- variables).
 local CB = ns:RegisterModule("PersonalResource", {
     title = "Combat",
     defaults = {
-        fontStyle     = true,
-        centerText    = true,
-        percentText   = true,
-        altText       = true,
-        cdmIconStyle  = true,
-        cdmFontStyle  = true,
-        cdmDynamic    = true,
-        dmIconStyle   = true,
-        dmFontStyle   = true,
+        auraStyle    = true,
+        auraIconZoom = 5,
+        cdmStyle     = true,
+        cdmDynamic   = true,
+        dmStyle      = true,
+        prdStyle     = true,
     },
     options = {
-        { header = "Personal Resource Display" },
-        { key = "fontStyle",    label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the bar text. Requires Reload UI." },
-        { key = "centerText",   label = "Center text",          tooltip = "Center the text on the bars. Requires Reload UI." },
-        { key = "percentText",  label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), with one decimal below 100, like the Player and Target frames. Hidden at 0. Requires Reload UI." },
-        { key = "altText",      label = "Always show alternate bar text", tooltip = "Always show the value on the alternate power bar (e.g. Monk Stagger, Evoker Ebon Might, mana in shapeshift forms), not only on mouseover. Class resources shown as icons (chi, shards...) have no text. Requires Reload UI." },
+        { header = "Buffs & Debuffs" },
+        { key = "auraStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of buff and debuff icons.",
+          bullets = { "Rounded icon borders", "Outlined text" } },
+        { key = "auraIconZoom", label = "Icon zoom",
+          tooltip = "Crop the edges of buff and debuff icons. 0 = off.",
+          slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { header = "Cooldown Manager" },
-        { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
-        { key = "cdmFontStyle", label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the Cooldown Manager texts: tracked bar names and durations, stacks, charges and cooldown numbers. Requires Reload UI." },
-        { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },
+        { key = "cdmStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the Cooldown Manager.",
+          bullets = { "Rounded icon borders", "Outlined text" } },
+        { key = "cdmDynamic", label = "Dynamic layout", reload = true,
+          tooltip = "Keep tracked buffs and bars packed with no gaps.",
+          bullets = { "Buff icons grow from the center", "Buff bars grow from the bottom up" } },
         { header = "Damage Meter" },
-        { key = "dmIconStyle",  label = "Action bar style",     tooltip = "Give the Damage Meter icons (class/spec and spells) the same rounded frame as action buttons. Requires Reload UI." },
-        { key = "dmFontStyle",  label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the names and values on the Damage Meter bars. Requires Reload UI." },
+        { key = "dmStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the Damage Meter.",
+          bullets = { "Rounded icon borders", "Outlined text" } },
+        { header = "Personal Resource Display" },
+        { key = "prdStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the Personal Resource Display.",
+          bullets = { "Outlined, centered text", "Health and power as a percentage", "Alternate bar value always shown" } },
     },
 })
+
+-- Old saved values: Buffs & Debuffs were their own module (and before that
+-- part of Miscellaneous); the other sections had one option per detail.
+function CB:Migrate(db, saved)
+    ns.MergeOptions(db, "auraStyle", saved.Auras, "style")
+    ns.MergeOptions(db, "auraIconZoom", saved.Auras, "iconZoom")
+    ns.MergeOptions(db, "auraStyle", saved.Miscellaneous, "auraIconStyle", "auraFontStyle")
+    ns.MergeOptions(db, "auraIconZoom", saved.Miscellaneous, "auraIconZoom")
+    ns.MergeOptions(db, "prdStyle", db, "fontStyle", "centerText", "percentText", "altText")
+    ns.MergeOptions(db, "cdmStyle", db, "cdmIconStyle", "cdmFontStyle")
+    ns.MergeOptions(db, "dmStyle", db, "dmIconStyle", "dmFontStyle")
+end
+
+--------------------------------------------------------------------------------
+-- Buffs & Debuffs. Blizzard creates all aura buttons once at load
+-- (BuffFrame/DebuffFrame.auraFrames), so they are styled once: no hooks.
+-- Only widget calls on the buttons, no Blizzard fields are written.
+--------------------------------------------------------------------------------
+local function ForEachAuraButton(func)
+    for _, container in ipairs({ BuffFrame, DebuffFrame }) do
+        for _, button in ipairs(container.auraFrames or {}) do
+            -- Skip private-aura anchors (isAuraAnchor): their Icon is a Frame, not a texture.
+            local icon = button.Icon
+            if not button.isAuraAnchor and icon and icon.AddMaskTexture then func(button, icon) end
+        end
+    end
+end
+
+local function ZoomAuraIcon(_, icon)
+    ns.ZoomIcon(icon, CB.db.auraIconZoom)
+end
+
+local function StyleAuraButton(button, icon)
+    ns.StyleIcon(icon, button)
+    ns.StyleFont(button.Count)
+    ns.StyleFont(button.Duration)
+end
 
 --------------------------------------------------------------------------------
 -- Personal Resource Display
 --------------------------------------------------------------------------------
-local function SetupPRD(db)
+local function SetupPRD()
     local frame = PersonalResourceDisplayFrame
     if not frame then return end
 
@@ -58,8 +100,8 @@ local function SetupPRD(db)
     for i = 1, 3 do
         local bar = bars[i]
         if bar then
-            if db.fontStyle then ns.StyleBarText(bar) end
-            if db.centerText and bar.TextString then
+            ns.StyleBarText(bar)
+            if bar.TextString then
                 bar.TextString:ClearAllPoints()
                 bar.TextString:SetPoint("CENTER")
                 bar.TextString:SetJustifyH("CENTER")
@@ -68,10 +110,8 @@ local function SetupPRD(db)
     end
 
     -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own value.
-    if db.percentText then
-        ns.PercentText(health, false, "player")
-        ns.PercentText(power,  true,  "player")
-    end
+    ns.PercentText(health, false, "player")
+    ns.PercentText(power,  true,  "player")
 end
 
 -- Alternate power bar text always shown. Blizzard shows it only on mouseover
@@ -299,26 +339,35 @@ end
 --------------------------------------------------------------------------------
 function CB:OnEnable()
     local db = self.db
-    if db.fontStyle or db.centerText or db.percentText or db.altText then
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function()
+        if db.auraStyle then ForEachAuraButton(StyleAuraButton) end
+        ForEachAuraButton(ZoomAuraIcon)
+    end)
+    if db.prdStyle then
+        local function Setup()
+            SetupPRD()
+            SetupAltText()
+        end
         if PersonalResourceDisplayFrame then
-            SetupPRD(db)
-            if db.altText then SetupAltText() end
+            Setup()
         else
-            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", function()
-                SetupPRD(db)
-                if db.altText then SetupAltText() end
-            end)
+            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", Setup)
         end
     end
-    if db.cdmIconStyle then
+    if db.cdmStyle then
         ns.OnCooldownItem(StyleItem)
-    end
-    if db.cdmFontStyle then
         ns.OnCooldownItem(StyleItemText)
     end
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
-    if db.dmIconStyle then ns.OnDamageMeterEntry(StyleEntryIcon) end
-    if db.dmFontStyle then ns.OnDamageMeterEntry(StyleEntryText) end
+    if db.dmStyle then
+        ns.OnDamageMeterEntry(StyleEntryIcon)
+        ns.OnDamageMeterEntry(StyleEntryText)
+    end
+end
+
+-- Live: aura icon zoom.
+function CB:OnOptionChanged(key)
+    if key == "auraIconZoom" then ForEachAuraButton(ZoomAuraIcon) end
 end

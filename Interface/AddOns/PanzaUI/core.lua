@@ -119,14 +119,19 @@ end
 -- Same proportions as ActionButtonTemplate (icon = 45x45 button): the mask
 -- keeps its native atlas size centered on the icon (it has transparent
 -- padding), the frame is 46x45 at the icon's top-left.
+-- followIcon: the size is followed through the icon's own SetSize instead of
+-- the parent's scripts. Midnight: buttons with secret aspects (e.g. aura
+-- buttons of other addons' nameplates) refuse new script handlers.
+-- Forbidden frames are skipped (nil is returned).
 -- Only widget calls, no Blizzard fields are written (taint-safe).
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
 
-function ns.StyleIcon(icon, parent)
-    if not (icon and icon.AddMaskTexture) then return end
+function ns.StyleIcon(icon, parent, followIcon)
+    if not (icon and icon.AddMaskTexture) or icon:IsForbidden() then return end
     parent = parent or icon:GetParent()
+    if not parent or parent:IsForbidden() then return end
     local info = C_Texture.GetAtlasInfo(ICON_MASK)
 
     local mask = parent:CreateMaskTexture()
@@ -163,8 +168,12 @@ function ns.StyleIcon(icon, parent)
         frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w > 0 and w / 45 or 0, 0) -- 46x45 like action buttons
     end
     Resize()
-    parent:HookScript("OnSizeChanged", Resize)
-    parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
+    if followIcon then
+        hooksecurefunc(icon, "SetSize", Resize)
+    else
+        parent:HookScript("OnSizeChanged", Resize)
+        parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
+    end
     return frame, mask
 end
 
@@ -623,11 +632,21 @@ end
 
 --------------------------------------------------------------------------------
 -- Module registry
---   info = { title, defaults = { key = value, ... },
---            options = { { header = "Section" }, { key, label, tooltip [, slider | dropdown] }, ... } }
---   info.main = true puts the options on the main page instead of a sub-page.
+--   info = {
+--       title    = "Page title",
+--       main     = true,                     -- options on the main page
+--       defaults = { key = value, ... },
+--       options  = {
+--           { header = "Section" },
+--           { key, label, tooltip, bullets = { ... }, reload = true,
+--             slider = { min, max, step, suffix } | dropdown = list or func },
+--       },
+--   }
+--   Sections (by header) and the options inside them are listed
+--   alphabetically.
 --   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value),
---                     module:Migrate(db) (convert old saved values at load)
+--                     module:Migrate(db, saved) (convert old saved values;
+--                     saved = every module's table, old modules included).
 --------------------------------------------------------------------------------
 function ns:RegisterModule(key, info)
     info.key = key
@@ -635,26 +654,51 @@ function ns:RegisterModule(key, info)
     return info
 end
 
+-- Migration helper: newKey takes the value of older options merged into it.
+-- Booleans: on if any of them was on. Other types: the first one saved.
+-- Nothing happens once newKey is saved, or when no old key is found.
+function ns.MergeOptions(db, newKey, old, ...)
+    if db[newKey] ~= nil or not old then return end
+    local value
+    for i = 1, select("#", ...) do
+        local v = old[(select(i, ...))]
+        if type(v) == "boolean" then
+            value = value or v
+        elseif v ~= nil and value == nil then
+            value = v
+        end
+    end
+    if value ~= nil then db[newKey] = value end
+end
+
 --------------------------------------------------------------------------------
--- Saved variables: fill defaults, drop obsolete keys.
+-- Saved variables. Migrations run first, while the tables of removed or
+-- renamed modules still exist; then those tables, unknown keys and values
+-- of the wrong type are dropped, and missing values get their defaults.
 --------------------------------------------------------------------------------
 local function InitDB()
     PanzaUI_DB = PanzaUI_DB or {}
+    local saved = PanzaUI_DB
+
+    for _, m in ipairs(ns.modules) do
+        saved[m.key] = saved[m.key] or {}
+        if m.Migrate then m:Migrate(saved[m.key], saved) end
+    end
+
     local known = {}
     for _, m in ipairs(ns.modules) do known[m.key] = true end
-    for k in pairs(PanzaUI_DB) do
-        if not known[k] then PanzaUI_DB[k] = nil end -- removed/renamed modules
+    for k in pairs(saved) do
+        if not known[k] then saved[k] = nil end
     end
+
     for _, m in ipairs(ns.modules) do
-        local db = PanzaUI_DB[m.key] or {}
-        if m.Migrate then m:Migrate(db) end -- convert old saved values first
+        local db = saved[m.key]
         for k in pairs(db) do
             if m.defaults[k] == nil then db[k] = nil end
         end
         for k, v in pairs(m.defaults) do
-            if type(db[k]) ~= type(v) then db[k] = v end -- missing or type changed
+            if type(db[k]) ~= type(v) then db[k] = v end
         end
-        PanzaUI_DB[m.key] = db
         m.db = db
     end
 end
@@ -665,6 +709,16 @@ end
 local function AddReloadButton(layout)
     layout:AddInitializer(CreateSettingsButtonInitializer(
         "", "Reload UI", ReloadUI, "Reload the interface to apply changes.", false))
+end
+
+-- Tooltip: summary line, bullet list, reload note. Built once per option.
+local function BuildTooltip(opt)
+    local text = opt.tooltip or ""
+    if opt.bullets then
+        for _, line in ipairs(opt.bullets) do text = text .. "\n• " .. line end
+    end
+    if opt.reload then text = text .. "\n\nRequires Reload UI." end
+    return text
 end
 
 -- Checkbox (boolean default), slider (opt.slider = { min, max, step, suffix })
@@ -686,6 +740,7 @@ local function AddOption(category, m, opt)
         end)
     end
 
+    local tooltip = BuildTooltip(opt)
     if opt.dropdown then
         local function GetOptions()
             local container = Settings.CreateControlTextContainer()
@@ -693,17 +748,21 @@ local function AddOption(category, m, opt)
             for _, o in ipairs(list) do container:Add(o[1], o[2], o[3]) end
             return container:GetData()
         end
-        return Settings.CreateDropdown(category, setting, GetOptions, opt.tooltip)
+        return Settings.CreateDropdown(category, setting, GetOptions, tooltip)
     end
     if not opt.slider then
-        return Settings.CreateCheckbox(category, setting, opt.tooltip)
+        return Settings.CreateCheckbox(category, setting, tooltip)
     end
     local sl = opt.slider
     local sliderOptions = Settings.CreateSliderOptions(sl.min, sl.max, sl.step or 1)
     sliderOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, function(value)
         return value .. (sl.suffix or "")
     end)
-    return Settings.CreateSlider(category, setting, sliderOptions, opt.tooltip)
+    return Settings.CreateSlider(category, setting, sliderOptions, tooltip)
+end
+
+local function ByLabel(a, b)
+    return a.label:lower() < b.label:lower()
 end
 
 local function BuildSettings()
@@ -712,13 +771,29 @@ local function BuildSettings()
     local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Version: " .. version))
 
+    -- Sections are listed alphabetically by header (options before the first
+    -- header stay on top), and so are the options inside each section.
     local function AddOptions(cat, lay, m)
+        local sections, current = {}, { options = {} }
+        sections[1] = current
         for _, opt in ipairs(m.options) do
             if opt.header then
-                lay:AddInitializer(CreateSettingsListSectionHeaderInitializer(opt.header))
+                current = { header = opt.header, label = opt.header, options = {} }
+                sections[#sections + 1] = current
             else
-                AddOption(cat, m, opt)
+                current.options[#current.options + 1] = opt
             end
+        end
+        local untitled = table.remove(sections, 1)
+        table.sort(sections, ByLabel)
+        table.insert(sections, 1, untitled)
+
+        for _, section in ipairs(sections) do
+            if section.header then
+                lay:AddInitializer(CreateSettingsListSectionHeaderInitializer(section.header))
+            end
+            table.sort(section.options, ByLabel)
+            for _, opt in ipairs(section.options) do AddOption(cat, m, opt) end
         end
     end
 

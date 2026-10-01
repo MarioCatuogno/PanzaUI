@@ -3,19 +3,18 @@
 ## Notes: Lightweight, modular enhancements for the default UI.
 ## Author: Panzarotto
 ## IconTexture: 572034
-## Version: 2.0.135
+## Version: 2.0.142
 ## SavedVariables: PanzaUI_DB
-## OptionalDeps: LibSharedMedia-3.0, SharedMedia, SharedMedia_MyMedia
+## OptionalDeps: LibSharedMedia-3.0, SharedMedia, SharedMedia_MyMedia, Platynator
 
 core.lua
 Module\General.lua
 Module\Chat.lua
 Module\ActionBars.lua
-Module\QuestTracker.lua
 Module\UnitFrames.lua
 Module\GroupFrames.lua
 Module\Combat.lua
-Module\Minimap.lua
-Module\Bags.lua
+Module\QuestMinimap.lua
+Module\Items.lua
 Module\Tooltips.lua
 Module\Miscellaneous.lua

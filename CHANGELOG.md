@@ -7,16 +7,17 @@ Here's a list of all the features included in this first release!
 ### 🛠️ Core
 
 * Action Bars - Added a visibility option for each bar, including Pet and Stance bars (default, mouseover, Skyriding only, no Skyriding or always hidden)
+* Action Bars - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden)
 * Action Bars - Added an icon zoom slider to hide the old borders of classic icons
 * Action Bars - Added an option to hide macro names and keybindings
 * Action Bars - Added the outlined font to keybindings, stack counts and macro names
 * Action Bars - Bars are always shown in Edit Mode and while dragging a spell
-* Bags - Added an icon zoom slider
-* Bags - Added the item level on equipment, colored by item quality
-* Bags - Added the outlined font to item counts and item levels
-* Buffs/Debuffs - Added an icon zoom slider
-* Buffs/Debuffs - Added the action bar style to buff and debuff icons
-* Buffs/Debuffs - Added the outlined font to stack counts and durations
+* Bags & Items - Added an icon zoom slider
+* Bags & Items - Added the auto-repair with personal gold
+* Bags & Items - Added the auto-sell of junk items at merchants
+* Bags & Items - Added the item level on equipment, colored by item quality
+* Bags & Items - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
+* Bags & Items - Added the outlined font to item counts and item levels
 * Chat - Added the outlined font to chat text, tab names and input box
 * Chat - Added timestamps (hours:minutes) to every message
 * Chat - Hidden the Combat Log tab
@@ -24,9 +25,12 @@ Here's a list of all the features included in this first release!
 * Chat - Removed the background art from chat tabs, now showing tab names in full
 * Chat - Removed the border of the input box
 * Chat - Removed the chat window background shown on mouseover
+* Combat - Added an icon zoom slider to buff and debuff icons
+* Combat - Added the action bar style to buff and debuff icons
 * Combat - Added the action bar style to Cooldown Manager icons
 * Combat - Added the action bar style to Damage Meter icons
 * Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
+* Combat - Added the outlined font to buff and debuff stack counts and durations
 * Combat - Added the outlined font to Cooldown Manager texts (tracked bars, stacks, charges, cooldowns)
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
@@ -37,20 +41,19 @@ Here's a list of all the features included in this first release!
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
 * Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
 * Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD and Absorb), also available in SharedMedia
-* Minimap - Added the outlined font to zone name and clock
-* Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
-* Party & Raid Frames - Added the option for Blizzard's HD role icons
+* Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
+* Miscellaneous - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
+* Party & Raid Frames - Added the option for Blizzard's HD role icons, also on the Player frame
 * Party & Raid Frames - Added the outlined font to names and status text
 * Party & Raid Frames - Added the PanzaUI absorb, heal prediction and aggro border textures
 * Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
-* QoL - Added the auto-repair with personal gold
-* QoL - Added the auto-sell of junk items at merchants
-* QoL - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
-* Quest Tracker - Added the outlined font to the tracker text
-* Quest Tracker - Added the quest counter (e.g. 20/35) in the tracker header
-* Quest Tracker - Collapsed the tracker during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), reopening it afterwards
+* Quest & Minimap - Added the outlined font to the minimap zone name and clock
+* Quest & Minimap - Added the outlined font to the Quest Tracker text
+* Quest & Minimap - Added the quest counter (e.g. 20/35) in the tracker header
+* Quest & Minimap - Collapsed the tracker during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), reopening it afterwards
+* Quest & Minimap - Removed the backgrounds of the minimap zone name, tracking and calendar buttons
 * Tooltips - Added the ID of items and spells
 * Tooltips - Added the item level of players (other players are inspected automatically)
 * Tooltips - Added the Mythic+ rating of players, in the rating color
@@ -74,7 +77,6 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name
-* Various - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden)
 
 ### 🧮 Class CDM
 

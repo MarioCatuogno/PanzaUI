@@ -1,30 +1,87 @@
 --[[----------------------------------------------------------------------------
-    PanzaUI - Quest Tracker
-    Text style, auto-collapse in instances (boss fights, Mythic+, combat in
-    raids and dungeons) and quest count for the Objective Tracker.
+    PanzaUI - Quest & Minimap
+    Minimap: refined style (outlined zone text and clock, no zone / tracking /
+    calendar backgrounds).
+    Quest Tracker: refined style (outlined text), auto-collapse in instances
+    (boss fights, Mythic+, combat in raids and dungeons) and quest count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
-local QT = ns:RegisterModule("QuestTracker", {
-    title = "Quest Tracker",
+local QM = ns:RegisterModule("QuestMinimap", {
+    title = "Quest & Minimap",
     defaults = {
-        fontStyle      = true,
+        minimapStyle   = true,
+        questStyle     = true,
         combatCollapse = true,
         questCount     = true,
     },
     options = {
-        { header = "Style" },
-        { key = "fontStyle",      label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to quest tracker text. Requires Reload UI." },
-        { header = "Features" },
-        { key = "combatCollapse", label = "Collapse in instances", tooltip = "Collapse the tracker during dungeon and raid boss fights, for the whole Mythic+ run, and in combat in raids (not LFR) and dungeons (not Follower dungeons). It is expanded again afterwards." },
-        { key = "questCount",     label = "Show quest count",    tooltip = "Show the number of quests in your log out of the maximum (e.g. 20/35) in the tracker header." },
+        { header = "Minimap" },
+        { key = "minimapStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the minimap.",
+          bullets = { "Outlined text", "No button and zone backgrounds" } },
+        { header = "Quest Tracker" },
+        { key = "questStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the Quest Tracker.",
+          bullets = { "Outlined text" } },
+        { key = "combatCollapse", label = "Collapse in instances",
+          tooltip = "Collapse the tracker during dungeon, raid and Mythic+ combat.",
+          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Expanded again afterwards" } },
+        { key = "questCount", label = "Quest count",
+          tooltip = "Show the number of quests in your log.",
+          bullets = { "In the tracker header (e.g. 20/35)" } },
     },
 })
 
+-- Formerly the Minimap and Quest Tracker modules.
+function QM:Migrate(db, saved)
+    local mm, qt = saved.Minimap, saved.QuestTracker
+    ns.MergeOptions(db, "minimapStyle", mm, "style", "fontStyle", "hideZoneBackground", "hideTrackingBackground", "hideCalendarBackground")
+    ns.MergeOptions(db, "questStyle", qt, "style", "fontStyle")
+    ns.MergeOptions(db, "combatCollapse", qt, "combatCollapse")
+    ns.MergeOptions(db, "questCount", qt, "questCount")
+end
+
 --------------------------------------------------------------------------------
--- Text style: every tracker text inherits these two shared font objects,
--- so styling them covers headers, quest titles and objectives with no hooks
--- on layout updates.
+-- Minimap backgrounds: hidden with alpha only. These regions are anchor
+-- points for other elements (zone text, tracking button), so they must stay
+-- in place.
+--------------------------------------------------------------------------------
+
+-- Calendar: every texture of the button except its icon states and the
+-- invite/alarm notifications.
+local function CalendarBackgrounds()
+    local list, f = {}, GameTimeFrame
+    if not f then return list end
+    local keep = {
+        [f:GetNormalTexture() or f] = true, [f:GetPushedTexture() or f] = true, [f:GetHighlightTexture() or f] = true,
+    }
+    for _, name in ipairs({ "GameTimeCalendarInvitesTexture", "GameTimeCalendarInvitesGlow", "GameTimeCalendarEventAlarmTexture" }) do
+        if _G[name] then keep[_G[name]] = true end
+    end
+    for _, region in ipairs({ f:GetRegions() }) do
+        if region:IsObjectType("Texture") and not keep[region] then list[#list + 1] = region end
+    end
+    return list
+end
+
+local function Backgrounds()
+    local list = CalendarBackgrounds()
+    list[#list + 1] = MinimapCluster.BorderTop                                         -- zone text
+    list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background -- tracking button
+    return list
+end
+
+-- Applied live (alpha), the text style needs a reload.
+local function ApplyBackgrounds()
+    local alpha = QM.db.minimapStyle and 0 or 1
+    for _, region in pairs(Backgrounds()) do region:SetAlpha(alpha) end
+end
+
+--------------------------------------------------------------------------------
+-- Quest Tracker text style: every tracker text inherits these two shared
+-- font objects, so styling them covers headers, quest titles and objectives
+-- with no hooks on layout updates.
 --------------------------------------------------------------------------------
 local FONTS = { "ObjectiveTrackerHeaderFont", "ObjectiveTrackerLineFont" }
 
@@ -33,7 +90,8 @@ local function StyleFonts()
 end
 
 --------------------------------------------------------------------------------
--- Auto-collapse. The tracker is collapsed while any of these is true:
+-- Quest Tracker auto-collapse. The tracker is collapsed while any of these
+-- is true:
 --  * a dungeon/raid boss encounter is in progress;
 --  * a Mythic+ run is active (the whole run);
 --  * the player is in combat in a raid (not LFR) or dungeon (not Follower).
@@ -106,13 +164,10 @@ local function SetCombatCollapse(on)
 end
 
 --------------------------------------------------------------------------------
--- Module API
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- Quest count (e.g. 20/35) in the "All Objectives" header, same font and
--- color as its title, right before the minimize button. Only quests that
--- count toward the log limit (no headers, hidden, world/bonus or bounty
--- quests). Updated on quest log changes, only while the option is on.
+-- Quest Tracker quest count (e.g. 20/35) in the "All Objectives" header,
+-- same font and color as its title, right before the minimize button. Only
+-- quests that count toward the log limit (no headers, hidden, world/bonus or
+-- bounty quests). Updated on quest log changes, only while the option is on.
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -176,22 +231,39 @@ local function SetQuestCount(on)
     end
 end
 
-function QT:OnEnable()
-    if self.db.questCount then
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
+function QM:OnEnable()
+    local db = self.db
+
+    if db.minimapStyle then
+        ApplyBackgrounds()
+        ns.StyleFont(MinimapZoneText)
+        -- The clock lives in a load-on-demand Blizzard addon.
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
+            ns.StyleFont(TimeManagerClockTicker)
+        end)
+    end
+
+    if db.questCount then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
     end
-    if self.db.fontStyle then
+    if db.questStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
             StyleFonts()
             -- Edit Mode "Text Size" resets the font objects: restyle after it.
             ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts)
         end)
     end
-    SetCombatCollapse(self.db.combatCollapse)
+    SetCombatCollapse(db.combatCollapse)
 end
 
-function QT:OnOptionChanged(key, value)
-    if key == "combatCollapse" then
+-- Live: minimap backgrounds, auto-collapse, quest count.
+function QM:OnOptionChanged(key, value)
+    if key == "minimapStyle" then
+        ApplyBackgrounds()
+    elseif key == "combatCollapse" then
         SetCombatCollapse(value)
     elseif key == "questCount" then
         SetQuestCount(value)
