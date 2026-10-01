@@ -44,7 +44,7 @@ local TARGET_OPTIONS = {
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
-    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
+    { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar (and its Target of Target) with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
 }
 
@@ -270,7 +270,13 @@ local function SetupTargetFrame(frame, db, p)
     local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
 
-    if db[p .. "ClassColor"] then classColorBars[health] = true end
+    if db[p .. "ClassColor"] then
+        classColorBars[health] = true
+        -- Its Target of Target frame (TargetFrameToT / FocusFrameToT).
+        local tot = frame.totFrame
+        local totHealth = tot and (tot.healthbar or tot.HealthBar)
+        if totHealth then classColorBars[totHealth] = true end
+    end
 
     if db[p .. "HideAuras"] then
         frame.maxBuffs   = 0
@@ -391,7 +397,8 @@ function UF:OnEnable()
 
     if next(classColorBars) then
         -- Anything that can change a cached color: recompute on next update.
-        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE",
+        -- UNIT_TARGET: the target/focus changed its own target (Target of Target).
+        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "UNIT_TARGET", "GROUP_ROSTER_UPDATE",
                                  "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE", "PLAYER_ENTERING_WORLD" }) do
             colorEvents:RegisterEvent(event)
         end

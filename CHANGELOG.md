@@ -51,7 +51,7 @@ Here's a list of all the features included in this first release!
 * Tooltips - Added the Mythic+ rating of players, in the rating color
 * Tooltips - Colored player names with their class color
 * Tooltips - Removed the health bar from unit tooltips
-* Unit Frames - Added class color to the health bar of Player, Target and Focus (reaction color for NPCs on Target and Focus)
+* Unit Frames - Added class color to the health bar of Player, Target, Focus and their Target of Target (reaction color for NPCs)
 * Unit Frames - Added the action bar style to the cast bar icon of Target and Focus
 * Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus and Pet
 * Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
