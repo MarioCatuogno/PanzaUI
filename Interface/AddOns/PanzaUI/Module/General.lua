@@ -9,19 +9,28 @@ local _, ns = ...
 
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 local DEFAULT = ""        -- keep Blizzard's own textures
-local PANZA   = "PanzaUI" -- PanzaUI's own bar texture (selectable, not a default)
 
--- Bundled with the addon; also registered in SharedMedia so other addons can
--- use it (if a same-named texture is already registered, that one is kept).
-local PANZA_PATH = [[Interface\AddOns\PanzaUI\Media\Statusbar\PanzaUI_bar.tga]]
-if LSM then LSM:Register("statusbar", PANZA, PANZA_PATH) end
+-- PanzaUI's own bar textures (selectable, not defaults). Bundled with the
+-- addon and also registered in SharedMedia so other addons can use them (if a
+-- same-named texture is already registered, that one is kept).
+local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local PANZA = {
+    ["PanzaUI - General"] = MEDIA .. "PanzaUI_general.tga",
+    ["PanzaUI - Glass"]   = MEDIA .. "PanzaUI_glass.tga",
+    ["PanzaUI - Player"]  = MEDIA .. "PanzaUI_player.tga",
+    ["PanzaUI - Target"]  = MEDIA .. "PanzaUI_target.tga",
+    ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
+}
 
 -- Used when SharedMedia is not installed.
 local BUILTIN = {
-    [PANZA]      = PANZA_PATH,
     ["Blizzard"] = [[Interface\TargetingFrame\UI-StatusBar]],
     ["Solid"]    = [[Interface\Buttons\WHITE8X8]],
 }
+for name, path in pairs(PANZA) do
+    BUILTIN[name] = path
+    if LSM then LSM:Register("statusbar", name, path) end
+end
 
 -- Blizzard atlases usable as bar textures (StatusBar:SetStatusBarTexture
 -- takes atlas names). Not registered in SharedMedia: other addons expect
@@ -90,11 +99,15 @@ end
 local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
 
 -- 2.0.49 had a single texture for every frame: keep it for each group.
+-- Up to 2.0.110 the only own texture was "PanzaUI": now "PanzaUI - Glass".
 function GEN:Migrate(db)
     if type(db.barTexture) == "string" then
         for _, g in ipairs(GROUPS) do
             if db[g.key] == nil then db[g.key] = db.barTexture end
         end
+    end
+    for k, v in pairs(db) do
+        if v == "PanzaUI" then db[k] = "PanzaUI - Glass" end
     end
 end
 
