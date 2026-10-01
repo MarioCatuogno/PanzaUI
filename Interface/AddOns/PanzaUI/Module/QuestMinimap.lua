@@ -30,7 +30,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
     },
 })
 
--- Formerly the Minimap and Quest Tracker modules.
+-- Converts the saved values of older versions.
 function QM:Migrate(db, saved)
     local mm, qt = saved.Minimap, saved.QuestTracker
     ns.MergeOptions(db, "minimapStyle", mm, "style", "fontStyle", "hideZoneBackground", "hideTrackingBackground", "hideCalendarBackground")
@@ -39,13 +39,9 @@ function QM:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Minimap backgrounds: hidden with alpha only. These regions are anchor
--- points for other elements (zone text, tracking button), so they must stay
--- in place.
+-- Minimap backgrounds (zone text, tracking and calendar buttons), hidden
+-- with alpha only: other elements are anchored to them.
 --------------------------------------------------------------------------------
-
--- Calendar: every texture of the button except its icon states and the
--- invite/alarm notifications.
 local function CalendarBackgrounds()
     local list, f = {}, GameTimeFrame
     if not f then return list end
@@ -63,21 +59,19 @@ end
 
 local function Backgrounds()
     local list = CalendarBackgrounds()
-    list[#list + 1] = MinimapCluster.BorderTop                                         -- zone text
-    list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background -- tracking button
+    list[#list + 1] = MinimapCluster.BorderTop
+    list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background
     return list
 end
 
--- Applied live (alpha).
 local function ApplyBackgrounds()
     local alpha = QM.db.minimapStyle and 0 or 1
     for _, region in pairs(Backgrounds()) do region:SetAlpha(alpha) end
 end
 
 --------------------------------------------------------------------------------
--- Quest Tracker text style: every tracker text inherits these two shared
--- font objects, so styling them covers headers, quest titles and objectives
--- with no hooks on layout updates.
+-- Text style: the Quest Tracker's two shared font objects, and the instance
+-- texts at the top of the screen (pooled widgets, restyled after each layout).
 --------------------------------------------------------------------------------
 local FONTS = { "ObjectiveTrackerHeaderFont", "ObjectiveTrackerLineFont" }
 
@@ -85,9 +79,6 @@ local function StyleFonts()
     for _, name in ipairs(FONTS) do ns.StyleFont(_G[name]) end
 end
 
--- Instance texts at the top of the screen (UI widgets: scenario progress,
--- counters...). Widgets come from pools and set their own fonts on every
--- setup, so they are restyled after each layout of the container.
 local function StyleTopWidgets(container)
     local widgets = container.widgetFrames
     if not widgets then return end
@@ -95,14 +86,9 @@ local function StyleTopWidgets(container)
 end
 
 --------------------------------------------------------------------------------
--- Quest Tracker auto-collapse. The tracker is collapsed while any of these
--- is true:
---  * a dungeon/raid boss encounter is in progress;
---  * a Mythic+ run is active (the whole run);
---  * the player is in combat in a raid (not LFR) or dungeon (not Follower).
--- It is expanded again when none is true any more, only if we collapsed it
--- (a tracker collapsed by hand stays collapsed). Events are registered only
--- while the option is on; state is re-checked on each of them.
+-- Quest Tracker auto-collapse during boss fights, Mythic+ runs and combat in
+-- raids and dungeons (not LFR or Follower). It is expanded again only if it
+-- was collapsed here.
 --------------------------------------------------------------------------------
 local BOSS_INSTANCES  = { party = true, raid = true }
 local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR, legacy LFR, Timewalking LFR
@@ -164,18 +150,14 @@ local function SetCombatCollapse(on)
     else
         events:UnregisterAllEvents()
         inEncounter, inCombat = false, false
-        UpdateCollapse() -- expands it if we collapsed it
+        UpdateCollapse()
     end
 end
 
 --------------------------------------------------------------------------------
--- Quest Tracker quest count (e.g. 20/35) in the "All Objectives" header,
--- same font and color as its title, right before the minimize button. Only
--- quests that count toward the log limit (no headers, hidden, world/bonus or
--- bounty quests). Updated only while the option is on, when a quest enters
--- or leaves the log. QUEST_LOG_UPDATE fires every few seconds even when
--- nothing changes, and each count reads one new info table per log entry
--- (tens of KB of garbage): it is used only until the log has loaded.
+-- Quest count (e.g. 20/35) in the tracker header: only quests that count
+-- toward the log limit. Updated when quests enter or leave the log
+-- (QUEST_LOG_UPDATE fires constantly and is used only until the log loads).
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -191,7 +173,6 @@ local function CountQuests()
     return count
 end
 
--- Right before the minimize button, on the same line as the header title.
 local function PlaceCount()
     local header = ObjectiveTrackerFrame.Header
     local button = header.MinimizeButton or header
@@ -207,14 +188,12 @@ local function UpdateCount()
     PlaceCount()
     countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
 end
--- Bursts of events: count at most once per second, always after the last
--- change. Timer callback made once (no closure per event).
+-- Bursts of events: at most one count per second.
 local COUNT_EVENTS = { "QUEST_ACCEPTED", "QUEST_REMOVED", "QUEST_TURNED_IN", "QUEST_LOG_UPDATE" }
 local countPending, logLoaded = false, false
 local function DelayedCount()
     countPending = false
     UpdateCount()
-    -- Log loaded: from now on only accepted/removed quests change the count.
     if logLoaded then countEvents:UnregisterEvent("QUEST_LOG_UPDATE") end
 end
 countEvents:SetScript("OnEvent", function(_, event)
@@ -252,7 +231,6 @@ function QM:OnEnable()
 
     if ns.textStyle then
         ns.StyleFont(MinimapZoneText)
-        -- The clock lives in a load-on-demand Blizzard addon.
         EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
             ns.StyleFont(TimeManagerClockTicker)
         end)
@@ -264,7 +242,7 @@ function QM:OnEnable()
     if ns.textStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
             StyleFonts()
-            -- Edit Mode "Text Size" resets the font objects: restyle after it.
+            -- Edit Mode "Text Size" resets the font objects.
             ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts)
         end)
         local top = UIWidgetTopCenterContainerFrame
@@ -276,7 +254,7 @@ function QM:OnEnable()
     SetCombatCollapse(db.combatCollapse)
 end
 
--- Live: minimap backgrounds, auto-collapse, quest count.
+-- Live options.
 function QM:OnOptionChanged(key, value)
     if key == "minimapStyle" then
         ApplyBackgrounds()

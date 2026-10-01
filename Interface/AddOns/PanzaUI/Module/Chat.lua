@@ -27,35 +27,33 @@ function Chat:Migrate(db)
     ns.MergeOptions(db, "style", db, "fontStyle", "hideTabArt", "hideButtons", "hideEditBoxArt", "hideBackground")
 end
 
-local TIMESTAMP_FORMAT = "%H:%M "  -- Blizzard's native HH:MM format (TIMESTAMP_FORMAT_HHMM)
+local TIMESTAMP_FORMAT = "%H:%M " -- Blizzard's HH:MM format
 
+-- Tab art, input box border and window background (Blizzard's own list when
+-- available), side buttons.
 local TAB_TEXTURES = {
     "Left", "Middle", "Right",
     "ActiveLeft", "ActiveMiddle", "ActiveRight",
     "HighlightLeft", "HighlightMiddle", "HighlightRight",
 }
 
--- Chat input box border (normal + focused), as <EditBoxName><suffix> globals.
 local EDITBOX_TEXTURES = { "Left", "Mid", "Right", "FocusLeft", "FocusMid", "FocusRight" }
 
--- Chat window background (faded in by Blizzard on mouseover), as
--- <ChatFrameName><suffix> globals. Blizzard's own list is used when available.
 local BACKGROUND_TEXTURES = CHAT_FRAME_TEXTURES or {
     "Background", "TopLeftTexture", "BottomLeftTexture", "TopRightTexture", "BottomRightTexture",
     "LeftTexture", "RightTexture", "BottomTexture", "TopTexture",
 }
 
 local SIDE_BUTTONS = {
-    "QuickJoinToastButton",            -- friends / social
+    "QuickJoinToastButton",
     "ChatFrameChannelButton",
-    "ChatFrameMenuButton",             -- emotes / languages
+    "ChatFrameMenuButton",
     "ChatFrameToggleVoiceDeafenButton",
     "ChatFrameToggleVoiceMuteButton",
 }
 
 --------------------------------------------------------------------------------
--- Timestamps: uses Blizzard's own CVar, no message hooks (zero CPU per message,
--- safe with Midnight secret values).
+-- Timestamps through Blizzard's own CVar: no message hooks.
 --------------------------------------------------------------------------------
 local function SetTimestamps(on)
     local current = C_CVar.GetCVar("showTimestamps")
@@ -67,8 +65,7 @@ local function SetTimestamps(on)
 end
 
 --------------------------------------------------------------------------------
--- Combat Log (ChatFrame2): closed/reopened through Blizzard's own functions,
--- so the dock layout stays consistent and the state is saved by the game.
+-- Combat Log (ChatFrame2), closed and reopened with Blizzard's own functions.
 --------------------------------------------------------------------------------
 local function SetCombatLog(show)
     local frame = ChatFrame2
@@ -85,20 +82,17 @@ local function SetCombatLog(show)
 end
 
 --------------------------------------------------------------------------------
--- Per chat window setup (permanent and temporary/whisper windows)
+-- Chat windows (permanent and temporary): text style and refined style, once
+-- per window. Tab names keep their full width (Blizzard sizes them before the
+-- outline is applied).
 --------------------------------------------------------------------------------
 local processed = {}
-
--- Tab names: Blizzard sizes the name to the tab with the font it had at that
--- moment (before our outline), so the first tab can show "Gene...". The name
--- simply uses its full width: done now and after every Blizzard tab resize.
 local chatTabs = {}
 local function FitTabText(tab)
     local text = chatTabs[tab]
     if text then text:SetWidth(text:GetUnboundedStringWidth() + 2) end
 end
 
--- Messages + input box (typed text and "Say:" header).
 local function StyleText(frame)
     local editName = frame:GetName() .. "EditBox"
     ns.StyleFont(frame)
@@ -114,16 +108,14 @@ local function SetupFrame(frame)
     local name = frame:GetName()
     local tab  = _G[name .. "Tab"]
 
-    -- Text (shared text style): messages, input box and tab name.
     local tabText = tab and (tab.Text or _G[name .. "TabText"])
     if ns.textStyle then
         StyleText(frame)
         ns.StyleFont(tabText)
     end
-    if tabText then chatTabs[tab] = tabText end -- name fitted to its full width
+    if tabText then chatTabs[tab] = tabText end
     if not Chat.db.style then return end
 
-    -- Tab art hidden (alpha).
     if tab then
         for _, key in ipairs(TAB_TEXTURES) do
             local tex = tab[key]
@@ -131,18 +123,14 @@ local function SetupFrame(frame)
         end
     end
 
-    -- Side button column of the window.
     ns.Kill(frame.buttonFrame or _G[name .. "ButtonFrame"])
 
-    -- Input box border: textures cleared, Blizzard shows/hides the focus
-    -- border itself.
     local editName = name .. "EditBox"
     for _, suffix in ipairs(EDITBOX_TEXTURES) do
         local tex = _G[editName .. suffix]
         if tex then tex:SetTexture(nil) end
     end
 
-    -- Window background: textures cleared, Blizzard keeps fading their alpha.
     for _, suffix in ipairs(BACKGROUND_TEXTURES) do
         local tex = _G[name .. suffix]
         if tex and tex.SetTexture then tex:SetTexture(nil) end
@@ -174,14 +162,13 @@ function Chat:OnEnable()
         ns.Hook("PanelTemplates_TabResize", FitTabText)
     end
     if ns.textStyle then
-        -- Changing the font size from the tab menu must keep our flags.
         ns.Hook("FCF_SetChatWindowFontSize", function(_, frame)
             StyleText(frame or FCF_GetCurrentChatFrame())
         end)
     end
 end
 
--- Live options (no reload needed): timestamps and Combat Log.
+-- Live options.
 function Chat:OnOptionChanged(key, value)
     if key == "timestamps" then
         SetTimestamps(value)

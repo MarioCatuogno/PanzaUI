@@ -25,27 +25,18 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 })
 
 --------------------------------------------------------------------------------
--- Platynator aura icons. Each nameplate display has an AurasManager with
--- three aura containers (buffs, debuffs, crowd control); their icon frames
--- are created on demand and appended to container.frames (a reused frame
--- can be appended again). New entries are checked right after a nameplate is
--- added and then a few times per second while nameplates are shown, from the
--- last position seen; each frame is styled once (no garbage, a few table
--- reads). Frames that can't be styled yet are retried on the next scans, and
--- displays Platynator attaches to a nameplate later (e.g. another design
--- when the target changes) are picked up by the same scan. No UNIT_AURA: it fires for every unit around, and each call hands
--- the handler a new table of aura data (memory counted as PanzaUI's).
--- The buttons have secret aspects (their scripts can't be hooked): the icon
--- border follows the icon's own SetSize. Forbidden buttons are skipped.
+-- Platynator aura icons: each nameplate display has three aura containers
+-- whose icon frames are created on demand. New frames are styled once, by a
+-- scan that runs when a nameplate appears and a few times per second while
+-- nameplates are shown (no UNIT_AURA: its payload would be counted as
+-- PanzaUI memory). Frames that can't be styled yet are retried for a while.
 --------------------------------------------------------------------------------
 local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
-local containers = {}  -- aura container -> number of frames already handled
-local styledAuras = {} -- aura frame -> true (each one is styled only once)
-local retryAuras  = {} -- aura frame -> failed attempts (not stylable yet: forbidden, secret aspects)
-local MAX_RETRIES = 20 -- about 5 seconds of visible time, then until listed again
+local containers = {}  -- container -> frames already handled
+local styledAuras = {}
+local retryAuras  = {} -- frame -> failed attempts
+local MAX_RETRIES = 20
 
--- A button that can't be styled now is retried on the next scans while it is
--- shown (a refused mask creates an error string: attempts are capped).
 local function StyleAuraFrame(frame)
     if not frame or styledAuras[frame] then return end
     if frame:IsForbidden() or not ns.StyleIcon(frame.Icon, frame, true) then
@@ -55,8 +46,8 @@ local function StyleAuraFrame(frame)
     end
     retryAuras[frame] = nil
     styledAuras[frame] = true
-    if frame.Border then frame.Border:SetAlpha(0) end -- Platynator's square 1px border
-    ns.RoundSwipe(frame.Cooldown)                     -- no dark square corners
+    if frame.Border then frame.Border:SetAlpha(0) end
+    ns.RoundSwipe(frame.Cooldown)
 end
 
 local function ScanContainers()
@@ -69,15 +60,13 @@ local function ScanContainers()
         end
     end
     for frame in pairs(retryAuras) do
-        if frame:IsForbidden() or frame:IsVisible() then StyleAuraFrame(frame) end -- no methods on forbidden frames
+        if frame:IsForbidden() or frame:IsVisible() then StyleAuraFrame(frame) end
     end
 end
 
 --------------------------------------------------------------------------------
--- Platynator cast icon. Markers come from a shared pool and can be reused
--- for another kind (quest, elite, raid...) after a design change, so the
--- border is shown and the icon masked only while the marker is a cast icon,
--- checked after each Init (hooked once per marker).
+-- Platynator cast icon: markers are pooled and reused for other kinds, so
+-- the border and mask follow the marker kind after each Init.
 --------------------------------------------------------------------------------
 local markerBorder, markerMask, markerMasked = {}, {}, {}
 
@@ -94,7 +83,7 @@ local function UpdateMarker(marker)
             markerMasked[marker] = isCast
         end
     end
-    if isCast and marker.background then marker.background:SetAlpha(0) end -- square backdrop
+    if isCast and marker.background then marker.background:SetAlpha(0) end
 end
 
 local hookedMarkers = {}
@@ -112,12 +101,12 @@ local function HookMarkers(display)
 end
 
 --------------------------------------------------------------------------------
--- Displays: Platynator parents its display frame to the nameplate when a
--- unit is added. Nameplates added in the same frame are handled together on
--- the next one (after Platynator's own handler), with varargs (no tables).
+-- Displays: found among the nameplate children, after Platynator's own
+-- handler (deferred) and by the periodic scan (only while nameplates are
+-- shown).
 --------------------------------------------------------------------------------
 local pendingUnits = {}
-local shownPlates  = {} -- nameplate unit -> true while shown
+local shownPlates  = {}
 
 local function RegisterDisplays(...)
     for i = 1, select("#", ...) do
@@ -142,9 +131,6 @@ local function UpdatePending()
     ScanContainers()
 end
 
--- Periodic scan: a ticker (4 calls per second, not one per frame), running
--- only while at least one nameplate is shown. Displays of the shown
--- nameplates are checked too (varargs, no tables: only new ones are added).
 local SCAN_INTERVAL = 0.25 -- seconds
 local function PeriodicScan()
     for unit in pairs(shownPlates) do
@@ -181,7 +167,6 @@ end)
 local function SetupPlatynator()
     events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
     events:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-    -- Nameplates already shown (e.g. after a reload).
     for _, plate in ipairs(C_NamePlate.GetNamePlates()) do
         if not plate:IsForbidden() then
             local unit = plate.namePlateUnitToken
@@ -194,12 +179,9 @@ local function SetupPlatynator()
 end
 
 --------------------------------------------------------------------------------
--- Fast auto-loot. Blizzard's auto-loot takes the items one by one, with a
--- short delay each; here every slot is looted at once when LOOT_READY fires,
--- if auto-loot applies (the game setting, inverted by its modifier key).
--- LOOT_READY can fire twice for the same loot: a short lock skips repeats.
--- Bind-on-pickup confirmations and full bags are left to Blizzard. The
--- event is registered only while the option is on.
+-- Fast auto-loot: every slot looted at once when the loot is ready and
+-- auto-loot applies (game setting and its modifier key). A short lock skips
+-- repeated events; confirmations are left to Blizzard.
 --------------------------------------------------------------------------------
 local LOOT_LOCK = 0.3 -- seconds
 local lastLoot = 0
@@ -224,14 +206,13 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
--- Other addons load before PLAYER_LOGIN (when modules are enabled): if they
--- are not loaded by now, they are not installed or are disabled.
+-- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     SetFastLoot(self.db.fastLoot)
 end
 
--- Live: fast auto-loot.
+-- Live options.
 function Misc:OnOptionChanged(key, value)
     if key == "fastLoot" then SetFastLoot(value) end
 end

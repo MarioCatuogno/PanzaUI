@@ -36,43 +36,34 @@ function GF:Migrate(db)
 end
 
 --------------------------------------------------------------------------------
--- Shared text style (name and status text) and refined style (clean names,
--- percentage text).
+-- Text style (name and status text) and refined style: names without server
+-- or follower mark, health as a percentage. Post-hooks of Blizzard's updates;
+-- secret values are skipped.
 --------------------------------------------------------------------------------
-
--- Text style: name + status text of one compact frame (member or pet).
 local function StyleFrame(frame)
     if not frame then return end
     ns.StyleFont(frame.name)
     ns.StyleFont(frame.statusText)
-    ns.SyncPercentFont(frame.statusText) -- "100" twin of the percentage text
+    ns.SyncPercentFont(frame.statusText)
 end
 
--- Frames already created before login.
 local function StyleExisting()
     ns.ForEachCompactFrame(StyleFrame)
     local title = CompactPartyFrame and CompactPartyFrame.title
     if title and title.GetFontString then ns.StyleFont(title:GetFontString()) end
 end
 
--- Clean names: runs after Blizzard's CompactUnitFrame_UpdateName. Shows only
--- the character name: no server for players from another server, no "*" mark
--- Blizzard puts on NPC followers (follower dungeons, delves). Skipped when the
--- name is a secret value (it can't be inspected then).
 local function UpdateName(frame)
     if frame:IsForbidden() then return end
     local unit = frame.unit
     if not unit or IsSecret(unit) or unit:find("nameplate", 1, true) or not frame.name then return end
     local name = UnitName(unit)
     if not name or IsSecret(name) then return end
-    if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- "*": no string work otherwise
+    if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
     frame.name:SetText(name)
 end
 
--- Percentage-only health text: runs after Blizzard's
--- CompactUnitFrame_UpdateStatusText, only where Blizzard shows a health text
--- (its Edit Mode setting decides). Dead/Offline/Ghost texts are left alone.
--- Nameplates (same function) are skipped. Values go straight to the text.
+-- Only where Blizzard shows a health text; Dead/Offline texts are kept.
 local function UpdateStatusText(frame)
     if frame:IsForbidden() then return end
     local text, unit = frame.statusText, frame.displayedUnit or frame.unit
@@ -80,24 +71,20 @@ local function UpdateStatusText(frame)
     if not text:IsShown() then ns.HidePercentFull(text) return end
     local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
     if IsSecret(connected) or IsSecret(dead) or not connected or dead then
-        text:SetAlpha(1) -- status text (Dead, Offline...) always visible
-        ns.SetPercentColor(text, GameFontDisable:GetTextColor()) -- Blizzard's grey
+        text:SetAlpha(1)
+        ns.SetPercentColor(text, GameFontDisable:GetTextColor())
         ns.HidePercentFull(text)
         return
     end
-    ns.SetPercentColor(text, 1, 1, 1) -- white, like the rest of the UI text
+    ns.SetPercentColor(text, 1, 1, 1)
     ns.SetPercentText(text, unit, false)
 end
 
 --------------------------------------------------------------------------------
--- Role icons. Blizzard sets them only on a full frame update or on
--- PLAYER_ROLES_ASSIGNED: when the role isn't known yet at that moment (reload,
--- joining a group, roster changes) the icon stays hidden, and after a reload
--- it can be shown at 0x0 size. Shortly after those events, hidden or 0-sized
--- icons of units with a known role are fixed. With
--- "HD role icons" Blizzard's large icons (GetIconForRole) replace the small
--- ones after each Blizzard update. Vehicle / main tank icons are left alone,
--- Blizzard's "Display role icon" setting is respected, secret roles skipped.
+-- Role icons: Blizzard can leave them hidden or at 0x0 size when the role is
+-- not known yet (reload, roster changes), so they are fixed shortly after
+-- those events. "HD role icons" swaps in Blizzard's large icons, also on the
+-- Player frame. Blizzard's "Display role icon" setting is respected.
 --------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
 local hdRoles
@@ -119,7 +106,6 @@ local function SetRoleAtlas(icon, role)
     end
 end
 
--- After Blizzard's update: small role icon -> HD one.
 local function UpdateRoleIcon(frame)
     local icon = frame.roleIcon
     if not (icon and icon:IsShown()) then return end
@@ -127,8 +113,6 @@ local function UpdateRoleIcon(frame)
     if role and icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
 end
 
--- Player frame role icon (PlayerFrame_UpdateRolesAssigned sets a "tiny"
--- atlas per role): replaced with the HD one right after.
 local TINY_ROLE_ATLASES = {
     ["roleicon-tiny-tank"]   = "TANK",
     ["roleicon-tiny-healer"] = "HEALER",
@@ -142,10 +126,7 @@ local function UpdatePlayerRoleIcon()
     if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
 end
 
--- Icon size: Blizzard reuses the icon's current height (GetHeight). Right
--- after a reload that can still be 0 (layout not done yet), so the icon is
--- "shown" at 0x0 and stays invisible until the frame is set up again. The
--- name's font size is used then (the icon is as tall as the name).
+-- Before the first layout the icon height can be 0: the name's size is used.
 local function RoleIconSize(frame, icon)
     local size = icon:GetHeight()
     if not IsSecret(size) and size >= 2 then return size end
@@ -154,7 +135,6 @@ local function RoleIconSize(frame, icon)
     return 12
 end
 
--- Hidden (or 0-sized) icon of a unit whose role is known now.
 local function FixRoleIcon(frame)
     local icon = frame.roleIcon
     if not icon then return end
@@ -180,22 +160,17 @@ local roleEvents = CreateFrame("Frame")
 roleEvents:SetScript("OnEvent", function()
     if rolePending then return end
     rolePending = true
-    C_Timer.After(1, FixRoleIcons) -- one pending check at a time
+    C_Timer.After(1, FixRoleIcons)
 end)
 
 --------------------------------------------------------------------------------
--- Refined overlays: absorb fill, heal prediction, aggro border, over-absorb
--- glow. Blizzard sets the absorb atlases in DefaultCompactUnitFrameSetup
--- (re-applied after it) and the aggro border in the frame template;
--- afterwards it only shows/hides and colors them, so our textures keep
--- Blizzard's sizing and threat colors. The aggro border is 9-sliced:
--- constant thickness whatever the frame size. Widget calls only.
+-- Refined overlays: PanzaUI textures for absorbs, heal prediction and the
+-- aggro border (9-sliced), applied after Blizzard's frame setup; Blizzard
+-- keeps sizing and coloring them. No over-absorb glow.
 --------------------------------------------------------------------------------
 local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
 local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
 
--- Heal prediction: Blizzard uses plain color fills (set in the setup): our
--- texture tinted with the same color (alpha included).
 local function StyleHealPrediction(bar, color)
     if not (bar and color) then return end
     bar:SetTexture(HEAL_PRED)
@@ -208,11 +183,10 @@ local function StyleOverlays(frame)
     if frame.totalAbsorb then
         frame.totalAbsorb:SetTexture(MEDIA .. "PanzaUI_absorb.tga", "CLAMP", "CLAMP")
         frame.totalAbsorb:SetTexCoord(0, 1, 0, 1)
-        if frame.totalAbsorbOverlay then frame.totalAbsorbOverlay:SetAlpha(0) end -- stripes
+        if frame.totalAbsorbOverlay then frame.totalAbsorbOverlay:SetAlpha(0) end
     end
     StyleHealPrediction(frame.myHealPrediction, CUF_MY_HEAL_PREDICTION_COLOR)
     StyleHealPrediction(frame.otherHealPrediction, CUF_OTHER_HEAL_PREDICTION_COLOR)
-    -- Over-absorb glow: Blizzard only shows/hides it, alpha 0 keeps it hidden.
     if frame.overAbsorbGlow then frame.overAbsorbGlow:SetAlpha(0) end
     local aggro = frame.aggroHighlight
     if aggro then
@@ -226,10 +200,8 @@ local function StyleOverlays(frame)
 end
 
 --------------------------------------------------------------------------------
--- Group border (party frame and raid groups, Edit Mode "Display Border"):
--- Blizzard's panel reaches 5 px below the last member, leaving a visible gap
--- at the bottom. Its texture (not the frame: combat-safe) is pulled up 0.6 px
--- (more uncovers the bottom corners of the last member).
+-- Group border (Edit Mode "Display Border"): its texture is pulled up to
+-- close the gap Blizzard leaves below the last member.
 --------------------------------------------------------------------------------
 local function FitGroupBorder(group)
     local border = group and group.borderFrame
@@ -243,7 +215,6 @@ end
 local function SetupGroupBorders()
     FitGroupBorder(CompactPartyFrame)
     for i = 1, 8 do FitGroupBorder(_G["CompactRaidGroup" .. i]) end
-    -- Raid groups are created on demand.
     ns.Hook("CompactRaidGroup_GenerateForGroup", function(index) FitGroupBorder(_G["CompactRaidGroup" .. tostring(index)]) end)
 end
 
@@ -271,9 +242,7 @@ function GF:OnEnable()
     end
 
     if ns.textStyle then
-        -- Blizzard (re)applies fonts in these setup functions (new frames and
-        -- option changes): restyle right after. Only widget calls, no fields
-        -- written, secret sizes skipped (taint-safe).
+        -- Blizzard reapplies the fonts in its frame setup.
         ns.Hook("DefaultCompactUnitFrameSetup", StyleFrame)
         ns.Hook("DefaultCompactMiniFrameSetup", StyleFrame)
         StyleExisting()

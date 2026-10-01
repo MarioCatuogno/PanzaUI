@@ -32,8 +32,7 @@ local Items = ns:RegisterModule("Items", {
     },
 })
 
--- Old saved values: the Bags module, the Character panel item level and the
--- merchant options (Miscellaneous, then Quality of Life).
+-- Converts the saved values of older versions.
 function Items:Migrate(db, saved)
     local bags, misc, qol = saved.Bags, saved.Miscellaneous, saved.QualityOfLife
     ns.MergeOptions(db, "iconZoom", bags, "iconZoom")
@@ -46,8 +45,7 @@ function Items:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Item level of a bag slot (weapons, armor, profession gear only).
--- One reused ItemLocation and no info tables: no garbage per update.
+-- Item level of a bag slot (equipment only), read without garbage.
 --------------------------------------------------------------------------------
 local EQUIPMENT = {
     [Enum.ItemClass.Weapon]     = true,
@@ -68,8 +66,8 @@ local function BagItemLevel(bag, slot)
 end
 
 --------------------------------------------------------------------------------
--- Bag buttons. Our own data lives in local tables (no fields written on
--- Blizzard buttons: taint-safe). Item level text: shared helper (core.lua).
+-- Bag buttons: icon zoom, text style and item level, after each Blizzard
+-- update. Data lives in local tables (no fields on Blizzard buttons).
 --------------------------------------------------------------------------------
 local styled = {} -- button -> true
 local containers = {}
@@ -88,14 +86,12 @@ local function UpdateBagButton(button)
     ns.ItemLevelText(button, ilvl, color)
 end
 
--- Runs after Blizzard's UpdateItems (bags opened, items changed).
 local function UpdateContainer(frame)
     if not frame:IsShown() then return end
     for _, button in frame:EnumerateValidItems() do UpdateBagButton(button) end
 end
 
 local function SetupBags()
-    -- Combined bags + individual bag frames (nil entries skipped).
     local count = NUM_CONTAINER_FRAMES or 13
     local frames = { ContainerFrameCombinedBags }
     for i = 1, count do frames[i + 1] = _G["ContainerFrame" .. i] end
@@ -108,10 +104,8 @@ local function SetupBags()
 end
 
 --------------------------------------------------------------------------------
--- Character and Inspect panels (same look as in the bags). Post-hooks of
--- Blizzard's slot updates. Own items: one reused ItemLocation. Inspected
--- player: the item link of the slot (no ItemLocation for other units).
--- Shirt and tabard have no meaningful item level.
+-- Character and Inspect panels: item level on equipped items, after each
+-- Blizzard slot update (shirt and tabard excluded).
 --------------------------------------------------------------------------------
 local CHAR_SLOTS = {
     "Head", "Neck", "Shoulder", "Back", "Chest", "Wrist", "Hands", "Waist", "Legs", "Feet",
@@ -156,19 +150,15 @@ local function UpdateCharSlots()
 end
 
 local function SetupPanels()
-    -- Hooked always (cheap), so the option can be turned on and off live.
     ns.Hook("PaperDollItemSlotButton_Update", UpdateCharSlot)
-    -- The Inspect panel is load-on-demand.
     EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
         ns.Hook("InspectPaperDollItemSlotButton_Update", UpdateInspectSlot)
     end)
 end
 
 --------------------------------------------------------------------------------
--- Merchant: when a merchant opens, junk is sold with Blizzard's own "Sell All
--- Junk", then gear is repaired with personal gold (the gold you have when the
--- merchant opens; the junk gold arrives a moment later). MERCHANT_SHOW is
--- registered only while at least one of the two options is on.
+-- Merchant: junk sold with Blizzard's "Sell All Junk", then gear repaired
+-- with personal gold. The event is registered only while an option is on.
 --------------------------------------------------------------------------------
 local merchantEvents = CreateFrame("Frame")
 
@@ -215,7 +205,7 @@ function Items:OnEnable()
     UpdateMerchantEvents()
 end
 
--- Live: icon zoom, item level, merchant options.
+-- Live options.
 function Items:OnOptionChanged(key)
     if key == "autoRepair" or key == "autoSellJunk" then
         UpdateMerchantEvents()

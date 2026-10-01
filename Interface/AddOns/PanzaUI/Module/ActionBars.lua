@@ -7,10 +7,7 @@ local _, ns = ...
 local VIS = ns.VIS
 
 --------------------------------------------------------------------------------
--- Bars
---   Action bars: frames = global bar names (new name first), prefix = button
---   name prefix. Other bars: every frame found (nil names skipped), buttons
---   are their mouse-enabled children.
+-- Managed bars: global frame names and, for action bars, the button prefix.
 --------------------------------------------------------------------------------
 local ACTION_BARS = {
     { key = "bar1",   label = "Action Bar 1", frames = { "MainActionBar", "MainMenuBar" }, prefix = "ActionButton" },
@@ -56,8 +53,7 @@ end
 
 local AB = ns:RegisterModule("ActionBars", { title = "Action Bars", defaults = defaults, options = options })
 
--- Old saved values: mouseover on/off per bar, the three style options, and
--- the visibility of the other bars (formerly in Miscellaneous).
+-- Converts the saved values of older versions.
 function AB:Migrate(db, saved)
     for _, bar in ipairs(ACTION_BARS) do
         if type(db[bar.key]) == "boolean" then db[bar.key] = db[bar.key] and VIS.MOUSEOVER or VIS.DEFAULT end
@@ -68,7 +64,9 @@ function AB:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Visibility registration (once, at login)
+-- Visibility: every bar is registered once in the shared engine (core.lua).
+-- Frames are faded with alpha only, so Edit Mode positions and anchored
+-- frames stay in place.
 --------------------------------------------------------------------------------
 local function ChildButtons(frame, list)
     for _, child in ipairs({ frame:GetChildren() }) do
@@ -94,10 +92,10 @@ local function SetupActionBars()
         ns.RegisterVisibility({
             frames  = { bar.frame },
             buttons = bar.buttons,
-            grid    = true, -- also shown while dragging a spell
-            flyout  = true, -- stays shown while its spell flyout is hovered
+            grid    = true,
+            flyout  = true,
             getMode = function() return AB.db[bar.key] end,
-            -- Cooldown "bling" ignores parent alpha: off on managed bars.
+            -- The cooldown "bling" ignores the parent alpha.
             onRefresh = function(mode)
                 local bling = mode == VIS.DEFAULT
                 for _, button in ipairs(bar.buttons) do
@@ -108,8 +106,6 @@ local function SetupActionBars()
     end
 end
 
--- Alpha only, so Edit Mode positions and anything anchored to these frames
--- (e.g. the queue eye) stay in place.
 local function SetupOtherBars()
     for _, bar in ipairs(OTHER_BARS) do
         local frames, buttons = {}, {}
@@ -125,15 +121,14 @@ local function SetupOtherBars()
 end
 
 --------------------------------------------------------------------------------
--- Buttons: macro names and keybindings (alpha, live), icon zoom (live),
--- shared text style (at login).
+-- Buttons: refined style and icon zoom (live), shared text style (at login).
 --------------------------------------------------------------------------------
 local function RefreshButtons(bar)
     local db = AB.db
     local textAlpha = db.style and 0 or 1
     for _, btn in ipairs(bar.buttons) do
         if btn.Name   then btn.Name:SetAlpha(textAlpha) end
-        if btn.HotKey then btn.HotKey:SetAlpha(textAlpha) end -- keybind and range dot
+        if btn.HotKey then btn.HotKey:SetAlpha(textAlpha) end
         ns.ZoomIcon(btn.icon or btn.Icon, db.iconZoom)
     end
 end

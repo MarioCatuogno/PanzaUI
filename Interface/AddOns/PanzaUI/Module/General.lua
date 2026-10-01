@@ -1,33 +1,28 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Style: one refined text style (outlined text) for every PanzaUI module.
-    Textures: health/power bar texture per frame group (incl. Personal Resource Display),
-    cast bars (in Blizzard's cast colors), Reputation panel bars,
-    experience/reputation tracking bars, Achievement window, Quest Tracker,
-    tooltip, Cooldown Manager and Damage Meter bars, from LibSharedMedia-3.0
-    (SharedMedia).
+    Style: the shared text style used by every module.
+    Textures: bar textures (SharedMedia or PanzaUI's own) for unit frames,
+    cast bars, Cooldown Manager, Damage Meter and the other interface bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
-local DEFAULT = ""        -- keep Blizzard's own textures
+local DEFAULT = ""
 
--- PanzaUI's own bar textures (selectable, not defaults). Bundled with the
--- addon and also registered in SharedMedia so other addons can use them (if a
--- same-named texture is already registered, that one is kept).
+-- PanzaUI bar textures, also registered in SharedMedia for other addons.
 local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
 local PANZA = {
     ["PanzaUI - General"] = MEDIA .. "PanzaUI_general.tga",
     ["PanzaUI - Glass"]   = MEDIA .. "PanzaUI_glass.tga",
     ["PanzaUI - Player"]  = MEDIA .. "PanzaUI_player.tga",
     ["PanzaUI - Target"]  = MEDIA .. "PanzaUI_target.tga",
-    ["PanzaUI - Focus"]   = MEDIA .. "PanzaUI_focus.tga",                  -- Target with wide stripes
+    ["PanzaUI - Focus"]   = MEDIA .. "PanzaUI_focus.tga",
     ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
-    ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
-    ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
-    ["PanzaUI - Absorb"]  = MEDIA .. "PanzaUI_absorb.tga",                -- semi-transparent (shields)
-    ["PanzaUI - Cast Bar"] = MEDIA .. "PanzaUI_castbar.tga",              -- inset: stays inside the bar border
-    ["PanzaUI - Cast Bar (Full)"] = MEDIA .. "PanzaUI_castbar_full.tga",  -- no inset: for other addons' bars
+    ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga",
+    ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",
+    ["PanzaUI - Absorb"]  = MEDIA .. "PanzaUI_absorb.tga",
+    ["PanzaUI - Cast Bar"] = MEDIA .. "PanzaUI_castbar.tga",
+    ["PanzaUI - Cast Bar (Full)"] = MEDIA .. "PanzaUI_castbar_full.tga",
 }
 
 -- Used when SharedMedia is not installed.
@@ -40,17 +35,14 @@ for name, path in pairs(PANZA) do
     if LSM then LSM:Register("statusbar", name, path) end
 end
 
--- Blizzard atlases usable as bar textures (StatusBar:SetStatusBarTexture
--- takes atlas names). Not registered in SharedMedia: other addons expect
--- file paths there.
+-- Blizzard atlases usable as bar textures (not registered in SharedMedia,
+-- which expects file paths).
 local ATLASES = {
     ["Blizzard Cooldown Manager"] = "UI-HUD-CoolDownManager-Bar",
 }
 
--- Dropdown list. The settings panel asks every dropdown for its list each
--- time a page is shown (18 dropdowns, each list as long as SharedMedia's):
--- it is built once and shared, and built again only after another addon
--- registers a new bar texture. LSM's list is copied, never modified.
+-- Dropdown list, shared by every texture option: built once, and again only
+-- when another addon registers a new bar texture.
 local textureList
 if LSM then
     LSM.RegisterCallback("PanzaUI", "LibSharedMedia_Registered", function(_, mediaType)
@@ -81,7 +73,7 @@ end
 -- Options: the shared text style and one texture per bar group (listed
 -- alphabetically by the core).
 --------------------------------------------------------------------------------
--- old: older option keys merged into this one (saved values, see Migrate).
+-- old: option keys merged into this one (see Migrate).
 local UNIT_BARS = {
     { key = "texFocus",      label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
     { key = "texGroup",      label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
@@ -121,8 +113,7 @@ AddTextureOptions("Textures - Other Bars", OTHER_BARS)
 
 local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
 
--- 2.0.49 had a single texture for every frame: keep it for each group.
--- Up to 2.0.110 the only own texture was "PanzaUI": now "PanzaUI - Glass".
+-- Converts the saved values of older versions.
 function GEN:Migrate(db, saved)
     if type(db.barTexture) == "string" then
         for _, g in ipairs(UNIT_BARS) do
@@ -132,8 +123,6 @@ function GEN:Migrate(db, saved)
     for k, v in pairs(db) do
         if v == "PanzaUI" then db[k] = "PanzaUI - Glass" end
     end
-    -- Up to 2.0.168 some of these groups had one texture per frame: the
-    -- first own texture chosen among them is kept.
     for _, list in ipairs({ UNIT_BARS, OTHER_BARS }) do
         for _, g in ipairs(list) do
             if g.old and db[g.key] == nil then
@@ -144,13 +133,10 @@ function GEN:Migrate(db, saved)
             end
         end
     end
-    -- 2.0.153 applied the cast bar texture from Combat's cast bar style.
     local combat = saved and saved.PersonalResource
     if db.texCastBar == nil and combat and combat.castStyle ~= nil then
         db.texCastBar = combat.castStyle and "PanzaUI - Cast Bar" or DEFAULT
     end
-    -- Up to 2.0.159 each module's refined style had its own outlined text:
-    -- on if any of them was on (default when none was saved).
     if db.textStyle == nil and saved then
         local found, on = false, false
         for name, t in pairs(saved) do
@@ -167,9 +153,9 @@ function GEN:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Applying textures. Only widget calls, no Blizzard fields written.
+-- Applying textures (widget calls only, no Blizzard fields written).
 --------------------------------------------------------------------------------
-local powerBars = {} -- Blizzard unit frame power bar -> texture path
+local powerBars = {}
 
 local function TexturePath(key)
     local name = GEN.db[key]
@@ -177,11 +163,8 @@ local function TexturePath(key)
     return ATLASES[name] or (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
 end
 
--- The fill keeps Blizzard's draw layer: a new texture would go to the default
--- layer and could cover things drawn above the original fill at the same
--- frame level (e.g. the dispel icon on party/raid frames). Midnight: bars
--- showing secret data (e.g. enemy cast bars in combat) can return a secret
--- draw layer; it can't be passed back, and the layer is then left as is.
+-- Sets a bar texture keeping Blizzard's draw layer, so overlays drawn above
+-- the fill stay on top (secret layers are left as they are).
 local function SetTexture(bar, path)
     if not (bar and path and bar.SetStatusBarTexture) or bar:IsForbidden() then return end
     local fill = bar:GetStatusBarTexture()
@@ -193,10 +176,8 @@ local function SetTexture(bar, path)
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
 end
 
--- Some frames put their atlas back on the bar texture object (e.g. Target,
--- Focus and Boss frames on every target change, in CheckClassification):
--- re-apply our texture right after. The hook fires only for Lua SetAtlas
--- calls, so our own SetStatusBarTexture can't loop.
+-- Frames that put their atlas back on the fill (e.g. Target on every target
+-- change) get the texture again right after.
 local keptTextures = {}
 local function KeepTexture(bar, path)
     local texture = bar and path and bar.GetStatusBarTexture and bar:GetStatusBarTexture()
@@ -205,10 +186,7 @@ local function KeepTexture(bar, path)
     hooksecurefunc(texture, "SetAtlas", function() SetTexture(bar, path) end)
 end
 
--- Power spend/gain flash (FeedbackFrame, e.g. on the part of energy just
--- spent): Blizzard draws it with the power type's own atlas. Our texture goes
--- there too, tinted like the bar. A busy flag stops our own calls from
--- re-entering the hooks.
+-- Power spend/gain flash: same texture, tinted like the bar.
 local function KeepFeedback(bar, path)
     local feedback = bar and path and bar.FeedbackFrame
     local texture = feedback and feedback.BarTexture
@@ -229,13 +207,11 @@ local function KeepFeedback(bar, path)
 end
 
 --------------------------------------------------------------------------------
--- Bars colored by their atlas (experience, reputation, honor...): when
--- Blizzard sets an atlas, our texture replaces it and the bar is tinted with
--- the color that atlas stood for (read from its name). Bars colored with
--- SetStatusBarColor keep Blizzard's color. A busy flag stops our own
--- SetStatusBarTexture from re-entering the hook.
+-- Bars colored by their atlas (experience, reputation, honor...): the texture
+-- replaces the atlas and the bar is tinted with the color the atlas name
+-- stands for (cached per name).
 --------------------------------------------------------------------------------
-local ATLAS_COLORS = { -- order matters: first match wins
+local ATLAS_COLORS = { -- first match wins
     { "rested",   0.00, 0.39, 0.88 },
     { "renown",   0.00, 0.55, 0.90 },
     { "red",      0.80, 0.13, 0.13 },
@@ -251,11 +227,9 @@ local ATLAS_COLORS = { -- order matters: first match wins
     { "experience", 0.58, 0.00, 0.55 },
 }
 
--- Results are cached per atlas name (a handful of names): the string work
--- runs once per atlas, not on every Blizzard update.
-local atlasColors = {} -- atlas -> color entry or false
+local atlasColors = {}
 local function AtlasColor(atlas)
-    -- Secret names are never used as cache keys (each one would be a new key).
+    -- Secret names are never used as cache keys.
     if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
     local cached = atlasColors[atlas]
     if cached ~= nil then return cached or nil end
@@ -269,20 +243,14 @@ local function AtlasColor(atlas)
     return found or nil
 end
 
--- Blizzard's fill atlas has shaped (angled/rounded) ends that fit the bar
--- border; a plain texture would spill over them. The original atlas is used
--- as a mask over the whole bar, so the new texture keeps the same shape.
--- Bars with a plain (non-atlas) texture inside a separate border, like the
--- Reputation panel bars, get a square mask inset by `inset` pixels instead,
--- applied to the fill and to the black background, so nothing shows outside
--- the border.
+-- The original atlas (with shaped ends) is kept as a mask, so the new texture
+-- has the same shape. Plain bars inside a separate border get a square mask
+-- inset by `inset` pixels instead.
 local trackedBars = {}
 local function TrackTexture(bar, path, inset)
     if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] then return end
     trackedBars[bar] = true
 
-    -- The mask is created from the first Blizzard atlas seen: at tracking time
-    -- or later (reused list entries can get their atlas after we hook them).
     local mask, masked = nil, {}
     if inset then
         mask = bar:CreateMaskTexture()
@@ -304,8 +272,6 @@ local function TrackTexture(bar, path, inset)
         end
     end
 
-    -- Keep the fill on Blizzard's original draw layer, so overlays like the
-    -- tick separators of tooltip bars stay on top of it.
     local original = bar:GetStatusBarTexture()
     local layer, sublevel
     if original then layer, sublevel = original:GetDrawLayer() end
@@ -330,8 +296,8 @@ local function TrackTexture(bar, path, inset)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
 
--- Blizzard unit frames color power bars with per-power atlases (white bar
--- color): after its update, put our texture back and color it by power type.
+-- Unit frame power bars: texture back and colored by power type after
+-- Blizzard's update.
 local function UpdatePowerBar(bar)
     local path = powerBars[bar]
     if not path then return end
@@ -341,7 +307,6 @@ local function UpdatePowerBar(bar)
     if info and info.r then bar:SetStatusBarColor(info.r, info.g, info.b) end
 end
 
--- Health + power bar of a Blizzard unit frame (Target/Focus/Boss/Party style).
 local function UnitFrameBars(frame)
     local main = frame.TargetFrameContent and frame.TargetFrameContent.TargetFrameContentMain
     if main then return main.HealthBarsContainer.HealthBar, main.ManaBar end
@@ -360,7 +325,7 @@ local function SkinBars(health, power, path)
     end
 end
 
--- Note: UnitFrameBars() returns two values, so it must be the last argument.
+-- UnitFrameBars() returns two values: it must be the last argument.
 local function SkinFrame(frame, path)
     if not (frame and path) then return end
     local health, power = UnitFrameBars(frame)
@@ -368,14 +333,10 @@ local function SkinFrame(frame, path)
 end
 
 --------------------------------------------------------------------------------
--- Cast bars (Player, Target, Focus, Boss). Blizzard sets a colored fill atlas
--- for each cast type on every cast, then resets the bar color: right after
--- each, the chosen texture is put back and tinted with that type's color
--- (matched by the atlas name, cached per name). The fill keeps Blizzard's
--- draw layer (SetTexture). A busy flag stops our own calls from re-entering
--- the hooks.
+-- Cast bars: after Blizzard sets the fill atlas of a cast and resets its
+-- color, the texture is put back and tinted with the cast type's color.
 --------------------------------------------------------------------------------
-local CAST_COLORS = { -- order matters: first match wins
+local CAST_COLORS = { -- first match wins
     { "uninterrupt", 0.60, 0.60, 0.60 },
     { "interrupt",   0.85, 0.15, 0.15 },
     { "channel",     0.25, 0.80, 0.35 },
@@ -383,7 +344,7 @@ local CAST_COLORS = { -- order matters: first match wins
     { "craft",       0.95, 0.55, 0.10 },
     { "",            1.00, 0.72, 0.10 }, -- standard cast
 }
-local castColors = {} -- atlas -> color entry
+local castColors = {}
 
 local function CastColor(asset)
     local color = castColors[asset]
@@ -397,7 +358,7 @@ local function CastColor(asset)
 end
 
 local castTexture, castBusy
-local castBarColor = {} -- cast bar -> color entry of its current cast
+local castBarColor = {}
 
 local function KeepCastColor(bar)
     local c = castBarColor[bar]
@@ -407,10 +368,8 @@ local function KeepCastColor(bar)
     castBusy = false
 end
 
--- The cast type comes from Blizzard's bar type ("standard", "channel",
--- "uninterruptable"...), or else from the fill atlas name. Midnight: for
--- other units both can be secret in combat; that cast then keeps Blizzard's
--- own fill. Our own SetStatusBarTexture call is skipped by the busy flag.
+-- Cast type from the bar type, or else from the atlas name. Midnight: casts
+-- of other units can be secret in combat and keep Blizzard's own fill.
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
     local kind = bar.barType
@@ -438,7 +397,7 @@ end
 function GEN:OnEnable()
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local pet, boss, group = player, target, TexturePath("texGroup")
-    local interface = TexturePath("texInterface") -- Achievements, XP/Rep, Quest Tracker, Reputation panel, tooltips
+    local interface = TexturePath("texInterface")
 
     SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
     SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
@@ -466,9 +425,7 @@ function GEN:OnEnable()
                 KeepTexture(bar, prd)
             end
             KeepFeedback(frame.PowerBar, prd)
-            -- Alternate power (Stagger, Ebon Might...): Blizzard swaps its
-            -- colored atlas on state changes, so it is tracked like the
-            -- atlas-colored bars. The bar is set up again on spec changes.
+            -- Alternate power bar: atlas-colored, set up again on spec changes.
             local function SkinAlt(f) TrackTexture(f.AlternatePowerBar, prd) end
             SkinAlt(frame)
             ns.Hook(frame, "SetupAlternatePowerBar", SkinAlt)
@@ -480,7 +437,7 @@ function GEN:OnEnable()
         end
     end
 
-    -- Reputation panel (scrolling list: entries are created/reused on scroll)
+    -- Reputation panel (scrolling list).
     local repPanel = interface
     local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
     if repPanel and scrollBox and ScrollUtil then
@@ -490,8 +447,7 @@ function GEN:OnEnable()
         end), self, true)
     end
 
-    -- Achievement window (load-on-demand): every status bar inside it, scanned
-    -- when the window opens, plus the criteria bars of expanded achievements.
+    -- Achievement window: bars scanned when it opens, plus the criteria bars.
     local achievements = interface
     if achievements then
         local function Scan(frame)
@@ -502,8 +458,6 @@ function GEN:OnEnable()
         end
         EventUtil.ContinueOnAddOnLoaded("Blizzard_AchievementUI", function()
             AchievementFrame:HookScript("OnShow", Scan)
-            -- Criteria bars of an expanded achievement come from a pool on the
-            -- objectives frame (AchievementsObjectivesMixin:GetProgressBar).
             ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
                 local bars = objectives.progressBars
                 if not bars then return end
@@ -517,8 +471,7 @@ function GEN:OnEnable()
         end)
     end
 
-    -- Quest Tracker: progress/timer bars come from each module's pool
-    -- (ObjectiveTrackerModuleMixin:GetProgressBar / GetTimerBar).
+    -- Quest Tracker: progress and timer bars from each module's pool.
     local questTracker = interface
     if questTracker then
         local function TrackPool(pool)
@@ -545,15 +498,12 @@ function GEN:OnEnable()
         end)
     end
 
-    -- Tooltips: progress/status bars come from pools on each tooltip
-    -- (GameTooltip_ShowProgressBar / GameTooltip_ShowStatusBar).
+    -- Tooltips: progress and status bars from each tooltip's pools (inset mask).
     local tooltips = interface
     if tooltips then
         local function TrackTooltipPool(tooltip, poolKey)
             local pool = tooltip and tooltip[poolKey]
             if not pool then return end
-            -- Plain texture inside a separate rounded border: inset square mask.
-            -- The active list is read directly (no iterator closure per call).
             local active = pool.activeObjects
             if active then
                 for bar in pairs(active) do TrackTexture(bar.Bar or bar, tooltips, 1) end
@@ -565,21 +515,19 @@ function GEN:OnEnable()
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
     end
 
-    -- Cooldown Manager buff bars (shared item registry in core.lua).
+    -- Cooldown Manager bars (shared registry in core.lua).
     local cooldownBars = TexturePath("texCooldownBars")
     if cooldownBars then
-        -- Only bar items have .Bar (icon viewers' items are skipped).
         ns.OnCooldownItem(function(item) TrackTexture(item.Bar, cooldownBars) end)
     end
 
-    -- Damage Meter bars (session and spell breakdown windows): shaped like
-    -- Blizzard's atlas, which also follows the Edit Mode size and scale.
+    -- Damage Meter bars (shared registry in core.lua).
     local damageMeter = TexturePath("texDamageMeter")
     if damageMeter then
         ns.OnDamageMeterEntry(function(entry) TrackTexture(entry.StatusBar, damageMeter) end)
     end
 
-    -- Experience / reputation / honor tracking bars
+    -- Experience, reputation and honor bars (rescanned when Blizzard updates them).
     local tracking = interface
     if tracking then
         local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
@@ -594,19 +542,17 @@ function GEN:OnEnable()
             end
         end
         ScanTracking()
-        -- Bars may be created later: rescan when Blizzard updates the containers.
         for _, container in ipairs(containers) do
             ns.Hook(container, "UpdateBarsShown", ScanTracking)
         end
     end
 
     if group then
-        -- Classic party frames
+        -- Party frames: classic and compact (Blizzard resets them in its setup).
         for i = 1, 4 do
             local frame = PartyFrame and PartyFrame["MemberFrame" .. i]
             if frame then SkinFrame(frame, group) end
         end
-        -- Compact party/raid frames: Blizzard resets the textures in setup.
         local function SkinCompact(frame)
             if frame:IsForbidden() then return end
             SetTexture(frame.healthBar, group)

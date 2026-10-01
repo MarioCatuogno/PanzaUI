@@ -31,11 +31,13 @@ end
 
 local IsSecret = ns.IsSecret
 
-local ILVL_CACHE_TIME  = 300 -- seconds before a player is inspected again
-local INSPECT_THROTTLE = 1.5 -- min seconds between inspect requests
+-- Inspect results and M+ ratings are cached per player (GUID); the caches
+-- are emptied when full.
+local ILVL_CACHE_TIME  = 300 -- seconds
+local INSPECT_THROTTLE = 1.5 -- seconds between inspect requests
 
-local ilvlCache, ilvlTime = {}, {} -- guid -> item level / GetTime() of the inspect
-local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0 -- caches are emptied when full
+local ilvlCache, ilvlTime = {}, {}
+local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0
 
 local lastInspect, pendingGUID = 0, nil
 
@@ -49,12 +51,12 @@ local function AddLine(tooltip, label, value, r, g, b)
 end
 
 --------------------------------------------------------------------------------
--- Item level (players). Self: direct. Others: inspect, throttled and cached.
+-- Item level: read directly for the player, inspected (throttled) for others.
 --------------------------------------------------------------------------------
 local function RequestInspect(unit, guid)
     local now = GetTime()
     if now - lastInspect < INSPECT_THROTTLE or InCombatLockdown() or not CanInspect(unit) then return end
-    if InspectFrame and InspectFrame:IsShown() then return end -- don't steal the user's inspect
+    if InspectFrame and InspectFrame:IsShown() then return end
     lastInspect, pendingGUID = now, guid
     NotifyInspect(unit)
 end
@@ -76,12 +78,12 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     end
     ilvlCache[guid], ilvlTime[guid] = floor(ilvl + 0.5), GetTime()
 
-    -- Still hovering the same player and no value shown yet: add it now.
+    -- Still hovering the same player: add the value now.
     local _, ttUnit = GameTooltip:GetUnit()
     if not hadValue and TT.db.playerInfo and GameTooltip:IsShown()
         and ttUnit and not IsSecret(ttUnit) and UnitGUID(ttUnit) == guid then
         AddLine(GameTooltip, "Item Level", ilvlCache[guid])
-        GameTooltip:Show() -- resize
+        GameTooltip:Show()
     end
 end)
 
@@ -97,11 +99,9 @@ local function AddItemLevel(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
--- M+ rating
+-- M+ rating: the summary is a big table, so score and color are read once
+-- per player per minute and reused.
 --------------------------------------------------------------------------------
--- The summary is a big table (every dungeon run) and tooltips refresh
--- several times per second while hovering: the score and its color are read
--- once per player per minute and reused (flat tables, no garbage per refresh).
 local RATING_CACHE_TIME = 60
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
 
@@ -110,8 +110,6 @@ local function AddMythicRating(tooltip, unit, guid)
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
         local score = summary and summary.currentSeasonScore
-        -- Unknown or secret scores are cached as 0 too: the summary is a big
-        -- table and must not be read again on every tooltip refresh.
         if not score or IsSecret(score) then score = 0 end
         if not ratingTime[guid] then
             ratingCount = ratingCount + 1
@@ -132,15 +130,13 @@ local function AddMythicRating(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
--- Tooltip post-calls (registered once; options are checked at runtime, so
--- they apply live). Secret values (restricted combat/instance data) are
--- skipped, never read.
+-- Tooltip post-calls, registered once (options are read live). Secret values
+-- are skipped.
 --------------------------------------------------------------------------------
--- Player name (first line) in the class color.
 local function ColorName(tooltip, unit)
     local _, class = UnitClass(unit)
     local color = class and not IsSecret(class) and RAID_CLASS_COLORS[class]
-    local line = color and GameTooltipTextLeft1 -- only GameTooltip gets here
+    local line = color and GameTooltipTextLeft1
     if line then line:SetTextColor(color.r, color.g, color.b) end
 end
 
@@ -174,8 +170,7 @@ end
 --------------------------------------------------------------------------------
 function TT:OnEnable()
     if self.db.style then
-        -- Hidden (not reparented): the tooltip then sees the bar as not shown
-        -- and leaves no empty space for it at the bottom.
+        -- Hidden, not reparented: no empty space is left for it.
         ns.Disable(GameTooltip.StatusBar or GameTooltipStatusBar)
     end
 
