@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest Tracker
-    Text style, auto-collapse during boss fights and quest count for the
-    Objective Tracker.
+    Text style, auto-collapse in instances (boss fights, Mythic+, combat in
+    raids and dungeons) and quest count for the Objective Tracker.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -16,7 +16,7 @@ local QT = ns:RegisterModule("QuestTracker", {
         { header = "Style" },
         { key = "fontStyle",      label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to quest tracker text. Requires Reload UI." },
         { header = "Features" },
-        { key = "combatCollapse", label = "Collapse during boss fights", tooltip = "Collapse the tracker during dungeon and raid boss encounters and expand it again when the encounter ends." },
+        { key = "combatCollapse", label = "Collapse in instances", tooltip = "Collapse the tracker during dungeon and raid boss fights, for the whole Mythic+ run, and in combat in raids (not LFR) and dungeons (not Follower dungeons). It is expanded again afterwards." },
         { key = "questCount",     label = "Show quest count",    tooltip = "Show the number of quests in your log out of the maximum (e.g. 20/35) in the tracker header." },
     },
 })
@@ -33,38 +33,75 @@ local function StyleFonts()
 end
 
 --------------------------------------------------------------------------------
--- Collapse during dungeon/raid boss encounters. Events are registered only
--- while the option is on. The tracker is expanded when the encounter ends
--- (kill or wipe) only if we collapsed it.
+-- Auto-collapse. The tracker is collapsed while any of these is true:
+--  * a dungeon/raid boss encounter is in progress;
+--  * a Mythic+ run is active (the whole run);
+--  * the player is in combat in a raid (not LFR) or dungeon (not Follower).
+-- It is expanded again when none is true any more, only if we collapsed it
+-- (a tracker collapsed by hand stays collapsed). Events are registered only
+-- while the option is on; state is re-checked on each of them.
 --------------------------------------------------------------------------------
-local BOSS_INSTANCES = { party = true, raid = true }
+local BOSS_INSTANCES  = { party = true, raid = true }
+local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR, legacy LFR, Timewalking LFR
+local FOLLOWER_DUNGEON = 205
 
-local collapsedByUs = false
+local COLLAPSE_EVENTS = {
+    "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED",
+    "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "CHALLENGE_MODE_RESET",
+    "PLAYER_ENTERING_WORLD", "ZONE_CHANGED_NEW_AREA",
+}
+
+local collapsedByUs, inEncounter, inCombat = false, false, false
 local events = CreateFrame("Frame")
 
-events:SetScript("OnEvent", function(_, event)
+local function ShouldCollapse()
+    local _, instanceType, difficulty = GetInstanceInfo()
+    if not BOSS_INSTANCES[instanceType] then return false end
+    if inEncounter then return true end
+    if C_ChallengeMode and C_ChallengeMode.IsChallengeModeActive and C_ChallengeMode.IsChallengeModeActive() then
+        return true
+    end
+    return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
+end
+
+local function UpdateCollapse()
     local tracker = ObjectiveTrackerFrame
     if not tracker then return end
-
-    if event == "ENCOUNTER_START" then
-        local _, instanceType = IsInInstance()
-        if BOSS_INSTANCES[instanceType] and not tracker:IsCollapsed() then
+    if ShouldCollapse() then
+        if not tracker:IsCollapsed() then
             tracker:SetCollapsed(true)
             collapsedByUs = true
         end
-    elseif collapsedByUs then -- ENCOUNTER_END
+    elseif collapsedByUs then
         collapsedByUs = false
         if tracker:IsCollapsed() then tracker:SetCollapsed(false) end
     end
+end
+
+events:SetScript("OnEvent", function(_, event)
+    if event == "ENCOUNTER_START" then
+        inEncounter = true
+    elseif event == "ENCOUNTER_END" then
+        inEncounter = false
+    elseif event == "PLAYER_REGEN_DISABLED" then
+        inCombat = true
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        inCombat = false
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        inEncounter, inCombat = false, InCombatLockdown()
+    end
+    UpdateCollapse()
 end)
 
 local function SetCombatCollapse(on)
     if on then
-        events:RegisterEvent("ENCOUNTER_START")
-        events:RegisterEvent("ENCOUNTER_END")
+        for _, event in ipairs(COLLAPSE_EVENTS) do events:RegisterEvent(event) end
+        inCombat = InCombatLockdown()
+        UpdateCollapse()
     else
         events:UnregisterAllEvents()
-        collapsedByUs = false
+        inEncounter, inCombat = false, false
+        UpdateCollapse() -- expands it if we collapsed it
     end
 end
 

@@ -44,7 +44,7 @@ Here's a list of all the features included in this first release!
 * QoL - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
 * Quest Tracker - Added the outlined font to the tracker text
 * Quest Tracker - Added the quest counter (e.g. 20/35) in the tracker header
-* Quest Tracker - Collapsed the tracker during dungeon and raid boss fights, reopening it afterwards
+* Quest Tracker - Collapsed the tracker during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), reopening it afterwards
 * Tooltips - Added the ID of items and spells
 * Tooltips - Added the item level of players (other players are inspected automatically)
 * Tooltips - Added the Mythic+ rating of players, in the rating color
