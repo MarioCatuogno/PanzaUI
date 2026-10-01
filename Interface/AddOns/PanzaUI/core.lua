@@ -450,6 +450,14 @@ local function FullText(text)
     return twin
 end
 
+-- Text color of a percentage text and of its "100" twin (set only when the
+-- color changes, not on every update).
+function ns.SetPercentColor(text, r, g, b)
+    text:SetTextColor(r, g, b)
+    local twin = fullTexts[text]
+    if twin then twin:SetTextColor(r, g, b) end
+end
+
 -- Hides the twin (status texts like Dead/Offline, or no unit).
 function ns.HidePercentFull(text)
     local twin = text and fullTexts[text]
@@ -478,7 +486,6 @@ function ns.SetPercentText(text, unit, isPower, powerType)
     if partCurve then
         text:SetAlpha(alpha)
         local twin = FullText(text)
-        twin:SetTextColor(text:GetTextColor()) -- follows the text color
         twin:SetAlpha(full)
         twin:Show()
     end
@@ -587,7 +594,9 @@ local function HookEntry(e)
     e.hooked = true
     local onEnter = function() OnEnterEntry(e) end
     for _, f in ipairs(e.frames) do f:HookScript("OnEnter", onEnter) end
-    for _, b in ipairs(e.buttons or {}) do b:HookScript("OnEnter", onEnter) end
+    if e.buttons then
+        for _, b in ipairs(e.buttons) do b:HookScript("OnEnter", onEnter) end
+    end
 end
 
 -- Clicks only where the entry can be seen (mouseover entries keep the mouse).

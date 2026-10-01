@@ -210,7 +210,8 @@ local ATLAS_COLORS = { -- order matters: first match wins
 -- runs once per atlas, not on every Blizzard update.
 local atlasColors = {} -- atlas -> color entry or false
 local function AtlasColor(atlas)
-    if type(atlas) ~= "string" then return end
+    -- Secret names are never used as cache keys (each one would be a new key).
+    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
     local cached = atlasColors[atlas]
     if cached ~= nil then return cached or nil end
     local name = atlas:lower()
@@ -246,7 +247,7 @@ local function TrackTexture(bar, path, inset)
         if bar.Background then bar.Background:AddMaskTexture(mask) end
     end
     local function EnsureMask(atlas)
-        if not mask and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
+        if not mask and not ns.IsSecret(atlas) and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
             mask = bar:CreateMaskTexture()
             mask:SetAtlas(atlas)
             mask:SetAllPoints(bar)
@@ -504,9 +505,15 @@ function GEN:OnEnable()
     if tooltips then
         local function TrackTooltipPool(tooltip, poolKey)
             local pool = tooltip and tooltip[poolKey]
-            if not (pool and pool.EnumerateActive) then return end
+            if not pool then return end
             -- Plain texture inside a separate rounded border: inset square mask.
-            for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 1) end
+            -- The active list is read directly (no iterator closure per call).
+            local active = pool.activeObjects
+            if active then
+                for bar in pairs(active) do TrackTexture(bar.Bar or bar, tooltips, 1) end
+            elseif pool.EnumerateActive then
+                for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 1) end
+            end
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)

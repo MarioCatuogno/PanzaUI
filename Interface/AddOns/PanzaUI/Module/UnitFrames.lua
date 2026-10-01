@@ -430,19 +430,27 @@ local function SetupPortraits(db)
 end
 
 --------------------------------------------------------------------------------
--- Focus debuffs (refined style): rounded icon borders. Debuff buttons come from the frame's aura
--- pool: after each aura update the active ones are styled (once each).
+-- Focus debuffs (refined style): rounded icon borders. Debuff buttons come
+-- from the frame's aura pool: after each aura update the active ones are
+-- styled (once each). The pool's active list is read directly (no iterator
+-- closure per update); EnumerateActive is the fallback.
 --------------------------------------------------------------------------------
 local styledAuras = {}
+
+local function StyleFocusDebuff(button)
+    if styledAuras[button] or not button.Icon then return end
+    styledAuras[button] = true
+    ns.StyleIcon(button.Icon, button)
+end
 
 local function StyleFocusDebuffs(frame)
     local pool = frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate")
     if not pool then return end
-    for button in pool:EnumerateActive() do
-        if not styledAuras[button] and button.Icon then
-            styledAuras[button] = true
-            ns.StyleIcon(button.Icon, button)
-        end
+    local active = pool.activeObjects
+    if active then
+        for button in pairs(active) do StyleFocusDebuff(button) end
+    else
+        for button in pool:EnumerateActive() do StyleFocusDebuff(button) end
     end
 end
 

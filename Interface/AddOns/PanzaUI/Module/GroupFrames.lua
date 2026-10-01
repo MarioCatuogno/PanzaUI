@@ -80,11 +80,11 @@ local function UpdateStatusText(frame)
     local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
     if IsSecret(connected) or IsSecret(dead) or not connected or dead then
         text:SetAlpha(1) -- status text (Dead, Offline...) always visible
-        text:SetTextColor(GameFontDisable:GetTextColor()) -- Blizzard's grey
+        ns.SetPercentColor(text, GameFontDisable:GetTextColor()) -- Blizzard's grey
         ns.HidePercentFull(text)
         return
     end
-    text:SetTextColor(1, 1, 1) -- white, like the rest of the UI text
+    ns.SetPercentColor(text, 1, 1, 1) -- white, like the rest of the UI text
     ns.SetPercentText(text, unit, false)
 end
 

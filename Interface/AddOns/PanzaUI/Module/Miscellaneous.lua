@@ -87,7 +87,9 @@ end
 local hookedMarkers = {}
 
 local function HookMarkers(display)
-    for _, widget in ipairs(display.widgets or {}) do
+    local widgets = display.widgets
+    if not widgets then return end
+    for _, widget in ipairs(widgets) do
         if widget.marker and widget.Init and not hookedMarkers[widget] then
             hookedMarkers[widget] = true
             hooksecurefunc(widget, "Init", UpdateMarker)

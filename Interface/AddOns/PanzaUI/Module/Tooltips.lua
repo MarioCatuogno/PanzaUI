@@ -110,7 +110,9 @@ local function AddMythicRating(tooltip, unit, guid)
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
         local score = summary and summary.currentSeasonScore
-        if not score or IsSecret(score) then return end -- not cached: read again next time
+        -- Unknown or secret scores are cached as 0 too: the summary is a big
+        -- table and must not be read again on every tooltip refresh.
+        if not score or IsSecret(score) then score = 0 end
         if not ratingTime[guid] then
             ratingCount = ratingCount + 1
             if ratingCount > CACHE_LIMIT then

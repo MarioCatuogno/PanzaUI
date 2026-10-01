@@ -73,12 +73,17 @@ end
 -- (BuffFrame/DebuffFrame.auraFrames), so they are styled once: no hooks.
 -- Only widget calls on the buttons, no Blizzard fields are written.
 --------------------------------------------------------------------------------
+local AURA_CONTAINERS = { "BuffFrame", "DebuffFrame" }
+
 local function ForEachAuraButton(func)
-    for _, container in ipairs({ BuffFrame, DebuffFrame }) do
-        for _, button in ipairs(container.auraFrames or {}) do
-            -- Skip private-aura anchors (isAuraAnchor): their Icon is a Frame, not a texture.
-            local icon = button.Icon
-            if not button.isAuraAnchor and icon and icon.AddMaskTexture then func(button, icon) end
+    for _, name in ipairs(AURA_CONTAINERS) do
+        local buttons = _G[name] and _G[name].auraFrames
+        if buttons then
+            for _, button in ipairs(buttons) do
+                -- Skip private-aura anchors (isAuraAnchor): their Icon is a Frame, not a texture.
+                local icon = button.Icon
+                if not button.isAuraAnchor and icon and icon.AddMaskTexture then func(button, icon) end
+            end
         end
     end
 end
@@ -114,7 +119,7 @@ end
 -- the bar is visible. The time is the bar value (casts fill up with the
 -- elapsed time; channels empty, so it is max - value when readable).
 -- Secret values go straight to the text (C formatting, no garbage).
-local CAST_TICK = 0.05
+local CAST_TICK = 0.1 -- one decimal: 10 updates per second are enough
 local IsSecretValue = ns.IsSecret
 
 local function SetupCastTimer(bar)
