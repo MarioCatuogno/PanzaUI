@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
-    Refined style (outlined text, clean names, health as a percentage),
+    Refined style (clean names, health as a percentage), shared text style,
     refined overlays (absorb, heal prediction and aggro border textures, no
     over-absorb glow) and HD role icons (also on the Player frame) for the
     compact party/raid frames.
@@ -20,7 +20,7 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of party and raid frames.",
-          bullets = { "Outlined text", "Names without server", "Health as a simple percentage" } },
+          bullets = { "Names without server", "Health as a simple percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
           tooltip = "Use cleaner textures on party and raid health bars.",
           bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
@@ -36,10 +36,11 @@ function GF:Migrate(db)
 end
 
 --------------------------------------------------------------------------------
--- Refined style: outlined name and status text, clean names, percentage text.
+-- Shared text style (name and status text) and refined style (clean names,
+-- percentage text).
 --------------------------------------------------------------------------------
 
--- Name + status text of one compact frame (member or pet).
+-- Text style: name + status text of one compact frame (member or pet).
 local function StyleFrame(frame)
     if not frame then return end
     ns.StyleFont(frame.name)
@@ -269,16 +270,19 @@ function GF:OnEnable()
         ns.Hook("DefaultCompactUnitFrameSetup", StyleOverlays)
     end
 
+    if ns.textStyle then
+        -- Blizzard (re)applies fonts in these setup functions (new frames and
+        -- option changes): restyle right after. Only widget calls, no fields
+        -- written, secret sizes skipped (taint-safe).
+        ns.Hook("DefaultCompactUnitFrameSetup", StyleFrame)
+        ns.Hook("DefaultCompactMiniFrameSetup", StyleFrame)
+        StyleExisting()
+    end
+
     if not db.style then return end
     ns.Hook("CompactUnitFrame_UpdateName", UpdateName)
     if CurveConstants and UnitHealthPercent then
         ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)
         ns.ForEachCompactFrame(UpdateStatusText)
     end
-    -- Blizzard (re)applies fonts in these setup functions (new frames and
-    -- option changes): restyle right after. Only widget calls, no fields
-    -- written, secret sizes skipped (taint-safe).
-    ns.Hook("DefaultCompactUnitFrameSetup", StyleFrame)
-    ns.Hook("DefaultCompactMiniFrameSetup", StyleFrame)
-    StyleExisting()
 end

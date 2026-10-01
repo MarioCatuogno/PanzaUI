@@ -8,6 +8,7 @@ local addonName, ns = ...
 ns.modules    = {}                 -- ordered list of registered modules
 ns.IsSecret   = issecretvalue or function() return false end -- Midnight secret values
 ns.FONT_FLAGS = "OUTLINE, SLUG"    -- shared text style for every module
+ns.textStyle  = false              -- Style > Refined text (General), set at load
 
 --------------------------------------------------------------------------------
 -- Shared helpers
@@ -327,8 +328,8 @@ end
 
 local ilvlTexts = {} -- button -> FontString
 -- Shows ilvl at the top of the button, in the quality color; hides it when
--- ilvl is nil. outline: style the text with the shared font flags.
-function ns.ItemLevelText(button, ilvl, color, outline)
+-- ilvl is nil. The text follows the shared text style.
+function ns.ItemLevelText(button, ilvl, color)
     local text = ilvlTexts[button]
     if not ilvl then
         if text then text:Hide() end
@@ -337,7 +338,7 @@ function ns.ItemLevelText(button, ilvl, color, outline)
     if not text then
         text = button:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
         text:SetPoint("TOP", 0, -2)
-        if outline then ns.StyleFont(text) end
+        if ns.textStyle then ns.StyleFont(text) end
         ilvlTexts[button] = text
     end
     text:SetText(ilvl)
@@ -898,6 +899,8 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         if arg1 ~= addonName then return end
         self:UnregisterEvent(event)
         InitDB()
+        -- One text style for every module (General page, before OnEnable).
+        ns.textStyle = PanzaUI_DB.General.textStyle
         BuildSettings()
     else -- PLAYER_LOGIN: Blizzard frames exist, enable modules
         self:UnregisterEvent(event)

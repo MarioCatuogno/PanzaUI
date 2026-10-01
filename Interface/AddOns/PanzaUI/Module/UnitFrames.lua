@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames (Player, Target, Focus, Pet)
-    Per frame: refined style (outlined text, centered name, health and power
-    as a percentage, portrait redraw...), class colors and hidden clutter
+    Per frame: shared text style, refined style (centered name, health and
+    power as a percentage, portrait redraw...), class colors and hidden clutter
     (minor icons, glows, numbers, auras; Player: totems and class resources;
     Focus: cast bar). Focus refined style shows only 4 debuffs.
     All options are applied once at login (Requires Reload UI): nothing here
@@ -23,7 +23,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Outlined text", "Centered name, no level", "Health and power as a percentage", "Portrait redrawn when it stays zoomed in" } },
+      bullets = { "Centered name, no level", "Health and power as a percentage", "Portrait redrawn when it stays zoomed in" } },
     { key = "playerClassColor", label = "Class colors",
       tooltip = "Color the health bar by class." },
     { key = "playerHideClutter", label = "Hide clutter",
@@ -33,7 +33,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Outlined text", "Centered name, no level or name background", "Health and power as a percentage",
+    local styleBullets = { "Centered name, no level or name background", "Health and power as a percentage",
                            "Rounded cast bar icon border", "Portrait redrawn when it stays zoomed in" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs" }
     if p == "focus" then
@@ -53,7 +53,7 @@ end
 options[#options + 1] = { header = "Pet" }
 options[#options + 1] = { key = "petStyle", label = "Refined style",
     tooltip = "Polish the look of the Pet frame.",
-    bullets = { "Outlined text", "Health and power as a percentage" } }
+    bullets = { "Health and power as a percentage" } }
 options[#options + 1] = { key = "petHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Pet frame.",
     bullets = { "Damage and healing numbers", "Buffs and debuffs" } }
@@ -210,12 +210,25 @@ local function ClassColorHealth(bar)
 end
 
 --------------------------------------------------------------------------------
+-- Shared text style: name, level and bar texts of a frame. Runs before the
+-- percentage text (its "100" twin copies the bar text font).
+--------------------------------------------------------------------------------
+local function StyleTexts(name, level, health, power)
+    if not ns.textStyle then return end
+    ns.StyleFont(name)
+    ns.StyleFont(level)
+    ns.StyleBarText(health)
+    ns.StyleBarText(power)
+end
+
+--------------------------------------------------------------------------------
 -- Player
 --------------------------------------------------------------------------------
 local function SetupPlayer(db)
     local main = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain
     local ctx  = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBarArea.ManaBar
+    StyleTexts(PlayerName, PlayerLevelText, health, power)
 
     if db.playerHideClutter then
         ns.Kill(main.StatusTexture)                          -- rest (yellow) / combat (red) pulse
@@ -254,10 +267,6 @@ local function SetupPlayer(db)
         -- Blizzard re-anchors the player name when entering/leaving vehicles.
         ns.Hook("PlayerFrame_UpdatePlayerNameTextAnchor", function() CenterName(PlayerName, bar) end)
 
-        ns.StyleFont(PlayerName)
-        ns.StyleFont(PlayerLevelText)
-        ns.StyleBarText(health)
-        ns.StyleBarText(power)
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
@@ -315,6 +324,7 @@ local function SetupTargetFrame(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
     local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
+    StyleTexts(main.Name, main.LevelText, health, power)
 
     if db[p .. "HideClutter"] then
         HidePvpIcon(ctx)
@@ -346,10 +356,6 @@ local function SetupTargetFrame(frame, db, p)
         local spellbar = frame.spellbar or _G[frame:GetName() .. "SpellBar"]
         if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
 
-        ns.StyleFont(main.Name)
-        ns.StyleFont(main.LevelText)
-        ns.StyleBarText(health)
-        ns.StyleBarText(power)
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end
@@ -362,6 +368,7 @@ end
 local function SetupPet(db)
     if not PetFrame then return end
     local health, power = PetFrameHealthBar, PetFrameManaBar
+    StyleTexts(PetName, nil, health, power)
 
     if db.petHideClutter then
         ns.Kill(PetHitIndicator)
@@ -371,9 +378,6 @@ local function SetupPet(db)
     end
 
     if db.petStyle then
-        ns.StyleFont(PetName)
-        ns.StyleBarText(health)
-        ns.StyleBarText(power)
         ns.PercentText(health, false)
         ns.PercentText(power, true)
     end

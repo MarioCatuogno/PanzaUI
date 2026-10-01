@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Bags & Items
-    Items: refined style and icon zoom for bag items; item level on equipment
-    in the bags, the Character panel and the Inspect panel.
+    Items: icon zoom for bag items (and the shared text style); item level on
+    equipment in the bags, the Character panel and the Inspect panel.
     Merchant: auto-repair and auto-sell junk.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -9,7 +9,6 @@ local _, ns = ...
 local Items = ns:RegisterModule("Items", {
     title = "Bags & Items",
     defaults = {
-        style        = true,
         iconZoom     = 5,
         itemLevel    = true,
         autoRepair   = true,
@@ -17,9 +16,6 @@ local Items = ns:RegisterModule("Items", {
     },
     options = {
         { header = "Items" },
-        { key = "style", label = "Refined style", reload = true,
-          tooltip = "Polish the look of bag items.",
-          bullets = { "Outlined text" } },
         { key = "iconZoom", label = "Icon zoom",
           tooltip = "Crop the edges of bag item icons. 0 = off.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
@@ -40,7 +36,6 @@ local Items = ns:RegisterModule("Items", {
 -- merchant options (Miscellaneous, then Quality of Life).
 function Items:Migrate(db, saved)
     local bags, misc, qol = saved.Bags, saved.Miscellaneous, saved.QualityOfLife
-    ns.MergeOptions(db, "style", bags, "fontStyle")
     ns.MergeOptions(db, "iconZoom", bags, "iconZoom")
     ns.MergeOptions(db, "itemLevel", bags, "showItemLevel")
     ns.MergeOptions(db, "itemLevel", misc, "charItemLevel")
@@ -83,14 +78,14 @@ local function UpdateBagButton(button)
     local db = Items.db
     ns.ZoomIcon(button.icon or button.Icon, db.iconZoom)
 
-    if db.style and not styled[button] then
+    if ns.textStyle and not styled[button] then
         styled[button] = true
         ns.StyleFont(button.Count)
     end
 
     local ilvl, color
     if db.itemLevel then ilvl, color = BagItemLevel(button:GetBagID(), button:GetID()) end
-    ns.ItemLevelText(button, ilvl, color, db.style)
+    ns.ItemLevelText(button, ilvl, color)
 end
 
 -- Runs after Blizzard's UpdateItems (bags opened, items changed).
@@ -132,7 +127,7 @@ local function UpdateCharSlot(button)
         charLocation:SetEquipmentSlot(slot)
         ilvl, color = ns.LocationItemLevel(charLocation)
     end
-    ns.ItemLevelText(button, ilvl, color, true)
+    ns.ItemLevelText(button, ilvl, color)
 end
 
 local function UpdateInspectSlot(button)
@@ -148,7 +143,7 @@ local function UpdateInspectSlot(button)
             color = quality and ITEM_QUALITY_COLORS[quality]
         end
     end
-    ns.ItemLevelText(button, ilvl, color, true)
+    ns.ItemLevelText(button, ilvl, color)
 end
 
 local function UpdateCharSlots()

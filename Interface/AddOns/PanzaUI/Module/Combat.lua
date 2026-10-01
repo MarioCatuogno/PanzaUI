@@ -1,15 +1,16 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Combat
-    Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
-    icon zoom of the player's auras.
+    Buffs & Debuffs: refined style (rounded icon borders) and icon zoom of
+    the player's auras.
     Cast Bar: refined style for the Player, Target, Focus and Boss cast bars
     (elapsed time in the center, hidden right when the cast ends).
-    Cooldown Manager: refined style (rounded icon borders, outlined text),
-    dynamic layout of tracked buffs (centered) and bars (bottom-up).
-    Damage Meter: refined style (rounded icon borders, outlined text).
-    Personal Resource Display: refined style (outlined, centered text, health
-    and power as a percentage, alternate bar value always shown, hidden while
-    the player casts).
+    Cooldown Manager: refined style (rounded icon borders), dynamic layout of
+    tracked buffs (centered) and bars (bottom-up).
+    Damage Meter: refined style (rounded icon borders).
+    Personal Resource Display: refined style (centered text, health and power
+    as a percentage, alternate bar value always shown, hidden while the
+    player casts).
+    Every section also follows the shared text style (General > Style).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -30,7 +31,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Buffs & Debuffs" },
         { key = "auraStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of buff and debuff icons.",
-          bullets = { "Rounded icon borders", "Outlined text" } },
+          bullets = { "Rounded icon borders" } },
         { key = "auraIconZoom", label = "Icon zoom",
           tooltip = "Crop the edges of buff and debuff icons. 0 = off.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
@@ -41,18 +42,18 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager.",
-          bullets = { "Rounded icon borders", "Outlined text" } },
+          bullets = { "Rounded icon borders" } },
         { key = "cdmDynamic", label = "Dynamic layout", reload = true,
           tooltip = "Keep tracked buffs and bars packed with no gaps.",
           bullets = { "Buff icons grow from the center", "Buff bars grow from the bottom up" } },
         { header = "Damage Meter" },
         { key = "dmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Damage Meter.",
-          bullets = { "Rounded icon borders", "Outlined text" } },
+          bullets = { "Rounded icon borders" } },
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
-          bullets = { "Outlined, centered text", "Health and power as a percentage", "Alternate bar value always shown", "Hidden while you cast" } },
+          bullets = { "Centered text", "Health and power as a percentage", "Alternate bar value always shown", "Hidden while you cast" } },
     },
 })
 
@@ -94,6 +95,9 @@ end
 
 local function StyleAuraButton(button, icon)
     ns.StyleIcon(icon, button)
+end
+
+local function StyleAuraText(button)
     ns.StyleFont(button.Count)
     ns.StyleFont(button.Duration)
 end
@@ -114,7 +118,7 @@ local function InstantAnims(...)
     end
 end
 
--- Elapsed cast time, one decimal, outlined, in the center of the bar. Each
+-- Elapsed cast time, one decimal, in the center of the bar. Each
 -- bar gets a small child frame whose OnUpdate (throttled) runs only while
 -- the bar is visible. The time is the bar value (casts fill up with the
 -- elapsed time; channels empty, so it is max - value when readable).
@@ -124,7 +128,7 @@ local IsSecretValue = ns.IsSecret
 
 local function SetupCastTimer(bar)
     local text = bar:CreateFontString(nil, "OVERLAY")
-    text:SetFontObject(ns.OutlinedFont(GameFontHighlightSmall))
+    text:SetFontObject(ns.textStyle and ns.OutlinedFont(GameFontHighlightSmall) or GameFontHighlightSmall)
     text:SetPoint("CENTER")
 
     local driver, tick = CreateFrame("Frame", nil, bar), 0
@@ -152,26 +156,33 @@ end
 --------------------------------------------------------------------------------
 -- Personal Resource Display
 --------------------------------------------------------------------------------
-local function SetupPRD()
+local function PRDBars()
     local frame = PersonalResourceDisplayFrame
-    if not frame then return end
-
     local container = frame.HealthBarsContainer
-    local health    = container and (container.healthBar or container.HealthBar)
-    local power     = frame.PowerBar
-    local bars      = { health, power, frame.AlternatePowerBar }
+    return container and (container.healthBar or container.HealthBar), frame.PowerBar, frame.AlternatePowerBar
+end
 
-    for i = 1, 3 do
-        local bar = bars[i]
-        if bar then
-            ns.StyleBarText(bar)
-            if bar.TextString then
-                bar.TextString:ClearAllPoints()
-                bar.TextString:SetPoint("CENTER")
-                bar.TextString:SetJustifyH("CENTER")
-            end
-        end
-    end
+-- Shared text style (before the percentage text: its "100" twin copies it).
+local function StylePRDText()
+    local health, power, alt = PRDBars()
+    ns.StyleBarText(health)
+    ns.StyleBarText(power)
+    ns.StyleBarText(alt)
+end
+
+local function CenterText(bar)
+    local text = bar and bar.TextString
+    if not text then return end
+    text:ClearAllPoints()
+    text:SetPoint("CENTER")
+    text:SetJustifyH("CENTER")
+end
+
+local function SetupPRD()
+    local health, power, alt = PRDBars()
+    CenterText(health)
+    CenterText(power)
+    CenterText(alt)
 
     -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own value.
     ns.PercentText(health, false, "player")
@@ -285,9 +296,9 @@ local function StyleItem(item)
     ns.StyleIcon(icon, holder)
 end
 
--- Texts (bar name/duration, stacks, charges, cooldown numbers): every font
--- string of the item and of its children (two levels: bar, icon, cooldown),
--- found by type rather than by name. Styled once per item.
+-- Shared text style. Texts (bar name/duration, stacks, charges, cooldown
+-- numbers): every font string of the item and of its children (two levels:
+-- bar, icon, cooldown), found by type rather than by name. Once per item.
 local styledTexts = {}
 
 local function StyleItemText(item)
@@ -396,7 +407,7 @@ end
 --------------------------------------------------------------------------------
 -- Damage Meter: each entry (session and spell breakdown windows, from the
 -- shared registry in core.lua) is styled once: icon frame (follows
--- Blizzard's "show bar icons" setting) and/or outlined text.
+-- Blizzard's "show bar icons" setting) and/or shared text style.
 -- Widget calls only, no Blizzard fields written.
 --------------------------------------------------------------------------------
 local function StyleEntryIcon(entry)
@@ -429,14 +440,19 @@ function CB:OnEnable()
     local db = self.db
     EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function()
         if db.auraStyle then ForEachAuraButton(StyleAuraButton) end
+        if ns.textStyle then ForEachAuraButton(StyleAuraText) end
         ForEachAuraButton(ZoomAuraIcon)
     end)
     if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
-    if db.prdStyle then
+    if db.prdStyle or ns.textStyle then
         local function Setup()
-            SetupPRD()
-            SetupAltText()
-            SetupCastHide()
+            if not PersonalResourceDisplayFrame then return end
+            if ns.textStyle then StylePRDText() end
+            if db.prdStyle then
+                SetupPRD()
+                SetupAltText()
+                SetupCastHide()
+            end
         end
         if PersonalResourceDisplayFrame then
             Setup()
@@ -444,17 +460,13 @@ function CB:OnEnable()
             EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", Setup)
         end
     end
-    if db.cdmStyle then
-        ns.OnCooldownItem(StyleItem)
-        ns.OnCooldownItem(StyleItemText)
-    end
+    if db.cdmStyle then ns.OnCooldownItem(StyleItem) end
+    if ns.textStyle then ns.OnCooldownItem(StyleItemText) end
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
-    if db.dmStyle then
-        ns.OnDamageMeterEntry(StyleEntryIcon)
-        ns.OnDamageMeterEntry(StyleEntryText)
-    end
+    if db.dmStyle then ns.OnDamageMeterEntry(StyleEntryIcon) end
+    if ns.textStyle then ns.OnDamageMeterEntry(StyleEntryText) end
 end
 
 -- Live: aura icon zoom.

@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Chat
-    Refined style (outlined text, no tab art, input box border, background or
-    side buttons), timestamps and the Combat Log tab.
+    Refined style (no tab art, input box border, background or side buttons),
+    shared text style, timestamps and the Combat Log tab.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -15,7 +15,7 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of chat windows.",
-          bullets = { "Outlined text", "Cleaner tabs and input box", "No background or side buttons" } },
+          bullets = { "Cleaner tabs and input box", "No background or side buttons" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time in front of every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
@@ -90,9 +90,8 @@ end
 local processed = {}
 
 -- Tab names: Blizzard sizes the name to the tab with the font it had at that
--- moment (before our outline), so the first tab can show "Gene...". Without
--- tab art the name may simply use its full width: done now and after every
--- Blizzard tab resize.
+-- moment (before our outline), so the first tab can show "Gene...". The name
+-- simply uses its full width: done now and after every Blizzard tab resize.
 local chatTabs = {}
 local function FitTabText(tab)
     local text = chatTabs[tab]
@@ -115,17 +114,21 @@ local function SetupFrame(frame)
     local name = frame:GetName()
     local tab  = _G[name .. "Tab"]
 
-    -- Text: messages, input box and tab name.
-    StyleText(frame)
-    if tab then
-        local tabText = tab.Text or _G[name .. "TabText"]
+    -- Text (shared text style): messages, input box and tab name.
+    local tabText = tab and (tab.Text or _G[name .. "TabText"])
+    if ns.textStyle then
+        StyleText(frame)
         ns.StyleFont(tabText)
-        -- Tab art hidden (alpha), the name may use its full width.
+    end
+    if tabText then chatTabs[tab] = tabText end -- name fitted to its full width
+    if not Chat.db.style then return end
+
+    -- Tab art hidden (alpha).
+    if tab then
         for _, key in ipairs(TAB_TEXTURES) do
             local tex = tab[key]
             if tex then tex:SetAlpha(0) end
         end
-        chatTabs[tab] = tabText
     end
 
     -- Side button column of the window.
@@ -163,10 +166,14 @@ function Chat:OnEnable()
 
     if db.style then
         for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
+    end
+    if db.style or ns.textStyle then
         SetupAllFrames()
         ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
         for tab in pairs(chatTabs) do FitTabText(tab) end
         ns.Hook("PanelTemplates_TabResize", FitTabText)
+    end
+    if ns.textStyle then
         -- Changing the font size from the tab menu must keep our flags.
         ns.Hook("FCF_SetChatWindowFontSize", function(_, frame)
             StyleText(frame or FCF_GetCurrentChatFrame())

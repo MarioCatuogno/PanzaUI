@@ -1,10 +1,10 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest & Minimap
-    Minimap: refined style (outlined zone text and clock, no zone / tracking /
-    calendar backgrounds).
-    Quest Tracker: refined style (outlined text, also on the instance texts at
-    the top of the screen), auto-collapse in instances
-    (boss fights, Mythic+, combat in raids and dungeons) and quest count.
+    Minimap: refined style (no zone / tracking / calendar backgrounds).
+    Quest Tracker: auto-collapse in instances (boss fights, Mythic+, combat
+    in raids and dungeons) and quest count.
+    Shared text style: minimap zone text and clock, Quest Tracker and the
+    instance texts at the top of the screen.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -12,7 +12,6 @@ local QM = ns:RegisterModule("QuestMinimap", {
     title = "Quest & Minimap",
     defaults = {
         minimapStyle   = true,
-        questStyle     = true,
         combatCollapse = true,
         questCount     = true,
     },
@@ -20,11 +19,8 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { header = "Minimap" },
         { key = "minimapStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the minimap.",
-          bullets = { "Outlined text", "No button and zone backgrounds" } },
+          bullets = { "No button and zone backgrounds" } },
         { header = "Quest Tracker" },
-        { key = "questStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the Quest Tracker.",
-          bullets = { "Outlined text", "Also the instance texts at the top of the screen (e.g. \"Prisoners Freed: 0/8\")" } },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Collapse the tracker during dungeon, raid and Mythic+ combat.",
           bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Expanded again afterwards" } },
@@ -38,7 +34,6 @@ local QM = ns:RegisterModule("QuestMinimap", {
 function QM:Migrate(db, saved)
     local mm, qt = saved.Minimap, saved.QuestTracker
     ns.MergeOptions(db, "minimapStyle", mm, "style", "fontStyle", "hideZoneBackground", "hideTrackingBackground", "hideCalendarBackground")
-    ns.MergeOptions(db, "questStyle", qt, "style", "fontStyle")
     ns.MergeOptions(db, "combatCollapse", qt, "combatCollapse")
     ns.MergeOptions(db, "questCount", qt, "questCount")
 end
@@ -73,7 +68,7 @@ local function Backgrounds()
     return list
 end
 
--- Applied live (alpha), the text style needs a reload.
+-- Applied live (alpha).
 local function ApplyBackgrounds()
     local alpha = QM.db.minimapStyle and 0 or 1
     for _, region in pairs(Backgrounds()) do region:SetAlpha(alpha) end
@@ -247,8 +242,9 @@ end
 function QM:OnEnable()
     local db = self.db
 
-    if db.minimapStyle then
-        ApplyBackgrounds()
+    if db.minimapStyle then ApplyBackgrounds() end
+
+    if ns.textStyle then
         ns.StyleFont(MinimapZoneText)
         -- The clock lives in a load-on-demand Blizzard addon.
         EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
@@ -259,7 +255,7 @@ function QM:OnEnable()
     if db.questCount then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
     end
-    if db.questStyle then
+    if ns.textStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
             StyleFonts()
             -- Edit Mode "Text Size" resets the font objects: restyle after it.

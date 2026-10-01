@@ -39,7 +39,7 @@ local options  = {
     { header = "Buttons" },
     { key = "style", label = "Refined style", reload = true,
       tooltip = "Polish the look of action buttons.",
-      bullets = { "Outlined text", "No macro names or keybindings" } },
+      bullets = { "No macro names or keybindings" } },
     { key = "iconZoom", label = "Icon zoom",
       tooltip = "Crop the edges of action button icons. 0 = off.",
       slider = { min = 0, max = 15, step = 1, suffix = "%" } },
@@ -126,7 +126,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Buttons: macro names and keybindings (alpha, live), icon zoom (live),
--- outlined text (at login).
+-- shared text style (at login).
 --------------------------------------------------------------------------------
 local function RefreshButtons(bar)
     local db = AB.db
@@ -154,7 +154,7 @@ function AB:OnEnable()
     SetupOtherBars()
     for _, bar in ipairs(ACTION_BARS) do
         RefreshButtons(bar)
-        if self.db.style then StyleText(bar) end
+        if ns.textStyle then StyleText(bar) end
     end
 end
 

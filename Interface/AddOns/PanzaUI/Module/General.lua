@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Health/power bar texture per frame group (incl. Personal Resource Display),
+    Style: one refined text style (outlined text) for every PanzaUI module.
+    Textures: health/power bar texture per frame group (incl. Personal Resource Display),
     cast bars (in Blizzard's cast colors), Reputation panel bars,
     experience/reputation tracking bars, Achievement window, Quest Tracker,
     tooltip, Cooldown Manager and Damage Meter bars, from LibSharedMedia-3.0
@@ -66,7 +67,8 @@ local function TextureList()
 end
 
 --------------------------------------------------------------------------------
--- Options: one texture per bar group (listed alphabetically by the core).
+-- Options: the shared text style and one texture per bar group (listed
+-- alphabetically by the core).
 --------------------------------------------------------------------------------
 local UNIT_BARS = {
     { key = "texBoss",   label = "Boss frames",               tooltip = "Texture for the Boss health and power bars." },
@@ -89,7 +91,13 @@ local OTHER_BARS = {
     { key = "texTooltips",     label = "Tooltips",                  tooltip = "Texture for the progress bars inside tooltips." },
 }
 
-local defaults, options = {}, {}
+local defaults = { textStyle = true }
+local options  = {
+    { header = "Style" },
+    { key = "textStyle", label = "Refined text", reload = true,
+      tooltip = "Polish the look of text across the whole UI.",
+      bullets = { "Outlined, sharper text" } },
+}
 local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }
     for _, o in ipairs(list) do
@@ -98,8 +106,8 @@ local function AddTextureOptions(header, list)
             dropdown = TextureList, reload = true }
     end
 end
-AddTextureOptions("Unit Frame Bars", UNIT_BARS)
-AddTextureOptions("Other Bars", OTHER_BARS)
+AddTextureOptions("Textures - Unit Frames", UNIT_BARS)
+AddTextureOptions("Textures - Other Bars", OTHER_BARS)
 
 local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
 
@@ -118,6 +126,21 @@ function GEN:Migrate(db, saved)
     local combat = saved and saved.PersonalResource
     if db.texCastBar == nil and combat and combat.castStyle ~= nil then
         db.texCastBar = combat.castStyle and "PanzaUI - Cast Bar" or DEFAULT
+    end
+    -- Up to 2.0.159 each module's refined style had its own outlined text:
+    -- on if any of them was on (default when none was saved).
+    if db.textStyle == nil and saved then
+        local found, on = false, false
+        for name, t in pairs(saved) do
+            if name ~= "General" and type(t) == "table" then
+                for k, v in pairs(t) do
+                    if type(v) == "boolean" and type(k) == "string" and k:lower():find("style$") then
+                        found, on = true, on or v
+                    end
+                end
+            end
+        end
+        if found then db.textStyle = on end
     end
 end
 

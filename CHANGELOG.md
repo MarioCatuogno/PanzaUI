@@ -39,6 +39,7 @@ Here's a list of all the features included in this first release!
 * Combat - Hidden the Player, Target, Focus and Boss cast bars right when the cast ends, with no fade out
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
+* Core - Added a single Refined text option for the outlined font of the whole UI
 * Core - Added a texture option for Achievement, cast bar (in Blizzard's cast colors), Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
