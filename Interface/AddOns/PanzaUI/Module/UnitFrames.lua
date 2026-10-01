@@ -25,6 +25,7 @@ local defaults = {
     fixPortraits       = true,
     hideGroupNumber    = true,
     playerHidePvpIcon  = true,
+    playerHideLeaderIcon = true,
 }
 
 local options = {
@@ -38,6 +39,7 @@ local options = {
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
     { key = "playerHidePvpIcon",  label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the Player portrait (and its PvP timer)." .. RELOAD },
+    { key = "playerHideLeaderIcon", label = "Hide leader icon",      tooltip = "Hide the group leader (crown) and guide icons above the Player portrait." .. RELOAD },
     { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
     { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
@@ -48,6 +50,7 @@ local TARGET_OPTIONS = {
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
     { key = "HidePvpIcon",        label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the %s portrait." },
+    { key = "HideLeaderIcon",     label = "Hide leader icon",        tooltip = "Hide the group leader (crown) and guide icons above the %s portrait." },
     { key = "HideFollowerMark",   label = "Hide follower * mark",    tooltip = "Remove the * that Blizzard puts before the names of NPC followers (follower dungeons, delves) on the %s frame and its Target of Target." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
     { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar (and its Target of Target) with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
@@ -148,6 +151,14 @@ local function HidePvpIcon(ctx)
     for _, key in ipairs(PVP_PARTS) do ns.Kill(ctx[key]) end
 end
 
+-- Group leader (crown), assistant and guide icons.
+local LEADER_PARTS = { "LeaderIcon", "AssistantIcon", "GuideIcon" }
+
+local function HideLeaderIcon(ctx)
+    if not ctx then return end
+    for _, key in ipairs(LEADER_PARTS) do ns.Kill(ctx[key]) end
+end
+
 --------------------------------------------------------------------------------
 -- Name centered above the health bar
 --------------------------------------------------------------------------------
@@ -233,6 +244,8 @@ local function SetupPlayer(db)
         HidePvpIcon(ctx)
         ns.Kill(PlayerPVPTimerText)
     end
+
+    if db.playerHideLeaderIcon then HideLeaderIcon(ctx) end
 
     -- Raid group indicator ("Group 5" + its background): Blizzard keeps
     -- showing/hiding it, so it is moved under the hidden parent.
@@ -328,6 +341,7 @@ local function SetupTargetFrame(frame, db, p)
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
 
     if db[p .. "HidePvpIcon"] then HidePvpIcon(ctx) end
+    if db[p .. "HideLeaderIcon"] then HideLeaderIcon(ctx) end
 
     if db[p .. "HideFollowerMark"] then
         HideFollowerMark(main.Name, frame)

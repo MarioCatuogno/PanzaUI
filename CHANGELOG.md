@@ -61,6 +61,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Hidden damage/healing numbers on Player and Pet portraits
 * Unit Frames - Hidden the * mark before NPC follower names on Target, Focus and their Target of Target
 * Unit Frames - Hidden the Focus cast bar
+* Unit Frames - Hidden the group leader icon on Player, Target and Focus
 * Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
 * Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation
 * Unit Frames - Hidden the Player raid group indicator (e.g. "Group 5")
