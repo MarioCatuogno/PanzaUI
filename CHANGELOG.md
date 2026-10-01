@@ -30,6 +30,7 @@ Here's a list of all the features included in this first release!
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
+* Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a texture option for Achievement, Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
@@ -62,6 +63,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
 * Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation
 * Unit Frames - Hidden the Player raid group indicator (e.g. "Group 5")
+* Unit Frames - Hidden the PvP / prestige icon on Player, Target and Focus
 * Unit Frames - Hidden the totem icons under the Player frame
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus

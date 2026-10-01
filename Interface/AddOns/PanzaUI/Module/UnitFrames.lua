@@ -24,6 +24,7 @@ local defaults = {
     hideTotems         = true,
     fixPortraits       = true,
     hideGroupNumber    = true,
+    playerHidePvpIcon  = true,
 }
 
 local options = {
@@ -36,6 +37,7 @@ local options = {
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
+    { key = "playerHidePvpIcon",  label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the Player portrait (and its PvP timer)." .. RELOAD },
     { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
     { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
@@ -45,6 +47,7 @@ local TARGET_OPTIONS = {
     { key = "HideLevel",          label = "Hide level, center name", tooltip = "Remove the %s level and center the name above the health bar." },
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
+    { key = "HidePvpIcon",        label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the %s portrait." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
     { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar (and its Target of Target) with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
@@ -133,6 +136,18 @@ local function RestorePlayerArt()
 end
 
 --------------------------------------------------------------------------------
+-- PvP icon: the faction / prestige badge (and the Player's PvP timer) of a
+-- unit frame's contextual layer. Blizzard keeps showing/hiding them, so
+-- they are moved under the hidden parent (key names differ per frame).
+--------------------------------------------------------------------------------
+local PVP_PARTS = { "PVPIcon", "PvpIcon", "PrestigePortrait", "PrestigeBadge", "PvpTimerText", "PVPTimerText" }
+
+local function HidePvpIcon(ctx)
+    if not ctx then return end
+    for _, key in ipairs(PVP_PARTS) do ns.Kill(ctx[key]) end
+end
+
+--------------------------------------------------------------------------------
 -- Name centered above the health bar
 --------------------------------------------------------------------------------
 local function CenterName(name, bar)
@@ -213,6 +228,11 @@ local function SetupPlayer(db)
         ns.Kill(main.HitIndicator)
     end
 
+    if db.playerHidePvpIcon then
+        HidePvpIcon(ctx)
+        ns.Kill(PlayerPVPTimerText)
+    end
+
     -- Raid group indicator ("Group 5" + its background): Blizzard keeps
     -- showing/hiding it, so it is moved under the hidden parent.
     if db.hideGroupNumber then
@@ -285,6 +305,8 @@ local function SetupTargetFrame(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
     local ctx  = frame.TargetFrameContent.TargetFrameContentContextual
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
+
+    if db[p .. "HidePvpIcon"] then HidePvpIcon(ctx) end
 
     if db[p .. "ClassColor"] then
         classColorBars[health] = true
@@ -365,8 +387,13 @@ local function RedrawPortraits()
     portraitPending = false
     for _, frame in pairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame and frame.portrait, frame and frame.unit
-        if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit) then
-            SetPortraitTexture(portrait, unit)
+        if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
+            -- Blizzard can show a class icon instead of the portrait: leave it.
+            and not (UnitFrame_ShouldReplacePortrait and UnitFrame_ShouldReplacePortrait(frame)) then
+            -- Same arguments as Blizzard's UnitFramePortrait_Update: the Player
+            -- frame draws an unmasked portrait (its own mask has a square
+            -- corner); without the flag the image comes out pre-rounded.
+            SetPortraitTexture(portrait, unit, frame.disablePortraitMask)
         end
     end
 end

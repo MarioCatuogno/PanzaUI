@@ -2,7 +2,8 @@
     PanzaUI - Combat
     Personal Resource Display: text style, centered text, percentage-only
     health/power text (always shown, like Player/Target, regardless of the
-    Edit Mode "Show Bar Text" setting).
+    Edit Mode "Show Bar Text" setting); alternate power bar text (stagger,
+    ebon might, mana in forms...) always shown too.
     Cooldown Manager: action bar style for the icons of every viewer, dynamic
     layout for tracked buffs (centered) and tracked bars (bottom-up).
     Damage Meter: action bar style for the class/spec and spell icons,
@@ -18,6 +19,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         fontStyle     = true,
         centerText    = true,
         percentText   = true,
+        altText       = true,
         cdmIconStyle  = true,
         cdmDynamic    = true,
         dmIconStyle   = true,
@@ -28,6 +30,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { key = "fontStyle",    label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the bar text. Requires Reload UI." },
         { key = "centerText",   label = "Center text",          tooltip = "Center the text on the bars. Requires Reload UI." },
         { key = "percentText",  label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), with one decimal below 100, like the Player and Target frames. Hidden at 0. Requires Reload UI." },
+        { key = "altText",      label = "Always show alternate bar text", tooltip = "Always show the value on the alternate power bar (e.g. Monk Stagger, Evoker Ebon Might, mana in shapeshift forms), not only on mouseover. Class resources shown as icons (chi, shards...) have no text. Requires Reload UI." },
         { header = "Cooldown Manager" },
         { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
         { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },
@@ -61,11 +64,46 @@ local function SetupPRD(db)
         end
     end
 
-    -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own text.
+    -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own value.
     if db.percentText then
         ns.PercentText(health, false, "player")
         ns.PercentText(power,  true,  "player")
     end
+end
+
+-- Alternate power bar text always shown. Blizzard shows it only on mouseover
+-- (or with the Edit Mode "Show Bar Text" setting) and clears it otherwise:
+-- right after its update, a hidden text is filled with the bar value and
+-- shown. Secret values go straight to the text (C formatting), readable ones
+-- get Blizzard's number format. The class mixin is applied to the bar later
+-- (SetupAlternatePowerBar), so the hook is (re)checked after it.
+local altHooked = {}
+
+local function ShowAltText(bar)
+    local text = bar.TextString
+    if not text or text:IsShown() then return end -- Blizzard already shows it
+    local value = bar:GetValue()
+    if ns.IsSecret(value) then
+        text:SetFormattedText("%.0f", value)
+    else
+        text:SetText(BreakUpLargeNumbers(floor(value + 0.5)))
+    end
+    text:Show()
+end
+
+local function HookAltBar(frame)
+    local bar = frame.AlternatePowerBar
+    if not bar or altHooked[bar] == bar.UpdateTextString then return end
+    ns.Hook(bar, "UpdateTextString", ShowAltText)
+    altHooked[bar] = bar.UpdateTextString -- the hooked function
+    if bar:IsShown() then ShowAltText(bar) end
+end
+
+local function SetupAltText()
+    local frame = PersonalResourceDisplayFrame
+    if not frame then return end
+    HookAltBar(frame)
+    ns.Hook(frame, "SetupAlternatePowerBar", HookAltBar)
 end
 
 --------------------------------------------------------------------------------
@@ -239,11 +277,15 @@ end
 --------------------------------------------------------------------------------
 function CB:OnEnable()
     local db = self.db
-    if db.fontStyle or db.centerText or db.percentText then
+    if db.fontStyle or db.centerText or db.percentText or db.altText then
         if PersonalResourceDisplayFrame then
             SetupPRD(db)
+            if db.altText then SetupAltText() end
         else
-            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", function() SetupPRD(db) end)
+            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", function()
+                SetupPRD(db)
+                if db.altText then SetupAltText() end
+            end)
         end
     end
     if db.cdmIconStyle then
