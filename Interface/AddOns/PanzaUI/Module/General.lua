@@ -20,6 +20,7 @@ local PANZA = {
     ["PanzaUI - Player"]  = MEDIA .. "PanzaUI_player.tga",
     ["PanzaUI - Target"]  = MEDIA .. "PanzaUI_target.tga",
     ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
+    ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
 }
 
 -- Used when SharedMedia is not installed.
