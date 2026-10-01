@@ -411,13 +411,19 @@ local function RedrawPortraits()
     end
 end
 
-local portraitEvents = CreateFrame("Frame")
-portraitEvents:SetScript("OnEvent", function(_, event, unit)
+local function OnPortraitEvent(_, _, unit)
     if unit and (IsSecret(unit) or not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
     C_Timer.After(1, RedrawPortraits)
-end)
+end
+
+-- Unit events only for the portrait units (two per frame: RegisterUnitEvent
+-- takes at most two), not for every unit around (nameplates, group).
+local PORTRAIT_UNIT_EVENTS = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }
+local portraitEvents, portraitEvents2 = CreateFrame("Frame"), CreateFrame("Frame")
+portraitEvents:SetScript("OnEvent", OnPortraitEvent)
+portraitEvents2:SetScript("OnEvent", OnPortraitEvent)
 
 -- Redraws the portraits of the frames whose refined style is on.
 local function SetupPortraits(db)
@@ -427,8 +433,11 @@ local function SetupPortraits(db)
         if frame and db[t.prefix .. "Style"] then PORTRAIT_FRAMES[#PORTRAIT_FRAMES + 1] = frame end
     end
     if #PORTRAIT_FRAMES == 0 then return end
-    for _, event in ipairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "PLAYER_ENTERING_WORLD",
-                             "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
+    for _, event in ipairs(PORTRAIT_UNIT_EVENTS) do
+        portraitEvents:RegisterUnitEvent(event, "player", "vehicle")
+        portraitEvents2:RegisterUnitEvent(event, "target", "focus")
+    end
+    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
         portraitEvents:RegisterEvent(event)
     end
 end
@@ -486,9 +495,12 @@ function UF:OnEnable()
     if next(classColorBars) then
         -- Anything that can change a cached color: recompute on next update.
         -- UNIT_TARGET: the target/focus changed its own target (Target of Target).
-        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "UNIT_TARGET", "GROUP_ROSTER_UPDATE",
-                                 "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE", "PLAYER_ENTERING_WORLD" }) do
+        -- Unit events only for target and focus, not for every unit around.
+        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD" }) do
             colorEvents:RegisterEvent(event)
+        end
+        for _, event in ipairs({ "UNIT_TARGET", "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE" }) do
+            colorEvents:RegisterUnitEvent(event, "target", "focus")
         end
         ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
         for bar in pairs(classColorBars) do ClassColorHealth(bar) end

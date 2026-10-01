@@ -28,9 +28,11 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 -- Platynator aura icons. Each nameplate display has an AurasManager with
 -- three aura containers (buffs, debuffs, crowd control); their icon frames
 -- are created on demand and appended to container.frames (a reused frame
--- can be appended again). New entries are checked shortly after a nameplate
--- is added or an aura changes: one deferred scan per frame, from the last
--- position seen; each frame is styled once (no garbage, a few table reads).
+-- can be appended again). New entries are checked right after a nameplate is
+-- added and then a few times per second while nameplates are shown, from the
+-- last position seen; each frame is styled once (no garbage, a few table
+-- reads). No UNIT_AURA: it fires for every unit around, and each call hands
+-- the handler a new table of aura data (memory counted as PanzaUI's).
 -- The buttons have secret aspects (their scripts can't be hooked): the icon
 -- border follows the icon's own SetSize. Forbidden buttons are skipped.
 --------------------------------------------------------------------------------
@@ -104,6 +106,7 @@ end
 -- the next one (after Platynator's own handler), with varargs (no tables).
 --------------------------------------------------------------------------------
 local pendingUnits = {}
+local shownPlates  = {} -- nameplate unit -> true while shown
 
 local function RegisterDisplays(...)
     for i = 1, select("#", ...) do
@@ -128,25 +131,46 @@ local function UpdatePending()
     ScanContainers()
 end
 
+-- Periodic scan: a ticker (4 calls per second, not one per frame), running
+-- only while at least one nameplate is shown.
+local SCAN_INTERVAL = 0.25 -- seconds
+local scanner
+local function UpdateScanner()
+    local active = next(shownPlates) ~= nil
+    if active and not scanner then
+        scanner = C_Timer.NewTicker(SCAN_INTERVAL, ScanContainers)
+    elseif not active and scanner then
+        scanner:Cancel()
+        scanner = nil
+    end
+end
+
 local events = CreateFrame("Frame")
 events:SetScript("OnEvent", function(_, event, unit)
+    if not unit or ns.IsSecret(unit) then return end
     if event == "NAME_PLATE_UNIT_ADDED" then
-        if not unit or ns.IsSecret(unit) then return end
+        shownPlates[unit] = true
         pendingUnits[unit] = true
         ns.Defer(UpdatePending)
-    elseif next(containers) then -- UNIT_AURA
-        ns.Defer(ScanContainers)
+    else -- NAME_PLATE_UNIT_REMOVED
+        shownPlates[unit] = nil
     end
+    UpdateScanner()
 end)
 
 local function SetupPlatynator()
     events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    events:RegisterEvent("UNIT_AURA")
+    events:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
     -- Nameplates already shown (e.g. after a reload).
     for _, plate in ipairs(C_NamePlate.GetNamePlates()) do
-        if not plate:IsForbidden() then RegisterDisplays(plate:GetChildren()) end
+        if not plate:IsForbidden() then
+            local unit = plate.namePlateUnitToken
+            if unit and not ns.IsSecret(unit) then shownPlates[unit] = true end
+            RegisterDisplays(plate:GetChildren())
+        end
     end
     ScanContainers()
+    UpdateScanner()
 end
 
 --------------------------------------------------------------------------------

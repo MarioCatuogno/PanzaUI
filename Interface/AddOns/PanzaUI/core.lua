@@ -77,21 +77,20 @@ function ns.StyleFont(obj)
 end
 
 -- Every compact party/raid frame already created (party members, flat raid
--- list, raid groups); nil names are simply skipped.
+-- list, raid groups); missing frames are simply skipped. The names are built
+-- once: names of frames not created yet would otherwise be new strings
+-- (garbage) on every call.
+local COMPACT_FRAMES = {}
+for i = 1, 5 do COMPACT_FRAMES[#COMPACT_FRAMES + 1] = "CompactPartyFrameMember" .. i end
+for i = 1, 40 do COMPACT_FRAMES[#COMPACT_FRAMES + 1] = "CompactRaidFrame" .. i end
+for g = 1, 8 do
+    for m = 1, 5 do COMPACT_FRAMES[#COMPACT_FRAMES + 1] = "CompactRaidGroup" .. g .. "Member" .. m end
+end
+
 function ns.ForEachCompactFrame(func)
-    for i = 1, 5 do
-        local f = _G["CompactPartyFrameMember" .. i]
+    for i = 1, #COMPACT_FRAMES do
+        local f = _G[COMPACT_FRAMES[i]]
         if f then func(f) end
-    end
-    for i = 1, 40 do
-        local f = _G["CompactRaidFrame" .. i]
-        if f then func(f) end
-    end
-    for g = 1, 8 do
-        for m = 1, 5 do
-            local f = _G["CompactRaidGroup" .. g .. "Member" .. m]
-            if f then func(f) end
-        end
     end
 end
 
@@ -919,9 +918,26 @@ loader:SetScript("OnEvent", function(self, event, arg1)
     end
 end)
 
+-- Memory used by PanzaUI before and after a full garbage collection: what
+-- goes away was only garbage waiting for Lua's collector, what stays is in use.
+local function MemoryReport()
+    local GetMemory = GetAddOnMemoryUsage or (C_AddOns and C_AddOns.GetAddOnMemoryUsage)
+    if not GetMemory then return end
+    UpdateAddOnMemoryUsage()
+    local before = GetMemory(addonName)
+    collectgarbage("collect")
+    UpdateAddOnMemoryUsage()
+    ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
+end
+
+-- /pui: options. /pui mem: memory report.
 SLASH_PANZAUI1, SLASH_PANZAUI2 = "/panza", "/pui"
-SlashCmdList.PANZAUI = function()
-    Settings.OpenToCategory(ns.category:GetID())
+SlashCmdList.PANZAUI = function(msg)
+    if msg and msg:lower():find("^%s*mem") then
+        MemoryReport()
+    else
+        Settings.OpenToCategory(ns.category:GetID())
+    end
 end
 
 -- Shortcuts: /rl = Reload UI, /rc = ready check, /pl = 10 second pull timer.

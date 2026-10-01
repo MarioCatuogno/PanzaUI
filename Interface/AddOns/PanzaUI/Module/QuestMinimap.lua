@@ -172,7 +172,10 @@ end
 -- Quest Tracker quest count (e.g. 20/35) in the "All Objectives" header,
 -- same font and color as its title, right before the minimize button. Only
 -- quests that count toward the log limit (no headers, hidden, world/bonus or
--- bounty quests). Updated on quest log changes, only while the option is on.
+-- bounty quests). Updated only while the option is on, when a quest enters
+-- or leaves the log. QUEST_LOG_UPDATE fires every few seconds even when
+-- nothing changes, and each count reads one new info table per log entry
+-- (tens of KB of garbage): it is used only until the log has loaded.
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -204,15 +207,18 @@ local function UpdateCount()
     PlaceCount()
     countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
 end
--- QUEST_LOG_UPDATE fires very often (and in bursts), and each count reads
--- one info table per log entry: count at most once per second, always after
--- the last change. Timer callback made once (no closure per event).
-local countPending = false
+-- Bursts of events: count at most once per second, always after the last
+-- change. Timer callback made once (no closure per event).
+local COUNT_EVENTS = { "QUEST_ACCEPTED", "QUEST_REMOVED", "QUEST_TURNED_IN", "QUEST_LOG_UPDATE" }
+local countPending, logLoaded = false, false
 local function DelayedCount()
     countPending = false
     UpdateCount()
+    -- Log loaded: from now on only accepted/removed quests change the count.
+    if logLoaded then countEvents:UnregisterEvent("QUEST_LOG_UPDATE") end
 end
-countEvents:SetScript("OnEvent", function()
+countEvents:SetScript("OnEvent", function(_, event)
+    if event == "QUEST_LOG_UPDATE" then logLoaded = true end
     if countPending then return end
     countPending = true
     C_Timer.After(1, DelayedCount)
@@ -229,8 +235,8 @@ local function SetQuestCount(on)
     if not countText then return end
     countText:SetShown(on)
     if on then
-        countEvents:RegisterEvent("QUEST_LOG_UPDATE")
-        UpdateCount()
+        for _, event in ipairs(COUNT_EVENTS) do countEvents:RegisterEvent(event) end
+        DelayedCount()
     else
         countEvents:UnregisterAllEvents()
     end
