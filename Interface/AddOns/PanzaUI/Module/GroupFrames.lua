@@ -18,7 +18,7 @@ local GF = ns:RegisterModule("GroupFrames", {
         { key = "fontStyle", label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to names and status text (Dead, Offline, ...) on party and raid frames. Requires Reload UI." },
         { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain white percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
         { header = "Features" },
-        { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name, without the server, on party and raid frames. Requires Reload UI." },
+        { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name on party and raid frames: no server, and no * mark on NPC followers. Requires Reload UI." },
     },
 })
 
@@ -37,16 +37,17 @@ local function StyleExisting()
     if title and title.GetFontString then ns.StyleFont(title:GetFontString()) end
 end
 
--- Names without server: runs after Blizzard's CompactUnitFrame_UpdateName.
--- Only players from another server are touched (NPC followers and same-server
--- players keep Blizzard's text). The name is passed straight to SetText and
--- never inspected, so secret values are safe.
+-- Clean names: runs after Blizzard's CompactUnitFrame_UpdateName. Shows only
+-- the character name: no server for players from another server, no "*" mark
+-- Blizzard puts on NPC followers (follower dungeons, delves). Skipped when the
+-- name is a secret value (it can't be inspected then).
 local function UpdateName(frame)
     if frame:IsForbidden() then return end
     local unit = frame.unit
     if not unit or IsSecret(unit) or unit:find("nameplate", 1, true) or not frame.name then return end
-    local name, realm = UnitName(unit)
-    if realm and not IsSecret(realm) and realm ~= "" then frame.name:SetText(name) end
+    local name = UnitName(unit)
+    if not name or IsSecret(name) then return end
+    frame.name:SetText((name:gsub("^%*+%s*", "")))
 end
 
 -- Percentage-only health text: runs after Blizzard's

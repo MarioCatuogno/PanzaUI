@@ -40,7 +40,7 @@ Here's a list of all the features included in this first release!
 * Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
 * Party & Raid Frames - Added the outlined font to names and status text
 * Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
-* Party & Raid Frames - Removed the server from player names
+* Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
 * QoL - Added the auto-repair with personal gold
 * QoL - Added the auto-sell of junk items at merchants
 * QoL - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
