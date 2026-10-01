@@ -1,7 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
     Text style, server-less names and percentage-only health text for the
-    compact party/raid frames. PanzaUI absorb texture and aggro border.
+    compact party/raid frames. PanzaUI absorb, heal prediction and aggro
+    border textures, optional over-absorb glow.
     Role icons: optional HD icons, and hidden icons shown again when the role
     becomes known (Blizzard misses it on reload).
 ------------------------------------------------------------------------------]]
@@ -17,6 +18,8 @@ local GF = ns:RegisterModule("GroupFrames", {
         hdRoleIcons = true,
         absorbTexture = true,
         aggroBorder   = true,
+        healPredTexture = true,
+        hideOverAbsorb  = true,
     },
     options = {
         { header = "Style" },
@@ -26,6 +29,8 @@ local GF = ns:RegisterModule("GroupFrames", {
         { key = "hdRoleIcons", label = "HD role icons", tooltip = "Use Blizzard's large, high-resolution role icons (like the dungeon finder ready popup) on party and raid frames. Requires Reload UI." },
         { key = "absorbTexture", label = "PanzaUI absorb texture", tooltip = "Show shields/absorbs on party and raid health bars with PanzaUI's own texture instead of Blizzard's striped one. Requires Reload UI." },
         { key = "aggroBorder",   label = "PanzaUI aggro border",   tooltip = "Replace the aggro (threat) border of party and raid frames with a thinner PanzaUI border, colored by threat like Blizzard's. Requires Reload UI." },
+        { key = "healPredTexture", label = "PanzaUI heal prediction", tooltip = "Show incoming heals on party and raid health bars with the PanzaUI texture, in Blizzard's colors. Requires Reload UI." },
+        { key = "hideOverAbsorb",  label = "Hide over-absorb glow",   tooltip = "Hide the bright glow at the end of party and raid health bars shown when shields exceed the missing health. Requires Reload UI." },
         { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name on party and raid frames: no server, and no * mark on NPC followers. Requires Reload UI." },
     },
 })
@@ -161,7 +166,17 @@ end)
 -- textures keep Blizzard's sizing and threat colors. The aggro border is
 -- 9-sliced: constant thickness whatever the frame size. Widget calls only.
 local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
-local useAbsorb, useAggro
+local useAbsorb, useAggro, useHealPred, hideOverAbsorb
+local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
+
+-- Heal prediction: Blizzard uses plain color fills (set in the setup): our
+-- texture tinted with the same color (alpha included).
+local function StyleHealPrediction(bar, color)
+    if not (bar and color) then return end
+    bar:SetTexture(HEAL_PRED)
+    bar:SetTexCoord(0, 1, 0, 1)
+    bar:SetVertexColor(color:GetRGBA())
+end
 
 local function StyleExtras(frame)
     if not frame or frame:IsForbidden() then return end
@@ -170,6 +185,12 @@ local function StyleExtras(frame)
         frame.totalAbsorb:SetTexCoord(0, 1, 0, 1)
         if frame.totalAbsorbOverlay then frame.totalAbsorbOverlay:SetAlpha(0) end -- stripes
     end
+    if useHealPred then
+        StyleHealPrediction(frame.myHealPrediction, CUF_MY_HEAL_PREDICTION_COLOR)
+        StyleHealPrediction(frame.otherHealPrediction, CUF_OTHER_HEAL_PREDICTION_COLOR)
+    end
+    -- Over-absorb glow: Blizzard only shows/hides it, alpha 0 keeps it hidden.
+    if hideOverAbsorb and frame.overAbsorbGlow then frame.overAbsorbGlow:SetAlpha(0) end
     local aggro = useAggro and frame.aggroHighlight
     if aggro then
         aggro:SetTexture(MEDIA .. "PanzaUI_aggro.tga")
@@ -182,8 +203,9 @@ local function StyleExtras(frame)
 end
 
 function GF:OnEnable()
-    useAbsorb, useAggro = self.db.absorbTexture, self.db.aggroBorder
-    if useAbsorb or useAggro then
+    local db = self.db
+    useAbsorb, useAggro, useHealPred, hideOverAbsorb = db.absorbTexture, db.aggroBorder, db.healPredTexture, db.hideOverAbsorb
+    if useAbsorb or useAggro or useHealPred or hideOverAbsorb then
         ns.ForEachCompactFrame(StyleExtras)
         ns.Hook("DefaultCompactUnitFrameSetup", StyleExtras)
     end
