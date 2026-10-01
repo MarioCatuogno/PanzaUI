@@ -16,7 +16,7 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { header = "Style" },
         { key = "fontStyle", label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to names and status text (Dead, Offline, ...) on party and raid frames. Requires Reload UI." },
-        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain percentage (no % symbol) on party and raid frames. Hidden at 0 and 100. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
+        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
         { header = "Features" },
         { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name, without the server, on party and raid frames. Requires Reload UI." },
     },
@@ -27,6 +27,7 @@ local function StyleFrame(frame)
     if not frame then return end
     ns.StyleFont(frame.name)
     ns.StyleFont(frame.statusText)
+    ns.SyncPercentFont(frame.statusText) -- "100" twin of the percentage text
 end
 
 -- Frames already created before login.
@@ -55,13 +56,15 @@ end
 local function UpdateStatusText(frame)
     if frame:IsForbidden() then return end
     local text, unit = frame.statusText, frame.displayedUnit or frame.unit
-    if not (text and unit) or IsSecret(unit) or unit:find("nameplate", 1, true) or not text:IsShown() then return end
+    if not (text and unit) or IsSecret(unit) or unit:find("nameplate", 1, true) then return end
+    if not text:IsShown() then ns.HidePercentFull(text) return end
     local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
     if IsSecret(connected) or IsSecret(dead) or not connected or dead then
         text:SetAlpha(1) -- status text (Dead, Offline...) always visible
+        ns.HidePercentFull(text)
         return
     end
-    ns.SetPercentText(text, unit, false, nil, ns.CanHidePercentEnds)
+    ns.SetPercentText(text, unit, false)
 end
 
 function GF:OnEnable()

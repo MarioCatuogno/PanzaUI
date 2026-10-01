@@ -289,80 +289,117 @@ function ns.StyleBarText(bar)
     ns.StyleFont(bar.RightText)
 end
 
--- Percentage-only text (no % symbol). Midnight: health/power are secret
--- values, so the percentage comes from UnitHealthPercent/UnitPowerPercent and
--- is passed straight to the FontString, never read or compared.
--- Runs after Blizzard's UpdateTextString (post-hook: no taint on Blizzard code).
-local percentBars = {} -- bar -> { power = bool, unit = fallback unit, respect = bool, hideEnds = bool }
+--------------------------------------------------------------------------------
+-- Percentage-only text (no % symbol): one decimal below 100 (95.5, 37.2 ...
+-- down to 0.1), "100" when full, nothing at 0. Midnight: health/power are
+-- secret values, so they can't be compared or formatted conditionally:
+--  * the bar text always shows the value with one decimal, and a curve turns
+--    the fraction into its alpha (visible from 0.05% to just under 99.95%);
+--  * a twin FontString on top shows a fixed "100", with the opposite curve
+--    (visible from 99.95%: where "%.1f" would read "100.0").
+-- The secret values go straight to the widgets, never read. Curves and twins
+-- are made once. Runs after Blizzard's UpdateTextString (post-hook).
+--------------------------------------------------------------------------------
 local IsSecret = ns.IsSecret
+local percentBars = {} -- bar -> { power = bool, unit = fallback unit }
+local fullTexts   = {} -- bar text -> twin FontString showing "100"
 
--- hideEnds: text hidden at 0 and 100 (i.e. when it would read "0" or "100").
--- The value is secret, so it can't be compared: a curve turns the health or
--- power fraction into the text alpha (0 outside 0.5..99.5%, 1 inside) and
--- that secret alpha goes straight to the FontString. Made once.
-local endsCurve
+local partCurve, fullCurve
 if C_CurveUtil and C_CurveUtil.CreateCurve then
-    endsCurve = C_CurveUtil.CreateCurve()
-    endsCurve:AddPoint(0,     0)
-    endsCurve:AddPoint(0.004, 0)
-    endsCurve:AddPoint(0.005, 1)
-    endsCurve:AddPoint(0.995, 1)
-    endsCurve:AddPoint(0.996, 0)
-    endsCurve:AddPoint(1,     0)
+    partCurve = C_CurveUtil.CreateCurve()
+    partCurve:AddPoint(0,       0)
+    partCurve:AddPoint(0.0004,  0)
+    partCurve:AddPoint(0.0005,  1)
+    partCurve:AddPoint(0.99949, 1)
+    partCurve:AddPoint(0.9995,  0)
+    partCurve:AddPoint(1,       0)
+    fullCurve = C_CurveUtil.CreateCurve()
+    fullCurve:AddPoint(0,       0)
+    fullCurve:AddPoint(0.99949, 0)
+    fullCurve:AddPoint(0.9995,  1)
+    fullCurve:AddPoint(1,       1)
+end
+
+-- Copies the current font of the bar text to its twin (after a restyle).
+function ns.SyncPercentFont(text)
+    local twin = text and fullTexts[text]
+    if not twin then return end
+    local font, size, flags = text:GetFont()
+    if not IsSecret(font) and not IsSecret(size) and font then twin:SetFont(font, size, flags) end
+end
+
+local function FullText(text)
+    local twin = fullTexts[text]
+    if twin then return twin end
+    twin = text:GetParent():CreateFontString(nil, (text:GetDrawLayer()))
+    local base = text:GetFontObject()
+    if base and not IsSecret(base) then twin:SetFontObject(base) end
+    twin:SetAllPoints(text)
+    twin:SetJustifyH(text:GetJustifyH())
+    twin:SetJustifyV(text:GetJustifyV())
+    twin:SetTextColor(text:GetTextColor())
+    twin:SetText("100")
+    fullTexts[text] = twin
+    ns.SyncPercentFont(text)
+    -- Whenever Blizzard hides the bar text, the twin goes too.
+    hooksecurefunc(text, "Hide", function() twin:Hide() end)
+    return twin
+end
+
+-- Hides the twin (status texts like Dead/Offline, or no unit).
+function ns.HidePercentFull(text)
+    local twin = text and fullTexts[text]
+    if twin then twin:Hide() end
+end
+
+-- Writes the health (or power, with isPower) percentage of unit.
+-- No and/or shortcut: a secret value can't be tested for truthiness.
+function ns.SetPercentText(text, unit, isPower, powerType)
+    local curve = CurveConstants.ScaleTo100
+    local pct, alpha, full
+    if isPower then
+        pct = UnitPowerPercent(unit, powerType, false, curve)
+        if partCurve then
+            alpha = UnitPowerPercent(unit, powerType, false, partCurve)
+            full  = UnitPowerPercent(unit, powerType, false, fullCurve)
+        end
+    else
+        pct = UnitHealthPercent(unit, true, curve)
+        if partCurve then
+            alpha = UnitHealthPercent(unit, true, partCurve)
+            full  = UnitHealthPercent(unit, true, fullCurve)
+        end
+    end
+    text:SetFormattedText("%.1f", pct)
+    if partCurve then
+        text:SetAlpha(alpha)
+        local twin = FullText(text)
+        twin:SetAlpha(full)
+        twin:Show()
+    end
 end
 
 local function ShowPercent(bar)
     local info, text = percentBars[bar], bar.TextString
     if not (info and text) then return end
-
-    -- respect: keep Blizzard's own visibility choice (e.g. an Edit Mode setting)
-    local visible = not info.respect or text:IsShown()
-        or (bar.LeftText and bar.LeftText:IsShown()) or (bar.RightText and bar.RightText:IsShown())
     if bar.LeftText  then bar.LeftText:Hide()  end
     if bar.RightText then bar.RightText:Hide() end
 
     local unit = bar.unit or info.unit
-    if not visible or not unit then
+    if not unit then
         text:Hide()
         return
     end
-    -- Empty bars (e.g. no power) hide the text. With hideEnds the curve
-    -- already hides 0, so the extra min/max read is skipped (runs on every
-    -- value change).
-    if not info.hideEnds then
-        local _, max = bar:GetMinMaxValues()
-        if not IsSecret(max) and max <= 0 then
-            text:Hide()
-            return
-        end
-    end
-
-    ns.SetPercentText(text, unit, info.power, bar.powerType, info.hideEnds)
+    ns.SetPercentText(text, unit, info.power, bar.powerType)
     text:Show()
 end
 
--- Writes the health (or power, with isPower) percentage of unit as a plain
--- number. hideEnds: invisible at 0 and 100 (secret-safe alpha).
--- No and/or shortcut: a secret value can't be tested for truthiness.
-function ns.SetPercentText(text, unit, isPower, powerType, hideEnds)
-    local curve = CurveConstants.ScaleTo100
-    local pct, alpha
-    if isPower then
-        pct = UnitPowerPercent(unit, powerType, false, curve)
-        if hideEnds then alpha = UnitPowerPercent(unit, powerType, false, endsCurve) end
-    else
-        pct = UnitHealthPercent(unit, true, curve)
-        if hideEnds then alpha = UnitHealthPercent(unit, true, endsCurve) end
-    end
-    text:SetFormattedText("%.0f", pct)
-    if hideEnds then text:SetAlpha(alpha) end
-end
-ns.CanHidePercentEnds = endsCurve ~= nil
-
-function ns.PercentText(bar, isPower, unit, respectVisibility, hideEnds)
+-- Call after styling the bar text: its twin is made now, with the same font
+-- (readable at login; later the text can hold secret values).
+function ns.PercentText(bar, isPower, unit)
     if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
-    percentBars[bar] = { power = isPower, unit = unit, respect = respectVisibility,
-                         hideEnds = hideEnds and endsCurve ~= nil }
+    percentBars[bar] = { power = isPower, unit = unit }
+    if partCurve and bar.TextString then FullText(bar.TextString):Hide() end
     ns.Hook(bar, "UpdateTextString", ShowPercent)
 end
 

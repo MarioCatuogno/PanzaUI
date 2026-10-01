@@ -27,7 +27,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Personal Resource Display" },
         { key = "fontStyle",    label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the bar text. Requires Reload UI." },
         { key = "centerText",   label = "Center text",          tooltip = "Center the text on the bars. Requires Reload UI." },
-        { key = "percentText",  label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), like the Player and Target frames. Requires Reload UI." },
+        { key = "percentText",  label = "Percentage-only text", tooltip = "Always show health and power as a plain percentage (no % symbol), with one decimal below 100, like the Player and Target frames. Hidden at 0. Requires Reload UI." },
         { header = "Cooldown Manager" },
         { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
         { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },

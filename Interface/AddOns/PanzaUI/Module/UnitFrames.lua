@@ -30,7 +30,7 @@ local options = {
     { key = "playerFontStyle",    label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the Player text." .. RELOAD },
     { key = "playerHideLevel",    label = "Hide level, center name", tooltip = "Remove the Player level and center the name above the health bar." .. RELOAD },
     { key = "hideStatusGlow",     label = "Hide combat/rest glow",   tooltip = "Remove the combat and rest glow and the Zzz animation." .. RELOAD },
-    { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol). Hidden at 0 and 100." .. RELOAD },
+    { key = "playerPercentText",  label = "Percentage-only text",    tooltip = "Show health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." .. RELOAD },
     { key = "playerClassColor",   label = "Class colored health bar", tooltip = "Color the health bar with your class color." .. RELOAD },
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
@@ -42,7 +42,7 @@ local TARGET_OPTIONS = {
     { key = "FontStyle",          label = "Outline + Slug text",     tooltip = "Apply outline and slug rendering to the %s text." },
     { key = "HideLevel",          label = "Hide level, center name", tooltip = "Remove the %s level and center the name above the health bar." },
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
-    { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol). Hidden at 0 and 100." },
+    { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
     { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
@@ -75,7 +75,7 @@ options[#options + 1] = { key = "focusHideCastBar", label = "Hide cast bar", too
 local PET_OPTIONS = {
     { header = "Pet" },
     { key = "petFontStyle",   label = "Outline + Slug text",   tooltip = "Apply outline and slug rendering to the Pet text." .. RELOAD },
-    { key = "petPercentText", label = "Percentage-only text",  tooltip = "Show Pet health and power as a plain percentage (no % symbol). Hidden at 0 and 100." .. RELOAD },
+    { key = "petPercentText", label = "Percentage-only text",  tooltip = "Show Pet health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." .. RELOAD },
     { key = "petHideHitText", label = "Hide damage/heal text", tooltip = "Hide the damage and healing numbers on the Pet portrait." .. RELOAD },
     { key = "petHideAuras",   label = "Hide buffs/debuffs",    tooltip = "Hide buffs and debuffs on the Pet frame." .. RELOAD },
 }
@@ -243,8 +243,8 @@ local function SetupPlayer(db)
     end
 
     if db.playerPercentText then
-        ns.PercentText(health, false, nil, nil, true) -- hidden at 0 and 100
-        ns.PercentText(power, true, nil, nil, true)
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
     end
 
     if db.playerClassColor then classColorBars[health] = true end
@@ -300,8 +300,8 @@ local function SetupTargetFrame(frame, db, p)
     end
 
     if db[p .. "PercentText"] then
-        ns.PercentText(health, false, nil, nil, true) -- hidden at 0 and 100
-        ns.PercentText(power, true, nil, nil, true)
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
     end
 end
 
@@ -325,8 +325,8 @@ local function SetupPet(db)
     end
 
     if db.petPercentText then
-        ns.PercentText(health, false, nil, nil, true) -- hidden at 0 and 100
-        ns.PercentText(power, true, nil, nil, true)
+        ns.PercentText(health, false)
+        ns.PercentText(power, true)
     end
 end
 

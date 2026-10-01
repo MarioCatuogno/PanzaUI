@@ -29,7 +29,7 @@ Here's a list of all the features included in this first release!
 * Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
-* Combat - Personal Resource Display now always shows health and power as a percentage
+* Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Core - Added a texture option for Achievement, Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
@@ -38,7 +38,7 @@ Here's a list of all the features included in this first release!
 * Minimap - Added the outlined font to zone name and clock
 * Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
 * Party & Raid Frames - Added the outlined font to names and status text
-* Party & Raid Frames - Health now shown as a simple percentage (hidden at 0 and 100)
+* Party & Raid Frames - Health now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Removed the server from player names
 * QoL - Added the auto-repair with personal gold
 * QoL - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
@@ -53,7 +53,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Added class color to the health bar of Player, Target and Focus (reaction color for NPCs on Target and Focus)
 * Unit Frames - Added the action bar style to the cast bar icon of Target and Focus
 * Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus and Pet
-* Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage (hidden at 0 and 100)
+* Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
 * Unit Frames - Hidden damage/healing numbers on Player and Pet portraits
 * Unit Frames - Hidden the Focus cast bar
