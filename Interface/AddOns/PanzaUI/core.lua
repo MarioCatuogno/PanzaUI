@@ -247,6 +247,46 @@ function ns.OnDamageMeterEntry(func)
 end
 
 --------------------------------------------------------------------------------
+-- Cooldown Manager items: shared registry, like the Damage Meter one. Items
+-- come from a pool per viewer: each one is passed once to every registered
+-- function, when acquired (one hook per viewer for all modules) or, for the
+-- ones already there, in a single scan at load. No table per layout refresh
+-- (GetItemFrames builds a new one on every call, so it is used only once).
+--------------------------------------------------------------------------------
+local CDM_VIEWERS = { "EssentialCooldownViewer", "UtilityCooldownViewer", "BuffIconCooldownViewer", "BuffBarCooldownViewer" }
+local cdmFuncs, cdmItems = {}, {}
+
+local function OnCooldownItem(item)
+    if not item or cdmItems[item] then return end
+    cdmItems[item] = true
+    for _, func in ipairs(cdmFuncs) do func(item) end
+end
+
+local function OnAcquireCooldownItem(_, item) OnCooldownItem(item) end
+
+local function SetupCooldownItems()
+    for _, name in ipairs(CDM_VIEWERS) do
+        local viewer = _G[name]
+        if viewer then
+            if viewer.GetItemFrames then
+                for _, item in ipairs(viewer:GetItemFrames()) do OnCooldownItem(item) end
+            end
+            ns.Hook(viewer, "OnAcquireItemFrame", OnAcquireCooldownItem)
+        end
+    end
+end
+
+-- func(item): runs once per Cooldown Manager item (every viewer; func skips
+-- the items it doesn't handle). Items seen before registering get it too.
+function ns.OnCooldownItem(func)
+    cdmFuncs[#cdmFuncs + 1] = func
+    for item in pairs(cdmItems) do func(item) end
+    if #cdmFuncs == 1 then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupCooldownItems)
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Item level on item buttons (Bags, Character panel). The level and quality
 -- come from an ItemLocation (reused by the caller: no garbage). The text is
 -- our own FontString, kept in a local table (no fields written on Blizzard

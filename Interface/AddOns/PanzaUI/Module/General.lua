@@ -435,23 +435,11 @@ function GEN:OnEnable()
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
     end
 
-    -- Cooldown Manager buff bars: items come from the viewer's pool, so the
-    -- bar of each item is tracked when acquired (and the ones already there).
+    -- Cooldown Manager buff bars (shared item registry in core.lua).
     local cooldownBars = TexturePath("texCooldownBars")
     if cooldownBars then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function()
-            local viewer = BuffBarCooldownViewer
-            if not viewer then return end
-            local function TrackItem(item) if item then TrackTexture(item.Bar, cooldownBars) end end
-            local function TrackAll(v)
-                if v.GetItemFrames then
-                    for _, item in ipairs(v:GetItemFrames()) do TrackItem(item) end
-                end
-            end
-            TrackAll(viewer)
-            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) TrackItem(item) end)
-            ns.Hook(viewer, "RefreshLayout", TrackAll)
-        end)
+        -- Only bar items have .Bar (icon viewers' items are skipped).
+        ns.OnCooldownItem(function(item) TrackTexture(item.Bar, cooldownBars) end)
     end
 
     -- Damage Meter bars (session and spell breakdown windows): shaped like

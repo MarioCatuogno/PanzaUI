@@ -82,6 +82,8 @@ end
 -- (SetupAlternatePowerBar), so the hook is (re)checked after it.
 local altHooked = {}
 
+-- Readable values get Blizzard's thousands separator (like BreakUpLargeNumbers)
+-- through C formatting: no Lua string is built on each update.
 local function ShowAltText(bar)
     local text = bar.TextString
     if not text or text:IsShown() then return end -- Blizzard already shows it
@@ -89,7 +91,14 @@ local function ShowAltText(bar)
     if ns.IsSecret(value) then
         text:SetFormattedText("%.0f", value)
     else
-        text:SetText(BreakUpLargeNumbers(floor(value + 0.5)))
+        local n, sep = floor(value + 0.5), LARGE_NUMBER_SEPERATOR or ","
+        if n < 1000 then
+            text:SetFormattedText("%d", n)
+        elseif n < 1000000 then
+            text:SetFormattedText("%d%s%03d", floor(n / 1000), sep, n % 1000)
+        else
+            text:SetFormattedText("%d%s%03d%s%03d", floor(n / 1000000), sep, floor(n / 1000) % 1000, sep, n % 1000)
+        end
     end
     text:Show()
 end
@@ -110,11 +119,10 @@ local function SetupAltText()
 end
 
 --------------------------------------------------------------------------------
--- Cooldown Manager icons. Items come from a pool per viewer: styled once when
--- acquired (and the ones already there). Blizzard's own square icon overlay
+-- Cooldown Manager icons. Items come from the shared registry in core.lua
+-- (ns.OnCooldownItem): styled once each. Blizzard's own square icon overlay
 -- is hidden so only the action bar frame shows. Widget calls only.
 --------------------------------------------------------------------------------
-local VIEWERS = { "EssentialCooldownViewer", "UtilityCooldownViewer", "BuffIconCooldownViewer", "BuffBarCooldownViewer" }
 local styledItems = {}
 
 local function StyleItem(item)
@@ -158,24 +166,6 @@ local function StyleItemText(item)
     if not item or styledTexts[item] then return end
     styledTexts[item] = true
     StyleFonts(item, 0)
-end
-
--- Runs func on every item of every viewer: the ones already there, newly
--- acquired ones and after each layout refresh (func skips items already done).
-local function ForEachCooldownItem(func)
-    local function All(viewer)
-        if viewer.GetItemFrames then
-            for _, item in ipairs(viewer:GetItemFrames()) do func(item) end
-        end
-    end
-    for _, name in ipairs(VIEWERS) do
-        local viewer = _G[name]
-        if viewer then
-            All(viewer)
-            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) func(item) end)
-            ns.Hook(viewer, "RefreshLayout", All)
-        end
-    end
 end
 
 --------------------------------------------------------------------------------
@@ -321,10 +311,10 @@ function CB:OnEnable()
         end
     end
     if db.cdmIconStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function() ForEachCooldownItem(StyleItem) end)
+        ns.OnCooldownItem(StyleItem)
     end
     if db.cdmFontStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function() ForEachCooldownItem(StyleItemText) end)
+        ns.OnCooldownItem(StyleItemText)
     end
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)

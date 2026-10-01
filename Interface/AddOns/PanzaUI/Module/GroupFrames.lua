@@ -60,7 +60,8 @@ local function UpdateName(frame)
     if not unit or IsSecret(unit) or unit:find("nameplate", 1, true) or not frame.name then return end
     local name = UnitName(unit)
     if not name or IsSecret(name) then return end
-    frame.name:SetText((name:gsub("^%*+%s*", "")))
+    if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- "*": no string work otherwise
+    frame.name:SetText(name)
 end
 
 -- Percentage-only health text: runs after Blizzard's

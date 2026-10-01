@@ -309,7 +309,8 @@ local function HideFollowerMark(text, frame)
         local name = UnitName(unit)
         if not name or IsSecret(name) then return end
         busy = true
-        text:SetText((name:gsub("^%*+%s*", "")))
+        if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- "*": no string work otherwise
+        text:SetText(name)
         busy = false
     end)
 end
