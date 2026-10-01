@@ -2,7 +2,7 @@
     PanzaUI - Combat
     Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
     icon zoom of the player's auras.
-    Cast Bar: refined style (remaining time in the center, hidden right when
+    Cast Bar: refined style (elapsed time in the center, hidden right when
     the cast ends).
     Cooldown Manager: refined style (rounded icon borders, outlined text),
     dynamic layout of tracked buffs (centered) and bars (bottom-up).
@@ -37,7 +37,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Cast Bar" },
         { key = "castStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the player cast bar.",
-          bullets = { "Remaining time in the center (e.g. 1.4)", "Hidden right when the cast ends (no fade out)" } },
+          bullets = { "Elapsed cast time in the center", "Hidden right when the cast ends (no fade out)" } },
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager.",
@@ -109,7 +109,7 @@ local function InstantAnims(...)
     end
 end
 
--- Remaining time, one decimal, outlined, in the center of the bar. A small
+-- Elapsed cast time, one decimal, outlined, in the center of the bar. A small
 -- driver frame updates it (throttled) only while the player is casting or
 -- channeling; it reads the player's own cast times (never secret values:
 -- the text is just left empty then). C formatting, no garbage per update.
@@ -117,25 +117,25 @@ local CAST_TICK = 0.05
 local castTimer, castDriver
 local tickElapsed = 0
 
-local function CastEndTime()
-    local _, _, _, _, endMS = UnitCastingInfo("player")
-    if endMS == nil then _, _, _, _, endMS = UnitChannelInfo("player") end
-    if endMS == nil or ns.IsSecret(endMS) then return end
-    return endMS / 1000
+local function CastStartTime()
+    local _, _, _, startMS = UnitCastingInfo("player")
+    if startMS == nil then _, _, _, startMS = UnitChannelInfo("player") end
+    if startMS == nil or ns.IsSecret(startMS) then return end
+    return startMS / 1000
 end
 
 local function UpdateCastTimer(driver, elapsed)
     tickElapsed = tickElapsed + elapsed
     if tickElapsed < CAST_TICK then return end
     tickElapsed = 0
-    local endTime = CastEndTime()
-    if not endTime then
+    local startTime = CastStartTime()
+    if not startTime then
         castTimer:SetText("")
         driver:Hide()
         return
     end
-    local remaining = endTime - GetTime()
-    castTimer:SetFormattedText("%.1f", remaining > 0 and remaining or 0)
+    local elapsedTime = GetTime() - startTime
+    castTimer:SetFormattedText("%.1f", elapsedTime > 0 and elapsedTime or 0)
 end
 
 local function SetupCastTimer(bar)
