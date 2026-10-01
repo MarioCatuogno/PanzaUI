@@ -296,9 +296,9 @@ end
 local percentBars = {} -- bar -> { power = bool, unit = fallback unit, respect = bool, hideEnds = bool }
 local IsSecret = ns.IsSecret
 
--- hideEnds: health text hidden at 0 and 100 (i.e. when it would read "0" or
--- "100"). The value is secret, so it can't be compared: a curve turns the
--- health fraction into the text alpha (0 outside 0.5..99.5%, 1 inside) and
+-- hideEnds: text hidden at 0 and 100 (i.e. when it would read "0" or "100").
+-- The value is secret, so it can't be compared: a curve turns the health or
+-- power fraction into the text alpha (0 outside 0.5..99.5%, 1 inside) and
 -- that secret alpha goes straight to the FontString. Made once.
 local endsCurve
 if C_CurveUtil and C_CurveUtil.CreateCurve then
@@ -330,21 +330,23 @@ local function ShowPercent(bar)
 
     -- No and/or shortcut: a secret value can't be tested for truthiness.
     local curve = CurveConstants.ScaleTo100
-    local pct
+    local pct, alpha
     if info.power then
         pct = UnitPowerPercent(unit, bar.powerType, false, curve)
+        if info.hideEnds then alpha = UnitPowerPercent(unit, bar.powerType, false, endsCurve) end
     else
         pct = UnitHealthPercent(unit, true, curve)
+        if info.hideEnds then alpha = UnitHealthPercent(unit, true, endsCurve) end
     end
     text:SetFormattedText("%.0f", pct)
-    if info.hideEnds then text:SetAlpha(UnitHealthPercent(unit, true, endsCurve)) end
+    if info.hideEnds then text:SetAlpha(alpha) end
     text:Show()
 end
 
 function ns.PercentText(bar, isPower, unit, respectVisibility, hideEnds)
     if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
     percentBars[bar] = { power = isPower, unit = unit, respect = respectVisibility,
-                         hideEnds = hideEnds and not isPower and endsCurve ~= nil }
+                         hideEnds = hideEnds and endsCurve ~= nil }
     ns.Hook(bar, "UpdateTextString", ShowPercent)
 end
 
