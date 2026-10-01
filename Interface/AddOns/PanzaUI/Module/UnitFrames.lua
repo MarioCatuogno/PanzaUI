@@ -24,7 +24,6 @@ local defaults = {
     hideTotems         = true,
     fixPortraits       = true,
     hideGroupNumber    = true,
-    mirrorTargetArt    = true,
 }
 
 local options = {
@@ -37,7 +36,6 @@ local options = {
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
-    { key = "mirrorTargetArt",    label = "Target-style frame art",  tooltip = "Use the Target frame art, mirrored, for the Player frame: a round portrait ring without the corner arrow, symmetric to the Target frame." .. RELOAD },
     { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
     { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
@@ -132,69 +130,6 @@ local function RestorePlayerArt()
     if not InCombatLockdown() then
         GetPlayerBottomManagedFrameContainer():SetPoint("TOP", PlayerFrame, "BOTTOM", 30, 25)
     end
-end
-
---------------------------------------------------------------------------------
--- Player frame art: the Target frame atlas, mirrored horizontally (both
--- frames are 232x100 with the art centered). To match the mirrored art like
--- on the Target frame:
---  * the portrait gets the Target's round mask (no square bottom-right corner)
---    and the corner embellishment is hidden;
---  * health and power bars use the Target's mirrored geometry: health from
---    x=84 (126 wide), power from x=76 (134 wide, slightly under the ring).
--- Re-applied after PlayerFrame_ToPlayerArt (it sets its own atlas and bar
--- positions). Only the normal art: vehicle and class-resource art are left
--- alone. Bars are moved out of combat only (protected-frame safety).
---------------------------------------------------------------------------------
-local TARGET_ART  = "UI-HUD-UnitFrame-Target-PortraitOn"
-local HEALTH_X, HEALTH_W = 84, 126
-local MANA_X, MANA_W     = 76, 134
-local mirrorPending = false
-local mirrorEvents = CreateFrame("Frame")
-
-local function MirrorPlayerArt()
-    local container = PlayerFrame.PlayerFrameContainer
-    local art = container.FrameTexture
-    local info = C_Texture.GetAtlasInfo(TARGET_ART)
-    if not (art and info) or PlayerFrame.state ~= "player" or UNIT_FRAME_SHOW_HEALTH_ONLY or not art:IsShown() then return end
-    art:SetTexture(info.file)
-    art:SetTexCoord(info.rightTexCoord, info.leftTexCoord, info.topTexCoord, info.bottomTexCoord)
-    art:SetSize(info.width, info.height)
-
-    if InCombatLockdown() then -- bar layout waits for the end of combat
-        mirrorPending = true
-        mirrorEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
-        return
-    end
-    local healthContainer = PlayerFrame_GetHealthBarContainer()
-    local manaBar = PlayerFrame_GetManaBar()
-    if healthContainer then
-        healthContainer:SetWidth(HEALTH_W)
-        healthContainer:SetPoint("TOPLEFT", HEALTH_X, -41)
-    end
-    if manaBar then
-        manaBar:SetWidth(MANA_W)
-        manaBar:SetPoint("TOPLEFT", MANA_X, -61)
-        if manaBar.ManaBarMask then manaBar.ManaBarMask:SetWidth(MANA_W + 4) end
-    end
-end
-
-mirrorEvents:SetScript("OnEvent", function(self)
-    self:UnregisterAllEvents()
-    if mirrorPending then
-        mirrorPending = false
-        MirrorPlayerArt()
-    end
-end)
-
-local function SetupMirroredArt()
-    local container = PlayerFrame.PlayerFrameContainer
-    local ctx = PlayerFrame.PlayerFrameContent and PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual
-    ns.Kill(container.PlayerPortraitCornerIcon)
-    if ctx then ns.Kill(ctx.PlayerPortraitCornerIcon) end
-    if container.PlayerPortraitMask then container.PlayerPortraitMask:SetAtlas("CircleMask") end
-    ns.Hook("PlayerFrame_ToPlayerArt", MirrorPlayerArt)
-    MirrorPlayerArt()
 end
 
 --------------------------------------------------------------------------------
@@ -301,9 +236,6 @@ local function SetupPlayer(db)
         ns.Hook("PlayerFrame_ToPlayerArt", RestorePlayerArt)
         RestorePlayerArt()
     end
-
-    -- After RestorePlayerArt (hooks run in order): it may show the normal art.
-    if db.mirrorTargetArt then SetupMirroredArt() end
 
     if db.playerHideLevel then
         ns.Kill(PlayerLevelText)
