@@ -31,6 +31,7 @@ local ILVL_CACHE_TIME  = 300 -- seconds before a player is inspected again
 local INSPECT_THROTTLE = 1.5 -- min seconds between inspect requests
 
 local ilvlCache, ilvlTime = {}, {} -- guid -> item level / GetTime() of the inspect
+local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0 -- caches are emptied when full
 
 local lastInspect, pendingGUID = 0, nil
 
@@ -65,6 +66,10 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     if not ilvl or IsSecret(ilvl) or ilvl <= 0 then return end
 
     local hadValue = ilvlCache[guid] ~= nil
+    if not hadValue then
+        ilvlCount = ilvlCount + 1
+        if ilvlCount > CACHE_LIMIT then wipe(ilvlCache); wipe(ilvlTime); ilvlCount = 1 end
+    end
     ilvlCache[guid], ilvlTime[guid] = floor(ilvl + 0.5), GetTime()
 
     -- Still hovering the same player and no value shown yet: add it now.
@@ -102,6 +107,13 @@ local function AddMythicRating(tooltip, unit, guid)
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
         local score = summary and summary.currentSeasonScore
         if not score or IsSecret(score) then return end -- not cached: read again next time
+        if not ratingTime[guid] then
+            ratingCount = ratingCount + 1
+            if ratingCount > CACHE_LIMIT then
+                wipe(ratingScore); wipe(ratingTime); wipe(ratingR); wipe(ratingG); wipe(ratingB)
+                ratingCount = 1
+            end
+        end
         ratingScore[guid], ratingTime[guid] = score, now
         if score > 0 then
             local color = C_ChallengeMode.GetDungeonScoreRarityColor(score) or HIGHLIGHT_FONT_COLOR

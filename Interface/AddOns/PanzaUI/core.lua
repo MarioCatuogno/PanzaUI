@@ -322,10 +322,19 @@ local function ShowPercent(bar)
     if bar.RightText then bar.RightText:Hide() end
 
     local unit = bar.unit or info.unit
-    local _, max = bar:GetMinMaxValues()
-    if not visible or not unit or (not IsSecret(max) and max <= 0) then
+    if not visible or not unit then
         text:Hide()
         return
+    end
+    -- Empty bars (e.g. no power) hide the text. With hideEnds the curve
+    -- already hides 0, so the extra min/max read is skipped (runs on every
+    -- value change).
+    if not info.hideEnds then
+        local _, max = bar:GetMinMaxValues()
+        if not IsSecret(max) and max <= 0 then
+            text:Hide()
+            return
+        end
     end
 
     -- No and/or shortcut: a secret value can't be tested for truthiness.

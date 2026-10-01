@@ -341,9 +341,11 @@ end
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
 
+local PORTRAIT_FRAMES = { PlayerFrame, TargetFrame, FocusFrame } -- made once; pairs skips missing ones
+
 local function RedrawPortraits()
     portraitPending = false
-    for _, frame in ipairs({ PlayerFrame, TargetFrame, FocusFrame }) do
+    for _, frame in pairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame and frame.portrait, frame and frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit) then
             SetPortraitTexture(portrait, unit)

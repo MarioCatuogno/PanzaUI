@@ -107,8 +107,19 @@ local function UpdateCount()
     PlaceCount()
     countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
 end
--- QUEST_LOG_UPDATE comes in bursts: count once, on the next frame.
-countEvents:SetScript("OnEvent", function() ns.Defer(UpdateCount) end)
+-- QUEST_LOG_UPDATE fires very often (and in bursts), and each count reads
+-- one info table per log entry: count at most once per second, always after
+-- the last change. Timer callback made once (no closure per event).
+local countPending = false
+local function DelayedCount()
+    countPending = false
+    UpdateCount()
+end
+countEvents:SetScript("OnEvent", function()
+    if countPending then return end
+    countPending = true
+    C_Timer.After(1, DelayedCount)
+end)
 
 local function SetQuestCount(on)
     local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
