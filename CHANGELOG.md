@@ -59,6 +59,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
 * Unit Frames - Hidden damage/healing numbers on Player and Pet portraits
+* Unit Frames - Hidden the * mark before NPC follower names on Target, Focus and their Target of Target
 * Unit Frames - Hidden the Focus cast bar
 * Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
 * Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation

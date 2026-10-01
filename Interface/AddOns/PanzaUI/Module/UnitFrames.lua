@@ -48,6 +48,7 @@ local TARGET_OPTIONS = {
     { key = "HideNameBackground", label = "Hide name background",    tooltip = "Remove the colored background behind the %s name, like the Player frame." },
     { key = "PercentText",        label = "Percentage-only text",    tooltip = "Show %s health and power as a plain percentage (no % symbol), with one decimal below 100. Hidden at 0." },
     { key = "HidePvpIcon",        label = "Hide PvP icon",           tooltip = "Hide the PvP / prestige badge next to the %s portrait." },
+    { key = "HideFollowerMark",   label = "Hide follower * mark",    tooltip = "Remove the * that Blizzard puts before the names of NPC followers (follower dungeons, delves) on the %s frame and its Target of Target." },
     { key = "HideAuras",          label = "Hide buffs/debuffs",      tooltip = "Hide buffs and debuffs on the %s frame." },
     { key = "ClassColor",         label = "Class colored health bar", tooltip = "Color the %s health bar (and its Target of Target) with the class color (players and party members, including follower dungeon NPCs); other units use their reaction color (hostile red, neutral yellow, friendly green)." },
     { key = "CastIconStyle",      label = "Action bar style for cast bar icon", tooltip = "Give the %s cast bar spell icon the same rounded frame as action buttons." },
@@ -281,6 +282,26 @@ local function SetupPlayer(db)
 end
 
 --------------------------------------------------------------------------------
+-- NPC followers (follower dungeons, delves): Blizzard puts a "*" before their
+-- name. After each Blizzard SetText the name is rewritten from UnitName
+-- without it. Skipped when unit or name are secret values (never inspected).
+--------------------------------------------------------------------------------
+local function HideFollowerMark(text, frame)
+    if not text then return end
+    local busy
+    hooksecurefunc(text, "SetText", function()
+        if busy then return end
+        local unit = frame.unit
+        if not unit or IsSecret(unit) then return end
+        local name = UnitName(unit)
+        if not name or IsSecret(name) then return end
+        busy = true
+        text:SetText((name:gsub("^%*+%s*", "")))
+        busy = false
+    end)
+end
+
+--------------------------------------------------------------------------------
 -- Target-style frames (Target and Focus share TargetFrameMixin/template)
 --------------------------------------------------------------------------------
 
@@ -307,6 +328,12 @@ local function SetupTargetFrame(frame, db, p)
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
 
     if db[p .. "HidePvpIcon"] then HidePvpIcon(ctx) end
+
+    if db[p .. "HideFollowerMark"] then
+        HideFollowerMark(main.Name, frame)
+        local tot = frame.totFrame
+        if tot then HideFollowerMark(tot.name or tot.Name, tot) end
+    end
 
     if db[p .. "ClassColor"] then
         classColorBars[health] = true
