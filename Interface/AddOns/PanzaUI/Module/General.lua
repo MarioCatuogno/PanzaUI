@@ -133,12 +133,15 @@ end
 
 -- The fill keeps Blizzard's draw layer: a new texture would go to the default
 -- layer and could cover things drawn above the original fill at the same
--- frame level (e.g. the dispel icon on party/raid frames).
+-- frame level (e.g. the dispel icon on party/raid frames). Midnight: bars
+-- showing secret data (e.g. enemy cast bars in combat) can return a secret
+-- draw layer; it can't be passed back, and the layer is then left as is.
 local function SetTexture(bar, path)
     if not (bar and path and bar.SetStatusBarTexture) or bar:IsForbidden() then return end
     local fill = bar:GetStatusBarTexture()
     local layer, sublevel
     if fill then layer, sublevel = fill:GetDrawLayer() end
+    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
     bar:SetStatusBarTexture(path)
     fill = bar:GetStatusBarTexture()
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
@@ -357,19 +360,22 @@ local function KeepCastColor(bar)
     castBusy = false
 end
 
--- Midnight: the cast type (fill atlas) of other units can be a secret value
--- in combat. It can't be read, so that cast keeps Blizzard's own fill.
+-- The cast type comes from Blizzard's bar type ("standard", "channel",
+-- "uninterruptable"...), or else from the fill atlas name. Midnight: for
+-- other units both can be secret in combat; that cast then keeps Blizzard's
+-- own fill. Our own SetStatusBarTexture call is skipped by the busy flag.
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
-    if ns.IsSecret(asset) then
+    local kind = bar.barType
+    if ns.IsSecret(kind) or type(kind) ~= "string" then kind = asset end
+    if ns.IsSecret(kind) or type(kind) ~= "string" then
         castBarColor[bar] = nil
         return
     end
-    if type(asset) ~= "string" or asset == castTexture then return end
     castBusy = true
     SetTexture(bar, castTexture)
     castBusy = false
-    castBarColor[bar] = CastColor(asset)
+    castBarColor[bar] = CastColor(kind)
     KeepCastColor(bar)
 end
 
