@@ -32,12 +32,13 @@ local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
 local containers = {}  -- aura container -> number of frames already handled
 local styledAuras = {} -- aura frame -> true (each one is styled only once)
 
+-- A button that can't be styled now is left as is and tried again the next
+-- time Platynator lists it (buttons are reused).
 local function StyleAuraFrame(frame)
     if not frame or styledAuras[frame] or frame:IsForbidden() then return end
+    if not ns.StyleIcon(frame.Icon, frame, true) then return end
     styledAuras[frame] = true
-    if ns.StyleIcon(frame.Icon, frame, true) and frame.Border then
-        frame.Border:SetAlpha(0) -- Platynator's square 1px border
-    end
+    if frame.Border then frame.Border:SetAlpha(0) end -- Platynator's square 1px border
 end
 
 -- The count is updated before styling, so a failing frame is never retried.

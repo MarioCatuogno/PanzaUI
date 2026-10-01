@@ -122,19 +122,25 @@ end
 -- followIcon: the size is followed through the icon's own SetSize instead of
 -- the parent's scripts. Midnight: buttons with secret aspects (e.g. aura
 -- buttons of other addons' nameplates) refuse new script handlers.
--- Forbidden frames are skipped (nil is returned).
+-- Forbidden frames are skipped, and so are frames whose secret aspects
+-- refuse new child regions at that moment (nil is returned: the caller may
+-- try again later).
 -- Only widget calls, no Blizzard fields are written (taint-safe).
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
 
+local maskInfo -- mask atlas size, read once
+
 function ns.StyleIcon(icon, parent, followIcon)
     if not (icon and icon.AddMaskTexture) or icon:IsForbidden() then return end
     parent = parent or icon:GetParent()
     if not parent or parent:IsForbidden() then return end
-    local info = C_Texture.GetAtlasInfo(ICON_MASK)
+    maskInfo = maskInfo or C_Texture.GetAtlasInfo(ICON_MASK)
+    local info = maskInfo
 
-    local mask = parent:CreateMaskTexture()
+    local ok, mask = pcall(parent.CreateMaskTexture, parent)
+    if not ok then return end
     mask:SetAtlas(ICON_MASK)
     icon:AddMaskTexture(mask)
 
