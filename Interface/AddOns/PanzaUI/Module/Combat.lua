@@ -137,6 +137,11 @@ local function SetupCastTimer(bar)
     end)
 end
 
+-- Text style: spell name of the cast bar.
+local function StyleCastText(bar)
+    ns.StyleFont(bar.Text)
+end
+
 local function SetupCastBar(bar)
     for _, key in ipairs(FADE_ANIMS) do
         local group = bar[key]
@@ -418,6 +423,7 @@ function CB:OnEnable()
         ForEachAuraButton(ZoomAuraIcon)
     end)
     if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
+    if ns.textStyle then ns.ForEachCastBar(StyleCastText) end
     if db.prdStyle or ns.textStyle then
         local function Setup()
             if not PersonalResourceDisplayFrame then return end
