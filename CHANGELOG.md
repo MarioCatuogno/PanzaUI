@@ -91,6 +91,7 @@ Here's a list of all the features included in this first release!
 
 * BlizzUI - Adjusted every frame position and size to match the new version of UI
 * BigWigs - Adjusted every frame position and size to match the new version of UI
+* Platynator - Changed the texture to PanzaUI for health bar and cast bar
 
 ### 📏 Various
 
