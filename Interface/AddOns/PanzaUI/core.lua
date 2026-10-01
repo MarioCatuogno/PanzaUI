@@ -770,9 +770,37 @@ end
 --------------------------------------------------------------------------------
 -- Settings panel (modern Settings API)
 --------------------------------------------------------------------------------
-local function AddReloadButton(layout)
-    layout:AddInitializer(CreateSettingsButtonInitializer(
-        "", "Reload UI", ReloadUI, "Reload the interface to apply changes.", false))
+-- Reload UI button in the page header, left of Blizzard's "Defaults"
+-- button: made once, shown only on PanzaUI's pages (post-hook of the
+-- category display: no Blizzard code or fields are changed).
+local reloadButton
+
+local function IsOwnCategory(category)
+    if not (category and ns.category) then return false end
+    if category == ns.category then return true end
+    local parent = category.GetParentCategory and category:GetParentCategory()
+    return parent == ns.category
+end
+
+local function UpdateReloadButton(_, category)
+    local list = SettingsPanel.GetSettingsList and SettingsPanel:GetSettingsList()
+    local header = list and list.Header
+    local defaults = header and header.DefaultsButton
+    if not defaults then return end
+    if not reloadButton then
+        reloadButton = CreateFrame("Button", nil, header, "UIPanelButtonTemplate")
+        reloadButton:SetSize(defaults:GetSize())
+        reloadButton:SetPoint("RIGHT", defaults, "LEFT", -8, 0)
+        reloadButton:SetText("Reload UI")
+        reloadButton:SetScript("OnClick", ReloadUI)
+        reloadButton:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOP")
+            GameTooltip:SetText("Reload the interface to apply changes.")
+            GameTooltip:Show()
+        end)
+        reloadButton:SetScript("OnLeave", GameTooltip_Hide)
+    end
+    reloadButton:SetShown(IsOwnCategory(category))
 end
 
 -- Tooltip: summary line, bullet list (alphabetical), reload note. Built once
@@ -874,17 +902,18 @@ local function BuildSettings()
     for _, m in ipairs(ns.modules) do
         if m.main then AddOptions(category, layout, m) else sorted[#sorted + 1] = m end
     end
-    AddReloadButton(layout)
     table.sort(sorted, function(a, b) return a.title < b.title end)
 
     for _, m in ipairs(sorted) do
         local sub, subLayout = Settings.RegisterVerticalLayoutSubcategory(category, m.title)
         AddOptions(sub, subLayout, m)
-        AddReloadButton(subLayout)
     end
 
     Settings.RegisterAddOnCategory(category)
     ns.category = category
+    if SettingsPanel then
+        ns.Hook(SettingsPanel, SettingsPanel.DisplayCategory and "DisplayCategory" or "SelectCategory", UpdateReloadButton)
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -918,10 +947,26 @@ loader:SetScript("OnEvent", function(self, event, arg1)
     end
 end)
 
--- /panzaui (also /panza, /pui): options.
+-- Memory used by PanzaUI before and after a full garbage collection: what
+-- goes away was only garbage waiting for Lua's collector, what stays is in use.
+local function MemoryReport()
+    local GetMemory = GetAddOnMemoryUsage or (C_AddOns and C_AddOns.GetAddOnMemoryUsage)
+    if not GetMemory then return end
+    UpdateAddOnMemoryUsage()
+    local before = GetMemory(addonName)
+    collectgarbage("collect")
+    UpdateAddOnMemoryUsage()
+    ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
+end
+
+-- /panzaui (also /panza, /pui): options. /pui mem: memory report.
 SLASH_PANZAUI1, SLASH_PANZAUI2, SLASH_PANZAUI3 = "/panzaui", "/panza", "/pui"
-SlashCmdList.PANZAUI = function()
-    Settings.OpenToCategory(ns.category:GetID())
+SlashCmdList.PANZAUI = function(msg)
+    if msg and msg:lower():find("^%s*mem") then
+        MemoryReport()
+    else
+        Settings.OpenToCategory(ns.category:GetID())
+    end
 end
 
 -- Shortcuts: /rl = Reload UI, /rc = ready check, /pl = 10 second pull timer.
