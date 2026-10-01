@@ -24,6 +24,7 @@ local defaults = {
     hideTotems         = true,
     fixPortraits       = true,
     hideGroupNumber    = true,
+    mirrorTargetArt    = true,
 }
 
 local options = {
@@ -36,6 +37,7 @@ local options = {
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
+    { key = "mirrorTargetArt",    label = "Target-style frame art",  tooltip = "Use the Target frame art, mirrored, for the Player frame: a round portrait ring without the corner arrow, symmetric to the Target frame." .. RELOAD },
     { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
     { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
@@ -130,6 +132,24 @@ local function RestorePlayerArt()
     if not InCombatLockdown() then
         GetPlayerBottomManagedFrameContainer():SetPoint("TOP", PlayerFrame, "BOTTOM", 30, 25)
     end
+end
+
+--------------------------------------------------------------------------------
+-- Player frame art: the Target frame atlas, mirrored horizontally (same
+-- frame size, bars and portrait land in the same place), and no corner
+-- arrow. Re-applied after PlayerFrame_ToPlayerArt (it sets its own atlas).
+-- Only the normal art: vehicle and class-resource art are left alone.
+--------------------------------------------------------------------------------
+local TARGET_ART = "UI-HUD-UnitFrame-Target-PortraitOn"
+
+local function MirrorPlayerArt()
+    local container = PlayerFrame.PlayerFrameContainer
+    local art = container.FrameTexture
+    local info = C_Texture.GetAtlasInfo(TARGET_ART)
+    if not (art and info) or PlayerFrame.state ~= "player" or UNIT_FRAME_SHOW_HEALTH_ONLY or not art:IsShown() then return end
+    art:SetTexture(info.file)
+    art:SetTexCoord(info.rightTexCoord, info.leftTexCoord, info.topTexCoord, info.bottomTexCoord)
+    art:SetSize(info.width, info.height)
 end
 
 --------------------------------------------------------------------------------
@@ -235,6 +255,13 @@ local function SetupPlayer(db)
         end
         ns.Hook("PlayerFrame_ToPlayerArt", RestorePlayerArt)
         RestorePlayerArt()
+    end
+
+    -- After RestorePlayerArt (hooks run in order): it may show the normal art.
+    if db.mirrorTargetArt then
+        ns.Kill(PlayerFrame.PlayerFrameContainer.PlayerPortraitCornerIcon)
+        ns.Hook("PlayerFrame_ToPlayerArt", MirrorPlayerArt)
+        MirrorPlayerArt()
     end
 
     if db.playerHideLevel then
