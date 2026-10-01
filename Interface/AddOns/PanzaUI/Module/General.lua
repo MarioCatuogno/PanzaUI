@@ -357,8 +357,15 @@ local function KeepCastColor(bar)
     castBusy = false
 end
 
+-- Midnight: the cast type (fill atlas) of other units can be a secret value
+-- in combat. It can't be read, so that cast keeps Blizzard's own fill.
 local function KeepCastTexture(bar, asset)
-    if castBusy or type(asset) ~= "string" or asset == castTexture or ns.IsSecret(asset) then return end
+    if castBusy then return end
+    if ns.IsSecret(asset) then
+        castBarColor[bar] = nil
+        return
+    end
+    if type(asset) ~= "string" or asset == castTexture then return end
     castBusy = true
     SetTexture(bar, castTexture)
     castBusy = false
