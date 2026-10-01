@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Miscellaneous
     Buffs/Debuffs: action bar style, text style, icon zoom.
-    Quality of Life: auto-repair, item level in the Character panel.
+    Quality of Life: auto-repair, item level in the Character and Inspect panels.
     Various: visibility of the Micro Menu, Bag Bar and XP/Reputation bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -35,7 +35,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { header = "Quality of Life" },
         { key = "autoRepair",    label = "Auto-repair",          tooltip = "Repair all items with your own gold when opening a merchant that can repair." },
-        { key = "charItemLevel", label = "Character item level", tooltip = "Show the item level at the top of the equipped items in the Character panel, colored by item quality." },
+        { key = "charItemLevel", label = "Character item level", tooltip = "Show the item level at the top of the equipped items in the Character panel and in the Inspect panel of other players, colored by item quality." },
         { header = "Various" },
         { key = "microMenu",     label = "Micro Menu",           dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the micro menu (character, spellbook, talents, ...) is shown. Keybindings still work." },
         { key = "bagBar",        label = "Bag Bar",              dropdown = ns.VISIBILITY_OPTIONS, tooltip = "When the backpack and bag slot buttons are shown. Keybindings still work." },
@@ -102,9 +102,11 @@ local function SetAutoRepair(on)
 end
 
 --------------------------------------------------------------------------------
--- Quality of Life: item level in the Character panel (same look as in the
--- bags, shared helper in core.lua). Post-hook of Blizzard's slot update, one
--- reused ItemLocation. Shirt and tabard have no meaningful item level.
+-- Quality of Life: item level in the Character panel and in the Inspect panel
+-- (same look as in the bags, shared helper in core.lua). Post-hooks of
+-- Blizzard's slot updates. Own items: one reused ItemLocation. Inspected
+-- player: the item link of the slot (no ItemLocation for other units).
+-- Shirt and tabard have no meaningful item level.
 --------------------------------------------------------------------------------
 local CHAR_SLOTS = {
     "Head", "Neck", "Shoulder", "Back", "Chest", "Wrist", "Hands", "Waist", "Legs", "Feet",
@@ -123,11 +125,29 @@ local function UpdateCharSlot(button)
     ns.ItemLevelText(button, ilvl, color, true)
 end
 
+local function UpdateInspectSlot(button)
+    local slot = button:GetID()
+    local unit = InspectFrame and InspectFrame.unit
+    local ilvl, color
+    if Misc.db.charItemLevel and unit and not NO_ILVL[slot] then
+        local link = GetInventoryItemLink(unit, slot)
+        if link and not ns.IsSecret(link) then
+            ilvl = C_Item.GetDetailedItemLevelInfo(link)
+            if ilvl and ilvl <= 1 then ilvl = nil end
+            local quality = ilvl and C_Item.GetItemQualityByID(link)
+            color = quality and ITEM_QUALITY_COLORS[quality]
+        end
+    end
+    ns.ItemLevelText(button, ilvl, color, true)
+end
+
 -- Every slot at once (option toggled live).
 local function UpdateCharSlots()
     for _, name in ipairs(CHAR_SLOTS) do
         local button = _G["Character" .. name .. "Slot"]
         if button then UpdateCharSlot(button) end
+        button = _G["Inspect" .. name .. "Slot"]
+        if button then UpdateInspectSlot(button) end
     end
 end
 
@@ -166,6 +186,10 @@ function Misc:OnEnable()
     SetAutoRepair(db.autoRepair)
     -- Hooked always (cheap), so the option can be turned on and off live.
     ns.Hook("PaperDollItemSlotButton_Update", UpdateCharSlot)
+    -- The Inspect panel is load-on-demand.
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
+        ns.Hook("InspectPaperDollItemSlotButton_Update", UpdateInspectSlot)
+    end)
     if db.charItemLevel then UpdateCharSlots() end
     SetupVisibility()
 end
