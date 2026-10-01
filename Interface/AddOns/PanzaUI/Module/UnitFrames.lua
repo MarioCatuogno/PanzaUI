@@ -23,6 +23,7 @@ local defaults = {
     hideClassResources = true,
     hideTotems         = true,
     fixPortraits       = true,
+    hideGroupNumber    = true,
 }
 
 local options = {
@@ -35,6 +36,7 @@ local options = {
     { key = "hideHitText",        label = "Hide damage/heal text",   tooltip = "Hide the damage and healing numbers on the portrait." .. RELOAD },
     { key = "hideTotems",         label = "Hide totems",             tooltip = "Hide the totem/guardian icons under the Player frame (e.g. Shaman totems, Monk Niuzao)." .. RELOAD },
     { key = "hideClassResources", label = "Hide class resources",    tooltip = "Hide combo points, chi, stagger, runes, shards, holy power, essence, etc. on the Player frame (the Personal Resource Display keeps them)." .. RELOAD },
+    { key = "hideGroupNumber",    label = "Hide group number",       tooltip = "Hide the raid group indicator (e.g. \"Group 5\") and its background above the Player frame." .. RELOAD },
     { key = "fixPortraits",       label = "Fix portraits",           tooltip = "Redraw the Player, Target and Focus portraits one second after the game updates them, so they don't stay zoomed in when the character model was not loaded yet." .. RELOAD },
 }
 
@@ -209,6 +211,12 @@ local function SetupPlayer(db)
 
     if db.hideHitText then
         ns.Kill(main.HitIndicator)
+    end
+
+    -- Raid group indicator ("Group 5" + its background): Blizzard keeps
+    -- showing/hiding it, so it is moved under the hidden parent.
+    if db.hideGroupNumber then
+        ns.Kill(ctx.GroupIndicator or PlayerFrameGroupIndicator)
     end
 
     -- Totems (not secure): hidden and events stopped, so the frame below the

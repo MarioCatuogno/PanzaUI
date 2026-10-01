@@ -61,6 +61,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Hidden the Focus cast bar
 * Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
 * Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation
+* Unit Frames - Hidden the Player raid group indicator (e.g. "Group 5")
 * Unit Frames - Hidden the totem icons under the Player frame
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
