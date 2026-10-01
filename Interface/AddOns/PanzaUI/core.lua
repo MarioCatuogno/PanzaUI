@@ -346,6 +346,31 @@ function ns.ItemLevelText(button, ilvl, color, outline)
 end
 
 --------------------------------------------------------------------------------
+-- Every font string of a frame and of its children, down to `levels` levels
+-- of children (found by type, not by name: for frames whose texts have no
+-- fixed keys). Varargs, no tables.
+--------------------------------------------------------------------------------
+local StyleAllFonts
+
+local function StyleFontRegions(...)
+    for i = 1, select("#", ...) do
+        local region = select(i, ...)
+        if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
+    end
+end
+
+local function StyleChildFonts(levels, ...)
+    for i = 1, select("#", ...) do StyleAllFonts((select(i, ...)), levels) end
+end
+
+function StyleAllFonts(frame, levels)
+    if not frame or frame:IsForbidden() then return end
+    StyleFontRegions(frame:GetRegions())
+    if levels and levels > 0 then StyleChildFonts(levels - 1, frame:GetChildren()) end
+end
+ns.StyleAllFonts = StyleAllFonts
+
+--------------------------------------------------------------------------------
 -- Status bar text helpers (TextStatusBar: TextString / LeftText / RightText)
 --------------------------------------------------------------------------------
 function ns.StyleBarText(bar)

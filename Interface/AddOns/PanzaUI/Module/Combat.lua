@@ -182,30 +182,13 @@ end
 
 -- Texts (bar name/duration, stacks, charges, cooldown numbers): every font
 -- string of the item and of its children (two levels: bar, icon, cooldown),
--- found by type rather than by name. Styled once per item. Varargs, no tables.
+-- found by type rather than by name. Styled once per item.
 local styledTexts = {}
-local StyleFonts
-
-local function StyleRegions(...)
-    for i = 1, select("#", ...) do
-        local region = select(i, ...)
-        if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
-    end
-end
-
-local function StyleChildren(depth, ...)
-    for i = 1, select("#", ...) do StyleFonts(select(i, ...), depth) end
-end
-
-function StyleFonts(frame, depth)
-    StyleRegions(frame:GetRegions())
-    if depth < 2 then StyleChildren(depth + 1, frame:GetChildren()) end
-end
 
 local function StyleItemText(item)
     if not item or styledTexts[item] then return end
     styledTexts[item] = true
-    StyleFonts(item, 0)
+    ns.StyleAllFonts(item, 2)
 end
 
 --------------------------------------------------------------------------------

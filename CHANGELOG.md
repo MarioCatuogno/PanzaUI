@@ -51,7 +51,7 @@ Here's a list of all the features included in this first release!
 * Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
 * Quest & Minimap - Added the outlined font to the minimap zone name and clock
-* Quest & Minimap - Added the outlined font to the Quest Tracker text
+* Quest & Minimap - Added the outlined font to the Quest Tracker text and to the instance texts at the top of the screen
 * Quest & Minimap - Added the quest counter (e.g. 20/35) in the tracker header
 * Quest & Minimap - Collapsed the tracker during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), reopening it afterwards
 * Quest & Minimap - Removed the backgrounds of the minimap zone name, tracking and calendar buttons

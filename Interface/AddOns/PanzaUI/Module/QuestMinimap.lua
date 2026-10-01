@@ -2,7 +2,8 @@
     PanzaUI - Quest & Minimap
     Minimap: refined style (outlined zone text and clock, no zone / tracking /
     calendar backgrounds).
-    Quest Tracker: refined style (outlined text), auto-collapse in instances
+    Quest Tracker: refined style (outlined text, also on the instance texts at
+    the top of the screen), auto-collapse in instances
     (boss fights, Mythic+, combat in raids and dungeons) and quest count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -23,7 +24,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { header = "Quest Tracker" },
         { key = "questStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Quest Tracker.",
-          bullets = { "Outlined text" } },
+          bullets = { "Outlined text", "Also the instance texts at the top of the screen (e.g. \"Prisoners Freed: 0/8\")" } },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Collapse the tracker during dungeon, raid and Mythic+ combat.",
           bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Expanded again afterwards" } },
@@ -87,6 +88,15 @@ local FONTS = { "ObjectiveTrackerHeaderFont", "ObjectiveTrackerLineFont" }
 
 local function StyleFonts()
     for _, name in ipairs(FONTS) do ns.StyleFont(_G[name]) end
+end
+
+-- Instance texts at the top of the screen (UI widgets: scenario progress,
+-- counters...). Widgets come from pools and set their own fonts on every
+-- setup, so they are restyled after each layout of the container.
+local function StyleTopWidgets(container)
+    local widgets = container.widgetFrames
+    if not widgets then return end
+    for _, widget in pairs(widgets) do ns.StyleAllFonts(widget, 1) end
 end
 
 --------------------------------------------------------------------------------
@@ -255,6 +265,11 @@ function QM:OnEnable()
             -- Edit Mode "Text Size" resets the font objects: restyle after it.
             ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts)
         end)
+        local top = UIWidgetTopCenterContainerFrame
+        if top then
+            ns.Hook(top, "UpdateWidgetLayout", StyleTopWidgets)
+            StyleTopWidgets(top)
+        end
     end
     SetCombatCollapse(db.combatCollapse)
 end
