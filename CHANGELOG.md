@@ -1,3 +1,19 @@
+## 1.7-RELEASE
+
+This is a small release that fixes some bugs and improve performance. It is compatible with WoW patch 12.1.5.
+
+### 👤 Profiles
+
+* BlizzUI - Adjusted frames position to match BigWigs addon
+* EnhanceQoL - Disabled Boss frame
+* EnhanceQoL - Enabled Calendar icon in Minimap
+* EnhanceQoL - Fixed the opacity of Damage Meter bars
+* EUI - Updated the EllesmereUI profile with the new Blizz-like style
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 1.6-RELEASE
 
 This is a small release that fixes some bugs and improve performance. Adds and fixes some CDM profiles and enable some new features in EQoL. It is compatible with WoW patch 12.1.
