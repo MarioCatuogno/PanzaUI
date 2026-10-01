@@ -100,7 +100,6 @@ Here's a list of all the features included in this first release!
 ### 📏 Various
 
 * Removed old profiles from unused addons
-* Sorted the modules alphabetically in the addon options menu
 * Updated documentation to the latest UI version
 
 ## 1.7-RELEASE
