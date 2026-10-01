@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
-    Text style and server-less names for the compact party/raid frames.
+    Text style, server-less names and percentage-only health text for the
+    compact party/raid frames.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -8,12 +9,14 @@ local IsSecret = ns.IsSecret
 local GF = ns:RegisterModule("GroupFrames", {
     title = "Party & Raid Frames",
     defaults = {
-        fontStyle  = true,
-        hideServer = true,
+        fontStyle   = true,
+        percentText = true,
+        hideServer  = true,
     },
     options = {
         { header = "Style" },
         { key = "fontStyle", label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to names and status text (Dead, Offline, ...) on party and raid frames. Requires Reload UI." },
+        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain percentage (no % symbol) on party and raid frames. Hidden at 0 and 100. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
         { header = "Features" },
         { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name, without the server, on party and raid frames. Requires Reload UI." },
     },
@@ -45,8 +48,28 @@ local function UpdateName(frame)
     if realm and not IsSecret(realm) and realm ~= "" then frame.name:SetText(name) end
 end
 
+-- Percentage-only health text: runs after Blizzard's
+-- CompactUnitFrame_UpdateStatusText, only where Blizzard shows a health text
+-- (its Edit Mode setting decides). Dead/Offline/Ghost texts are left alone.
+-- Nameplates (same function) are skipped. Values go straight to the text.
+local function UpdateStatusText(frame)
+    if frame:IsForbidden() then return end
+    local text, unit = frame.statusText, frame.displayedUnit or frame.unit
+    if not (text and unit) or IsSecret(unit) or unit:find("nameplate", 1, true) or not text:IsShown() then return end
+    local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
+    if IsSecret(connected) or IsSecret(dead) or not connected or dead then
+        text:SetAlpha(1) -- status text (Dead, Offline...) always visible
+        return
+    end
+    ns.SetPercentText(text, unit, false, nil, ns.CanHidePercentEnds)
+end
+
 function GF:OnEnable()
     if self.db.hideServer then ns.Hook("CompactUnitFrame_UpdateName", UpdateName) end
+    if self.db.percentText and CurveConstants and UnitHealthPercent then
+        ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)
+        ns.ForEachCompactFrame(UpdateStatusText)
+    end
     if not self.db.fontStyle then return end
     -- Blizzard (re)applies fonts in these setup functions (new frames and
     -- option changes): restyle right after. Only widget calls, no fields

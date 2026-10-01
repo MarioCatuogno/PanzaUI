@@ -337,20 +337,27 @@ local function ShowPercent(bar)
         end
     end
 
-    -- No and/or shortcut: a secret value can't be tested for truthiness.
-    local curve = CurveConstants.ScaleTo100
-    local pct, alpha
-    if info.power then
-        pct = UnitPowerPercent(unit, bar.powerType, false, curve)
-        if info.hideEnds then alpha = UnitPowerPercent(unit, bar.powerType, false, endsCurve) end
-    else
-        pct = UnitHealthPercent(unit, true, curve)
-        if info.hideEnds then alpha = UnitHealthPercent(unit, true, endsCurve) end
-    end
-    text:SetFormattedText("%.0f", pct)
-    if info.hideEnds then text:SetAlpha(alpha) end
+    ns.SetPercentText(text, unit, info.power, bar.powerType, info.hideEnds)
     text:Show()
 end
+
+-- Writes the health (or power, with isPower) percentage of unit as a plain
+-- number. hideEnds: invisible at 0 and 100 (secret-safe alpha).
+-- No and/or shortcut: a secret value can't be tested for truthiness.
+function ns.SetPercentText(text, unit, isPower, powerType, hideEnds)
+    local curve = CurveConstants.ScaleTo100
+    local pct, alpha
+    if isPower then
+        pct = UnitPowerPercent(unit, powerType, false, curve)
+        if hideEnds then alpha = UnitPowerPercent(unit, powerType, false, endsCurve) end
+    else
+        pct = UnitHealthPercent(unit, true, curve)
+        if hideEnds then alpha = UnitHealthPercent(unit, true, endsCurve) end
+    end
+    text:SetFormattedText("%.0f", pct)
+    if hideEnds then text:SetAlpha(alpha) end
+end
+ns.CanHidePercentEnds = endsCurve ~= nil
 
 function ns.PercentText(bar, isPower, unit, respectVisibility, hideEnds)
     if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
