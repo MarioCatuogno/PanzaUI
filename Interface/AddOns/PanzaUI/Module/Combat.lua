@@ -2,7 +2,8 @@
     PanzaUI - Combat
     Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
     icon zoom of the player's auras.
-    Cast Bar: refined style (hidden right when the cast ends).
+    Cast Bar: refined style (remaining time in the center, hidden right when
+    the cast ends).
     Cooldown Manager: refined style (rounded icon borders, outlined text),
     dynamic layout of tracked buffs (centered) and bars (bottom-up).
     Damage Meter: refined style (rounded icon borders, outlined text).
@@ -36,7 +37,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Cast Bar" },
         { key = "castStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the player cast bar.",
-          bullets = { "Hidden right when the cast ends (no fade out)" } },
+          bullets = { "Remaining time in the center (e.g. 1.4)", "Hidden right when the cast ends (no fade out)" } },
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager.",
@@ -108,6 +109,53 @@ local function InstantAnims(...)
     end
 end
 
+-- Remaining time, one decimal, outlined, in the center of the bar. A small
+-- driver frame updates it (throttled) only while the player is casting or
+-- channeling; it reads the player's own cast times (never secret values:
+-- the text is just left empty then). C formatting, no garbage per update.
+local CAST_TICK = 0.05
+local castTimer, castDriver
+local tickElapsed = 0
+
+local function CastEndTime()
+    local _, _, _, _, endMS = UnitCastingInfo("player")
+    if endMS == nil then _, _, _, _, endMS = UnitChannelInfo("player") end
+    if endMS == nil or ns.IsSecret(endMS) then return end
+    return endMS / 1000
+end
+
+local function UpdateCastTimer(driver, elapsed)
+    tickElapsed = tickElapsed + elapsed
+    if tickElapsed < CAST_TICK then return end
+    tickElapsed = 0
+    local endTime = CastEndTime()
+    if not endTime then
+        castTimer:SetText("")
+        driver:Hide()
+        return
+    end
+    local remaining = endTime - GetTime()
+    castTimer:SetFormattedText("%.1f", remaining > 0 and remaining or 0)
+end
+
+local function SetupCastTimer(bar)
+    castTimer = bar:CreateFontString(nil, "OVERLAY")
+    castTimer:SetFontObject(ns.OutlinedFont(GameFontHighlightSmall))
+    castTimer:SetPoint("CENTER")
+
+    castDriver = CreateFrame("Frame")
+    castDriver:Hide()
+    castDriver:SetScript("OnUpdate", UpdateCastTimer)
+    castDriver:SetScript("OnEvent", function(driver)
+        tickElapsed = CAST_TICK -- update at once
+        driver:Show()
+    end)
+    for _, event in ipairs({ "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_EMPOWER_START",
+                             "UNIT_SPELLCAST_DELAYED", "UNIT_SPELLCAST_CHANNEL_UPDATE", "UNIT_SPELLCAST_EMPOWER_UPDATE" }) do
+        castDriver:RegisterUnitEvent(event, "player")
+    end
+end
+
 local function SetupCastBar()
     local bar = PlayerCastingBarFrame
     if not bar then return end
@@ -115,6 +163,7 @@ local function SetupCastBar()
         local group = bar[key]
         if group and group.GetAnimations then InstantAnims(group:GetAnimations()) end
     end
+    SetupCastTimer(bar)
 end
 
 --------------------------------------------------------------------------------
