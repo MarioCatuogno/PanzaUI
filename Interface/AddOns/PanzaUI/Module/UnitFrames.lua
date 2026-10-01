@@ -135,12 +135,22 @@ local function RestorePlayerArt()
 end
 
 --------------------------------------------------------------------------------
--- Player frame art: the Target frame atlas, mirrored horizontally (same
--- frame size, bars and portrait land in the same place), and no corner
--- arrow. Re-applied after PlayerFrame_ToPlayerArt (it sets its own atlas).
--- Only the normal art: vehicle and class-resource art are left alone.
+-- Player frame art: the Target frame atlas, mirrored horizontally (both
+-- frames are 232x100 with the art centered). To match the mirrored art like
+-- on the Target frame:
+--  * the portrait gets the Target's round mask (no square bottom-right corner)
+--    and the corner embellishment is hidden;
+--  * health and power bars use the Target's mirrored geometry: health from
+--    x=84 (126 wide), power from x=76 (134 wide, slightly under the ring).
+-- Re-applied after PlayerFrame_ToPlayerArt (it sets its own atlas and bar
+-- positions). Only the normal art: vehicle and class-resource art are left
+-- alone. Bars are moved out of combat only (protected-frame safety).
 --------------------------------------------------------------------------------
-local TARGET_ART = "UI-HUD-UnitFrame-Target-PortraitOn"
+local TARGET_ART  = "UI-HUD-UnitFrame-Target-PortraitOn"
+local HEALTH_X, HEALTH_W = 84, 126
+local MANA_X, MANA_W     = 76, 134
+local mirrorPending = false
+local mirrorEvents = CreateFrame("Frame")
 
 local function MirrorPlayerArt()
     local container = PlayerFrame.PlayerFrameContainer
@@ -150,6 +160,41 @@ local function MirrorPlayerArt()
     art:SetTexture(info.file)
     art:SetTexCoord(info.rightTexCoord, info.leftTexCoord, info.topTexCoord, info.bottomTexCoord)
     art:SetSize(info.width, info.height)
+
+    if InCombatLockdown() then -- bar layout waits for the end of combat
+        mirrorPending = true
+        mirrorEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    local healthContainer = PlayerFrame_GetHealthBarContainer()
+    local manaBar = PlayerFrame_GetManaBar()
+    if healthContainer then
+        healthContainer:SetWidth(HEALTH_W)
+        healthContainer:SetPoint("TOPLEFT", HEALTH_X, -41)
+    end
+    if manaBar then
+        manaBar:SetWidth(MANA_W)
+        manaBar:SetPoint("TOPLEFT", MANA_X, -61)
+        if manaBar.ManaBarMask then manaBar.ManaBarMask:SetWidth(MANA_W + 4) end
+    end
+end
+
+mirrorEvents:SetScript("OnEvent", function(self)
+    self:UnregisterAllEvents()
+    if mirrorPending then
+        mirrorPending = false
+        MirrorPlayerArt()
+    end
+end)
+
+local function SetupMirroredArt()
+    local container = PlayerFrame.PlayerFrameContainer
+    local ctx = PlayerFrame.PlayerFrameContent and PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual
+    ns.Kill(container.PlayerPortraitCornerIcon)
+    if ctx then ns.Kill(ctx.PlayerPortraitCornerIcon) end
+    if container.PlayerPortraitMask then container.PlayerPortraitMask:SetAtlas("CircleMask") end
+    ns.Hook("PlayerFrame_ToPlayerArt", MirrorPlayerArt)
+    MirrorPlayerArt()
 end
 
 --------------------------------------------------------------------------------
@@ -258,11 +303,7 @@ local function SetupPlayer(db)
     end
 
     -- After RestorePlayerArt (hooks run in order): it may show the normal art.
-    if db.mirrorTargetArt then
-        ns.Kill(PlayerFrame.PlayerFrameContainer.PlayerPortraitCornerIcon)
-        ns.Hook("PlayerFrame_ToPlayerArt", MirrorPlayerArt)
-        MirrorPlayerArt()
-    end
+    if db.mirrorTargetArt then SetupMirroredArt() end
 
     if db.playerHideLevel then
         ns.Kill(PlayerLevelText)
