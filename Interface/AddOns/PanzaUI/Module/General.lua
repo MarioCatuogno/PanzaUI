@@ -19,6 +19,7 @@ local PANZA = {
     ["PanzaUI - Glass"]   = MEDIA .. "PanzaUI_glass.tga",
     ["PanzaUI - Player"]  = MEDIA .. "PanzaUI_player.tga",
     ["PanzaUI - Target"]  = MEDIA .. "PanzaUI_target.tga",
+    ["PanzaUI - Focus"]   = MEDIA .. "PanzaUI_focus.tga",                  -- Target with wide stripes
     ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
     ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
     ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
