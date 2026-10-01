@@ -6,7 +6,8 @@
     dynamic layout of tracked buffs (centered) and bars (bottom-up).
     Damage Meter: refined style (rounded icon borders, outlined text).
     Personal Resource Display: refined style (outlined, centered text, health
-    and power as a percentage, alternate bar value always shown).
+    and power as a percentage, alternate bar value always shown, hidden while
+    the player casts).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -44,7 +45,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
-          bullets = { "Outlined, centered text", "Health and power as a percentage", "Alternate bar value always shown" } },
+          bullets = { "Outlined, centered text", "Health and power as a percentage", "Alternate bar value always shown", "Hidden while you cast" } },
     },
 })
 
@@ -156,6 +157,47 @@ local function SetupAltText()
     if not frame then return end
     HookAltBar(frame)
     ns.Hook(frame, "SetupAlternatePowerBar", HookAltBar)
+end
+
+-- Hidden while the player casts (casts, channels, empowered spells): faded
+-- out with alpha (allowed in combat) when a cast starts, back to the alpha
+-- it had when it ends. When one of the "end" events fires, the cast state is
+-- read again: a new cast may already have started. Secret values are never
+-- tested (a secret cast name counts as casting).
+local CAST_START = {
+    UNIT_SPELLCAST_START = true, UNIT_SPELLCAST_CHANNEL_START = true, UNIT_SPELLCAST_EMPOWER_START = true,
+}
+local CAST_EVENTS = {
+    "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_EMPOWER_START",
+    "UNIT_SPELLCAST_STOP", "UNIT_SPELLCAST_CHANNEL_STOP", "UNIT_SPELLCAST_EMPOWER_STOP",
+    "UNIT_SPELLCAST_FAILED", "UNIT_SPELLCAST_INTERRUPTED",
+}
+local castEvents = CreateFrame("Frame")
+local hiddenAlpha -- PRD alpha before the cast; nil while shown
+
+local function IsCasting()
+    local cast = UnitCastingInfo("player")
+    if ns.IsSecret(cast) or cast then return true end
+    local channel = UnitChannelInfo("player")
+    return ns.IsSecret(channel) or channel ~= nil
+end
+
+castEvents:SetScript("OnEvent", function(_, event)
+    local frame = PersonalResourceDisplayFrame
+    if CAST_START[event] or IsCasting() then
+        if not hiddenAlpha then
+            hiddenAlpha = frame:GetAlpha()
+            frame:SetAlpha(0)
+        end
+    elseif hiddenAlpha then
+        frame:SetAlpha(hiddenAlpha)
+        hiddenAlpha = nil
+    end
+end)
+
+local function SetupCastHide()
+    if not PersonalResourceDisplayFrame then return end
+    for _, event in ipairs(CAST_EVENTS) do castEvents:RegisterUnitEvent(event, "player") end
 end
 
 --------------------------------------------------------------------------------
@@ -330,6 +372,7 @@ function CB:OnEnable()
         local function Setup()
             SetupPRD()
             SetupAltText()
+            SetupCastHide()
         end
         if PersonalResourceDisplayFrame then
             Setup()
