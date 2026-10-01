@@ -54,6 +54,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Added class color to the health bar of Player, Target, Focus and their Target of Target (reaction color for NPCs)
 * Unit Frames - Added the action bar style to the cast bar icon of Target and Focus
 * Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus and Pet
+* Unit Frames - Focus now shows only debuffs (max 4), with the action bar style
 * Unit Frames - Health and power of Player, Target, Focus and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
 * Unit Frames - Hidden damage/healing numbers on Player and Pet portraits

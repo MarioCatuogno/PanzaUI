@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames (Player, Target, Focus, Pet)
     Status glow, hit text, class resources, text style, percentage text,
-    level / name, name background, auras, portrait redraw.
+    level / name, name background, auras (Focus: debuffs only), portrait redraw.
     All options are applied once at login (Requires Reload UI): nothing here
     calls Blizzard update code, so no taint reaches secret-value handling.
 ------------------------------------------------------------------------------]]
@@ -69,7 +69,9 @@ end
 
 -- Focus only (appended right after the Focus section)
 defaults.focusHideCastBar = true
+defaults.focusDebuffsOnly = true
 options[#options + 1] = { key = "focusHideCastBar", label = "Hide cast bar", tooltip = "Hide the Focus cast bar." .. RELOAD }
+options[#options + 1] = { key = "focusDebuffsOnly", label = "Debuffs only (max 4)", tooltip = "Show only debuffs on the Focus frame, at most 4, with the same rounded frame as action buttons. \"Hide buffs/debuffs\" takes priority." .. RELOAD }
 
 -- Pet
 local PET_OPTIONS = {
@@ -258,6 +260,12 @@ end
 -- applied at login and again after FocusFrame:SetSmallSize().
 local function ApplyLayout(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
+    -- Aura limits (Blizzard's own fields, also reset by SetSmallSize).
+    if db[p .. "HideAuras"] then
+        frame.maxBuffs, frame.maxDebuffs = 0, 0
+    elseif p == "focus" and db.focusDebuffsOnly then
+        frame.maxBuffs, frame.maxDebuffs = 0, 4
+    end
     if db[p .. "HideLevel"] then CenterName(main.Name, main.HealthBarsContainer) end
     -- Clear the texture instead of Kill()/SetAlpha(): Name and LevelText are
     -- anchored to it (so it must stay in place), and Blizzard's
@@ -278,10 +286,6 @@ local function SetupTargetFrame(frame, db, p)
         if totHealth then classColorBars[totHealth] = true end
     end
 
-    if db[p .. "HideAuras"] then
-        frame.maxBuffs   = 0
-        frame.maxDebuffs = 0
-    end
 
     if db[p .. "HideLevel"] then
         -- Kill() is safe: nothing is anchored to the level text except the
@@ -375,6 +379,23 @@ local function SetupPortraits()
 end
 
 --------------------------------------------------------------------------------
+-- Focus debuffs: action bar style. Debuff buttons come from the frame's aura
+-- pool: after each aura update the active ones are styled (once each).
+--------------------------------------------------------------------------------
+local styledAuras = {}
+
+local function StyleFocusDebuffs(frame)
+    local pool = frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate")
+    if not pool then return end
+    for button in pool:EnumerateActive() do
+        if not styledAuras[button] and button.Icon then
+            styledAuras[button] = true
+            ns.StyleIcon(button.Icon, button)
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function UF:OnEnable()
@@ -390,6 +411,10 @@ function UF:OnEnable()
         ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
         -- Hidden and events stopped: no casting updates at all (no CPU cost).
         if db.focusHideCastBar then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
+        if db.focusDebuffsOnly and not db.focusHideAuras then
+            ns.Hook(FocusFrame, "UpdateAuras", StyleFocusDebuffs)
+            StyleFocusDebuffs(FocusFrame)
+        end
     end
 
     SetupPet(db)
