@@ -41,7 +41,7 @@ Here's a list of all the features included in this first release!
 * Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
 * Party & Raid Frames - Added the option for Blizzard's HD role icons
 * Party & Raid Frames - Added the outlined font to names and status text
-* Party & Raid Frames - Added the PanzaUI absorb, heal prediction, aggro border and group border textures
+* Party & Raid Frames - Added the PanzaUI absorb, heal prediction and aggro border textures
 * Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
