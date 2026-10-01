@@ -4,8 +4,9 @@
     health/power text (always shown, like Player/Target, regardless of the
     Edit Mode "Show Bar Text" setting); alternate power bar text (stagger,
     ebon might, mana in forms...) always shown too.
-    Cooldown Manager: action bar style for the icons of every viewer, dynamic
-    layout for tracked buffs (centered) and tracked bars (bottom-up).
+    Cooldown Manager: action bar style for the icons of every viewer, outlined
+    text, dynamic layout for tracked buffs (centered) and tracked bars
+    (bottom-up).
     Damage Meter: action bar style for the class/spec and spell icons,
     outlined text on the bars.
 ------------------------------------------------------------------------------]]
@@ -21,6 +22,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         percentText   = true,
         altText       = true,
         cdmIconStyle  = true,
+        cdmFontStyle  = true,
         cdmDynamic    = true,
         dmIconStyle   = true,
         dmFontStyle   = true,
@@ -33,6 +35,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { key = "altText",      label = "Always show alternate bar text", tooltip = "Always show the value on the alternate power bar (e.g. Monk Stagger, Evoker Ebon Might, mana in shapeshift forms), not only on mouseover. Class resources shown as icons (chi, shards...) have no text. Requires Reload UI." },
         { header = "Cooldown Manager" },
         { key = "cdmIconStyle", label = "Action bar style",     tooltip = "Give the Cooldown Manager icons (Essential, Utility, tracked buffs and buff bars) the same rounded frame as action buttons. Requires Reload UI." },
+        { key = "cdmFontStyle", label = "Outline + Slug text",  tooltip = "Apply outline and slug rendering to the Cooldown Manager texts: tracked bar names and durations, stacks, charges and cooldown numbers. Requires Reload UI." },
         { key = "cdmDynamic",   label = "Dynamic buff layout",  tooltip = "Keep tracked buffs and tracked bars packed with no gaps: buff icons grow from the center, buff bars grow from the bottom up. Requires Reload UI." },
         { header = "Damage Meter" },
         { key = "dmIconStyle",  label = "Action bar style",     tooltip = "Give the Damage Meter icons (class/spec and spells) the same rounded frame as action buttons. Requires Reload UI." },
@@ -129,19 +132,48 @@ local function StyleItem(item)
     ns.StyleIcon(icon, holder)
 end
 
-local function StyleViewer(viewer)
-    if viewer.GetItemFrames then
-        for _, item in ipairs(viewer:GetItemFrames()) do StyleItem(item) end
+-- Texts (bar name/duration, stacks, charges, cooldown numbers): every font
+-- string of the item and of its children (two levels: bar, icon, cooldown),
+-- found by type rather than by name. Styled once per item. Varargs, no tables.
+local styledTexts = {}
+local StyleFonts
+
+local function StyleRegions(...)
+    for i = 1, select("#", ...) do
+        local region = select(i, ...)
+        if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
     end
 end
 
-local function SetupCooldownManager()
+local function StyleChildren(depth, ...)
+    for i = 1, select("#", ...) do StyleFonts(select(i, ...), depth) end
+end
+
+function StyleFonts(frame, depth)
+    StyleRegions(frame:GetRegions())
+    if depth < 2 then StyleChildren(depth + 1, frame:GetChildren()) end
+end
+
+local function StyleItemText(item)
+    if not item or styledTexts[item] then return end
+    styledTexts[item] = true
+    StyleFonts(item, 0)
+end
+
+-- Runs func on every item of every viewer: the ones already there, newly
+-- acquired ones and after each layout refresh (func skips items already done).
+local function ForEachCooldownItem(func)
+    local function All(viewer)
+        if viewer.GetItemFrames then
+            for _, item in ipairs(viewer:GetItemFrames()) do func(item) end
+        end
+    end
     for _, name in ipairs(VIEWERS) do
         local viewer = _G[name]
         if viewer then
-            StyleViewer(viewer)
-            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) StyleItem(item) end)
-            ns.Hook(viewer, "RefreshLayout", StyleViewer)
+            All(viewer)
+            ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) func(item) end)
+            ns.Hook(viewer, "RefreshLayout", All)
         end
     end
 end
@@ -289,7 +321,10 @@ function CB:OnEnable()
         end
     end
     if db.cdmIconStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupCooldownManager)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function() ForEachCooldownItem(StyleItem) end)
+    end
+    if db.cdmFontStyle then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function() ForEachCooldownItem(StyleItemText) end)
     end
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)

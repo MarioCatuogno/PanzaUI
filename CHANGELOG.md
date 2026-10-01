@@ -27,6 +27,7 @@ Here's a list of all the features included in this first release!
 * Combat - Added the action bar style to Cooldown Manager icons
 * Combat - Added the action bar style to Damage Meter icons
 * Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
+* Combat - Added the outlined font to Cooldown Manager texts (tracked bars, stacks, charges, cooldowns)
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
