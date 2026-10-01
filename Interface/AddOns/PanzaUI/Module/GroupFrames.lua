@@ -2,7 +2,7 @@
     PanzaUI - Party & Raid Frames
     Text style, server-less names and percentage-only health text for the
     compact party/raid frames. PanzaUI absorb, heal prediction and aggro
-    border textures, optional over-absorb glow.
+    border textures, optional over-absorb glow. Group border fitted at the bottom.
     Role icons: optional HD icons, and hidden icons shown again when the role
     becomes known (Blizzard misses it on reload).
 ------------------------------------------------------------------------------]]
@@ -203,7 +203,28 @@ local function StyleExtras(frame)
     end
 end
 
+-- Group border (party frame and raid groups, Edit Mode "Display Border"):
+-- Blizzard's panel reaches 5 px below the last member, leaving a visible gap
+-- at the bottom. Its texture (not the frame: combat-safe) is pulled up 0.6 px
+-- (more uncovers the bottom corners of the last member).
+local function FitGroupBorder(group)
+    local border = group and group.borderFrame
+    local bg = border and border.Background
+    if not bg then return end
+    bg:ClearAllPoints()
+    bg:SetPoint("TOPLEFT", border, "TOPLEFT")
+    bg:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, 0.6)
+end
+
+local function SetupGroupBorders()
+    FitGroupBorder(CompactPartyFrame)
+    for i = 1, 8 do FitGroupBorder(_G["CompactRaidGroup" .. i]) end
+    -- Raid groups are created on demand.
+    ns.Hook("CompactRaidGroup_GenerateForGroup", function(index) FitGroupBorder(_G["CompactRaidGroup" .. tostring(index)]) end)
+end
+
 function GF:OnEnable()
+    SetupGroupBorders()
     local db = self.db
     useAbsorb, useAggro, useHealPred, hideOverAbsorb = db.absorbTexture, db.aggroBorder, db.healPredTexture, db.hideOverAbsorb
     if useAbsorb or useAggro or useHealPred or hideOverAbsorb then
