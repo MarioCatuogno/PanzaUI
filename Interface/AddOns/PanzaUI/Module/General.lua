@@ -21,6 +21,7 @@ local PANZA = {
     ["PanzaUI - Target"]  = MEDIA .. "PanzaUI_target.tga",
     ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
     ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
+    ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
 }
 
 -- Used when SharedMedia is not installed.
@@ -139,6 +140,29 @@ local function KeepTexture(bar, path)
     if not texture or keptTextures[texture] then return end
     keptTextures[texture] = true
     hooksecurefunc(texture, "SetAtlas", function() bar:SetStatusBarTexture(path) end)
+end
+
+-- Power spend/gain flash (FeedbackFrame, e.g. on the part of energy just
+-- spent): Blizzard draws it with the power type's own atlas. Our texture goes
+-- there too, tinted like the bar. A busy flag stops our own calls from
+-- re-entering the hooks.
+local function KeepFeedback(bar, path)
+    local feedback = bar and path and bar.FeedbackFrame
+    local texture = feedback and feedback.BarTexture
+    if not texture or keptTextures[texture] then return end
+    keptTextures[texture] = true
+    local busy
+    local function Reapply()
+        if busy then return end
+        busy = true
+        texture:SetTexture(path)
+        texture:SetVertexColor(bar:GetStatusBarColor())
+        busy = false
+    end
+    hooksecurefunc(texture, "SetAtlas", Reapply)
+    hooksecurefunc(texture, "SetTexture", Reapply)
+    hooksecurefunc(texture, "SetVertexColor", Reapply)
+    Reapply()
 end
 
 --------------------------------------------------------------------------------
@@ -308,6 +332,7 @@ function GEN:OnEnable()
                 SetTexture(bar, prd)
                 KeepTexture(bar, prd)
             end
+            KeepFeedback(frame.PowerBar, prd)
             -- Alternate power (Stagger, Ebon Might...): Blizzard swaps its
             -- colored atlas on state changes, so it is tracked like the
             -- atlas-colored bars. The bar is set up again on spec changes.

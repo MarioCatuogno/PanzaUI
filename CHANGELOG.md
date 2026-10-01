@@ -35,7 +35,7 @@ Here's a list of all the features included in this first release!
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
 * Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
-* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Party and Damage Meter), also available in SharedMedia
+* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Party, Damage Meter and PRD), also available in SharedMedia
 * Minimap - Added the outlined font to zone name and clock
 * Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
 * Party & Raid Frames - Added the outlined font to names and status text
