@@ -47,9 +47,19 @@ local ATLASES = {
     ["Blizzard Cooldown Manager"] = "UI-HUD-CoolDownManager-Bar",
 }
 
--- Dropdown list, rebuilt each time it opens (new SharedMedia textures appear).
--- LSM's list is copied, never modified.
+-- Dropdown list. The settings panel asks every dropdown for its list each
+-- time a page is shown (18 dropdowns, each list as long as SharedMedia's):
+-- it is built once and shared, and built again only after another addon
+-- registers a new bar texture. LSM's list is copied, never modified.
+local textureList
+if LSM then
+    LSM.RegisterCallback("PanzaUI", "LibSharedMedia_Registered", function(_, mediaType)
+        if mediaType == "statusbar" then textureList = nil end
+    end)
+end
+
 local function TextureList()
+    if textureList then return textureList end
     local names = {}
     if LSM then
         for _, name in ipairs(LSM:List("statusbar")) do names[#names + 1] = name end
@@ -63,6 +73,7 @@ local function TextureList()
 
     local list = { { DEFAULT, "Blizzard UI (unchanged)" } }
     for _, name in ipairs(names) do list[#list + 1] = { name, name } end
+    textureList = list
     return list
 end
 
@@ -70,25 +81,24 @@ end
 -- Options: the shared text style and one texture per bar group (listed
 -- alphabetically by the core).
 --------------------------------------------------------------------------------
+-- old: older option keys merged into this one (saved values, see Migrate).
 local UNIT_BARS = {
-    { key = "texBoss",   label = "Boss frames",               tooltip = "Texture for the Boss health and power bars." },
-    { key = "texFocus",  label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
-    { key = "texGroup",  label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
-    { key = "texPRD",    label = "Personal Resource Display", tooltip = "Texture for the Personal Resource Display bars." },
-    { key = "texPet",    label = "Pet",                       tooltip = "Texture for the Pet health and power bars." },
-    { key = "texPlayer", label = "Player",                    tooltip = "Texture for the Player health and power bars." },
-    { key = "texTarget", label = "Target",                    tooltip = "Texture for the Target health and power bars." },
+    { key = "texFocus",      label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
+    { key = "texGroup",      label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
+    { key = "texPRD",        label = "Personal Resource Display", tooltip = "Texture for the Personal Resource Display bars." },
+    { key = "texPlayerPet",  label = "Player & Pet",              tooltip = "Texture for the health and power bars of these frames.",
+      bullets = { "Player", "Pet" }, old = { "texPlayer", "texPet" } },
+    { key = "texTargetBoss", label = "Target & Boss",             tooltip = "Texture for the health and power bars of these frames.",
+      bullets = { "Target", "Boss frames" }, old = { "texTarget", "texBoss" } },
 }
 
 local OTHER_BARS = {
-    { key = "texAchievements", label = "Achievements",              tooltip = "Texture for the Achievements window bars." },
-    { key = "texCastBar",      label = "Cast Bars",                 tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
-    { key = "texCooldownBars", label = "Cooldown Manager",          tooltip = "Texture for the Cooldown Manager tracked bars." },
-    { key = "texDamageMeter",  label = "Damage Meter",              tooltip = "Texture for the Damage Meter bars." },
-    { key = "texTracking",     label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor bars." },
-    { key = "texQuestTracker", label = "Quest Tracker",             tooltip = "Texture for the Quest Tracker progress bars." },
-    { key = "texRepPanel",     label = "Reputation panel",          tooltip = "Texture for the Reputation panel bars." },
-    { key = "texTooltips",     label = "Tooltips",                  tooltip = "Texture for the progress bars inside tooltips." },
+    { key = "texCastBar",      label = "Cast Bars",        tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
+    { key = "texCooldownBars", label = "Cooldown Manager", tooltip = "Texture for the Cooldown Manager tracked bars." },
+    { key = "texDamageMeter",  label = "Damage Meter",     tooltip = "Texture for the Damage Meter bars." },
+    { key = "texInterface",    label = "Interface bars",   tooltip = "Texture for the progress bars of the interface.",
+      bullets = { "Achievements", "Experience/Reputation bar", "Quest Tracker", "Reputation panel", "Tooltips" },
+      old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
 local defaults = { textStyle = true }
@@ -102,7 +112,7 @@ local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }
     for _, o in ipairs(list) do
         defaults[o.key] = DEFAULT
-        options[#options + 1] = { key = o.key, label = o.label, tooltip = o.tooltip,
+        options[#options + 1] = { key = o.key, label = o.label, tooltip = o.tooltip, bullets = o.bullets,
             dropdown = TextureList, reload = true }
     end
 end
@@ -121,6 +131,18 @@ function GEN:Migrate(db, saved)
     end
     for k, v in pairs(db) do
         if v == "PanzaUI" then db[k] = "PanzaUI - Glass" end
+    end
+    -- Up to 2.0.168 some of these groups had one texture per frame: the
+    -- first own texture chosen among them is kept.
+    for _, list in ipairs({ UNIT_BARS, OTHER_BARS }) do
+        for _, g in ipairs(list) do
+            if g.old and db[g.key] == nil then
+                for _, oldKey in ipairs(g.old) do
+                    local v = db[oldKey]
+                    if type(v) == "string" and (db[g.key] == nil or db[g.key] == DEFAULT) then db[g.key] = v end
+                end
+            end
+        end
     end
     -- 2.0.153 applied the cast bar texture from Combat's cast bar style.
     local combat = saved and saved.PersonalResource
@@ -414,8 +436,9 @@ end
 -- Module API
 --------------------------------------------------------------------------------
 function GEN:OnEnable()
-    local player, target, focus = TexturePath("texPlayer"), TexturePath("texTarget"), TexturePath("texFocus")
-    local pet, boss, group = TexturePath("texPet"), TexturePath("texBoss"), TexturePath("texGroup")
+    local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
+    local pet, boss, group = player, target, TexturePath("texGroup")
+    local interface = TexturePath("texInterface") -- Achievements, XP/Rep, Quest Tracker, Reputation panel, tooltips
 
     SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
     SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
@@ -458,7 +481,7 @@ function GEN:OnEnable()
     end
 
     -- Reputation panel (scrolling list: entries are created/reused on scroll)
-    local repPanel = TexturePath("texRepPanel")
+    local repPanel = interface
     local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
     if repPanel and scrollBox and ScrollUtil then
         ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
@@ -469,7 +492,7 @@ function GEN:OnEnable()
 
     -- Achievement window (load-on-demand): every status bar inside it, scanned
     -- when the window opens, plus the criteria bars of expanded achievements.
-    local achievements = TexturePath("texAchievements")
+    local achievements = interface
     if achievements then
         local function Scan(frame)
             for _, child in ipairs({ frame:GetChildren() }) do
@@ -496,7 +519,7 @@ function GEN:OnEnable()
 
     -- Quest Tracker: progress/timer bars come from each module's pool
     -- (ObjectiveTrackerModuleMixin:GetProgressBar / GetTimerBar).
-    local questTracker = TexturePath("texQuestTracker")
+    local questTracker = interface
     if questTracker then
         local function TrackPool(pool)
             if not pool then return end
@@ -524,7 +547,7 @@ function GEN:OnEnable()
 
     -- Tooltips: progress/status bars come from pools on each tooltip
     -- (GameTooltip_ShowProgressBar / GameTooltip_ShowStatusBar).
-    local tooltips = TexturePath("texTooltips")
+    local tooltips = interface
     if tooltips then
         local function TrackTooltipPool(tooltip, poolKey)
             local pool = tooltip and tooltip[poolKey]
@@ -557,7 +580,7 @@ function GEN:OnEnable()
     end
 
     -- Experience / reputation / honor tracking bars
-    local tracking = TexturePath("texTracking")
+    local tracking = interface
     if tracking then
         local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
         local function ScanTracking()

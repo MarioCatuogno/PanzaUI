@@ -3,7 +3,7 @@
 ## Notes: Lightweight, modular enhancements for the default UI.|n|nType |cff00FF98/panzaui|r to open the options.
 ## Author: Panzarotto
 ## IconTexture: 572034
-## Version: 2.0.166
+## Version: 2.0.169
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, SharedMedia_MyMedia, Platynator
 

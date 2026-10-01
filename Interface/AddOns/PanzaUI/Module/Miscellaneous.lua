@@ -31,7 +31,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 -- can be appended again). New entries are checked right after a nameplate is
 -- added and then a few times per second while nameplates are shown, from the
 -- last position seen; each frame is styled once (no garbage, a few table
--- reads). No UNIT_AURA: it fires for every unit around, and each call hands
+-- reads). Frames that can't be styled yet are retried on the next scans, and
+-- displays Platynator attaches to a nameplate later (e.g. another design
+-- when the target changes) are picked up by the same scan. No UNIT_AURA: it fires for every unit around, and each call hands
 -- the handler a new table of aura data (memory counted as PanzaUI's).
 -- The buttons have secret aspects (their scripts can't be hooked): the icon
 -- border follows the icon's own SetSize. Forbidden buttons are skipped.
@@ -39,18 +41,24 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
 local containers = {}  -- aura container -> number of frames already handled
 local styledAuras = {} -- aura frame -> true (each one is styled only once)
+local retryAuras  = {} -- aura frame -> failed attempts (not stylable yet: forbidden, secret aspects)
+local MAX_RETRIES = 20 -- about 5 seconds of visible time, then until listed again
 
--- A button that can't be styled now is left as is and tried again the next
--- time Platynator lists it (buttons are reused).
+-- A button that can't be styled now is retried on the next scans while it is
+-- shown (a refused mask creates an error string: attempts are capped).
 local function StyleAuraFrame(frame)
-    if not frame or styledAuras[frame] or frame:IsForbidden() then return end
-    if not ns.StyleIcon(frame.Icon, frame, true) then return end
+    if not frame or styledAuras[frame] then return end
+    if frame:IsForbidden() or not ns.StyleIcon(frame.Icon, frame, true) then
+        local tries = (retryAuras[frame] or 0) + 1
+        retryAuras[frame] = tries <= MAX_RETRIES and tries or nil
+        return
+    end
+    retryAuras[frame] = nil
     styledAuras[frame] = true
     if frame.Border then frame.Border:SetAlpha(0) end -- Platynator's square 1px border
     ns.RoundSwipe(frame.Cooldown)                     -- no dark square corners
 end
 
--- The count is updated before styling, so a failing frame is never retried.
 local function ScanContainers()
     for container, handled in pairs(containers) do
         local frames = container.frames
@@ -59,6 +67,9 @@ local function ScanContainers()
             containers[container] = count
             for i = handled + 1, count do StyleAuraFrame(frames[i]) end
         end
+    end
+    for frame in pairs(retryAuras) do
+        if frame:IsForbidden() or frame:IsVisible() then StyleAuraFrame(frame) end -- no methods on forbidden frames
     end
 end
 
@@ -132,13 +143,22 @@ local function UpdatePending()
 end
 
 -- Periodic scan: a ticker (4 calls per second, not one per frame), running
--- only while at least one nameplate is shown.
+-- only while at least one nameplate is shown. Displays of the shown
+-- nameplates are checked too (varargs, no tables: only new ones are added).
 local SCAN_INTERVAL = 0.25 -- seconds
+local function PeriodicScan()
+    for unit in pairs(shownPlates) do
+        local plate = C_NamePlate.GetNamePlateForUnit(unit)
+        if plate and not plate:IsForbidden() then RegisterDisplays(plate:GetChildren()) end
+    end
+    ScanContainers()
+end
+
 local scanner
 local function UpdateScanner()
     local active = next(shownPlates) ~= nil
     if active and not scanner then
-        scanner = C_Timer.NewTicker(SCAN_INTERVAL, ScanContainers)
+        scanner = C_Timer.NewTicker(SCAN_INTERVAL, PeriodicScan)
     elseif not active and scanner then
         scanner:Cancel()
         scanner = nil

@@ -220,9 +220,18 @@ end
 -- scroll box gets one acquired + initialized callback (existing entries
 -- included), windows made later are caught by
 -- hooking SetupSessionWindow. Every registered function runs once per entry,
--- when Blizzard first acquires it (before any secret text is set).
+-- when Blizzard first acquires it (before any secret text is set). Windows
+-- (session and source) have their own registry, same rules.
 --------------------------------------------------------------------------------
 local dmFuncs, dmEntries, dmHooked = {}, {}, {}
+local dmWindowFuncs, dmWindows = {}, {}
+local dmSetup = false
+
+local function OnDamageMeterWindow(window)
+    if not window or dmWindows[window] then return end
+    dmWindows[window] = true
+    for _, func in ipairs(dmWindowFuncs) do func(window) end
+end
 
 local function OnDamageMeterEntry(entry)
     if not entry or dmEntries[entry] then return end
@@ -240,12 +249,15 @@ end
 
 local function HookDamageMeterSource(window)
     local source = window.GetSourceWindow and window:GetSourceWindow()
-    if source and source.GetScrollBox then HookDamageMeterBox(source:GetScrollBox()) end
+    if not source then return end
+    OnDamageMeterWindow(source)
+    if source.GetScrollBox then HookDamageMeterBox(source:GetScrollBox()) end
 end
 
 local function HookDamageMeterWindow(window)
     if not window or dmHooked[window] then return end
     dmHooked[window] = true
+    OnDamageMeterWindow(window)
     if window.GetScrollBox then HookDamageMeterBox(window:GetScrollBox()) end
     -- The local player's row pinned under the list is its own frame, not
     -- one from the scroll box.
@@ -255,7 +267,8 @@ local function HookDamageMeterWindow(window)
 end
 
 local function SetupDamageMeter()
-    if not ScrollUtil then return end
+    if dmSetup or not ScrollUtil then return end
+    dmSetup = true
     for i = 1, 10 do HookDamageMeterWindow(_G["DamageMeterSessionWindow" .. i]) end
     ns.Hook(DamageMeter, "SetupSessionWindow", function(_, index)
         HookDamageMeterWindow(_G["DamageMeterSessionWindow" .. tostring(index)])
@@ -267,9 +280,15 @@ end
 function ns.OnDamageMeterEntry(func)
     dmFuncs[#dmFuncs + 1] = func
     for entry in pairs(dmEntries) do func(entry) end
-    if #dmFuncs == 1 then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
-    end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
+end
+
+-- func(window): runs once per Damage Meter window (session windows and their
+-- spell breakdown windows). Windows seen before registering get it too.
+function ns.OnDamageMeterWindow(func)
+    dmWindowFuncs[#dmWindowFuncs + 1] = func
+    for window in pairs(dmWindows) do func(window) end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
 end
 
 --------------------------------------------------------------------------------
@@ -822,7 +841,22 @@ end
 
 -- Checkbox (boolean default), slider (opt.slider = { min, max, step, suffix })
 -- or dropdown (opt.dropdown = { { value, label [, tooltip] }, ... } or a
--- function returning that list, rebuilt each time the menu opens).
+-- function returning that list). The panel asks for the options every time
+-- the page is shown: the control data is built once per list table and
+-- shared by every dropdown using that list (weak keys: old lists go away).
+local dropdownData = setmetatable({}, { __mode = "k" })
+
+local function DropdownData(list)
+    local data = dropdownData[list]
+    if not data then
+        local container = Settings.CreateControlTextContainer()
+        for _, o in ipairs(list) do container:Add(o[1], o[2], o[3]) end
+        data = container:GetData()
+        dropdownData[list] = data
+    end
+    return data
+end
+
 -- The setting type (boolean / number / string) follows the default value.
 local function AddOption(category, m, opt)
     local key = opt.key
@@ -842,10 +876,7 @@ local function AddOption(category, m, opt)
     local tooltip = BuildTooltip(opt)
     if opt.dropdown then
         local function GetOptions()
-            local container = Settings.CreateControlTextContainer()
-            local list = type(opt.dropdown) == "function" and opt.dropdown() or opt.dropdown
-            for _, o in ipairs(list) do container:Add(o[1], o[2], o[3]) end
-            return container:GetData()
+            return DropdownData(type(opt.dropdown) == "function" and opt.dropdown() or opt.dropdown)
         end
         return Settings.CreateDropdown(category, setting, GetOptions, tooltip)
     end

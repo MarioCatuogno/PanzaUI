@@ -433,6 +433,13 @@ local function StyleEntryText(entry)
     if bar.Value then bar.Value:SetFontObject(font) end
 end
 
+-- Window header texts (meter type title, buttons): font strings of the
+-- window and of two levels of children (header, dropdown), found by type.
+-- The entries live deeper (scroll box > scroll target) and are styled above.
+local function StyleWindowText(window)
+    ns.StyleAllFonts(window, 2)
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -466,7 +473,10 @@ function CB:OnEnable()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
     if db.dmStyle then ns.OnDamageMeterEntry(StyleEntryIcon) end
-    if ns.textStyle then ns.OnDamageMeterEntry(StyleEntryText) end
+    if ns.textStyle then
+        ns.OnDamageMeterEntry(StyleEntryText)
+        ns.OnDamageMeterWindow(StyleWindowText)
+    end
 end
 
 -- Live: aura icon zoom.
