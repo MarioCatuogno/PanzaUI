@@ -22,6 +22,7 @@ local PANZA = {
     ["PanzaUI - Party"]   = MEDIA .. "PanzaUI_party.tga",
     ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
     ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
+    ["PanzaUI - Absorb"]  = MEDIA .. "PanzaUI_absorb.tga",                -- semi-transparent (shields)
 }
 
 -- Used when SharedMedia is not installed.
