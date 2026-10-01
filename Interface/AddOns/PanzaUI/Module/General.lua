@@ -26,6 +26,7 @@ local PANZA = {
     ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
     ["PanzaUI - Absorb"]  = MEDIA .. "PanzaUI_absorb.tga",                -- semi-transparent (shields)
     ["PanzaUI - Cast Bar"] = MEDIA .. "PanzaUI_castbar.tga",              -- inset: stays inside the bar border
+    ["PanzaUI - Cast Bar (Full)"] = MEDIA .. "PanzaUI_castbar_full.tga",  -- no inset: for other addons' bars
 }
 
 -- Used when SharedMedia is not installed.

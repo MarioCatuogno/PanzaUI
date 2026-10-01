@@ -43,7 +43,7 @@ Here's a list of all the features included in this first release!
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
 * Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
-* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb and Cast Bar), also available in SharedMedia
+* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb, Cast Bar and Cast Bar (Full)), also available in SharedMedia
 * Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
 * Miscellaneous - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Miscellaneous - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
@@ -92,6 +92,7 @@ Here's a list of all the features included in this first release!
 * BlizzUI - Adjusted every frame position and size to match the new version of UI
 * BigWigs - Adjusted every frame position and size to match the new version of UI
 * Platynator - Changed the texture to PanzaUI for health bar and cast bar
+* Platynator - Changed the value of health percentage to decimal
 
 ### 📏 Various
 
