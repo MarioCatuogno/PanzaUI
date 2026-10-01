@@ -392,9 +392,24 @@ end
 
 
 --------------------------------------------------------------------------------
+-- Text style for Blizzard texts no other module handles: the framerate
+-- counter (Ctrl+R).
+--------------------------------------------------------------------------------
+local function StyleBlizzardTexts()
+    local fps = FramerateFrame
+    if fps then
+        ns.StyleFont(fps.Label)
+        ns.StyleFont(fps.FramerateText)
+    end
+    ns.StyleFont(FramerateLabel) -- older global names
+    ns.StyleFont(FramerateText)
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function GEN:OnEnable()
+    if ns.textStyle then StyleBlizzardTexts() end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local pet, boss, group = player, target, TexturePath("texGroup")
     local interface = TexturePath("texInterface")
