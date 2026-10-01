@@ -293,8 +293,23 @@ end
 -- values, so the percentage comes from UnitHealthPercent/UnitPowerPercent and
 -- is passed straight to the FontString, never read or compared.
 -- Runs after Blizzard's UpdateTextString (post-hook: no taint on Blizzard code).
-local percentBars = {} -- bar -> { power = bool, unit = fallback unit, respect = bool }
+local percentBars = {} -- bar -> { power = bool, unit = fallback unit, respect = bool, hideEnds = bool }
 local IsSecret = ns.IsSecret
+
+-- hideEnds: health text hidden at 0 and 100 (i.e. when it would read "0" or
+-- "100"). The value is secret, so it can't be compared: a curve turns the
+-- health fraction into the text alpha (0 outside 0.5..99.5%, 1 inside) and
+-- that secret alpha goes straight to the FontString. Made once.
+local endsCurve
+if C_CurveUtil and C_CurveUtil.CreateCurve then
+    endsCurve = C_CurveUtil.CreateCurve()
+    endsCurve:AddPoint(0,     0)
+    endsCurve:AddPoint(0.004, 0)
+    endsCurve:AddPoint(0.005, 1)
+    endsCurve:AddPoint(0.995, 1)
+    endsCurve:AddPoint(0.996, 0)
+    endsCurve:AddPoint(1,     0)
+end
 
 local function ShowPercent(bar)
     local info, text = percentBars[bar], bar.TextString
@@ -322,12 +337,14 @@ local function ShowPercent(bar)
         pct = UnitHealthPercent(unit, true, curve)
     end
     text:SetFormattedText("%.0f", pct)
+    if info.hideEnds then text:SetAlpha(UnitHealthPercent(unit, true, endsCurve)) end
     text:Show()
 end
 
-function ns.PercentText(bar, isPower, unit, respectVisibility)
+function ns.PercentText(bar, isPower, unit, respectVisibility, hideEnds)
     if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
-    percentBars[bar] = { power = isPower, unit = unit, respect = respectVisibility }
+    percentBars[bar] = { power = isPower, unit = unit, respect = respectVisibility,
+                         hideEnds = hideEnds and not isPower and endsCurve ~= nil }
     ns.Hook(bar, "UpdateTextString", ShowPercent)
 end
 
