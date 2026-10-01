@@ -39,7 +39,6 @@ Here's a list of all the features included in this first release!
 * Minimap - Added the outlined font to zone name and clock
 * Minimap - Removed the backgrounds of zone name, tracking and calendar buttons
 * Party & Raid Frames - Added the outlined font to names and status text
-* Party & Raid Frames - Added the PanzaUI role icons (tank, healer, damage), also used in the group finder and role checks
 * Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
 * QoL - Added the auto-repair with personal gold
