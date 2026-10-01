@@ -1,13 +1,14 @@
 --[[----------------------------------------------------------------------------
-    PanzaUI - Miscellaneous
+    PanzaUI - Various
     Other Addons: refined style for Platynator nameplates (rounded borders on
     aura and cast icons).
     Quality of Life: fast auto-loot.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
+-- Saved variables key of the old Miscellaneous module.
 local Misc = ns:RegisterModule("Miscellaneous", {
-    title = "Miscellaneous",
+    title = "Various",
     defaults = {
         platynatorStyle = true,
         fastLoot        = true,
