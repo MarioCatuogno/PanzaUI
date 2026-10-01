@@ -77,7 +77,6 @@ end
 local UNIT_BARS = {
     { key = "texFocus",      label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
     { key = "texGroup",      label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
-    { key = "texPRD",        label = "Personal Resource Display", tooltip = "Texture for the Personal Resource Display bars." },
     { key = "texPlayerPet",  label = "Player & Pet",              tooltip = "Texture for the health and power bars of these frames.",
       bullets = { "Player", "Pet" }, old = { "texPlayer", "texPet" } },
     { key = "texTargetBoss", label = "Target & Boss",             tooltip = "Texture for the health and power bars of these frames.",
@@ -85,10 +84,11 @@ local UNIT_BARS = {
 }
 
 local OTHER_BARS = {
-    { key = "texCastBar",      label = "Cast Bars",        tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
-    { key = "texCooldownBars", label = "Cooldown Manager", tooltip = "Texture for the Cooldown Manager tracked bars." },
-    { key = "texDamageMeter",  label = "Damage Meter",     tooltip = "Texture for the Damage Meter bars." },
-    { key = "texInterface",    label = "Interface bars",   tooltip = "Texture for the progress bars of the interface.",
+    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
+    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of these frames.",
+      bullets = { "Cooldown Manager tracked bars", "Personal Resource Display" }, old = { "texPRD", "texCooldownBars" } },
+    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the Damage Meter bars." },
+    { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
       bullets = { "Achievements", "Experience/Reputation bar", "Quest Tracker", "Reputation panel", "Tooltips" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
@@ -414,7 +414,7 @@ function GEN:OnEnable()
     castTexture = TexturePath("texCastBar")
     if castTexture then ns.ForEachCastBar(SkinCastBar) end
 
-    local prd = TexturePath("texPRD")
+    local prd = TexturePath("texCdmPRD")
     if prd then
         local function SkinPRD()
             local frame = PersonalResourceDisplayFrame
@@ -516,7 +516,7 @@ function GEN:OnEnable()
     end
 
     -- Cooldown Manager bars (shared registry in core.lua).
-    local cooldownBars = TexturePath("texCooldownBars")
+    local cooldownBars = prd
     if cooldownBars then
         ns.OnCooldownItem(function(item) TrackTexture(item.Bar, cooldownBars) end)
     end

@@ -921,8 +921,8 @@ local function MemoryReport()
     ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
 end
 
--- /panzaui (also /panza, /pui): options. /pui mem: memory report.
-SLASH_PANZAUI1, SLASH_PANZAUI2, SLASH_PANZAUI3 = "/panzaui", "/panza", "/pui"
+-- /pui: options. /pui mem: memory report.
+SLASH_PANZAUI1 = "/pui"
 SlashCmdList.PANZAUI = function(msg)
     if msg and msg:lower():find("^%s*mem") then
         MemoryReport()
