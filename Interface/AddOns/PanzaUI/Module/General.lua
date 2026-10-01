@@ -124,10 +124,17 @@ local function TexturePath(key)
     return ATLASES[name] or (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
 end
 
+-- The fill keeps Blizzard's draw layer: a new texture would go to the default
+-- layer and could cover things drawn above the original fill at the same
+-- frame level (e.g. the dispel icon on party/raid frames).
 local function SetTexture(bar, path)
-    if bar and path and bar.SetStatusBarTexture and not bar:IsForbidden() then
-        bar:SetStatusBarTexture(path)
-    end
+    if not (bar and path and bar.SetStatusBarTexture) or bar:IsForbidden() then return end
+    local fill = bar:GetStatusBarTexture()
+    local layer, sublevel
+    if fill then layer, sublevel = fill:GetDrawLayer() end
+    bar:SetStatusBarTexture(path)
+    fill = bar:GetStatusBarTexture()
+    if fill and layer then fill:SetDrawLayer(layer, sublevel) end
 end
 
 -- Some frames put their atlas back on the bar texture object (e.g. Target,
@@ -139,7 +146,7 @@ local function KeepTexture(bar, path)
     local texture = bar and path and bar.GetStatusBarTexture and bar:GetStatusBarTexture()
     if not texture or keptTextures[texture] then return end
     keptTextures[texture] = true
-    hooksecurefunc(texture, "SetAtlas", function() bar:SetStatusBarTexture(path) end)
+    hooksecurefunc(texture, "SetAtlas", function() SetTexture(bar, path) end)
 end
 
 -- Power spend/gain flash (FeedbackFrame, e.g. on the part of energy just

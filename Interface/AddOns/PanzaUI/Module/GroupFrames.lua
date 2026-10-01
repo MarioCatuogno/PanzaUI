@@ -80,8 +80,9 @@ end
 
 -- Role icons. Blizzard sets them only on a full frame update or on
 -- PLAYER_ROLES_ASSIGNED: when the role isn't known yet at that moment (reload,
--- joining a group, roster changes) the icon stays hidden. Shortly after those
--- events, hidden icons of units with a known role are shown again. With
+-- joining a group, roster changes) the icon stays hidden, and after a reload
+-- it can be shown at 0x0 size. Shortly after those events, hidden or 0-sized
+-- icons of units with a known role are fixed. With
 -- "HD role icons" Blizzard's large icons (GetIconForRole) replace the small
 -- ones after each Blizzard update. Vehicle / main tank icons are left alone,
 -- Blizzard's "Display role icon" setting is respected, secret roles skipped.
@@ -113,15 +114,30 @@ local function UpdateRoleIcon(frame)
     if role and icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
 end
 
--- Hidden icon of a unit whose role is known now.
+-- Icon size: Blizzard reuses the icon's current height (GetHeight). Right
+-- after a reload that can still be 0 (layout not done yet), so the icon is
+-- "shown" at 0x0 and stays invisible until the frame is set up again. The
+-- name's font size is used then (the icon is as tall as the name).
+local function RoleIconSize(frame, icon)
+    local size = icon:GetHeight()
+    if not IsSecret(size) and size >= 2 then return size end
+    local _, fontSize = frame.name and frame.name:GetFont()
+    if fontSize and not IsSecret(fontSize) and fontSize >= 2 then return fontSize end
+    return 12
+end
+
+-- Hidden (or 0-sized) icon of a unit whose role is known now.
 local function FixRoleIcon(frame)
     local icon = frame.roleIcon
-    if not icon or icon:IsShown() then return end
+    if not icon then return end
+    if icon:IsShown() then
+        local w, h = icon:GetSize()
+        if IsSecret(w) or IsSecret(h) or (w >= 2 and h >= 2) then return end
+    end
     local role = KnownRole(frame)
     if not role then return end
-    local size = icon:GetHeight() -- Blizzard keeps the height, width 1 when hidden
-    if IsSecret(size) then return end
-    SetRoleAtlas(icon, role)
+    local size = RoleIconSize(frame, icon)
+    if not icon:IsShown() then SetRoleAtlas(icon, role) end
     icon:SetSize(size, size)
     icon:Show()
 end
