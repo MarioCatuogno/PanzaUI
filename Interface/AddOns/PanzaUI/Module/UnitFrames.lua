@@ -351,10 +351,11 @@ end
 --------------------------------------------------------------------------------
 -- Portrait redraw. The 2D portrait is a snapshot of the 3D model: taken
 -- before the model has loaded (loading screen, mount, transmog, shapeshift)
--- it stays zoomed in until the next update. One second after the game
--- updates a portrait, it is drawn again with the same API Blizzard uses.
--- Bursts are merged into one redraw; the handler and the timer callback are
--- created once (no garbage). Widget/API calls only, no Blizzard code called.
+-- it stays zoomed in until the next update. After the game updates a
+-- portrait, it is drawn again with the same API Blizzard uses: after 1 and
+-- after 4 seconds (slow model loads, e.g. after a loading screen). Bursts are
+-- merged; the handler and the timer callbacks are created once (no garbage).
+-- Widget/API calls only, no Blizzard code called.
 --------------------------------------------------------------------------------
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
@@ -362,7 +363,6 @@ local portraitPending = false
 local PORTRAIT_FRAMES = { PlayerFrame, TargetFrame, FocusFrame } -- made once; pairs skips missing ones
 
 local function RedrawPortraits()
-    portraitPending = false
     for _, frame in pairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame and frame.portrait, frame and frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit) then
@@ -371,17 +371,30 @@ local function RedrawPortraits()
     end
 end
 
+local function SecondRedraw()
+    portraitPending = false
+    RedrawPortraits()
+end
+
+local function FirstRedraw()
+    RedrawPortraits()
+    C_Timer.After(3, SecondRedraw)
+end
+
 local portraitEvents = CreateFrame("Frame")
 portraitEvents:SetScript("OnEvent", function(_, event, unit)
-    if unit and (IsSecret(unit) or not PORTRAIT_UNITS[unit]) then return end
+    -- Only UNIT_ events carry a unit (PLAYER_ENTERING_WORLD's first argument
+    -- is a boolean, not a unit).
+    if event:find("^UNIT_") and (IsSecret(unit) or not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
-    C_Timer.After(1, RedrawPortraits)
+    C_Timer.After(1, FirstRedraw)
 end)
 
 local function SetupPortraits()
     for _, event in ipairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "PLAYER_ENTERING_WORLD",
-                             "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
+                             "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "PLAYER_MOUNT_DISPLAY_CHANGED",
+                             "UPDATE_SHAPESHIFT_FORM", "PLAYER_EQUIPMENT_CHANGED" }) do
         portraitEvents:RegisterEvent(event)
     end
 end
