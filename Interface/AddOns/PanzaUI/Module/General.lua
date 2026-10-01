@@ -303,10 +303,16 @@ function GEN:OnEnable()
             local frame = PersonalResourceDisplayFrame
             if not frame then return end
             local container = frame.HealthBarsContainer
-            for _, bar in ipairs({ container and (container.healthBar or container.HealthBar), frame.PowerBar, frame.AlternatePowerBar }) do
+            for _, bar in ipairs({ container and (container.healthBar or container.HealthBar), frame.PowerBar }) do
                 SetTexture(bar, prd)
                 KeepTexture(bar, prd)
             end
+            -- Alternate power (Stagger, Ebon Might...): Blizzard swaps its
+            -- colored atlas on state changes, so it is tracked like the
+            -- atlas-colored bars. The bar is set up again on spec changes.
+            local function SkinAlt(f) TrackTexture(f.AlternatePowerBar, prd) end
+            SkinAlt(frame)
+            ns.Hook(frame, "SetupAlternatePowerBar", SkinAlt)
         end
         if PersonalResourceDisplayFrame then
             SkinPRD()

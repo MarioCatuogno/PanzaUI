@@ -374,6 +374,7 @@ function ns.SetPercentText(text, unit, isPower, powerType)
     if partCurve then
         text:SetAlpha(alpha)
         local twin = FullText(text)
+        twin:SetTextColor(text:GetTextColor()) -- follows the text color
         twin:SetAlpha(full)
         twin:Show()
     end

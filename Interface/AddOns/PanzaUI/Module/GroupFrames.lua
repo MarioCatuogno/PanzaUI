@@ -16,7 +16,7 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { header = "Style" },
         { key = "fontStyle", label = "Outline + Slug text", tooltip = "Apply outline and slug rendering to names and status text (Dead, Offline, ...) on party and raid frames. Requires Reload UI." },
-        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
+        { key = "percentText", label = "Percentage-only text", tooltip = "Show health as a plain white percentage (no % symbol), with one decimal below 100, on party and raid frames. Hidden at 0. Dead/Offline are kept. Uses Blizzard's health text setting (Edit Mode: anything but None). Requires Reload UI." },
         { header = "Features" },
         { key = "hideServer", label = "Hide server name",  tooltip = "Show only the character name, without the server, on party and raid frames. Requires Reload UI." },
     },
@@ -61,9 +61,11 @@ local function UpdateStatusText(frame)
     local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
     if IsSecret(connected) or IsSecret(dead) or not connected or dead then
         text:SetAlpha(1) -- status text (Dead, Offline...) always visible
+        text:SetTextColor(GameFontDisable:GetTextColor()) -- Blizzard's grey
         ns.HidePercentFull(text)
         return
     end
+    text:SetTextColor(1, 1, 1) -- white, like the rest of the UI text
     ns.SetPercentText(text, unit, false)
 end
 
