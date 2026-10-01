@@ -35,6 +35,7 @@ Here's a list of all the features included in this first release!
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
 * Combat - Hidden the Personal Resource Display while the player casts, shown again when the cast ends
+* Combat - Hidden the player cast bar right when the cast ends, with no fade out
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a texture option for Achievement, Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars

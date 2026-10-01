@@ -2,6 +2,7 @@
     PanzaUI - Combat
     Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
     icon zoom of the player's auras.
+    Cast Bar: refined style (hidden right when the cast ends).
     Cooldown Manager: refined style (rounded icon borders, outlined text),
     dynamic layout of tracked buffs (centered) and bars (bottom-up).
     Damage Meter: refined style (rounded icon borders, outlined text).
@@ -18,6 +19,7 @@ local CB = ns:RegisterModule("PersonalResource", {
     defaults = {
         auraStyle    = true,
         auraIconZoom = 5,
+        castStyle    = true,
         cdmStyle     = true,
         cdmDynamic   = true,
         dmStyle      = true,
@@ -31,6 +33,10 @@ local CB = ns:RegisterModule("PersonalResource", {
         { key = "auraIconZoom", label = "Icon zoom",
           tooltip = "Crop the edges of buff and debuff icons. 0 = off.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
+        { header = "Cast Bar" },
+        { key = "castStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the player cast bar.",
+          bullets = { "Hidden right when the cast ends (no fade out)" } },
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager.",
@@ -84,6 +90,31 @@ local function StyleAuraButton(button, icon)
     ns.StyleIcon(icon, button)
     ns.StyleFont(button.Count)
     ns.StyleFont(button.Duration)
+end
+
+--------------------------------------------------------------------------------
+-- Cast Bar. At the end of a cast Blizzard plays the bar's fade out animations
+-- and hides the bar when they finish (OnFinished). Their delays and
+-- durations are set to 0 once at login: the bar still goes through
+-- Blizzard's own code, it just ends at once. No hooks, no runtime cost.
+--------------------------------------------------------------------------------
+local FADE_ANIMS = { "FadeOutAnim", "HoldFadeOutAnim" }
+
+local function InstantAnims(...)
+    for i = 1, select("#", ...) do
+        local anim = select(i, ...)
+        anim:SetStartDelay(0)
+        anim:SetDuration(0)
+    end
+end
+
+local function SetupCastBar()
+    local bar = PlayerCastingBarFrame
+    if not bar then return end
+    for _, key in ipairs(FADE_ANIMS) do
+        local group = bar[key]
+        if group and group.GetAnimations then InstantAnims(group:GetAnimations()) end
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -368,6 +399,7 @@ function CB:OnEnable()
         if db.auraStyle then ForEachAuraButton(StyleAuraButton) end
         ForEachAuraButton(ZoomAuraIcon)
     end)
+    if db.castStyle then SetupCastBar() end
     if db.prdStyle then
         local function Setup()
             SetupPRD()
