@@ -43,8 +43,7 @@ Here's a list of all the features included in this first release!
 * Core - Added a texture option for Achievement, cast bar (in Blizzard's cast colors), Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
-* Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
-* Core - Added the /pui mem command, showing PanzaUI memory before and after garbage collection
+* Core - Added shortcut commands: /panzaui (options), /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
 * Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb, Cast Bar and Cast Bar (Full)), also available in SharedMedia
 * Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
 * Miscellaneous - Added the fast auto-loot (every item looted at once when auto-loot is on)

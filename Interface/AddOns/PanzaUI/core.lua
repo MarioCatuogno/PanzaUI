@@ -788,7 +788,7 @@ local function BuildTooltip(opt)
         table.sort(bullets, ByText)
         for _, line in ipairs(bullets) do text = text .. "\n• " .. line end
     end
-    if opt.reload then text = text .. "\n\nRequires Reload UI." end
+    if opt.reload then text = text .. "\n\n" .. RED_FONT_COLOR:WrapTextInColorCode("Requires Reload UI.") end
     return text
 end
 
@@ -918,26 +918,10 @@ loader:SetScript("OnEvent", function(self, event, arg1)
     end
 end)
 
--- Memory used by PanzaUI before and after a full garbage collection: what
--- goes away was only garbage waiting for Lua's collector, what stays is in use.
-local function MemoryReport()
-    local GetMemory = GetAddOnMemoryUsage or (C_AddOns and C_AddOns.GetAddOnMemoryUsage)
-    if not GetMemory then return end
-    UpdateAddOnMemoryUsage()
-    local before = GetMemory(addonName)
-    collectgarbage("collect")
-    UpdateAddOnMemoryUsage()
-    ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
-end
-
--- /pui: options. /pui mem: memory report.
-SLASH_PANZAUI1, SLASH_PANZAUI2 = "/panza", "/pui"
-SlashCmdList.PANZAUI = function(msg)
-    if msg and msg:lower():find("^%s*mem") then
-        MemoryReport()
-    else
-        Settings.OpenToCategory(ns.category:GetID())
-    end
+-- /panzaui (also /panza, /pui): options.
+SLASH_PANZAUI1, SLASH_PANZAUI2, SLASH_PANZAUI3 = "/panzaui", "/panza", "/pui"
+SlashCmdList.PANZAUI = function()
+    Settings.OpenToCategory(ns.category:GetID())
 end
 
 -- Shortcuts: /rl = Reload UI, /rc = ready check, /pl = 10 second pull timer.
