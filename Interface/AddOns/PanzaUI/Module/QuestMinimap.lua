@@ -113,6 +113,9 @@ local function ShouldCollapse()
     return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
 end
 
+-- Expanding lays out the tracker contents, and Blizzard's layout reads
+-- auras that are secret in combat (refused from addon-called code): the
+-- tracker is expanded only out of combat (PLAYER_REGEN_ENABLED runs this again).
 local function UpdateCollapse()
     local tracker = ObjectiveTrackerFrame
     if not tracker then return end
@@ -121,7 +124,7 @@ local function UpdateCollapse()
             tracker:SetCollapsed(true)
             collapsedByUs = true
         end
-    elseif collapsedByUs then
+    elseif collapsedByUs and not InCombatLockdown() then
         collapsedByUs = false
         if tracker:IsCollapsed() then tracker:SetCollapsed(false) end
     end
