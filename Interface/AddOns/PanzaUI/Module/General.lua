@@ -1,9 +1,10 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
-    Reputation panel bars, experience/reputation tracking bars, Achievement
-    window, Quest Tracker, tooltip, Cooldown Manager and Damage Meter bars, from
-    LibSharedMedia-3.0 (SharedMedia).
+    player cast bar (in Blizzard's cast colors), Reputation panel bars,
+    experience/reputation tracking bars, Achievement window, Quest Tracker,
+    tooltip, Cooldown Manager and Damage Meter bars, from LibSharedMedia-3.0
+    (SharedMedia).
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -24,6 +25,7 @@ local PANZA = {
     ["PanzaUI - Damage Meter"] = MEDIA .. "PanzaUI_damagemeter.tga", -- inset: stays inside the bar border
     ["PanzaUI - PRD"]     = MEDIA .. "PanzaUI_prd.tga",                   -- inset: stays inside the bar border
     ["PanzaUI - Absorb"]  = MEDIA .. "PanzaUI_absorb.tga",                -- semi-transparent (shields)
+    ["PanzaUI - Cast Bar"] = MEDIA .. "PanzaUI_castbar.tga",              -- inset: stays inside the bar border
 }
 
 -- Used when SharedMedia is not installed.
@@ -77,6 +79,7 @@ local UNIT_BARS = {
 
 local OTHER_BARS = {
     { key = "texAchievements", label = "Achievements",              tooltip = "Texture for the Achievements window bars." },
+    { key = "texCastBar",      label = "Cast Bar",                  tooltip = "Texture for the player cast bar, in Blizzard's cast colors." },
     { key = "texCooldownBars", label = "Cooldown Manager",          tooltip = "Texture for the Cooldown Manager tracked bars." },
     { key = "texDamageMeter",  label = "Damage Meter",              tooltip = "Texture for the Damage Meter bars." },
     { key = "texTracking",     label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor bars." },
@@ -101,7 +104,7 @@ local GEN = ns:RegisterModule("General", { title = "General", main = true, defau
 
 -- 2.0.49 had a single texture for every frame: keep it for each group.
 -- Up to 2.0.110 the only own texture was "PanzaUI": now "PanzaUI - Glass".
-function GEN:Migrate(db)
+function GEN:Migrate(db, saved)
     if type(db.barTexture) == "string" then
         for _, g in ipairs(UNIT_BARS) do
             if db[g.key] == nil then db[g.key] = db.barTexture end
@@ -109,6 +112,11 @@ function GEN:Migrate(db)
     end
     for k, v in pairs(db) do
         if v == "PanzaUI" then db[k] = "PanzaUI - Glass" end
+    end
+    -- 2.0.153 applied the cast bar texture from Combat's cast bar style.
+    local combat = saved and saved.PersonalResource
+    if db.texCastBar == nil and combat and combat.castStyle ~= nil then
+        db.texCastBar = combat.castStyle and "PanzaUI - Cast Bar" or DEFAULT
     end
 end
 
@@ -310,6 +318,52 @@ local function SkinFrame(frame, path)
 end
 
 --------------------------------------------------------------------------------
+-- Player cast bar. Blizzard sets a colored fill atlas for each cast type on
+-- every cast: right after, the chosen texture is put back and tinted with
+-- that type's color (matched by the atlas name, cached per name). The fill
+-- keeps Blizzard's draw layer (SetTexture). A busy flag stops our own call
+-- from re-entering the hook.
+--------------------------------------------------------------------------------
+local CAST_COLORS = { -- order matters: first match wins
+    { "uninterrupt", 0.60, 0.60, 0.60 },
+    { "interrupt",   0.85, 0.15, 0.15 },
+    { "channel",     0.25, 0.80, 0.35 },
+    { "empower",     0.30, 0.60, 1.00 },
+    { "craft",       0.95, 0.55, 0.10 },
+    { "",            1.00, 0.72, 0.10 }, -- standard cast
+}
+local castColors = {} -- atlas -> color entry
+
+local function CastColor(asset)
+    local color = castColors[asset]
+    if color then return color end
+    local name = asset:lower()
+    for _, c in ipairs(CAST_COLORS) do
+        if name:find(c[1], 1, true) then color = c break end
+    end
+    castColors[asset] = color
+    return color
+end
+
+local castTexture, castBusy
+local function KeepCastTexture(bar, asset)
+    if castBusy or type(asset) ~= "string" or asset == castTexture or ns.IsSecret(asset) then return end
+    castBusy = true
+    SetTexture(bar, castTexture)
+    local c = CastColor(asset)
+    bar:SetStatusBarColor(c[2], c[3], c[4])
+    castBusy = false
+end
+
+local function SkinCastBar(path)
+    local bar = PlayerCastingBarFrame
+    if not (bar and path) then return end
+    castTexture = path
+    hooksecurefunc(bar, "SetStatusBarTexture", KeepCastTexture)
+end
+
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function GEN:OnEnable()
@@ -327,6 +381,8 @@ function GEN:OnEnable()
         end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
+
+    SkinCastBar(TexturePath("texCastBar"))
 
     local prd = TexturePath("texPRD")
     if prd then

@@ -30,20 +30,20 @@ Here's a list of all the features included in this first release!
 * Combat - Added the action bar style to Cooldown Manager icons
 * Combat - Added the action bar style to Damage Meter icons
 * Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
+* Combat - Added the elapsed cast time (e.g. 1.4) in the center of the player cast bar
 * Combat - Added the outlined font to buff and debuff stack counts and durations
 * Combat - Added the outlined font to Cooldown Manager texts (tracked bars, stacks, charges, cooldowns)
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
-* Combat - Added the elapsed cast time (e.g. 1.4) in the center of the player cast bar
 * Combat - Hidden the Personal Resource Display while the player casts, shown again when the cast ends
 * Combat - Hidden the player cast bar right when the cast ends, with no fade out
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
-* Core - Added a texture option for Achievement, Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
+* Core - Added a texture option for Achievement, cast bar (in Blizzard's cast colors), Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars
 * Core - Added a texture option for health and power bars of each frame (Player, Target, Focus, Pet, Boss, Party/Raid and Personal Resource Display)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
 * Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
-* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD and Absorb), also available in SharedMedia
+* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb and Cast Bar), also available in SharedMedia
 * Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
 * Miscellaneous - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Miscellaneous - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
