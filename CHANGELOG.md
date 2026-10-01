@@ -42,6 +42,7 @@ Here's a list of all the features included in this first release!
 * Core - Added shortcut commands: /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
 * Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD and Absorb), also available in SharedMedia
 * Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
+* Miscellaneous - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Miscellaneous - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
 * Party & Raid Frames - Added the option for Blizzard's HD role icons, also on the Player frame
 * Party & Raid Frames - Added the outlined font to names and status text

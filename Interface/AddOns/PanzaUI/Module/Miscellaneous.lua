@@ -2,6 +2,7 @@
     PanzaUI - Miscellaneous
     Other Addons: refined style for Platynator nameplates (rounded borders on
     aura and cast icons).
+    Quality of Life: fast auto-loot.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -9,12 +10,17 @@ local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Miscellaneous",
     defaults = {
         platynatorStyle = true,
+        fastLoot        = true,
     },
     options = {
         { header = "Other Addons" },
         { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
           tooltip = "Polish the look of Platynator nameplates.",
           bullets = { "Rounded aura icon borders", "Rounded cast icon border", "Only when Platynator is installed" } },
+        { header = "Quality of Life" },
+        { key = "fastLoot", label = "Fast auto-loot",
+          tooltip = "Loot everything at once, as soon as the loot is ready.",
+          bullets = { "Only when auto-loot is on (game setting or its modifier key)", "No waiting for the loot window" } },
     },
 })
 
@@ -142,10 +148,44 @@ local function SetupPlatynator()
 end
 
 --------------------------------------------------------------------------------
+-- Fast auto-loot. Blizzard's auto-loot takes the items one by one, with a
+-- short delay each; here every slot is looted at once when LOOT_READY fires,
+-- if auto-loot applies (the game setting, inverted by its modifier key).
+-- LOOT_READY can fire twice for the same loot: a short lock skips repeats.
+-- Bind-on-pickup confirmations and full bags are left to Blizzard. The
+-- event is registered only while the option is on.
+--------------------------------------------------------------------------------
+local LOOT_LOCK = 0.3 -- seconds
+local lastLoot = 0
+local lootEvents = CreateFrame("Frame")
+
+lootEvents:SetScript("OnEvent", function()
+    local now = GetTime()
+    if now - lastLoot < LOOT_LOCK then return end
+    if C_CVar.GetCVarBool("autoLootDefault") == IsModifiedClick("AUTOLOOTTOGGLE") then return end
+    lastLoot = now
+    for slot = GetNumLootItems(), 1, -1 do LootSlot(slot) end
+end)
+
+local function SetFastLoot(on)
+    if on then
+        lootEvents:RegisterEvent("LOOT_READY")
+    else
+        lootEvents:UnregisterAllEvents()
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons load before PLAYER_LOGIN (when modules are enabled): if they
 -- are not loaded by now, they are not installed or are disabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
+    SetFastLoot(self.db.fastLoot)
+end
+
+-- Live: fast auto-loot.
+function Misc:OnOptionChanged(key, value)
+    if key == "fastLoot" then SetFastLoot(value) end
 end
