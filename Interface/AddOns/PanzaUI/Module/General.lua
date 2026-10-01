@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
     Health/power bar texture per frame group (incl. Personal Resource Display),
-    player cast bar (in Blizzard's cast colors), Reputation panel bars,
+    cast bars (in Blizzard's cast colors), Reputation panel bars,
     experience/reputation tracking bars, Achievement window, Quest Tracker,
     tooltip, Cooldown Manager and Damage Meter bars, from LibSharedMedia-3.0
     (SharedMedia).
@@ -79,7 +79,7 @@ local UNIT_BARS = {
 
 local OTHER_BARS = {
     { key = "texAchievements", label = "Achievements",              tooltip = "Texture for the Achievements window bars." },
-    { key = "texCastBar",      label = "Cast Bar",                  tooltip = "Texture for the player cast bar, in Blizzard's cast colors." },
+    { key = "texCastBar",      label = "Cast Bars",                 tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
     { key = "texCooldownBars", label = "Cooldown Manager",          tooltip = "Texture for the Cooldown Manager tracked bars." },
     { key = "texDamageMeter",  label = "Damage Meter",              tooltip = "Texture for the Damage Meter bars." },
     { key = "texTracking",     label = "Experience/Reputation bar", tooltip = "Texture for the experience, reputation and honor bars." },
@@ -318,11 +318,12 @@ local function SkinFrame(frame, path)
 end
 
 --------------------------------------------------------------------------------
--- Player cast bar. Blizzard sets a colored fill atlas for each cast type on
--- every cast: right after, the chosen texture is put back and tinted with
--- that type's color (matched by the atlas name, cached per name). The fill
--- keeps Blizzard's draw layer (SetTexture). A busy flag stops our own call
--- from re-entering the hook.
+-- Cast bars (Player, Target, Focus, Boss). Blizzard sets a colored fill atlas
+-- for each cast type on every cast, then resets the bar color: right after
+-- each, the chosen texture is put back and tinted with that type's color
+-- (matched by the atlas name, cached per name). The fill keeps Blizzard's
+-- draw layer (SetTexture). A busy flag stops our own calls from re-entering
+-- the hooks.
 --------------------------------------------------------------------------------
 local CAST_COLORS = { -- order matters: first match wins
     { "uninterrupt", 0.60, 0.60, 0.60 },
@@ -346,20 +347,28 @@ local function CastColor(asset)
 end
 
 local castTexture, castBusy
-local function KeepCastTexture(bar, asset)
-    if castBusy or type(asset) ~= "string" or asset == castTexture or ns.IsSecret(asset) then return end
+local castBarColor = {} -- cast bar -> color entry of its current cast
+
+local function KeepCastColor(bar)
+    local c = castBarColor[bar]
+    if castBusy or not c then return end
     castBusy = true
-    SetTexture(bar, castTexture)
-    local c = CastColor(asset)
     bar:SetStatusBarColor(c[2], c[3], c[4])
     castBusy = false
 end
 
-local function SkinCastBar(path)
-    local bar = PlayerCastingBarFrame
-    if not (bar and path) then return end
-    castTexture = path
+local function KeepCastTexture(bar, asset)
+    if castBusy or type(asset) ~= "string" or asset == castTexture or ns.IsSecret(asset) then return end
+    castBusy = true
+    SetTexture(bar, castTexture)
+    castBusy = false
+    castBarColor[bar] = CastColor(asset)
+    KeepCastColor(bar)
+end
+
+local function SkinCastBar(bar)
     hooksecurefunc(bar, "SetStatusBarTexture", KeepCastTexture)
+    hooksecurefunc(bar, "SetStatusBarColor", KeepCastColor)
 end
 
 
@@ -382,7 +391,8 @@ function GEN:OnEnable()
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
 
-    SkinCastBar(TexturePath("texCastBar"))
+    castTexture = TexturePath("texCastBar")
+    if castTexture then ns.ForEachCastBar(SkinCastBar) end
 
     local prd = TexturePath("texPRD")
     if prd then

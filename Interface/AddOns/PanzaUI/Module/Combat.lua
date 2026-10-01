@@ -2,8 +2,8 @@
     PanzaUI - Combat
     Buffs & Debuffs: refined style (rounded icon borders, outlined text) and
     icon zoom of the player's auras.
-    Cast Bar: refined style (elapsed time in the center, hidden right when
-    the cast ends).
+    Cast Bar: refined style for the Player, Target, Focus and Boss cast bars
+    (elapsed time in the center, hidden right when the cast ends).
     Cooldown Manager: refined style (rounded icon borders, outlined text),
     dynamic layout of tracked buffs (centered) and bars (bottom-up).
     Damage Meter: refined style (rounded icon borders, outlined text).
@@ -36,7 +36,7 @@ local CB = ns:RegisterModule("PersonalResource", {
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { header = "Cast Bar" },
         { key = "castStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the player cast bar.",
+          tooltip = "Polish the look of the Player, Target, Focus and Boss cast bars.",
           bullets = { "Elapsed cast time in the center", "Hidden right when the cast ends (no fade out)" } },
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
@@ -94,10 +94,10 @@ local function StyleAuraButton(button, icon)
 end
 
 --------------------------------------------------------------------------------
--- Cast Bar. At the end of a cast Blizzard plays the bar's fade out animations
--- and hides the bar when they finish (OnFinished). Their delays and
--- durations are set to 0 once at login: the bar still goes through
--- Blizzard's own code, it just ends at once. No hooks, no runtime cost.
+-- Cast bars (Player, Target, Focus, Boss). At the end of a cast Blizzard
+-- plays the bar's fade out animations and hides the bar when they finish
+-- (OnFinished). Their delays and durations are set to 0 once at login: the
+-- bar still goes through Blizzard's own code, it just ends at once.
 --------------------------------------------------------------------------------
 local FADE_ANIMS = { "FadeOutAnim", "HoldFadeOutAnim" }
 
@@ -109,56 +109,34 @@ local function InstantAnims(...)
     end
 end
 
--- Elapsed cast time, one decimal, outlined, in the center of the bar. A small
--- driver frame updates it (throttled) only while the player is casting or
--- channeling; it reads the player's own cast times (never secret values:
--- the text is just left empty then). C formatting, no garbage per update.
+-- Elapsed cast time, one decimal, outlined, in the center of the bar. Each
+-- bar gets a small child frame whose OnUpdate (throttled) runs only while
+-- the bar is visible. The time is the bar value (casts fill up with the
+-- elapsed time; channels empty, so it is max - value when readable).
+-- Secret values go straight to the text (C formatting, no garbage).
 local CAST_TICK = 0.05
-local castTimer, castDriver
-local tickElapsed = 0
-
-local function CastStartTime()
-    local _, _, _, startMS = UnitCastingInfo("player")
-    if startMS == nil then _, _, _, startMS = UnitChannelInfo("player") end
-    if startMS == nil or ns.IsSecret(startMS) then return end
-    return startMS / 1000
-end
-
-local function UpdateCastTimer(driver, elapsed)
-    tickElapsed = tickElapsed + elapsed
-    if tickElapsed < CAST_TICK then return end
-    tickElapsed = 0
-    local startTime = CastStartTime()
-    if not startTime then
-        castTimer:SetText("")
-        driver:Hide()
-        return
-    end
-    local elapsedTime = GetTime() - startTime
-    castTimer:SetFormattedText("%.1f", elapsedTime > 0 and elapsedTime or 0)
-end
+local IsSecretValue = ns.IsSecret
 
 local function SetupCastTimer(bar)
-    castTimer = bar:CreateFontString(nil, "OVERLAY")
-    castTimer:SetFontObject(ns.OutlinedFont(GameFontHighlightSmall))
-    castTimer:SetPoint("CENTER")
+    local text = bar:CreateFontString(nil, "OVERLAY")
+    text:SetFontObject(ns.OutlinedFont(GameFontHighlightSmall))
+    text:SetPoint("CENTER")
 
-    castDriver = CreateFrame("Frame")
-    castDriver:Hide()
-    castDriver:SetScript("OnUpdate", UpdateCastTimer)
-    castDriver:SetScript("OnEvent", function(driver)
-        tickElapsed = CAST_TICK -- update at once
-        driver:Show()
+    local driver, tick = CreateFrame("Frame", nil, bar), 0
+    driver:SetScript("OnUpdate", function(_, elapsed)
+        tick = tick + elapsed
+        if tick < CAST_TICK then return end
+        tick = 0
+        local value = bar:GetValue()
+        if bar.channeling and not IsSecretValue(value) then
+            local _, max = bar:GetMinMaxValues()
+            if not IsSecretValue(max) then value = max - value end
+        end
+        text:SetFormattedText("%.1f", value)
     end)
-    for _, event in ipairs({ "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_EMPOWER_START",
-                             "UNIT_SPELLCAST_DELAYED", "UNIT_SPELLCAST_CHANNEL_UPDATE", "UNIT_SPELLCAST_EMPOWER_UPDATE" }) do
-        castDriver:RegisterUnitEvent(event, "player")
-    end
 end
 
-local function SetupCastBar()
-    local bar = PlayerCastingBarFrame
-    if not bar then return end
+local function SetupCastBar(bar)
     for _, key in ipairs(FADE_ANIMS) do
         local group = bar[key]
         if group and group.GetAnimations then InstantAnims(group:GetAnimations()) end
@@ -448,7 +426,7 @@ function CB:OnEnable()
         if db.auraStyle then ForEachAuraButton(StyleAuraButton) end
         ForEachAuraButton(ZoomAuraIcon)
     end)
-    if db.castStyle then SetupCastBar() end
+    if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
     if db.prdStyle then
         local function Setup()
             SetupPRD()

@@ -30,13 +30,13 @@ Here's a list of all the features included in this first release!
 * Combat - Added the action bar style to Cooldown Manager icons
 * Combat - Added the action bar style to Damage Meter icons
 * Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
-* Combat - Added the elapsed cast time (e.g. 1.4) in the center of the player cast bar
+* Combat - Added the elapsed cast time (e.g. 1.4) in the center of the Player, Target, Focus and Boss cast bars
 * Combat - Added the outlined font to buff and debuff stack counts and durations
 * Combat - Added the outlined font to Cooldown Manager texts (tracked bars, stacks, charges, cooldowns)
 * Combat - Added the outlined font to Damage Meter bars
 * Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
 * Combat - Hidden the Personal Resource Display while the player casts, shown again when the cast ends
-* Combat - Hidden the player cast bar right when the cast ends, with no fade out
+* Combat - Hidden the Player, Target, Focus and Boss cast bars right when the cast ends, with no fade out
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a texture option for Achievement, cast bar (in Blizzard's cast colors), Cooldown Manager, Damage Meter, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars

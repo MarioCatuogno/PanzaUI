@@ -371,6 +371,19 @@ end
 ns.StyleAllFonts = StyleAllFonts
 
 --------------------------------------------------------------------------------
+-- Cast bars: Player, Target, Focus and Boss frames (missing ones skipped).
+--------------------------------------------------------------------------------
+function ns.ForEachCastBar(func)
+    if PlayerCastingBarFrame then func(PlayerCastingBarFrame) end
+    if TargetFrame and TargetFrame.spellbar then func(TargetFrame.spellbar) end
+    if FocusFrame and FocusFrame.spellbar then func(FocusFrame.spellbar) end
+    for i = 1, 5 do
+        local boss = _G["Boss" .. i .. "TargetFrame"]
+        if boss and boss.spellbar then func(boss.spellbar) end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Status bar text helpers (TextStatusBar: TextString / LeftText / RightText)
 --------------------------------------------------------------------------------
 function ns.StyleBarText(bar)
