@@ -753,11 +753,18 @@ local function AddReloadButton(layout)
         "", "Reload UI", ReloadUI, "Reload the interface to apply changes.", false))
 end
 
--- Tooltip: summary line, bullet list, reload note. Built once per option.
+-- Tooltip: summary line, bullet list (alphabetical), reload note. Built once
+-- per option.
+local function ByText(a, b)
+    return a:lower() < b:lower()
+end
+
 local function BuildTooltip(opt)
     local text = opt.tooltip or ""
     if opt.bullets then
-        for _, line in ipairs(opt.bullets) do text = text .. "\n• " .. line end
+        local bullets = CopyTable(opt.bullets)
+        table.sort(bullets, ByText)
+        for _, line in ipairs(bullets) do text = text .. "\n• " .. line end
     end
     if opt.reload then text = text .. "\n\nRequires Reload UI." end
     return text
