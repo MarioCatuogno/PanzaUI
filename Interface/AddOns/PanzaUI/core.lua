@@ -117,7 +117,7 @@ end
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
-local ICON_SWIPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconswipe.tga]] -- rounded icon shape
+local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame
 
 local maskInfo
 
@@ -134,7 +134,7 @@ function ns.StyleIcon(icon, parent, anchored)
     frame:SetAtlas(ICON_FRAME)
 
     if anchored then
-        mask:SetTexture(ICON_SWIPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
         mask:SetAllPoints(icon)
         icon:AddMaskTexture(mask)
         frame:SetAllPoints(icon)
@@ -172,7 +172,7 @@ end
 
 function ns.RoundSwipe(cooldown)
     if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then
-        cooldown:SetSwipeTexture(ICON_SWIPE)
+        cooldown:SetSwipeTexture(ICON_SHAPE)
     end
 end
 
