@@ -174,7 +174,6 @@ local classColorBars = {}
 
 local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- colorValid: bar -> unit it was computed for
 local colorEvents = CreateFrame("Frame")
-colorEvents:SetScript("OnEvent", function() wipe(colorValid) end)
 
 -- classColorBars: bar -> true, or the unit to use when the bar has none
 -- (Target of Target bars).
@@ -214,10 +213,18 @@ local function ClassColorHealth(bar)
     bar:SetStatusBarColor(r, g, b)
 end
 
--- Bars colored by other Blizzard code: the class color is put back right
--- after each SetStatusBarColor (our own call is skipped by the busy flag).
-local colorBusy
+-- Target of Target bars: Blizzard updates them with its own code (no
+-- UnitFrameHealthBar_Update), so they are colored when their unit can change
+-- (next frame, after Blizzard's update) and again after any Blizzard
+-- SetStatusBarColor (our own call is skipped by the busy flag).
+local totBars, colorBusy = {}, false
+
+local function ColorToTBars()
+    for _, bar in ipairs(totBars) do ClassColorHealth(bar) end
+end
+
 local function KeepClassColor(bar)
+    totBars[#totBars + 1] = bar
     hooksecurefunc(bar, "SetStatusBarColor", function(self)
         if colorBusy then return end
         colorBusy = true
@@ -226,6 +233,12 @@ local function KeepClassColor(bar)
     end)
     ClassColorHealth(bar)
 end
+
+-- Anything that can change a cached color.
+colorEvents:SetScript("OnEvent", function()
+    wipe(colorValid)
+    if totBars[1] then ns.Defer(ColorToTBars) end
+end)
 
 --------------------------------------------------------------------------------
 -- Shared text style, before the percentage text (its "100" twin copies the
