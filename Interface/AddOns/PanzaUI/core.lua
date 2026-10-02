@@ -171,11 +171,14 @@ function ns.StyleIcon(icon, parent, anchored)
     return frame, mask
 end
 
--- Rounded cooldown swipe for icons styled with ns.StyleIcon.
+-- Rounded cooldown swipe for icons styled with ns.StyleIcon. The edge line
+-- (spark) is drawn outside the rounded frame, so it gets an empty texture.
+local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
 
 function ns.RoundSwipe(cooldown)
     if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then
         cooldown:SetSwipeTexture(ICON_SHAPE)
+        cooldown:SetEdgeTexture(BLANK)
     end
 end
 
