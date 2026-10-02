@@ -15,7 +15,7 @@ Here's a list of all the features included in this first release!
 * Bags & Items - Added an icon zoom slider
 * Bags & Items - Added the auto-repair with personal gold
 * Bags & Items - Added the auto-sell of junk items at merchants
-* Bags & Items - Added the item level on equipment, colored by item quality
+* Bags & Items - Added the item level on equipment in the bags and in the character, warband and guild banks, colored by item quality
 * Bags & Items - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
 * Bags & Items - Added the outlined font to item counts and item levels
 * Chat - Added the outlined font to chat text, tab names and input box

@@ -1,7 +1,8 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Bags & Items
     Items: icon zoom for bag items (and the shared text style); item level on
-    equipment in the bags, the Character panel and the Inspect panel.
+    equipment in the bags, the banks (character, warband, guild), the
+    Character panel and the Inspect panel.
     Merchant: auto-repair and auto-sell junk.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
@@ -21,7 +22,7 @@ local Items = ns:RegisterModule("Items", {
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { key = "itemLevel", label = "Item level",
           tooltip = "Show the item level on equipment.",
-          bullets = { "Bags", "Character and Inspect panels", "Colored by item quality" } },
+          bullets = { "Bags", "Character, warband and guild banks", "Character and Inspect panels", "Colored by item quality" } },
         { header = "Merchant" },
         { key = "autoRepair", label = "Auto-repair",
           tooltip = "Repair all your gear when you open a merchant that can repair.",
@@ -124,18 +125,26 @@ local function UpdateCharSlot(button)
     ns.ItemLevelText(button, ilvl, color)
 end
 
+-- Item level and quality color from an item link (equipmentOnly: weapons,
+-- armor and profession gear, like the bags).
+local function LinkItemLevel(link, equipmentOnly)
+    if not link or ns.IsSecret(link) then return end
+    if equipmentOnly then
+        local _, _, _, equipLoc, _, classID = C_Item.GetItemInfoInstant(link)
+        if not EQUIPMENT[classID] or SKIP_SLOTS[equipLoc] then return end
+    end
+    local ilvl = C_Item.GetDetailedItemLevelInfo(link)
+    if not ilvl or ilvl <= 1 then return end
+    local quality = C_Item.GetItemQualityByID(link)
+    return ilvl, quality and ITEM_QUALITY_COLORS[quality]
+end
+
 local function UpdateInspectSlot(button)
     local slot = button:GetID()
     local unit = InspectFrame and InspectFrame.unit
     local ilvl, color
     if Items.db.itemLevel and unit and not NO_ILVL[slot] then
-        local link = GetInventoryItemLink(unit, slot)
-        if link and not ns.IsSecret(link) then
-            ilvl = C_Item.GetDetailedItemLevelInfo(link)
-            if ilvl and ilvl <= 1 then ilvl = nil end
-            local quality = ilvl and C_Item.GetItemQualityByID(link)
-            color = quality and ITEM_QUALITY_COLORS[quality]
-        end
+        ilvl, color = LinkItemLevel(GetInventoryItemLink(unit, slot))
     end
     ns.ItemLevelText(button, ilvl, color)
 end
@@ -153,6 +162,68 @@ local function SetupPanels()
     ns.Hook("PaperDollItemSlotButton_Update", UpdateCharSlot)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
         ns.Hook("InspectPaperDollItemSlotButton_Update", UpdateInspectSlot)
+    end)
+end
+
+--------------------------------------------------------------------------------
+-- Banks: item level on equipment, after each Blizzard update.
+-- Character and warband bank: one panel with pooled buttons (bank tab and
+-- slot of each button). Guild bank (load-on-demand): 7 columns of 14
+-- buttons, read through the item links of the current tab.
+--------------------------------------------------------------------------------
+local hookedBank = {}
+
+local function UpdateBankButton(button)
+    local ilvl, color
+    if Items.db.itemLevel and button.GetBankTabID and button.GetContainerSlotID then
+        ilvl, color = BagItemLevel(button:GetBankTabID(), button:GetContainerSlotID())
+    end
+    ns.ItemLevelText(button, ilvl, color)
+end
+
+local function UpdateBankPanel()
+    local panel = BankPanel
+    local active = panel and panel:IsShown() and panel.itemButtonPool and panel.itemButtonPool.activeObjects
+    if not active then return end
+    for button in pairs(active) do
+        if not hookedBank[button] and button.Refresh then
+            hookedBank[button] = true
+            hooksecurefunc(button, "Refresh", UpdateBankButton)
+        end
+        UpdateBankButton(button)
+    end
+end
+
+local GUILD_COLUMNS = NUM_GUILDBANK_COLUMNS or 7
+local GUILD_SLOTS   = NUM_SLOTS_PER_GUILDBANK_GROUP or 14
+
+local function UpdateGuildBank()
+    local frame = GuildBankFrame
+    if not (frame and frame:IsShown() and frame.Columns) then return end
+    local show = Items.db.itemLevel and (frame.mode == nil or frame.mode == "bank")
+    local tab = GetCurrentGuildBankTab()
+    for c = 1, GUILD_COLUMNS do
+        local buttons = frame.Columns[c] and frame.Columns[c].Buttons
+        if buttons then
+            for i = 1, GUILD_SLOTS do
+                local button = buttons[i]
+                if button then
+                    local ilvl, color
+                    if show then ilvl, color = LinkItemLevel(GetGuildBankItemLink(tab, (c - 1) * GUILD_SLOTS + i), true) end
+                    ns.ItemLevelText(button, ilvl, color)
+                end
+            end
+        end
+    end
+end
+
+local function SetupBanks()
+    if BankPanel then
+        ns.Hook(BankPanel, "GenerateItemSlotsForSelectedTab", UpdateBankPanel)
+        ns.Hook(BankPanel, "RefreshAllItemsForSelectedTab", UpdateBankPanel)
+    end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_GuildBankUI", function()
+        ns.Hook(GuildBankFrame, "Update", UpdateGuildBank)
     end)
 end
 
@@ -201,6 +272,7 @@ end
 function Items:OnEnable()
     SetupBags()
     SetupPanels()
+    SetupBanks()
     if self.db.itemLevel then UpdateCharSlots() end
     UpdateMerchantEvents()
 end
@@ -212,5 +284,7 @@ function Items:OnOptionChanged(key)
     else
         for _, frame in ipairs(containers) do UpdateContainer(frame) end
         UpdateCharSlots()
+        UpdateBankPanel()
+        UpdateGuildBank()
     end
 end
