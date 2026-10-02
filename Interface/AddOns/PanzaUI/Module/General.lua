@@ -325,46 +325,57 @@ local function SkinBars(health, power, path)
     end
 end
 
--- Target of Target bars. Blizzard updates them with its own code: the
--- power bar gets its power type's atlas (no bar color), so after each atlas
--- the texture is put back and tinted with the power color read from the
--- atlas name (cached per name).
-local POWER_WORDS = { -- first match wins
-    { "mana", "MANA" }, { "rage", "RAGE" }, { "energy", "ENERGY" }, { "focus", "FOCUS" },
-    { "runic", "RUNIC_POWER" }, { "insanity", "INSANITY" }, { "maelstrom", "MAELSTROM" },
-    { "lunar", "LUNAR_POWER" }, { "fury", "FURY" }, { "pain", "PAIN" },
-}
-local powerColors = {} -- atlas -> PowerBarColor entry or false
+-- Target of Target bars (Blizzard updates them with its own code). The
+-- power bar color comes from Blizzard's atlas, lost with another texture:
+-- it is set from the unit's power type whenever the Target of Target can
+-- change (next frame, after Blizzard's update).
+local totPower = {}   -- { bar, unit } pairs
+local totColor = {}   -- power bar -> its current PowerBarColor entry
 
-local function PowerAtlasColor(atlas)
-    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
-    local cached = powerColors[atlas]
-    if cached ~= nil then return cached or nil end
-    local name, found = atlas:lower(), false
-    for _, w in ipairs(POWER_WORDS) do
-        if name:find(w[1], 1, true) then found = PowerBarColor[w[2]] or false break end
+local function ColorToTPower()
+    for i = 1, #totPower, 2 do
+        local bar, unit = totPower[i], ns.GroupUnit(totPower[i + 1])
+        local _, token = UnitPowerType(unit)
+        local c = not ns.IsSecret(token) and token and PowerBarColor[token]
+        if c then
+            totColor[bar] = c
+            bar:SetStatusBarColor(c.r, c.g, c.b)
+        end
     end
-    powerColors[atlas] = found
-    return found or nil
 end
 
+-- Blizzard puts its atlas back on the bar itself (SetStatusBarTexture) as
+-- well as on the fill, and resets the bar color: all three are followed, the
+-- texture and the last power color are put back (busy flag: no loops).
 local function KeepToTPower(bar, path)
     local busy
-    local function Reapply(atlas)
+    local function Recolor()
+        local c = totColor[bar]
+        if c then bar:SetStatusBarColor(c.r, c.g, c.b) end
+    end
+    local function Reapply()
         if busy then return end
         busy = true
         SetTexture(bar, path)
-        local c = PowerAtlasColor(atlas)
-        if c then bar:SetStatusBarColor(c.r, c.g, c.b) end
+        Recolor()
         busy = false
     end
+    Reapply()
+    hooksecurefunc(bar, "SetStatusBarTexture", Reapply)
+    hooksecurefunc(bar, "SetStatusBarColor", function()
+        if busy then return end
+        busy = true
+        Recolor()
+        busy = false
+    end)
     local texture = bar:GetStatusBarTexture()
-    Reapply(texture and texture:GetAtlas())
-    hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
-    if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
+    if texture then hooksecurefunc(texture, "SetAtlas", Reapply) end
 end
 
-local function SkinToT(frame, path)
+local totEvents = CreateFrame("Frame")
+totEvents:SetScript("OnEvent", function() ns.Defer(ColorToTPower) end)
+
+local function SkinToT(frame, path, unit)
     local tot = frame and path and (frame.totFrame or _G[frame:GetName() .. "ToT"])
     if not tot then return end
     local health = tot.HealthBar or tot.healthbar or tot.healthBar
@@ -373,7 +384,14 @@ local function SkinToT(frame, path)
         KeepTexture(health, path)
     end
     local power = tot.ManaBar or tot.manabar or tot.manaBar
-    if power then KeepToTPower(power, path) end
+    if power then
+        KeepToTPower(power, path)
+        totPower[#totPower + 1] = power
+        totPower[#totPower + 1] = unit
+        totEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+        totEvents:RegisterEvent("PLAYER_FOCUS_CHANGED")
+        totEvents:RegisterUnitEvent("UNIT_TARGET", "target", "focus")
+    end
 end
 
 -- UnitFrameBars() returns two values: it must be the last argument.
@@ -469,8 +487,8 @@ function GEN:OnEnable()
     SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
     if target then SkinFrame(TargetFrame, target) end
     if focus and FocusFrame then SkinFrame(FocusFrame, focus) end
-    SkinToT(TargetFrame, target)
-    SkinToT(FocusFrame, target) -- every Target of Target uses the Target texture
+    SkinToT(TargetFrame, target, "targettarget")
+    SkinToT(FocusFrame, target, "focustarget") -- every Target of Target uses the Target texture
     if boss then
         for i = 1, 5 do
             local frame = _G["Boss" .. i .. "TargetFrame"]

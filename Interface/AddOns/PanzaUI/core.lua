@@ -88,6 +88,25 @@ function ns.ForEachCompactFrame(func)
     end
 end
 
+-- Midnight: in combat the data of compound units (e.g. targettarget) can be
+-- secret. When the unit is the player or a group member, its own token
+-- (player, partyN, raidN) gives readable data: that token is returned, or
+-- else the unit itself. Tokens built once.
+local GROUP_UNITS = { "player" }
+for i = 1, 4 do GROUP_UNITS[#GROUP_UNITS + 1] = "party" .. i end
+for i = 1, 40 do GROUP_UNITS[#GROUP_UNITS + 1] = "raid" .. i end
+
+function ns.GroupUnit(unit)
+    for _, token in ipairs(GROUP_UNITS) do
+        if UnitExists(token) then
+            local same = UnitIsUnit(unit, token)
+            if not ns.IsSecret(same) and same then return token end
+        end
+    end
+    return unit
+end
+
+-- Chat message with the addon prefix.
 function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
 end
