@@ -80,7 +80,7 @@ local UNIT_BARS = {
     { key = "texPlayerPet",  label = "Player & Pet",              tooltip = "Texture for the health and power bars of these frames.",
       bullets = { "Player", "Pet" }, old = { "texPlayer", "texPet" } },
     { key = "texTargetBoss", label = "Target & Boss",             tooltip = "Texture for the health and power bars of these frames.",
-      bullets = { "Target", "Boss frames" }, old = { "texTarget", "texBoss" } },
+      bullets = { "Target", "Target of Target (also the Focus one)", "Boss frames" }, old = { "texTarget", "texBoss" } },
 }
 
 local OTHER_BARS = {
@@ -325,6 +325,15 @@ local function SkinBars(health, power, path)
     end
 end
 
+-- Target of Target health bar: same texture as its frame.
+local function SkinToT(frame, path)
+    local tot = frame and path and (frame.totFrame or _G[frame:GetName() .. "ToT"])
+    local health = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
+    if not health then return end
+    SetTexture(health, path)
+    KeepTexture(health, path)
+end
+
 -- UnitFrameBars() returns two values: it must be the last argument.
 local function SkinFrame(frame, path)
     if not (frame and path) then return end
@@ -418,6 +427,8 @@ function GEN:OnEnable()
     SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
     if target then SkinFrame(TargetFrame, target) end
     if focus and FocusFrame then SkinFrame(FocusFrame, focus) end
+    SkinToT(TargetFrame, target)
+    SkinToT(FocusFrame, target) -- every Target of Target uses the Target texture
     if boss then
         for i = 1, 5 do
             local frame = _G["Boss" .. i .. "TargetFrame"]

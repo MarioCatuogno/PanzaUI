@@ -42,7 +42,7 @@ Here's a list of all the features included in this first release!
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a single Refined text option for the outlined font of the whole UI
 * Core - Added a texture option for cast bars (in Blizzard's cast colors), Cooldown Manager and Personal Resource Display, Damage Meter and interface bars (Achievement, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars)
-* Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid)
+* Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid, Target of Target included)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
 * Core - Added shortcut commands: /pui (options), /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
 * Core - Added the /pui mem command, showing PanzaUI memory before and after garbage collection
