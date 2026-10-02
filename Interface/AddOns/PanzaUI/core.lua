@@ -60,11 +60,18 @@ end
 
 -- Applies the shared text style to a font string or font object. Midnight:
 -- secret font data gets an outlined copy of the font object instead.
+-- Texts already styled are skipped (no SetFont, no text re-layout): the
+-- flags as the game returns them are read back after the first change.
+local styledFlags = ns.FONT_FLAGS
+
 function ns.StyleFont(obj)
     if not (obj and obj.GetFont) then return end
-    local font, size = obj:GetFont()
+    local font, size, flags = obj:GetFont()
     if not ns.IsSecret(font) and not ns.IsSecret(size) then
-        if font then obj:SetFont(font, size, ns.FONT_FLAGS) end
+        if not font or (not ns.IsSecret(flags) and (flags == styledFlags or flags == ns.FONT_FLAGS)) then return end
+        obj:SetFont(font, size, ns.FONT_FLAGS)
+        local _, _, applied = obj:GetFont()
+        if not ns.IsSecret(applied) and applied then styledFlags = applied end
         return
     end
     local base = obj.GetFontObject and obj:GetFontObject()
@@ -92,16 +99,23 @@ end
 -- secret. When the unit is the player or a group member, its own token
 -- (player, partyN, raidN) gives readable data: that token is returned, or
 -- else the unit itself. Tokens built once.
-local GROUP_UNITS = { "player" }
-for i = 1, 4 do GROUP_UNITS[#GROUP_UNITS + 1] = "party" .. i end
-for i = 1, 40 do GROUP_UNITS[#GROUP_UNITS + 1] = "raid" .. i end
+local PARTY_UNITS, RAID_UNITS = {}, {}
+for i = 1, 4 do PARTY_UNITS[i] = "party" .. i end
+for i = 1, 40 do RAID_UNITS[i] = "raid" .. i end
 
+local function IsUnit(unit, token)
+    local same = UnitIsUnit(unit, token)
+    return not ns.IsSecret(same) and same
+end
+
+-- Only the tokens of the current group are checked.
 function ns.GroupUnit(unit)
-    for _, token in ipairs(GROUP_UNITS) do
-        if UnitExists(token) then
-            local same = UnitIsUnit(unit, token)
-            if not ns.IsSecret(same) and same then return token end
-        end
+    if IsUnit(unit, "player") then return "player" end
+    local tokens, count = PARTY_UNITS, GetNumSubgroupMembers()
+    if IsInRaid() then tokens, count = RAID_UNITS, GetNumGroupMembers() end
+    for i = 1, count do
+        local token = tokens[i]
+        if token and IsUnit(unit, token) then return token end
     end
     return unit
 end

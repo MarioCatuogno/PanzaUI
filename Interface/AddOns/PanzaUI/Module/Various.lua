@@ -212,8 +212,12 @@ local function UpdateRing()
     if ring then ring:SetShown(RingVisible(Misc.db.cursorRing)) end
 end
 
+-- Moved only when the cursor moved.
+local lastX, lastY
 local function FollowCursor(self)
     local x, y = GetCursorPosition()
+    if x == lastX and y == lastY then return end
+    lastX, lastY = x, y
     local scale = self:GetEffectiveScale()
     self:ClearAllPoints()
     self:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / scale, y / scale)
