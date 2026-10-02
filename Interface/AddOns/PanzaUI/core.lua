@@ -655,6 +655,7 @@ local function ReadSkyriding()
     local _, canGlide = C_PlayerInfo.GetGlidingInfo()
     return not ns.IsSecret(canGlide) and canGlide and true or false
 end
+ns.IsSkyriding = ReadSkyriding -- shared with other modules
 
 local visInitialized = false
 local function InitVisibility()

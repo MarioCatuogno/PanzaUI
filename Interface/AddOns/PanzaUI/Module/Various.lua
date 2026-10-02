@@ -2,7 +2,7 @@
     PanzaUI - Various
     Other Addons: refined style for Platynator nameplates (rounded borders on
     aura and cast icons).
-    Quality of Life: fast auto-loot.
+    Quality of Life: fast auto-loot and a crosshair on the player.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -12,6 +12,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
     defaults = {
         platynatorStyle = true,
         fastLoot        = true,
+        crosshair       = 0, -- off
     },
     options = {
         { header = "Other Addons" },
@@ -22,6 +23,16 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once, as soon as the loot is ready.",
           bullets = { "Only when auto-loot is on (game setting or its modifier key)", "No waiting for the loot window" } },
+        { key = "crosshair", label = "Crosshair",
+          tooltip = "Show a cross in the center of the screen, on your character.",
+          bullets = { "In your class color, outlined" },
+          dropdown = {
+              { 0, "Off", "Never shown." },
+              { 1, "Always", "Always shown." },
+              { 2, "In combat", "Shown only in combat." },
+              { 3, "In combat (group)", "Shown only in combat while in a party or raid." },
+              { 4, "Skyriding only", "Shown only while Skyriding." },
+          } },
     },
 })
 
@@ -181,15 +192,77 @@ local function SetFastLoot(on)
 end
 
 --------------------------------------------------------------------------------
+-- Crosshair: a "+" in the class color with the shared outline, in the
+-- center of the screen. Shown by mode (always, combat, combat in a group,
+-- Skyriding); events are registered only while a mode is chosen. Not a
+-- protected frame: it can be shown and hidden in combat.
+--------------------------------------------------------------------------------
+local CROSS = { OFF = 0, ALWAYS = 1, COMBAT = 2, GROUP = 3, SKYRIDING = 4 }
+local CROSS_EVENTS = {
+    "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "GROUP_ROSTER_UPDATE",
+    "PLAYER_ENTERING_WORLD", "PLAYER_MOUNT_DISPLAY_CHANGED",
+}
+local cross, inCombat
+
+local function CrossVisible(mode)
+    if mode == CROSS.ALWAYS then return true end
+    if mode == CROSS.COMBAT then return inCombat end
+    if mode == CROSS.GROUP then return inCombat and IsInGroup() end
+    if mode == CROSS.SKYRIDING then return ns.IsSkyriding() end
+    return false
+end
+
+local crossEvents = CreateFrame("Frame")
+
+local function UpdateCross()
+    if cross then cross:SetShown(CrossVisible(Misc.db.crosshair)) end
+end
+
+crossEvents:SetScript("OnEvent", function(_, event)
+    if event == "PLAYER_REGEN_DISABLED" then
+        inCombat = true
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        inCombat = false
+    end
+    UpdateCross()
+end)
+
+local function SetCrosshair(mode)
+    if mode == CROSS.OFF then
+        crossEvents:UnregisterAllEvents()
+        if cross then cross:Hide() end
+        return
+    end
+    if not cross then
+        cross = UIParent:CreateFontString(nil, "OVERLAY")
+        local font = GameFontNormalHuge:GetFont()
+        cross:SetFont(font, 32, ns.FONT_FLAGS)
+        cross:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+        cross:SetText("+")
+        local color = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
+        if color then cross:SetTextColor(color.r, color.g, color.b) end
+    end
+    for _, event in ipairs(CROSS_EVENTS) do crossEvents:RegisterEvent(event) end
+    pcall(crossEvents.RegisterEvent, crossEvents, "PLAYER_CAN_GLIDE_CHANGED")
+    inCombat = InCombatLockdown()
+    UpdateCross()
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     SetFastLoot(self.db.fastLoot)
+    SetCrosshair(self.db.crosshair)
 end
 
 -- Live options.
 function Misc:OnOptionChanged(key, value)
-    if key == "fastLoot" then SetFastLoot(value) end
+    if key == "fastLoot" then
+        SetFastLoot(value)
+    elseif key == "crosshair" then
+        SetCrosshair(value)
+    end
 end

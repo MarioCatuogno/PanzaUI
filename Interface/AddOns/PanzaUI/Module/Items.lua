@@ -167,32 +167,58 @@ end
 
 --------------------------------------------------------------------------------
 -- Banks: item level on equipment, after each Blizzard update.
--- Character and warband bank: one panel with pooled buttons (bank tab and
--- slot of each button). Guild bank (load-on-demand): 7 columns of 14
--- buttons, read through the item links of the current tab.
+-- Character and warband bank: one panel whose item buttons know their bank
+-- tab and slot; they are found by those methods among the panel's children
+-- (two levels, varargs) when the bank opens, its contents change or the
+-- panel is shown, and each one is followed through its own Refresh/Init.
+-- Guild bank (load-on-demand): 7 columns of 14 buttons, read through the
+-- item links of the current tab.
 --------------------------------------------------------------------------------
 local hookedBank = {}
 
 local function UpdateBankButton(button)
     local ilvl, color
-    if Items.db.itemLevel and button.GetBankTabID and button.GetContainerSlotID then
-        ilvl, color = BagItemLevel(button:GetBankTabID(), button:GetContainerSlotID())
+    if Items.db.itemLevel and button:IsShown() then
+        local bag, slot = button:GetBankTabID(), button:GetContainerSlotID()
+        if bag and slot then ilvl, color = BagItemLevel(bag, slot) end
     end
     ns.ItemLevelText(button, ilvl, color)
 end
 
-local function UpdateBankPanel()
-    local panel = BankPanel
-    local active = panel and panel:IsShown() and panel.itemButtonPool and panel.itemButtonPool.activeObjects
-    if not active then return end
-    for button in pairs(active) do
-        if not hookedBank[button] and button.Refresh then
-            hookedBank[button] = true
-            hooksecurefunc(button, "Refresh", UpdateBankButton)
+local function ScanBankChildren(depth, ...)
+    for i = 1, select("#", ...) do
+        local child = select(i, ...)
+        if child.GetBankTabID and child.GetContainerSlotID then
+            if not hookedBank[child] then
+                hookedBank[child] = true
+                if child.Refresh then hooksecurefunc(child, "Refresh", UpdateBankButton) end
+                if child.Init then hooksecurefunc(child, "Init", UpdateBankButton) end
+            end
+            UpdateBankButton(child)
+        elseif depth > 0 then
+            ScanBankChildren(depth - 1, child:GetChildren())
         end
-        UpdateBankButton(button)
     end
 end
+
+local function UpdateBankPanel()
+    local panel = BankPanel
+    if panel and panel:IsShown() then ScanBankChildren(2, panel:GetChildren()) end
+end
+
+-- Contents changes are watched only while the bank is open.
+local bankEvents = CreateFrame("Frame")
+bankEvents:SetScript("OnEvent", function(self, event)
+    if event == "BANKFRAME_OPENED" then
+        self:RegisterEvent("BAG_UPDATE_DELAYED")
+        self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
+    elseif event == "BANKFRAME_CLOSED" then
+        self:UnregisterEvent("BAG_UPDATE_DELAYED")
+        self:UnregisterEvent("PLAYERBANKSLOTS_CHANGED")
+        return
+    end
+    ns.Defer(UpdateBankPanel)
+end)
 
 local GUILD_COLUMNS = NUM_GUILDBANK_COLUMNS or 7
 local GUILD_SLOTS   = NUM_SLOTS_PER_GUILDBANK_GROUP or 14
@@ -221,7 +247,10 @@ local function SetupBanks()
     if BankPanel then
         ns.Hook(BankPanel, "GenerateItemSlotsForSelectedTab", UpdateBankPanel)
         ns.Hook(BankPanel, "RefreshAllItemsForSelectedTab", UpdateBankPanel)
+        BankPanel:HookScript("OnShow", function() ns.Defer(UpdateBankPanel) end)
     end
+    bankEvents:RegisterEvent("BANKFRAME_OPENED")
+    bankEvents:RegisterEvent("BANKFRAME_CLOSED")
     EventUtil.ContinueOnAddOnLoaded("Blizzard_GuildBankUI", function()
         ns.Hook(GuildBankFrame, "Update", UpdateGuildBank)
     end)

@@ -84,6 +84,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name
+* Various - Added a crosshair on the player, in the class color (always, in combat, in combat in a group or while Skyriding)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Various - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
 
