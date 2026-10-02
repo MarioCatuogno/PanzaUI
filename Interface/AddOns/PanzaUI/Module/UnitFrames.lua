@@ -175,6 +175,26 @@ local classColorBars = {}
 local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- colorValid: bar -> unit it was computed for
 local colorEvents = CreateFrame("Frame")
 
+-- Midnight: in combat the class of compound units (e.g. targettarget) is a
+-- secret value. When the unit is the player or a group member, the class is
+-- read from that unit's own token instead (tokens built once).
+local GROUP_UNITS = { "player" }
+for i = 1, 4 do GROUP_UNITS[#GROUP_UNITS + 1] = "party" .. i end
+for i = 1, 40 do GROUP_UNITS[#GROUP_UNITS + 1] = "raid" .. i end
+
+local function GroupClass(unit)
+    for _, token in ipairs(GROUP_UNITS) do
+        if UnitExists(token) then
+            local same = UnitIsUnit(unit, token)
+            if not IsSecret(same) and same then
+                local _, class = UnitClass(token)
+                if not IsSecret(class) then return class end
+                return
+            end
+        end
+    end
+end
+
 -- classColorBars: bar -> true, or the unit to use when the bar has none
 -- (Target of Target bars).
 local function ClassColorHealth(bar)
@@ -195,8 +215,12 @@ local function ClassColorHealth(bar)
     local isPlayer = UnitIsPlayer(unit)
     local inParty  = UnitInParty(unit)
     local classed  = (not IsSecret(isPlayer) and isPlayer) or (not IsSecret(inParty) and inParty)
-    local _, class = UnitClass(unit)
-    local color = classed and class and not IsSecret(class) and RAID_CLASS_COLORS[class]
+    local class
+    if classed then
+        class = select(2, UnitClass(unit))
+        if IsSecret(class) then class = GroupClass(unit) end
+    end
+    local color = class and RAID_CLASS_COLORS[class]
 
     local r, g, b
     if color then

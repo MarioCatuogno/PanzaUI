@@ -325,13 +325,55 @@ local function SkinBars(health, power, path)
     end
 end
 
--- Target of Target health bar: same texture as its frame.
+-- Target of Target bars. Blizzard updates them with its own code: the
+-- power bar gets its power type's atlas (no bar color), so after each atlas
+-- the texture is put back and tinted with the power color read from the
+-- atlas name (cached per name).
+local POWER_WORDS = { -- first match wins
+    { "mana", "MANA" }, { "rage", "RAGE" }, { "energy", "ENERGY" }, { "focus", "FOCUS" },
+    { "runic", "RUNIC_POWER" }, { "insanity", "INSANITY" }, { "maelstrom", "MAELSTROM" },
+    { "lunar", "LUNAR_POWER" }, { "fury", "FURY" }, { "pain", "PAIN" },
+}
+local powerColors = {} -- atlas -> PowerBarColor entry or false
+
+local function PowerAtlasColor(atlas)
+    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
+    local cached = powerColors[atlas]
+    if cached ~= nil then return cached or nil end
+    local name, found = atlas:lower(), false
+    for _, w in ipairs(POWER_WORDS) do
+        if name:find(w[1], 1, true) then found = PowerBarColor[w[2]] or false break end
+    end
+    powerColors[atlas] = found
+    return found or nil
+end
+
+local function KeepToTPower(bar, path)
+    local busy
+    local function Reapply(atlas)
+        if busy then return end
+        busy = true
+        SetTexture(bar, path)
+        local c = PowerAtlasColor(atlas)
+        if c then bar:SetStatusBarColor(c.r, c.g, c.b) end
+        busy = false
+    end
+    local texture = bar:GetStatusBarTexture()
+    Reapply(texture and texture:GetAtlas())
+    hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
+    if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
+end
+
 local function SkinToT(frame, path)
     local tot = frame and path and (frame.totFrame or _G[frame:GetName() .. "ToT"])
-    local health = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
-    if not health then return end
-    SetTexture(health, path)
-    KeepTexture(health, path)
+    if not tot then return end
+    local health = tot.HealthBar or tot.healthbar or tot.healthBar
+    if health then
+        SetTexture(health, path)
+        KeepTexture(health, path)
+    end
+    local power = tot.ManaBar or tot.manabar or tot.manaBar
+    if power then KeepToTPower(power, path) end
 end
 
 -- UnitFrameBars() returns two values: it must be the last argument.
