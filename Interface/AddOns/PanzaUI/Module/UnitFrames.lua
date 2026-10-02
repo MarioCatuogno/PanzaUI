@@ -31,10 +31,10 @@ for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
     local styleBullets = { "Centered name, no level or name background", "Health and power as a percentage",
                            "Rounded cast bar icon border", "Portrait redrawn when it stays zoomed in" }
-    local clutterBullets = { "PvP and leader icons", "Buffs and debuffs" }
+    local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Red combat/threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 4 debuffs, with rounded borders"
-        clutterBullets = { "PvP and leader icons", "Cast bar", "Buffs and debuffs (Refined style keeps 4 debuffs)" }
+        clutterBullets = { "PvP and leader icons", "Cast bar", "Buffs and debuffs (Refined style keeps 4 debuffs)", "Red combat/threat glow" }
     end
     options[#options + 1] = { header = t.unit }
     options[#options + 1] = { key = p .. "Style", label = "Refined style",
@@ -300,6 +300,9 @@ local function SetupTargetFrame(frame, db, p)
     if db[p .. "HideClutter"] then
         HidePvpIcon(ctx)
         HideLeaderIcon(ctx)
+        -- Threat glow around the frame (red in combat).
+        local container = frame.TargetFrameContainer
+        ns.Kill(frame.threatIndicator or (container and container.Flash))
     end
 
     if db[p .. "ClassColor"] then
