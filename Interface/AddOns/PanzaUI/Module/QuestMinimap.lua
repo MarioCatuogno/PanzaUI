@@ -22,8 +22,8 @@ local QM = ns:RegisterModule("QuestMinimap", {
           bullets = { "No button and zone backgrounds" } },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
-          tooltip = "Collapse the tracker during dungeon, raid and Mythic+ combat.",
-          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Expanded again afterwards" } },
+          tooltip = "Hide the tracker contents during dungeon, raid and Mythic+ combat.",
+          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Only the header stays visible", "Shown again afterwards" } },
         { key = "questCount", label = "Quest count",
           tooltip = "Show the number of quests in your log.",
           bullets = { "In the tracker header (e.g. 20/35)" } },
@@ -87,8 +87,10 @@ end
 
 --------------------------------------------------------------------------------
 -- Quest Tracker auto-collapse during boss fights, Mythic+ runs and combat in
--- raids and dungeons (not LFR or Follower). It is expanded again only if it
--- was collapsed here.
+-- raids and dungeons (not LFR or Follower). The contents are faded out with
+-- alpha (header kept): calling Blizzard's SetCollapsed from an addon taints
+-- the tracker, whose layout then can't read the auras that are secret in
+-- combat.
 --------------------------------------------------------------------------------
 local BOSS_INSTANCES  = { party = true, raid = true }
 local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR, legacy LFR, Timewalking LFR
@@ -100,7 +102,7 @@ local COLLAPSE_EVENTS = {
     "PLAYER_ENTERING_WORLD", "ZONE_CHANGED_NEW_AREA",
 }
 
-local collapsedByUs, inEncounter, inCombat = false, false, false
+local hidden, inEncounter, inCombat = false, false, false
 local events = CreateFrame("Frame")
 
 local function ShouldCollapse()
@@ -113,21 +115,21 @@ local function ShouldCollapse()
     return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
 end
 
--- Expanding lays out the tracker contents, and Blizzard's layout reads
--- auras that are secret in combat (refused from addon-called code): the
--- tracker is expanded only out of combat (PLAYER_REGEN_ENABLED runs this again).
+-- Every child of the tracker except its header (varargs, no tables).
+local function SetContentAlpha(header, alpha, ...)
+    for i = 1, select("#", ...) do
+        local child = select(i, ...)
+        if child ~= header then child:SetAlpha(alpha) end
+    end
+end
+
 local function UpdateCollapse()
     local tracker = ObjectiveTrackerFrame
     if not tracker then return end
-    if ShouldCollapse() then
-        if not tracker:IsCollapsed() then
-            tracker:SetCollapsed(true)
-            collapsedByUs = true
-        end
-    elseif collapsedByUs and not InCombatLockdown() then
-        collapsedByUs = false
-        if tracker:IsCollapsed() then tracker:SetCollapsed(false) end
-    end
+    local hide = ShouldCollapse()
+    if hide == hidden then return end
+    hidden = hide
+    SetContentAlpha(tracker.Header, hide and 0 or 1, tracker:GetChildren())
 end
 
 events:SetScript("OnEvent", function(_, event)
