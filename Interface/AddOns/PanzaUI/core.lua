@@ -145,14 +145,17 @@ function ns.StyleIcon(icon, parent, anchored)
     icon:AddMaskTexture(mask)
     frame:SetPoint("TOPLEFT", icon)
 
-    -- Width and height follow the icon (or the parent while the icon is 0x0).
-    -- Midnight: secret geometry is skipped, the last good size is kept.
-    local lastW, lastH = -1, -1
+    -- Width and height follow the icon. While the icon is still 0x0 the
+    -- parent's size stands in, and the real size is read again on show
+    -- (e.g. cast bar icons, much smaller than their bar). Midnight: secret
+    -- geometry is skipped, the last good size is kept.
+    local lastW, lastH, sized = -1, -1, false
     local function Resize()
         local w, h = icon:GetSize()
-        if ns.IsSecret(w) or ns.IsSecret(h) or w <= 0 or h <= 0 then w, h = parent:GetSize() end
+        local real = not ns.IsSecret(w) and not ns.IsSecret(h) and w > 0 and h > 0
+        if not real then w, h = parent:GetSize() end
         if ns.IsSecret(w) or ns.IsSecret(h) or (w == lastW and h == lastH) then return end
-        lastW, lastH = w, h
+        lastW, lastH, sized = w, h, real
         mask:ClearAllPoints()
         if w > 0 and h > 0 and info then
             mask:SetPoint("CENTER", icon)
@@ -164,7 +167,7 @@ function ns.StyleIcon(icon, parent, anchored)
     end
     Resize()
     parent:HookScript("OnSizeChanged", Resize)
-    parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
+    parent:HookScript("OnShow", function() if not sized then Resize() end end)
     return frame, mask
 end
 
