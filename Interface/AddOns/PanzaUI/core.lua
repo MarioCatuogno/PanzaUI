@@ -110,16 +110,18 @@ end
 --------------------------------------------------------------------------------
 -- Action button look for any icon texture: rounded mask and action bar frame,
 -- sized like ActionButtonTemplate and following the icon size.
--- followIcon: follow the icon's own SetSize (for frames whose scripts can't
--- be hooked). Returns nil when the frame can't be styled now (forbidden,
--- secret aspects): the caller may try again later.
+-- anchored: lightweight version for icons made in large numbers (e.g.
+-- nameplate auras): mask and frame are simply anchored to the icon, with no
+-- size tracking (no closure or hook per icon). Returns nil when the frame
+-- can't be styled now (forbidden, secret aspects).
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
+local ICON_SWIPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconswipe.tga]] -- rounded icon shape
 
 local maskInfo
 
-function ns.StyleIcon(icon, parent, followIcon)
+function ns.StyleIcon(icon, parent, anchored)
     if not (icon and icon.AddMaskTexture) or icon:IsForbidden() then return end
     parent = parent or icon:GetParent()
     if not parent or parent:IsForbidden() then return end
@@ -128,11 +130,19 @@ function ns.StyleIcon(icon, parent, followIcon)
 
     local ok, mask = pcall(parent.CreateMaskTexture, parent)
     if not ok then return end
-    mask:SetAtlas(ICON_MASK)
-    icon:AddMaskTexture(mask)
-
     local frame = parent:CreateTexture(nil, "OVERLAY", nil, -1) -- below other overlays
     frame:SetAtlas(ICON_FRAME)
+
+    if anchored then
+        mask:SetTexture(ICON_SWIPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetAllPoints(icon)
+        icon:AddMaskTexture(mask)
+        frame:SetAllPoints(icon)
+        return frame, mask
+    end
+
+    mask:SetAtlas(ICON_MASK)
+    icon:AddMaskTexture(mask)
     frame:SetPoint("TOPLEFT", icon)
 
     -- Width and height follow the icon (or the parent while the icon is 0x0).
@@ -153,17 +163,12 @@ function ns.StyleIcon(icon, parent, followIcon)
         frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w > 0 and w / 45 or 0, 0)
     end
     Resize()
-    if followIcon then
-        hooksecurefunc(icon, "SetSize", Resize)
-    else
-        parent:HookScript("OnSizeChanged", Resize)
-        parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
-    end
+    parent:HookScript("OnSizeChanged", Resize)
+    parent:HookScript("OnShow", function() if lastW <= 0 then Resize() end end)
     return frame, mask
 end
 
 -- Rounded cooldown swipe for icons styled with ns.StyleIcon.
-local ICON_SWIPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconswipe.tga]]
 
 function ns.RoundSwipe(cooldown)
     if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then

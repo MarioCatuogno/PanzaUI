@@ -29,25 +29,20 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 -- Platynator aura icons: styled while Platynator builds each button (found
 -- through a post-hook of CreateFrame, filtered on the child frames it
 -- makes), because once a button shows secret aura data it refuses new
--- textures. Only the newest button of an aura container is touched, each
--- step once. Blizzard also creates frames with forbidden parents, which
--- can't even be indexed: the check runs protected.
+-- textures. Only the newest button of an aura container is touched, once
+-- its icon, cooldown and border exist. Blizzard also creates frames with
+-- forbidden parents, which can't even be indexed: the check runs protected.
 --------------------------------------------------------------------------------
 local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
-local auraIcon, auraSwipe, auraBorder = {}, {}, {}
+local styledAuras = {}
 
+-- Runs once Platynator has made the icon, cooldown and border.
 local function StyleAuraFrame(frame)
-    if not auraIcon[frame] and frame.Icon then
-        auraIcon[frame] = ns.StyleIcon(frame.Icon, frame, true) and true
-    end
-    if not auraSwipe[frame] and frame.Cooldown then
-        auraSwipe[frame] = true
-        ns.RoundSwipe(frame.Cooldown)
-    end
-    if not auraBorder[frame] and frame.Border then
-        auraBorder[frame] = true
-        frame.Border:SetAlpha(0)
-    end
+    if styledAuras[frame] or not (frame.Icon and frame.Cooldown and frame.Border) then return end
+    if not ns.StyleIcon(frame.Icon, frame, true) then return end
+    styledAuras[frame] = true
+    ns.RoundSwipe(frame.Cooldown)
+    frame.Border:SetAlpha(0)
 end
 
 -- The button being initialized is the last entry of its container's list.
@@ -58,21 +53,16 @@ local function IsNewAuraButton(button, container)
 end
 
 local function CheckAuraButton(button)
-    if button:IsForbidden() or not button.Icon then return end
+    if button:IsForbidden() or not button.Border or styledAuras[button] then return end
     local container = button:GetParent()
     if IsNewAuraButton(button, container) or (container and IsNewAuraButton(button, container:GetParent())) then
         StyleAuraFrame(button)
     end
 end
 
--- Platynator makes a Cooldown (CooldownFrameTemplate) and plain Frames.
+-- The border is followed by a plain Frame (the dispel frame).
 local function OnCreateFrame(frameType, name, parent, template)
-    if type(parent) ~= "table" then return end
-    if frameType == "Cooldown" then
-        if template ~= "CooldownFrameTemplate" then return end
-    elseif frameType ~= "Frame" or name ~= nil or template ~= nil then
-        return
-    end
+    if frameType ~= "Frame" or name ~= nil or template ~= nil or type(parent) ~= "table" then return end
     pcall(CheckAuraButton, parent)
 end
 
