@@ -176,28 +176,14 @@ local function SetTexture(bar, path)
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
 end
 
--- Unit frame health bars get their green from Blizzard's atlas (the bar
--- color stays white): with another texture they are tinted green, unless
--- something else (e.g. class colors) already colored them.
-local HEALTH_R, HEALTH_G, HEALTH_B = 0, 0.8, 0
-
-local function TintHealth(bar)
-    local r, g, b = bar:GetStatusBarColor()
-    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) then return end
-    if r > 0.99 and g > 0.99 and b > 0.99 then bar:SetStatusBarColor(HEALTH_R, HEALTH_G, HEALTH_B) end
-end
-
 -- Frames that put their atlas back on the fill (e.g. Target on every target
--- change) get the texture again right after (tint: unit frame health bar).
+-- change) get the texture again right after.
 local keptTextures = {}
-local function KeepTexture(bar, path, tint)
+local function KeepTexture(bar, path)
     local texture = bar and path and bar.GetStatusBarTexture and bar:GetStatusBarTexture()
     if not texture or keptTextures[texture] then return end
     keptTextures[texture] = true
-    hooksecurefunc(texture, "SetAtlas", function()
-        SetTexture(bar, path)
-        if tint then TintHealth(bar) end
-    end)
+    hooksecurefunc(texture, "SetAtlas", function() SetTexture(bar, path) end)
 end
 
 -- Power spend/gain flash: same texture, tinted like the bar.
@@ -332,8 +318,7 @@ end
 local function SkinBars(health, power, path)
     if not path then return end
     SetTexture(health, path)
-    if health then TintHealth(health) end
-    KeepTexture(health, path, true)
+    KeepTexture(health, path)
     if power then
         powerBars[power] = path
         UpdatePowerBar(power)

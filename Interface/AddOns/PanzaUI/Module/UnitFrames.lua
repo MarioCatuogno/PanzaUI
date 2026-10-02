@@ -354,6 +354,9 @@ local function SetupBoss(db)
             local main, ctx = content.TargetFrameContentMain, content.TargetFrameContentContextual
             local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
             StyleTexts(main.Name, main.LevelText, health, power)
+            -- Reaction color (red for enemies): Blizzard's boss bar takes its
+            -- color from its atlas, lost with another texture.
+            classColorBars[health] = true
 
             if db.bossHideClutter then
                 ns.Kill(main.LevelText)
@@ -494,7 +497,8 @@ function UF:OnEnable()
     if next(classColorBars) then
         -- Anything that can change a cached color (unit events: target and focus
         -- only).
-        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD" }) do
+        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
+                                 "INSTANCE_ENCOUNTER_ENGAGE_UNIT" }) do
             colorEvents:RegisterEvent(event)
         end
         for _, event in ipairs({ "UNIT_TARGET", "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE" }) do
