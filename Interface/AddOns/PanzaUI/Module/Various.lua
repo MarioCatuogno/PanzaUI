@@ -2,7 +2,7 @@
     PanzaUI - Various
     Other Addons: refined style for Platynator nameplates (rounded borders on
     aura and cast icons).
-    Quality of Life: fast auto-loot.
+    Quality of Life: fast auto-loot and a ring on the mouse cursor.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -12,6 +12,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
     defaults = {
         platynatorStyle = true,
         fastLoot        = true,
+        cursorRing      = 0, -- off
     },
     options = {
         { header = "Other Addons" },
@@ -22,6 +23,15 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once, as soon as the loot is ready.",
           bullets = { "Only when auto-loot is on (game setting or its modifier key)", "No waiting for the loot window" } },
+        { key = "cursorRing", label = "Cursor ring",
+          tooltip = "Show a ring around the mouse cursor.",
+          bullets = { "In your class color, outlined" },
+          dropdown = {
+              { 0, "Off", "Never shown." },
+              { 1, "Always", "Always shown." },
+              { 2, "In combat", "Shown only in combat." },
+              { 3, "In combat (group)", "Shown only in combat while in a party or raid." },
+          } },
     },
 })
 
@@ -181,15 +191,85 @@ local function SetFastLoot(on)
 end
 
 --------------------------------------------------------------------------------
+-- Cursor ring: a white ring with a black outline (one texture), tinted with
+-- the class color (black stays black). It follows the cursor in its own
+-- OnUpdate, which runs only while the ring is shown; events are registered
+-- only while a mode is chosen.
+--------------------------------------------------------------------------------
+local RING = { OFF = 0, ALWAYS = 1, COMBAT = 2, GROUP = 3 }
+local RING_TEXTURE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_ring.tga]]
+local RING_SIZE = 48
+local ring, ringCombat
+
+local function RingVisible(mode)
+    if mode == RING.ALWAYS then return true end
+    if mode == RING.COMBAT then return ringCombat end
+    if mode == RING.GROUP then return ringCombat and IsInGroup() end
+    return false
+end
+
+local function UpdateRing()
+    if ring then ring:SetShown(RingVisible(Misc.db.cursorRing)) end
+end
+
+local function FollowCursor(self)
+    local x, y = GetCursorPosition()
+    local scale = self:GetEffectiveScale()
+    self:ClearAllPoints()
+    self:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x / scale, y / scale)
+end
+
+local ringEvents = CreateFrame("Frame")
+ringEvents:SetScript("OnEvent", function(_, event)
+    if event == "PLAYER_REGEN_DISABLED" then
+        ringCombat = true
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        ringCombat = false
+    end
+    UpdateRing()
+end)
+
+local function SetCursorRing(mode)
+    if mode == RING.OFF then
+        ringEvents:UnregisterAllEvents()
+        if ring then ring:Hide() end
+        return
+    end
+    if not ring then
+        ring = CreateFrame("Frame", nil, UIParent)
+        ring:SetFrameStrata("TOOLTIP")
+        ring:SetSize(RING_SIZE, RING_SIZE)
+        ring:EnableMouse(false)
+        local tex = ring:CreateTexture(nil, "OVERLAY")
+        tex:SetAllPoints()
+        tex:SetTexture(RING_TEXTURE)
+        local color = RAID_CLASS_COLORS[select(2, UnitClass("player"))] or HIGHLIGHT_FONT_COLOR
+        tex:SetVertexColor(color.r, color.g, color.b)
+        ring:SetScript("OnUpdate", FollowCursor)
+        ring:Hide()
+    end
+    ringEvents:RegisterEvent("PLAYER_REGEN_DISABLED")
+    ringEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+    ringEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
+    ringCombat = InCombatLockdown()
+    UpdateRing()
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     SetFastLoot(self.db.fastLoot)
+    SetCursorRing(self.db.cursorRing)
 end
 
 -- Live options.
 function Misc:OnOptionChanged(key, value)
-    if key == "fastLoot" then SetFastLoot(value) end
+    if key == "fastLoot" then
+        SetFastLoot(value)
+    elseif key == "cursorRing" then
+        SetCursorRing(value)
+    end
 end

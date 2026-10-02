@@ -802,7 +802,20 @@ local function UpdateReloadButton(_, category)
         end)
         reloadButton:SetScript("OnLeave", GameTooltip_Hide)
     end
-    reloadButton:SetShown(IsOwnCategory(category))
+    local own = IsOwnCategory(category)
+    reloadButton:SetShown(own)
+    if own then ns.settingsViewed = true end
+end
+
+-- Showing a settings page makes Blizzard's panel build its controls and
+-- dropdown menus, and that temporary memory is counted as the addon's whose
+-- page it is; Lua frees it only gradually. When the panel closes after a
+-- PanzaUI page was shown, it is collected at once (one short collection,
+-- never in combat). The panel's own controls are kept by Blizzard for reuse.
+local function CollectAfterSettings()
+    if not ns.settingsViewed or InCombatLockdown() then return end
+    ns.settingsViewed = false
+    collectgarbage("collect")
 end
 
 -- Tooltip: summary, bullets (alphabetical) and reload note.
@@ -919,6 +932,7 @@ local function BuildSettings()
     ns.category = category
     if SettingsPanel then
         ns.Hook(SettingsPanel, SettingsPanel.DisplayCategory and "DisplayCategory" or "SelectCategory", UpdateReloadButton)
+        SettingsPanel:HookScript("OnHide", CollectAfterSettings)
     end
 end
 
