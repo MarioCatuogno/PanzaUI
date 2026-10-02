@@ -143,6 +143,11 @@ local function HideLeaderIcon(ctx)
     for _, key in ipairs(LEADER_PARTS) do ns.Kill(ctx[key]) end
 end
 
+-- Target of Target frame of Target/Focus (field or global name).
+local function TotFrame(frame)
+    return frame.totFrame or _G[frame:GetName() .. "ToT"]
+end
+
 -- Threat glow around Target-style frames (red in combat).
 local function HideThreatGlow(frame)
     local container = frame.TargetFrameContainer
@@ -171,10 +176,15 @@ local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- colorValid: bar -> 
 local colorEvents = CreateFrame("Frame")
 colorEvents:SetScript("OnEvent", function() wipe(colorValid) end)
 
+-- classColorBars: bar -> true, or the unit to use when the bar has none
+-- (Target of Target bars).
 local function ClassColorHealth(bar)
-    if not classColorBars[bar] or bar.disconnected then return end
+    local fallback = classColorBars[bar]
+    if not fallback or bar.disconnected then return end
     local unit = bar.unit
-    if not unit or IsSecret(unit) then return end
+    if IsSecret(unit) then return end
+    if not unit and type(fallback) == "string" then unit = fallback end
+    if not unit then return end
 
     bar:GetStatusBarTexture():SetDesaturated(true)
     if colorValid[bar] == unit then
@@ -202,6 +212,19 @@ local function ClassColorHealth(bar)
     end
     colorR[bar], colorG[bar], colorB[bar], colorValid[bar] = r, g, b, unit
     bar:SetStatusBarColor(r, g, b)
+end
+
+-- Bars colored by other Blizzard code: the class color is put back right
+-- after each SetStatusBarColor (our own call is skipped by the busy flag).
+local colorBusy
+local function KeepClassColor(bar)
+    hooksecurefunc(bar, "SetStatusBarColor", function(self)
+        if colorBusy then return end
+        colorBusy = true
+        ClassColorHealth(self)
+        colorBusy = false
+    end)
+    ClassColorHealth(bar)
 end
 
 --------------------------------------------------------------------------------
@@ -268,20 +291,24 @@ end
 -- NPC followers: the "*" Blizzard puts before their name is removed after
 -- each SetText (secret names are skipped).
 --------------------------------------------------------------------------------
-local function HideFollowerMark(text, frame)
+local function HideFollowerMark(text, frame, fallbackUnit)
     if not text then return end
     local busy
-    hooksecurefunc(text, "SetText", function()
+    local function Fix()
         if busy then return end
         local unit = frame.unit
-        if not unit or IsSecret(unit) then return end
+        if IsSecret(unit) then return end
+        unit = unit or fallbackUnit
+        if not unit then return end
         local name = UnitName(unit)
         if not name or IsSecret(name) then return end
         busy = true
         if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
         text:SetText(name)
         busy = false
-    end)
+    end
+    hooksecurefunc(text, "SetText", Fix)
+    hooksecurefunc(text, "SetFormattedText", Fix)
 end
 
 --------------------------------------------------------------------------------
@@ -319,9 +346,14 @@ local function SetupTargetFrame(frame, db, p)
 
     if db[p .. "ClassColor"] then
         classColorBars[health] = true
-        local tot = frame.totFrame
-        local totHealth = tot and (tot.healthbar or tot.HealthBar)
-        if totHealth then classColorBars[totHealth] = true end
+        -- Target of Target: its bar is colored by Blizzard's own ToT update
+        -- (not UnitFrameHealthBar_Update), so the color is put back after it.
+        local tot = TotFrame(frame)
+        local totHealth = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
+        if totHealth then
+            classColorBars[totHealth] = p .. "target"
+            KeepClassColor(totHealth)
+        end
     end
 
     ApplyLayout(frame, db, p)
@@ -332,8 +364,11 @@ local function SetupTargetFrame(frame, db, p)
         ns.Kill(ctx.HighLevelTexture)
 
         HideFollowerMark(main.Name, frame)
-        local tot = frame.totFrame
-        if tot then HideFollowerMark(tot.name or tot.Name, tot) end
+        local tot = TotFrame(frame)
+        if tot then
+            HideFollowerMark(tot.Name, tot, p .. "target")
+            if tot.name ~= tot.Name then HideFollowerMark(tot.name, tot, p .. "target") end
+        end
 
         local spellbar = frame.spellbar or _G[frame:GetName() .. "SpellBar"]
         if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
