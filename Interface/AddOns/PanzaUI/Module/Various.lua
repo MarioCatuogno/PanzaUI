@@ -1,8 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Various
-    Other Addons: refined style for Platynator nameplates (rounded borders on
-    aura and cast icons).
-    Quality of Life: fast auto-loot and a ring on the mouse cursor.
+    Other addons' styling and quality of life features.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -36,17 +34,13 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 })
 
 --------------------------------------------------------------------------------
--- Platynator aura icons: styled while Platynator builds each button (found
--- through a post-hook of CreateFrame, filtered on the child frames it
--- makes), because once a button shows secret aura data it refuses new
--- textures. Only the newest button of an aura container is touched, once
--- its icon, cooldown and border exist. Blizzard also creates frames with
--- forbidden parents, which can't even be indexed: the check runs protected.
+-- Platynator aura icons: styled while Platynator builds each button, before
+-- secret aura data locks it (found through a post-hook of CreateFrame).
 --------------------------------------------------------------------------------
 local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
 local styledAuras = {}
 
--- Runs once Platynator has made the icon, cooldown and border.
+-- Styles a button once its icon, cooldown and border exist.
 local function StyleAuraFrame(frame)
     if styledAuras[frame] or not (frame.Icon and frame.Cooldown and frame.Border) then return end
     if not ns.StyleIcon(frame.Icon, frame, true) then return end
@@ -55,7 +49,7 @@ local function StyleAuraFrame(frame)
     frame.Border:SetAlpha(0)
 end
 
--- The button being initialized is the last entry of its container's list.
+-- The button being built is the last one of its container.
 local function IsNewAuraButton(button, container)
     if not container or container:IsForbidden() then return false end
     local list = container.frames
@@ -70,14 +64,13 @@ local function CheckAuraButton(button)
     end
 end
 
--- The border is followed by a plain Frame (the dispel frame).
+-- Forbidden parents can't be indexed: the check runs protected.
 local function OnCreateFrame(frameType, name, parent, template)
     if frameType ~= "Frame" or name ~= nil or template ~= nil or type(parent) ~= "table" then return end
     pcall(CheckAuraButton, parent)
 end
 
--- Buttons made before the hook (e.g. after a reload): styled once, when
--- their nameplate display is found.
+-- Buttons made before the hook (e.g. after a reload).
 local function StyleExistingAuras(manager)
     for _, kind in ipairs(AURA_KINDS) do
         local list = manager[kind] and manager[kind].frames
@@ -90,8 +83,7 @@ local function StyleExistingAuras(manager)
 end
 
 --------------------------------------------------------------------------------
--- Platynator cast icon: markers are pooled and reused for other kinds, so
--- the border and mask follow the marker kind after each Init.
+-- Platynator cast icon: border and mask follow the marker kind.
 --------------------------------------------------------------------------------
 local markerBorder, markerMask, markerMasked = {}, {}, {}
 
@@ -126,8 +118,7 @@ local function HookMarkers(display)
 end
 
 --------------------------------------------------------------------------------
--- Displays: found among the nameplate children after Platynator's own
--- handler (deferred), once per display.
+-- Displays: found among the nameplate children, once each.
 --------------------------------------------------------------------------------
 local pendingUnits, knownDisplays = {}, {}
 
@@ -166,9 +157,7 @@ local function SetupPlatynator()
 end
 
 --------------------------------------------------------------------------------
--- Fast auto-loot: every slot looted at once when the loot is ready and
--- auto-loot applies (game setting and its modifier key). A short lock skips
--- repeated events; confirmations are left to Blizzard.
+-- Fast auto-loot: every slot looted at once (repeats skipped).
 --------------------------------------------------------------------------------
 local LOOT_LOCK = 0.3 -- seconds
 local lastLoot = 0
@@ -191,10 +180,8 @@ local function SetFastLoot(on)
 end
 
 --------------------------------------------------------------------------------
--- Cursor ring: a white ring with a black outline (one texture), tinted with
--- the class color (black stays black). It follows the cursor in its own
--- OnUpdate, which runs only while the ring is shown; events are registered
--- only while a mode is chosen.
+-- Cursor ring: class colored ring following the cursor (OnUpdate only
+-- while shown).
 --------------------------------------------------------------------------------
 local RING = { OFF = 0, ALWAYS = 1, COMBAT = 2, GROUP = 3 }
 local RING_TEXTURE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_ring.tga]]

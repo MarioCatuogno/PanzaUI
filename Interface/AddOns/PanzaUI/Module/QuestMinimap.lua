@@ -1,10 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest & Minimap
-    Minimap: refined style (no zone / tracking / calendar backgrounds).
-    Quest Tracker: auto-collapse in instances (boss fights, Mythic+, combat
-    in raids and dungeons) and quest count.
-    Shared text style: minimap zone text and clock, Quest Tracker and the
-    instance texts at the top of the screen.
+    Minimap style, Quest Tracker auto-collapse and quest count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -39,8 +35,7 @@ function QM:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Minimap backgrounds (zone text, tracking and calendar buttons), hidden
--- with alpha only: other elements are anchored to them.
+-- Minimap backgrounds, hidden with alpha (other elements anchor to them).
 --------------------------------------------------------------------------------
 local function CalendarBackgrounds()
     local list, f = {}, GameTimeFrame
@@ -70,8 +65,7 @@ local function ApplyBackgrounds()
 end
 
 --------------------------------------------------------------------------------
--- Text style: the Quest Tracker's two shared font objects, and the instance
--- texts at the top of the screen (pooled widgets, restyled after each layout).
+-- Text style: Quest Tracker fonts and instance texts at the top.
 --------------------------------------------------------------------------------
 local FONTS = { "ObjectiveTrackerHeaderFont", "ObjectiveTrackerLineFont" }
 
@@ -86,11 +80,8 @@ local function StyleTopWidgets(container)
 end
 
 --------------------------------------------------------------------------------
--- Quest Tracker auto-collapse during boss fights, Mythic+ runs and combat in
--- raids and dungeons (not LFR or Follower). The contents are faded out with
--- alpha (header kept): calling Blizzard's SetCollapsed from an addon taints
--- the tracker, whose layout then can't read the auras that are secret in
--- combat.
+-- Quest Tracker auto-collapse in instances. Contents are faded with alpha:
+-- Blizzard's SetCollapsed would taint the tracker.
 --------------------------------------------------------------------------------
 local BOSS_INSTANCES  = { party = true, raid = true }
 local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR, legacy LFR, Timewalking LFR
@@ -115,9 +106,7 @@ local function ShouldCollapse()
     return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
 end
 
--- Every child of the tracker except its header (varargs, no tables). Their
--- own alpha is saved and put back (e.g. the background, transparent by
--- default).
+-- Fades every child except the header, restoring its own alpha.
 local savedAlpha = {}
 
 local function SetContentHidden(header, hide, ...)
@@ -171,9 +160,7 @@ local function SetCombatCollapse(on)
 end
 
 --------------------------------------------------------------------------------
--- Quest count (e.g. 20/35) in the tracker header: only quests that count
--- toward the log limit. Updated when quests enter or leave the log
--- (QUEST_LOG_UPDATE fires constantly and is used only until the log loads).
+-- Quest count in the tracker header.
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -204,7 +191,7 @@ local function UpdateCount()
     PlaceCount()
     countText:SetFormattedText("%d/%d", CountQuests(), C_QuestLog.GetMaxNumQuestsCanAccept())
 end
--- Bursts of events: at most one count per second.
+-- At most one count per second.
 local COUNT_EVENTS = { "QUEST_ACCEPTED", "QUEST_REMOVED", "QUEST_TURNED_IN", "QUEST_LOG_UPDATE" }
 local countPending, logLoaded = false, false
 local function DelayedCount()

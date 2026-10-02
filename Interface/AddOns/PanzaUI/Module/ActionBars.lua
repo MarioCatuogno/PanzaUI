@@ -1,13 +1,12 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Action Bars
-    Refined button style, icon zoom, and visibility (shared engine in
-    core.lua) of the action bars, Micro Menu, Bag Bar and XP/Reputation bars.
+    Button style, icon zoom and visibility of the bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local VIS = ns.VIS
 
 --------------------------------------------------------------------------------
--- Managed bars: global frame names and, for action bars, the button prefix.
+-- Managed bars: global frame names and action button prefixes.
 --------------------------------------------------------------------------------
 local ACTION_BARS = {
     { key = "bar1",   label = "Action Bar 1", frames = { "MainActionBar", "MainMenuBar" }, prefix = "ActionButton" },
@@ -23,8 +22,7 @@ local ACTION_BARS = {
 }
 
 local OTHER_BARS = {
-    -- The buttons only (MicroMenu): the Group Finder eye (QueueStatusButton)
-    -- lives in MicroMenuContainer and stays visible.
+    -- Buttons only: the Group Finder eye stays visible.
     { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenu" } },
     { key = "bagBar",     label = "Bag Bar",                   frames = { "BagsBar" } },
     { key = "statusBars", label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
@@ -66,9 +64,7 @@ function AB:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Visibility: every bar is registered once in the shared engine (core.lua).
--- Frames are faded with alpha only, so Edit Mode positions and anchored
--- frames stay in place.
+-- Visibility: every bar is registered in the shared engine (alpha only).
 --------------------------------------------------------------------------------
 local function ChildButtons(frame, list)
     for _, child in ipairs({ frame:GetChildren() }) do
@@ -97,7 +93,7 @@ local function SetupActionBars()
             grid    = true,
             flyout  = true,
             getMode = function() return AB.db[bar.key] end,
-            -- The cooldown "bling" ignores the parent alpha.
+            -- The cooldown bling ignores the parent alpha.
             onRefresh = function(mode)
                 local bling = mode == VIS.DEFAULT
                 for _, button in ipairs(bar.buttons) do
@@ -123,7 +119,7 @@ local function SetupOtherBars()
 end
 
 --------------------------------------------------------------------------------
--- Buttons: refined style and icon zoom (live), shared text style (at login).
+-- Buttons: refined style, icon zoom and text style.
 --------------------------------------------------------------------------------
 local function RefreshButtons(bar)
     local db = AB.db

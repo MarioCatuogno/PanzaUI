@@ -1,16 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Combat
-    Buffs & Debuffs: refined style (rounded icon borders) and icon zoom of
-    the player's auras.
-    Cast Bar: refined style for the Player, Target, Focus and Boss cast bars
-    (elapsed time in the center, hidden right when the cast ends).
-    Cooldown Manager: refined style (rounded icon borders), dynamic layout of
-    tracked buffs (centered) and bars (bottom-up).
-    Damage Meter: refined style (rounded icon borders).
-    Personal Resource Display: refined style (centered text, health and power
-    as a percentage, alternate bar value always shown, hidden while the
-    player casts).
-    Every section also follows the shared text style (General > Style).
+    Buffs & Debuffs, cast bars, Cooldown Manager, Damage Meter and Personal
+    Resource Display.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -68,8 +59,7 @@ function CB:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Buffs & Debuffs: Blizzard creates the aura buttons once at load, so they
--- are styled once (no hooks).
+-- Buffs & Debuffs: aura buttons are created once at load and styled once.
 --------------------------------------------------------------------------------
 local AURA_CONTAINERS = { "BuffFrame", "DebuffFrame" }
 
@@ -78,7 +68,7 @@ local function ForEachAuraButton(func)
         local buttons = _G[name] and _G[name].auraFrames
         if buttons then
             for _, button in ipairs(buttons) do
-                -- Private-aura anchors have a frame as Icon, not a texture.
+                -- Private-aura anchors have no icon texture.
                 local icon = button.Icon
                 if not button.isAuraAnchor and icon and icon.AddMaskTexture then func(button, icon) end
             end
@@ -100,8 +90,7 @@ local function StyleAuraText(button)
 end
 
 --------------------------------------------------------------------------------
--- Cast bars: the fade out animations are set to 0 once at login, so the bar
--- hides right when the cast ends (still through Blizzard's own code).
+-- Cast bars: no fade out, the bar hides as soon as the cast ends.
 --------------------------------------------------------------------------------
 local FADE_ANIMS = { "FadeOutAnim", "HoldFadeOutAnim" }
 
@@ -113,8 +102,7 @@ local function InstantAnims(...)
     end
 end
 
--- Elapsed cast time in the center of the bar, updated 10 times per second
--- while the bar is shown. Secret values go straight to the text.
+-- Elapsed cast time in the center of the bar (10 updates per second).
 local CAST_TICK = 0.1
 local IsSecretValue = ns.IsSecret
 
@@ -137,7 +125,7 @@ local function SetupCastTimer(bar)
     end)
 end
 
--- Text style: spell name of the cast bar.
+-- Text style for the spell name.
 local function StyleCastText(bar)
     ns.StyleFont(bar.Text)
 end
@@ -159,7 +147,7 @@ local function PRDBars()
     return container and (container.healthBar or container.HealthBar), frame.PowerBar, frame.AlternatePowerBar
 end
 
--- Text style first: the "100" twin of the percentage text copies its font.
+-- Text style, before the percentage text.
 local function StylePRDText()
     local health, power, alt = PRDBars()
     ns.StyleBarText(health)
@@ -181,14 +169,12 @@ local function SetupPRD()
     CenterText(power)
     CenterText(alt)
 
-    -- Alternate power (stagger, ebon might, ...) keeps Blizzard's own value.
+    -- Alternate power keeps Blizzard's own value.
     ns.PercentText(health, false, "player")
     ns.PercentText(power,  true,  "player")
 end
 
--- Alternate power bar value always shown (Blizzard shows it only on
--- mouseover), in Blizzard's number format. The bar is set up again on spec
--- changes, so the hook is checked again.
+-- Alternate power value always shown, in Blizzard's number format.
 local altHooked = {}
 
 local function ShowAltText(bar)
@@ -225,8 +211,7 @@ local function SetupAltText()
     ns.Hook(frame, "SetupAlternatePowerBar", HookAltBar)
 end
 
--- Hidden while the player casts: faded out with alpha (allowed in combat)
--- and restored when the cast ends. Secret cast names count as casting.
+-- Hidden while the player casts (alpha, allowed in combat).
 local CAST_START = {
     UNIT_SPELLCAST_START = true, UNIT_SPELLCAST_CHANNEL_START = true, UNIT_SPELLCAST_EMPOWER_START = true,
 }
@@ -236,7 +221,7 @@ local CAST_EVENTS = {
     "UNIT_SPELLCAST_FAILED", "UNIT_SPELLCAST_INTERRUPTED",
 }
 local castEvents = CreateFrame("Frame")
-local hiddenAlpha -- alpha before the cast, nil while shown
+local hiddenAlpha -- alpha before the cast
 
 local function IsCasting()
     local cast = UnitCastingInfo("player")
@@ -264,14 +249,13 @@ local function SetupCastHide()
 end
 
 --------------------------------------------------------------------------------
--- Cooldown Manager icons: action bar frame instead of Blizzard's square
--- overlay, once per item (shared registry in core.lua).
+-- Cooldown Manager icons: action button frame, once per item.
 --------------------------------------------------------------------------------
 local styledItems = {}
 
 local function StyleItem(item)
     if not item or styledItems[item] then return end
-    -- Icon viewers: item.Icon is the texture. Bar viewer: item.Icon is a frame.
+    -- Icon viewers: item.Icon is a texture, bar viewer: a frame.
     local holder, icon = item, item.Icon
     if icon and not icon.AddMaskTexture then holder, icon = icon, icon.Icon end
     if not (icon and icon.AddMaskTexture) then return end
@@ -284,7 +268,7 @@ local function StyleItem(item)
     ns.StyleIcon(icon, holder)
 end
 
--- Text style: every font string of the item, two levels deep, once per item.
+-- Text style for every font string of the item.
 local styledTexts = {}
 
 local function StyleItemText(item)
@@ -294,9 +278,7 @@ local function StyleItemText(item)
 end
 
 --------------------------------------------------------------------------------
--- Dynamic layout: shown buff icons centered and bars stacked from the bottom,
--- with no gaps. Show/hide asks for one reflow on the next frame; sizes are
--- measured after Blizzard's layout and reused.
+-- Dynamic layout: buff icons centered and bars stacked with no gaps.
 --------------------------------------------------------------------------------
 local DYNAMIC = { BuffIconCooldownViewer = "CENTER", BuffBarCooldownViewer = "BOTTOM" }
 local items, known, shown = {}, {}, {}
@@ -304,8 +286,7 @@ local itemSize, itemScale = {}, {}
 
 local function ByLayoutIndex(a, b) return (a.layoutIndex or 0) < (b.layoutIndex or 0) end
 
--- Midnight: item geometry can be secret in combat, so the last readable
--- value is kept.
+-- Midnight: secret geometry keeps the last readable value.
 local IsSecret = ns.IsSecret
 local function Readable(value, fallback)
     if value == nil or IsSecret(value) then return fallback end
@@ -322,9 +303,9 @@ local function Reflow(viewer, anchor, measure)
     if n > 1 then table.sort(shown, ByLayoutIndex) end
 
     local vertical = anchor == "BOTTOM" or viewer.isHorizontal == false
-    -- Blizzard's padding is in the viewer's scale: converted to the item's.
+    -- Blizzard's padding is converted to the item's scale.
     if measure or not itemSize[viewer] then
-        local first, size = shown[1], nil -- no and/or: a secret can't be tested
+        local first, size = shown[1], nil -- no and/or: secrets can't be tested
         if vertical then size = first:GetHeight() else size = first:GetWidth() end
         itemSize[viewer]  = Readable(size, itemSize[viewer])
         itemScale[viewer] = Readable(first:GetScale(), itemScale[viewer])
@@ -361,7 +342,7 @@ local function SetupDynamicLayout()
                 item:HookScript("OnShow", Queue)
                 item:HookScript("OnHide", Queue)
             end
-            -- Items already there (one-time scan).
+            -- Items already there.
             local container = viewer.GetItemContainerFrame and viewer:GetItemContainerFrame()
             if container then
                 for _, child in ipairs({ container:GetChildren() }) do
@@ -369,7 +350,7 @@ local function SetupDynamicLayout()
                 end
             end
             ns.Hook(viewer, "OnAcquireItemFrame", function(_, item) AddItem(item); Queue() end)
-            -- Blizzard's layout puts every item back in its fixed slot: re-pack after it.
+            -- Re-pack after each Blizzard layout.
             local function Repack() Reflow(viewer, anchor, true) end
             if viewer.Layout then
                 ns.Hook(viewer, "Layout", Repack)
@@ -382,8 +363,7 @@ local function SetupDynamicLayout()
 end
 
 --------------------------------------------------------------------------------
--- Damage Meter: icon frame and text style, once per entry and per window
--- (shared registry in core.lua).
+-- Damage Meter: icon frame and text style, once per entry and window.
 --------------------------------------------------------------------------------
 local function StyleEntryIcon(entry)
     local holder = entry.Icon
@@ -397,8 +377,7 @@ local function StyleEntryIcon(entry)
     ns.Hook(entry, "SetupSharedStyleIconVisibility", SyncBorder)
 end
 
--- Entry texts are secret in combat: an outlined copy of their template font
--- is used instead.
+-- Secret entry texts get an outlined copy of their font object.
 local function StyleEntryText(entry)
     local bar = entry.StatusBar
     local font = ns.OutlinedFont(NumberFontNormal)
@@ -407,7 +386,7 @@ local function StyleEntryText(entry)
     if bar.Value then bar.Value:SetFontObject(font) end
 end
 
--- Window texts (title, buttons); the entries are deeper, in the scroll box.
+-- Window texts (title, buttons).
 local function StyleWindowText(window)
     ns.StyleAllFonts(window, 2)
 end

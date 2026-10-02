@@ -1,7 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Chat
-    Refined style (no tab art, input box border, background or side buttons),
-    shared text style, timestamps and the Combat Log tab.
+    Window style, timestamps and Combat Log tab.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -29,8 +28,7 @@ end
 
 local TIMESTAMP_FORMAT = "%H:%M " -- Blizzard's HH:MM format
 
--- Tab art, input box border and window background (Blizzard's own list when
--- available), side buttons.
+-- Tab art, input box border, window background and side buttons.
 local TAB_TEXTURES = {
     "Left", "Middle", "Right",
     "ActiveLeft", "ActiveMiddle", "ActiveRight",
@@ -53,7 +51,7 @@ local SIDE_BUTTONS = {
 }
 
 --------------------------------------------------------------------------------
--- Timestamps through Blizzard's own CVar: no message hooks.
+-- Timestamps through Blizzard's own CVar.
 --------------------------------------------------------------------------------
 local function SetTimestamps(on)
     local current = C_CVar.GetCVar("showTimestamps")
@@ -65,7 +63,7 @@ local function SetTimestamps(on)
 end
 
 --------------------------------------------------------------------------------
--- Combat Log (ChatFrame2), closed and reopened with Blizzard's own functions.
+-- Combat Log tab, closed and reopened with Blizzard's own functions.
 --------------------------------------------------------------------------------
 local function SetCombatLog(show)
     local frame = ChatFrame2
@@ -82,9 +80,7 @@ local function SetCombatLog(show)
 end
 
 --------------------------------------------------------------------------------
--- Chat windows (permanent and temporary): text style and refined style, once
--- per window. Tab names keep their full width (Blizzard sizes them before the
--- outline is applied).
+-- Chat windows: text style and refined style, once per window.
 --------------------------------------------------------------------------------
 local processed = {}
 local chatTabs = {}

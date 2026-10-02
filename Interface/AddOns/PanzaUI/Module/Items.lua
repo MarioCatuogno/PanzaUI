@@ -1,9 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Bags & Items
-    Items: icon zoom for bag items (and the shared text style); item level on
-    equipment in the bags, the banks (character, warband, guild), the
-    Character panel and the Inspect panel.
-    Merchant: auto-repair and auto-sell junk.
+    Bag items, item level (bags, banks, Character and Inspect panels) and
+    merchant automation.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -46,7 +44,7 @@ function Items:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Item level of a bag slot (equipment only), read without garbage.
+-- Item level of a bag slot (equipment only).
 --------------------------------------------------------------------------------
 local EQUIPMENT = {
     [Enum.ItemClass.Weapon]     = true,
@@ -67,10 +65,9 @@ local function BagItemLevel(bag, slot)
 end
 
 --------------------------------------------------------------------------------
--- Bag buttons: icon zoom, text style and item level, after each Blizzard
--- update. Data lives in local tables (no fields on Blizzard buttons).
+-- Bag buttons: icon zoom, text style and item level.
 --------------------------------------------------------------------------------
-local styled = {} -- button -> true
+local styled = {}
 local containers = {}
 
 local function UpdateBagButton(button)
@@ -105,8 +102,7 @@ local function SetupBags()
 end
 
 --------------------------------------------------------------------------------
--- Character and Inspect panels: item level on equipped items, after each
--- Blizzard slot update (shirt and tabard excluded).
+-- Character and Inspect panels: item level on equipped items.
 --------------------------------------------------------------------------------
 local CHAR_SLOTS = {
     "Head", "Neck", "Shoulder", "Back", "Chest", "Wrist", "Hands", "Waist", "Legs", "Feet",
@@ -125,8 +121,7 @@ local function UpdateCharSlot(button)
     ns.ItemLevelText(button, ilvl, color)
 end
 
--- Item level and quality color from an item link (equipmentOnly: weapons,
--- armor and profession gear, like the bags).
+-- Item level and quality color from an item link.
 local function LinkItemLevel(link, equipmentOnly)
     if not link or ns.IsSecret(link) then return end
     if equipmentOnly then
@@ -166,13 +161,7 @@ local function SetupPanels()
 end
 
 --------------------------------------------------------------------------------
--- Banks: item level on equipment, after each Blizzard update.
--- Character and warband bank: one panel whose item buttons know their bank
--- tab and slot; they are found by those methods among the panel's children
--- (two levels, varargs) when the bank opens, its contents change or the
--- panel is shown, and each one is followed through its own Refresh/Init.
--- Guild bank (load-on-demand): 7 columns of 14 buttons, read through the
--- item links of the current tab.
+-- Banks: item level on character, warband and guild bank items.
 --------------------------------------------------------------------------------
 local hookedBank = {}
 
@@ -206,7 +195,7 @@ local function UpdateBankPanel()
     if panel and panel:IsShown() then ScanBankChildren(2, panel:GetChildren()) end
 end
 
--- Contents changes are watched only while the bank is open.
+-- Contents are watched only while the bank is open.
 local bankEvents = CreateFrame("Frame")
 bankEvents:SetScript("OnEvent", function(self, event)
     if event == "BANKFRAME_OPENED" then
@@ -257,8 +246,7 @@ local function SetupBanks()
 end
 
 --------------------------------------------------------------------------------
--- Merchant: junk sold with Blizzard's "Sell All Junk", then gear repaired
--- with personal gold. The event is registered only while an option is on.
+-- Merchant: auto-sell junk and auto-repair.
 --------------------------------------------------------------------------------
 local merchantEvents = CreateFrame("Frame")
 

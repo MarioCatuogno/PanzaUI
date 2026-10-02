@@ -1,20 +1,19 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Core
-    Shared namespace, helpers, saved variables, module registry and the
-    settings panel (Options > AddOns > PanzaUI).
+    Shared helpers, saved variables, module registry and settings panel.
 ------------------------------------------------------------------------------]]
 local addonName, ns = ...
 
 ns.modules    = {}
 ns.IsSecret   = issecretvalue or function() return false end
 ns.FONT_FLAGS = "OUTLINE, SLUG" -- shared text style
-ns.textStyle  = false           -- General > Style > Refined text
+ns.textStyle  = false -- General > Style > Refined text
 
 --------------------------------------------------------------------------------
 -- Shared helpers
 --------------------------------------------------------------------------------
 
--- Hidden parent: frames moved here disappear for good.
+-- Hidden parent for frames removed for good.
 ns.Hider = CreateFrame("Frame")
 ns.Hider:Hide()
 
@@ -22,8 +21,7 @@ function ns.Kill(frame)
     if frame then frame:SetParent(ns.Hider) end
 end
 
--- Runs a function once on the next frame, however many times it is asked
--- for meanwhile (one hidden frame, no timers or closures).
+-- Runs a function once on the next frame, however often it is requested.
 local pending, running = {}, {}
 local deferFrame = CreateFrame("Frame")
 deferFrame:Hide()
@@ -58,10 +56,8 @@ function ns.OutlinedFont(base)
     return copy
 end
 
--- Applies the shared text style to a font string or font object. Midnight:
--- secret font data gets an outlined copy of the font object instead.
--- Texts already styled are skipped (no SetFont, no text re-layout): the
--- flags as the game returns them are read back after the first change.
+-- Applies the shared text style; secret fonts get an outlined font object.
+-- Already styled texts are skipped (flags as read back from the game).
 local styledFlags = ns.FONT_FLAGS
 
 function ns.StyleFont(obj)
@@ -80,7 +76,7 @@ function ns.StyleFont(obj)
     if copy then obj:SetFontObject(copy) end
 end
 
--- Every compact party/raid frame that exists (names built once).
+-- Calls func for every existing compact party/raid frame.
 local COMPACT_FRAMES = {}
 for i = 1, 5 do COMPACT_FRAMES[#COMPACT_FRAMES + 1] = "CompactPartyFrameMember" .. i end
 for i = 1, 40 do COMPACT_FRAMES[#COMPACT_FRAMES + 1] = "CompactRaidFrame" .. i end
@@ -95,10 +91,8 @@ function ns.ForEachCompactFrame(func)
     end
 end
 
--- Midnight: in combat the data of compound units (e.g. targettarget) can be
--- secret. When the unit is the player or a group member, its own token
--- (player, partyN, raidN) gives readable data: that token is returned, or
--- else the unit itself. Tokens built once.
+-- Midnight: compound units (e.g. targettarget) can be secret in combat.
+-- Returns the matching player/party/raid token, or the unit itself.
 local PARTY_UNITS, RAID_UNITS = {}, {}
 for i = 1, 4 do PARTY_UNITS[i] = "party" .. i end
 for i = 1, 40 do RAID_UNITS[i] = "raid" .. i end
@@ -108,7 +102,6 @@ local function IsUnit(unit, token)
     return not ns.IsSecret(same) and same
 end
 
--- Only the tokens of the current group are checked.
 function ns.GroupUnit(unit)
     if IsUnit(unit, "player") then return "player" end
     local tokens, count = PARTY_UNITS, GetNumSubgroupMembers()
@@ -125,7 +118,7 @@ function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
 end
 
--- Permanently hides a (non-secure) frame and stops its events.
+-- Permanently hides a non-secure frame and stops its events.
 function ns.Disable(frame)
     if not frame then return end
     frame:UnregisterAllEvents()
@@ -133,7 +126,7 @@ function ns.Disable(frame)
     frame:HookScript("OnShow", frame.Hide)
 end
 
--- hooksecurefunc, only if the function exists.
+-- hooksecurefunc, only when the function exists.
 -- ns.Hook("GlobalFunc", cb) or ns.Hook(object, "Method", cb)
 function ns.Hook(target, name, callback)
     if type(target) == "string" then target, name, callback = _G, target, name end
@@ -141,12 +134,9 @@ function ns.Hook(target, name, callback)
 end
 
 --------------------------------------------------------------------------------
--- Action button look for any icon texture: rounded mask and action bar frame,
--- sized like ActionButtonTemplate and following the icon size.
--- anchored: lightweight version for icons made in large numbers (e.g.
--- nameplate auras): mask and frame are simply anchored to the icon, with no
--- size tracking (no closure or hook per icon). Returns nil when the frame
--- can't be styled now (forbidden, secret aspects).
+-- Icon look: action button rounded mask and frame, following the icon size.
+-- anchored: lightweight variant for icons made in large numbers (no size
+-- tracking). Returns nil when the frame can't be styled yet.
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
@@ -170,8 +160,7 @@ function ns.StyleIcon(icon, parent, anchored)
         mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
         mask:SetAllPoints(icon)
         icon:AddMaskTexture(mask)
-        -- The frame atlas is 46x45 (one extra column on the right, for 45x45
-        -- icons): that column is cropped, so the opening is centered on the icon.
+        -- The 46x45 frame atlas is cropped to 45x45 to center its opening.
         frameInfo = frameInfo or C_Texture.GetAtlasInfo(ICON_FRAME)
         local fi = frameInfo
         if fi and fi.file and fi.width and fi.width > 1 then
@@ -189,10 +178,7 @@ function ns.StyleIcon(icon, parent, anchored)
     frame:SetPoint("BOTTOMRIGHT", icon)
     mask:SetAllPoints(icon)
 
-    -- Width and height follow the icon. While its size is unknown (0x0
-    -- before the first layout, e.g. icons of hidden frames) the mask simply
-    -- covers the icon, and the size is read again on show and on the next
-    -- frame. Midnight: secret geometry is skipped, the last good size is kept.
+    -- Follows the icon size; unknown sizes (0x0, secret) are read again on show.
     local lastW, lastH, sized = -1, -1, false
     local function Resize()
         local w, h = icon:GetSize()
@@ -215,8 +201,7 @@ function ns.StyleIcon(icon, parent, anchored)
     return frame, mask
 end
 
--- Rounded cooldown swipe for icons styled with ns.StyleIcon. The edge line
--- (spark) is drawn outside the rounded frame, so it gets an empty texture.
+-- Rounded cooldown swipe, without the edge line drawn outside the frame.
 local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
 
 function ns.RoundSwipe(cooldown)
@@ -226,7 +211,7 @@ function ns.RoundSwipe(cooldown)
     end
 end
 
--- Icon zoom: crops `percent`% of the texture on each side.
+-- Crops `percent`% of the icon on each side.
 function ns.ZoomIcon(icon, percent)
     if not (icon and icon.SetTexCoord) then return end
     local lo = (tonumber(percent) or 0) / 100
@@ -234,8 +219,7 @@ function ns.ZoomIcon(icon, percent)
 end
 
 --------------------------------------------------------------------------------
--- ScrollBox frame callback that always gets the frame (ScrollUtil passes
--- different arguments for new and existing frames).
+-- ScrollBox frame callback that always receives the frame.
 --------------------------------------------------------------------------------
 function ns.ScrollFrameCallback(func)
     return function(a, b)
@@ -244,9 +228,7 @@ function ns.ScrollFrameCallback(func)
 end
 
 --------------------------------------------------------------------------------
--- Damage Meter registry: every registered function runs once per entry and
--- once per window (session and spell breakdown), as soon as Blizzard makes
--- them. One set of hooks for every module.
+-- Damage Meter registry: each function runs once per entry and per window.
 --------------------------------------------------------------------------------
 local dmFuncs, dmEntries, dmHooked = {}, {}, {}
 local dmWindowFuncs, dmWindows = {}, {}
@@ -284,7 +266,7 @@ local function HookDamageMeterWindow(window)
     dmHooked[window] = true
     OnDamageMeterWindow(window)
     if window.GetScrollBox then HookDamageMeterBox(window:GetScrollBox()) end
-    -- The pinned local player row is not part of the scroll box.
+    -- The pinned player row is not part of the scroll box.
     if window.GetLocalPlayerEntry then OnDamageMeterEntry(window:GetLocalPlayerEntry()) end
     HookDamageMeterSource(window)
     ns.Hook(window, "ShowSourceWindow", HookDamageMeterSource)
@@ -314,8 +296,7 @@ function ns.OnDamageMeterWindow(func)
 end
 
 --------------------------------------------------------------------------------
--- Cooldown Manager registry: every registered function runs once per item
--- of every viewer, when acquired or (already there) at load.
+-- Cooldown Manager registry: each function runs once per item.
 --------------------------------------------------------------------------------
 local CDM_VIEWERS = { "EssentialCooldownViewer", "UtilityCooldownViewer", "BuffIconCooldownViewer", "BuffBarCooldownViewer" }
 local cdmFuncs, cdmItems = {}, {}
@@ -340,7 +321,7 @@ local function SetupCooldownItems()
     end
 end
 
--- func(item): func skips the items it doesn't handle.
+-- func(item): skips the items it doesn't handle.
 function ns.OnCooldownItem(func)
     cdmFuncs[#cdmFuncs + 1] = func
     for item in pairs(cdmItems) do func(item) end
@@ -350,8 +331,7 @@ function ns.OnCooldownItem(func)
 end
 
 --------------------------------------------------------------------------------
--- Item level on item buttons (bags, Character and Inspect panels), in the
--- quality color. The text is kept in a local table (taint-safe).
+-- Item level text on item buttons, in the quality color.
 --------------------------------------------------------------------------------
 function ns.LocationItemLevel(location)
     if not C_Item.DoesItemExist(location) then return end
@@ -361,7 +341,7 @@ function ns.LocationItemLevel(location)
 end
 
 local ilvlTexts = {}
--- Shows ilvl on the button, or hides it when ilvl is nil.
+-- Shows ilvl on the button, or hides it when nil.
 function ns.ItemLevelText(button, ilvl, color)
     local text = ilvlTexts[button]
     if not ilvl then
@@ -380,7 +360,7 @@ function ns.ItemLevelText(button, ilvl, color)
 end
 
 --------------------------------------------------------------------------------
--- Every font string of a frame and of `levels` levels of children.
+-- Styles every font string of a frame, down to `levels` children.
 --------------------------------------------------------------------------------
 local StyleAllFonts
 
@@ -403,7 +383,7 @@ end
 ns.StyleAllFonts = StyleAllFonts
 
 --------------------------------------------------------------------------------
--- Cast bars of Player, Target, Focus and Boss frames.
+-- Calls func for the Player, Target, Focus and Boss cast bars.
 --------------------------------------------------------------------------------
 function ns.ForEachCastBar(func)
     if PlayerCastingBarFrame then func(PlayerCastingBarFrame) end
@@ -416,7 +396,7 @@ function ns.ForEachCastBar(func)
 end
 
 --------------------------------------------------------------------------------
--- Status bar texts (TextString / LeftText / RightText)
+-- Status bar texts
 --------------------------------------------------------------------------------
 function ns.StyleBarText(bar)
     if not bar then return end
@@ -426,10 +406,9 @@ function ns.StyleBarText(bar)
 end
 
 --------------------------------------------------------------------------------
--- Percentage text: one decimal below 100, "100" when full, nothing at 0.
--- Midnight: health/power are secret, so the value goes straight to the text
--- and curves set its alpha; a twin FontString shows the "100". Runs after
--- Blizzard's UpdateTextString.
+-- Percentage text: one decimal, "100" when full, empty at 0.
+-- Midnight: secret values go straight to the text, curves set its alpha and
+-- a twin font string shows the "100".
 --------------------------------------------------------------------------------
 local IsSecret = ns.IsSecret
 local percentBars = {}
@@ -451,7 +430,7 @@ if C_CurveUtil and C_CurveUtil.CreateCurve then
     fullCurve:AddPoint(1,       1)
 end
 
--- Copies the bar text font to its twin (after a restyle).
+-- Copies the bar text font to its twin.
 function ns.SyncPercentFont(text)
     local twin = text and fullTexts[text]
     if not twin then return end
@@ -476,21 +455,20 @@ local function FullText(text)
     return twin
 end
 
--- Text color of a percentage text and its twin.
+-- Sets the color of a percentage text and its twin.
 function ns.SetPercentColor(text, r, g, b)
     text:SetTextColor(r, g, b)
     local twin = fullTexts[text]
     if twin then twin:SetTextColor(r, g, b) end
 end
 
--- Hides the twin (status texts or no unit).
+-- Hides the twin (status texts, no unit).
 function ns.HidePercentFull(text)
     local twin = text and fullTexts[text]
     if twin then twin:Hide() end
 end
 
--- Writes the health (or power) percentage of unit. No and/or: secret values
--- can't be tested.
+-- Writes the health or power percentage (no and/or: secrets can't be tested).
 function ns.SetPercentText(text, unit, isPower, powerType)
     local curve = CurveConstants.ScaleTo100
     local pct, alpha, full
@@ -531,7 +509,7 @@ local function ShowPercent(bar)
     text:Show()
 end
 
--- Call after styling the bar text (the twin copies its font).
+-- Call after styling the bar text.
 function ns.PercentText(bar, isPower, unit)
     if not (bar and CurveConstants and UnitHealthPercent) or percentBars[bar] then return end
     percentBars[bar] = { power = isPower, unit = unit }
@@ -540,10 +518,8 @@ function ns.PercentText(bar, isPower, unit)
 end
 
 --------------------------------------------------------------------------------
--- Shared visibility engine (Action Bars, Micro Menu, Bag Bar, XP/Rep bars).
--- Entry: { frames, buttons?, getMode, grid?, flyout?, onRefresh? }. Frames
--- are faded with alpha, hidden buttons stop taking clicks (out of combat).
--- A small watcher runs only while a mouseover entry is shown.
+-- Visibility engine: frames faded with alpha, hidden buttons unclickable.
+-- Entry: { frames, buttons?, getMode, grid?, flyout?, onRefresh? }
 --------------------------------------------------------------------------------
 local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
 ns.VIS = VIS
@@ -621,7 +597,7 @@ local function HookEntry(e)
     end
 end
 
--- Clicks only where the entry can be seen.
+-- Clicks only where the entry is visible (out of combat).
 local function ApplyMouse()
     if InCombatLockdown() then mousePending = true return end
     mousePending = false
@@ -738,8 +714,7 @@ function ns:RegisterModule(key, info)
     return info
 end
 
--- Migration helper: newKey takes the value of older options (booleans: on if
--- any was on; other types: the first saved).
+-- Migration helper: newKey takes the value of older options.
 function ns.MergeOptions(db, newKey, old, ...)
     if db[newKey] ~= nil or not old then return end
     local value
@@ -755,8 +730,7 @@ function ns.MergeOptions(db, newKey, old, ...)
 end
 
 --------------------------------------------------------------------------------
--- Saved variables: migrations first, then unknown keys and wrong types are
--- dropped and missing values get their defaults.
+-- Saved variables: migrations, cleanup and defaults.
 --------------------------------------------------------------------------------
 local function InitDB()
     PanzaUI_DB = PanzaUI_DB or {}
@@ -786,9 +760,9 @@ local function InitDB()
 end
 
 --------------------------------------------------------------------------------
--- Settings panel (modern Settings API)
+-- Settings panel
 --------------------------------------------------------------------------------
--- Reload UI button next to Blizzard's "Defaults", only on PanzaUI's pages.
+-- Reload UI button next to Blizzard's "Defaults", on PanzaUI pages only.
 local reloadButton
 
 local function IsOwnCategory(category)
@@ -821,18 +795,14 @@ local function UpdateReloadButton(_, category)
     if own then ns.settingsViewed = true end
 end
 
--- Showing a settings page makes Blizzard's panel build its controls and
--- dropdown menus, and that temporary memory is counted as the addon's whose
--- page it is; Lua frees it only gradually. When the panel closes after a
--- PanzaUI page was shown, it is collected at once (one short collection,
--- never in combat). The panel's own controls are kept by Blizzard for reuse.
+-- Collects the settings panel's temporary memory when it closes (out of combat).
 local function CollectAfterSettings()
     if not ns.settingsViewed or InCombatLockdown() then return end
     ns.settingsViewed = false
     collectgarbage("collect")
 end
 
--- Tooltip: summary, bullets (alphabetical) and reload note.
+-- Tooltip: summary, sorted bullets and reload note.
 local function ByText(a, b)
     return a:lower() < b:lower()
 end
@@ -848,8 +818,7 @@ local function BuildTooltip(opt)
     return text
 end
 
--- Checkbox, slider or dropdown, by the option's fields; the setting type
--- follows the default value. Dropdown data is built once per list.
+-- Checkbox, slider or dropdown; dropdown data is built once per list.
 local dropdownData = setmetatable({}, { __mode = "k" })
 
 local function DropdownData(list)
@@ -905,7 +874,7 @@ local function BuildSettings()
     local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Version: " .. version))
 
-    -- Sections and options are listed alphabetically.
+    -- Sections and options are sorted alphabetically.
     local function AddOptions(cat, lay, m)
         local sections, current = {}, { options = {} }
         sections[1] = current
@@ -1000,7 +969,7 @@ SlashCmdList.PANZAUI = function(msg)
     end
 end
 
--- Shortcuts: /rl Reload UI, /rc ready check, /pl 10 second pull timer.
+-- Shortcuts: /rl Reload UI, /rc ready check, /pl pull timer.
 SLASH_PANZAUI_RL1 = "/rl"
 SlashCmdList.PANZAUI_RL = ReloadUI
 

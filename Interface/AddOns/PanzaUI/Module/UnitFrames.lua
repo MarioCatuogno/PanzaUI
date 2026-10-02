@@ -1,14 +1,12 @@
 --[[----------------------------------------------------------------------------
-    PanzaUI - Unit Frames (Player, Target, Focus, Pet)
-    Per frame: shared text style, refined style, class colors and hidden
-    clutter. Everything is applied once at login and kept with post-hooks:
-    no Blizzard update code is called (taint-safe).
+    PanzaUI - Unit Frames
+    Player, Target, Focus, Boss and Pet frames: style, class colors and
+    hidden clutter, applied at login and kept with post-hooks.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
 --------------------------------------------------------------------------------
--- Options: Target and Focus share their entries (keys <prefix><Key>, e.g.
--- targetStyle). Every option is on by default.
+-- Options: Target and Focus share their entries (<prefix><Key>).
 --------------------------------------------------------------------------------
 local TARGET_FRAMES = {
     { frame = "TargetFrame", prefix = "target", unit = "Target" },
@@ -88,8 +86,7 @@ function UF:Migrate(db)
     Merge(db, "petHideClutter", db, "petHideHitText", "petHideAuras")
 end
 
--- Class resource bars hidden from the Player frame (never the ones inside
--- the Personal Resource Display, built from the same templates).
+-- Player class resources (never the Personal Resource Display ones).
 local CLASS_RESOURCES = {
     "RogueComboPointBarFrame", "DruidComboPointBarFrame", "MonkHarmonyBarFrame",
     "MonkStaggerBar", "WarlockPowerFrame", "PaladinPowerBarFrame",
@@ -107,8 +104,7 @@ local function IsInPRD(frame)
     return false
 end
 
--- Alternate power class resources (e.g. Stagger) switch the Player frame to a
--- taller art: with the bar hidden, the normal art is restored after Blizzard.
+-- Restores the normal Player art when the alternate power bar is hidden.
 local function RestorePlayerArt()
     local altBar = PlayerFrame_GetAlternatePowerBar and PlayerFrame_GetAlternatePowerBar()
     if not (altBar and hiddenResources[altBar]) or PlayerFrame.state ~= "player" or UNIT_FRAME_SHOW_HEALTH_ONLY then return end
@@ -126,8 +122,7 @@ local function RestorePlayerArt()
 end
 
 --------------------------------------------------------------------------------
--- PvP and group leader icons, moved under the hidden parent (Blizzard keeps
--- showing them).
+-- PvP and group leader icons.
 --------------------------------------------------------------------------------
 local PVP_PARTS = { "PVPIcon", "PvpIcon", "PrestigePortrait", "PrestigeBadge", "PvpTimerText", "PVPTimerText" }
 
@@ -143,19 +138,19 @@ local function HideLeaderIcon(ctx)
     for _, key in ipairs(LEADER_PARTS) do ns.Kill(ctx[key]) end
 end
 
--- Target of Target frame of Target/Focus (field or global name).
+-- Target of Target frame of Target/Focus.
 local function TotFrame(frame)
     return frame.totFrame or _G[frame:GetName() .. "ToT"]
 end
 
--- Threat glow around Target-style frames (red in combat).
+-- Threat glow of Target-style frames.
 local function HideThreatGlow(frame)
     local container = frame.TargetFrameContainer
     ns.Kill(frame.threatIndicator or (container and container.Flash))
 end
 
 --------------------------------------------------------------------------------
--- Name centered above the health bar
+-- Centered name
 --------------------------------------------------------------------------------
 local function CenterName(name, bar)
     name:ClearAllPoints()
@@ -165,18 +160,16 @@ local function CenterName(name, bar)
 end
 
 --------------------------------------------------------------------------------
--- Class colored health bars: players get their class color, other units
--- their reaction color, after each Blizzard update. The color is computed
--- once per unit and reused until the unit or its state changes.
+-- Class colors: class color for players, reaction color for other units,
+-- cached per unit.
 --------------------------------------------------------------------------------
 local IsSecret = ns.IsSecret
 local classColorBars = {}
 
-local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- colorValid: bar -> unit it was computed for
+local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- bar -> unit it was computed for
 local colorEvents = CreateFrame("Frame")
 
--- classColorBars: bar -> true, or the unit to use when the bar has none
--- (Target of Target bars).
+-- classColorBars: bar -> true, or the unit to use for Target of Target bars.
 local function ClassColorHealth(bar)
     local fallback = classColorBars[bar]
     if not fallback or bar.disconnected then return end
@@ -198,7 +191,7 @@ local function ClassColorHealth(bar)
     local class
     if classed then
         class = select(2, UnitClass(unit))
-        -- Secret for compound units in combat: read from the group token.
+        -- Secret class: read from the group token.
         if IsSecret(class) then class = select(2, UnitClass(ns.GroupUnit(unit))) end
         if IsSecret(class) then class = nil end
     end
@@ -219,10 +212,7 @@ local function ClassColorHealth(bar)
     bar:SetStatusBarColor(r, g, b)
 end
 
--- Target of Target bars: Blizzard updates them with its own code (no
--- UnitFrameHealthBar_Update), so they are colored when their unit can change
--- (next frame, after Blizzard's update) and again after any Blizzard
--- SetStatusBarColor (our own call is skipped by the busy flag).
+-- Target of Target bars: colored on unit changes and after Blizzard's color.
 local totBars, colorBusy = {}, false
 
 local function ColorToTBars()
@@ -247,8 +237,7 @@ colorEvents:SetScript("OnEvent", function()
 end)
 
 --------------------------------------------------------------------------------
--- Shared text style, before the percentage text (its "100" twin copies the
--- bar text font).
+-- Shared text style, before the percentage text.
 --------------------------------------------------------------------------------
 local function StyleTexts(name, level, health, power)
     if not ns.textStyle then return end
@@ -307,8 +296,7 @@ local function SetupPlayer(db)
 end
 
 --------------------------------------------------------------------------------
--- NPC followers: the "*" Blizzard puts before their name is removed after
--- each SetText (secret names are skipped).
+-- NPC followers: the "*" before their name is removed.
 --------------------------------------------------------------------------------
 local function HideFollowerMark(text, frame, fallbackUnit)
     if not text then return end
@@ -331,14 +319,13 @@ local function HideFollowerMark(text, frame, fallbackUnit)
 end
 
 --------------------------------------------------------------------------------
--- Target and Focus (same Blizzard template)
+-- Target and Focus
 --------------------------------------------------------------------------------
 
--- Layout parts Blizzard may reset (Focus small size): applied at login and
--- after SetSmallSize().
+-- Layout parts Blizzard may reset (Focus small size).
 local function ApplyLayout(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
-    -- Aura limits: Focus refined style keeps 4 debuffs, hidden clutter none.
+    -- Aura limits: Focus refined style keeps 4 debuffs.
     if p == "focus" and db.focusStyle then
         frame.maxBuffs, frame.maxDebuffs = 0, 4
     elseif db[p .. "HideClutter"] then
@@ -346,7 +333,7 @@ local function ApplyLayout(frame, db, p)
     end
     if db[p .. "Style"] then
         CenterName(main.Name, main.HealthBarsContainer)
-        -- Texture cleared, not hidden: the name and level are anchored to it.
+        -- Cleared, not hidden: name and level are anchored to it.
         main.ReputationColor:SetTexture(nil)
     end
 end
@@ -365,8 +352,7 @@ local function SetupTargetFrame(frame, db, p)
 
     if db[p .. "ClassColor"] then
         classColorBars[health] = true
-        -- Target of Target: its bar is colored by Blizzard's own ToT update
-        -- (not UnitFrameHealthBar_Update), so the color is put back after it.
+        -- Target of Target: class color kept after Blizzard's update.
         local tot = TotFrame(frame)
         local totHealth = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
         if totHealth then
@@ -378,7 +364,7 @@ local function SetupTargetFrame(frame, db, p)
     ApplyLayout(frame, db, p)
 
     if db[p .. "Style"] then
-        -- Nothing but the skull icon is anchored to the level text.
+        -- Only the skull icon is anchored to the level text.
         ns.Kill(main.LevelText)
         ns.Kill(ctx.HighLevelTexture)
 
@@ -398,7 +384,7 @@ local function SetupTargetFrame(frame, db, p)
 end
 
 --------------------------------------------------------------------------------
--- Boss frames (same Blizzard template as Target)
+-- Boss frames
 --------------------------------------------------------------------------------
 local function SetupBoss(db)
     for i = 1, 5 do
@@ -408,8 +394,7 @@ local function SetupBoss(db)
             local main, ctx = content.TargetFrameContentMain, content.TargetFrameContentContextual
             local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
             StyleTexts(main.Name, main.LevelText, health, power)
-            -- Reaction color (red for enemies): Blizzard's boss bar takes its
-            -- color from its atlas, lost with another texture.
+            -- Reaction color (the boss bar color comes from Blizzard's atlas).
             classColorBars[health] = true
 
             if db.bossHideClutter then
@@ -438,7 +423,7 @@ local function SetupPet(db)
 
     if db.petHideClutter then
         ns.Kill(PetHitIndicator)
-        -- Auras: their container is moved under the hidden parent.
+        -- Auras hidden with their container.
         ns.Kill(PetFrame.AuraFrameContainer)
     end
 
@@ -449,9 +434,7 @@ local function SetupPet(db)
 end
 
 --------------------------------------------------------------------------------
--- Portrait redraw: a portrait taken before the 3D model has loaded stays
--- zoomed in, so it is drawn again one second after each update (bursts
--- merged), with the same API Blizzard uses.
+-- Portrait redraw: portraits stuck zoomed in are drawn again after a second.
 --------------------------------------------------------------------------------
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
@@ -463,9 +446,9 @@ local function RedrawPortraits()
     for _, frame in ipairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame and frame.portrait, frame and frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
-            -- Blizzard can show a class icon instead of the portrait.
+            -- Blizzard can show a class icon instead.
             and not (UnitFrame_ShouldReplacePortrait and UnitFrame_ShouldReplacePortrait(frame)) then
-            -- Same arguments as Blizzard's UnitFramePortrait_Update.
+            -- Same arguments as UnitFramePortrait_Update.
             SetPortraitTexture(portrait, unit, frame.disablePortraitMask)
         end
     end
@@ -478,7 +461,7 @@ local function OnPortraitEvent(_, _, unit)
     C_Timer.After(1, RedrawPortraits)
 end
 
--- Unit events only for the portrait units (at most two units per frame).
+-- Unit events for the portrait units only (two per frame).
 local PORTRAIT_UNIT_EVENTS = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }
 local portraitEvents, portraitEvents2 = CreateFrame("Frame"), CreateFrame("Frame")
 portraitEvents:SetScript("OnEvent", OnPortraitEvent)
@@ -501,7 +484,7 @@ local function SetupPortraits(db)
 end
 
 --------------------------------------------------------------------------------
--- Focus debuffs (refined style): rounded icon borders, once per pooled button.
+-- Focus debuffs: rounded icon borders.
 --------------------------------------------------------------------------------
 local styledAuras = {}
 
@@ -549,8 +532,7 @@ function UF:OnEnable()
     SetupPortraits(db)
 
     if next(classColorBars) then
-        -- Anything that can change a cached color (unit events: target and focus
-        -- only).
+        -- Anything that can change a cached color.
         for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
                                  "INSTANCE_ENCOUNTER_ENGAGE_UNIT" }) do
             colorEvents:RegisterEvent(event)

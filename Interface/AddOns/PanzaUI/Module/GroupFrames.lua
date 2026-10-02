@@ -1,11 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Party & Raid Frames
-    Refined style (clean names, health as a percentage), shared text style,
-    refined overlays (absorb, heal prediction and aggro border textures, no
-    over-absorb glow) and HD role icons (also on the Player frame) for the
-    compact party/raid frames.
-    Always on: hidden role icons shown again when the role becomes known
-    (Blizzard misses it on reload), group border fitted at the bottom.
+    Style, overlays and role icons of the compact party/raid frames.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -36,9 +31,7 @@ function GF:Migrate(db)
 end
 
 --------------------------------------------------------------------------------
--- Text style (name and status text) and refined style: names without server
--- or follower mark, health as a percentage. Post-hooks of Blizzard's updates;
--- secret values are skipped.
+-- Text style and refined style: clean names, health as a percentage.
 --------------------------------------------------------------------------------
 local function StyleFrame(frame)
     if not frame then return end
@@ -63,7 +56,7 @@ local function UpdateName(frame)
     frame.name:SetText(name)
 end
 
--- Only where Blizzard shows a health text; Dead/Offline texts are kept.
+-- Only where Blizzard shows a health text; status texts are kept.
 local function UpdateStatusText(frame)
     if frame:IsForbidden() then return end
     local text, unit = frame.statusText, frame.displayedUnit or frame.unit
@@ -81,10 +74,7 @@ local function UpdateStatusText(frame)
 end
 
 --------------------------------------------------------------------------------
--- Role icons: Blizzard can leave them hidden or at 0x0 size when the role is
--- not known yet (reload, roster changes), so they are fixed shortly after
--- those events. "HD role icons" swaps in Blizzard's large icons, also on the
--- Player frame. Blizzard's "Display role icon" setting is respected.
+-- Role icons: fixed when Blizzard leaves them hidden, optionally HD.
 --------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
 local hdRoles
@@ -126,7 +116,7 @@ local function UpdatePlayerRoleIcon()
     if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
 end
 
--- Before the first layout the icon height can be 0: the name's size is used.
+-- The icon can be 0x0 before the first layout: the name size is used.
 local function RoleIconSize(frame, icon)
     local size = icon:GetHeight()
     if not IsSecret(size) and size >= 2 then return size end
@@ -164,9 +154,7 @@ roleEvents:SetScript("OnEvent", function()
 end)
 
 --------------------------------------------------------------------------------
--- Refined overlays: PanzaUI textures for absorbs, heal prediction and the
--- aggro border (9-sliced), applied after Blizzard's frame setup; Blizzard
--- keeps sizing and coloring them. No over-absorb glow.
+-- Refined overlays: PanzaUI textures for absorbs, heal prediction and aggro.
 --------------------------------------------------------------------------------
 local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
 local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
@@ -200,8 +188,7 @@ local function StyleOverlays(frame)
 end
 
 --------------------------------------------------------------------------------
--- Group border (Edit Mode "Display Border"): its texture is pulled up to
--- close the gap Blizzard leaves below the last member.
+-- Group border: closes the gap below the last member.
 --------------------------------------------------------------------------------
 local function FitGroupBorder(group)
     local border = group and group.borderFrame

@@ -1,7 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Refined style (no health bar, class colored names), player info (M+
-    rating, item level) and item/spell IDs.
+    Tooltip style, player info and IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -31,10 +30,9 @@ end
 
 local IsSecret = ns.IsSecret
 
--- Inspect results and M+ ratings are cached per player (GUID); the caches
--- are emptied when full.
+-- Caches per player (GUID), emptied when full.
 local ILVL_CACHE_TIME  = 300 -- seconds
-local INSPECT_THROTTLE = 1.5 -- seconds between inspect requests
+local INSPECT_THROTTLE = 1.5 -- seconds between inspects
 
 local ilvlCache, ilvlTime = {}, {}
 local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0
@@ -51,7 +49,7 @@ local function AddLine(tooltip, label, value, r, g, b)
 end
 
 --------------------------------------------------------------------------------
--- Item level: read directly for the player, inspected (throttled) for others.
+-- Item level: direct for the player, inspected for others.
 --------------------------------------------------------------------------------
 local function RequestInspect(unit, guid)
     local now = GetTime()
@@ -78,7 +76,7 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     end
     ilvlCache[guid], ilvlTime[guid] = floor(ilvl + 0.5), GetTime()
 
-    -- Still hovering the same player: add the value now.
+    -- Still hovering the same player: add it now.
     local _, ttUnit = GameTooltip:GetUnit()
     if not hadValue and TT.db.playerInfo and GameTooltip:IsShown()
         and ttUnit and not IsSecret(ttUnit) and UnitGUID(ttUnit) == guid then
@@ -99,8 +97,7 @@ local function AddItemLevel(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
--- M+ rating: the summary is a big table, so score and color are read once
--- per player per minute and reused.
+-- M+ rating, read once per player per minute.
 --------------------------------------------------------------------------------
 local RATING_CACHE_TIME = 60
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
@@ -130,8 +127,7 @@ local function AddMythicRating(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
--- Tooltip post-calls, registered once (options are read live). Secret values
--- are skipped.
+-- Tooltip post-calls (options read live, secrets skipped).
 --------------------------------------------------------------------------------
 local function ColorName(tooltip, unit)
     local _, class = UnitClass(unit)
@@ -170,7 +166,7 @@ end
 --------------------------------------------------------------------------------
 function TT:OnEnable()
     if self.db.style then
-        -- Hidden, not reparented: no empty space is left for it.
+        -- Hidden, not reparented: no empty space is left.
         ns.Disable(GameTooltip.StatusBar or GameTooltipStatusBar)
     end
 
