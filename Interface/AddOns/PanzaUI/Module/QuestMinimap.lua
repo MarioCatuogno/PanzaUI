@@ -115,11 +115,22 @@ local function ShouldCollapse()
     return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
 end
 
--- Every child of the tracker except its header (varargs, no tables).
-local function SetContentAlpha(header, alpha, ...)
+-- Every child of the tracker except its header (varargs, no tables). Their
+-- own alpha is saved and put back (e.g. the background, transparent by
+-- default).
+local savedAlpha = {}
+
+local function SetContentHidden(header, hide, ...)
     for i = 1, select("#", ...) do
         local child = select(i, ...)
-        if child ~= header then child:SetAlpha(alpha) end
+        if child ~= header then
+            if hide then
+                savedAlpha[child] = child:GetAlpha()
+                child:SetAlpha(0)
+            else
+                child:SetAlpha(savedAlpha[child] or 1)
+            end
+        end
     end
 end
 
@@ -129,7 +140,7 @@ local function UpdateCollapse()
     local hide = ShouldCollapse()
     if hide == hidden then return end
     hidden = hide
-    SetContentAlpha(tracker.Header, hide and 0 or 1, tracker:GetChildren())
+    SetContentHidden(tracker.Header, hide, tracker:GetChildren())
 end
 
 events:SetScript("OnEvent", function(_, event)

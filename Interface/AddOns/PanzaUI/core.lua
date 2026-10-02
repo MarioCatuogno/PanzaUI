@@ -119,7 +119,7 @@ local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
 local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame
 
-local maskInfo
+local maskInfo, frameInfo
 
 function ns.StyleIcon(icon, parent, anchored)
     if not (icon and icon.AddMaskTexture) or icon:IsForbidden() then return end
@@ -137,6 +137,15 @@ function ns.StyleIcon(icon, parent, anchored)
         mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
         mask:SetAllPoints(icon)
         icon:AddMaskTexture(mask)
+        -- The frame atlas is 46x45 (one extra column on the right, for 45x45
+        -- icons): that column is cropped, so the opening is centered on the icon.
+        frameInfo = frameInfo or C_Texture.GetAtlasInfo(ICON_FRAME)
+        local fi = frameInfo
+        if fi and fi.file and fi.width and fi.width > 1 then
+            local l, r = fi.leftTexCoord, fi.rightTexCoord
+            frame:SetTexture(fi.file)
+            frame:SetTexCoord(l, r - (r - l) / fi.width, fi.topTexCoord, fi.bottomTexCoord)
+        end
         frame:SetAllPoints(icon)
         return frame, mask
     end
@@ -144,30 +153,32 @@ function ns.StyleIcon(icon, parent, anchored)
     mask:SetAtlas(ICON_MASK)
     icon:AddMaskTexture(mask)
     frame:SetPoint("TOPLEFT", icon)
+    frame:SetPoint("BOTTOMRIGHT", icon)
+    mask:SetAllPoints(icon)
 
-    -- Width and height follow the icon. While the icon is still 0x0 the
-    -- parent's size stands in, and the real size is read again on show
-    -- (e.g. cast bar icons, much smaller than their bar). Midnight: secret
-    -- geometry is skipped, the last good size is kept.
+    -- Width and height follow the icon. While its size is unknown (0x0
+    -- before the first layout, e.g. icons of hidden frames) the mask simply
+    -- covers the icon, and the size is read again on show and on the next
+    -- frame. Midnight: secret geometry is skipped, the last good size is kept.
     local lastW, lastH, sized = -1, -1, false
     local function Resize()
         local w, h = icon:GetSize()
-        local real = not ns.IsSecret(w) and not ns.IsSecret(h) and w > 0 and h > 0
-        if not real then w, h = parent:GetSize() end
-        if ns.IsSecret(w) or ns.IsSecret(h) or (w == lastW and h == lastH) then return end
-        lastW, lastH, sized = w, h, real
-        mask:ClearAllPoints()
-        if w > 0 and h > 0 and info then
+        if ns.IsSecret(w) or ns.IsSecret(h) or w <= 0 or h <= 0 then return sized end
+        if w == lastW and h == lastH then return true end
+        lastW, lastH, sized = w, h, true
+        if info then
+            mask:ClearAllPoints()
             mask:SetPoint("CENTER", icon)
             mask:SetSize(info.width * w / 45, info.height * h / 45)
-        else
-            mask:SetAllPoints(icon)
         end
-        frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w > 0 and w / 45 or 0, 0)
+        frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w / 45, 0)
+        return true
     end
     Resize()
     parent:HookScript("OnSizeChanged", Resize)
-    parent:HookScript("OnShow", function() if not sized then Resize() end end)
+    parent:HookScript("OnShow", function()
+        if not sized and not Resize() then ns.Defer(Resize) end
+    end)
     return frame, mask
 end
 
