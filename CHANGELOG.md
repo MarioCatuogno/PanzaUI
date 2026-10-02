@@ -7,7 +7,7 @@ Here's a list of all the features included in this first release!
 ### 🛠️ Core
 
 * Action Bars - Added a visibility option for each bar, including Pet and Stance bars (default, mouseover, Skyriding only, no Skyriding or always hidden)
-* Action Bars - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden)
+* Action Bars - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden), the Group Finder eye always stays visible
 * Action Bars - Added an icon zoom slider to hide the old borders of classic icons
 * Action Bars - Added an option to hide macro names and keybindings
 * Action Bars - Added the outlined font to keybindings, stack counts and macro names

@@ -23,7 +23,9 @@ local ACTION_BARS = {
 }
 
 local OTHER_BARS = {
-    { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenuContainer" } },
+    -- The buttons only (MicroMenu): the Group Finder eye (QueueStatusButton)
+    -- lives in MicroMenuContainer and stays visible.
+    { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenu" } },
     { key = "bagBar",     label = "Bag Bar",                   frames = { "BagsBar" } },
     { key = "statusBars", label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
 }
