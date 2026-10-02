@@ -46,6 +46,14 @@ for _, t in ipairs(TARGET_FRAMES) do
         tooltip = "Hide minor elements of the " .. t.unit .. " frame.", bullets = clutterBullets }
 end
 
+options[#options + 1] = { header = "Boss" }
+options[#options + 1] = { key = "bossStyle", label = "Refined style",
+    tooltip = "Polish the look of the Boss frames.",
+    bullets = { "Health and power as a percentage", "Rounded cast bar icon border" } }
+options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
+    tooltip = "Hide minor elements of the Boss frames.",
+    bullets = { "Level", "Red combat/threat glow" } }
+
 options[#options + 1] = { header = "Pet" }
 options[#options + 1] = { key = "petStyle", label = "Refined style",
     tooltip = "Polish the look of the Pet frame.",
@@ -133,6 +141,12 @@ local LEADER_PARTS = { "LeaderIcon", "AssistantIcon", "GuideIcon" }
 local function HideLeaderIcon(ctx)
     if not ctx then return end
     for _, key in ipairs(LEADER_PARTS) do ns.Kill(ctx[key]) end
+end
+
+-- Threat glow around Target-style frames (red in combat).
+local function HideThreatGlow(frame)
+    local container = frame.TargetFrameContainer
+    ns.Kill(frame.threatIndicator or (container and container.Flash))
 end
 
 --------------------------------------------------------------------------------
@@ -300,9 +314,7 @@ local function SetupTargetFrame(frame, db, p)
     if db[p .. "HideClutter"] then
         HidePvpIcon(ctx)
         HideLeaderIcon(ctx)
-        -- Threat glow around the frame (red in combat).
-        local container = frame.TargetFrameContainer
-        ns.Kill(frame.threatIndicator or (container and container.Flash))
+        HideThreatGlow(frame)
     end
 
     if db[p .. "ClassColor"] then
@@ -328,6 +340,34 @@ local function SetupTargetFrame(frame, db, p)
 
         ns.PercentText(health, false)
         ns.PercentText(power, true)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Boss frames (same Blizzard template as Target)
+--------------------------------------------------------------------------------
+local function SetupBoss(db)
+    for i = 1, 5 do
+        local frame = _G["Boss" .. i .. "TargetFrame"]
+        local content = frame and frame.TargetFrameContent
+        if content then
+            local main, ctx = content.TargetFrameContentMain, content.TargetFrameContentContextual
+            local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
+            StyleTexts(main.Name, main.LevelText, health, power)
+
+            if db.bossHideClutter then
+                ns.Kill(main.LevelText)
+                if ctx then ns.Kill(ctx.HighLevelTexture) end
+                HideThreatGlow(frame)
+            end
+
+            if db.bossStyle then
+                local spellbar = frame.spellbar
+                if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
+                ns.PercentText(health, false)
+                ns.PercentText(power, true)
+            end
+        end
     end
 end
 
@@ -447,6 +487,7 @@ function UF:OnEnable()
         end
     end
 
+    SetupBoss(db)
     SetupPet(db)
     SetupPortraits(db)
 
