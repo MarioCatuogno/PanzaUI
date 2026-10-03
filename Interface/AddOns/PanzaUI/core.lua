@@ -8,6 +8,7 @@ ns.modules    = {}
 ns.IsSecret   = issecretvalue or function() return false end
 ns.FONT_FLAGS = "OUTLINE, SLUG" -- shared text style
 ns.textStyle  = false -- General > Style > Refined text
+ns.classColors = false -- General > Style > Class colors
 
 --------------------------------------------------------------------------------
 -- Shared helpers
@@ -938,6 +939,7 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         self:UnregisterEvent(event)
         InitDB()
         ns.textStyle = PanzaUI_DB.General.textStyle
+        ns.classColors = PanzaUI_DB.General.classColors
         BuildSettings()
     else -- PLAYER_LOGIN
         self:UnregisterEvent(event)

@@ -88,9 +88,11 @@ local OTHER_BARS = {
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
-local defaults = { textStyle = true }
+local defaults = { textStyle = true, classColors = true }
 local options  = {
     { header = "Style" },
+    { key = "classColors", label = "Class colors", reload = true,
+      tooltip = "Color the health bars by class or reaction." },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -143,6 +145,15 @@ function GEN:Migrate(db, saved)
             end
         end
         if found then db.textStyle = on end
+    end
+    -- Up to 2.0.241 Class colors was an option of each unit frame.
+    local uf = saved and saved.UnitFrames
+    if db.classColors == nil and uf then
+        local found, on = false, false
+        for _, k in ipairs({ "playerClassColor", "targetClassColor", "focusClassColor" }) do
+            if type(uf[k]) == "boolean" then found, on = true, on or uf[k] end
+        end
+        if found then db.classColors = on end
     end
 end
 

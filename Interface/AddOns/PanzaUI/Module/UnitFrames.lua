@@ -18,8 +18,6 @@ local options = {
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
       bullets = { "Centered name, no level", "Health and power as a percentage" } },
-    { key = "playerClassColor", label = "Class colors",
-      tooltip = "Color the health bar by class." },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -36,8 +34,6 @@ for _, t in ipairs(TARGET_FRAMES) do
     options[#options + 1] = { header = t.unit }
     options[#options + 1] = { key = p .. "Style", label = "Refined style",
         tooltip = "Polish the look of the " .. t.unit .. " frame.", bullets = styleBullets }
-    options[#options + 1] = { key = p .. "ClassColor", label = "Class colors",
-        tooltip = "Color the health bars by class or reaction, Target of Target included." }
     options[#options + 1] = { key = p .. "HideClutter", label = "Hide clutter",
         tooltip = "Hide minor elements of the " .. t.unit .. " frame.", bullets = clutterBullets }
 end
@@ -299,7 +295,7 @@ local function SetupPlayer(db)
         ns.PercentText(power, true)
     end
 
-    if db.playerClassColor then classColorBars[health] = true end
+    if ns.classColors then classColorBars[health] = true end
 end
 
 --------------------------------------------------------------------------------
@@ -357,7 +353,7 @@ local function SetupTargetFrame(frame, db, p)
         HideThreatGlow(frame)
     end
 
-    if db[p .. "ClassColor"] then
+    if ns.classColors then
         classColorBars[health] = true
         -- Target of Target: class color kept after Blizzard's update.
         local tot = TotFrame(frame)
