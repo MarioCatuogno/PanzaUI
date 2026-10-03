@@ -10,6 +10,7 @@ local Chat = ns:RegisterModule("Chat", {
         style         = true,
         timestamps    = true,
         hideCombatLog = true,
+        hideClutter   = true,
     },
     options = {
         { key = "style", label = "Refined style", reload = true,
@@ -19,6 +20,9 @@ local Chat = ns:RegisterModule("Chat", {
           tooltip = "Show the time before every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
           tooltip = "Hide the Combat Log tab." },
+        { key = "hideClutter", label = "Hide clutter",
+          tooltip = "Hide minor messages in the chat.",
+          bullets = { "Guild message of the day", "Loot specialization changes" } },
     },
 })
 
@@ -160,6 +164,36 @@ local function SetupFlagFilter()
     local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
     if not AddFilter then return end
     for _, event in ipairs(FLAG_EVENTS) do AddFilter(event, StripFlag) end
+end
+
+--------------------------------------------------------------------------------
+-- Hide clutter: lines starting like these Blizzard messages are removed right
+-- after a chat window adds them (post-hook, same frame: never drawn).
+-- Hooked at load, before the login messages; the option is read live.
+--------------------------------------------------------------------------------
+local CLUTTER = {} -- plain text before the first %s of each message
+for _, fmt in ipairs({ ERR_LOOT_SPEC_CHANGED_S, GUILD_MOTD_TEMPLATE }) do
+    local prefix = type(fmt) == "string" and fmt:match("^(.-)%%s")
+    if prefix and prefix ~= "" then CLUTTER[#CLUTTER + 1] = prefix end
+end
+
+local function IsClutter(text)
+    if type(text) ~= "string" or ns.IsSecret(text) then return false end
+    for i = 1, #CLUTTER do
+        if text:find(CLUTTER[i], 1, true) then return true end
+    end
+    return false
+end
+
+local function RemoveClutter(frame, text)
+    local db = Chat.db
+    if not (db and db.hideClutter) or not IsClutter(text) then return end
+    pcall(frame.RemoveMessagesByPredicate, frame, IsClutter)
+end
+
+for _, name in ipairs(CHAT_FRAMES) do
+    local frame = _G[name]
+    if frame and frame.RemoveMessagesByPredicate then hooksecurefunc(frame, "AddMessage", RemoveClutter) end
 end
 
 --------------------------------------------------------------------------------
