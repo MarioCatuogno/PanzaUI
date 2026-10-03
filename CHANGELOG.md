@@ -87,7 +87,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Hidden the totem icons under the Player frame
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
-* Unit Frames - Removed the level from Player, Target and Focus, centering the name
+* Unit Frames - Removed the level from Player, Target and Focus, centering the name in a slightly larger font
 * Various - Added a ring on the mouse cursor, in the class color (always, in combat or in combat in a group)
 * Various - Added the /way command to set a map waypoint from coordinates (e.g. /way 45.2 61.8)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)

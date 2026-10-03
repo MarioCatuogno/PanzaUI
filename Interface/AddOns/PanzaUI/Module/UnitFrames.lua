@@ -17,7 +17,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Centered name, no level", "Health and power as a percentage" } },
+      bullets = { "Larger centered name, no level", "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -25,7 +25,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Centered name, no level", "Health and power as a percentage", "Rounded cast bar icon" }
+    local styleBullets = { "Larger centered name, no level", "Health and power as a percentage", "Rounded cast bar icon" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 4 debuffs"
@@ -146,6 +146,13 @@ end
 --------------------------------------------------------------------------------
 -- Centered name
 --------------------------------------------------------------------------------
+-- Slightly larger name (refined style), once at login.
+local NAME_SIZE_BONUS = 2
+local function EnlargeName(name)
+    local font, size, flags = name:GetFont()
+    if font and not ns.IsSecret(size) then name:SetFont(font, size + NAME_SIZE_BONUS, flags) end
+end
+
 local function CenterName(name, bar)
     name:ClearAllPoints()
     name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  0, 1)
@@ -289,6 +296,7 @@ local function SetupPlayer(db)
         ns.Kill(PlayerLevelText)
         local bar = main.HealthBarsContainer
         CenterName(PlayerName, bar)
+        EnlargeName(PlayerName)
         ns.Hook("PlayerFrame_UpdatePlayerNameTextAnchor", function() CenterName(PlayerName, bar) end)
 
         ns.PercentText(health, false)
@@ -371,6 +379,7 @@ local function SetupTargetFrame(frame, db, p)
         ns.Kill(main.LevelText)
         ns.Kill(ctx.HighLevelTexture)
 
+        EnlargeName(main.Name)
         HideFollowerMark(main.Name, frame)
         local tot = TotFrame(frame)
         if tot then
