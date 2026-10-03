@@ -253,6 +253,17 @@ end
 --------------------------------------------------------------------------------
 local styledItems = {}
 
+-- Items of the tracked bars viewer (a few parents up).
+local function IsBarItem(item)
+    local viewer, parent = BuffBarCooldownViewer, item:GetParent()
+    for _ = 1, 3 do
+        if not parent then return false end
+        if parent == viewer then return true end
+        parent = parent:GetParent()
+    end
+    return false
+end
+
 local function StyleItem(item)
     if not item or styledItems[item] then return end
     -- Icon viewers: item.Icon is a texture, bar viewer: a frame.
@@ -265,14 +276,18 @@ local function StyleItem(item)
         local atlas = region.GetAtlas and region:GetAtlas()
         if atlas and atlas:find("IconOverlay", 1, true) then region:SetAlpha(0) end
     end
-    -- Bar items: Blizzard's own icon mask would shrink the icon in the frame.
-    if item.Bar and icon.GetNumMaskTextures then
+    local _, ours = ns.StyleIcon(icon, holder)
+    -- Tracked bars: Blizzard's own icon masks (also added later) would shrink
+    -- the icon inside the frame; only ours is kept.
+    if ours and IsBarItem(item) and icon.GetNumMaskTextures then
         for i = icon:GetNumMaskTextures(), 1, -1 do
             local mask = icon:GetMaskTexture(i)
-            if mask then icon:RemoveMaskTexture(mask) end
+            if mask and mask ~= ours then icon:RemoveMaskTexture(mask) end
         end
+        hooksecurefunc(icon, "AddMaskTexture", function(self, mask)
+            if mask ~= ours then self:RemoveMaskTexture(mask) end
+        end)
     end
-    ns.StyleIcon(icon, holder)
 end
 
 -- Text style for every font string of the item.
