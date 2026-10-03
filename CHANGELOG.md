@@ -33,6 +33,7 @@ Here's a list of all the features included in this first release!
 * Combat - Added the elapsed cast time in the center of Player, Target, Focus and Boss cast bars
 * Combat - Hidden the cast bars right when the cast ends, with no fade out
 * Combat - Hidden the Personal Resource Display while casting
+* Combat - Hidden the pinned player row of the Damage Meter, which covered the other rows
 * Combat - Personal Resource Display now always shows the alternate power value (eg. Stagger)
 * Combat - Personal Resource Display now shows health and power as a percentage, with centered text
 * Core - Added /pui to open the options and /pui mem to show the memory used by PanzaUI

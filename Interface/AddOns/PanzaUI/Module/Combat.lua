@@ -37,7 +37,8 @@ local CB = ns:RegisterModule("PersonalResource", {
           bullets = { "Icons grow from the center", "Bars grow upwards" } },
         { header = "Damage Meter" },
         { key = "dmStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the Damage Meter." },
+          tooltip = "Polish the look of the Damage Meter.",
+          bullets = { "Icons in the action bar style", "No pinned row for your character" } },
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
@@ -409,6 +410,14 @@ local function StyleEntryText(entry)
     if bar.Value then bar.Value:SetFontObject(font) end
 end
 
+-- Pinned player row: Blizzard keeps your row on the edge of the list when it
+-- is scrolled out of view, over the other rows; it stays hidden instead.
+local function HidePinnedPlayer(window)
+    if not window.GetLocalPlayerEntry then return end
+    window:GetLocalPlayerEntry():Hide()
+    ns.Hook(window, "ShowLocalPlayerEntry", function(self) self:GetLocalPlayerEntry():Hide() end)
+end
+
 -- Window texts (title, buttons).
 local function StyleWindowText(window)
     ns.StyleAllFonts(window, 2)
@@ -447,7 +456,10 @@ function CB:OnEnable()
     if db.cdmDynamic then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
     end
-    if db.dmStyle then ns.OnDamageMeterEntry(StyleEntryIcon) end
+    if db.dmStyle then
+        ns.OnDamageMeterEntry(StyleEntryIcon)
+        ns.OnDamageMeterWindow(HidePinnedPlayer)
+    end
     if ns.textStyle then
         ns.OnDamageMeterEntry(StyleEntryText)
         ns.OnDamageMeterWindow(StyleWindowText)
