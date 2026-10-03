@@ -1,7 +1,7 @@
 <p align="center">
 
   <a href="https://github.com/MarioCatuogno/PanzaUI">
-  <img width=800px src="https://github.com/MarioCatuogno/PanzaUI/blob/main/Images/panzaui_logo.jpeg" alt="PanzaUI logo">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_logo.jpeg" alt="PanzaUI logo">
   </a>
 
 </p>
