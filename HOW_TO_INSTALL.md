@@ -58,7 +58,7 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 
 **Where do I find the latest version of the profiles?**
 
-Here on Github (see the releases or pre-releases) or on [Wago](https://wago.io/PO1A4B5V3).
+Here on Github (see the releases or pre-releases) or on [CurseForge](https://www.curseforge.com/wow/addons/panzaui).
 
 **Why is my UI shifted or why can't I see the Minimap?**
 
