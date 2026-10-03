@@ -6,6 +6,7 @@ local addonName, ns = ...
 
 ns.modules    = {}
 ns.IsSecret   = issecretvalue or function() return false end
+local IsSecret = ns.IsSecret
 ns.FONT_FLAGS = "OUTLINE, SLUG" -- shared text style
 ns.textStyle  = false -- General > Style > Refined text
 ns.classColors = false -- General > Style > Class colors
@@ -65,15 +66,15 @@ local styledFlags = ns.FONT_FLAGS
 function ns.StyleFont(obj)
     if not (obj and obj.GetFont) then return end
     local font, size, flags = obj:GetFont()
-    if not ns.IsSecret(font) and not ns.IsSecret(size) then
-        if not font or (not ns.IsSecret(flags) and (flags == styledFlags or flags == ns.FONT_FLAGS)) then return end
+    if not IsSecret(font) and not IsSecret(size) then
+        if not font or (not IsSecret(flags) and (flags == styledFlags or flags == ns.FONT_FLAGS)) then return end
         obj:SetFont(font, size, ns.FONT_FLAGS)
         local _, _, applied = obj:GetFont()
-        if not ns.IsSecret(applied) and applied then styledFlags = applied end
+        if not IsSecret(applied) and applied then styledFlags = applied end
         return
     end
     local base = obj.GetFontObject and obj:GetFontObject()
-    if ns.IsSecret(base) then return end
+    if IsSecret(base) then return end
     local copy = ns.OutlinedFont(base)
     if copy then obj:SetFontObject(copy) end
 end
@@ -101,7 +102,7 @@ for i = 1, 40 do RAID_UNITS[i] = "raid" .. i end
 
 local function IsUnit(unit, token)
     local same = UnitIsUnit(unit, token)
-    return not ns.IsSecret(same) and same
+    return not IsSecret(same) and same
 end
 
 function ns.GroupUnit(unit)
@@ -183,7 +184,7 @@ function ns.StyleIcon(icon, parent, anchored)
     local lastW, lastH, sized = -1, -1, false
     local function Resize()
         local w, h = icon:GetSize()
-        if ns.IsSecret(w) or ns.IsSecret(h) or w <= 0 or h <= 0 then return sized end
+        if IsSecret(w) or IsSecret(h) or w <= 0 or h <= 0 then return sized end
         if w == lastW and h == lastH then return true end
         lastW, lastH, sized = w, h, true
         if info then
@@ -368,7 +369,7 @@ local StyleAllFonts
 
 local function IsDark(region)
     local r, g, b = region:GetTextColor()
-    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) then return false end
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) then return false end
     return r + g + b < 1
 end
 
@@ -417,7 +418,6 @@ end
 -- Percentage text: one decimal, "100" when full, empty at 0 (secret values
 -- go straight to the text, curves and a twin font string do the rest).
 --------------------------------------------------------------------------------
-local IsSecret = ns.IsSecret
 local percentBars = {}
 local fullTexts   = {}
 
@@ -650,7 +650,7 @@ end
 
 local function ReadSkyriding()
     local _, canGlide = C_PlayerInfo.GetGlidingInfo()
-    return not ns.IsSecret(canGlide) and canGlide and true or false
+    return not IsSecret(canGlide) and canGlide and true or false
 end
 
 local visInitialized = false
@@ -743,13 +743,12 @@ local function InitDB()
     PanzaUI_DB = PanzaUI_DB or {}
     local saved = PanzaUI_DB
 
+    local known = {}
     for _, m in ipairs(ns.modules) do
+        known[m.key] = true
         saved[m.key] = saved[m.key] or {}
         if m.Migrate then m:Migrate(saved[m.key], saved) end
     end
-
-    local known = {}
-    for _, m in ipairs(ns.modules) do known[m.key] = true end
     for k in pairs(saved) do
         if not known[k] then saved[k] = nil end
     end

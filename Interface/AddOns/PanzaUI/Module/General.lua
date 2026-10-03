@@ -79,7 +79,8 @@ local UNIT_BARS = {
 }
 
 local OTHER_BARS = {
-    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the cast bars, in Blizzard's cast colors." },
+    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the cast bars.",
+      bullets = { "Colored by cast type" } },
     { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of the Cooldown Manager and Personal Resource Display.",
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
@@ -508,7 +509,7 @@ local function FitQuestText(region)
     if region:GetObjectType() ~= "FontString" then return end
     local path, size, flags = region:GetFont()
     local r, g, b = region:GetTextColor()
-    if not path or ns.IsSecret(r) or ns.IsSecret(path) then return end
+    if ns.IsSecret(path) or not path or ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or ns.IsSecret(flags) then return end
     local light = r + g + b >= 1
     local outlined = flags and flags:find("OUTLINE") ~= nil
     if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end

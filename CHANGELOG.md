@@ -1,103 +1,89 @@
 ## 2.0-RELEASE
 
-Big update! This is a full rework of the PanzaUI switching from existing addons (eg. EQOL, Chattynator and Cooldown Manager Centered) to a new entire addon simply called "PanzaUI" which modify the default UI of World of Warcraft with many QoL features and improvements.
+Big update! This is a full rework of PanzaUI: instead of profiles for other addons (eg. EnhanceQoL, Chattynator and Cooldown Manager Centered), PanzaUI is now a standalone and lightweight addon that improves the default UI of World of Warcraft with many QoL features. Every feature can be turned on or off from the AddOns options (type /pui).
 
 Here's a list of all the features included in this first release!
 
 ### 🛠️ Core
 
-* Action Bars - Added a visibility option for each bar, including Pet and Stance bars (default, mouseover, Skyriding only, no Skyriding or always hidden)
-* Action Bars - Added a visibility option for Micro Menu, Bag Bar and XP/Reputation bar (default, mouseover, Skyriding only, no Skyriding or always hidden), the Group Finder eye always stays visible
+* Action Bars - Added a visibility option for each bar, including Pet and Stance bars: default, mouseover, Skyriding only, no Skyriding or always hidden
 * Action Bars - Added an icon zoom slider to hide the old borders of classic icons
-* Action Bars - Added an option to hide macro names and keybindings
-* Action Bars - Added the outlined font to keybindings, stack counts and macro names
+* Action Bars - Added the same visibility option for Micro Menu, Bag Bar and XP/Reputation bar, keeping the Group Finder eye always visible
 * Action Bars - Bars are always shown in Edit Mode and while dragging a spell
-* Bags & Items - Added an icon zoom slider
+* Action Bars - Hidden macro names and keybindings
+* Bags & Items - Added an icon zoom slider to bag items
 * Bags & Items - Added the auto-repair with personal gold
 * Bags & Items - Added the auto-sell of junk items at merchants
-* Bags & Items - Added the item level on equipment in the bags and in the character, warband and guild banks, colored by item quality
+* Bags & Items - Added the item level on equipment in bags and in the personal, warband and guild banks, colored by item quality
 * Bags & Items - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
-* Bags & Items - Added the outlined font to item counts and item levels
-* Chat - Added the outlined font to chat text, tab names and input box
-* Chat - Added timestamps (hours:minutes) to every message
-* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline, channel and group join/leave notices, "not in a group" warnings
+* Chat - Added timestamps to every message
+* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline notices, channel and group join/leave notices, "not in a group" warnings
 * Chat - Hidden the Combat Log tab
-* Chat - Hidden the Recent Allies icon by player names
-* Chat - Hidden the side buttons (friends, channels, emotes and voice)
-* Chat - Hidden the status icons before player names (AFK, DND and GM kept)
+* Chat - Hidden the Recent Allies icon next to player names
+* Chat - Hidden the side buttons of the chat window
+* Chat - Hidden the status icons next to player names, except AFK, DND and GM
 * Chat - Made web links clickable, opening a box to copy them
-* Chat - Removed the background art from chat tabs, now showing tab names in full
+* Chat - Removed the background art of chat tabs, now showing tab names in full
 * Chat - Removed the border of the input box
 * Chat - Removed the chat window background shown on mouseover
-* Chat - Shortened the channel names (e.g. [2. Trade - City] becomes [2. T])
+* Chat - Shortened the zone channel names (eg. [2. Trade - City] becomes [2. T])
 * Combat - Added an icon zoom slider to buff and debuff icons
-* Combat - Added the action bar style to buff and debuff icons
-* Combat - Added the action bar style to Cooldown Manager icons
-* Combat - Added the action bar style to Damage Meter icons
-* Combat - Added the dynamic layout to Cooldown Manager tracked buffs (centered) and tracked bars (bottom up)
-* Combat - Added the elapsed cast time (e.g. 1.4) in the center of the Player, Target, Focus and Boss cast bars
-* Combat - Added the outlined font to buff and debuff stack counts and durations
-* Combat - Added the outlined font to Cooldown Manager texts (tracked bars, stacks, charges, cooldowns)
-* Combat - Added the outlined font to Damage Meter bars and window titles
-* Combat - Added the outlined font to the Personal Resource Display text, centered on the bars
-* Combat - Added the outlined font to the spell names of the Player, Target, Focus and Boss cast bars
-* Combat - Hidden the Personal Resource Display while the player casts, shown again when the cast ends
-* Combat - Hidden the Player, Target, Focus and Boss cast bars right when the cast ends, with no fade out
-* Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
-* Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
-* Core - Added a single Class colors option for the health bars of Player, Target, Focus and Target of Target (reaction color for NPCs)
-* Core - Added a single Refined text option for the outlined font of the whole UI (every Blizzard panel, menu, list and tooltip, parchment texts kept as they are)
-* Core - Added a texture option for cast bars (in Blizzard's cast colors), Cooldown Manager and Personal Resource Display, Damage Meter and interface bars (Achievement, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars)
-* Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid, Target of Target included)
+* Combat - Added the action bar style to buff, debuff, Cooldown Manager and Damage Meter icons
+* Combat - Added the dynamic layout to Cooldown Manager: tracked buffs grow from the center, tracked bars grow upwards
+* Combat - Added the elapsed cast time in the center of Player, Target, Focus and Boss cast bars
+* Combat - Hidden the cast bars right when the cast ends, with no fade out
+* Combat - Hidden the Personal Resource Display while casting
+* Combat - Personal Resource Display now always shows the alternate power value (eg. Stagger)
+* Combat - Personal Resource Display now shows health and power as a percentage, with centered text
+* Core - Added /pui to open the options and /pui mem to show the memory used by PanzaUI
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
-* Core - Added shortcut commands: /pui (options), /rl (Reload UI), /rc (ready check) and /pl (10-second pull timer)
-* Core - Added the /pui mem command, showing PanzaUI memory before and after garbage collection
-* Core - Added the PanzaUI bar textures (General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb, Cast Bar and Cast Bar (Full)), also available in SharedMedia
-* Core - Reorganized the options into fewer, grouped entries, with a short description of what each one does
-* Party & Raid Frames - Added the option for Blizzard's HD role icons, also on the Player frame
-* Party & Raid Frames - Added the outlined font to names and status text
-* Party & Raid Frames - Added the PanzaUI absorb, heal prediction and aggro border textures
-* Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
+* Core - Added shortcut commands: /rl to reload the UI, /rc for a ready check and /pl for a 10-second pull timer
+* Core - Added texture options for cast bars, Cooldown Manager & PRD, Damage Meter and interface bars (achievements, XP/Reputation bars, Quest Tracker, Reputation panel and tooltips)
+* Core - Added texture options for health and power bars of Player & Pet, Target & Boss, Focus and Party/Raid frames
+* Core - Added the Class colors option for health bars of Player, Target, Focus and Target of Target, with reaction colors for NPCs
+* Core - Added the PanzaUI bar textures, also available in SharedMedia: General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb, Cast Bar and Cast Bar (Full)
+* Core - Added the Refined text option, an outlined font for the whole UI (parchment texts excluded)
+* Core - Grouped the options into a few clear sections, each one with a short description
+* Party & Raid Frames - Added sharper role icons, also on the Player frame
+* Party & Raid Frames - Added the PanzaUI textures for shields, incoming heals and aggro border
+* Party & Raid Frames - Health now shown as a white percentage
 * Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
 * Party & Raid Frames - Shortened long names to fit the frame
-* Quest & Minimap - Added the outlined font to the minimap zone name and clock
-* Quest & Minimap - Added the outlined font to the Quest Tracker text and to the instance texts at the top of the screen
-* Quest & Minimap - Added the quest counter (e.g. 20/35) in the tracker header
-* Quest & Minimap - Hidden the pending calendar invites notice and flashing icon on the minimap
-* Quest & Minimap - Hidden the tracker contents (except the Dungeon / Mythic+ section) during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), showing them again afterwards
-* Quest & Minimap - Removed the backgrounds of the minimap zone name, tracking and calendar buttons
+* Quest & Minimap - Added the quest counter in the Quest Tracker header (eg. 20/35)
+* Quest & Minimap - Hidden the calendar invites notice and flashing icon on the minimap
+* Quest & Minimap - Hidden the Quest Tracker during boss fights, Mythic+ runs and combat in raids and dungeons (except Raid Finder and Follower dungeons), keeping Dungeon and Mythic+ objectives visible
+* Quest & Minimap - Removed the backgrounds of zone name, tracking and calendar buttons on the minimap
 * Tooltips - Added the ID of items and spells
-* Tooltips - Added the item level of players (other players are inspected automatically)
+* Tooltips - Added the item level of players, inspected automatically
 * Tooltips - Added the Mythic+ rating of players, in the rating color
 * Tooltips - Colored player names with their class color
 * Tooltips - Removed the health bar from unit tooltips
 * Unit Frames - Added the action bar style to the cast bar icon of Target, Focus and Boss frames
-* Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus, Boss, Pet and Target of Target
-* Unit Frames - Focus now shows only debuffs (max 4), with the action bar style
-* Unit Frames - Health and power of Player, Target, Focus, Boss and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
+* Unit Frames - Fixed the Player, Target and Focus portraits getting stuck zoomed in
+* Unit Frames - Focus now shows only up to 4 debuffs, with the action bar style
+* Unit Frames - Health and power of Player, Target, Focus, Boss and Pet now shown as a percentage
 * Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
-* Unit Frames - Hidden damage/healing numbers on Player and Pet portraits
+* Unit Frames - Hidden damage and healing numbers on Player and Pet portraits
 * Unit Frames - Hidden the * mark before NPC follower names on Target, Focus and their Target of Target
 * Unit Frames - Hidden the Focus cast bar
 * Unit Frames - Hidden the group leader icon on Player, Target and Focus
 * Unit Frames - Hidden the level on Boss frames
-* Unit Frames - Hidden the Player class resources (still shown on the Personal Resource Display), restoring the normal frame art
-* Unit Frames - Hidden the Player combat/resting glow and the "Zzz" animation
-* Unit Frames - Hidden the Player raid group indicator (e.g. "Group 5")
-* Unit Frames - Hidden the PvP / prestige icon on Player, Target and Focus
+* Unit Frames - Hidden the Player class resources, still shown on the Personal Resource Display
+* Unit Frames - Hidden the Player combat and rest glow and the "Zzz" animation
+* Unit Frames - Hidden the Player raid group indicator (eg. "Group 5")
+* Unit Frames - Hidden the PvP and prestige icons on Player, Target and Focus
 * Unit Frames - Hidden the red threat glow on Target, Focus and Boss frames
 * Unit Frames - Hidden the totem icons under the Player frame
-* Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name in a slightly larger font
 * Unit Frames - Shortened long names on Player, Target, Focus and their Target of Target to fit the frame
-* Various - Added a ring on the mouse cursor, in the class color (always, in combat or in combat in a group)
-* Various - Added the /way command to set a map waypoint from coordinates (e.g. /way 45.2 61.8)
-* Various - Added the fast auto-loot (every item looted at once when auto-loot is on)
-* Various - Added the fast item delete ("DELETE" already typed in the confirmation box)
-* Various - Added the option to hide system notices, such as the micro menu alerts (e.g. unspent talent points)
-* Various - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
+* Various - Added /way to set a map waypoint from coordinates (eg. /way 45.2 61.8)
+* Various - Added a ring around the mouse cursor in the class color: always, in combat or in combat in a group
+* Various - Added the fast auto-loot, looting everything at once
+* Various - Added the fast item delete, with "DELETE" already typed in the confirmation box
+* Various - Added the refined style for Platynator nameplates, with rounded aura and cast icons
+* Various - Hidden the micro menu alerts (eg. unspent talent points)
 
 ### 🧮 Class CDM
 

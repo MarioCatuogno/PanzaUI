@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest & Minimap
-    Minimap style, Quest Tracker auto-collapse and quest count.
+    Minimap style and clutter, Quest Tracker auto-collapse and quest count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -14,7 +14,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
     },
     options = {
         { header = "Minimap" },
-        { key = "minimapStyle", label = "Refined style", reload = true,
+        { key = "minimapStyle", label = "Refined style",
           tooltip = "Polish the look of the minimap." },
         { key = "minimapClutter", label = "Hide clutter",
           tooltip = "Hide minor notifications around the minimap.",
@@ -22,7 +22,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Hide the Quest Tracker during instance combat.",
-          bullets = { "Boss fights and Mythic+ runs", "Raid and dungeon combat, except LFR and Follower", "Dungeon and Mythic+ objectives stay visible" } },
+          bullets = { "Boss fights and Mythic+ runs", "Raid and dungeon combat, except Raid Finder and Follower dungeons", "Dungeon and Mythic+ objectives stay visible" } },
         { key = "questCount", label = "Quest count",
           tooltip = "Show the number of quests in the tracker header." },
     },

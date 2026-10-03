@@ -168,7 +168,7 @@ end
 -- Target of Target: same position, one line as wide as the health bar.
 local function FitToTName(name, bar)
     local width = name and bar and bar:GetWidth()
-    if not width or IsSecret(width) or width <= 0 then return end
+    if IsSecret(width) or not width or width <= 0 then return end
     name:SetWidth(width)
     name:SetWordWrap(false)
     if name.SetMaxLines then name:SetMaxLines(1) end
@@ -212,7 +212,7 @@ local function ClassColorHealth(bar)
         elseif C_ClassColor and C_ClassColor.GetClassColor then
             -- Secret class: Blizzard's lookup may accept it.
             local ok, c = pcall(C_ClassColor.GetClassColor, class)
-            if ok and c and not IsSecret(c) then color = c end
+            if ok and not IsSecret(c) and c then color = c end
         end
     end
 
@@ -231,7 +231,7 @@ local function ClassColorHealth(bar)
     bar:SetStatusBarColor(r, g, b)
 end
 
--- Every colored bar again, on the next frame (after Blizzard's own update).
+-- Every colored bar again (run deferred, after Blizzard's own update).
 local function RecolorAll()
     for bar in pairs(classColorBars) do ClassColorHealth(bar) end
 end
@@ -365,6 +365,7 @@ local function SetupTargetFrame(frame, db, p)
 
     -- Target of Target name.
     local tot = TotFrame(frame)
+    local totBar = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
     if tot and ns.textStyle then
         ns.StyleFont(tot.Name)
         ns.StyleFont(tot.name)
@@ -379,10 +380,9 @@ local function SetupTargetFrame(frame, db, p)
     if ns.classColors then
         classColorBars[health] = true
         -- Target of Target: class color kept after Blizzard's update.
-        local totHealth = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
-        if totHealth then
-            classColorBars[totHealth] = p .. "target"
-            KeepClassColor(totHealth)
+        if totBar then
+            classColorBars[totBar] = p .. "target"
+            KeepClassColor(totBar)
         end
     end
 
@@ -396,7 +396,6 @@ local function SetupTargetFrame(frame, db, p)
         EnlargeName(main.Name)
         HideFollowerMark(main.Name, frame)
         if tot then
-            local totBar = tot.HealthBar or tot.healthbar or tot.healthBar
             FitToTName(tot.Name, totBar)
             if tot.name ~= tot.Name then FitToTName(tot.name, totBar) end
             HideFollowerMark(tot.Name, tot, p .. "target")
@@ -483,13 +482,13 @@ local function RedrawPortraits()
 end
 
 local function OnPortraitEvent(_, _, unit)
-    if IsSecret(unit) or (unit and not PORTRAIT_UNITS[unit]) then return end
+    if IsSecret(unit) or (type(unit) == "string" and not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
     C_Timer.After(1, RedrawPortraits)
 end
 
--- Unit events for the portrait units only (two per frame).
+-- Unit events for the portrait units only (two units per event frame).
 local PORTRAIT_UNIT_EVENTS = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }
 local portraitEvents, portraitEvents2 = CreateFrame("Frame"), CreateFrame("Frame")
 portraitEvents:SetScript("OnEvent", OnPortraitEvent)

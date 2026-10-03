@@ -41,7 +41,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
-          bullets = { "Centered text", "Health and power as a percentage", "Alternate power always shown", "Hidden while casting" } },
+          bullets = { "Centered text", "Health and power as a percentage", "Alternate power value always shown", "Hidden while casting" } },
     },
 })
 

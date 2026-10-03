@@ -63,19 +63,13 @@ local function BagItemLevel(bag, slot)
 end
 
 --------------------------------------------------------------------------------
--- Bag buttons: icon zoom, text style and item level.
+-- Bag buttons: icon zoom and item level.
 --------------------------------------------------------------------------------
-local styled = {}
 local containers = {}
 
 local function UpdateBagButton(button)
     local db = Items.db
     ns.ZoomIcon(button.icon or button.Icon, db.iconZoom)
-
-    if ns.textStyle and not styled[button] then
-        styled[button] = true
-        ns.StyleFont(button.Count)
-    end
 
     local ilvl, color
     if db.itemLevel then ilvl, color = BagItemLevel(button:GetBagID(), button:GetID()) end

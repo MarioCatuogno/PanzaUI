@@ -147,6 +147,9 @@ local function SetupAllFrames()
     end
 end
 
+-- Chat message filters (refined style and hide clutter).
+local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+
 --------------------------------------------------------------------------------
 -- Status icons before player names (AFK, DND and Blizzard staff kept).
 --------------------------------------------------------------------------------
@@ -231,8 +234,7 @@ local function OnLinkClick(link, text)
     if url then StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url) end
 end
 
-local function SetupFlagFilter()
-    local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+local function SetupStyleFilters()
     if not AddFilter then return end
     for _, event in ipairs(FLAG_EVENTS) do
         AddFilter(event, StripFlag)
@@ -339,7 +341,6 @@ local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
 local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
 
-local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
 if AddFilter then
     AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
     AddFilter("CHAT_MSG_SYSTEM", HideNotices)
@@ -360,7 +361,7 @@ function Chat:OnEnable()
 
     if db.style then
         for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
-        SetupFlagFilter()
+        SetupStyleFilters()
     end
     if db.style or ns.textStyle then
         SetupAllFrames()

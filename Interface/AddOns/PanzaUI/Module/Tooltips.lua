@@ -14,7 +14,7 @@ local TT = ns:RegisterModule("Tooltips", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the unit tooltips.",
-          bullets = { "No health bar", "Class colored names" } },
+          bullets = { "No health bar", "Class colored player names" } },
         { key = "playerInfo", label = "Player info",
           tooltip = "Show more information about players.",
           bullets = { "Mythic+ rating", "Item level" } },
@@ -23,6 +23,7 @@ local TT = ns:RegisterModule("Tooltips", {
     },
 })
 
+-- Converts the saved values of older versions.
 function TT:Migrate(db)
     ns.MergeOptions(db, "style", db, "hideHealthBar", "classColorNames")
     ns.MergeOptions(db, "playerInfo", db, "showMythicRating", "showItemLevel")
@@ -135,7 +136,7 @@ end
 --------------------------------------------------------------------------------
 -- Tooltip post-calls (options read live, secrets skipped).
 --------------------------------------------------------------------------------
-local function ColorName(tooltip, unit)
+local function ColorName(unit)
     local _, class = UnitClass(unit)
     local color = not IsSecret(class) and class and RAID_CLASS_COLORS[class]
     local line = color and GameTooltipTextLeft1
@@ -150,7 +151,7 @@ local function OnUnit(tooltip)
     if IsSecret(unit) or not unit then return end
     local isPlayer = UnitIsPlayer(unit)
     if IsSecret(isPlayer) or not isPlayer then return end
-    if db.style then ColorName(tooltip, unit) end
+    if db.style then ColorName(unit) end
 
     if not db.playerInfo then return end
     local guid = UnitGUID(unit)

@@ -34,7 +34,7 @@ local OTHER_BARS = {
 local defaults = { style = true, iconZoom = 5 }
 local options  = {
     { header = "Buttons" },
-    { key = "style", label = "Refined style", reload = true,
+    { key = "style", label = "Refined style",
       tooltip = "Polish the look of the action buttons.",
       bullets = { "No macro names or keybindings" } },
     { key = "iconZoom", label = "Icon zoom",

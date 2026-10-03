@@ -25,11 +25,11 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
         { key = "hideNotices", label = "Hide system notices",
-          tooltip = "Hide system messages and notifications.",
-          bullets = { "Micro menu alerts (e.g. unspent talent points)" } },
+          tooltip = "Hide the alerts on the micro menu buttons.",
+          bullets = { "Help tips like unspent talent points", "Flashing buttons" } },
         { key = "waypoints", label = "Waypoint command", reload = true,
           tooltip = "Set a map waypoint with /way and coordinates.",
-          bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is installed" } },
+          bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is enabled" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring in your class color around the cursor.",
           dropdown = {
@@ -151,7 +151,7 @@ end
 
 local events = CreateFrame("Frame")
 events:SetScript("OnEvent", function(_, _, unit)
-    if not unit or ns.IsSecret(unit) then return end
+    if ns.IsSecret(unit) or not unit then return end
     pendingUnits[unit] = true
     ns.Defer(UpdatePending)
 end)

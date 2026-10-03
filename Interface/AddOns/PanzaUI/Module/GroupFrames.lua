@@ -20,7 +20,8 @@ local GF = ns:RegisterModule("GroupFrames", {
           tooltip = "Use cleaner overlays on the party and raid health bars.",
           bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
         { key = "hdRoleIcons", label = "HD role icons", reload = true,
-          tooltip = "Use Blizzard's high-resolution role icons, also on the Player frame." },
+          tooltip = "Use sharper role icons on the party and raid frames.",
+          bullets = { "Also on the Player frame" } },
     },
 })
 
