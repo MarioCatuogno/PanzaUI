@@ -185,17 +185,26 @@ local function ClassColorHealth(bar)
     end
 
     -- Secret values are passed on, never tested.
-    local isPlayer = UnitIsPlayer(unit)
-    local inParty  = UnitInParty(unit)
-    local classed  = (not IsSecret(isPlayer) and isPlayer) or (not IsSecret(inParty) and inParty)
-    local class
-    if classed then
-        class = select(2, UnitClass(unit))
-        -- Secret class: read from the group token.
-        if IsSecret(class) then class = select(2, UnitClass(ns.GroupUnit(unit))) end
-        if IsSecret(class) then class = nil end
+    -- The player and group members are always classed, read from their own
+    -- token (compound units can be secret in combat).
+    local token = ns.GroupUnit(unit)
+    local classed = token ~= unit
+    if not classed then
+        local isPlayer, inParty = UnitIsPlayer(unit), UnitInParty(unit)
+        classed = (not IsSecret(isPlayer) and isPlayer) or (not IsSecret(inParty) and inParty)
     end
-    local color = class and RAID_CLASS_COLORS[class]
+    local color
+    if classed then
+        local class = select(2, UnitClass(token))
+        if not IsSecret(class) then
+            color = class and RAID_CLASS_COLORS[class]
+        elseif C_ClassColor and C_ClassColor.GetClassColor then
+            -- Secret class: Blizzard's lookup may accept it (its color values
+            -- then go straight to the bar); refused calls are ignored.
+            local ok, c = pcall(C_ClassColor.GetClassColor, class)
+            if ok and c and not IsSecret(c) then color = c end
+        end
+    end
 
     local r, g, b
     if color then

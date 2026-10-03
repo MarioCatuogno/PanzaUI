@@ -19,7 +19,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Hide the tracker contents during dungeon, raid and Mythic+ combat.",
-          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Only the header stays visible", "Shown again afterwards" } },
+          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Header and Dungeon / Mythic+ section stay visible", "Shown again afterwards" } },
         { key = "questCount", label = "Quest count",
           tooltip = "Show the number of quests in your log.",
           bullets = { "In the tracker header (e.g. 20/35)" } },
@@ -106,13 +106,15 @@ local function ShouldCollapse()
     return inCombat and not LFR_DIFFICULTY[difficulty] and difficulty ~= FOLLOWER_DUNGEON
 end
 
--- Fades every child except the header, restoring its own alpha.
+-- Fades every child except the header and the Dungeon / Mythic+ section,
+-- restoring its own alpha.
 local savedAlpha = {}
 
 local function SetContentHidden(header, hide, ...)
+    local scenario = ScenarioObjectiveTracker
     for i = 1, select("#", ...) do
         local child = select(i, ...)
-        if child ~= header then
+        if child ~= header and child ~= scenario then
             if hide then
                 savedAlpha[child] = child:GetAlpha()
                 child:SetAlpha(0)

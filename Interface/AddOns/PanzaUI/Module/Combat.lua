@@ -265,6 +265,13 @@ local function StyleItem(item)
         local atlas = region.GetAtlas and region:GetAtlas()
         if atlas and atlas:find("IconOverlay", 1, true) then region:SetAlpha(0) end
     end
+    -- Bar items: Blizzard's own icon mask would shrink the icon in the frame.
+    if item.Bar and icon.GetNumMaskTextures then
+        for i = icon:GetNumMaskTextures(), 1, -1 do
+            local mask = icon:GetMaskTexture(i)
+            if mask then icon:RemoveMaskTexture(mask) end
+        end
+    end
     ns.StyleIcon(icon, holder)
 end
 

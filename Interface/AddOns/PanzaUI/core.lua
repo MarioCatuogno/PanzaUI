@@ -193,7 +193,7 @@ function ns.StyleIcon(icon, parent, anchored)
         frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w / 45, 0)
         return true
     end
-    Resize()
+    if not Resize() then ns.Defer(Resize) end -- size known after the first layout
     parent:HookScript("OnSizeChanged", Resize)
     parent:HookScript("OnShow", function()
         if not sized and not Resize() then ns.Defer(Resize) end
