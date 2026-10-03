@@ -15,14 +15,16 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names", "Short channel names" } },
+          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names",
+                      "Short channel names", "Clickable web links" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time before every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
           tooltip = "Hide the Combat Log tab." },
         { key = "hideClutter", label = "Hide clutter",
           tooltip = "Hide minor messages in the chat.",
-          bullets = { "Guild message of the day", "Loot specialization changes", "Crafting by other players" } },
+          bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
+                      "Online and offline notices", "Channel join and leave notices" } },
     },
 })
 
@@ -188,11 +190,61 @@ local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zo
     return false, msg, author, lang, ShortName(channel, zoneChannel), target, flag, zoneID, ...
 end
 
+--------------------------------------------------------------------------------
+-- Clickable links: web addresses in player messages become chat links that
+-- open a box to copy them. Messages are scanned only when they contain
+-- "://" or "www." (plain find), messages with other links are left alone.
+--------------------------------------------------------------------------------
+local URL_PATTERNS = { "(%a[%w+.-]*://[^%s|]+)", "(www%.[%w-]+%.[^%s|]+)" }
+local URL_LINK = "|cff4fc3f7|Haddon:PanzaUI:url|h[%1]|h|r"
+
+local function LinkURLs(_, _, msg, ...)
+    if type(msg) ~= "string" or ns.IsSecret(msg) or msg:find("|H", 1, true) then return false end
+    if not (msg:find("://", 1, true) or msg:find("www.", 1, true)) then return false end
+    local linked, count = msg:gsub(URL_PATTERNS[1], URL_LINK)
+    if count == 0 then linked, count = msg:gsub(URL_PATTERNS[2], URL_LINK) end
+    if count == 0 then return false end
+    return false, linked, ...
+end
+
+StaticPopupDialogs.PANZAUI_COPY_URL = {
+    text = "Press Ctrl+C to copy the link.",
+    button1 = CLOSE,
+    hasEditBox = true,
+    editBoxWidth = 320,
+    OnShow = function(self, data)
+        local box = (self.GetEditBox and self:GetEditBox()) or self.editBox
+        box:SetText(data or self.data or "")
+        box:HighlightText()
+        box:SetFocus()
+    end,
+    EditBoxOnEnterPressed = function(self) self:GetParent():Hide() end,
+    EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+}
+
+-- The address is the link text: "[url]" inside the clicked link.
+local function OnLinkClick(link, text)
+    if type(link) ~= "string" or not link:find("^addon:PanzaUI:url") then return end
+    local url = type(text) == "string" and text:match("%[(.-)%]")
+    if url then StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url) end
+end
+
 local function SetupFlagFilter()
     local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
     if not AddFilter then return end
-    for _, event in ipairs(FLAG_EVENTS) do AddFilter(event, StripFlag) end
+    for _, event in ipairs(FLAG_EVENTS) do
+        AddFilter(event, StripFlag)
+        AddFilter(event, LinkURLs)
+    end
+    AddFilter("CHAT_MSG_BN_WHISPER", LinkURLs)
     AddFilter("CHAT_MSG_CHANNEL", ShortenChannel)
+    if EventRegistry then
+        EventRegistry:RegisterCallback("SetItemRef", function(_, link, text) OnLinkClick(link, text) end, ns)
+    end
+    ns.Hook("SetItemRef", OnLinkClick)
 end
 
 --------------------------------------------------------------------------------
@@ -234,8 +286,51 @@ local function HideOthersCrafts(_, _, msg)
     return not (OWN_CRAFT and OWN_CRAFT ~= "" and msg:find(OWN_CRAFT, 1, true) == 1)
 end
 
+-- Longest plain part of a Blizzard format string (between its %s/%d).
+local function KeyText(fmt)
+    if type(fmt) ~= "string" then return end
+    local best = ""
+    for part in (fmt:gsub("%%%d?%$?[sd]", "\0") .. "\0"):gmatch("([^%z]*)%z") do
+        if #part > #best then best = part end
+    end
+    return #best >= 4 and best or nil
+end
+
+local function KeyTexts(...)
+    local list = {}
+    for i = 1, select("#", ...) do list[#list + 1] = KeyText((select(i, ...))) end
+    return list
+end
+
+local function HasAny(msg, list)
+    for i = 1, #list do
+        if msg:find(list[i], 1, true) then return true end
+    end
+    return false
+end
+
+-- Online / offline notices, loot of other players.
+local PRESENCE = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S)
+local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LOOT_ITEM_PUSHED_MULTIPLE)
+
+local function Hiding(msg)
+    local db = Chat.db
+    return db and db.hideClutter and type(msg) == "string" and not ns.IsSecret(msg)
+end
+
+local function HidePresence(_, _, msg) return Hiding(msg) and HasAny(msg, PRESENCE) end
+local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
+local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
+
 local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
-if AddFilter then AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts) end
+if AddFilter then
+    AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
+    AddFilter("CHAT_MSG_SYSTEM", HidePresence)
+    AddFilter("CHAT_MSG_LOOT", HideOthersLoot)
+    for _, event in ipairs({ "CHAT_MSG_CHANNEL_NOTICE", "CHAT_MSG_CHANNEL_NOTICE_USER", "CHAT_MSG_CHANNEL_JOIN", "CHAT_MSG_CHANNEL_LEAVE" }) do
+        AddFilter(event, HideChannelNotice)
+    end
+end
 
 --------------------------------------------------------------------------------
 -- Module API
