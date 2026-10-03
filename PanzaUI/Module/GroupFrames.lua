@@ -252,5 +252,12 @@ function GF:OnEnable()
     if CurveConstants and UnitHealthPercent then
         ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)
         ns.ForEachCompactFrame(UpdateStatusText)
+        -- The "100" text follows Blizzard's font size (synced by the text
+        -- style when it is on).
+        if not ns.textStyle then
+            ns.Hook("DefaultCompactUnitFrameSetup", function(frame)
+                if frame and not frame:IsForbidden() then ns.SyncPercentFont(frame.statusText) end
+            end)
+        end
     end
 end
