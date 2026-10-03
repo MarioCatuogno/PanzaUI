@@ -20,6 +20,7 @@ Here's a list of all the features included in this first release!
 * Bags & Items - Added the outlined font to item counts and item levels
 * Chat - Added the outlined font to chat text, tab names and input box
 * Chat - Added timestamps (hours:minutes) to every message
+* Chat - Hidden the status icons before player names (AFK, DND and GM kept)
 * Chat - Hidden the Combat Log tab
 * Chat - Hidden the side buttons (friends, channels, emotes and voice)
 * Chat - Removed the background art from chat tabs, now showing tab names in full
