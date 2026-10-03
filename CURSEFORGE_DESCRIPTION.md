@@ -91,6 +91,10 @@ PanzaUI works on its own with any layout. If you want the exact look of the scre
 
 ![PanzaUI - Party](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg)
 
+## 🤖 AI Disclaimer
+
+PanzaUI is designed, tested in game and maintained by me. During development I used an AI assistant to help write and review the code, track down bugs and improve performance. Every change has been checked and tested in game before being released.
+
 ## 🐞 Bugs and feedback
 
 Found a bug or have an idea? [Open an issue on GitHub](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.

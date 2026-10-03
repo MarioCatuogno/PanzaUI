@@ -96,6 +96,10 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 
 </p>
 
+## AI Disclaimer
+
+PanzaUI is designed, tested in game and maintained by me. During development I used an AI assistant to help write and review the code, track down bugs and improve performance. Every change has been checked and tested in game before being released.
+
 ## Problems/Bugs?
 
 If you find bugs or any kind of problems, please open an issue [here](https://github.com/MarioCatuogno/PanzaUI/issues). Thanks!
