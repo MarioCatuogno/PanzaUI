@@ -165,6 +165,15 @@ local function CenterName(name, bar)
     if name.SetMaxLines then name:SetMaxLines(1) end
 end
 
+-- Target of Target: same position, one line as wide as the health bar.
+local function FitToTName(name, bar)
+    local width = name and bar and bar:GetWidth()
+    if not width or IsSecret(width) or width <= 0 then return end
+    name:SetWidth(width)
+    name:SetWordWrap(false)
+    if name.SetMaxLines then name:SetMaxLines(1) end
+end
+
 --------------------------------------------------------------------------------
 -- Class colors: class color for players, reaction color for other units,
 -- cached per unit.
@@ -354,6 +363,13 @@ local function SetupTargetFrame(frame, db, p)
     local health, power = main.HealthBarsContainer.HealthBar, main.ManaBar
     StyleTexts(main.Name, main.LevelText, health, power)
 
+    -- Target of Target name.
+    local tot = TotFrame(frame)
+    if tot and ns.textStyle then
+        ns.StyleFont(tot.Name)
+        ns.StyleFont(tot.name)
+    end
+
     if db[p .. "HideClutter"] then
         HidePvpIcon(ctx)
         HideLeaderIcon(ctx)
@@ -363,7 +379,6 @@ local function SetupTargetFrame(frame, db, p)
     if ns.classColors then
         classColorBars[health] = true
         -- Target of Target: class color kept after Blizzard's update.
-        local tot = TotFrame(frame)
         local totHealth = tot and (tot.HealthBar or tot.healthbar or tot.healthBar)
         if totHealth then
             classColorBars[totHealth] = p .. "target"
@@ -380,8 +395,10 @@ local function SetupTargetFrame(frame, db, p)
 
         EnlargeName(main.Name)
         HideFollowerMark(main.Name, frame)
-        local tot = TotFrame(frame)
         if tot then
+            local totBar = tot.HealthBar or tot.healthbar or tot.healthBar
+            FitToTName(tot.Name, totBar)
+            if tot.name ~= tot.Name then FitToTName(tot.name, totBar) end
             HideFollowerMark(tot.Name, tot, p .. "target")
             if tot.name ~= tot.Name then HideFollowerMark(tot.name, tot, p .. "target") end
         end

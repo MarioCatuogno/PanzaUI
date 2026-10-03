@@ -45,7 +45,7 @@ Here's a list of all the features included in this first release!
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a single Class colors option for the health bars of Player, Target, Focus and Target of Target (reaction color for NPCs)
-* Core - Added a single Refined text option for the outlined font of the whole UI (framerate counter, waypoint distance, Character panel, reputation, currency, talents and spellbook included)
+* Core - Added a single Refined text option for the outlined font of the whole UI (framerate counter, waypoint distance, Character and Inspect panels, reputation, currency, talents and spellbook included)
 * Core - Added a texture option for cast bars (in Blizzard's cast colors), Cooldown Manager and Personal Resource Display, Damage Meter and interface bars (Achievement, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars)
 * Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid, Target of Target included)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
@@ -72,7 +72,7 @@ Here's a list of all the features included in this first release!
 * Tooltips - Colored player names with their class color
 * Tooltips - Removed the health bar from unit tooltips
 * Unit Frames - Added the action bar style to the cast bar icon of Target, Focus and Boss frames
-* Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus, Boss and Pet
+* Unit Frames - Added the outlined font to name and bar text of Player, Target, Focus, Boss, Pet and Target of Target
 * Unit Frames - Focus now shows only debuffs (max 4), with the action bar style
 * Unit Frames - Health and power of Player, Target, Focus, Boss and Pet now shown as a simple percentage (one decimal below 100, hidden at 0)
 * Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
@@ -90,6 +90,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Redrawn the Player, Target and Focus portraits when they get stuck zoomed in
 * Unit Frames - Removed the colored name background from Target and Focus
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name in a slightly larger font
+* Unit Frames - Shortened long names on Player, Target, Focus and their Target of Target to fit the frame
 * Various - Added a ring on the mouse cursor, in the class color (always, in combat or in combat in a group)
 * Various - Added the /way command to set a map waypoint from coordinates (e.g. /way 45.2 61.8)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)

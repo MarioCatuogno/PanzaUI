@@ -489,6 +489,18 @@ local function StyleBlizzardTexts()
         ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
     end
 
+    -- Inspect panel: every tab, restyled on the next frame after it opens or
+    -- changes tab (texts already styled are skipped).
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
+        local panel = InspectFrame
+        if not panel then return end
+        local function Restyle() ns.StyleAllFonts(panel, 4, true) end
+        local function Queue() ns.Defer(Restyle) end
+        panel:HookScript("OnShow", Queue)
+        ns.Hook("InspectSwitchTabs", Queue)
+        if panel:IsShown() then Queue() end
+    end)
+
     -- Talents / specialization: texts are made when a page is built, so the
     -- panel is restyled on the next frame after it opens or changes tab
     -- (texts already styled are skipped).
