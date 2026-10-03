@@ -476,7 +476,8 @@ local seenFonts, keptFonts = {}, {}
 -- mail, books), so they are kept by name.
 local PARCHMENT_FONTS = { "^QuestFont", "^QuestTitleFont", "^MailTextFont", "^InvoiceTextFont", "^ItemTextFont" }
 
--- Fonts of nameplate addons keep their own style.
+-- Fonts of other addons keep their own style: only Blizzard's fonts (secure
+-- globals) are styled. Nameplate addons are also excluded by name.
 local OTHER_FONTS = { "^Platynator" }
 
 local function MatchAny(name, patterns)
@@ -498,7 +499,8 @@ local function StyleSharedFonts()
         local font = type(name) == "string" and _G[name] or name
         if type(font) == "table" and font.GetFont and not seenFonts[font] then
             seenFonts[font] = true
-            local other = type(name) == "string" and MatchAny(name, OTHER_FONTS)
+            local other = type(name) == "string"
+                and (MatchAny(name, OTHER_FONTS) or (issecurevariable and not issecurevariable(name)))
             local path, _, flags = font:GetFont()
             local r, g, b = font:GetTextColor()
             if path and not other then
