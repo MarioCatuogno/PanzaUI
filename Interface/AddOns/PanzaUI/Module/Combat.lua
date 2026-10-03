@@ -276,10 +276,12 @@ local function StyleItem(item)
         local atlas = region.GetAtlas and region:GetAtlas()
         if atlas and atlas:find("IconOverlay", 1, true) then region:SetAlpha(0) end
     end
-    local _, ours = ns.StyleIcon(icon, holder)
-    -- Tracked bars: Blizzard's own icon masks (also added later) would shrink
-    -- the icon inside the frame; only ours is kept.
-    if ours and IsBarItem(item) and icon.GetNumMaskTextures then
+    -- Tracked bars: anchored variant (mask and frame follow the icon's own
+    -- edges, no size reading); Blizzard's own icon masks, also added later,
+    -- would shrink the icon, so only ours is kept.
+    local isBar = IsBarItem(item)
+    local _, ours = ns.StyleIcon(icon, holder, isBar)
+    if ours and isBar and icon.GetNumMaskTextures then
         for i = icon:GetNumMaskTextures(), 1, -1 do
             local mask = icon:GetMaskTexture(i)
             if mask and mask ~= ours then icon:RemoveMaskTexture(mask) end
