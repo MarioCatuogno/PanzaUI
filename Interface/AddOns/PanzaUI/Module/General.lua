@@ -505,7 +505,9 @@ local function StylePanel(addon, name, levels, pageHooks, scrollLists)
     local function Setup()
         local panel = _G[name]
         if not panel then return end
-        local function Restyle() ns.StyleAllFonts(panel, levels, true) end
+        local function Restyle()
+            if panel:IsShown() then ns.StyleAllFonts(panel, levels, true) end
+        end
         local function Queue() ns.Defer(Restyle) end
         panel:HookScript("OnShow", Queue)
         for _, func in ipairs(pageHooks) do
@@ -554,7 +556,8 @@ local function StyleBlizzardTexts()
         ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
     end
 
-    -- Inspect, Talents / specialization, Professions, Adventure Guide and Mail.
+    -- Inspect, Talents / specialization, Professions, Adventure Guide, Mail,
+    -- World Map (title and zone bar, not the map pins) and Quest Log.
     StylePanel("Blizzard_InspectUI", "InspectFrame", 4, { "InspectSwitchTabs" })
     StylePanel("Blizzard_PlayerSpells", "PlayerSpellsFrame", 4, { "SetTab" })
     StylePanel("Blizzard_ProfessionsBook", "ProfessionsBookFrame", 5, {})
@@ -562,6 +565,8 @@ local function StyleBlizzardTexts()
         "EncounterJournal_ListInstances", "EncounterJournal_DisplayInstance", "EncounterJournal_DisplayEncounter" }, true)
     StylePanel("Blizzard_MailFrame", "MailFrame", 4, { "InboxFrame_Update", "MailFrameTab_OnClick" })
     StylePanel("Blizzard_MailFrame", "OpenMailFrame", 4, { "OpenMail_Update" })
+    StylePanel("Blizzard_WorldMap", "WorldMapFrame", 3, { "OnMapChanged", "NavBar_AddButton" })
+    StylePanel("Blizzard_WorldMap", "QuestMapFrame", 6, { "QuestLogQuests_Update" })
 end
 
 --------------------------------------------------------------------------------
