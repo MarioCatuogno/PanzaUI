@@ -498,10 +498,11 @@ local function StyleTabs(panel)
     end
 end
 
--- Load-on-demand panels: restyled on the next frame after they open or change
--- page (methods of the panel or global functions); dark texts are skipped.
+-- Blizzard panels: restyled on the next frame after they open or change page
+-- (methods of the panel or global functions); dark texts are skipped.
+-- Load-on-demand panels are set up when their addon loads.
 local function StylePanel(addon, name, levels, pageHooks, scrollLists)
-    EventUtil.ContinueOnAddOnLoaded(addon, function()
+    local function Setup()
         local panel = _G[name]
         if not panel then return end
         local function Restyle() ns.StyleAllFonts(panel, levels, true) end
@@ -513,7 +514,8 @@ local function StylePanel(addon, name, levels, pageHooks, scrollLists)
         if scrollLists and ScrollUtil then HookScrollBoxes(levels, panel:GetChildren()) end
         StyleTabs(panel)
         if panel:IsShown() then Queue() end
-    end)
+    end
+    if _G[name] then Setup() else EventUtil.ContinueOnAddOnLoaded(addon, Setup) end
 end
 
 local function StyleBlizzardTexts()
@@ -552,12 +554,14 @@ local function StyleBlizzardTexts()
         ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
     end
 
-    -- Inspect, Talents / specialization, Professions and Adventure Guide.
+    -- Inspect, Talents / specialization, Professions, Adventure Guide and Mail.
     StylePanel("Blizzard_InspectUI", "InspectFrame", 4, { "InspectSwitchTabs" })
     StylePanel("Blizzard_PlayerSpells", "PlayerSpellsFrame", 4, { "SetTab" })
     StylePanel("Blizzard_ProfessionsBook", "ProfessionsBookFrame", 5, {})
     StylePanel("Blizzard_EncounterJournal", "EncounterJournal", 6, { "EJ_ContentTab_Select",
         "EncounterJournal_ListInstances", "EncounterJournal_DisplayInstance", "EncounterJournal_DisplayEncounter" }, true)
+    StylePanel("Blizzard_MailFrame", "MailFrame", 4, { "InboxFrame_Update", "MailFrameTab_OnClick" })
+    StylePanel("Blizzard_MailFrame", "OpenMailFrame", 4, { "OpenMail_Update" })
 end
 
 --------------------------------------------------------------------------------
