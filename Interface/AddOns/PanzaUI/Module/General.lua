@@ -617,6 +617,13 @@ local function StyleBlizzardTexts()
         StyleButtonFonts(settings.CloseButton)
         StyleButtonFonts(ChildAt(settings, "Container.SettingsList.Header.DefaultsButton"))
     end
+
+    -- Social panel: Contacts, Who, Raid and Quick Join, with the Friends /
+    -- Recent Allies / Recruit A Friend tabs and the bottom buttons.
+    StylePanel("Blizzard_FriendsFrame", "FriendsFrame", 6, { "FriendsFrame_Update", "FriendsList_Update" }, true)
+    if FriendsTabHeader then StyleTabs(FriendsTabHeader) end
+    StyleButtonFonts(FriendsFrameAddFriendButton)
+    StyleButtonFonts(FriendsFrameSendMessageButton)
 end
 
 --------------------------------------------------------------------------------
