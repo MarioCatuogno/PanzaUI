@@ -442,7 +442,8 @@ end
 
 --------------------------------------------------------------------------------
 -- Text style for other Blizzard texts (framerate counter, waypoint distance,
--- Character panel header and stats, talents and spellbook pages).
+-- Character panel header, stats, reputation and currency, talents and
+-- spellbook pages).
 --------------------------------------------------------------------------------
 local function StyleBlizzardTexts()
     local fps = FramerateFrame
@@ -460,6 +461,17 @@ local function StyleBlizzardTexts()
     local title = CharacterFrame and CharacterFrame.TitleContainer and CharacterFrame.TitleContainer.TitleText
     ns.StyleFont(title or CharacterFrameTitleText)
     ns.StyleFont(CharacterLevelText)
+
+    -- Reputation and Currency tabs: scrolling lists, each row styled when
+    -- Blizzard sets it up (texts already styled are skipped).
+    local function StyleRow(row) ns.StyleAllFonts(row, 2) end
+    for _, panel in ipairs({ ReputationFrame, TokenFrame }) do
+        local box = panel and panel.ScrollBox
+        if box and ScrollUtil then
+            ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(StyleRow), ns, true)
+        end
+        if panel then ns.StyleAllFonts(panel, 1) end
+    end
 
     -- Character stats: rows are made and updated by Blizzard's stats update.
     local stats = CharacterStatsPane
