@@ -15,7 +15,7 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the party and raid frames.",
-          bullets = { "Names without server", "Health as a percentage" } },
+          bullets = { "Names without server", "Long names shortened", "Health as a percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
           tooltip = "Use cleaner overlays on the party and raid health bars.",
           bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
@@ -43,6 +43,16 @@ local function StyleExisting()
     ns.ForEachCompactFrame(StyleFrame)
     local title = CompactPartyFrame and CompactPartyFrame.title
     if title and title.GetFontString then ns.StyleFont(title:GetFontString()) end
+end
+
+-- Names on one line within the frame: longer ones end with "...".
+local fittedNames = {}
+local function FitName(frame)
+    local name = frame and not frame:IsForbidden() and frame.name
+    if not name or fittedNames[name] then return end
+    fittedNames[name] = true
+    name:SetWordWrap(false)
+    if name.SetMaxLines then name:SetMaxLines(1) end
 end
 
 local function UpdateName(frame)
@@ -235,6 +245,8 @@ function GF:OnEnable()
     end
 
     if not db.style then return end
+    ns.ForEachCompactFrame(FitName)
+    ns.Hook("DefaultCompactUnitFrameSetup", FitName)
     ns.Hook("CompactUnitFrame_UpdateName", UpdateName)
     if CurveConstants and UnitHealthPercent then
         ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)

@@ -20,10 +20,11 @@ Here's a list of all the features included in this first release!
 * Bags & Items - Added the outlined font to item counts and item levels
 * Chat - Added the outlined font to chat text, tab names and input box
 * Chat - Added timestamps (hours:minutes) to every message
-* Chat - Hidden minor messages: guild message of the day, loot specialization changes and crafting by other players
+* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline and channel join/leave notices
 * Chat - Hidden the status icons before player names (AFK, DND and GM kept)
 * Chat - Hidden the Combat Log tab
 * Chat - Hidden the side buttons (friends, channels, emotes and voice)
+* Chat - Made web links clickable, opening a box to copy them
 * Chat - Removed the background art from chat tabs, now showing tab names in full
 * Chat - Removed the border of the input box
 * Chat - Removed the chat window background shown on mouseover
@@ -58,6 +59,7 @@ Here's a list of all the features included in this first release!
 * Party & Raid Frames - Health now shown as a simple white percentage (one decimal below 100, hidden at 0)
 * Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
 * Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
+* Party & Raid Frames - Shortened long names to fit the frame
 * Quest & Minimap - Added the outlined font to the minimap zone name and clock
 * Quest & Minimap - Added the outlined font to the Quest Tracker text and to the instance texts at the top of the screen
 * Quest & Minimap - Added the quest counter (e.g. 20/35) in the tracker header

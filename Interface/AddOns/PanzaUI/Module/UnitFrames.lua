@@ -17,7 +17,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Larger centered name, no level", "Health and power as a percentage" } },
+      bullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -25,7 +25,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Larger centered name, no level", "Health and power as a percentage", "Rounded cast bar icon" }
+    local styleBullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage", "Rounded cast bar icon" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 4 debuffs"
@@ -153,11 +153,16 @@ local function EnlargeName(name)
     if font and not ns.IsSecret(size) then name:SetFont(font, size + NAME_SIZE_BONUS, flags) end
 end
 
+-- Centered over the health bar, one line within its width: longer names
+-- end with "...".
+local NAME_MARGIN = 4 -- pixels kept free on each side
 local function CenterName(name, bar)
     name:ClearAllPoints()
-    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  0, 1)
-    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", 0, 1)
+    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  NAME_MARGIN, 1)
+    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", -NAME_MARGIN, 1)
     name:SetJustifyH("CENTER")
+    name:SetWordWrap(false)
+    if name.SetMaxLines then name:SetMaxLines(1) end
 end
 
 --------------------------------------------------------------------------------
