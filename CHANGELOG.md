@@ -21,9 +21,10 @@ Here's a list of all the features included in this first release!
 * Chat - Added the outlined font to chat text, tab names and input box
 * Chat - Added timestamps (hours:minutes) to every message
 * Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline, channel and group join/leave notices, "not in a group" warnings
-* Chat - Hidden the status icons before player names (AFK, DND and GM kept)
 * Chat - Hidden the Combat Log tab
+* Chat - Hidden the Recent Allies icon by player names
 * Chat - Hidden the side buttons (friends, channels, emotes and voice)
+* Chat - Hidden the status icons before player names (AFK, DND and GM kept)
 * Chat - Made web links clickable, opening a box to copy them
 * Chat - Removed the background art from chat tabs, now showing tab names in full
 * Chat - Removed the border of the input box

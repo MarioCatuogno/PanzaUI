@@ -25,7 +25,7 @@ local Chat = ns:RegisterModule("Chat", {
           tooltip = "Hide minor messages in the chat.",
           bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
                       "Online and offline notices", "Channel and group join and leave notices",
-                      "Not in a group warnings" } },
+                      "Not in a group warnings", "Recent Allies icon by player names" } },
     },
 })
 
@@ -264,10 +264,25 @@ local function IsClutter(text)
     return false
 end
 
+-- Recent Allies icon Blizzard adds after some player names.
+local ALLY_ICON = "%s?|A:friendslist%-recentallies[^|]*|a"
+
+local function HasAllyIcon(text)
+    return type(text) == "string" and not ns.IsSecret(text) and text:find("friendslist-recentallies", 1, true) ~= nil
+end
+
+local function StripAllyIcon(text, ...)
+    return (text:gsub(ALLY_ICON, "")), ...
+end
+
 local function RemoveClutter(frame, text)
     local db = Chat.db
-    if not (db and db.hideClutter) or not IsClutter(text) then return end
-    pcall(frame.RemoveMessagesByPredicate, frame, IsClutter)
+    if not (db and db.hideClutter) then return end
+    if IsClutter(text) then
+        pcall(frame.RemoveMessagesByPredicate, frame, IsClutter)
+    elseif HasAllyIcon(text) and frame.TransformMessages then
+        pcall(frame.TransformMessages, frame, HasAllyIcon, StripAllyIcon)
+    end
 end
 
 for _, name in ipairs(CHAT_FRAMES) do
