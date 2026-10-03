@@ -454,6 +454,38 @@ end
 --------------------------------------------------------------------------------
 -- Text style for other Blizzard texts (panels, counters, waypoint).
 --------------------------------------------------------------------------------
+
+-- Scrolling lists of a panel: each row styled when Blizzard sets it up.
+local function StyleListRow(row) ns.StyleAllFonts(row, 2, true) end
+
+local function HookScrollBoxes(levels, ...)
+    for i = 1, select("#", ...) do
+        local child = select(i, ...)
+        if child.ScrollTarget and child.GetView then
+            pcall(ScrollUtil.AddInitializedFrameCallback, child, ns.ScrollFrameCallback(StyleListRow), ns, false)
+        elseif levels > 0 then
+            HookScrollBoxes(levels - 1, child:GetChildren())
+        end
+    end
+end
+
+-- Load-on-demand panels: restyled on the next frame after they open or change
+-- page (methods of the panel or global functions); dark texts are skipped.
+local function StylePanel(addon, name, levels, pageHooks, scrollLists)
+    EventUtil.ContinueOnAddOnLoaded(addon, function()
+        local panel = _G[name]
+        if not panel then return end
+        local function Restyle() ns.StyleAllFonts(panel, levels, true) end
+        local function Queue() ns.Defer(Restyle) end
+        panel:HookScript("OnShow", Queue)
+        for _, func in ipairs(pageHooks) do
+            if panel[func] then ns.Hook(panel, func, Queue) else ns.Hook(func, Queue) end
+        end
+        if scrollLists and ScrollUtil then HookScrollBoxes(levels, panel:GetChildren()) end
+        if panel:IsShown() then Queue() end
+    end)
+end
+
 local function StyleBlizzardTexts()
     local fps = FramerateFrame
     if fps then
@@ -489,30 +521,12 @@ local function StyleBlizzardTexts()
         ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
     end
 
-    -- Inspect panel: every tab, restyled on the next frame after it opens or
-    -- changes tab (texts already styled are skipped).
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_InspectUI", function()
-        local panel = InspectFrame
-        if not panel then return end
-        local function Restyle() ns.StyleAllFonts(panel, 4, true) end
-        local function Queue() ns.Defer(Restyle) end
-        panel:HookScript("OnShow", Queue)
-        ns.Hook("InspectSwitchTabs", Queue)
-        if panel:IsShown() then Queue() end
-    end)
-
-    -- Talents / specialization: texts are made when a page is built, so the
-    -- panel is restyled on the next frame after it opens or changes tab
-    -- (texts already styled are skipped).
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", function()
-        local panel = PlayerSpellsFrame
-        if not panel then return end
-        local function Restyle() ns.StyleAllFonts(panel, 4, true) end
-        local function Queue() ns.Defer(Restyle) end
-        panel:HookScript("OnShow", Queue)
-        ns.Hook(panel, "SetTab", Queue)
-        if panel:IsShown() then Queue() end
-    end)
+    -- Inspect, Talents / specialization, Professions and Adventure Guide.
+    StylePanel("Blizzard_InspectUI", "InspectFrame", 4, { "InspectSwitchTabs" })
+    StylePanel("Blizzard_PlayerSpells", "PlayerSpellsFrame", 4, { "SetTab" })
+    StylePanel("Blizzard_ProfessionsBook", "ProfessionsBookFrame", 5, {})
+    StylePanel("Blizzard_EncounterJournal", "EncounterJournal", 6, { "EJ_ContentTab_Select",
+        "EncounterJournal_ListInstances", "EncounterJournal_DisplayInstance", "EncounterJournal_DisplayEncounter" }, true)
 end
 
 --------------------------------------------------------------------------------

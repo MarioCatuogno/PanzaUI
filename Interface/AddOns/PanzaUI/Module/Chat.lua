@@ -24,7 +24,8 @@ local Chat = ns:RegisterModule("Chat", {
         { key = "hideClutter", label = "Hide clutter",
           tooltip = "Hide minor messages in the chat.",
           bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
-                      "Online and offline notices", "Channel join and leave notices" } },
+                      "Online and offline notices", "Channel and group join and leave notices",
+                      "Not in a group warnings" } },
     },
 })
 
@@ -306,8 +307,12 @@ local function HasAny(msg, list)
     return false
 end
 
--- Online / offline notices, loot of other players.
-local PRESENCE = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S)
+-- System notices (online / offline, group join / leave, not in a group),
+-- loot of other players.
+local NOTICES = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S,
+    ERR_JOINED_GROUP_S, ERR_LEFT_GROUP_S, ERR_RAID_MEMBER_ADDED_S, ERR_RAID_MEMBER_REMOVED_S,
+    ERR_INSTANCE_GROUP_ADDED_S, ERR_INSTANCE_GROUP_REMOVED_S,
+    ERR_NOT_IN_GROUP, ERR_NOT_IN_RAID, ERR_NOT_IN_INSTANCE_GROUP)
 local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LOOT_ITEM_PUSHED_MULTIPLE)
 
 local function Hiding(msg)
@@ -315,14 +320,14 @@ local function Hiding(msg)
     return db and db.hideClutter and type(msg) == "string" and not ns.IsSecret(msg)
 end
 
-local function HidePresence(_, _, msg) return Hiding(msg) and HasAny(msg, PRESENCE) end
+local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES) end
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
 local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
 
 local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
 if AddFilter then
     AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
-    AddFilter("CHAT_MSG_SYSTEM", HidePresence)
+    AddFilter("CHAT_MSG_SYSTEM", HideNotices)
     AddFilter("CHAT_MSG_LOOT", HideOthersLoot)
     for _, event in ipairs({ "CHAT_MSG_CHANNEL_NOTICE", "CHAT_MSG_CHANNEL_NOTICE_USER", "CHAT_MSG_CHANNEL_JOIN", "CHAT_MSG_CHANNEL_LEAVE" }) do
         AddFilter(event, HideChannelNotice)

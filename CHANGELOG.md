@@ -20,7 +20,7 @@ Here's a list of all the features included in this first release!
 * Bags & Items - Added the outlined font to item counts and item levels
 * Chat - Added the outlined font to chat text, tab names and input box
 * Chat - Added timestamps (hours:minutes) to every message
-* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline and channel join/leave notices
+* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline, channel and group join/leave notices, "not in a group" warnings
 * Chat - Hidden the status icons before player names (AFK, DND and GM kept)
 * Chat - Hidden the Combat Log tab
 * Chat - Hidden the side buttons (friends, channels, emotes and voice)
@@ -45,7 +45,7 @@ Here's a list of all the features included in this first release!
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
 * Core - Added a single Class colors option for the health bars of Player, Target, Focus and Target of Target (reaction color for NPCs)
-* Core - Added a single Refined text option for the outlined font of the whole UI (framerate counter, waypoint distance, Character and Inspect panels, reputation, currency, talents and spellbook included)
+* Core - Added a single Refined text option for the outlined font of the whole UI (framerate counter, waypoint distance, Character and Inspect panels, reputation, currency, talents, spellbook, professions and Adventure Guide included)
 * Core - Added a texture option for cast bars (in Blizzard's cast colors), Cooldown Manager and Personal Resource Display, Damage Meter and interface bars (Achievement, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars)
 * Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid, Target of Target included)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
