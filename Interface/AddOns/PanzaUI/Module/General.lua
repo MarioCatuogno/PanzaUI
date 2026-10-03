@@ -454,22 +454,78 @@ end
 --------------------------------------------------------------------------------
 -- Text style for Blizzard texts: every shared font object gets the outlined
 -- style, so all texts using it follow (panels, tooltips, menus, lists).
--- Dark fonts (parchment texts) and thick outlines are left as they are; fonts
--- of load-on-demand addons are styled when they load.
+-- Dark and parchment fonts and thick outlines keep their own flags; fonts of
+-- load-on-demand addons are styled when they load.
 --------------------------------------------------------------------------------
-local styledFonts = {}
+local seenFonts, keptFonts = {}, {}
+
+-- Parchment fonts: Blizzard colors their texts dark at runtime (quest details,
+-- mail, books), so they are kept by name.
+local PARCHMENT_FONTS = { "^QuestFont", "^QuestTitleFont", "^MailTextFont", "^InvoiceTextFont", "^ItemTextFont" }
+
+local function IsParchment(name)
+    if type(name) ~= "string" then return false end
+    for _, pattern in ipairs(PARCHMENT_FONTS) do
+        if name:find(pattern) then return true end
+    end
+    return false
+end
 
 local function StyleSharedFonts()
+    -- New fonts: kept ones remember their own flags (read before any change
+    -- in this pass; our flags left by a styled parent count as none).
+    local styled = {}
     for _, name in ipairs(GetFonts()) do
         local font = type(name) == "string" and _G[name] or name
-        if type(font) == "table" and font.GetFont and not styledFonts[font] then
-            styledFonts[font] = true
-            local path, size, flags = font:GetFont()
+        if type(font) == "table" and font.GetFont and not seenFonts[font] then
+            seenFonts[font] = true
+            local path, _, flags = font:GetFont()
             local r, g, b = font:GetTextColor()
-            local dark = r and r + g + b < 1
-            if path and not dark and not (flags and flags:find("THICK")) then font:SetFont(path, size, ns.FONT_FLAGS) end
+            if path then
+                flags = flags or ""
+                if IsParchment(name) or (r and r + g + b < 1) or flags:find("THICK") then
+                    keptFonts[font] = flags:find("SLUG") and "" or flags
+                else
+                    styled[#styled + 1] = font
+                end
+            end
         end
     end
+    for _, font in ipairs(styled) do
+        local path, size = font:GetFont()
+        font:SetFont(path, size, ns.FONT_FLAGS)
+    end
+    -- Inherited fonts follow their parent, so kept fonts get their flags back.
+    for font, flags in pairs(keptFonts) do
+        local path, size, current = font:GetFont()
+        if current ~= flags then font:SetFont(path, size, flags) end
+    end
+end
+
+-- Quest details: the same texts are dark on parchment and light on dark
+-- backgrounds, so each one is outlined only while it is light.
+local function FitQuestText(region)
+    if region:GetObjectType() ~= "FontString" then return end
+    local path, size, flags = region:GetFont()
+    local r, g, b = region:GetTextColor()
+    if not path or ns.IsSecret(r) or ns.IsSecret(path) then return end
+    local light = r + g + b >= 1
+    local outlined = flags and flags:find("OUTLINE") ~= nil
+    if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end
+end
+
+local function FitQuestFrame(frame, levels)
+    if not frame then return end
+    for _, region in ipairs({ frame:GetRegions() }) do FitQuestText(region) end
+    if levels > 0 then
+        for _, child in ipairs({ frame:GetChildren() }) do FitQuestFrame(child, levels - 1) end
+    end
+end
+
+local function FitQuestInfo()
+    FitQuestFrame(QuestInfoFrame, 2)
+    FitQuestFrame(QuestInfoRewardsFrame, 2)
+    FitQuestFrame(MapQuestInfoRewardsFrame, 2)
 end
 
 local function StyleBlizzardTexts()
@@ -478,6 +534,7 @@ local function StyleBlizzardTexts()
     local loader = CreateFrame("Frame")
     loader:RegisterEvent("ADDON_LOADED")
     loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)
+    ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
 end
 
 --------------------------------------------------------------------------------
