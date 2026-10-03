@@ -1,3 +1,110 @@
+## 2.0-RELEASE
+
+Big update! This is a full rework of PanzaUI: instead of profiles for other addons (eg. EnhanceQoL, Chattynator and Cooldown Manager Centered), PanzaUI is now a standalone and lightweight addon that improves the default UI of World of Warcraft with many QoL features. Every feature can be turned on or off from the AddOns options (type /pui).
+
+Here's a list of all the features included in this first release!
+
+### 🛠️ Core
+
+* Action Bars - Added a visibility option for each bar, including Pet and Stance bars: default, mouseover, Skyriding only, no Skyriding or always hidden
+* Action Bars - Added an icon zoom slider to hide the old borders of classic icons
+* Action Bars - Added the same visibility option for Micro Menu, Bag Bar and XP/Reputation bar, keeping the Group Finder eye always visible
+* Action Bars - Bars are always shown in Edit Mode and while dragging a spell
+* Action Bars - Hidden macro names and keybindings
+* Bags & Items - Added an icon zoom slider to bag items
+* Bags & Items - Added the auto-repair with personal gold
+* Bags & Items - Added the auto-sell of junk items at merchants
+* Bags & Items - Added the item level on equipment in bags and in the personal, warband and guild banks, colored by item quality
+* Bags & Items - Added the item level on equipped items in the Character and Inspect panels, colored by item quality
+* Chat - Added timestamps to every message
+* Chat - Hidden minor messages: guild message of the day, loot specialization changes, crafting and loot of other players, online/offline notices, channel and group join/leave notices, "not in a group" warnings
+* Chat - Hidden the Combat Log tab
+* Chat - Hidden the Recent Allies icon next to player names
+* Chat - Hidden the side buttons of the chat window
+* Chat - Hidden the status icons next to player names, except AFK, DND and GM
+* Chat - Made web links clickable, opening a box to copy them
+* Chat - Removed the background art of chat tabs, now showing tab names in full
+* Chat - Removed the border of the input box
+* Chat - Removed the chat window background shown on mouseover
+* Chat - Shortened the zone channel names (eg. [2. Trade - City] becomes [2. T])
+* Combat - Added an icon zoom slider to buff and debuff icons
+* Combat - Added the action bar style to buff, debuff, Cooldown Manager and Damage Meter icons
+* Combat - Added the dynamic layout to Cooldown Manager: tracked buffs grow from the center, tracked bars grow upwards
+* Combat - Added the elapsed cast time in the center of Player, Target, Focus and Boss cast bars
+* Combat - Hidden the cast bars right when the cast ends, with no fade out
+* Combat - Hidden the Personal Resource Display while casting
+* Combat - Hidden the pinned player row of the Damage Meter, which covered the other rows
+* Combat - Personal Resource Display now always shows the alternate power value (eg. Stagger)
+* Combat - Personal Resource Display now shows health and power as a percentage, with centered text
+* Core - Added /pui to open the options and /pui mem to show the memory used by PanzaUI
+* Core - Added Blizzard's Cooldown Manager bar texture to the texture list
+* Core - Added shortcut commands: /rl to reload the UI, /rc for a ready check and /pl for a 10-second pull timer
+* Core - Added texture options for cast bars, Cooldown Manager & PRD, Damage Meter and interface bars (achievements, XP/Reputation bars, Quest Tracker, Reputation panel and tooltips)
+* Core - Added texture options for health and power bars of Player & Pet, Target & Boss, Focus and Party/Raid frames
+* Core - Added the Class colors option for health bars of Player, Target, Focus and Target of Target, with reaction colors for NPCs
+* Core - Added the PanzaUI bar textures, also available in SharedMedia: General, Glass, Player, Target, Focus, Party, Damage Meter, PRD, Absorb, Cast Bar and Cast Bar (Full)
+* Core - Added the Refined text option, an outlined font for the whole UI (parchment texts excluded)
+* Core - Grouped the options into a few clear sections, each one with a short description
+* Party & Raid Frames - Added sharper role icons, also on the Player frame
+* Party & Raid Frames - Added the PanzaUI textures for shields, incoming heals and aggro border
+* Party & Raid Frames - Health now shown as a white percentage
+* Party & Raid Frames - Hidden the over-absorb glow at the end of the health bar
+* Party & Raid Frames - Removed the server from player names and the * mark from NPC followers
+* Party & Raid Frames - Shortened long names to fit the frame
+* Quest & Minimap - Added the quest counter in the Quest Tracker header (eg. 20/35)
+* Quest & Minimap - Hidden the calendar invites notice and flashing icon on the minimap
+* Quest & Minimap - Hidden the Quest Tracker during boss fights, Mythic+ runs and combat in raids and dungeons (except Raid Finder and Follower dungeons), keeping Dungeon and Mythic+ objectives visible
+* Quest & Minimap - Removed the backgrounds of zone name, tracking and calendar buttons on the minimap
+* Tooltips - Added the ID of items and spells
+* Tooltips - Added the item level of players, inspected automatically
+* Tooltips - Added the Mythic+ rating of players, in the rating color
+* Tooltips - Colored player names with their class color
+* Tooltips - Removed the health bar from unit tooltips
+* Unit Frames - Added the action bar style to the cast bar icon of Target, Focus and Boss frames
+* Unit Frames - Fixed the Player, Target and Focus portraits getting stuck zoomed in
+* Unit Frames - Focus now shows only up to 4 debuffs, with the action bar style
+* Unit Frames - Health and power of Player, Target, Focus, Boss and Pet now shown as a percentage
+* Unit Frames - Hidden buffs and debuffs on Target, Focus and Pet frames
+* Unit Frames - Hidden damage and healing numbers on Player and Pet portraits
+* Unit Frames - Hidden the * mark before NPC follower names on Target, Focus and their Target of Target
+* Unit Frames - Hidden the Focus cast bar
+* Unit Frames - Hidden the group leader icon on Player, Target and Focus
+* Unit Frames - Hidden the level on Boss frames
+* Unit Frames - Hidden the Player class resources, still shown on the Personal Resource Display
+* Unit Frames - Hidden the Player combat and rest glow and the "Zzz" animation
+* Unit Frames - Hidden the Player raid group indicator (eg. "Group 5")
+* Unit Frames - Hidden the PvP and prestige icons on Player, Target and Focus
+* Unit Frames - Hidden the red threat glow on Target, Focus and Boss frames
+* Unit Frames - Hidden the totem icons under the Player frame
+* Unit Frames - Removed the colored name background from Target and Focus
+* Unit Frames - Removed the level from Player, Target and Focus, centering the name in a slightly larger font
+* Unit Frames - Shortened long names on Player, Target, Focus and their Target of Target to fit the frame
+* Various - Added /way to set a map waypoint from coordinates (eg. /way 45.2 61.8)
+* Various - Added a ring around the mouse cursor in the class color: always, in combat or in combat in a group
+* Various - Added the fast auto-loot, looting everything at once
+* Various - Added the fast item delete, with "DELETE" already typed in the confirmation box
+* Various - Added the refined style for Platynator nameplates, with rounded aura and cast icons
+* Various - Hidden the micro menu alerts (eg. unspent talent points)
+
+### 🧮 Class CDM
+
+* Monk - Brewmaster: Adjusted buffs and tracked bars to match the new version of UI
+* Monk - Mistweaver: Adjusted buffs and tracked bars to match the new version of UI
+* Monk - Windwalker: Adjusted buffs and tracked bars to match the new version of UI
+
+### 👤 Profiles
+
+* BigWigs - Adjusted every frame position and size to match the new version of UI
+* BlizzUI - Adjusted every frame position and size to match the new version of UI
+* Platynator - Changed the text size of buffs, debuffs and CC icons
+* Platynator - Changed the texture to PanzaUI for health bar and cast bar
+* Platynator - Changed the value of health percentage to decimal
+
+### 📏 Various
+
+* Removed old profiles from unused addons
+* Updated documentation to the latest UI version
+
 ## 1.7-RELEASE
 
 This is a small release that fixes some bugs and improve performance. It is compatible with WoW patch 12.1.5.
