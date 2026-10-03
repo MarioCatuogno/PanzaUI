@@ -503,10 +503,10 @@ local function StyleSharedFonts()
     end
 end
 
--- Quest details: the same texts are dark on parchment and light on dark
--- backgrounds, so each one is outlined only while it is light.
-local function FitQuestText(region)
-    if region:GetObjectType() ~= "FontString" then return end
+-- Texts colored dark on parchment by Blizzard (quest details, spellbook):
+-- each one is outlined only while it is light.
+local function FitOutline(region)
+    if not region or region:GetObjectType() ~= "FontString" then return end
     local path, size, flags = region:GetFont()
     local r, g, b = region:GetTextColor()
     if ns.IsSecret(path) or not path or ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or ns.IsSecret(flags) then return end
@@ -515,18 +515,33 @@ local function FitQuestText(region)
     if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end
 end
 
-local function FitQuestFrame(frame, levels)
+local function FitFrameOutlines(frame, levels)
     if not frame then return end
-    for _, region in ipairs({ frame:GetRegions() }) do FitQuestText(region) end
+    for _, region in ipairs({ frame:GetRegions() }) do FitOutline(region) end
     if levels > 0 then
-        for _, child in ipairs({ frame:GetChildren() }) do FitQuestFrame(child, levels - 1) end
+        for _, child in ipairs({ frame:GetChildren() }) do FitFrameOutlines(child, levels - 1) end
     end
 end
 
 local function FitQuestInfo()
-    FitQuestFrame(QuestInfoFrame, 2)
-    FitQuestFrame(QuestInfoRewardsFrame, 2)
-    FitQuestFrame(MapQuestInfoRewardsFrame, 2)
+    FitFrameOutlines(QuestInfoFrame, 2)
+    FitFrameOutlines(QuestInfoRewardsFrame, 2)
+    FitFrameOutlines(MapQuestInfoRewardsFrame, 2)
+end
+
+-- Spellbook: spell names, headers and page number, as Blizzard sets them up.
+local function SetupSpellBook()
+    ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
+        FitOutline(item.Name)
+        FitOutline(item.SubName)
+        FitOutline(item.RequiredLevel)
+    end)
+    ns.Hook(SpellBookHeaderMixin, "Init", function(header) FitOutline(header.Text) end)
+    local book = PlayerSpellsFrame and PlayerSpellsFrame.SpellBookFrame
+    local pages = book and book.PagedSpellsFrame
+    if not pages then return end
+    local function FitPages() FitFrameOutlines(pages, 4) end
+    book:HookScript("OnShow", function() ns.Defer(FitPages) end)
 end
 
 local function StyleBlizzardTexts()
@@ -536,6 +551,7 @@ local function StyleBlizzardTexts()
     loader:RegisterEvent("ADDON_LOADED")
     loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
 end
 
 --------------------------------------------------------------------------------
