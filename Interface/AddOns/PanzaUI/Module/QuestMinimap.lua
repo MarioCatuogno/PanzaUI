@@ -86,7 +86,7 @@ end
 -- Blizzard's SetCollapsed would taint the tracker.
 --------------------------------------------------------------------------------
 local BOSS_INSTANCES  = { party = true, raid = true }
-local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR, legacy LFR, Timewalking LFR
+local LFR_DIFFICULTY  = { [7] = true, [17] = true, [151] = true } -- LFR difficulties (legacy, current, Timewalking)
 local FOLLOWER_DUNGEON = 205
 
 local COLLAPSE_EVENTS = {
@@ -130,7 +130,7 @@ end
 local function UpdateCollapse()
     local tracker = ObjectiveTrackerFrame
     if not tracker then return end
-    local hide = ShouldCollapse()
+    local hide = QM.db.combatCollapse and ShouldCollapse() or false
     if hide == hidden then return end
     hidden = hide
     SetContentHidden(tracker.Header, hide, tracker:GetChildren())

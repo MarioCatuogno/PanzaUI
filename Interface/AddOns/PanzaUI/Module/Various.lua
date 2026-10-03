@@ -96,7 +96,7 @@ end
 local markerBorder, markerMask, markerMasked = {}, {}, {}
 
 local function UpdateMarker(marker)
-    local isCast = marker.details and marker.details.kind == "castIcon"
+    local isCast = marker.details ~= nil and marker.details.kind == "castIcon"
     local icon = marker.marker
     if isCast and not markerBorder[marker] then
         markerBorder[marker], markerMask[marker] = ns.StyleIcon(icon, marker)

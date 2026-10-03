@@ -4,6 +4,7 @@
     hidden clutter, applied at login and kept with post-hooks.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 --------------------------------------------------------------------------------
 -- Options: Target and Focus share their entries (<prefix><Key>).
@@ -110,13 +111,13 @@ local function RestorePlayerArt()
     container.FrameFlash:SetPoint("CENTER", container.FrameFlash:GetParent(), "CENTER", -1.5, 1)
     PlayerFrame_GetManaBar().ManaBarMask:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana-Mask", TextureKitConstants.UseAtlasSize)
     PlayerFrameAlternatePowerBarArea:Hide()
-    if not InCombatLockdown() then
+    if not InCombatLockdown() and GetPlayerBottomManagedFrameContainer then
         GetPlayerBottomManagedFrameContainer():SetPoint("TOP", PlayerFrame, "BOTTOM", 30, 25)
     end
 end
 
 --------------------------------------------------------------------------------
--- PvP and group leader icons.
+-- Hidden elements: PvP and leader icons, threat glow.
 --------------------------------------------------------------------------------
 local PVP_PARTS = { "PVPIcon", "PvpIcon", "PrestigePortrait", "PrestigeBadge", "PvpTimerText", "PVPTimerText" }
 
@@ -150,11 +151,10 @@ end
 local NAME_SIZE_BONUS = 2
 local function EnlargeName(name)
     local font, size, flags = name:GetFont()
-    if font and not ns.IsSecret(size) then name:SetFont(font, size + NAME_SIZE_BONUS, flags) end
+    if not IsSecret(font) and font and not IsSecret(size) then name:SetFont(font, size + NAME_SIZE_BONUS, flags) end
 end
 
--- Centered over the health bar, one line within its width: longer names
--- end with "...".
+-- Centered over the health bar on one line; long names end with "...".
 local NAME_MARGIN = 4 -- pixels kept free on each side
 local function CenterName(name, bar)
     name:ClearAllPoints()
@@ -169,13 +169,11 @@ end
 -- Class colors: class color for players, reaction color for other units,
 -- cached per unit.
 --------------------------------------------------------------------------------
-local IsSecret = ns.IsSecret
-local classColorBars = {}
-
-local colorR, colorG, colorB, colorValid = {}, {}, {}, {} -- bar -> unit it was computed for
+local classColorBars = {} -- bar -> true, or the unit to use (Target of Target)
+local colorR, colorG, colorB = {}, {}, {}
+local colorValid = {} -- bar -> unit its color was computed for
 local colorEvents = CreateFrame("Frame")
 
--- classColorBars: bar -> true, or the unit to use for Target of Target bars.
 local function ClassColorHealth(bar)
     local fallback = classColorBars[bar]
     if not fallback or bar.disconnected then return end
@@ -190,9 +188,7 @@ local function ClassColorHealth(bar)
         return
     end
 
-    -- Secret values are passed on, never tested.
-    -- The player and group members are always classed, read from their own
-    -- token (compound units can be secret in combat).
+    -- Player and group members: class read from their own token.
     local token = ns.GroupUnit(unit)
     local classed = token ~= unit
     if not classed then
@@ -205,8 +201,7 @@ local function ClassColorHealth(bar)
         if not IsSecret(class) then
             color = class and RAID_CLASS_COLORS[class]
         elseif C_ClassColor and C_ClassColor.GetClassColor then
-            -- Secret class: Blizzard's lookup may accept it (its color values
-            -- then go straight to the bar); refused calls are ignored.
+            -- Secret class: Blizzard's lookup may accept it.
             local ok, c = pcall(C_ClassColor.GetClassColor, class)
             if ok and c and not IsSecret(c) then color = c end
         end
@@ -227,15 +222,14 @@ local function ClassColorHealth(bar)
     bar:SetStatusBarColor(r, g, b)
 end
 
--- Target of Target bars: colored on unit changes and after Blizzard's color.
-local totBars, colorBusy = {}, false
-
-local function ColorToTBars()
-    for _, bar in ipairs(totBars) do ClassColorHealth(bar) end
+-- Every colored bar again, on the next frame (after Blizzard's own update).
+local function RecolorAll()
+    for bar in pairs(classColorBars) do ClassColorHealth(bar) end
 end
 
+-- Target of Target bars: Blizzard colors them with its own code.
+local colorBusy = false
 local function KeepClassColor(bar)
-    totBars[#totBars + 1] = bar
     hooksecurefunc(bar, "SetStatusBarColor", function(self)
         if colorBusy then return end
         colorBusy = true
@@ -248,7 +242,7 @@ end
 -- Anything that can change a cached color.
 colorEvents:SetScript("OnEvent", function()
     wipe(colorValid)
-    if totBars[1] then ns.Defer(ColorToTBars) end
+    ns.Defer(RecolorAll)
 end)
 
 --------------------------------------------------------------------------------
@@ -324,7 +318,7 @@ local function HideFollowerMark(text, frame, fallbackUnit)
         unit = unit or fallbackUnit
         if not unit then return end
         local name = UnitName(unit)
-        if not name or IsSecret(name) then return end
+        if IsSecret(name) or not name then return end
         busy = true
         if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
         text:SetText(name)
@@ -461,7 +455,7 @@ local PORTRAIT_FRAMES = {}
 local function RedrawPortraits()
     portraitPending = false
     for _, frame in ipairs(PORTRAIT_FRAMES) do
-        local portrait, unit = frame and frame.portrait, frame and frame.unit
+        local portrait, unit = frame.portrait, frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
             -- Blizzard can show a class icon instead.
             and not (UnitFrame_ShouldReplacePortrait and UnitFrame_ShouldReplacePortrait(frame)) then
@@ -472,7 +466,7 @@ local function RedrawPortraits()
 end
 
 local function OnPortraitEvent(_, _, unit)
-    if unit and (IsSecret(unit) or not PORTRAIT_UNITS[unit]) then return end
+    if IsSecret(unit) or (unit and not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
     C_Timer.After(1, RedrawPortraits)
@@ -549,7 +543,6 @@ function UF:OnEnable()
     SetupPortraits(db)
 
     if next(classColorBars) then
-        -- Anything that can change a cached color.
         for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
                                  "INSTANCE_ENCOUNTER_ENGAGE_UNIT" }) do
             colorEvents:RegisterEvent(event)

@@ -30,10 +30,10 @@ end
 
 local IsSecret = ns.IsSecret
 
--- Caches per player (GUID), emptied when full.
 local ILVL_CACHE_TIME  = 300 -- seconds
 local INSPECT_THROTTLE = 1.5 -- seconds between inspects
 
+-- Caches per player (GUID), emptied when full.
 local ilvlCache, ilvlTime = {}, {}
 local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0
 
@@ -59,15 +59,21 @@ local function RequestInspect(unit, guid)
     NotifyInspect(unit)
 end
 
+-- The tooltip unit's GUID can be secret: compared only when readable.
+local function SameGUID(unit, guid)
+    local unitGUID = UnitGUID(unit)
+    return not IsSecret(unitGUID) and unitGUID == guid
+end
+
 local inspectEvents = CreateFrame("Frame")
 inspectEvents:SetScript("OnEvent", function(_, _, guid)
-    if not guid or IsSecret(guid) or guid ~= pendingGUID then return end
+    if IsSecret(guid) or not guid or guid ~= pendingGUID then return end
     pendingGUID = nil
 
     local unit = UnitTokenFromGUID(guid)
     local ilvl = unit and C_PaperDollInfo.GetInspectItemLevel(unit)
     if not (InspectFrame and InspectFrame:IsShown()) then ClearInspectPlayer() end
-    if not ilvl or IsSecret(ilvl) or ilvl <= 0 then return end
+    if IsSecret(ilvl) or not ilvl or ilvl <= 0 then return end
 
     local hadValue = ilvlCache[guid] ~= nil
     if not hadValue then
@@ -79,7 +85,7 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     -- Still hovering the same player: add it now.
     local _, ttUnit = GameTooltip:GetUnit()
     if not hadValue and TT.db.playerInfo and GameTooltip:IsShown()
-        and ttUnit and not IsSecret(ttUnit) and UnitGUID(ttUnit) == guid then
+        and not IsSecret(ttUnit) and ttUnit and SameGUID(ttUnit, guid) then
         AddLine(GameTooltip, "Item Level", ilvlCache[guid])
         GameTooltip:Show()
     end
@@ -99,7 +105,7 @@ end
 --------------------------------------------------------------------------------
 -- M+ rating, read once per player per minute.
 --------------------------------------------------------------------------------
-local RATING_CACHE_TIME = 60
+local RATING_CACHE_TIME = 60 -- seconds
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
 
 local function AddMythicRating(tooltip, unit, guid)
@@ -107,7 +113,7 @@ local function AddMythicRating(tooltip, unit, guid)
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
         local score = summary and summary.currentSeasonScore
-        if not score or IsSecret(score) then score = 0 end
+        if IsSecret(score) or not score then score = 0 end
         if not ratingTime[guid] then
             ratingCount = ratingCount + 1
             if ratingCount > CACHE_LIMIT then
@@ -131,7 +137,7 @@ end
 --------------------------------------------------------------------------------
 local function ColorName(tooltip, unit)
     local _, class = UnitClass(unit)
-    local color = class and not IsSecret(class) and RAID_CLASS_COLORS[class]
+    local color = not IsSecret(class) and class and RAID_CLASS_COLORS[class]
     local line = color and GameTooltipTextLeft1
     if line then line:SetTextColor(color.r, color.g, color.b) end
 end
@@ -141,14 +147,14 @@ local function OnUnit(tooltip)
     if tooltip ~= GameTooltip or not (db.playerInfo or db.style) then return end
 
     local _, unit = tooltip:GetUnit()
-    if not unit or IsSecret(unit) then return end
+    if IsSecret(unit) or not unit then return end
     local isPlayer = UnitIsPlayer(unit)
     if IsSecret(isPlayer) or not isPlayer then return end
     if db.style then ColorName(tooltip, unit) end
 
     if not db.playerInfo then return end
     local guid = UnitGUID(unit)
-    if not guid or IsSecret(guid) then return end
+    if IsSecret(guid) or not guid then return end
     AddMythicRating(tooltip, unit, guid)
     AddItemLevel(tooltip, unit, guid)
 end
@@ -157,7 +163,7 @@ local function IDLine(label)
     return function(tooltip, data)
         if not TT.db.showIDs or not data or not IsUsable(tooltip) then return end
         local id = data.id
-        if id and not IsSecret(id) then AddLine(tooltip, label, id) end
+        if not IsSecret(id) and id then AddLine(tooltip, label, id) end
     end
 end
 

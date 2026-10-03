@@ -58,9 +58,9 @@ end
 local function UpdateName(frame)
     if frame:IsForbidden() then return end
     local unit = frame.unit
-    if not unit or IsSecret(unit) or unit:find("nameplate", 1, true) or not frame.name then return end
+    if IsSecret(unit) or not unit or unit:find("nameplate", 1, true) or not frame.name then return end
     local name = UnitName(unit)
-    if not name or IsSecret(name) then return end
+    if IsSecret(name) or not name then return end
     if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
     frame.name:SetText(name)
 end
@@ -69,7 +69,7 @@ end
 local function UpdateStatusText(frame)
     if frame:IsForbidden() then return end
     local text, unit = frame.statusText, frame.displayedUnit or frame.unit
-    if not (text and unit) or IsSecret(unit) or unit:find("nameplate", 1, true) then return end
+    if IsSecret(unit) or not (text and unit) or unit:find("nameplate", 1, true) then return end
     if not text:IsShown() then ns.HidePercentFull(text) return end
     local connected, dead = UnitIsConnected(unit), UnitIsDeadOrGhost(unit)
     if IsSecret(connected) or IsSecret(dead) or not connected or dead then
@@ -90,7 +90,7 @@ local hdRoles
 
 local function KnownRole(frame)
     local unit = frame.unit
-    if not unit or IsSecret(unit) or frame:IsForbidden() then return end
+    if IsSecret(unit) or not unit or frame:IsForbidden() then return end
     local options = frame.optionTable
     if not (options and options.displayRoleIcon) then return end
     local role = UnitGroupRolesAssigned(unit)
@@ -130,7 +130,7 @@ local function RoleIconSize(frame, icon)
     local size = icon:GetHeight()
     if not IsSecret(size) and size >= 2 then return size end
     local _, fontSize = frame.name and frame.name:GetFont()
-    if fontSize and not IsSecret(fontSize) and fontSize >= 2 then return fontSize end
+    if not IsSecret(fontSize) and fontSize and fontSize >= 2 then return fontSize end
     return 12
 end
 

@@ -199,7 +199,7 @@ local function KeepFeedback(bar, path)
     local function Reapply()
         if busy then return end
         busy = true
-        texture:SetTexture(path)
+        if ATLASES[GEN.db.texCdmPRD] then texture:SetAtlas(path) else texture:SetTexture(path) end
         texture:SetVertexColor(bar:GetStatusBarColor())
         busy = false
     end
@@ -274,6 +274,7 @@ local function TrackTexture(bar, path, inset)
     local original = bar:GetStatusBarTexture()
     local layer, sublevel
     if original then layer, sublevel = original:GetDrawLayer() end
+    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
 
     local busy
     local function Reapply(atlas)
@@ -301,7 +302,7 @@ local function UpdatePowerBar(bar)
     if not path then return end
     SetTexture(bar, path)
     local token = bar.powerToken
-    local info = bar.overrideInfo or (token and not ns.IsSecret(token) and PowerBarColor[token])
+    local info = bar.overrideInfo or (not ns.IsSecret(token) and token and PowerBarColor[token])
     if info and info.r then bar:SetStatusBarColor(info.r, info.g, info.b) end
 end
 
@@ -387,7 +388,7 @@ local function SkinToT(frame, path, unit)
     end
 end
 
--- UnitFrameBars() returns two values: keep it last.
+-- Health and power bars of a unit frame.
 local function SkinFrame(frame, path)
     if not (frame and path) then return end
     local health, power = UnitFrameBars(frame)
@@ -450,11 +451,8 @@ local function SkinCastBar(bar)
     hooksecurefunc(bar, "SetStatusBarColor", KeepCastColor)
 end
 
-
 --------------------------------------------------------------------------------
--- Text style for other Blizzard texts (framerate counter, waypoint distance,
--- Character panel header, stats, reputation and currency, talents and
--- spellbook pages).
+-- Text style for other Blizzard texts (panels, counters, waypoint).
 --------------------------------------------------------------------------------
 local function StyleBlizzardTexts()
     local fps = FramerateFrame
@@ -511,20 +509,17 @@ end
 function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
-    local pet, boss, group = player, target, TexturePath("texGroup")
-    local interface = TexturePath("texInterface")
+    local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
 
+    -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
     SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
-    SkinBars(PetFrameHealthBar, PetFrameManaBar, pet)
-    if target then SkinFrame(TargetFrame, target) end
-    if focus and FocusFrame then SkinFrame(FocusFrame, focus) end
+    SkinBars(PetFrameHealthBar, PetFrameManaBar, player)
+    SkinFrame(TargetFrame, target)
+    SkinFrame(FocusFrame, focus)
     SkinToT(TargetFrame, target, "targettarget")
-    SkinToT(FocusFrame, target, "focustarget") -- the Target texture
-    if boss then
-        for i = 1, 5 do
-            local frame = _G["Boss" .. i .. "TargetFrame"]
-            if frame then SkinFrame(frame, boss) end
-        end
+    SkinToT(FocusFrame, target, "focustarget")
+    if target then
+        for i = 1, 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
 
@@ -537,10 +532,11 @@ function GEN:OnEnable()
             local frame = PersonalResourceDisplayFrame
             if not frame then return end
             local container = frame.HealthBarsContainer
-            for _, bar in ipairs({ container and (container.healthBar or container.HealthBar), frame.PowerBar }) do
-                SetTexture(bar, prd)
-                KeepTexture(bar, prd)
-            end
+            local health = container and (container.healthBar or container.HealthBar)
+            SetTexture(health, prd)
+            KeepTexture(health, prd)
+            SetTexture(frame.PowerBar, prd)
+            KeepTexture(frame.PowerBar, prd)
             KeepFeedback(frame.PowerBar, prd)
             -- Alternate power bar, set up again on spec changes.
             local function SkinAlt(f) TrackTexture(f.AlternatePowerBar, prd) end
@@ -555,24 +551,25 @@ function GEN:OnEnable()
     end
 
     -- Reputation panel.
-    local repPanel = interface
     local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
-    if repPanel and scrollBox and ScrollUtil then
+    if interface and scrollBox and ScrollUtil then
         ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
             local content = entry.Content or entry
-            TrackTexture(content.ReputationBar or entry.ReputationBar, repPanel, 2)
+            TrackTexture(content.ReputationBar or entry.ReputationBar, interface, 2)
         end), self, true)
     end
 
-    -- Achievement window and criteria bars.
-    local achievements = interface
-    if achievements then
-        local function Scan(frame)
-            for _, child in ipairs({ frame:GetChildren() }) do
-                if child:IsObjectType("StatusBar") then TrackTexture(child, achievements, 2) end
+    -- Achievement window and criteria bars (children walked as varargs).
+    if interface then
+        local Scan
+        local function ScanChildren(...)
+            for i = 1, select("#", ...) do
+                local child = select(i, ...)
+                if child:IsObjectType("StatusBar") then TrackTexture(child, interface, 2) end
                 Scan(child)
             end
         end
+        function Scan(frame) ScanChildren(frame:GetChildren()) end
         EventUtil.ContinueOnAddOnLoaded("Blizzard_AchievementUI", function()
             AchievementFrame:HookScript("OnShow", Scan)
             ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
@@ -580,7 +577,7 @@ function GEN:OnEnable()
                 if not bars then return end
                 for _, bar in pairs(bars) do
                     if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
-                        TrackTexture(bar, achievements, 2)
+                        TrackTexture(bar, interface, 2)
                     end
                 end
             end)
@@ -589,12 +586,11 @@ function GEN:OnEnable()
     end
 
     -- Quest Tracker progress and timer bars.
-    local questTracker = interface
-    if questTracker then
+    if interface then
         local function TrackPool(pool)
             if not pool then return end
             for _, bar in pairs(pool) do
-                if type(bar) == "table" then TrackTexture(bar.Bar or bar, questTracker) end
+                if type(bar) == "table" then TrackTexture(bar.Bar or bar, interface) end
             end
         end
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
@@ -616,16 +612,15 @@ function GEN:OnEnable()
     end
 
     -- Tooltip progress and status bars.
-    local tooltips = interface
-    if tooltips then
+    if interface then
         local function TrackTooltipPool(tooltip, poolKey)
             local pool = tooltip and tooltip[poolKey]
             if not pool then return end
             local active = pool.activeObjects
             if active then
-                for bar in pairs(active) do TrackTexture(bar.Bar or bar, tooltips, 1) end
+                for bar in pairs(active) do TrackTexture(bar.Bar or bar, interface, 1) end
             elseif pool.EnumerateActive then
-                for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, tooltips, 1) end
+                for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, interface, 1) end
             end
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
@@ -633,9 +628,8 @@ function GEN:OnEnable()
     end
 
     -- Cooldown Manager bars.
-    local cooldownBars = prd
-    if cooldownBars then
-        ns.OnCooldownItem(function(item) TrackTexture(item.Bar, cooldownBars) end)
+    if prd then
+        ns.OnCooldownItem(function(item) TrackTexture(item.Bar, prd) end)
     end
 
     -- Damage Meter bars.
@@ -645,15 +639,14 @@ function GEN:OnEnable()
     end
 
     -- Experience, reputation and honor bars.
-    local tracking = interface
-    if tracking then
+    if interface then
         local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
         local function ScanTracking()
             for _, container in ipairs(containers) do
                 local bars = container.bars
                 if bars then
                     for _, bar in pairs(bars) do
-                        if type(bar) == "table" then TrackTexture(bar.StatusBar, tracking) end
+                        if type(bar) == "table" then TrackTexture(bar.StatusBar, interface) end
                     end
                 end
             end

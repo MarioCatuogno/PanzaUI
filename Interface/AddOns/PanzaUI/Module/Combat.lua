@@ -4,6 +4,7 @@
     Resource Display.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 -- Saved variables key of the old Personal Resource Display module.
 local CB = ns:RegisterModule("PersonalResource", {
@@ -101,7 +102,6 @@ end
 
 -- Elapsed cast time in the center of the bar (10 updates per second).
 local CAST_TICK = 0.1
-local IsSecretValue = ns.IsSecret
 
 local function SetupCastTimer(bar)
     local text = bar:CreateFontString(nil, "OVERLAY")
@@ -114,9 +114,9 @@ local function SetupCastTimer(bar)
         if tick < CAST_TICK then return end
         tick = 0
         local value = bar:GetValue()
-        if bar.channeling and not IsSecretValue(value) then
+        if bar.channeling and not IsSecret(value) then
             local _, max = bar:GetMinMaxValues()
-            if not IsSecretValue(max) then value = max - value end
+            if not IsSecret(max) then value = max - value end
         end
         text:SetFormattedText("%.1f", value)
     end)
@@ -178,7 +178,7 @@ local function ShowAltText(bar)
     local text = bar.TextString
     if not text or text:IsShown() then return end
     local value = bar:GetValue()
-    if ns.IsSecret(value) then
+    if IsSecret(value) then
         text:SetFormattedText("%.0f", value)
     else
         local n, sep = floor(value + 0.5), LARGE_NUMBER_SEPERATOR or ","
@@ -218,25 +218,25 @@ local CAST_EVENTS = {
     "UNIT_SPELLCAST_FAILED", "UNIT_SPELLCAST_INTERRUPTED",
 }
 local castEvents = CreateFrame("Frame")
-local hiddenAlpha -- alpha before the cast
+local castHidden, hiddenAlpha = false, 1 -- alpha before the cast
 
 local function IsCasting()
     local cast = UnitCastingInfo("player")
-    if ns.IsSecret(cast) or cast then return true end
+    if IsSecret(cast) or cast then return true end
     local channel = UnitChannelInfo("player")
-    return ns.IsSecret(channel) or channel ~= nil
+    return IsSecret(channel) or channel ~= nil
 end
 
 castEvents:SetScript("OnEvent", function(_, event)
     local frame = PersonalResourceDisplayFrame
     if CAST_START[event] or IsCasting() then
-        if not hiddenAlpha then
-            hiddenAlpha = frame:GetAlpha()
+        if not castHidden then
+            castHidden, hiddenAlpha = true, frame:GetAlpha()
             frame:SetAlpha(0)
         end
-    elseif hiddenAlpha then
+    elseif castHidden then
+        castHidden = false
         frame:SetAlpha(hiddenAlpha)
-        hiddenAlpha = nil
     end
 end)
 
@@ -271,7 +271,7 @@ local function StyleItem(item)
 
     for _, region in ipairs({ holder:GetRegions() }) do
         local atlas = region.GetAtlas and region:GetAtlas()
-        if atlas and atlas:find("IconOverlay", 1, true) then region:SetAlpha(0) end
+        if not IsSecret(atlas) and atlas and atlas:find("IconOverlay", 1, true) then region:SetAlpha(0) end
     end
     -- Tracked bars: anchored variant (mask and frame follow the icon's own
     -- edges, no size reading); Blizzard's own icon masks, also added later,
@@ -308,9 +308,8 @@ local itemSize, itemScale = {}, {}
 local function ByLayoutIndex(a, b) return (a.layoutIndex or 0) < (b.layoutIndex or 0) end
 
 -- Midnight: secret geometry keeps the last readable value.
-local IsSecret = ns.IsSecret
 local function Readable(value, fallback)
-    if value == nil or IsSecret(value) then return fallback end
+    if IsSecret(value) or value == nil then return fallback end
     return value
 end
 
@@ -332,7 +331,9 @@ local function Reflow(viewer, anchor, measure)
         itemScale[viewer] = Readable(first:GetScale(), itemScale[viewer])
     end
     local scale = itemScale[viewer] or 1
-    local pad  = Readable((vertical and viewer.childYPadding or viewer.childXPadding), 0) / scale
+    local padding
+    if vertical then padding = viewer.childYPadding else padding = viewer.childXPadding end
+    local pad  = Readable(padding, 0) / scale
     local step = (itemSize[viewer] or 40) + pad
     local start = anchor == "BOTTOM" and 0 or -(n - 1) * step / 2
 
@@ -392,13 +393,14 @@ local function StyleEntryIcon(entry)
     if not (icon and icon.AddMaskTexture) then return end
 
     local border = ns.StyleIcon(icon, holder)
+    if not border then return end
     local function SyncBorder() border:SetShown(icon:IsShown()) end
     SyncBorder()
     ns.Hook(entry, "SetShowBarIcons", SyncBorder)
     ns.Hook(entry, "SetupSharedStyleIconVisibility", SyncBorder)
 end
 
--- Secret entry texts get an outlined copy of their font object.
+-- Entry texts use an outlined NumberFontNormal (their values can be secret).
 local function StyleEntryText(entry)
     local bar = entry.StatusBar
     local font = ns.OutlinedFont(NumberFontNormal)

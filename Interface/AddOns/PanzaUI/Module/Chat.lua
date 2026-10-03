@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Chat
-    Window style, timestamps and Combat Log tab.
+    Window style, timestamps, Combat Log tab and message filters.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -28,6 +28,7 @@ local Chat = ns:RegisterModule("Chat", {
     },
 })
 
+-- Converts the saved values of older versions.
 function Chat:Migrate(db)
     ns.MergeOptions(db, "style", db, "fontStyle", "hideTabArt", "hideButtons", "hideEditBoxArt", "hideBackground")
 end
@@ -146,8 +147,7 @@ local function SetupAllFrames()
 end
 
 --------------------------------------------------------------------------------
--- Status icons before player names (chat flag, e.g. guide or newcomer):
--- removed by a message filter. AFK, DND and Blizzard staff flags are kept.
+-- Status icons before player names (AFK, DND and Blizzard staff kept).
 --------------------------------------------------------------------------------
 local KEEP_FLAGS = { [""] = true, AFK = true, DND = true, GM = true, DEV = true }
 local FLAG_EVENTS = {
@@ -158,14 +158,13 @@ local FLAG_EVENTS = {
 }
 
 local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
-    if flag == nil or ns.IsSecret(flag) or KEEP_FLAGS[flag] then return false end
+    if ns.IsSecret(flag) or flag == nil or KEEP_FLAGS[flag] then return false end
     return false, msg, author, lang, channel, target, "", ...
 end
 
 --------------------------------------------------------------------------------
--- Short channel names: "2. Trade - City" becomes "2. T". Built-in channels
--- are shortened to their initials (any language), custom ones lose only the
--- zone suffix. Each name is built once and cached.
+-- Short channel names: built-in channels as initials ("2. T"), custom ones
+-- without the zone suffix. Each name is built once and cached.
 --------------------------------------------------------------------------------
 local shortNames = {}
 
@@ -191,9 +190,8 @@ local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zo
 end
 
 --------------------------------------------------------------------------------
--- Clickable links: web addresses in player messages become chat links that
--- open a box to copy them. Messages are scanned only when they contain
--- "://" or "www." (plain find), messages with other links are left alone.
+-- Clickable links: web addresses in player messages open a box to copy them
+-- (messages with other links are left alone).
 --------------------------------------------------------------------------------
 local URL_PATTERNS = { "(%a[%w+.-]*://[^%s|]+)", "(www%.[%w-]+%.[^%s|]+)" }
 local URL_LINK = "|cff4fc3f7|Haddon:PanzaUI:url|h[%1]|h|r"
@@ -248,9 +246,8 @@ local function SetupFlagFilter()
 end
 
 --------------------------------------------------------------------------------
--- Hide clutter: lines starting like these Blizzard messages are removed right
--- after a chat window adds them (post-hook, same frame: never drawn).
--- Hooked at load, before the login messages; the option is read live.
+-- Hide clutter: minor Blizzard messages removed or filtered before they are
+-- drawn (hooked at load, before the login messages; option read live).
 --------------------------------------------------------------------------------
 local CLUTTER = {} -- plain text before the first %s of each message
 for _, fmt in ipairs({ ERR_LOOT_SPEC_CHANGED_S, GUILD_MOTD_TEMPLATE }) do

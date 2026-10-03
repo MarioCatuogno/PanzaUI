@@ -29,9 +29,10 @@ deferFrame:Hide()
 deferFrame:SetScript("OnUpdate", function(self)
     self:Hide()
     pending, running = running, pending
+    local handler = geterrorhandler()
     for func in pairs(running) do
         running[func] = nil
-        func()
+        xpcall(func, handler) -- one failing function can't stop the others
     end
 end)
 
@@ -135,9 +136,8 @@ function ns.Hook(target, name, callback)
 end
 
 --------------------------------------------------------------------------------
--- Icon look: action button rounded mask and frame, following the icon size.
--- anchored: lightweight variant for icons made in large numbers (no size
--- tracking). Returns nil when the frame can't be styled yet.
+-- Icon look: action button rounded mask and frame (anchored: lightweight
+-- variant). Returns nil when the frame can't be styled yet.
 --------------------------------------------------------------------------------
 local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
@@ -414,9 +414,8 @@ function ns.StyleBarText(bar)
 end
 
 --------------------------------------------------------------------------------
--- Percentage text: one decimal, "100" when full, empty at 0.
--- Midnight: secret values go straight to the text, curves set its alpha and
--- a twin font string shows the "100".
+-- Percentage text: one decimal, "100" when full, empty at 0 (secret values
+-- go straight to the text, curves and a twin font string do the rest).
 --------------------------------------------------------------------------------
 local IsSecret = ns.IsSecret
 local percentBars = {}
@@ -451,7 +450,7 @@ local function FullText(text)
     if twin then return twin end
     twin = text:GetParent():CreateFontString(nil, (text:GetDrawLayer()))
     local base = text:GetFontObject()
-    if base and not IsSecret(base) then twin:SetFontObject(base) end
+    if not IsSecret(base) and base then twin:SetFontObject(base) end
     twin:SetAllPoints(text)
     twin:SetJustifyH(text:GetJustifyH())
     twin:SetJustifyV(text:GetJustifyV())
@@ -771,7 +770,7 @@ end
 -- Settings panel
 --------------------------------------------------------------------------------
 -- Reload UI button next to Blizzard's "Defaults", on PanzaUI pages only.
-local reloadButton
+local reloadButton, settingsViewed
 
 local function IsOwnCategory(category)
     if not (category and ns.category) then return false end
@@ -800,13 +799,13 @@ local function UpdateReloadButton(_, category)
     end
     local own = IsOwnCategory(category)
     reloadButton:SetShown(own)
-    if own then ns.settingsViewed = true end
+    if own then settingsViewed = true end
 end
 
 -- Collects the settings panel's temporary memory when it closes (out of combat).
 local function CollectAfterSettings()
-    if not ns.settingsViewed or InCombatLockdown() then return end
-    ns.settingsViewed = false
+    if not settingsViewed or InCombatLockdown() then return end
+    settingsViewed = false
     collectgarbage("collect")
 end
 
@@ -840,9 +839,11 @@ local function DropdownData(list)
     return data
 end
 
+local VAR_TYPES
+
 local function AddOption(category, m, opt)
     local key = opt.key
-    local VAR_TYPES = { boolean = Settings.VarType.Boolean, number = Settings.VarType.Number, string = Settings.VarType.String }
+    VAR_TYPES = VAR_TYPES or { boolean = Settings.VarType.Boolean, number = Settings.VarType.Number, string = Settings.VarType.String }
     local varType = VAR_TYPES[type(m.defaults[key])]
     local setting = Settings.RegisterAddOnSetting(category,
         addonName .. "_" .. m.key .. "_" .. key, key, m.db,
@@ -941,7 +942,7 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         ns.textStyle = PanzaUI_DB.General.textStyle
         ns.classColors = PanzaUI_DB.General.classColors
         BuildSettings()
-    else -- PLAYER_LOGIN
+    else -- PLAYER_LOGIN, or PLAYER_REGEN_ENABLED after a /reload in combat
         self:UnregisterEvent(event)
         -- After a /reload in combat, modules wait until combat ends.
         if InCombatLockdown() then

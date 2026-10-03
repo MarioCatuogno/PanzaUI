@@ -22,7 +22,7 @@ local ACTION_BARS = {
 }
 
 local OTHER_BARS = {
-    -- Buttons only: the Group Finder eye stays visible.
+    -- MicroMenu only, so the Group Finder eye stays visible.
     { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenu" } },
     { key = "bagBar",     label = "Bag Bar",                   frames = { "BagsBar" } },
     { key = "statusBars", label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
@@ -63,7 +63,7 @@ function AB:Migrate(db, saved)
 end
 
 --------------------------------------------------------------------------------
--- Visibility: every bar is registered in the shared engine (alpha only).
+-- Visibility: every bar is registered in the shared engine.
 --------------------------------------------------------------------------------
 local function ChildButtons(frame, list)
     for _, child in ipairs({ frame:GetChildren() }) do
@@ -150,6 +150,7 @@ function AB:OnEnable()
     end
 end
 
+-- Live options.
 function AB:OnOptionChanged()
     ns.RefreshVisibility()
     for _, bar in ipairs(ACTION_BARS) do RefreshButtons(bar) end

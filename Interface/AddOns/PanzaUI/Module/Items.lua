@@ -121,7 +121,7 @@ end
 
 -- Item level and quality color from an item link.
 local function LinkItemLevel(link, equipmentOnly)
-    if not link or ns.IsSecret(link) then return end
+    if ns.IsSecret(link) or not link then return end
     if equipmentOnly then
         local _, _, _, equipLoc, _, classID = C_Item.GetItemInfoInstant(link)
         if not EQUIPMENT[classID] or SKIP_SLOTS[equipLoc] then return end
@@ -198,10 +198,10 @@ local bankEvents = CreateFrame("Frame")
 bankEvents:SetScript("OnEvent", function(self, event)
     if event == "BANKFRAME_OPENED" then
         self:RegisterEvent("BAG_UPDATE_DELAYED")
-        self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
+        pcall(self.RegisterEvent, self, "PLAYERBANKSLOTS_CHANGED") -- may not exist in every version
     elseif event == "BANKFRAME_CLOSED" then
         self:UnregisterEvent("BAG_UPDATE_DELAYED")
-        self:UnregisterEvent("PLAYERBANKSLOTS_CHANGED")
+        pcall(self.UnregisterEvent, self, "PLAYERBANKSLOTS_CHANGED")
         return
     end
     ns.Defer(UpdateBankPanel)
