@@ -14,7 +14,7 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons" } },
+          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons before player names (AFK, DND and GM kept)" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time in front of every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
@@ -140,6 +140,29 @@ local function SetupAllFrames()
 end
 
 --------------------------------------------------------------------------------
+-- Status icons before player names (chat flag, e.g. guide or newcomer):
+-- removed by a message filter. AFK, DND and Blizzard staff flags are kept.
+--------------------------------------------------------------------------------
+local KEEP_FLAGS = { [""] = true, AFK = true, DND = true, GM = true, DEV = true }
+local FLAG_EVENTS = {
+    "CHAT_MSG_SAY", "CHAT_MSG_YELL", "CHAT_MSG_EMOTE", "CHAT_MSG_WHISPER",
+    "CHAT_MSG_GUILD", "CHAT_MSG_OFFICER", "CHAT_MSG_PARTY", "CHAT_MSG_PARTY_LEADER",
+    "CHAT_MSG_RAID", "CHAT_MSG_RAID_LEADER", "CHAT_MSG_RAID_WARNING",
+    "CHAT_MSG_INSTANCE_CHAT", "CHAT_MSG_INSTANCE_CHAT_LEADER", "CHAT_MSG_CHANNEL",
+}
+
+local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
+    if flag == nil or ns.IsSecret(flag) or KEEP_FLAGS[flag] then return false end
+    return false, msg, author, lang, channel, target, "", ...
+end
+
+local function SetupFlagFilter()
+    local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+    if not AddFilter then return end
+    for _, event in ipairs(FLAG_EVENTS) do AddFilter(event, StripFlag) end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function Chat:OnEnable()
@@ -150,6 +173,7 @@ function Chat:OnEnable()
 
     if db.style then
         for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
+        SetupFlagFilter()
     end
     if db.style or ns.textStyle then
         SetupAllFrames()
