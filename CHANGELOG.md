@@ -60,6 +60,7 @@ Here's a list of all the features included in this first release!
 * Quest & Minimap - Added the outlined font to the minimap zone name and clock
 * Quest & Minimap - Added the outlined font to the Quest Tracker text and to the instance texts at the top of the screen
 * Quest & Minimap - Added the quest counter (e.g. 20/35) in the tracker header
+* Quest & Minimap - Hidden the pending calendar invites notice and flashing icon on the minimap
 * Quest & Minimap - Hidden the tracker contents (except the Dungeon / Mythic+ section) during boss fights, Mythic+ runs and combat in raids (not LFR) and dungeons (not Follower), showing them again afterwards
 * Quest & Minimap - Removed the backgrounds of the minimap zone name, tracking and calendar buttons
 * Tooltips - Added the ID of items and spells
@@ -91,6 +92,7 @@ Here's a list of all the features included in this first release!
 * Various - Added the /way command to set a map waypoint from coordinates (e.g. /way 45.2 61.8)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Various - Added the fast item delete ("DELETE" already typed in the confirmation box)
+* Various - Added the option to hide system notices, such as the micro menu alerts (e.g. unspent talent points)
 * Various - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
 
 ### 🧮 Class CDM

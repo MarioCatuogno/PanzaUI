@@ -13,6 +13,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         cursorRing      = 0, -- off
         fastDelete      = true,
         waypoints       = true,
+        hideNotices     = true,
     },
     options = {
         { header = "Other Addons" },
@@ -23,6 +24,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Loot everything at once when auto-loot is on." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
+        { key = "hideNotices", label = "Hide system notices",
+          tooltip = "Hide system messages and notifications.",
+          bullets = { "Micro menu alerts (e.g. unspent talent points)" } },
         { key = "waypoints", label = "Waypoint command", reload = true,
           tooltip = "Set a map waypoint with /way and coordinates.",
           bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is installed" } },
@@ -302,6 +306,32 @@ local function SetupWaypoints()
 end
 
 --------------------------------------------------------------------------------
+-- System notices: micro menu alerts (help tips anchored to a micro button)
+-- closed as soon as they are shown, and their button flash stopped.
+-- Post-hooks, option read live.
+--------------------------------------------------------------------------------
+local function IsMicroButton(frame)
+    if type(frame) ~= "table" or not frame.GetParent or frame:IsForbidden() then return false end
+    local parent = frame:GetParent()
+    return parent ~= nil and parent == MicroMenu
+end
+
+local function HideMicroTip(helpTip, parent, info)
+    if Misc.db.hideNotices and info and info.text and IsMicroButton(parent) then
+        helpTip:Hide(parent, info.text)
+    end
+end
+
+local function StopMicroPulse(button)
+    if Misc.db.hideNotices and MicroButtonPulseStop and IsMicroButton(button) then MicroButtonPulseStop(button) end
+end
+
+local function SetupNotices()
+    if HelpTip then ns.Hook(HelpTip, "Show", HideMicroTip) end
+    ns.Hook("MicroButtonPulse", StopMicroPulse)
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
@@ -310,6 +340,7 @@ function Misc:OnEnable()
     SetFastLoot(self.db.fastLoot)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
+    SetupNotices()
     if self.db.waypoints then SetupWaypoints() end
 end
 
