@@ -1,7 +1,7 @@
 ## Installation
 
 1. Download the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases) and unzip it.
-2. Copy the `PanzaUI` folder (from `Interface/AddOns`) into `World of Warcraft/_retail_/Interface/AddOns`.
+2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui), or copy the `PanzaUI` folder (from `Interface/AddOns`) into `World of Warcraft/_retail_/Interface/AddOns`.
 3. Copy the `Fonts` folder into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
