@@ -41,7 +41,7 @@ Here's a list of all the features included in this first release!
 * Combat - Hidden the Player, Target, Focus and Boss cast bars right when the cast ends, with no fade out
 * Combat - Personal Resource Display now always shows health and power as a percentage (one decimal below 100, hidden at 0)
 * Combat - Personal Resource Display now always shows the alternate power bar value (e.g. Stagger)
-* Core - Added a single Refined text option for the outlined font of the whole UI
+* Core - Added a single Refined text option for the outlined font of the whole UI (framerate counter and waypoint distance included)
 * Core - Added a texture option for cast bars (in Blizzard's cast colors), Cooldown Manager and Personal Resource Display, Damage Meter and interface bars (Achievement, Quest Tracker, Reputation panel, tooltip and XP/Reputation bars)
 * Core - Added a texture option for health and power bars of each frame group (Player & Pet, Target & Boss, Focus and Party/Raid, Target of Target included)
 * Core - Added Blizzard's Cooldown Manager bar texture to the texture list
@@ -86,6 +86,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Removed the colored name background from Target and Focus
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name
 * Various - Added a ring on the mouse cursor, in the class color (always, in combat or in combat in a group)
+* Various - Added the /way command to set a map waypoint from coordinates (e.g. /way 45.2 61.8)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)
 * Various - Added the fast item delete ("DELETE" already typed in the confirmation box)
 * Various - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)

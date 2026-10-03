@@ -441,7 +441,7 @@ end
 
 
 --------------------------------------------------------------------------------
--- Text style for other Blizzard texts (framerate counter).
+-- Text style for other Blizzard texts (framerate counter, waypoint distance).
 --------------------------------------------------------------------------------
 local function StyleBlizzardTexts()
     local fps = FramerateFrame
@@ -451,6 +451,10 @@ local function StyleBlizzardTexts()
     end
     ns.StyleFont(FramerateLabel) -- older global names
     ns.StyleFont(FramerateText)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_QuestNavigation", function()
+        local nav = SuperTrackedFrame
+        if nav then ns.StyleFont(nav.DistanceText) end
+    end)
 end
 
 --------------------------------------------------------------------------------

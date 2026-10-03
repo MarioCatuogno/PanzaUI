@@ -12,6 +12,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         fastLoot        = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
+        waypoints       = true,
     },
     options = {
         { header = "Other Addons" },
@@ -22,6 +23,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Loot everything at once when auto-loot is on." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
+        { key = "waypoints", label = "Waypoint command", reload = true,
+          tooltip = "Set a map waypoint with /way and coordinates.",
+          bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is installed" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring in your class color around the cursor.",
           dropdown = {
@@ -261,6 +265,43 @@ local function FillDeleteText(which)
 end
 
 --------------------------------------------------------------------------------
+-- Waypoint command: /way [#mapID] x y, set as Blizzard's own map pin and
+-- tracked on screen. Not registered when TomTom provides /way.
+--------------------------------------------------------------------------------
+local function SetWaypoint(msg)
+    msg = (msg or ""):gsub(",", " ")
+    if msg:lower():match("^%s*clear") then
+        C_Map.ClearUserWaypoint()
+        ns.Print("waypoint cleared.")
+        return
+    end
+    local mapID, x, y = msg:match("^%s*#(%d+)%s+([%d%.]+)%s+([%d%.]+)")
+    if not mapID then
+        x, y = msg:match("^%s*([%d%.]+)%s+([%d%.]+)")
+        mapID = C_Map.GetBestMapForUnit("player")
+    end
+    mapID, x, y = tonumber(mapID), tonumber(x), tonumber(y)
+    if not (mapID and x and y and x <= 100 and y <= 100) then
+        ns.Print("usage: /way [#mapID] x y, or /way clear.")
+        return
+    end
+    if not C_Map.CanSetUserWaypointOnMap(mapID) then
+        ns.Print("waypoints can't be set on this map.")
+        return
+    end
+    C_Map.SetUserWaypoint(UiMapPoint.CreateFromCoordinates(mapID, x / 100, y / 100))
+    C_SuperTrack.SetSuperTrackedUserWaypoint(true)
+    local info = C_Map.GetMapInfo(mapID)
+    ns.Print(("waypoint set at %.1f, %.1f%s."):format(x, y, info and (" in " .. info.name) or ""))
+end
+
+local function SetupWaypoints()
+    if C_AddOns.IsAddOnLoaded("TomTom") or not (C_Map and C_Map.SetUserWaypoint) then return end
+    SLASH_PANZAUI_WAY1 = "/way"
+    SlashCmdList.PANZAUI_WAY = SetWaypoint
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
@@ -269,6 +310,7 @@ function Misc:OnEnable()
     SetFastLoot(self.db.fastLoot)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
+    if self.db.waypoints then SetupWaypoints() end
 end
 
 -- Live options.
