@@ -482,7 +482,7 @@ local function StyleButtonFonts(button)
         local copy = ns.OutlinedFont(font)
         if copy then button["Set" .. kind .. "FontObject"](button, copy) end
     end
-    ns.StyleFont(button.Text or button:GetFontString())
+    ns.StyleFont(button.Text or (button.GetFontString and button:GetFontString()))
 end
 
 local function StyleTabs(panel)
@@ -498,8 +498,15 @@ local function StyleTabs(panel)
     end
 end
 
+-- Path of a child frame ("Container.ScrollBox").
+local function ChildAt(root, path)
+    for key in path:gmatch("[^.]+") do root = root and root[key] end
+    return root
+end
+
 -- Blizzard panels: restyled on the next frame after they open or change page
--- (methods of the panel or global functions); dark texts are skipped.
+-- (methods of the panel, { child path, method } or global functions); dark
+-- texts are skipped.
 -- Load-on-demand panels are set up when their addon loads.
 local function StylePanel(addon, name, levels, pageHooks, scrollLists)
     local function Setup()
@@ -511,7 +518,13 @@ local function StylePanel(addon, name, levels, pageHooks, scrollLists)
         local function Queue() ns.Defer(Restyle) end
         panel:HookScript("OnShow", Queue)
         for _, func in ipairs(pageHooks) do
-            if panel[func] then ns.Hook(panel, func, Queue) else ns.Hook(func, Queue) end
+            if type(func) == "table" then
+                ns.Hook(ChildAt(panel, func[1]), func[2], Queue)
+            elseif panel[func] then
+                ns.Hook(panel, func, Queue)
+            else
+                ns.Hook(func, Queue)
+            end
         end
         if scrollLists and ScrollUtil then HookScrollBoxes(levels, panel:GetChildren()) end
         StyleTabs(panel)
@@ -583,7 +596,8 @@ local function StyleBlizzardTexts()
     end
 
     -- Inspect, Talents / specialization, Professions, Adventure Guide, Mail,
-    -- World Map (title and zone bar, not the map pins) and Quest Log.
+    -- World Map (title and zone bar, not the map pins), Quest Log and Options
+    -- (post-hooks only, no Blizzard callbacks: the Options panel stays taint-free).
     StylePanel("Blizzard_InspectUI", "InspectFrame", 4, { "InspectSwitchTabs" })
     StylePanel("Blizzard_PlayerSpells", "PlayerSpellsFrame", 4, { "SetTab" })
     StylePanel("Blizzard_ProfessionsBook", "ProfessionsBookFrame", 5, {})
@@ -593,6 +607,16 @@ local function StyleBlizzardTexts()
     StylePanel("Blizzard_MailFrame", "OpenMailFrame", 4, { "OpenMail_Update" })
     StylePanel("Blizzard_WorldMap", "WorldMapFrame", 3, { "OnMapChanged", "NavBar_AddButton" })
     StylePanel("Blizzard_WorldMap", "QuestMapFrame", 6, { "QuestLogQuests_Update" })
+    StylePanel("Blizzard_Settings", "SettingsPanel", 7, { "DisplayCategory",
+        { "Container.SettingsList.ScrollBox", "SetScrollPercentage" },
+        { "CategoryList.ScrollBox", "SetScrollPercentage" } })
+    local settings = SettingsPanel
+    if settings then
+        StyleButtonFonts(settings.GameTab)
+        StyleButtonFonts(settings.AddOnsTab)
+        StyleButtonFonts(settings.CloseButton)
+        StyleButtonFonts(ChildAt(settings, "Container.SettingsList.Header.DefaultsButton"))
+    end
 end
 
 --------------------------------------------------------------------------------
