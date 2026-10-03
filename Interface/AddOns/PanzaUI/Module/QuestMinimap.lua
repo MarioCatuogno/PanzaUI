@@ -8,6 +8,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
     title = "Quest & Minimap",
     defaults = {
         minimapStyle   = true,
+        minimapClutter = true,
         combatCollapse = true,
         questCount     = true,
     },
@@ -15,6 +16,9 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { header = "Minimap" },
         { key = "minimapStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the minimap." },
+        { key = "minimapClutter", label = "Hide clutter",
+          tooltip = "Hide minor notifications around the minimap.",
+          bullets = { "Pending calendar invites notice and flashing icon" } },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Hide the Quest Tracker during instance combat.",
@@ -225,10 +229,42 @@ local function SetQuestCount(on)
 end
 
 --------------------------------------------------------------------------------
+-- Hide clutter: Blizzard help tips with these texts are closed as soon as
+-- they are shown (post-hook, option read live).
+--------------------------------------------------------------------------------
+local CLUTTER_TIPS = {}
+if type(GAMETIME_TOOLTIP_CALENDAR_INVITES) == "string" then CLUTTER_TIPS[GAMETIME_TOOLTIP_CALENDAR_INVITES] = true end
+
+local function HideClutterTip(helpTip, parent, info)
+    local text = info and info.text
+    if QM.db.minimapClutter and type(text) == "string" and CLUTTER_TIPS[text] then
+        helpTip:Hide(parent, text)
+    end
+end
+
+-- Calendar button: the pending invites icon and its flashing glow, moved
+-- under the hidden parent (Blizzard keeps flashing them), restored when off.
+local INVITE_PARTS = { "GameTimeCalendarInvitesTexture", "GameTimeCalendarInvitesGlow" }
+local inviteParents = {}
+
+local function ApplyClutter()
+    local hide = QM.db.minimapClutter
+    for _, name in ipairs(INVITE_PARTS) do
+        local region = _G[name]
+        if region then
+            inviteParents[region] = inviteParents[region] or region:GetParent()
+            region:SetParent(hide and ns.Hider or inviteParents[region])
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function QM:OnEnable()
     local db = self.db
+    if HelpTip then ns.Hook(HelpTip, "Show", HideClutterTip) end
+    if db.minimapClutter then ApplyClutter() end
 
     if db.minimapStyle then ApplyBackgrounds() end
 
@@ -261,6 +297,8 @@ end
 function QM:OnOptionChanged(key, value)
     if key == "minimapStyle" then
         ApplyBackgrounds()
+    elseif key == "minimapClutter" then
+        ApplyClutter()
     elseif key == "combatCollapse" then
         SetCombatCollapse(value)
     elseif key == "questCount" then
