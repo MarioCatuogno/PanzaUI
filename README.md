@@ -20,6 +20,8 @@ Since version 2.0 the heart of the UI is the **PanzaUI addon**: a single, very l
 
 __Note__: designed for 2560×1440 and 65% UI scale. It works at other resolutions too, with some small adjustments of the frame positions.
 
+The addon is available on [CurseForge](https://www.curseforge.com/wow/addons/panzaui), so you can install it and keep it updated with the CurseForge app.
+
 Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
 If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3) where you will find all the profiles.
@@ -53,7 +55,7 @@ I'll maintain it as long as I play the game — and considering I've been playin
 
 | Addon | Description |
 |---|---|
-| [PanzaUI](https://github.com/MarioCatuogno/PanzaUI/tree/main/Interface/AddOns/PanzaUI) | Core addon: improves the default UI with all the features listed above |
+| [PanzaUI](https://www.curseforge.com/wow/addons/panzaui) | Core addon: improves the default UI with all the features listed above |
 | [Platynator](https://www.curseforge.com/wow/addons/platynator) | Customizes enemy and friendly nameplates |
 
 To replicate this setup, follow the [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md): it explains every step.
