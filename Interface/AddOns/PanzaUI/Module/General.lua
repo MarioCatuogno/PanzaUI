@@ -469,6 +469,35 @@ local function HookScrollBoxes(levels, ...)
     end
 end
 
+-- Panel tabs: the button swaps font when a tab is selected, so every font
+-- of the button gets an outlined copy (once per tab).
+local TAB_FONTS = { "Normal", "Highlight", "Disabled" }
+local styledTabs = {}
+
+local function StyleTab(tab)
+    if not tab or styledTabs[tab] then return end
+    styledTabs[tab] = true
+    for _, kind in ipairs(TAB_FONTS) do
+        local font = tab["Get" .. kind .. "FontObject"] and tab["Get" .. kind .. "FontObject"](tab)
+        local copy = ns.OutlinedFont(font)
+        if copy then tab["Set" .. kind .. "FontObject"](tab, copy) end
+    end
+    ns.StyleFont(tab.Text or tab:GetFontString())
+end
+
+local function StyleTabs(panel)
+    if panel.Tabs then
+        for _, tab in ipairs(panel.Tabs) do StyleTab(tab) end
+        return
+    end
+    local name = panel:GetName()
+    local i = 1
+    while name and _G[name .. "Tab" .. i] do
+        StyleTab(_G[name .. "Tab" .. i])
+        i = i + 1
+    end
+end
+
 -- Load-on-demand panels: restyled on the next frame after they open or change
 -- page (methods of the panel or global functions); dark texts are skipped.
 local function StylePanel(addon, name, levels, pageHooks, scrollLists)
@@ -482,6 +511,7 @@ local function StylePanel(addon, name, levels, pageHooks, scrollLists)
             if panel[func] then ns.Hook(panel, func, Queue) else ns.Hook(func, Queue) end
         end
         if scrollLists and ScrollUtil then HookScrollBoxes(levels, panel:GetChildren()) end
+        StyleTabs(panel)
         if panel:IsShown() then Queue() end
     end)
 end
@@ -502,6 +532,7 @@ local function StyleBlizzardTexts()
     local title = CharacterFrame and CharacterFrame.TitleContainer and CharacterFrame.TitleContainer.TitleText
     ns.StyleFont(title or CharacterFrameTitleText)
     ns.StyleFont(CharacterLevelText)
+    if CharacterFrame then StyleTabs(CharacterFrame) end
 
     -- Reputation and Currency tabs: scrolling lists, each row styled when
     -- Blizzard sets it up (texts already styled are skipped).
