@@ -452,178 +452,32 @@ local function SkinCastBar(bar)
 end
 
 --------------------------------------------------------------------------------
--- Text style for other Blizzard texts (panels, counters, waypoint).
+-- Text style for Blizzard texts: every shared font object gets the outlined
+-- style, so all texts using it follow (panels, tooltips, menus, lists).
+-- Dark fonts (parchment texts) and thick outlines are left as they are; fonts
+-- of load-on-demand addons are styled when they load.
 --------------------------------------------------------------------------------
+local styledFonts = {}
 
--- Scrolling lists of a panel: each row styled when Blizzard sets it up.
-local function StyleListRow(row) ns.StyleAllFonts(row, 2, true) end
-
-local function HookScrollBoxes(levels, ...)
-    for i = 1, select("#", ...) do
-        local child = select(i, ...)
-        if child.ScrollTarget and child.GetView then
-            pcall(ScrollUtil.AddInitializedFrameCallback, child, ns.ScrollFrameCallback(StyleListRow), ns, false)
-        elseif levels > 0 then
-            HookScrollBoxes(levels - 1, child:GetChildren())
+local function StyleSharedFonts()
+    for _, name in ipairs(GetFonts()) do
+        local font = type(name) == "string" and _G[name] or name
+        if type(font) == "table" and font.GetFont and not styledFonts[font] then
+            styledFonts[font] = true
+            local path, size, flags = font:GetFont()
+            local r, g, b = font:GetTextColor()
+            local dark = r and r + g + b < 1
+            if path and not dark and not (flags and flags:find("THICK")) then font:SetFont(path, size, ns.FONT_FLAGS) end
         end
     end
-end
-
--- Buttons swap font on hover or when selected, so every font of the button
--- gets an outlined copy (once per button).
-local BUTTON_FONTS = { "Normal", "Highlight", "Disabled" }
-local styledButtons = {}
-
-local function StyleButtonFonts(button)
-    if not button or styledButtons[button] then return end
-    styledButtons[button] = true
-    for _, kind in ipairs(BUTTON_FONTS) do
-        local font = button["Get" .. kind .. "FontObject"] and button["Get" .. kind .. "FontObject"](button)
-        local copy = ns.OutlinedFont(font)
-        if copy then button["Set" .. kind .. "FontObject"](button, copy) end
-    end
-    ns.StyleFont(button.Text or (button.GetFontString and button:GetFontString()))
-end
-
-local function StyleTabs(panel)
-    if panel.Tabs then
-        for _, tab in ipairs(panel.Tabs) do StyleButtonFonts(tab) end
-        return
-    end
-    local name = panel:GetName()
-    local i = 1
-    while name and _G[name .. "Tab" .. i] do
-        StyleButtonFonts(_G[name .. "Tab" .. i])
-        i = i + 1
-    end
-end
-
--- Path of a child frame ("Container.ScrollBox").
-local function ChildAt(root, path)
-    for key in path:gmatch("[^.]+") do root = root and root[key] end
-    return root
-end
-
--- Blizzard panels: restyled on the next frame after they open or change page
--- (methods of the panel, { child path, method } or global functions); dark
--- texts are skipped.
--- Load-on-demand panels are set up when their addon loads.
-local function StylePanel(addon, name, levels, pageHooks, scrollLists)
-    local function Setup()
-        local panel = _G[name]
-        if not panel then return end
-        local function Restyle()
-            if panel:IsShown() then ns.StyleAllFonts(panel, levels, true) end
-        end
-        local function Queue() ns.Defer(Restyle) end
-        panel:HookScript("OnShow", Queue)
-        for _, func in ipairs(pageHooks) do
-            if type(func) == "table" then
-                ns.Hook(ChildAt(panel, func[1]), func[2], Queue)
-            elseif panel[func] then
-                ns.Hook(panel, func, Queue)
-            else
-                ns.Hook(func, Queue)
-            end
-        end
-        if scrollLists and ScrollUtil then HookScrollBoxes(levels, panel:GetChildren()) end
-        StyleTabs(panel)
-        if panel:IsShown() then Queue() end
-    end
-    if _G[name] then Setup() else EventUtil.ContinueOnAddOnLoaded(addon, Setup) end
 end
 
 local function StyleBlizzardTexts()
-    local fps = FramerateFrame
-    if fps then
-        ns.StyleFont(fps.Label)
-        ns.StyleFont(fps.FramerateText)
-    end
-    ns.StyleFont(FramerateLabel) -- older global names
-    ns.StyleFont(FramerateText)
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_QuestNavigation", function()
-        local nav = SuperTrackedFrame
-        if nav then ns.StyleFont(nav.DistanceText) end
-    end)
-
-    -- Game Menu: title and buttons (made from a pool when the menu opens).
-    local menu = GameMenuFrame
-    if menu then
-        ns.StyleFont(menu.Header and menu.Header.Text)
-        local function StyleMenuButtons()
-            if not menu.buttonPool then return end
-            for button in menu.buttonPool:EnumerateActive() do StyleButtonFonts(button) end
-        end
-        menu:HookScript("OnShow", StyleMenuButtons)
-        ns.Hook(menu, "InitButtons", StyleMenuButtons)
-    end
-
-    -- Bag titles.
-    local bags = { ContainerFrameCombinedBags }
-    for i = 1, NUM_CONTAINER_FRAMES or 13 do bags[#bags + 1] = _G["ContainerFrame" .. i] end
-    for _, bag in pairs(bags) do
-        local titles = bag.TitleContainer
-        ns.StyleFont(titles and titles.TitleText or _G[bag:GetName() .. "Name"])
-    end
-
-    -- Tooltips: shared font objects, so every tooltip line follows them.
-    for _, font in ipairs({ GameTooltipHeaderText, GameTooltipText, GameTooltipTextSmall }) do
-        local path, size = font:GetFont()
-        if path then font:SetFont(path, size, ns.FONT_FLAGS) end
-    end
-
-    local title = CharacterFrame and CharacterFrame.TitleContainer and CharacterFrame.TitleContainer.TitleText
-    ns.StyleFont(title or CharacterFrameTitleText)
-    ns.StyleFont(CharacterLevelText)
-    if CharacterFrame then StyleTabs(CharacterFrame) end
-
-    -- Reputation and Currency tabs: scrolling lists, each row styled when
-    -- Blizzard sets it up (texts already styled are skipped).
-    local function StyleRow(row) ns.StyleAllFonts(row, 2) end
-    for _, panel in ipairs({ ReputationFrame, TokenFrame }) do
-        local box = panel and panel.ScrollBox
-        if box and ScrollUtil then
-            ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(StyleRow), ns, true)
-        end
-        if panel then ns.StyleAllFonts(panel, 1) end
-    end
-
-    -- Character stats: rows are made and updated by Blizzard's stats update.
-    local stats = CharacterStatsPane
-    if stats then
-        local function RestyleStats() ns.StyleAllFonts(stats, 3) end
-        ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
-    end
-
-    -- Inspect, Talents / specialization, Professions, Adventure Guide, Mail,
-    -- World Map (title and zone bar, not the map pins), Quest Log and Options
-    -- (post-hooks only, no Blizzard callbacks: the Options panel stays taint-free).
-    StylePanel("Blizzard_InspectUI", "InspectFrame", 4, { "InspectSwitchTabs" })
-    StylePanel("Blizzard_PlayerSpells", "PlayerSpellsFrame", 4, { "SetTab" })
-    StylePanel("Blizzard_ProfessionsBook", "ProfessionsBookFrame", 5, {})
-    StylePanel("Blizzard_EncounterJournal", "EncounterJournal", 6, { "EJ_ContentTab_Select",
-        "EncounterJournal_ListInstances", "EncounterJournal_DisplayInstance", "EncounterJournal_DisplayEncounter" }, true)
-    StylePanel("Blizzard_MailFrame", "MailFrame", 4, { "InboxFrame_Update", "MailFrameTab_OnClick" })
-    StylePanel("Blizzard_MailFrame", "OpenMailFrame", 4, { "OpenMail_Update" })
-    StylePanel("Blizzard_WorldMap", "WorldMapFrame", 3, { "OnMapChanged", "NavBar_AddButton" })
-    StylePanel("Blizzard_WorldMap", "QuestMapFrame", 6, { "QuestLogQuests_Update" })
-    StylePanel("Blizzard_Settings", "SettingsPanel", 7, { "DisplayCategory",
-        { "Container.SettingsList.ScrollBox", "SetScrollPercentage" },
-        { "CategoryList.ScrollBox", "SetScrollPercentage" } })
-    local settings = SettingsPanel
-    if settings then
-        StyleButtonFonts(settings.GameTab)
-        StyleButtonFonts(settings.AddOnsTab)
-        StyleButtonFonts(settings.CloseButton)
-        StyleButtonFonts(ChildAt(settings, "Container.SettingsList.Header.DefaultsButton"))
-    end
-
-    -- Social panel: Contacts, Who, Raid and Quick Join, with the Friends /
-    -- Recent Allies / Recruit A Friend tabs and the bottom buttons.
-    StylePanel("Blizzard_FriendsFrame", "FriendsFrame", 6, { "FriendsFrame_Update", "FriendsList_Update" }, true)
-    if FriendsTabHeader then StyleTabs(FriendsTabHeader) end
-    StyleButtonFonts(FriendsFrameAddFriendButton)
-    StyleButtonFonts(FriendsFrameSendMessageButton)
+    if not GetFonts then return end
+    StyleSharedFonts()
+    local loader = CreateFrame("Frame")
+    loader:RegisterEvent("ADDON_LOADED")
+    loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)
 end
 
 --------------------------------------------------------------------------------
