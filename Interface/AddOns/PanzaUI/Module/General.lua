@@ -315,10 +315,22 @@ local function UnitFrameBars(frame)
     return health, frame.ManaBar or frame.manabar
 end
 
-local function SkinBars(health, power, path)
+-- Health bars not class colored: Blizzard's green is baked in its atlas, so
+-- the new texture is tinted green (again when Blizzard sets the atlas).
+local HEALTH_GREEN = { 0.00, 0.70, 0.20 }
+local function TintHealth(bar)
+    bar:SetStatusBarColor(HEALTH_GREEN[1], HEALTH_GREEN[2], HEALTH_GREEN[3])
+end
+
+local function SkinBars(health, power, path, tint)
     if not path then return end
     SetTexture(health, path)
     KeepTexture(health, path)
+    local fill = tint and health and health:GetStatusBarTexture()
+    if fill then
+        TintHealth(health)
+        hooksecurefunc(fill, "SetAtlas", function() TintHealth(health) end)
+    end
     if power then
         powerBars[power] = path
         UpdatePowerBar(power)
@@ -390,10 +402,10 @@ local function SkinToT(frame, path, unit)
 end
 
 -- Health and power bars of a unit frame.
-local function SkinFrame(frame, path)
+local function SkinFrame(frame, path, tint)
     if not (frame and path) then return end
     local health, power = UnitFrameBars(frame)
-    SkinBars(health, power, path)
+    SkinBars(health, power, path, tint)
 end
 
 --------------------------------------------------------------------------------
@@ -563,10 +575,12 @@ function GEN:OnEnable()
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
 
     -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
-    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player)
-    SkinBars(PetFrameHealthBar, PetFrameManaBar, player)
-    SkinFrame(TargetFrame, target)
-    SkinFrame(FocusFrame, focus)
+    -- Green health when not class colored (the Pet frame never is).
+    local tint = not ns.classColors
+    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
+    SkinBars(PetFrameHealthBar, PetFrameManaBar, player, true)
+    SkinFrame(TargetFrame, target, tint)
+    SkinFrame(FocusFrame, focus, tint)
     SkinToT(TargetFrame, target, "targettarget")
     SkinToT(FocusFrame, target, "focustarget")
     if target then
