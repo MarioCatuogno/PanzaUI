@@ -533,6 +533,12 @@ local function StyleBlizzardTexts()
         if nav then ns.StyleFont(nav.DistanceText) end
     end)
 
+    -- Tooltips: shared font objects, so every tooltip line follows them.
+    for _, font in ipairs({ GameTooltipHeaderText, GameTooltipText, GameTooltipTextSmall }) do
+        local path, size = font:GetFont()
+        if path then font:SetFont(path, size, ns.FONT_FLAGS) end
+    end
+
     local title = CharacterFrame and CharacterFrame.TitleContainer and CharacterFrame.TitleContainer.TitleText
     ns.StyleFont(title or CharacterFrameTitleText)
     ns.StyleFont(CharacterLevelText)
