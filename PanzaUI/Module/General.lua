@@ -556,9 +556,32 @@ local function SetupSpellBook()
     book:HookScript("OnShow", function() ns.Defer(FitPages) end)
 end
 
+-- Texts colored dark at runtime (achievements, parchment pages): the outline
+-- is removed while they are dark and put back when they turn light again.
+local removedOutline = setmetatable({}, { __mode = "k" }) -- text -> its flags
+local function FitTextColor(text, r, g, b)
+    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not (r and g and b) then return end
+    local dark, flags = r + g + b < 1, removedOutline[text]
+    if not dark and not flags then return end -- light text never changed
+    local path, size, current = text:GetFont()
+    if ns.IsSecret(path) or not path or ns.IsSecret(current) then return end
+    local outlined = current and current:find("OUTLINE") ~= nil
+    if dark then
+        if outlined then
+            removedOutline[text] = current
+            text:SetFont(path, size, "")
+        end
+    else
+        removedOutline[text] = nil
+        if not outlined then text:SetFont(path, size, flags) end
+    end
+end
+
 local function StyleBlizzardTexts()
     if not GetFonts then return end
     StyleSharedFonts()
+    local fontString = UIParent:CreateFontString()
+    hooksecurefunc(getmetatable(fontString).__index, "SetTextColor", FitTextColor)
     local loader = CreateFrame("Frame")
     loader:RegisterEvent("ADDON_LOADED")
     loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)

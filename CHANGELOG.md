@@ -4,6 +4,8 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 
 ### 🛠️ Core
 
+* Core - Fixed the Refined text on texts that turn dark (eg. completed achievements), now shown without the outline [#113]
+
 ### 🧮 Class CDM
 
 ### 👤 Profiles
