@@ -14,15 +14,13 @@ local QM = ns:RegisterModule("QuestMinimap", {
     options = {
         { header = "Minimap" },
         { key = "minimapStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the minimap.",
-          bullets = { "No button and zone backgrounds" } },
+          tooltip = "Polish the look of the minimap." },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
-          tooltip = "Hide the tracker contents during dungeon, raid and Mythic+ combat.",
-          bullets = { "Boss fights and the whole Mythic+ run", "Combat in raids and dungeons (not LFR or Follower)", "Header and Dungeon / Mythic+ section stay visible", "Shown again afterwards" } },
+          tooltip = "Hide the Quest Tracker during instance combat.",
+          bullets = { "Boss fights and Mythic+ runs", "Raid and dungeon combat, except LFR and Follower", "Dungeon and Mythic+ objectives stay visible" } },
         { key = "questCount", label = "Quest count",
-          tooltip = "Show the number of quests in your log.",
-          bullets = { "In the tracker header (e.g. 20/35)" } },
+          tooltip = "Show the number of quests in the tracker header." },
     },
 })
 

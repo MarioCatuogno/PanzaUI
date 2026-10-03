@@ -524,11 +524,11 @@ end
 local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
-    { VIS.DEFAULT,      "Default",        "Blizzard's normal behavior." },
-    { VIS.MOUSEOVER,    "Mouseover",      "Shown only while the mouse is over it." },
+    { VIS.DEFAULT,      "Default",        "Blizzard's default behavior." },
+    { VIS.MOUSEOVER,    "Mouseover",      "Shown on mouseover." },
     { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
-    { VIS.NO_SKYRIDING, "No Skyriding",   "Like Default, but hidden while Skyriding." },
-    { VIS.HIDDEN,       "Always hidden",  "Never shown (keybindings still work)." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
+    { VIS.HIDDEN,       "Always hidden",  "Never shown. Keybindings still work." },
 }
 
 local visEntries   = {}

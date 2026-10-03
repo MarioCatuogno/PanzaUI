@@ -14,14 +14,13 @@ local GF = ns:RegisterModule("GroupFrames", {
     },
     options = {
         { key = "style", label = "Refined style", reload = true,
-          tooltip = "Polish the look of party and raid frames.",
-          bullets = { "Names without server", "Health as a simple percentage" } },
+          tooltip = "Polish the look of the party and raid frames.",
+          bullets = { "Names without server", "Health as a percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
-          tooltip = "Use cleaner textures on party and raid health bars.",
+          tooltip = "Use cleaner overlays on the party and raid health bars.",
           bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
         { key = "hdRoleIcons", label = "HD role icons", reload = true,
-          tooltip = "Use Blizzard's high-resolution role icons.",
-          bullets = { "Party and raid frames", "Player frame" } },
+          tooltip = "Use Blizzard's high-resolution role icons, also on the Player frame." },
     },
 })
 

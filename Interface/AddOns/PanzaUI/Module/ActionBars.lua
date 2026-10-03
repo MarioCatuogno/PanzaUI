@@ -35,10 +35,10 @@ local defaults = { style = true, iconZoom = 5 }
 local options  = {
     { header = "Buttons" },
     { key = "style", label = "Refined style", reload = true,
-      tooltip = "Polish the look of action buttons.",
+      tooltip = "Polish the look of the action buttons.",
       bullets = { "No macro names or keybindings" } },
     { key = "iconZoom", label = "Icon zoom",
-      tooltip = "Crop the edges of action button icons. 0 = off.",
+      tooltip = "Crop the edges of the action button icons.",
       slider = { min = 0, max = 15, step = 1, suffix = "%" } },
     { header = "Visibility" },
 }
@@ -46,8 +46,7 @@ for _, list in ipairs({ ACTION_BARS, OTHER_BARS }) do
     for _, bar in ipairs(list) do
         defaults[bar.key] = VIS.DEFAULT
         options[#options + 1] = { key = bar.key, label = bar.label, dropdown = ns.VISIBILITY_OPTIONS,
-            tooltip = "When this bar is shown.",
-            bullets = { "Always shown in Edit Mode", "Keybindings keep working" } }
+            tooltip = "Choose when the bar is shown." }
     end
 end
 

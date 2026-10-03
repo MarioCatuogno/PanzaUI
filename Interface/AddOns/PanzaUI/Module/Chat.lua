@@ -13,12 +13,12 @@ local Chat = ns:RegisterModule("Chat", {
     },
     options = {
         { key = "style", label = "Refined style", reload = true,
-          tooltip = "Polish the look of chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons before player names (AFK, DND and GM kept)" } },
+          tooltip = "Polish the look of the chat windows.",
+          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names" } },
         { key = "timestamps", label = "Timestamps",
-          tooltip = "Show the time in front of every message." },
+          tooltip = "Show the time before every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
-          tooltip = "Close the Combat Log window and its tab." },
+          tooltip = "Hide the Combat Log tab." },
     },
 })
 

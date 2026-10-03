@@ -70,21 +70,21 @@ end
 --------------------------------------------------------------------------------
 -- old: option keys merged into this one (see Migrate).
 local UNIT_BARS = {
-    { key = "texFocus",      label = "Focus",                     tooltip = "Texture for the Focus health and power bars." },
-    { key = "texGroup",      label = "Party/Raid",                tooltip = "Texture for the party and raid health and power bars." },
-    { key = "texPlayerPet",  label = "Player & Pet",              tooltip = "Texture for the health and power bars of these frames.",
-      bullets = { "Player", "Pet" }, old = { "texPlayer", "texPet" } },
-    { key = "texTargetBoss", label = "Target & Boss",             tooltip = "Texture for the health and power bars of these frames.",
-      bullets = { "Target", "Target of Target (also the Focus one)", "Boss frames" }, old = { "texTarget", "texBoss" } },
+    { key = "texFocus",      label = "Focus",        tooltip = "Texture for the bars of the Focus frame." },
+    { key = "texGroup",      label = "Party/Raid",   tooltip = "Texture for the bars of the party and raid frames." },
+    { key = "texPlayerPet",  label = "Player & Pet", tooltip = "Texture for the bars of the Player and Pet frames.",
+      old = { "texPlayer", "texPet" } },
+    { key = "texTargetBoss", label = "Target & Boss", tooltip = "Texture for the bars of the Target, Target of Target and Boss frames.",
+      old = { "texTarget", "texBoss" } },
 }
 
 local OTHER_BARS = {
-    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the Player, Target, Focus and Boss cast bars, in Blizzard's cast colors." },
-    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of these frames.",
-      bullets = { "Cooldown Manager tracked bars", "Personal Resource Display" }, old = { "texPRD", "texCooldownBars" } },
-    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the Damage Meter bars." },
+    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the cast bars, in Blizzard's cast colors." },
+    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of the Cooldown Manager and Personal Resource Display.",
+      old = { "texPRD", "texCooldownBars" } },
+    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
     { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
-      bullets = { "Achievements", "Experience/Reputation bar", "Quest Tracker", "Reputation panel", "Tooltips" },
+      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -92,8 +92,7 @@ local defaults = { textStyle = true }
 local options  = {
     { header = "Style" },
     { key = "textStyle", label = "Refined text", reload = true,
-      tooltip = "Polish the look of text across the whole UI.",
-      bullets = { "Outlined, sharper text" } },
+      tooltip = "Polish the look of text across the whole UI." },
 }
 local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }

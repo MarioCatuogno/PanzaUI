@@ -17,29 +17,27 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Centered name, no level", "Health and power as a percentage", "Portrait redrawn when it stays zoomed in" } },
+      bullets = { "Centered name, no level", "Health and power as a percentage" } },
     { key = "playerClassColor", label = "Class colors",
       tooltip = "Color the health bar by class." },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
-      bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems", "Class resources (shown on the Personal Resource Display)" } },
+      bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
 }
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Centered name, no level or name background", "Health and power as a percentage",
-                           "Rounded cast bar icon border", "Portrait redrawn when it stays zoomed in" }
-    local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Red combat/threat glow" }
+    local styleBullets = { "Centered name, no level", "Health and power as a percentage", "Rounded cast bar icon" }
+    local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
-        styleBullets[#styleBullets + 1] = "Only 4 debuffs, with rounded borders"
-        clutterBullets = { "PvP and leader icons", "Cast bar", "Buffs and debuffs (Refined style keeps 4 debuffs)", "Red combat/threat glow" }
+        styleBullets[#styleBullets + 1] = "Only 4 debuffs"
+        clutterBullets[#clutterBullets + 1] = "Cast bar"
     end
     options[#options + 1] = { header = t.unit }
     options[#options + 1] = { key = p .. "Style", label = "Refined style",
         tooltip = "Polish the look of the " .. t.unit .. " frame.", bullets = styleBullets }
     options[#options + 1] = { key = p .. "ClassColor", label = "Class colors",
-        tooltip = "Color the health bar by class or reaction.",
-        bullets = { "Also on its Target of Target" } }
+        tooltip = "Color the health bars by class or reaction, Target of Target included." }
     options[#options + 1] = { key = p .. "HideClutter", label = "Hide clutter",
         tooltip = "Hide minor elements of the " .. t.unit .. " frame.", bullets = clutterBullets }
 end
@@ -47,10 +45,10 @@ end
 options[#options + 1] = { header = "Boss" }
 options[#options + 1] = { key = "bossStyle", label = "Refined style",
     tooltip = "Polish the look of the Boss frames.",
-    bullets = { "Health and power as a percentage", "Rounded cast bar icon border" } }
+    bullets = { "Health and power as a percentage", "Rounded cast bar icon" } }
 options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Boss frames.",
-    bullets = { "Level", "Red combat/threat glow" } }
+    bullets = { "Level", "Threat glow" } }
 
 options[#options + 1] = { header = "Pet" }
 options[#options + 1] = { key = "petStyle", label = "Refined style",

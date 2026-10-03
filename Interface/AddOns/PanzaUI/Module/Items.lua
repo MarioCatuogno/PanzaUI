@@ -16,18 +16,16 @@ local Items = ns:RegisterModule("Items", {
     options = {
         { header = "Items" },
         { key = "iconZoom", label = "Icon zoom",
-          tooltip = "Crop the edges of bag item icons. 0 = off.",
+          tooltip = "Crop the edges of the bag item icons.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { key = "itemLevel", label = "Item level",
-          tooltip = "Show the item level on equipment.",
-          bullets = { "Bags", "Character, warband and guild banks", "Character and Inspect panels", "Colored by item quality" } },
+          tooltip = "Show the item level on equipment, in the quality color.",
+          bullets = { "Bags and banks", "Character and Inspect panels" } },
         { header = "Merchant" },
         { key = "autoRepair", label = "Auto-repair",
-          tooltip = "Repair all your gear when you open a merchant that can repair.",
-          bullets = { "Uses your own gold", "Shows the cost in chat" } },
+          tooltip = "Repair your gear with your own gold at merchants." },
         { key = "autoSellJunk", label = "Auto-sell junk",
-          tooltip = "Sell all junk items when you open a merchant.",
-          bullets = { "Poor quality (grey) items only", "Same as Blizzard's \"Sell All Junk\" button" } },
+          tooltip = "Sell your junk items at merchants." },
     },
 })
 
