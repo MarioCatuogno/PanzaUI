@@ -27,6 +27,7 @@ Here's a list of all the features included in this first release!
 * Chat - Removed the background art from chat tabs, now showing tab names in full
 * Chat - Removed the border of the input box
 * Chat - Removed the chat window background shown on mouseover
+* Chat - Shortened the channel names (e.g. [2. Trade - City] becomes [2. T])
 * Combat - Added an icon zoom slider to buff and debuff icons
 * Combat - Added the action bar style to buff and debuff icons
 * Combat - Added the action bar style to Cooldown Manager icons

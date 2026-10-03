@@ -15,7 +15,7 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names" } },
+          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names", "Short channel names" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time before every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
@@ -160,10 +160,39 @@ local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
     return false, msg, author, lang, channel, target, "", ...
 end
 
+--------------------------------------------------------------------------------
+-- Short channel names: "2. Trade - City" becomes "2. T". Built-in channels
+-- are shortened to their initials (any language), custom ones lose only the
+-- zone suffix. Each name is built once and cached.
+--------------------------------------------------------------------------------
+local shortNames = {}
+
+local function ShortName(channel, zoneChannel)
+    local short = shortNames[channel]
+    if short then return short end
+    local number, name = channel:match("^(%d+)%.%s*(.-)$")
+    if not number then return channel end
+    name = name:gsub("%s+%-%s+.*$", "") -- zone suffix
+    if zoneChannel then
+        local initials = name:gsub("(%a)[%l']*%s*", function(c) return c:upper() end)
+        name = initials ~= "" and initials or name
+    end
+    short = number .. ". " .. name
+    shortNames[channel] = short
+    return short
+end
+
+local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zoneID, ...)
+    if type(channel) ~= "string" or ns.IsSecret(channel) or ns.IsSecret(zoneID) then return false end
+    local zoneChannel = type(zoneID) == "number" and zoneID > 0
+    return false, msg, author, lang, ShortName(channel, zoneChannel), target, flag, zoneID, ...
+end
+
 local function SetupFlagFilter()
     local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
     if not AddFilter then return end
     for _, event in ipairs(FLAG_EVENTS) do AddFilter(event, StripFlag) end
+    AddFilter("CHAT_MSG_CHANNEL", ShortenChannel)
 end
 
 --------------------------------------------------------------------------------
