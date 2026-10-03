@@ -1,3 +1,17 @@
+## 2.1-RELEASE
+
+This is a smaller update with many bug-fixes, performance improvement and some new features!
+
+### 🛠️ Core
+
+### 🧮 Class CDM
+
+### 👤 Profiles
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.0-RELEASE
 
 Big update! This is a full rework of PanzaUI: instead of profiles for other addons (eg. EnhanceQoL, Chattynator and Cooldown Manager Centered), PanzaUI is now a standalone and lightweight addon that improves the default UI of World of Warcraft with many QoL features. Every feature can be turned on or off from the AddOns options (type /pui).
