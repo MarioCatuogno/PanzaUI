@@ -362,23 +362,30 @@ end
 --------------------------------------------------------------------------------
 -- Styles every font string of a frame, down to `levels` children.
 --------------------------------------------------------------------------------
+-- skipDark: dark texts (e.g. on parchment backgrounds) are left as they are.
 local StyleAllFonts
 
-local function StyleFontRegions(...)
+local function IsDark(region)
+    local r, g, b = region:GetTextColor()
+    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) then return false end
+    return r + g + b < 1
+end
+
+local function StyleFontRegions(skipDark, ...)
     for i = 1, select("#", ...) do
         local region = select(i, ...)
-        if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
+        if region:GetObjectType() == "FontString" and not (skipDark and IsDark(region)) then ns.StyleFont(region) end
     end
 end
 
-local function StyleChildFonts(levels, ...)
-    for i = 1, select("#", ...) do StyleAllFonts((select(i, ...)), levels) end
+local function StyleChildFonts(levels, skipDark, ...)
+    for i = 1, select("#", ...) do StyleAllFonts((select(i, ...)), levels, skipDark) end
 end
 
-function StyleAllFonts(frame, levels)
+function StyleAllFonts(frame, levels, skipDark)
     if not frame or frame:IsForbidden() then return end
-    StyleFontRegions(frame:GetRegions())
-    if levels and levels > 0 then StyleChildFonts(levels - 1, frame:GetChildren()) end
+    StyleFontRegions(skipDark, frame:GetRegions())
+    if levels and levels > 0 then StyleChildFonts(levels - 1, skipDark, frame:GetChildren()) end
 end
 ns.StyleAllFonts = StyleAllFonts
 

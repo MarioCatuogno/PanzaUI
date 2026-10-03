@@ -306,18 +306,33 @@ local function SetupWaypoints()
 end
 
 --------------------------------------------------------------------------------
--- System notices: micro menu alerts (help tips anchored to a micro button)
--- closed as soon as they are shown, and their button flash stopped.
+-- System notices: micro menu alerts (help tips on or pointing at a micro
+-- button, or with a known alert text) closed as soon as they are shown,
+-- their button flash stopped, and the ones already open closed at login.
 -- Post-hooks, option read live.
 --------------------------------------------------------------------------------
-local function IsMicroButton(frame)
-    if type(frame) ~= "table" or not frame.GetParent or frame:IsForbidden() then return false end
-    local parent = frame:GetParent()
-    return parent ~= nil and parent == MicroMenu
+local NOTICE_TEXTS = {}
+for _, key in ipairs({ "TALENT_MICRO_BUTTON_UNSPENT_TALENTS", "TALENT_MICRO_BUTTON_UNSPENT_PVP_TALENTS",
+                       "PLAYER_SPELLS_MICRO_BUTTON_UNSPENT_TALENTS" }) do
+    if type(_G[key]) == "string" then NOTICE_TEXTS[_G[key]] = true end
 end
 
-local function HideMicroTip(helpTip, parent, info)
-    if Misc.db.hideNotices and info and info.text and IsMicroButton(parent) then
+local function IsMicroButton(frame)
+    if type(frame) ~= "table" or not frame.GetName or frame:IsForbidden() then return false end
+    local name = frame:GetName()
+    if name and name:find("MicroButton", 1, true) then return true end
+    local parent = frame:GetParent()
+    return parent ~= nil and (parent == MicroMenu or parent == MicroMenuContainer)
+end
+
+local function IsNotice(parent, info, relativeRegion)
+    local text = info and info.text
+    if type(text) == "string" and NOTICE_TEXTS[text] then return true end
+    return IsMicroButton(parent) or IsMicroButton(relativeRegion)
+end
+
+local function HideNotice(helpTip, parent, info, relativeRegion)
+    if Misc.db.hideNotices and info and info.text and IsNotice(parent, info, relativeRegion) then
         helpTip:Hide(parent, info.text)
     end
 end
@@ -326,9 +341,21 @@ local function StopMicroPulse(button)
     if Misc.db.hideNotices and MicroButtonPulseStop and IsMicroButton(button) then MicroButtonPulseStop(button) end
 end
 
+-- Help tips already open (Blizzard's pool): closed when they are notices.
+local function CloseOpenNotices()
+    local pool = Misc.db.hideNotices and HelpTip and HelpTip.framePool
+    local active = pool and pool.activeObjects
+    if not active then return end
+    for frame in pairs(active) do
+        if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
+    end
+end
+
 local function SetupNotices()
-    if HelpTip then ns.Hook(HelpTip, "Show", HideMicroTip) end
+    if HelpTip then ns.Hook(HelpTip, "Show", HideNotice) end
     ns.Hook("MicroButtonPulse", StopMicroPulse)
+    CloseOpenNotices()
+    C_Timer.After(3, CloseOpenNotices) -- alerts shown during the login
 end
 
 --------------------------------------------------------------------------------
@@ -348,6 +375,8 @@ end
 function Misc:OnOptionChanged(key, value)
     if key == "fastLoot" then
         SetFastLoot(value)
+    elseif key == "hideNotices" then
+        if value then CloseOpenNotices() end
     elseif key == "cursorRing" then
         SetCursorRing(value)
     end

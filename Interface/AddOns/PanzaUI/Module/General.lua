@@ -441,7 +441,8 @@ end
 
 
 --------------------------------------------------------------------------------
--- Text style for other Blizzard texts (framerate counter, waypoint distance).
+-- Text style for other Blizzard texts (framerate counter, waypoint distance,
+-- Character panel header and stats, talents and spellbook pages).
 --------------------------------------------------------------------------------
 local function StyleBlizzardTexts()
     local fps = FramerateFrame
@@ -454,6 +455,30 @@ local function StyleBlizzardTexts()
     EventUtil.ContinueOnAddOnLoaded("Blizzard_QuestNavigation", function()
         local nav = SuperTrackedFrame
         if nav then ns.StyleFont(nav.DistanceText) end
+    end)
+
+    local title = CharacterFrame and CharacterFrame.TitleContainer and CharacterFrame.TitleContainer.TitleText
+    ns.StyleFont(title or CharacterFrameTitleText)
+    ns.StyleFont(CharacterLevelText)
+
+    -- Character stats: rows are made and updated by Blizzard's stats update.
+    local stats = CharacterStatsPane
+    if stats then
+        local function RestyleStats() ns.StyleAllFonts(stats, 3) end
+        ns.Hook("PaperDollFrame_UpdateStats", function() ns.Defer(RestyleStats) end)
+    end
+
+    -- Talents / specialization: texts are made when a page is built, so the
+    -- panel is restyled on the next frame after it opens or changes tab
+    -- (texts already styled are skipped).
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", function()
+        local panel = PlayerSpellsFrame
+        if not panel then return end
+        local function Restyle() ns.StyleAllFonts(panel, 4, true) end
+        local function Queue() ns.Defer(Restyle) end
+        panel:HookScript("OnShow", Queue)
+        ns.Hook(panel, "SetTab", Queue)
+        if panel:IsShown() then Queue() end
     end)
 end
 
