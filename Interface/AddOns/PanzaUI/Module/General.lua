@@ -469,31 +469,31 @@ local function HookScrollBoxes(levels, ...)
     end
 end
 
--- Panel tabs: the button swaps font when a tab is selected, so every font
--- of the button gets an outlined copy (once per tab).
-local TAB_FONTS = { "Normal", "Highlight", "Disabled" }
-local styledTabs = {}
+-- Buttons swap font on hover or when selected, so every font of the button
+-- gets an outlined copy (once per button).
+local BUTTON_FONTS = { "Normal", "Highlight", "Disabled" }
+local styledButtons = {}
 
-local function StyleTab(tab)
-    if not tab or styledTabs[tab] then return end
-    styledTabs[tab] = true
-    for _, kind in ipairs(TAB_FONTS) do
-        local font = tab["Get" .. kind .. "FontObject"] and tab["Get" .. kind .. "FontObject"](tab)
+local function StyleButtonFonts(button)
+    if not button or styledButtons[button] then return end
+    styledButtons[button] = true
+    for _, kind in ipairs(BUTTON_FONTS) do
+        local font = button["Get" .. kind .. "FontObject"] and button["Get" .. kind .. "FontObject"](button)
         local copy = ns.OutlinedFont(font)
-        if copy then tab["Set" .. kind .. "FontObject"](tab, copy) end
+        if copy then button["Set" .. kind .. "FontObject"](button, copy) end
     end
-    ns.StyleFont(tab.Text or tab:GetFontString())
+    ns.StyleFont(button.Text or button:GetFontString())
 end
 
 local function StyleTabs(panel)
     if panel.Tabs then
-        for _, tab in ipairs(panel.Tabs) do StyleTab(tab) end
+        for _, tab in ipairs(panel.Tabs) do StyleButtonFonts(tab) end
         return
     end
     local name = panel:GetName()
     local i = 1
     while name and _G[name .. "Tab" .. i] do
-        StyleTab(_G[name .. "Tab" .. i])
+        StyleButtonFonts(_G[name .. "Tab" .. i])
         i = i + 1
     end
 end
@@ -532,6 +532,26 @@ local function StyleBlizzardTexts()
         local nav = SuperTrackedFrame
         if nav then ns.StyleFont(nav.DistanceText) end
     end)
+
+    -- Game Menu: title and buttons (made from a pool when the menu opens).
+    local menu = GameMenuFrame
+    if menu then
+        ns.StyleFont(menu.Header and menu.Header.Text)
+        local function StyleMenuButtons()
+            if not menu.buttonPool then return end
+            for button in menu.buttonPool:EnumerateActive() do StyleButtonFonts(button) end
+        end
+        menu:HookScript("OnShow", StyleMenuButtons)
+        ns.Hook(menu, "InitButtons", StyleMenuButtons)
+    end
+
+    -- Bag titles.
+    local bags = { ContainerFrameCombinedBags }
+    for i = 1, NUM_CONTAINER_FRAMES or 13 do bags[#bags + 1] = _G["ContainerFrame" .. i] end
+    for _, bag in pairs(bags) do
+        local titles = bag.TitleContainer
+        ns.StyleFont(titles and titles.TitleText or _G[bag:GetName() .. "Name"])
+    end
 
     -- Tooltips: shared font objects, so every tooltip line follows them.
     for _, font in ipairs({ GameTooltipHeaderText, GameTooltipText, GameTooltipTextSmall }) do
