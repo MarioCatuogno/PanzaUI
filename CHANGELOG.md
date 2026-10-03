@@ -87,6 +87,7 @@ Here's a list of all the features included in this first release!
 * Unit Frames - Removed the level from Player, Target and Focus, centering the name
 * Various - Added a ring on the mouse cursor, in the class color (always, in combat or in combat in a group)
 * Various - Added the fast auto-loot (every item looted at once when auto-loot is on)
+* Various - Added the fast item delete ("DELETE" already typed in the confirmation box)
 * Various - Added the refined style for Platynator nameplates (rounded aura and cast icon borders)
 
 ### 🧮 Class CDM

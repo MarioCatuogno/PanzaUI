@@ -11,6 +11,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         platynatorStyle = true,
         fastLoot        = true,
         cursorRing      = 0, -- off
+        fastDelete      = true,
     },
     options = {
         { header = "Other Addons" },
@@ -21,6 +22,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once, as soon as the loot is ready.",
           bullets = { "Only when auto-loot is on (game setting or its modifier key)", "No waiting for the loot window" } },
+        { key = "fastDelete", label = "Fast item delete",
+          tooltip = "Fill in the confirmation text when you delete an item.",
+          bullets = { "\"DELETE\" already typed in the box", "You still confirm with Yes" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring around the mouse cursor.",
           bullets = { "In your class color, outlined" },
@@ -247,6 +251,20 @@ local function SetCursorRing(mode)
 end
 
 --------------------------------------------------------------------------------
+-- Fast item delete: the confirmation text is filled in when Blizzard's delete
+-- popup opens (post-hook, option read live). The player still clicks Yes.
+--------------------------------------------------------------------------------
+local DELETE_POPUPS = { DELETE_GOOD_ITEM = true, DELETE_GOOD_QUEST_ITEM = true }
+
+local function FillDeleteText(which)
+    if not (Misc.db.fastDelete and DELETE_POPUPS[which]) then return end
+    local popup = StaticPopup_FindVisible and StaticPopup_FindVisible(which)
+    if not popup then return end
+    local editBox = (popup.GetEditBox and popup:GetEditBox()) or popup.editBox
+    if editBox then editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
@@ -254,6 +272,7 @@ function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     SetFastLoot(self.db.fastLoot)
     SetCursorRing(self.db.cursorRing)
+    ns.Hook("StaticPopup_Show", FillDeleteText)
 end
 
 -- Live options.
