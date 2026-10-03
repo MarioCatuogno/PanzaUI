@@ -101,6 +101,7 @@ Here's a list of all the features included in this first release!
 ### 🧮 Class CDM
 
 * Monk - Brewmaster: Adjusted buffs and tracked bars to match the new version of UI
+* Monk - Mistweaver: Adjusted buffs and tracked bars to match the new version of UI
 * Monk - Windwalker: Adjusted buffs and tracked bars to match the new version of UI
 
 ### 👤 Profiles
