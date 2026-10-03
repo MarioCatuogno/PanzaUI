@@ -22,7 +22,7 @@ local Chat = ns:RegisterModule("Chat", {
           tooltip = "Hide the Combat Log tab." },
         { key = "hideClutter", label = "Hide clutter",
           tooltip = "Hide minor messages in the chat.",
-          bullets = { "Guild message of the day", "Loot specialization changes" } },
+          bullets = { "Guild message of the day", "Loot specialization changes", "Crafting by other players" } },
     },
 })
 
@@ -224,6 +224,18 @@ for _, name in ipairs(CHAT_FRAMES) do
     local frame = _G[name]
     if frame and frame.RemoveMessagesByPredicate then hooksecurefunc(frame, "AddMessage", RemoveClutter) end
 end
+
+-- Crafting by other players ("X creates Y."); your own crafts are kept.
+local OWN_CRAFT = type(TRADESKILL_LOG_FIRSTPERSON) == "string" and TRADESKILL_LOG_FIRSTPERSON:match("^(.-)%%s")
+
+local function HideOthersCrafts(_, _, msg)
+    local db = Chat.db
+    if not (db and db.hideClutter) or type(msg) ~= "string" or ns.IsSecret(msg) then return false end
+    return not (OWN_CRAFT and OWN_CRAFT ~= "" and msg:find(OWN_CRAFT, 1, true) == 1)
+end
+
+local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+if AddFilter then AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts) end
 
 --------------------------------------------------------------------------------
 -- Module API
