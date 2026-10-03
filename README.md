@@ -24,8 +24,6 @@ The addon is available on [CurseForge](https://www.curseforge.com/wow/addons/pan
 
 Found a bug or need help? [Open an issue](https://github.com/MarioCatuogno/PanzaUI/issues) and I'll help as much as I can.
 
-If you prefer, you can follow me on [Wago](https://wago.io/PO1A4B5V3) where you will find all the profiles.
-
 ## Features
 
 All the options are in the game menu: **Options → AddOns → PanzaUI** (or just type `/pui` in chat).
