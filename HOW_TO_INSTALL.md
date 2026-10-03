@@ -1,15 +1,15 @@
 ## Installation
 
 1. Download the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases) and unzip it.
-2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui), or copy the `PanzaUI` folder (from `Interface/AddOns`) into `World of Warcraft/_retail_/Interface/AddOns`.
-3. Copy the `Fonts` folder into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
+2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui), or copy the `PanzaUI` folder into `World of Warcraft/_retail_/Interface/AddOns`.
+3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
-6. Import the following mandatory profiles:
-   - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BlizzardUI.txt) (Edit Mode → Layout → Import)
-   - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt) (`/platynator` → Profiles → Import)
+6. Import the following mandatory profiles (you can find them in `PanzaUI/Profiles`):
+   - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) (Edit Mode → Layout → Import)
+   - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) (`/platynator` → Profiles → Import)
 7. If you want, you can also import these profiles to match my UI:
-   - [BigWigs](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BigWigs.txt) (`/bw` → Profiles → Import)
+   - [BigWigs](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) (`/bw` → Profiles → Import)
    - [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import)
 8. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
 9. Enjoy!
@@ -22,9 +22,9 @@ __Note__: the fonts replace the default ones of the whole game. To get the origi
 
 | Profile | Github Link | Wago Link |
 |---|---|---|
-| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BlizzardUI.txt) | [Import](https://wago.io/u-uPYMucI) |
-| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
-| BigWigs | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/PanzaUI-BigWigs.txt) | — |
+| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) | [Import](https://wago.io/u-uPYMucI) |
+| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
+| BigWigs | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) | — |
 
 ### Cooldown Manager Class Profiles
 
@@ -32,15 +32,15 @@ Optional class-specific profiles for the Cooldown Manager. These are not require
 
 | Class / Spec | Github Link | Wago Link |
 |---|---|---|
-| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Druid-Feral.txt) | — |
-| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Druid-Guardian.txt) | — |
-| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Mage-Frost.txt) | — |
-| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Monk-Brewmaster.txt) | [Import](https://wago.io/SC-WYrPjb) |
-| Monk — Mistweaver | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Monk-Mistweaver.txt) | — |
-| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Monk-Windwalker.txt) | [Import](https://wago.io/EE08tdX1t) |
-| Rogue — Outlaw | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Rogue-Outlaw.txt) | — |
-| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Shaman-Elemental.txt) | — |
-| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/Profiles/CooldownManager/Shaman-Enhancement.txt) | — |
+| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Druid-Feral.txt) | — |
+| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Druid-Guardian.txt) | — |
+| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Mage-Frost.txt) | — |
+| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Brewmaster.txt) | [Import](https://wago.io/SC-WYrPjb) |
+| Monk — Mistweaver | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Mistweaver.txt) | — |
+| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Windwalker.txt) | [Import](https://wago.io/EE08tdX1t) |
+| Rogue — Outlaw | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Rogue-Outlaw.txt) | — |
+| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Shaman-Elemental.txt) | — |
+| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Shaman-Enhancement.txt) | — |
 
 ## FAQ
 
