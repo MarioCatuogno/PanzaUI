@@ -476,12 +476,18 @@ local seenFonts, keptFonts = {}, {}
 -- mail, books), so they are kept by name.
 local PARCHMENT_FONTS = { "^QuestFont", "^QuestTitleFont", "^MailTextFont", "^InvoiceTextFont", "^ItemTextFont" }
 
-local function IsParchment(name)
-    if type(name) ~= "string" then return false end
-    for _, pattern in ipairs(PARCHMENT_FONTS) do
+-- Fonts of nameplate addons keep their own style.
+local OTHER_FONTS = { "^Platynator" }
+
+local function MatchAny(name, patterns)
+    for _, pattern in ipairs(patterns) do
         if name:find(pattern) then return true end
     end
     return false
+end
+
+local function IsParchment(name)
+    return type(name) == "string" and MatchAny(name, PARCHMENT_FONTS)
 end
 
 local function StyleSharedFonts()
@@ -492,9 +498,10 @@ local function StyleSharedFonts()
         local font = type(name) == "string" and _G[name] or name
         if type(font) == "table" and font.GetFont and not seenFonts[font] then
             seenFonts[font] = true
+            local other = type(name) == "string" and MatchAny(name, OTHER_FONTS)
             local path, _, flags = font:GetFont()
             local r, g, b = font:GetTextColor()
-            if path then
+            if path and not other then
                 flags = flags or ""
                 if IsParchment(name) or (r and r + g + b < 1) or flags:find("THICK") then
                     keptFonts[font] = flags:find("SLUG") and "" or flags
@@ -558,11 +565,28 @@ end
 
 -- Texts colored dark at runtime (achievements, parchment pages): the outline
 -- is removed while they are dark and put back when they turn light again.
+-- Nameplates are left to their own addons.
+local DARK = 0.4 -- brightest channel of a dark color
 local removedOutline = setmetatable({}, { __mode = "k" }) -- text -> its flags
+
+local function OnNamePlate(region)
+    local parent = region:GetParent()
+    for _ = 1, 10 do
+        if not parent then return false end
+        if parent:IsForbidden() then return true end
+        if parent.namePlateUnitToken or parent.UnitFrame then return true end
+        local name = parent:GetName()
+        if type(name) == "string" and name:find("^NamePlate") then return true end
+        parent = parent:GetParent()
+    end
+    return false
+end
+
 local function FitTextColor(text, r, g, b)
     if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not (r and g and b) then return end
-    local dark, flags = r + g + b < 1, removedOutline[text]
+    local dark, flags = math.max(r, g, b) < DARK, removedOutline[text]
     if not dark and not flags then return end -- light text never changed
+    if text:IsForbidden() or (dark and OnNamePlate(text)) then return end
     local path, size, current = text:GetFont()
     if ns.IsSecret(path) or not path or ns.IsSecret(current) then return end
     local outlined = current and current:find("OUTLINE") ~= nil
