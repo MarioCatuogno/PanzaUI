@@ -9,6 +9,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Various",
     defaults = {
         platynatorStyle = true,
+        bigwigsStyle    = true,
         fastLoot        = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
@@ -19,6 +20,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { header = "Other Addons" },
         { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
           tooltip = "Polish the look of the Platynator nameplates." },
+        { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
+          tooltip = "Polish the look of the BigWigs bars." },
         { header = "Quality of Life" },
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once when auto-loot is on." },
@@ -359,11 +362,43 @@ local function SetupNotices()
 end
 
 --------------------------------------------------------------------------------
+-- BigWigs "Blizzard" bar style: the Cooldown Manager bar texture (General >
+-- Textures) after BigWigs styles each bar; BigWigs restores its own texture
+-- when the bar ends.
+--------------------------------------------------------------------------------
+-- Pixels gained toward the frame border (the frame sits slightly lower).
+local BIGWIGS_TOP, BIGWIGS_BOTTOM = 2, 0
+
+local function SetupBigWigs()
+    local path = ns.CooldownBarTexture()
+    local style = path and BigWigsAPI and BigWigsAPI:GetBarStyle("Blizzard")
+    if not style then return end
+    hooksecurefunc(style, "ApplyStyle", function(bar)
+        local statusbar = bar.candyBarBar
+        if not statusbar then return end
+        statusbar:SetStatusBarTexture(path)
+        local fill = statusbar:GetStatusBarTexture()
+        fill:SetTexCoord(0, 1, 0, 1)
+        fill:ClearTextureSlice()
+        fill:ClearVertexOffsets()
+        -- Blizzard's fill is drawn inside an inset: the flat texture reaches
+        -- the frame border instead.
+        for i = 1, statusbar:GetNumPoints() do
+            local point, relative, relativePoint, x, y = statusbar:GetPoint(i)
+            if y and y ~= 0 then
+                statusbar:SetPoint(point, relative, relativePoint, x, y > 0 and y - BIGWIGS_BOTTOM or y + BIGWIGS_TOP)
+            end
+        end
+    end)
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
+    if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end
     SetFastLoot(self.db.fastLoot)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)

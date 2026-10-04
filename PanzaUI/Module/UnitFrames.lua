@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames
-    Player, Target, Focus, Boss and Pet frames: style, class colors and
-    hidden clutter, applied at login and kept with post-hooks.
+    Player, Target, Focus, Boss and Pet frames: style, class colors, class
+    icon portraits and hidden clutter, applied at login and kept with post-hooks.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -42,7 +42,7 @@ end
 options[#options + 1] = { header = "Boss" }
 options[#options + 1] = { key = "bossStyle", label = "Refined style",
     tooltip = "Polish the look of the Boss frames.",
-    bullets = { "Health and power as a percentage", "Rounded cast bar icon" } }
+    bullets = { "Health and power as a percentage", "Rounded cast bar icon", "No colored name background" } }
 options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Boss frames.",
     bullets = { "Level", "Threat glow" } }
@@ -63,7 +63,32 @@ for _, o in ipairs(options) do
     end
 end
 
+-- Blizzard's class icon portraits (off by default, applied live).
+defaults.playerClassIcon, defaults.targetClassIcon = false, false
+table.insert(options, 2, { key = "playerClassIcon", label = "Class icon portrait",
+    tooltip = "Show your class icon instead of the Player portrait.",
+    bullets = { "No portraits stuck zoomed in" } })
+for i, o in ipairs(options) do
+    if o.header == "Target" then
+        table.insert(options, i + 1, { key = "targetClassIcon", label = "Class icon portrait",
+            tooltip = "Show the class icon instead of the portrait of other players.",
+            bullets = { "Also on the Focus frame", "No portraits stuck zoomed in" } })
+        break
+    end
+end
+
 local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+
+-- Blizzard's own settings, set only when an option is on or turned off.
+local CLASS_ICON_CVARS = { playerClassIcon = "ReplaceMyPlayerPortrait", targetClassIcon = "ReplaceOtherPlayerPortraits" }
+
+local function SetClassIcon(key, on)
+    C_CVar.SetCVar(CLASS_ICON_CVARS[key], on and "1" or "0")
+    if not UnitFramePortrait_Update then return end
+    for _, frame in ipairs({ PlayerFrame, TargetFrame, FocusFrame }) do
+        if frame and frame.unit and UnitExists(frame.unit) then UnitFramePortrait_Update(frame) end
+    end
+end
 
 -- Converts the saved values of older versions.
 function UF:Migrate(db)
@@ -431,6 +456,8 @@ local function SetupBoss(db)
             end
 
             if db.bossStyle then
+                -- Cleared, not hidden: name and level are anchored to it.
+                main.ReputationColor:SetTexture(nil)
                 local spellbar = frame.spellbar
                 if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
                 ns.PercentText(health, false)
@@ -557,6 +584,9 @@ function UF:OnEnable()
     SetupBoss(db)
     SetupPet(db)
     SetupPortraits(db)
+    for key in pairs(CLASS_ICON_CVARS) do
+        if db[key] then SetClassIcon(key, true) end
+    end
 
     if next(classColorBars) then
         for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
@@ -569,4 +599,9 @@ function UF:OnEnable()
         ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
         for bar in pairs(classColorBars) do ClassColorHealth(bar) end
     end
+end
+
+-- Live options.
+function UF:OnOptionChanged(key, value)
+    if CLASS_ICON_CVARS[key] then SetClassIcon(key, value) end
 end

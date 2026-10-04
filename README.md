@@ -16,7 +16,7 @@
 
 PanzaUI is a clean, lightweight UI for **World of Warcraft Retail** (Midnight) that keeps the look and feel of the default Blizzard interface, but makes it sharper, tidier and more comfortable to play with.
 
-Since version 2.0 the heart of the UI is the **PanzaUI addon**: a single, very light addon that improves the default UI (no heavy frameworks, no replaced frames) and is built around the new Midnight addon restrictions. Every feature has its own toggle, so you only keep what you like. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), it recreates the whole PanzaUI setup.
+Since version 2.0 the heart of the UI is the **PanzaUI addon**: a single, very light addon that improves the default UI (no heavy frameworks, no replaced frames) and is built around the new Midnight addon restrictions. Every feature has its own toggle, so you only keep what you like. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
 
 __Note__: designed for 2560×1440 and 65% UI scale. It works at other resolutions too, with some small adjustments of the frame positions.
 
@@ -40,6 +40,8 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | **Tooltips** | Class colored names, Mythic+ rating and item level of players, item and spell IDs |
 | **Unit Frames** | Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage and less clutter (PvP icons, glows, combat text…) |
 | **Various** | Cursor ring, fast auto-loot, fast item delete, `/way` waypoints, rounded icons for Platynator nameplates and no more micro menu alerts |
+
+Want the action bars set up like mine? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 
 Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rc` (ready check), `/pl` (10-second pull timer).
 

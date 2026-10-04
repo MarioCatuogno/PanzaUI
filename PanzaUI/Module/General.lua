@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Shared text style and bar textures.
+    Text style, class colors, borders, bar textures and profile import.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -85,15 +85,94 @@ local OTHER_BARS = {
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
     { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
-      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips" },
+      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
+                  "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
-local defaults = { textStyle = true, classColors = true }
+-- Profiles: the PanzaUI Edit Mode layout, saved as "PanzaUI" (replacing an
+-- older copy) and made active.
+local function ImportEditMode()
+    local info = not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(ns.EDIT_MODE_LAYOUT)
+    if not info then
+        ns.Print("The Edit Mode layout can't be imported now (in combat or invalid).")
+        return
+    end
+    info.layoutName, info.layoutType = "PanzaUI", Enum.EditModeLayoutType.Account
+
+    -- Blizzard's index: preset layouts first, then the saved ones.
+    local saved = C_EditMode.GetLayouts()
+    local presets = Enum.EditModePresetLayoutsMeta.NumValues
+    local index, lastAccount
+    for i, layout in ipairs(saved.layouts) do
+        if layout.layoutName == "PanzaUI" then index = i end
+        if layout.layoutType == Enum.EditModeLayoutType.Account then lastAccount = i end
+    end
+    if index then
+        saved.layouts[index] = info
+    else -- account layouts come before character ones
+        index = (lastAccount or 0) + 1
+        table.insert(saved.layouts, index, info)
+    end
+    C_EditMode.SaveLayouts(saved)
+    C_EditMode.SetActiveLayout(presets + index)
+    ns.Print("Edit Mode layout imported: type /rl to finish.")
+end
+
+-- Platynator: imported with its own API, saved as "PanzaUI" and made active.
+local function ImportPlatynator()
+    local api = Platynator and Platynator.API
+    if InCombatLockdown() or not (api and api.ImportString) then
+        ns.Print("The Platynator profile can't be imported now (in combat or Platynator not loaded).")
+        return
+    end
+    if pcall(api.ImportString, ns.PLATYNATOR_PROFILE, "PanzaUI") then
+        ns.Print("Platynator profile imported.")
+    else
+        ns.Print("The Platynator profile can't be read.")
+    end
+end
+
+-- BigWigs: handed to its own import, which asks for confirmation.
+local function ImportBigWigs()
+    local api = BigWigsAPI
+    if InCombatLockdown() or not (api and api.RegisterProfile) then
+        ns.Print("The BigWigs profile can't be imported now (in combat or BigWigs not loaded).")
+        return
+    end
+    if not pcall(api.RegisterProfile, "PanzaUI", ns.BIGWIGS_PROFILE, "PanzaUI") then
+        ns.Print("The BigWigs profile can't be read.")
+    end
+end
+
+-- Confirmation before an import; data is the import function.
+StaticPopupDialogs["PANZAUI_IMPORT_PROFILE"] = {
+    text = "Import the PanzaUI profile for %s?\nAn older PanzaUI profile will be replaced.",
+    button1 = YES, button2 = NO,
+    OnAccept = function(_, import) import() end,
+    timeout = 0, whileDead = true, hideOnEscape = true,
+}
+local function ConfirmImport(target, import)
+    return function() StaticPopup_Show("PANZAUI_IMPORT_PROFILE", target, nil, import) end
+end
+
+local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
+    { header = "Profiles" },
+    { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
+      tooltip = "Import the PanzaUI layout of the interface frames.",
+      bullets = { "Saved as PanzaUI and made active" } },
+    { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
+      tooltip = "Import the PanzaUI profile of the Platynator nameplates.",
+      bullets = { "Saved as PanzaUI and made active" } },
+    { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
+      tooltip = "Import the PanzaUI profile of the BigWigs boss alerts.",
+      bullets = { "Confirmed in a BigWigs window" } },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },
+    { key = "refinedBorders", label = "Refined borders", reload = true,
+      tooltip = "Polish the look of borders across the whole UI." },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -167,6 +246,13 @@ local function TexturePath(key)
     local name = GEN.db[key]
     if name == DEFAULT then return end
     return ATLASES[name] or (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
+end
+
+-- Texture file of the Cooldown Manager bars, for other addons' bars (nil for
+-- Blizzard's own textures).
+function ns.CooldownBarTexture()
+    if ATLASES[GEN.db.texCdmPRD] then return end
+    return TexturePath("texCdmPRD")
 end
 
 -- Sets a bar texture, keeping Blizzard's draw layer.
@@ -295,6 +381,19 @@ local function TrackTexture(bar, path, inset)
     Reapply(texture and texture.GetAtlas and texture:GetAtlas())
     hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
+end
+
+-- Widget progress bars (events, NPCs): interface texture, set up with each
+-- bar (Blizzard sets the color after the fill, so the fill color goes back).
+local widgetTexture -- set in OnEnable
+if UIWidgetTemplateStatusBarMixin then
+    hooksecurefunc(UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
+        local bar = widgetTexture and not widget:IsForbidden() and widget.Bar
+        if not bar then return end
+        TrackTexture(bar, widgetTexture)
+        local c = AtlasColor(bar.lastFillAtlas)
+        if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
+    end)
 end
 
 -- Unit frame power bars: texture and power color after Blizzard's update.
@@ -476,12 +575,19 @@ local seenFonts, keptFonts = {}, {}
 -- mail, books), so they are kept by name.
 local PARCHMENT_FONTS = { "^QuestFont", "^QuestTitleFont", "^MailTextFont", "^InvoiceTextFont", "^ItemTextFont" }
 
-local function IsParchment(name)
-    if type(name) ~= "string" then return false end
-    for _, pattern in ipairs(PARCHMENT_FONTS) do
+-- Fonts of other addons keep their own style: only Blizzard's fonts (secure
+-- globals) are styled. Nameplate addons are also excluded by name.
+local OTHER_FONTS = { "^Platynator" }
+
+local function MatchAny(name, patterns)
+    for _, pattern in ipairs(patterns) do
         if name:find(pattern) then return true end
     end
     return false
+end
+
+local function IsParchment(name)
+    return type(name) == "string" and MatchAny(name, PARCHMENT_FONTS)
 end
 
 local function StyleSharedFonts()
@@ -492,9 +598,11 @@ local function StyleSharedFonts()
         local font = type(name) == "string" and _G[name] or name
         if type(font) == "table" and font.GetFont and not seenFonts[font] then
             seenFonts[font] = true
+            local other = type(name) == "string"
+                and (MatchAny(name, OTHER_FONTS) or (issecurevariable and not issecurevariable(name)))
             local path, _, flags = font:GetFont()
             local r, g, b = font:GetTextColor()
-            if path then
+            if path and not other then
                 flags = flags or ""
                 if IsParchment(name) or (r and r + g + b < 1) or flags:find("THICK") then
                     keptFonts[font] = flags:find("SLUG") and "" or flags
@@ -542,6 +650,21 @@ local function FitQuestInfo()
 end
 
 -- Spellbook: spell names, headers and page number, as Blizzard sets them up.
+-- Archaeology: parchment texts colored dark by the panel itself; each page
+-- is checked when it shows.
+local function SetupArchaeology()
+    local panel = ArchaeologyFrame
+    if not panel then return end
+    local function FitPanel() FitFrameOutlines(panel, 5) end
+    local function Queue() ns.Defer(FitPanel) end
+    panel:HookScript("OnShow", Queue)
+    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
+        local page = panel[key]
+        if page then page:HookScript("OnShow", Queue) end
+    end
+    if panel:IsShown() then Queue() end
+end
+
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -556,23 +679,88 @@ local function SetupSpellBook()
     book:HookScript("OnShow", function() ns.Defer(FitPages) end)
 end
 
+-- Texts colored dark at runtime (achievements, parchment pages): the outline
+-- is removed while they are dark and put back when they turn light again.
+-- Nameplates are left to their own addons.
+local DARK = 0.4 -- brightest channel of a dark color
+local removedOutline = setmetatable({}, { __mode = "k" }) -- text -> its flags
+
+local function OnNamePlate(region)
+    local parent = region:GetParent()
+    for _ = 1, 10 do
+        if not parent then return false end
+        if parent:IsForbidden() then return true end
+        if parent.namePlateUnitToken or parent.UnitFrame then return true end
+        local name = parent:GetName()
+        if type(name) == "string" and name:find("^NamePlate") then return true end
+        parent = parent:GetParent()
+    end
+    return false
+end
+
+local function FitTextColor(text, r, g, b)
+    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not (r and g and b) then return end
+    local dark, flags = math.max(r, g, b) < DARK, removedOutline[text]
+    if not dark and not flags then return end -- light text never changed
+    if text:IsForbidden() or (dark and OnNamePlate(text)) then return end
+    local path, size, current = text:GetFont()
+    if ns.IsSecret(path) or not path or ns.IsSecret(current) then return end
+    local outlined = current and current:find("OUTLINE") ~= nil
+    if dark then
+        if outlined then
+            removedOutline[text] = current
+            text:SetFont(path, size, "")
+        end
+    else
+        removedOutline[text] = nil
+        if not outlined then text:SetFont(path, size, flags) end
+    end
+end
+
 local function StyleBlizzardTexts()
     if not GetFonts then return end
     StyleSharedFonts()
+    local fontString = UIParent:CreateFontString()
+    hooksecurefunc(getmetatable(fontString).__index, "SetTextColor", FitTextColor)
     local loader = CreateFrame("Frame")
     loader:RegisterEvent("ADDON_LOADED")
     loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
 end
 
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Refined borders: Blizzard panel icons in the action bar style.
+--------------------------------------------------------------------------------
+local PROFESSION_BUTTONS = {
+    PrimaryProfession1 = { "SpellButtonTop", "SpellButtonBottom" },
+    PrimaryProfession2 = { "SpellButtonTop", "SpellButtonBottom" },
+    SecondaryProfession1 = { "SpellButtonLeft", "SpellButtonRight" },
+    SecondaryProfession2 = { "SpellButtonLeft", "SpellButtonRight" },
+    SecondaryProfession3 = { "SpellButtonLeft", "SpellButtonRight" },
+}
+
+local function StyleProfessionIcons()
+    for frame, buttons in pairs(PROFESSION_BUTTONS) do
+        for _, suffix in ipairs(buttons) do
+            local button = _G[frame .. suffix]
+            if button then ns.StyleIcon(button.IconTexture, button) end
+        end
+    end
+end
+
 function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
+    if self.db.refinedBorders then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
+    end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
+    widgetTexture = interface
 
     -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
     -- Green health when not class colored (the Pet frame never is).

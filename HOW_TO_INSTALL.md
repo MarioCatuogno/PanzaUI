@@ -5,26 +5,20 @@
 3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
-6. Import the following mandatory profiles (you can find them in `PanzaUI/Profiles`):
-   - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) (Edit Mode → Layout → Import)
-   - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) (`/platynator` → Profiles → Import)
-7. If you want, you can also import these profiles to match my UI:
-   - [BigWigs](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) (`/bw` → Profiles → Import)
-   - [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import)
-8. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
-9. Enjoy!
+6. Import the PanzaUI profiles: type `/pui` to open the PanzaUI options and, in the **Profiles** section, click **Import** next to:
+   - **Blizzard Edit Mode** (required): the layout that places every frame of the UI, confirm with **Yes**;
+   - **Platynator** (required): the nameplates, confirm with **Yes**;
+   - **BigWigs** (optional): the boss alerts, confirm in the BigWigs window.
+
+   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat.
+7. Type `/rl` to reload the UI.
+8. If you want, you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
+9. Type `/pui` to open the PanzaUI options and turn off anything you don't like. To set up the action bars like mine, follow [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
+10. Enjoy!
 
 __Note__: the fonts replace the default ones of the whole game. To get the original fonts back, just delete the `Fonts` folder from `_retail_`.
 
 ## Profiles
-
-### Addon Profiles
-
-| Profile | Github Link | Wago Link |
-|---|---|---|
-| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) | [Import](https://wago.io/u-uPYMucI) |
-| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
-| BigWigs | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) | — |
 
 ### Cooldown Manager Class Profiles
 
@@ -58,11 +52,15 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 
 **Where do I find the latest version of the profiles?**
 
-Here on Github (see the releases or pre-releases) or on [Wago](https://wago.io/PO1A4B5V3).
+Here on Github (see the releases or pre-releases) or on [CurseForge](https://www.curseforge.com/wow/addons/panzaui).
 
 **Why is my UI shifted or why can't I see the Minimap?**
 
 The Blizzard UI profile is made for 2560×1440. On other resolutions, lower the UI scale a little and move the frames in Edit Mode.
+
+**Where are your action bars? How do I set them up like yours?**
+
+My action bars are hidden or shown on mouseover with the PanzaUI visibility options (all bars start on Default after a new install). Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119) to see how I set up each bar and why.
 
 **Can I support your work?**
 

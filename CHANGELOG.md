@@ -1,3 +1,31 @@
+## 2.1-RELEASE
+
+This is a smaller update with many bug fixes, performance improvements and some new features!
+
+### 🛠️ Core
+
+* Chat - Hidden the group settings messages: difficulty, loot method, loot threshold and leader changes
+* Chat - Hidden the messages of spells learned and unlearned when changing specialization
+* Core - Added a Refined borders option, with the action bar style on the Profession book icons
+* Core - Added a Profiles section to the options, to import the PanzaUI profiles for Edit Mode, Platynator and BigWigs with one click [#116]
+* Core - Fixed the Interface bars texture missing on the progress bars of events and NPCs
+* Core - Fixed the Refined text changing the fonts of other addons (eg. Platynator nameplates), now kept as set in each addon [#114]
+* Core - Fixed the Refined text on the dark texts of the Archaeology panel, now shown without the outline
+* Core - Fixed the Refined text on texts that turn dark (eg. completed achievements), now shown without the outline [#113]
+* Party & Raid Frames - Fixed the size of the full health text ("100") after resizing the frames in Edit Mode, with Refined text off
+* Unit Frames - Added an option to show the class icon instead of the portrait on Player, Target and Focus frames (players only)
+* Unit Frames - Fixed the colored name background still shown on Boss frames, now removed like on Target and Focus
+* Various - Added the refined style for BigWigs bars (Blizzard style), with the same texture as the Cooldown Manager bars
+
+### 👤 Profiles
+
+* BlizzUI - Adjusted the action bars to give players more buttons to keybind rotation
+* Platynator - Updated the profile to be imported through PanzaUI [#116]
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.0-RELEASE
 
 Big update! This is a full rework of PanzaUI: instead of profiles for other addons (eg. EnhanceQoL, Chattynator and Cooldown Manager Centered), PanzaUI is now a standalone and lightweight addon that improves the default UI of World of Warcraft with many QoL features. Every feature can be turned on or off from the AddOns options (type /pui).
