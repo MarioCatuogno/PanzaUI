@@ -17,8 +17,6 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 * Unit Frames - Fixed the colored name background still shown on Boss frames, now removed like on Target and Focus
 * Various - Added the refined style for BigWigs bars (Blizzard style), with the same texture of the Cooldown Manager bars
 
-### 🧮 Class CDM
-
 ### 👤 Profiles
 
 * BlizzUI - Adjusted the action bars to give players more buttons to keybind rotation
