@@ -26,7 +26,7 @@ local Chat = ns:RegisterModule("Chat", {
           bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
                       "Online and offline notices", "Channel and group join and leave notices",
                       "Not in a group warnings", "Recent Allies icon by player names",
-                      "Group settings and leader changes" } },
+                      "Group settings and leader changes", "Spells learned on specialization changes" } },
     },
 })
 
@@ -326,7 +326,7 @@ local function HasAny(msg, list)
 end
 
 -- System notices (online / offline, group join / leave, not in a group,
--- group settings) and loot of other players.
+-- group settings, spells learned) and loot of other players.
 local NOTICES = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S,
     ERR_JOINED_GROUP_S, ERR_LEFT_GROUP_S, ERR_RAID_MEMBER_ADDED_S, ERR_RAID_MEMBER_REMOVED_S,
     ERR_INSTANCE_GROUP_ADDED_S, ERR_INSTANCE_GROUP_REMOVED_S,
@@ -335,7 +335,9 @@ local NOTICES = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S,
     ERR_DUNGEON_DIFFICULTY_CHANGED_S, ERR_RAID_DIFFICULTY_CHANGED_S, ERR_LEGACY_RAID_DIFFICULTY_CHANGED_S,
     ERR_SET_LOOT_FREEFORALL, ERR_SET_LOOT_GROUP, ERR_SET_LOOT_MASTER, ERR_SET_LOOT_NBG,
     ERR_SET_LOOT_PERSONAL, ERR_SET_LOOT_ROUNDROBIN, ERR_SET_LOOT_THRESHOLD_S,
-    ERR_NEW_LEADER_S, ERR_NEW_LEADER_YOU)
+    ERR_NEW_LEADER_S, ERR_NEW_LEADER_YOU,
+    -- Spells learned or unlearned (eg. on specialization changes).
+    ERR_LEARN_ABILITY_S, ERR_LEARN_SPELL_S, ERR_LEARN_PASSIVE_S, ERR_SPELL_UNLEARNED_S)
 local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LOOT_ITEM_PUSHED_MULTIPLE)
 
 local function Hiding(msg)
