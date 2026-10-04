@@ -142,13 +142,15 @@ local function AddMythicRating(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
--- Mount: found among the player's buffs, with its icon. Secret aura data
--- (eg. in instances) is skipped.
+-- Mount: found among the player's buffs, with its icon. Skipped in combat
+-- and while auras are secret (eg. in instances): reading them would error.
 --------------------------------------------------------------------------------
 local MOUNT_TEXT = "|T%d:0|t %s"
 local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal.GetMountFromSpell
+local AurasSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
 
 local function MountText(unit)
+    if InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
     for i = 1, 40 do
         local aura = GetAura(unit, i, "HELPFUL")
         if IsSecret(aura) or not aura then return end
