@@ -265,13 +265,18 @@ local function SetTexture(bar, path)
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
 end
 
--- Puts the texture back when Blizzard sets its atlas again.
+-- Puts the texture back when Blizzard sets its atlas again, on the fill or
+-- (viaBar, unit frame health) through the bar itself, as on Boss frames.
 local keptTextures = {}
-local function KeepTexture(bar, path)
+local function KeepTexture(bar, path, viaBar)
     local texture = bar and path and bar.GetStatusBarTexture and bar:GetStatusBarTexture()
     if not texture or keptTextures[texture] then return end
     keptTextures[texture] = true
     hooksecurefunc(texture, "SetAtlas", function() SetTexture(bar, path) end)
+    if not viaBar then return end
+    hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset)
+        if asset ~= path then SetTexture(bar, path) end
+    end)
 end
 
 -- Power spend/gain flash: same texture, tinted like the bar.
@@ -422,7 +427,7 @@ end
 local function SkinBars(health, power, path, tint)
     if not path then return end
     SetTexture(health, path)
-    KeepTexture(health, path)
+    KeepTexture(health, path, true)
     local fill = tint and health and health:GetStatusBarTexture()
     if fill then
         TintHealth(health)
