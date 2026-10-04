@@ -5,14 +5,18 @@
 3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
-6. Import the following mandatory profiles (you can find them in `PanzaUI/Profiles`):
-   - [BlizzardUI](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) (Edit Mode → Layout → Import)
-   - [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) (`/platynator` → Profiles → Import)
-7. If you want, you can also import these profiles to match my UI:
+6. Import the PanzaUI Edit Mode layout, which places every frame of the UI:
+   - type `/pui` to open the PanzaUI options;
+   - in the **Profiles** section, click **Import** next to **Blizzard Edit Mode** and confirm with **Yes**;
+   - type `/rl` to reload the UI.
+
+   The layout is saved as **PanzaUI** and made active (an older PanzaUI layout is replaced). It can't be imported in combat.
+7. Import the mandatory [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) profile (`/platynator` → Profiles → Import).
+8. If you want, you can also import these profiles to match my UI:
    - [BigWigs](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) (`/bw` → Profiles → Import)
    - [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import)
-8. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
-9. Enjoy!
+9. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
+10. Enjoy!
 
 __Note__: the fonts replace the default ones of the whole game. To get the original fonts back, just delete the `Fonts` folder from `_retail_`.
 
@@ -22,7 +26,6 @@ __Note__: the fonts replace the default ones of the whole game. To get the origi
 
 | Profile | Github Link | Wago Link |
 |---|---|---|
-| Blizzard UI | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BlizzardUI.txt) | [Import](https://wago.io/u-uPYMucI) |
 | Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
 | BigWigs | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) | — |
 
