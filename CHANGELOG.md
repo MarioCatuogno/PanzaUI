@@ -13,7 +13,7 @@
 
 ### 👤 Profiles
 
-* BigWigs - Added the Battle Res icon
+* BigWigs - Added the Battle Res tracker icon
 * BlizzUI - Moved the Loot Window to the right
 * Platynator - Added the new border texture to match the rest of the UI
 
