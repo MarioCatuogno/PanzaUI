@@ -41,6 +41,8 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | **Unit Frames** | Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage and less clutter (PvP icons, glows, combat text…) |
 | **Various** | Cursor ring, fast auto-loot, fast item delete, `/way` waypoints, rounded icons for Platynator nameplates and no more micro menu alerts |
 
+Want the action bars set up like mine? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
+
 Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rc` (ready check), `/pl` (10-second pull timer).
 
 ## Support

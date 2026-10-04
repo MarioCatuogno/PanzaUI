@@ -13,7 +13,7 @@
    Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat.
 7. Type `/rl` to reload the UI.
 8. If you want, you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
-9. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
+9. Type `/pui` to open the PanzaUI options and turn off anything you don't like. To set up the action bars like mine, follow [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 10. Enjoy!
 
 __Note__: the fonts replace the default ones of the whole game. To get the original fonts back, just delete the `Fonts` folder from `_retail_`.
@@ -66,6 +66,10 @@ Here on Github (see the releases or pre-releases) or on [CurseForge](https://www
 **Why is my UI shifted or why can't I see the Minimap?**
 
 The Blizzard UI profile is made for 2560×1440. On other resolutions, lower the UI scale a little and move the frames in Edit Mode.
+
+**Where are your action bars? How do I set them up like yours?**
+
+My action bars are hidden or shown on mouseover with the PanzaUI visibility options (all bars start on Default after a new install). Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119) to see how I set up each bar and why.
 
 **Can I support your work?**
 
