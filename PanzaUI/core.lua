@@ -707,6 +707,7 @@ end
 --           { header = "Section" },
 --           { key, label, tooltip, bullets = { ... }, reload = true,
 --             slider = { min, max, step, suffix } | dropdown = list or func },
+--           { label, tooltip, button = "Text", onClick = func },  -- no saved value
 --       },
 --   }
 --   Sections (by header) and the options inside them are listed
@@ -840,7 +841,10 @@ end
 
 local VAR_TYPES
 
-local function AddOption(category, m, opt)
+local function AddOption(category, layout, m, opt)
+    if opt.button then
+        return layout:AddInitializer(CreateSettingsButtonInitializer(opt.label, opt.button, opt.onClick, BuildTooltip(opt), true))
+    end
     local key = opt.key
     VAR_TYPES = VAR_TYPES or { boolean = Settings.VarType.Boolean, number = Settings.VarType.Number, string = Settings.VarType.String }
     local varType = VAR_TYPES[type(m.defaults[key])]
@@ -903,7 +907,7 @@ local function BuildSettings()
                 lay:AddInitializer(CreateSettingsListSectionHeaderInitializer(section.header))
             end
             table.sort(section.options, ByLabel)
-            for _, opt in ipairs(section.options) do AddOption(cat, m, opt) end
+            for _, opt in ipairs(section.options) do AddOption(cat, lay, m, opt) end
         end
     end
 

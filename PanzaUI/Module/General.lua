@@ -89,8 +89,41 @@ local OTHER_BARS = {
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
+-- Profiles: the PanzaUI Edit Mode layout, saved as "PanzaUI" (replacing an
+-- older copy) and made active.
+local function ImportEditMode()
+    local info = not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(ns.EDIT_MODE_LAYOUT)
+    if not info then
+        ns.Print("The Edit Mode layout can't be imported now (in combat or invalid).")
+        return
+    end
+    info.layoutName, info.layoutType = "PanzaUI", Enum.EditModeLayoutType.Account
+
+    -- Blizzard's index: preset layouts first, then the saved ones.
+    local saved = C_EditMode.GetLayouts()
+    local presets = Enum.EditModePresetLayoutsMeta.NumValues
+    local index, lastAccount
+    for i, layout in ipairs(saved.layouts) do
+        if layout.layoutName == "PanzaUI" then index = i end
+        if layout.layoutType == Enum.EditModeLayoutType.Account then lastAccount = i end
+    end
+    if index then
+        saved.layouts[index] = info
+    else -- account layouts come before character ones
+        index = (lastAccount or 0) + 1
+        table.insert(saved.layouts, index, info)
+    end
+    C_EditMode.SaveLayouts(saved)
+    C_EditMode.SetActiveLayout(presets + index)
+    ns.Print("Edit Mode layout imported: type /rl to finish.")
+end
+
 local defaults = { textStyle = true, classColors = true }
 local options  = {
+    { header = "Profiles" },
+    { label = "Blizzard Edit Mode", button = "Import", onClick = ImportEditMode,
+      tooltip = "Import the PanzaUI layout of the interface frames.",
+      bullets = { "Saved as PanzaUI and made active" } },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },
