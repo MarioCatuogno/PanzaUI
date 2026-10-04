@@ -118,19 +118,55 @@ local function ImportEditMode()
     ns.Print("Edit Mode layout imported: type /rl to finish.")
 end
 
-StaticPopupDialogs["PANZAUI_IMPORT_EDITMODE"] = {
-    text = "Import the PanzaUI Edit Mode layout?\nAn older PanzaUI layout will be replaced.",
-    button1 = YES, button2 = NO, OnAccept = ImportEditMode,
+-- Platynator: imported with its own API, saved as "PanzaUI" and made active.
+local function ImportPlatynator()
+    local api = Platynator and Platynator.API
+    if InCombatLockdown() or not (api and api.ImportString) then
+        ns.Print("The Platynator profile can't be imported now (in combat or Platynator not loaded).")
+        return
+    end
+    if pcall(api.ImportString, ns.PLATYNATOR_PROFILE, "PanzaUI") then
+        ns.Print("Platynator profile imported.")
+    else
+        ns.Print("The Platynator profile can't be read.")
+    end
+end
+
+-- BigWigs: handed to its own import, which asks for confirmation.
+local function ImportBigWigs()
+    local api = BigWigsAPI
+    if InCombatLockdown() or not (api and api.RegisterProfile) then
+        ns.Print("The BigWigs profile can't be imported now (in combat or BigWigs not loaded).")
+        return
+    end
+    if not pcall(api.RegisterProfile, "PanzaUI", ns.BIGWIGS_PROFILE, "PanzaUI") then
+        ns.Print("The BigWigs profile can't be read.")
+    end
+end
+
+-- Confirmation before an import; data is the import function.
+StaticPopupDialogs["PANZAUI_IMPORT_PROFILE"] = {
+    text = "Import the PanzaUI profile for %s?\nAn older PanzaUI profile will be replaced.",
+    button1 = YES, button2 = NO,
+    OnAccept = function(_, import) import() end,
     timeout = 0, whileDead = true, hideOnEscape = true,
 }
+local function ConfirmImport(target, import)
+    return function() StaticPopup_Show("PANZAUI_IMPORT_PROFILE", target, nil, import) end
+end
 
 local defaults = { textStyle = true, classColors = true }
 local options  = {
     { header = "Profiles" },
-    { label = "Blizzard Edit Mode", button = "Import",
-      onClick = function() StaticPopup_Show("PANZAUI_IMPORT_EDITMODE") end,
+    { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
       tooltip = "Import the PanzaUI layout of the interface frames.",
       bullets = { "Saved as PanzaUI and made active" } },
+    { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
+      tooltip = "Import the PanzaUI profile of the Platynator nameplates.",
+      bullets = { "Saved as PanzaUI and made active" } },
+    { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
+      tooltip = "Import the PanzaUI profile of the BigWigs boss alerts.",
+      bullets = { "Confirmed in a BigWigs window" } },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },

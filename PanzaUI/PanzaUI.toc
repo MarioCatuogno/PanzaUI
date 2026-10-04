@@ -4,12 +4,14 @@
 ## Author: Panzarotto
 ## X-Website: https://github.com/MarioCatuogno/PanzaUI
 ## IconTexture: 572034
-## Version: 2.1.5
+## Version: 2.1.6
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, Platynator
 
 core.lua
 Profiles\PanzaUI-BlizzardUI.lua
+Profiles\PanzaUI-Platynator.lua
+Profiles\PanzaUI-BigWigs.lua
 Module\General.lua
 Module\Chat.lua
 Module\ActionBars.lua

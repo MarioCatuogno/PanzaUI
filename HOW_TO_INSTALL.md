@@ -5,16 +5,14 @@
 3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
-6. Import the PanzaUI Edit Mode layout, which places every frame of the UI:
-   - type `/pui` to open the PanzaUI options;
-   - in the **Profiles** section, click **Import** next to **Blizzard Edit Mode** and confirm with **Yes**;
-   - type `/rl` to reload the UI.
+6. Import the PanzaUI profiles: type `/pui` to open the PanzaUI options and, in the **Profiles** section, click **Import** next to:
+   - **Blizzard Edit Mode** (required): the layout that places every frame of the UI, confirm with **Yes**;
+   - **Platynator** (required): the nameplates, confirm with **Yes**;
+   - **BigWigs** (optional): the boss alerts, confirm in the BigWigs window.
 
-   The layout is saved as **PanzaUI** and made active (an older PanzaUI layout is replaced). It can't be imported in combat.
-7. Import the mandatory [Platynator](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) profile (`/platynator` → Profiles → Import).
-8. If you want, you can also import these profiles to match my UI:
-   - [BigWigs](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) (`/bw` → Profiles → Import)
-   - [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import)
+   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat.
+7. Type `/rl` to reload the UI.
+8. If you want, you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
 9. Type `/pui` to open the PanzaUI options and turn off anything you don't like.
 10. Enjoy!
 
@@ -23,6 +21,8 @@ __Note__: the fonts replace the default ones of the whole game. To get the origi
 ## Profiles
 
 ### Addon Profiles
+
+The same profiles imported by the PanzaUI options, if you prefer to import them manually.
 
 | Profile | Github Link | Wago Link |
 |---|---|---|
