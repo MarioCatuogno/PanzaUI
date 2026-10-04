@@ -23,7 +23,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
           tooltip = "Polish the look of the Platynator nameplates." },
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
-          tooltip = "Polish the look of the BigWigs bars." },
+          tooltip = "Polish the look of the BigWigs bars and battle res icon." },
         { header = "Quality of Life" },
         { key = "ahExpansion", label = "Auction House: current expansion",
           tooltip = "Set the current expansion filter when opening the Auction House." },
@@ -461,14 +461,14 @@ local function SetupNotices()
 end
 
 --------------------------------------------------------------------------------
--- BigWigs "Blizzard" bar style: the Cooldown Manager bar texture (General >
+-- BigWigs bars, "Blizzard" style: the Cooldown Manager bar texture (General >
 -- Textures) after BigWigs styles each bar; BigWigs restores its own texture
 -- when the bar ends.
 --------------------------------------------------------------------------------
 -- Pixels gained toward the frame border (the frame sits slightly lower).
 local BIGWIGS_TOP, BIGWIGS_BOTTOM = 2, 0
 
-local function SetupBigWigs()
+local function StyleBigWigsBars()
     local path = ns.CooldownBarTexture()
     local style = path and BigWigsAPI and BigWigsAPI:GetBarStyle("Blizzard")
     if not style then return end
@@ -489,6 +489,50 @@ local function SetupBigWigs()
             end
         end
     end)
+end
+
+--------------------------------------------------------------------------------
+-- BigWigs Battle Res icon: rounded mask, frame and swipe like the action
+-- bars, BigWigs' own border hidden. The icon has no name: found among the
+-- UIParent children by its fields.
+--------------------------------------------------------------------------------
+local BACKDROP_EDGES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
+
+local function HideBackdropEdges(border)
+    for _, key in ipairs(BACKDROP_EDGES) do
+        local edge = border[key]
+        if edge then edge:SetAlpha(0) end
+    end
+end
+
+local function FindBattleRes(...)
+    for i = 1, select("#", ...) do
+        local frame = select(i, ...)
+        if not frame:IsForbidden() and frame.chargesText and frame.cdText and frame.cooldown
+            and frame.border and frame.icon then
+            return frame
+        end
+    end
+end
+
+local function StyleBattleRes()
+    local frame = FindBattleRes(UIParent:GetChildren())
+    local ring = frame and ns.StyleIcon(frame.icon, frame, true)
+    if not ring then return end
+    ns.RoundSwipe(frame.cooldown)
+    hooksecurefunc(frame.border, "SetBackdrop", HideBackdropEdges)
+    hooksecurefunc(frame.border, "SetBackdropBorderColor", HideBackdropEdges)
+    HideBackdropEdges(frame.border)
+    -- Text only mode: no icon, so no frame either.
+    hooksecurefunc(frame.icon, "SetTexture", function(_, texture) ring:SetShown(texture ~= nil) end)
+    hooksecurefunc(frame.icon, "SetColorTexture", function() ring:Hide() end)
+    ring:SetShown(frame.icon:GetTexture() ~= nil)
+end
+
+local function SetupBigWigs()
+    StyleBigWigsBars()
+    StyleBattleRes()
 end
 
 --------------------------------------------------------------------------------
