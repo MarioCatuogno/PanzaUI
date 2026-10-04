@@ -173,7 +173,7 @@ local options  = {
       tooltip = "Color the health bars by class or reaction." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
       tooltip = "Polish the look of borders across the whole UI.",
-      bullets = { "Profession book icons", "Tooltip borders" } },
+      bullets = { "Profession book icons" } },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -738,36 +738,10 @@ local function StyleProfessionIcons()
     end
 end
 
--- Tooltips: Blizzard's own background and border of the Damage Meter
--- windows and menus, instead of the tooltip frame.
-local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge", "Center" }
-local TOOLTIP_BACKGROUND = "common-dropdown-bg"
-local tooltipBackgrounds = {}
-
-local function StyleTooltipBorder(tooltip)
-    local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
-    if not nineSlice or nineSlice:IsForbidden() then return end
-    for _, key in ipairs(NINESLICE_PIECES) do
-        local piece = nineSlice[key]
-        if piece then piece:SetAlpha(0) end
-    end
-    if not tooltipBackgrounds[nineSlice] then
-        local background = nineSlice:CreateTexture(nil, "BACKGROUND")
-        background:SetAtlas(TOOLTIP_BACKGROUND)
-        background:SetAllPoints(nineSlice)
-        tooltipBackgrounds[nineSlice] = background
-    end
-end
-
 function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
     if self.db.refinedBorders then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
-        ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
-        for _, name in ipairs({ "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2" }) do
-            StyleTooltipBorder(_G[name])
-        end
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
