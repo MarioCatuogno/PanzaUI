@@ -1,3 +1,11 @@
+## 2.2-RELEASE
+
+### 🛠️ Core
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.1-RELEASE
 
 This is a smaller update with many bug fixes, performance improvements and some new features!
