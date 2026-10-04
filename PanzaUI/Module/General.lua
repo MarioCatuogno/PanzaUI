@@ -85,7 +85,8 @@ local OTHER_BARS = {
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
     { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
-      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips" },
+      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
+                  "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -378,6 +379,19 @@ local function TrackTexture(bar, path, inset)
     Reapply(texture and texture.GetAtlas and texture:GetAtlas())
     hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
+end
+
+-- Widget progress bars (events, NPCs): interface texture, set up with each
+-- bar (Blizzard sets the color after the fill, so the fill color goes back).
+local widgetTexture -- set in OnEnable
+if UIWidgetTemplateStatusBarMixin then
+    hooksecurefunc(UIWidgetTemplateStatusBarMixin, "Setup", function(widget)
+        local bar = widgetTexture and not widget:IsForbidden() and widget.Bar
+        if not bar then return end
+        TrackTexture(bar, widgetTexture)
+        local c = AtlasColor(bar.lastFillAtlas)
+        if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
+    end)
 end
 
 -- Unit frame power bars: texture and power color after Blizzard's update.
@@ -705,6 +719,7 @@ function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
+    widgetTexture = interface
 
     -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
     -- Green health when not class colored (the Pet frame never is).
