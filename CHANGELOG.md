@@ -11,6 +11,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Added the Battle Res icon
 * Platynator - Added the new border texture to match the rest of the UI
 
 ### 📏 Various
