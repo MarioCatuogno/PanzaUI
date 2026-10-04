@@ -156,7 +156,7 @@ local function ConfirmImport(target, import)
     return function() StaticPopup_Show("PANZAUI_IMPORT_PROFILE", target, nil, import) end
 end
 
-local defaults = { textStyle = true, classColors = true }
+local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
@@ -171,6 +171,9 @@ local options  = {
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },
+    { key = "refinedBorders", label = "Refined borders", reload = true,
+      tooltip = "Polish the look of borders across the whole UI.",
+      bullets = { "Profession book icons" } },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -715,8 +718,31 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Refined borders: Blizzard panel icons in the action bar style.
+--------------------------------------------------------------------------------
+local PROFESSION_BUTTONS = {
+    PrimaryProfession1 = { "SpellButtonTop", "SpellButtonBottom" },
+    PrimaryProfession2 = { "SpellButtonTop", "SpellButtonBottom" },
+    SecondaryProfession1 = { "SpellButtonLeft", "SpellButtonRight" },
+    SecondaryProfession2 = { "SpellButtonLeft", "SpellButtonRight" },
+    SecondaryProfession3 = { "SpellButtonLeft", "SpellButtonRight" },
+}
+
+local function StyleProfessionIcons()
+    for frame, buttons in pairs(PROFESSION_BUTTONS) do
+        for _, suffix in ipairs(buttons) do
+            local button = _G[frame .. suffix]
+            if button then ns.StyleIcon(button.IconTexture, button) end
+        end
+    end
+end
+
 function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
+    if self.db.refinedBorders then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
+    end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
     widgetTexture = interface
