@@ -13,6 +13,8 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 
 ### 👤 Profiles
 
+* Platynator - Updated the profile to be imported through PanzaUI [#116]
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version
