@@ -11,6 +11,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         platynatorStyle = true,
         bigwigsStyle    = true,
         fastLoot        = true,
+        ahExpansion     = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
         waypoints       = true,
@@ -23,6 +24,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
           tooltip = "Polish the look of the BigWigs bars." },
         { header = "Quality of Life" },
+        { key = "ahExpansion", label = "Auction House: current expansion",
+          tooltip = "Set the current expansion filter when opening the Auction House." },
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once when auto-loot is on." },
         { key = "fastDelete", label = "Fast item delete",
@@ -214,6 +217,33 @@ local function SetFastLoot(on)
         lootEvents:RegisterEvent("LOOT_READY")
     else
         lootEvents:UnregisterAllEvents()
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Auction House: the current expansion filter set at every opening (read
+-- first, since toggling a filter already set would turn it off).
+--------------------------------------------------------------------------------
+local ahEvents = CreateFrame("Frame")
+
+local function SetExpansionFilter()
+    local searchBar = AuctionHouseFrame and AuctionHouseFrame.SearchBar
+    local button = searchBar and searchBar.FilterButton
+    local filter = Enum.AuctionHouseFilter and Enum.AuctionHouseFilter.CurrentExpansionOnly
+    if not (filter and button and button.GetFilters and button.ToggleFilter) then return end
+    local filters = button:GetFilters()
+    if filters and filters[filter] then return end
+    button:ToggleFilter(filter)
+    if searchBar.UpdateClearFiltersButton then searchBar:UpdateClearFiltersButton() end
+end
+
+ahEvents:SetScript("OnEvent", function() RunNextFrame(SetExpansionFilter) end)
+
+local function SetAuctionFilter(on)
+    if on then
+        ahEvents:RegisterEvent("AUCTION_HOUSE_SHOW")
+    else
+        ahEvents:UnregisterAllEvents()
     end
 end
 
@@ -431,6 +461,7 @@ function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end
     SetFastLoot(self.db.fastLoot)
+    SetAuctionFilter(self.db.ahExpansion)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
     SetupNotices()
@@ -441,6 +472,8 @@ end
 function Misc:OnOptionChanged(key, value)
     if key == "fastLoot" then
         SetFastLoot(value)
+    elseif key == "ahExpansion" then
+        SetAuctionFilter(value)
     elseif key == "hideNotices" then
         if value then CloseOpenNotices() end
     elseif key == "cursorRing" then

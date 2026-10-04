@@ -4,6 +4,7 @@
 
 * Core - Added a new border texture to the tooltips, with the Refined borders option
 * Various - Added a new border texture for Platynator nameplates
+* Various - Added an option to set the current expansion filter when opening the Auction House
 
 ### 👤 Profiles
 
