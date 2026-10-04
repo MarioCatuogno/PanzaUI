@@ -12,6 +12,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         bigwigsStyle    = true,
         fastLoot        = true,
         ahExpansion     = true,
+        flightDestination = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
         waypoints       = true,
@@ -28,6 +29,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Set the current expansion filter when opening the Auction House." },
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once when auto-loot is on." },
+        { key = "flightDestination", label = "Flight destination",
+          tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
         { key = "hideNotices", label = "Hide system notices",
@@ -248,6 +251,45 @@ local function SetAuctionFilter(on)
 end
 
 --------------------------------------------------------------------------------
+-- Flight destination: shown from the take-off to the landing, checked twice
+-- per second only while waiting or flying.
+--------------------------------------------------------------------------------
+local FLIGHT_CHECK = 0.5     -- seconds between taxi checks
+local FLIGHT_START_WAIT = 5  -- seconds from the taxi click to the take-off
+local flightFrame, flightDeadline, flying
+
+local function CheckFlight(self, elapsed)
+    self.tick = self.tick + elapsed
+    if self.tick < FLIGHT_CHECK then return end
+    self.tick = 0
+    local onTaxi = UnitOnTaxi("player")
+    if onTaxi and not flying then
+        flying = true
+        self.text:Show()
+    elseif not onTaxi and (flying or GetTime() > flightDeadline) then
+        self:Hide()
+    end
+end
+
+-- Destination chosen on the flight map: shown once on the taxi.
+local function OnTakeTaxiNode(index)
+    if not Misc.db.flightDestination then return end
+    if not flightFrame then
+        flightFrame = CreateFrame("Frame", nil, UIParent)
+        flightFrame:SetSize(1, 1)
+        flightFrame:SetPoint("TOP", 0, -90)
+        flightFrame.text = flightFrame:CreateFontString(nil, "OVERLAY")
+        flightFrame.text:SetFontObject(ns.textStyle and ns.OutlinedFont(GameFontNormalLarge) or GameFontNormalLarge)
+        flightFrame.text:SetPoint("TOP")
+        flightFrame:SetScript("OnUpdate", CheckFlight)
+    end
+    flightFrame.text:SetText("Destination: " .. TaxiNodeName(index))
+    flightFrame.text:Hide()
+    flightFrame.tick, flightDeadline, flying = 0, GetTime() + FLIGHT_START_WAIT, false
+    flightFrame:Show()
+end
+
+--------------------------------------------------------------------------------
 -- Cursor ring: class colored ring following the cursor (OnUpdate only
 -- while shown).
 --------------------------------------------------------------------------------
@@ -462,6 +504,7 @@ function Misc:OnEnable()
     if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end
     SetFastLoot(self.db.fastLoot)
     SetAuctionFilter(self.db.ahExpansion)
+    ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
     SetupNotices()
@@ -474,6 +517,8 @@ function Misc:OnOptionChanged(key, value)
         SetFastLoot(value)
     elseif key == "ahExpansion" then
         SetAuctionFilter(value)
+    elseif key == "flightDestination" then
+        if not value and flightFrame then flightFrame:Hide() end
     elseif key == "hideNotices" then
         if value then CloseOpenNotices() end
     elseif key == "cursorRing" then
