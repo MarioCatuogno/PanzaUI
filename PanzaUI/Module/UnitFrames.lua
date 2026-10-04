@@ -63,18 +63,31 @@ for _, o in ipairs(options) do
     end
 end
 
--- Blizzard's class icon portrait (off by default, applied live).
-defaults.playerClassIcon = false
+-- Blizzard's class icon portraits (off by default, applied live).
+defaults.playerClassIcon, defaults.targetClassIcon = false, false
 table.insert(options, 2, { key = "playerClassIcon", label = "Class icon portrait",
     tooltip = "Show your class icon instead of the Player portrait.",
     bullets = { "No portraits stuck zoomed in" } })
+for i, o in ipairs(options) do
+    if o.header == "Target" then
+        table.insert(options, i + 1, { key = "targetClassIcon", label = "Class icon portrait",
+            tooltip = "Show the class icon instead of the portrait of other players.",
+            bullets = { "Also on the Focus frame", "No portraits stuck zoomed in" } })
+        break
+    end
+end
 
 local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
 
--- Blizzard's own setting, set only when the option is on or turned off.
-local function SetClassIcon(on)
-    C_CVar.SetCVar("ReplaceMyPlayerPortrait", on and "1" or "0")
-    if PlayerFrame and UnitFramePortrait_Update then UnitFramePortrait_Update(PlayerFrame) end
+-- Blizzard's own settings, set only when an option is on or turned off.
+local CLASS_ICON_CVARS = { playerClassIcon = "ReplaceMyPlayerPortrait", targetClassIcon = "ReplaceOtherPlayerPortraits" }
+
+local function SetClassIcon(key, on)
+    C_CVar.SetCVar(CLASS_ICON_CVARS[key], on and "1" or "0")
+    if not UnitFramePortrait_Update then return end
+    for _, frame in ipairs({ PlayerFrame, TargetFrame, FocusFrame }) do
+        if frame and frame.unit and UnitExists(frame.unit) then UnitFramePortrait_Update(frame) end
+    end
 end
 
 -- Converts the saved values of older versions.
@@ -571,7 +584,9 @@ function UF:OnEnable()
     SetupBoss(db)
     SetupPet(db)
     SetupPortraits(db)
-    if db.playerClassIcon then SetClassIcon(true) end
+    for key in pairs(CLASS_ICON_CVARS) do
+        if db[key] then SetClassIcon(key, true) end
+    end
 
     if next(classColorBars) then
         for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
@@ -588,5 +603,5 @@ end
 
 -- Live options.
 function UF:OnOptionChanged(key, value)
-    if key == "playerClassIcon" then SetClassIcon(value) end
+    if CLASS_ICON_CVARS[key] then SetClassIcon(key, value) end
 end
