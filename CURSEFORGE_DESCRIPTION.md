@@ -21,11 +21,14 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - **Refined text**: a clean outlined font across the whole UI, from unit frames to menus and tooltips
 - **Class colors** on the health bars, with reaction colors for NPCs
 - **Custom bar textures** for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars
+- **Refined borders**: icons of Blizzard panels in the same rounded style as the action bars
+- **Profiles**: the PanzaUI Edit Mode layout and the Platynator and BigWigs profiles, imported with one click
 
 ### Action Bars
 - Cleaner buttons, with no macro names or keybindings
 - Icon zoom to hide the old borders of classic icons
 - Visibility for every bar: always, on mouseover, only while Skyriding, never while Skyriding or hidden (also for Micro Menu, Bag Bar and XP bar)
+- Want my setup? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119)
 
 ### Bags & Items
 - Item level on equipment in bags, banks and the Character and Inspect panels, colored by quality
@@ -34,7 +37,7 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 ### Chat
 - Cleaner chat windows, timestamps and short channel names
 - Clickable web links, with a box to copy them
-- No more minor messages: guild message of the day, loot of other players, online/offline and join/leave notices, and more
+- No more minor messages: guild message of the day, loot of other players, online/offline and join/leave notices, group settings, spells learned when changing specialization, and more
 
 ### Combat
 - Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter
@@ -60,12 +63,14 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 ### Unit Frames
 - Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage
 - Less clutter: PvP icons, glows, combat text and other minor elements hidden
+- Class icon instead of the portrait for players, if you prefer it
 
 ### Various
 - Cursor ring in your class color
 - Fast auto-loot and fast item delete
 - `/way` command to set map waypoints from coordinates
 - Rounded icons for Platynator nameplates
+- Refined style for BigWigs bars (Blizzard style), with the same texture as the Cooldown Manager bars
 - No more flashing micro menu alerts
 
 ![PanzaUI - Interface](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg)
