@@ -125,6 +125,9 @@ local function IsInPRD(frame)
 end
 
 -- Restores the normal Player art when the alternate power bar is hidden.
+-- Its area is protected in combat: hidden (and the art redone) once it ends.
+local artEvents = CreateFrame("Frame")
+
 local function RestorePlayerArt()
     local altBar = PlayerFrame_GetAlternatePowerBar and PlayerFrame_GetAlternatePowerBar()
     if not (altBar and hiddenResources[altBar]) or PlayerFrame.state ~= "player" or UNIT_FRAME_SHOW_HEALTH_ONLY then return end
@@ -135,11 +138,20 @@ local function RestorePlayerArt()
     container.FrameFlash:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-InCombat", TextureKitConstants.UseAtlasSize)
     container.FrameFlash:SetPoint("CENTER", container.FrameFlash:GetParent(), "CENTER", -1.5, 1)
     PlayerFrame_GetManaBar().ManaBarMask:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana-Mask", TextureKitConstants.UseAtlasSize)
+    if InCombatLockdown() then
+        artEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
     PlayerFrameAlternatePowerBarArea:Hide()
-    if not InCombatLockdown() and GetPlayerBottomManagedFrameContainer then
+    if GetPlayerBottomManagedFrameContainer then
         GetPlayerBottomManagedFrameContainer():SetPoint("TOP", PlayerFrame, "BOTTOM", 30, 25)
     end
 end
+
+artEvents:SetScript("OnEvent", function(self)
+    self:UnregisterAllEvents()
+    RestorePlayerArt()
+end)
 
 --------------------------------------------------------------------------------
 -- Hidden elements: PvP and leader icons, threat glow.

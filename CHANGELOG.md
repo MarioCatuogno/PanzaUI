@@ -5,6 +5,7 @@
 * Core - Added a new border texture to the tooltips, with the Refined borders option
 * Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
 * Tooltips - Added an option to show the mount of players
+* Unit Frames - Fixed an error in combat when the Player frame art changed with the class resources hidden
 * Various - Added a new border texture for Platynator nameplates
 * Various - Added an option to set the current expansion filter when opening the Auction House
 * Various - Added an option to show the destination while flying on a flight path [#123]
