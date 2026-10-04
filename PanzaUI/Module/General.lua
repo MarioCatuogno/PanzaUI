@@ -756,6 +756,10 @@ end
 local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
     "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
 local TOOLTIP_SCALE, TOOLTIP_INSET = 0.2, 3
+-- Tooltips styled once at login too: some (eg. the options and AddOns list
+-- ones) set their look only when created.
+local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
+    "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip" }
 local tooltipBorders = {}
 
 local function TooltipBorder(nineSlice)
@@ -794,9 +798,7 @@ function GEN:OnEnable()
     if self.db.refinedBorders then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
-        for _, name in ipairs({ "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2" }) do
-            StyleTooltipBorder(_G[name])
-        end
+        for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
