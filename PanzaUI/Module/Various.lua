@@ -168,6 +168,31 @@ local function SetupPlatynator()
 end
 
 --------------------------------------------------------------------------------
+-- Platynator border "PanzaUI - Nameplates": an HD take on Blizzard Midnight,
+-- 4x the size of Platynator's (so 1/4 of its scale), always listed.
+--------------------------------------------------------------------------------
+local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
+if LSM then
+    local NAME, SIZE = "PanzaUI - Nameplates", 136
+    local margin, maskMargin = SIZE * 0.35, 8 * 0.49
+    LSM:Register("nineslice", NAME, {
+        file = [[Interface\AddOns\PanzaUI\Media\Borders\PanzaUI_nameplates.tga]],
+        previewWidth = SIZE, previewHeight = SIZE,
+        margins = { left = margin, right = margin, top = margin, bottom = margin },
+        padding = { left = 6, right = 6, top = 6, bottom = 6 },
+        scaleModifier = 0.1,
+        mode = Enum.UITextureSliceMode.Stretched,
+    })
+    LSM:Register("ninesliceborder", NAME, {
+        nineslice = NAME,
+        mask = {
+            file = [[Interface\Buttons\WHITE8X8]],
+            margins = { left = maskMargin, right = maskMargin, top = maskMargin, bottom = maskMargin },
+        },
+    })
+end
+
+--------------------------------------------------------------------------------
 -- Fast auto-loot: every slot looted at once (repeats skipped).
 --------------------------------------------------------------------------------
 local LOOT_LOCK = 0.3 -- seconds
