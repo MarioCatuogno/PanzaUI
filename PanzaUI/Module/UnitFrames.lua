@@ -42,7 +42,7 @@ end
 options[#options + 1] = { header = "Boss" }
 options[#options + 1] = { key = "bossStyle", label = "Refined style",
     tooltip = "Polish the look of the Boss frames.",
-    bullets = { "Health and power as a percentage", "Rounded cast bar icon" } }
+    bullets = { "Health and power as a percentage", "Rounded cast bar icon", "No colored name background" } }
 options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Boss frames.",
     bullets = { "Level", "Threat glow" } }
@@ -431,6 +431,8 @@ local function SetupBoss(db)
             end
 
             if db.bossStyle then
+                -- Cleared, not hidden: name and level are anchored to it.
+                main.ReputationColor:SetTexture(nil)
                 local spellbar = frame.spellbar
                 if spellbar then ns.StyleIcon(spellbar.Icon, spellbar) end
                 ns.PercentText(health, false)
