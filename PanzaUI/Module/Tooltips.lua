@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Tooltip style, player info and IDs.
+    Tooltip style, player info, mounts and IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -9,6 +9,7 @@ local TT = ns:RegisterModule("Tooltips", {
     defaults = {
         style      = true,
         playerInfo = true,
+        playerMount = true,
         showIDs    = true,
     },
     options = {
@@ -17,7 +18,9 @@ local TT = ns:RegisterModule("Tooltips", {
           bullets = { "No health bar", "Class colored player names" } },
         { key = "playerInfo", label = "Player info",
           tooltip = "Show more information about players.",
-          bullets = { "Mythic+ rating", "Item level" } },
+          bullets = { "Item level", "Mythic+ rating" } },
+        { key = "playerMount", label = "Player mount",
+          tooltip = "Show the mount of players, with its icon." },
         { key = "showIDs", label = "Show IDs",
           tooltip = "Show the ID of items and spells." },
     },
@@ -39,6 +42,7 @@ local ilvlCache, ilvlTime = {}, {}
 local CACHE_LIMIT, ilvlCount, ratingCount = 200, 0, 0
 
 local lastInspect, pendingGUID = 0, nil
+local ilvlLine -- GameTooltip line of the hovered player's item level
 
 local function IsUsable(tooltip)
     return tooltip.AddDoubleLine and not (tooltip.IsForbidden and tooltip:IsForbidden())
@@ -58,6 +62,7 @@ local function RequestInspect(unit, guid)
     if InspectFrame and InspectFrame:IsShown() then return end
     lastInspect, pendingGUID = now, guid
     NotifyInspect(unit)
+    return true
 end
 
 -- The tooltip unit's GUID can be secret: compared only when readable.
@@ -83,15 +88,16 @@ inspectEvents:SetScript("OnEvent", function(_, _, guid)
     end
     ilvlCache[guid], ilvlTime[guid] = floor(ilvl + 0.5), GetTime()
 
-    -- Still hovering the same player: add it now.
+    -- Still hovering the same player: its line is filled in place.
     local _, ttUnit = GameTooltip:GetUnit()
-    if not hadValue and TT.db.playerInfo and GameTooltip:IsShown()
-        and not IsSecret(ttUnit) and ttUnit and SameGUID(ttUnit, guid) then
-        AddLine(GameTooltip, "Item Level", ilvlCache[guid])
+    local line = ilvlLine and _G["GameTooltipTextRight" .. ilvlLine]
+    if line and GameTooltip:IsShown() and not IsSecret(ttUnit) and ttUnit and SameGUID(ttUnit, guid) then
+        line:SetText(ilvlCache[guid])
         GameTooltip:Show()
     end
 end)
 
+-- Not cached yet: a placeholder keeps the line in place until the inspect.
 local function AddItemLevel(tooltip, unit, guid)
     if guid == UnitGUID("player") then
         local _, equipped = GetAverageItemLevel()
@@ -99,8 +105,10 @@ local function AddItemLevel(tooltip, unit, guid)
         return
     end
     local cached = ilvlCache[guid]
-    if cached then AddLine(tooltip, "Item Level", cached) end
-    if not cached or GetTime() - ilvlTime[guid] > ILVL_CACHE_TIME then RequestInspect(unit, guid) end
+    local requested = (not cached or GetTime() - ilvlTime[guid] > ILVL_CACHE_TIME) and RequestInspect(unit, guid)
+    if not (cached or requested) then return end
+    AddLine(tooltip, "Item Level", cached or "...")
+    ilvlLine = tooltip:NumLines()
 end
 
 --------------------------------------------------------------------------------
@@ -134,6 +142,32 @@ local function AddMythicRating(tooltip, unit, guid)
 end
 
 --------------------------------------------------------------------------------
+-- Mount: found among the player's buffs, with its icon. Secret aura data
+-- (eg. in instances) is skipped.
+--------------------------------------------------------------------------------
+local MOUNT_TEXT = "|T%d:0|t %s"
+local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal.GetMountFromSpell
+
+local function MountText(unit)
+    for i = 1, 40 do
+        local aura = GetAura(unit, i, "HELPFUL")
+        if IsSecret(aura) or not aura then return end
+        local spellID = aura.spellId
+        if IsSecret(spellID) then return end
+        local mountID = spellID and GetMountFromSpell(spellID)
+        if mountID then
+            local name, _, icon = C_MountJournal.GetMountInfoByID(mountID)
+            return name and MOUNT_TEXT:format(icon, name)
+        end
+    end
+end
+
+local function AddMount(tooltip, unit)
+    local text = MountText(unit)
+    if text then AddLine(tooltip, "Mount", text) end
+end
+
+--------------------------------------------------------------------------------
 -- Tooltip post-calls (options read live, secrets skipped).
 --------------------------------------------------------------------------------
 local function ColorName(unit)
@@ -145,7 +179,7 @@ end
 
 local function OnUnit(tooltip)
     local db = TT.db
-    if tooltip ~= GameTooltip or not (db.playerInfo or db.style) then return end
+    if tooltip ~= GameTooltip or not (db.playerInfo or db.style or db.playerMount) then return end
 
     local _, unit = tooltip:GetUnit()
     if IsSecret(unit) or not unit then return end
@@ -153,11 +187,16 @@ local function OnUnit(tooltip)
     if IsSecret(isPlayer) or not isPlayer then return end
     if db.style then ColorName(unit) end
 
-    if not db.playerInfo then return end
-    local guid = UnitGUID(unit)
-    if IsSecret(guid) or not guid then return end
-    AddMythicRating(tooltip, unit, guid)
-    AddItemLevel(tooltip, unit, guid)
+    -- Fixed order: Item Level, M+ Rating, Mount.
+    ilvlLine = nil
+    if db.playerInfo then
+        local guid = UnitGUID(unit)
+        if not IsSecret(guid) and guid then
+            AddItemLevel(tooltip, unit, guid)
+            AddMythicRating(tooltip, unit, guid)
+        end
+    end
+    if db.playerMount then AddMount(tooltip, unit) end
 end
 
 local function IDLine(label)
