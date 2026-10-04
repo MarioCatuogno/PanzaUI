@@ -63,7 +63,19 @@ for _, o in ipairs(options) do
     end
 end
 
+-- Blizzard's class icon portrait (off by default, applied live).
+defaults.playerClassIcon = false
+table.insert(options, 2, { key = "playerClassIcon", label = "Class icon portrait",
+    tooltip = "Show your class icon instead of the Player portrait.",
+    bullets = { "No portraits stuck zoomed in" } })
+
 local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+
+-- Blizzard's own setting, set only when the option is on or turned off.
+local function SetClassIcon(on)
+    C_CVar.SetCVar("ReplaceMyPlayerPortrait", on and "1" or "0")
+    if PlayerFrame and UnitFramePortrait_Update then UnitFramePortrait_Update(PlayerFrame) end
+end
 
 -- Converts the saved values of older versions.
 function UF:Migrate(db)
@@ -463,8 +475,7 @@ local function SetupPet(db)
 end
 
 --------------------------------------------------------------------------------
--- Portrait redraw: portraits stuck zoomed in are drawn again after each
--- model change, twice (the new model can load late).
+-- Portrait redraw: portraits stuck zoomed in are drawn again after a second.
 --------------------------------------------------------------------------------
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
@@ -472,6 +483,7 @@ local portraitPending = false
 local PORTRAIT_FRAMES = {}
 
 local function RedrawPortraits()
+    portraitPending = false
     for _, frame in ipairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame.portrait, frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
@@ -483,19 +495,11 @@ local function RedrawPortraits()
     end
 end
 
-local REDRAW_DELAYS = { 0.5, 2 } -- seconds after the change
-
-local function RedrawLater()
-    portraitPending = false
-    C_Timer.After(REDRAW_DELAYS[2] - REDRAW_DELAYS[1], RedrawPortraits)
-    RedrawPortraits()
-end
-
 local function OnPortraitEvent(_, _, unit)
     if IsSecret(unit) or (type(unit) == "string" and not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
-    C_Timer.After(REDRAW_DELAYS[1], RedrawLater)
+    C_Timer.After(1, RedrawPortraits)
 end
 
 -- Unit events for the portrait units only (two units per event frame).
@@ -515,9 +519,7 @@ local function SetupPortraits(db)
         portraitEvents:RegisterUnitEvent(event, "player", "vehicle")
         portraitEvents2:RegisterUnitEvent(event, "target", "focus")
     end
-    -- Mounts, forms and vehicles change the player model.
-    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED",
-        "PLAYER_MOUNT_DISPLAY_CHANGED", "UPDATE_SHAPESHIFT_FORM", "UNIT_EXITED_VEHICLE" }) do
+    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
         portraitEvents:RegisterEvent(event)
     end
 end
@@ -569,6 +571,7 @@ function UF:OnEnable()
     SetupBoss(db)
     SetupPet(db)
     SetupPortraits(db)
+    if db.playerClassIcon then SetClassIcon(true) end
 
     if next(classColorBars) then
         for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
@@ -581,4 +584,9 @@ function UF:OnEnable()
         ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
         for bar in pairs(classColorBars) do ClassColorHealth(bar) end
     end
+end
+
+-- Live options.
+function UF:OnOptionChanged(key, value)
+    if key == "playerClassIcon" then SetClassIcon(value) end
 end

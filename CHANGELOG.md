@@ -11,8 +11,8 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 * Core - Fixed the Refined text changing the fonts of other addons (eg. Platynator nameplates), now kept as set in each addon [#114]
 * Core - Fixed the Refined text on texts that turn dark (eg. completed achievements), now shown without the outline [#113]
 * Party & Raid Frames - Fixed the size of the full health text ("100") after resizing the frames in Edit Mode, with Refined text off
+* Unit Frames - Added an option to show the class icon instead of the Player portrait, avoiding portraits stuck zoomed in
 * Unit Frames - Fixed the colored name background still shown on Boss frames, now removed like on Target and Focus
-* Unit Frames - Fixed the Player, Target and Focus portraits still getting stuck zoomed in after mounting, shapeshifting or using some abilities
 * Various - Added the refined style for BigWigs bars (Blizzard style), with the same texture of the Cooldown Manager bars
 
 ### 🧮 Class CDM
