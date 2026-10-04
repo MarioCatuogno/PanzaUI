@@ -169,10 +169,12 @@ end
 
 --------------------------------------------------------------------------------
 -- Platynator border "PanzaUI - Nameplates": an HD take on Blizzard Midnight,
--- 4x the size of Platynator's (so 1/4 of its scale), always listed.
+-- 4x the size of Platynator's (so 1/4 of its scale). Registered before login,
+-- ahead of the first nameplates.
 --------------------------------------------------------------------------------
-local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
-if LSM then
+local function RegisterPlatynatorBorder()
+    local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
+    if not LSM then return end
     local NAME, SIZE = "PanzaUI - Nameplates", 136
     local margin, maskMargin = SIZE * 0.35, 8 * 0.49
     LSM:Register("nineslice", NAME, {
@@ -420,6 +422,10 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+function Misc:OnLoad()
+    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then RegisterPlatynatorBorder() end
+end
+
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end

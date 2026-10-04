@@ -712,7 +712,8 @@ end
 --   }
 --   Sections (by header) and the options inside them are listed
 --   alphabetically.
---   Optional methods: module:OnEnable(), module:OnOptionChanged(key, value),
+--   Optional methods: module:OnLoad() (saved variables ready, before login),
+--                     module:OnEnable(), module:OnOptionChanged(key, value),
 --                     module:Migrate(db, saved) (convert old saved values;
 --                     saved = every module's table, old modules included).
 --------------------------------------------------------------------------------
@@ -945,6 +946,10 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         ns.textStyle = PanzaUI_DB.General.textStyle
         ns.classColors = PanzaUI_DB.General.classColors
         BuildSettings()
+        local handler = geterrorhandler()
+        for _, m in ipairs(ns.modules) do
+            if m.OnLoad then xpcall(m.OnLoad, handler, m) end
+        end
     else -- PLAYER_LOGIN, or PLAYER_REGEN_ENABLED after a /reload in combat
         self:UnregisterEvent(event)
         -- After a /reload in combat, modules wait until combat ends.

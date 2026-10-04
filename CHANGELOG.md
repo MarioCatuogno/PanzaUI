@@ -2,7 +2,7 @@
 
 ### 🛠️ Core
 
-* Various - Added the a new border texture for Platynator, an HD version similar to the Blizzard Midnight border with rounded corners
+* Various - Added the a new border texture for Platynator nameplates
 
 ### 📏 Various
 
