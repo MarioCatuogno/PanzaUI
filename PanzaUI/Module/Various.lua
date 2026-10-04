@@ -362,10 +362,6 @@ local function SetupNotices()
 end
 
 --------------------------------------------------------------------------------
--- Module API
---------------------------------------------------------------------------------
--- Other addons are already loaded when modules are enabled.
---------------------------------------------------------------------------------
 -- BigWigs "Blizzard" bar style: the Cooldown Manager bar texture (General >
 -- Textures) after BigWigs styles each bar; BigWigs restores its own texture
 -- when the bar ends.
@@ -396,6 +392,10 @@ local function SetupBigWigs()
     end)
 end
 
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
+-- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
     if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end

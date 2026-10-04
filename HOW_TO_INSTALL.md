@@ -20,15 +20,6 @@ __Note__: the fonts replace the default ones of the whole game. To get the origi
 
 ## Profiles
 
-### Addon Profiles
-
-The same profiles imported by the PanzaUI options, if you prefer to import them manually.
-
-| Profile | Github Link | Wago Link |
-|---|---|---|
-| Platynator | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-Platynator.txt) | [Import](https://wago.io/UxWRLG-r_) |
-| BigWigs | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/PanzaUI-BigWigs.txt) | — |
-
 ### Cooldown Manager Class Profiles
 
 Optional class-specific profiles for the Cooldown Manager. These are not required to replicate the UI.

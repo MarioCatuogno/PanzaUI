@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - General (main settings page)
-    Shared text style and bar textures.
+    Text style, class colors, borders, bar textures and profile import.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 

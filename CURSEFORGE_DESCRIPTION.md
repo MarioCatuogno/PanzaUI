@@ -87,7 +87,7 @@ Handy chat commands:
 
 ## 🎨 The full PanzaUI look
 
-PanzaUI works on its own with any layout. To get the PanzaUI layout of the frames, just click **Import** in the Profiles section of the options. If you want the exact look of the screenshots, the [GitHub page](https://github.com/MarioCatuogno/PanzaUI) also has the fonts and the profiles for Platynator, BigWigs and the Cooldown Manager, with a short [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
+PanzaUI works on its own with any layout. To get the PanzaUI layout of the frames and the profiles for Platynator and BigWigs, just click **Import** in the Profiles section of the options. If you want the exact look of the screenshots, the [GitHub page](https://github.com/MarioCatuogno/PanzaUI) also has the fonts and the Cooldown Manager class profiles, with a short [installation guide](https://github.com/MarioCatuogno/PanzaUI/blob/main/HOW_TO_INSTALL.md).
 
 ![PanzaUI - Party](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg)
 

@@ -1,6 +1,6 @@
 ## 2.1-RELEASE
 
-This is a smaller update with many bug-fixes, performance improvement and some new features!
+This is a smaller update with many bug fixes, performance improvements and some new features!
 
 ### 🛠️ Core
 
@@ -15,7 +15,7 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 * Party & Raid Frames - Fixed the size of the full health text ("100") after resizing the frames in Edit Mode, with Refined text off
 * Unit Frames - Added an option to show the class icon instead of the portrait on Player, Target and Focus frames (players only)
 * Unit Frames - Fixed the colored name background still shown on Boss frames, now removed like on Target and Focus
-* Various - Added the refined style for BigWigs bars (Blizzard style), with the same texture of the Cooldown Manager bars
+* Various - Added the refined style for BigWigs bars (Blizzard style), with the same texture as the Cooldown Manager bars
 
 ### 👤 Profiles
 

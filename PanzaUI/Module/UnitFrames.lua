@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Unit Frames
-    Player, Target, Focus, Boss and Pet frames: style, class colors and
-    hidden clutter, applied at login and kept with post-hooks.
+    Player, Target, Focus, Boss and Pet frames: style, class colors, class
+    icon portraits and hidden clutter, applied at login and kept with post-hooks.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
