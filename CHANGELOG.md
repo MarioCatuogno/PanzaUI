@@ -4,6 +4,7 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 
 ### 🛠️ Core
 
+* Chat - Hidden the group settings messages: difficulty, loot method, loot threshold and leader changes
 * Core - Added a Profiles section to the options, to import the PanzaUI profiles for Edit Mode, Platynator and BigWigs with one click [#116]
 * Core - Fixed the Refined text changing the fonts of other addons (eg. Platynator nameplates), now kept as set in each addon [#114]
 * Core - Fixed the Refined text on texts that turn dark (eg. completed achievements), now shown without the outline [#113]

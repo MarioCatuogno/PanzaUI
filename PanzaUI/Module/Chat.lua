@@ -25,7 +25,8 @@ local Chat = ns:RegisterModule("Chat", {
           tooltip = "Hide minor messages in the chat.",
           bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
                       "Online and offline notices", "Channel and group join and leave notices",
-                      "Not in a group warnings", "Recent Allies icon by player names" } },
+                      "Not in a group warnings", "Recent Allies icon by player names",
+                      "Group settings and leader changes" } },
     },
 })
 
@@ -324,12 +325,17 @@ local function HasAny(msg, list)
     return false
 end
 
--- System notices (online / offline, group join / leave, not in a group),
--- loot of other players.
+-- System notices (online / offline, group join / leave, not in a group,
+-- group settings) and loot of other players.
 local NOTICES = KeyTexts(ERR_FRIEND_ONLINE_SS, ERR_FRIEND_OFFLINE_S,
     ERR_JOINED_GROUP_S, ERR_LEFT_GROUP_S, ERR_RAID_MEMBER_ADDED_S, ERR_RAID_MEMBER_REMOVED_S,
     ERR_INSTANCE_GROUP_ADDED_S, ERR_INSTANCE_GROUP_REMOVED_S,
-    ERR_NOT_IN_GROUP, ERR_NOT_IN_RAID, ERR_NOT_IN_INSTANCE_GROUP)
+    ERR_NOT_IN_GROUP, ERR_NOT_IN_RAID, ERR_NOT_IN_INSTANCE_GROUP,
+    -- Group settings: difficulty, loot method and threshold, new leader.
+    ERR_DUNGEON_DIFFICULTY_CHANGED_S, ERR_RAID_DIFFICULTY_CHANGED_S, ERR_LEGACY_RAID_DIFFICULTY_CHANGED_S,
+    ERR_SET_LOOT_FREEFORALL, ERR_SET_LOOT_GROUP, ERR_SET_LOOT_MASTER, ERR_SET_LOOT_NBG,
+    ERR_SET_LOOT_PERSONAL, ERR_SET_LOOT_ROUNDROBIN, ERR_SET_LOOT_THRESHOLD_S,
+    ERR_NEW_LEADER_S, ERR_NEW_LEADER_YOU)
 local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LOOT_ITEM_PUSHED_MULTIPLE)
 
 local function Hiding(msg)
