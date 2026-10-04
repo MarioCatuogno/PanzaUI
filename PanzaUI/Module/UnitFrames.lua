@@ -463,7 +463,8 @@ local function SetupPet(db)
 end
 
 --------------------------------------------------------------------------------
--- Portrait redraw: portraits stuck zoomed in are drawn again after a second.
+-- Portrait redraw: portraits stuck zoomed in are drawn again after each
+-- model change, twice (the new model can load late).
 --------------------------------------------------------------------------------
 local PORTRAIT_UNITS = { player = true, vehicle = true, target = true, focus = true }
 local portraitPending = false
@@ -471,7 +472,6 @@ local portraitPending = false
 local PORTRAIT_FRAMES = {}
 
 local function RedrawPortraits()
-    portraitPending = false
     for _, frame in ipairs(PORTRAIT_FRAMES) do
         local portrait, unit = frame.portrait, frame.unit
         if portrait and unit and not IsSecret(unit) and portrait:IsVisible() and UnitExists(unit)
@@ -483,11 +483,19 @@ local function RedrawPortraits()
     end
 end
 
+local REDRAW_DELAYS = { 0.5, 2 } -- seconds after the change
+
+local function RedrawLater()
+    portraitPending = false
+    C_Timer.After(REDRAW_DELAYS[2] - REDRAW_DELAYS[1], RedrawPortraits)
+    RedrawPortraits()
+end
+
 local function OnPortraitEvent(_, _, unit)
     if IsSecret(unit) or (type(unit) == "string" and not PORTRAIT_UNITS[unit]) then return end
     if portraitPending then return end
     portraitPending = true
-    C_Timer.After(1, RedrawPortraits)
+    C_Timer.After(REDRAW_DELAYS[1], RedrawLater)
 end
 
 -- Unit events for the portrait units only (two units per event frame).
@@ -507,7 +515,9 @@ local function SetupPortraits(db)
         portraitEvents:RegisterUnitEvent(event, "player", "vehicle")
         portraitEvents2:RegisterUnitEvent(event, "target", "focus")
     end
-    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
+    -- Mounts, forms and vehicles change the player model.
+    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED",
+        "PLAYER_MOUNT_DISPLAY_CHANGED", "UPDATE_SHAPESHIFT_FORM", "UNIT_EXITED_VEHICLE" }) do
         portraitEvents:RegisterEvent(event)
     end
 end
