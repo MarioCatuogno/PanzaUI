@@ -21,6 +21,7 @@ This is a smaller update with many bug-fixes, performance improvement and some n
 
 ### 👤 Profiles
 
+* BlizzUI - Adjusted the action bars to give players more buttons to keybind rotation
 * Platynator - Updated the profile to be imported through PanzaUI [#116]
 
 ### 📏 Various
