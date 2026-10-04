@@ -5,6 +5,10 @@
 * Core - Added the PanzaUI border to the tooltips, with the Refined borders option
 * Various - Added the a new border texture for Platynator nameplates
 
+### 👤 Profiles
+
+* Platynator - Added the new border texture to match the rest of the UI
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version

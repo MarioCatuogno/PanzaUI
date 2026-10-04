@@ -175,10 +175,10 @@ end
 local function RegisterPlatynatorBorder()
     local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
     if not LSM then return end
-    local NAME, SIZE = "PanzaUI - Nameplates", 136
-    local margin, maskMargin = SIZE * 0.35, 8 * 0.49
+    local NAME, SIZE = "PanzaUI - Nameplates", ns.BORDER.size
+    local margin, maskMargin = ns.BORDER.margin, 8 * 0.49
     LSM:Register("nineslice", NAME, {
-        file = [[Interface\AddOns\PanzaUI\Media\Borders\PanzaUI_nameplates.tga]],
+        file = ns.BORDER.file,
         previewWidth = SIZE, previewHeight = SIZE,
         margins = { left = margin, right = margin, top = margin, bottom = margin },
         padding = { left = 6, right = 6, top = 6, bottom = 6 },

@@ -731,9 +731,6 @@ local function StyleBlizzardTexts()
 end
 
 --------------------------------------------------------------------------------
--- Module API
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 -- Refined borders: Blizzard panel icons in the action bar style.
 --------------------------------------------------------------------------------
 local PROFESSION_BUTTONS = {
@@ -753,10 +750,53 @@ local function StyleProfessionIcons()
     end
 end
 
+-- Tooltips: the PanzaUI border instead of Blizzard's frame, scaled down to
+-- the icon frame size. The background is inset to stay inside the corners;
+-- both are set again when Blizzard changes the tooltip style.
+local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
+local TOOLTIP_SCALE, TOOLTIP_INSET = 0.2, 3
+local tooltipBorders = {}
+
+local function TooltipBorder(nineSlice)
+    local border = nineSlice:CreateTexture(nil, "BORDER", nil, 7)
+    local m, pad = ns.BORDER.margin, ns.BORDER.padding
+    border:SetTexture(ns.BORDER.file)
+    border:SetTextureSliceMargins(m, m, m, m)
+    border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
+    border:SetScale(TOOLTIP_SCALE)
+    border:SetPoint("TOPLEFT", -pad, pad)
+    border:SetPoint("BOTTOMRIGHT", pad, -pad)
+    tooltipBorders[nineSlice] = border
+end
+
+local function StyleTooltipBorder(tooltip)
+    local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
+    if not nineSlice or nineSlice:IsForbidden() then return end
+    for _, key in ipairs(NINESLICE_PIECES) do
+        local piece = nineSlice[key]
+        if piece then piece:SetAlpha(0) end
+    end
+    local center = nineSlice.Center
+    if center then
+        center:ClearAllPoints()
+        center:SetPoint("TOPLEFT", TOOLTIP_INSET, -TOOLTIP_INSET)
+        center:SetPoint("BOTTOMRIGHT", -TOOLTIP_INSET, TOOLTIP_INSET)
+    end
+    if not tooltipBorders[nineSlice] then TooltipBorder(nineSlice) end
+end
+
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
 function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
     if self.db.refinedBorders then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
+        ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
+        for _, name in ipairs({ "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2" }) do
+            StyleTooltipBorder(_G[name])
+        end
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")

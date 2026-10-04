@@ -137,6 +137,17 @@ function ns.Hook(target, name, callback)
 end
 
 --------------------------------------------------------------------------------
+-- PanzaUI border: sliced texture in the action bar icon frame colors, with a
+-- transparent padding around it (sizes in texture pixels).
+--------------------------------------------------------------------------------
+ns.BORDER = {
+    file    = [[Interface\AddOns\PanzaUI\Media\Borders\PanzaUI_nameplates.tga]],
+    size    = 136,
+    margin  = 136 * 0.35,
+    padding = 16,
+}
+
+--------------------------------------------------------------------------------
 -- Icon look: action button rounded mask and frame (anchored: lightweight
 -- variant). Returns nil when the frame can't be styled yet.
 --------------------------------------------------------------------------------
