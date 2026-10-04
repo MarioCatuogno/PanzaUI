@@ -118,10 +118,17 @@ local function ImportEditMode()
     ns.Print("Edit Mode layout imported: type /rl to finish.")
 end
 
+StaticPopupDialogs["PANZAUI_IMPORT_EDITMODE"] = {
+    text = "Import the PanzaUI Edit Mode layout?\nAn older PanzaUI layout will be replaced.",
+    button1 = YES, button2 = NO, OnAccept = ImportEditMode,
+    timeout = 0, whileDead = true, hideOnEscape = true,
+}
+
 local defaults = { textStyle = true, classColors = true }
 local options  = {
     { header = "Profiles" },
-    { label = "Blizzard Edit Mode", button = "Import", onClick = ImportEditMode,
+    { label = "Blizzard Edit Mode", button = "Import",
+      onClick = function() StaticPopup_Show("PANZAUI_IMPORT_EDITMODE") end,
       tooltip = "Import the PanzaUI layout of the interface frames.",
       bullets = { "Saved as PanzaUI and made active" } },
     { header = "Style" },
