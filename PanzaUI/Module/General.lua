@@ -172,8 +172,7 @@ local options  = {
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
-      tooltip = "Polish the look of borders across the whole UI.",
-      bullets = { "Profession book icons" } },
+      tooltip = "Polish the look of borders across the whole UI." },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -651,6 +650,21 @@ local function FitQuestInfo()
 end
 
 -- Spellbook: spell names, headers and page number, as Blizzard sets them up.
+-- Archaeology: parchment texts colored dark by the panel itself; each page
+-- is checked when it shows.
+local function SetupArchaeology()
+    local panel = ArchaeologyFrame
+    if not panel then return end
+    local function FitPanel() FitFrameOutlines(panel, 5) end
+    local function Queue() ns.Defer(FitPanel) end
+    panel:HookScript("OnShow", Queue)
+    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
+        local page = panel[key]
+        if page then page:HookScript("OnShow", Queue) end
+    end
+    if panel:IsShown() then Queue() end
+end
+
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -713,6 +727,7 @@ local function StyleBlizzardTexts()
     loader:SetScript("OnEvent", function() ns.Defer(StyleSharedFonts) end)
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
 end
 
 --------------------------------------------------------------------------------
