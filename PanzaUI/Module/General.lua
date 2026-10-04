@@ -114,7 +114,23 @@ local function ImportEditMode()
         index = (lastAccount or 0) + 1
         table.insert(saved.layouts, index, info)
     end
-    C_EditMode.SaveLayouts(saved)
+    -- Other clients (eg. WoW: Forever) have other interface styles: on an
+    -- error the style of another saved layout is used, then none.
+    local ok = pcall(C_EditMode.SaveLayouts, saved)
+    if not ok then
+        for i, layout in ipairs(saved.layouts) do
+            if i ~= index and layout.interfaceStyle ~= nil then info.interfaceStyle = layout.interfaceStyle break end
+        end
+        ok = pcall(C_EditMode.SaveLayouts, saved)
+        if not ok then
+            info.interfaceStyle = nil
+            ok = pcall(C_EditMode.SaveLayouts, saved)
+        end
+    end
+    if not ok then
+        ns.Print("The Edit Mode layout can't be imported in this version of the game.")
+        return
+    end
     C_EditMode.SetActiveLayout(presets + index)
     ns.Print("Edit Mode layout imported: type /rl to finish.")
 end
