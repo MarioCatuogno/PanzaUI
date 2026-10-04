@@ -173,7 +173,7 @@ local options  = {
       tooltip = "Color the health bars by class or reaction." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
       tooltip = "Polish the look of borders across the whole UI.",
-      bullets = { "Profession book icons", "Thin tooltip borders" } },
+      bullets = { "Profession book icons", "Tooltip borders" } },
     { key = "textStyle", label = "Refined text", reload = true,
       tooltip = "Polish the look of text across the whole UI." },
 }
@@ -738,37 +738,12 @@ local function StyleProfessionIcons()
     end
 end
 
--- Tooltips: a thin border instead of Blizzard's frame, in the border color
--- Blizzard picks (eg. item quality); the default white turns dark gray.
+-- Tooltips: Blizzard's own background and border of the Damage Meter
+-- windows and menus, instead of the tooltip frame.
 local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-local TOOLTIP_BORDER = { 0.25, 0.25, 0.25 }
-local tooltipBorders = {}
-
-local function SetTooltipBorderColor(nineSlice, r, g, b)
-    local border = tooltipBorders[nineSlice]
-    if not border or ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not r then return end
-    if r > 0.9 and g > 0.9 and b > 0.9 then r, g, b = TOOLTIP_BORDER[1], TOOLTIP_BORDER[2], TOOLTIP_BORDER[3] end
-    for _, line in ipairs(border) do line:SetColorTexture(r, g, b, 1) end
-end
-
-local function TooltipBorder(nineSlice)
-    local border = tooltipBorders[nineSlice]
-    if border then return border end
-    border = {}
-    for i, sides in ipairs({ { "TOPLEFT", "TOPRIGHT" }, { "BOTTOMLEFT", "BOTTOMRIGHT" },
-                              { "TOPLEFT", "BOTTOMLEFT" }, { "TOPRIGHT", "BOTTOMRIGHT" } }) do
-        local line = nineSlice:CreateTexture(nil, "BORDER", nil, 7)
-        line:SetPoint(sides[1])
-        line:SetPoint(sides[2])
-        if i <= 2 then line:SetHeight(1) else line:SetWidth(1) end
-        border[i] = line
-    end
-    tooltipBorders[nineSlice] = border
-    hooksecurefunc(nineSlice, "SetBorderColor", SetTooltipBorderColor)
-    SetTooltipBorderColor(nineSlice, 1, 1, 1)
-    return border
-end
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge", "Center" }
+local TOOLTIP_BACKGROUND = "common-dropdown-bg"
+local tooltipBackgrounds = {}
 
 local function StyleTooltipBorder(tooltip)
     local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
@@ -777,7 +752,12 @@ local function StyleTooltipBorder(tooltip)
         local piece = nineSlice[key]
         if piece then piece:SetAlpha(0) end
     end
-    TooltipBorder(nineSlice)
+    if not tooltipBackgrounds[nineSlice] then
+        local background = nineSlice:CreateTexture(nil, "BACKGROUND")
+        background:SetAtlas(TOOLTIP_BACKGROUND)
+        background:SetAllPoints(nineSlice)
+        tooltipBackgrounds[nineSlice] = background
+    end
 end
 
 function GEN:OnEnable()
