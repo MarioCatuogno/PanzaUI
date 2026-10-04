@@ -245,6 +245,13 @@ local function TexturePath(key)
     return ATLASES[name] or (LSM and LSM:Fetch("statusbar", name, true)) or BUILTIN[name]
 end
 
+-- Texture file of the Cooldown Manager bars, for other addons' bars (nil for
+-- Blizzard's own textures).
+function ns.CooldownBarTexture()
+    if ATLASES[GEN.db.texCdmPRD] then return end
+    return TexturePath("texCdmPRD")
+end
+
 -- Sets a bar texture, keeping Blizzard's draw layer.
 local function SetTexture(bar, path)
     if not (bar and path and bar.SetStatusBarTexture) or bar:IsForbidden() then return end
