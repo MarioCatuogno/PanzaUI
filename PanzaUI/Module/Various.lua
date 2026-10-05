@@ -13,6 +13,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         bigwigsStyle    = true,
         fastLoot        = true,
         ahExpansion     = true,
+        autoKeystone    = true,
         flightDestination = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
@@ -28,6 +29,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { header = "Quality of Life" },
         { key = "ahExpansion", label = "Auction House: current expansion",
           tooltip = "Set the current expansion filter when opening the Auction House." },
+        { key = "autoKeystone", label = "Auto-insert keystone",
+          tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once when auto-loot is on." },
         { key = "flightDestination", label = "Flight destination",
@@ -218,6 +221,41 @@ end)
 
 local function SetFastLoot(on)
     ns.SetEvents(lootEvents, on, "LOOT_READY")
+end
+
+--------------------------------------------------------------------------------
+-- Keystone: found in the bags and slotted when the Font of Power opens
+-- (skipped in combat or when a keystone is already slotted).
+--------------------------------------------------------------------------------
+local keystoneEvents = CreateFrame("Frame")
+local KEYSTONE_CLASS = Enum.ItemClass and Enum.ItemClass.Reagent
+local KEYSTONE_SUBCLASS = Enum.ItemReagentSubclass and Enum.ItemReagentSubclass.Keystone
+
+local function IsKeystone(itemID)
+    if C_Item.IsItemKeystoneByID then return C_Item.IsItemKeystoneByID(itemID) end
+    local _, _, _, _, _, classID, subclassID = C_Item.GetItemInfoInstant(itemID)
+    return classID == KEYSTONE_CLASS and subclassID == KEYSTONE_SUBCLASS
+end
+
+local function SlotKeystone()
+    if InCombatLockdown() or not C_ChallengeMode.SlotKeystone then return end
+    if C_ChallengeMode.HasSlottedKeystone and C_ChallengeMode.HasSlottedKeystone() then return end
+    for bag = 0, NUM_BAG_SLOTS or 4 do
+        for slot = 1, C_Container.GetContainerNumSlots(bag) do
+            local itemID = C_Container.GetContainerItemID(bag, slot)
+            if itemID and IsKeystone(itemID) then
+                C_Container.PickupContainerItem(bag, slot)
+                if CursorHasItem() then C_ChallengeMode.SlotKeystone() end
+                return
+            end
+        end
+    end
+end
+
+keystoneEvents:SetScript("OnEvent", function() ns.Defer(SlotKeystone) end)
+
+local function SetAutoKeystone(on)
+    ns.SetEvents(keystoneEvents, on, "CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
 end
 
 --------------------------------------------------------------------------------
@@ -557,6 +595,7 @@ function Misc:OnEnable()
     end
     SetFastLoot(self.db.fastLoot)
     SetAuctionFilter(self.db.ahExpansion)
+    SetAutoKeystone(self.db.autoKeystone)
     ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
@@ -570,6 +609,8 @@ function Misc:OnOptionChanged(key, value)
         SetFastLoot(value)
     elseif key == "ahExpansion" then
         SetAuctionFilter(value)
+    elseif key == "autoKeystone" then
+        SetAutoKeystone(value)
     elseif key == "flightDestination" then
         if not value and flightFrame then flightFrame:Hide() end
     elseif key == "hideNotices" then
