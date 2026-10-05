@@ -11,6 +11,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         platynatorStyle = true,
         bigwigsStyle    = true,
         fastLoot        = true,
+        ahExpansion     = true,
+        flightDestination = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
         waypoints       = true,
@@ -21,10 +23,14 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
           tooltip = "Polish the look of the Platynator nameplates." },
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
-          tooltip = "Polish the look of the BigWigs bars." },
+          tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
+        { key = "ahExpansion", label = "Auction House: current expansion",
+          tooltip = "Set the current expansion filter when opening the Auction House." },
         { key = "fastLoot", label = "Fast auto-loot",
           tooltip = "Loot everything at once when auto-loot is on." },
+        { key = "flightDestination", label = "Flight destination",
+          tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
         { key = "hideNotices", label = "Hide system notices",
@@ -54,7 +60,7 @@ local styledAuras = {}
 -- Styles a button once its icon, cooldown and border exist.
 local function StyleAuraFrame(frame)
     if styledAuras[frame] or not (frame.Icon and frame.Cooldown and frame.Border) then return end
-    if not ns.StyleIcon(frame.Icon, frame, true) then return end
+    if not ns.StyleIcon(frame.Icon, frame) then return end
     styledAuras[frame] = true
     ns.RoundSwipe(frame.Cooldown)
     frame.Border:SetAlpha(0)
@@ -168,6 +174,33 @@ local function SetupPlatynator()
 end
 
 --------------------------------------------------------------------------------
+-- Platynator border "PanzaUI - Nameplates": an HD take on Blizzard Midnight,
+-- 4x the size of Platynator's (so 1/4 of its scale). Registered before login,
+-- ahead of the first nameplates.
+--------------------------------------------------------------------------------
+local function RegisterPlatynatorBorder()
+    local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
+    if not LSM then return end
+    local NAME, SIZE = "PanzaUI - Nameplates", ns.BORDER.size
+    local margin, maskMargin = ns.BORDER.margin, 8 * 0.49
+    LSM:Register("nineslice", NAME, {
+        file = ns.BORDER.file,
+        previewWidth = SIZE, previewHeight = SIZE,
+        margins = { left = margin, right = margin, top = margin, bottom = margin },
+        padding = { left = 6, right = 6, top = 6, bottom = 6 },
+        scaleModifier = 0.1,
+        mode = Enum.UITextureSliceMode.Stretched,
+    })
+    LSM:Register("ninesliceborder", NAME, {
+        nineslice = NAME,
+        mask = {
+            file = [[Interface\Buttons\WHITE8X8]],
+            margins = { left = maskMargin, right = maskMargin, top = maskMargin, bottom = maskMargin },
+        },
+    })
+end
+
+--------------------------------------------------------------------------------
 -- Fast auto-loot: every slot looted at once (repeats skipped).
 --------------------------------------------------------------------------------
 local LOOT_LOCK = 0.3 -- seconds
@@ -188,6 +221,72 @@ local function SetFastLoot(on)
     else
         lootEvents:UnregisterAllEvents()
     end
+end
+
+--------------------------------------------------------------------------------
+-- Auction House: the current expansion filter set at every opening (read
+-- first, since toggling a filter already set would turn it off).
+--------------------------------------------------------------------------------
+local ahEvents = CreateFrame("Frame")
+
+local function SetExpansionFilter()
+    local searchBar = AuctionHouseFrame and AuctionHouseFrame.SearchBar
+    local button = searchBar and searchBar.FilterButton
+    local filter = Enum.AuctionHouseFilter and Enum.AuctionHouseFilter.CurrentExpansionOnly
+    if not (filter and button and button.GetFilters and button.ToggleFilter) then return end
+    local filters = button:GetFilters()
+    if filters and filters[filter] then return end
+    button:ToggleFilter(filter)
+    if searchBar.UpdateClearFiltersButton then searchBar:UpdateClearFiltersButton() end
+end
+
+ahEvents:SetScript("OnEvent", function() RunNextFrame(SetExpansionFilter) end)
+
+local function SetAuctionFilter(on)
+    if on then
+        ahEvents:RegisterEvent("AUCTION_HOUSE_SHOW")
+    else
+        ahEvents:UnregisterAllEvents()
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Flight destination: shown from the take-off to the landing, checked twice
+-- per second only while waiting or flying.
+--------------------------------------------------------------------------------
+local FLIGHT_CHECK = 0.5     -- seconds between taxi checks
+local FLIGHT_START_WAIT = 5  -- seconds from the taxi click to the take-off
+local flightFrame, flightDeadline, flying
+
+local function CheckFlight(self, elapsed)
+    self.tick = self.tick + elapsed
+    if self.tick < FLIGHT_CHECK then return end
+    self.tick = 0
+    local onTaxi = UnitOnTaxi("player")
+    if onTaxi and not flying then
+        flying = true
+        self.text:Show()
+    elseif not onTaxi and (flying or GetTime() > flightDeadline) then
+        self:Hide()
+    end
+end
+
+-- Destination chosen on the flight map: shown once on the taxi.
+local function OnTakeTaxiNode(index)
+    if not Misc.db.flightDestination then return end
+    if not flightFrame then
+        flightFrame = CreateFrame("Frame", nil, UIParent)
+        flightFrame:SetSize(1, 1)
+        flightFrame:SetPoint("TOP", 0, -90)
+        flightFrame.text = flightFrame:CreateFontString(nil, "OVERLAY")
+        flightFrame.text:SetFontObject(ns.textStyle and ns.OutlinedFont(GameFontNormalLarge) or GameFontNormalLarge)
+        flightFrame.text:SetPoint("TOP")
+        flightFrame:SetScript("OnUpdate", CheckFlight)
+    end
+    flightFrame.text:SetText("Destination: " .. TaxiNodeName(index))
+    flightFrame.text:Hide()
+    flightFrame.tick, flightDeadline, flying = 0, GetTime() + FLIGHT_START_WAIT, false
+    flightFrame:Show()
 end
 
 --------------------------------------------------------------------------------
@@ -362,14 +461,14 @@ local function SetupNotices()
 end
 
 --------------------------------------------------------------------------------
--- BigWigs "Blizzard" bar style: the Cooldown Manager bar texture (General >
+-- BigWigs bars, "Blizzard" style: the Cooldown Manager bar texture (General >
 -- Textures) after BigWigs styles each bar; BigWigs restores its own texture
 -- when the bar ends.
 --------------------------------------------------------------------------------
 -- Pixels gained toward the frame border (the frame sits slightly lower).
 local BIGWIGS_TOP, BIGWIGS_BOTTOM = 2, 0
 
-local function SetupBigWigs()
+local function StyleBigWigsBars()
     local path = ns.CooldownBarTexture()
     local style = path and BigWigsAPI and BigWigsAPI:GetBarStyle("Blizzard")
     if not style then return end
@@ -393,13 +492,88 @@ local function SetupBigWigs()
 end
 
 --------------------------------------------------------------------------------
+-- BigWigs Battle Res icon: rounded mask, frame and swipe like the action
+-- bars, BigWigs' own border hidden. The icon has no name: found among the
+-- UIParent children by its fields.
+--------------------------------------------------------------------------------
+local BACKDROP_EDGES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
+
+local function HideBackdropEdges(border)
+    for _, key in ipairs(BACKDROP_EDGES) do
+        local edge = border[key]
+        if edge then edge:SetAlpha(0) end
+    end
+end
+
+local function FindBattleRes(...)
+    for i = 1, select("#", ...) do
+        local frame = select(i, ...)
+        if not frame:IsForbidden() and frame.chargesText and frame.cdText and frame.cooldown
+            and frame.border and frame.icon then
+            return frame
+        end
+    end
+end
+
+local function StyleBattleRes()
+    local frame = FindBattleRes(UIParent:GetChildren())
+    local ring = frame and ns.StyleIcon(frame.icon, frame)
+    if not ring then return end
+    ns.RoundSwipe(frame.cooldown)
+    hooksecurefunc(frame.border, "SetBackdrop", HideBackdropEdges)
+    hooksecurefunc(frame.border, "SetBackdropBorderColor", HideBackdropEdges)
+    HideBackdropEdges(frame.border)
+    -- Text only mode: no icon, so no frame either.
+    hooksecurefunc(frame.icon, "SetTexture", function(_, texture) ring:SetShown(texture ~= nil) end)
+    hooksecurefunc(frame.icon, "SetColorTexture", function() ring:Hide() end)
+    ring:SetShown(frame.icon:GetTexture() ~= nil)
+end
+
+-- Queue timer (under the "group formed" dialog): Interface bars texture
+-- (General > Textures) and the PanzaUI border instead of the old cast bar
+-- frame. Styled through BigWigs' own callback, when it is created.
+local QUEUE_BORDER_OUTSET = 3 -- room for the border corners around the thin bar
+local CAST_BORDER = 130874    -- Interface\CastingBar\UI-CastingBar-Border
+
+local function StyleQueueTimer(_, bar, name)
+    if name ~= "QueueTimer" or not bar or bar:IsForbidden() then return end
+    local path = ns.InterfaceBarTexture()
+    if path then bar:SetStatusBarTexture(path) end
+    for _, region in ipairs({ bar:GetRegions() }) do
+        local file = region:GetObjectType() == "Texture" and region:GetTexture()
+        if file == CAST_BORDER or (type(file) == "string" and file:find("CastingBar%-Border")) then
+            region:SetAlpha(0)
+        end
+    end
+    ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
+end
+
+local function SetupBigWigs()
+    StyleBigWigsBars()
+    StyleBattleRes()
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+function Misc:OnLoad()
+    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then RegisterPlatynatorBorder() end
+end
+
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
-    if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end
+    if self.db.bigwigsStyle then
+        EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs)
+        -- The queue timer is part of BigWigs itself, loaded with the game.
+        if BigWigsLoader and BigWigsLoader.RegisterMessage then
+            BigWigsLoader.RegisterMessage(ns, "BigWigs_FrameCreated", StyleQueueTimer)
+        end
+    end
     SetFastLoot(self.db.fastLoot)
+    SetAuctionFilter(self.db.ahExpansion)
+    ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
     SetupNotices()
@@ -410,6 +584,10 @@ end
 function Misc:OnOptionChanged(key, value)
     if key == "fastLoot" then
         SetFastLoot(value)
+    elseif key == "ahExpansion" then
+        SetAuctionFilter(value)
+    elseif key == "flightDestination" then
+        if not value and flightFrame then flightFrame:Hide() end
     elseif key == "hideNotices" then
         if value then CloseOpenNotices() end
     elseif key == "cursorRing" then

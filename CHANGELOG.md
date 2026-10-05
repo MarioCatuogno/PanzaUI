@@ -1,3 +1,35 @@
+## 2.2-RELEASE
+
+This is a smaller update focused on a more consistent look (new borders for tooltips, Platynator and BigWigs), some new quality of life options and many fixes to the UI and for errors in combat and in raids.
+
+### 🛠️ Core
+
+* Chat - Fixed the Hide clutter option on chat windows opened later (eg. whispers)
+* Combat - Fixed a possible error on the Damage Meter windows without your own row
+* Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
+* Core - Fixed the Refined borders option on the reward icons of quests, Delves, Dungeon Finder and Raid Finder and on the Currency, Equipment Manager and Professions icons, now in the action bar style (in the item quality color)
+* Core - Fixed the Refined borders option on tooltips, pop-up dialogs, Delves and Edit Mode windows, now with the new border texture
+* Core - Fixed the Refined text on the dark texts of the Adventure Guide (Suggested Content, Tutorials), the PvP New Season panel and the What's New panel
+* Tooltips - Added an option to show the mount of players
+* Unit Frames - Fixed an error in combat when Blizzard shows the hidden Totem frame or class resources
+* Unit Frames - Fixed an error in combat when the Player frame art changed with the class resources hidden
+* Unit Frames - Fixed an error on the percentage texts of missing units (eg. no target or no pet)
+* Various - Added a new border texture for Platynator nameplates
+* Various - Added an option to set the current expansion filter when opening the Auction House
+* Various - Added an option to show the destination while flying on a flight path [#123]
+* Various - Added the refined style to the BigWigs Battle Res icon
+* Various - Added the refined style to the BigWigs queue timer, with the Interface bars texture
+
+### 👤 Profiles
+
+* BigWigs - Added the Battle Res tracker icon
+* BlizzUI - Moved the Loot Window to the right
+* Platynator - Added the new border texture to match the rest of the UI
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.1-RELEASE
 
 This is a smaller update with many bug fixes, performance improvements and some new features!

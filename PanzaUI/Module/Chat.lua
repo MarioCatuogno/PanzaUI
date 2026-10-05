@@ -288,10 +288,19 @@ local function RemoveClutter(frame, text)
     end
 end
 
-for _, name in ipairs(CHAT_FRAMES) do
-    local frame = _G[name]
-    if frame and frame.RemoveMessagesByPredicate then hooksecurefunc(frame, "AddMessage", RemoveClutter) end
+-- Every chat window, temporary ones (eg. whispers) included when opened.
+local clutterHooked = {}
+local function HookClutter()
+    for _, name in ipairs(CHAT_FRAMES) do
+        local frame = _G[name]
+        if frame and frame.RemoveMessagesByPredicate and not clutterHooked[frame] then
+            clutterHooked[frame] = true
+            hooksecurefunc(frame, "AddMessage", RemoveClutter)
+        end
+    end
 end
+HookClutter()
+ns.Hook("FCF_OpenTemporaryWindow", HookClutter)
 
 -- Crafting by other players ("X creates Y."); your own crafts are kept.
 local OWN_CRAFT = type(TRADESKILL_LOG_FIRSTPERSON) == "string" and TRADESKILL_LOG_FIRSTPERSON:match("^(.-)%%s")
