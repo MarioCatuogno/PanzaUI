@@ -1,7 +1,7 @@
 ## Installation
 
 1. Download the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases) and unzip it.
-2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui), or copy the `PanzaUI` folder into `World of Warcraft/_retail_/Interface/AddOns`.
+2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui) or [Wago](https://addons.wago.io/addons/panzaui), or copy the `PanzaUI` folder into `World of Warcraft/_retail_/Interface/AddOns`.
 3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
@@ -52,7 +52,7 @@ No — PanzaUI only supports the **Retail** version of World of Warcraft.
 
 **Where do I find the latest version of the profiles?**
 
-Here on Github (see the releases or pre-releases) or on [CurseForge](https://www.curseforge.com/wow/addons/panzaui).
+Here on Github (see the releases or pre-releases), on [CurseForge](https://www.curseforge.com/wow/addons/panzaui) or on [Wago](https://addons.wago.io/addons/panzaui).
 
 **Why is my UI shifted or why can't I see the Minimap?**
 
