@@ -7,7 +7,7 @@ This is a smaller update focused on a more consistent look (new borders for tool
 * Chat - Fixed the Hide clutter option on chat windows opened later (eg. whispers)
 * Combat - Fixed a possible error on the Damage Meter windows without your own row
 * Core - Added a new border texture to the tooltips, pop-up dialogs, Delves and Edit Mode windows, with the Refined borders option
-* Core - Added the action bar style to the reward icons of quests, Delves, Dungeon Finder and Raid Finder and to the Currency and Equipment Manager icons, with the Refined borders option
+* Core - Added the action bar style to the reward icons of quests, Delves, Dungeon Finder and Raid Finder and to the Currency, Equipment Manager and Professions icons (in the item quality color), with the Refined borders option
 * Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
 * Core - Fixed the Refined text on the dark texts of the Adventure Guide (Suggested Content, Tutorials), the PvP New Season panel and the What's New panel
 * Tooltips - Added an option to show the mount of players

@@ -171,69 +171,37 @@ ns.BORDER = {
 }
 
 --------------------------------------------------------------------------------
--- Icon look: action button rounded mask and frame (anchored: lightweight
--- variant). Returns nil when the frame can't be styled yet.
+-- Icon look, one style for every icon: action button frame and rounded mask,
+-- both on the icon's own edges (they follow its size, no size reading).
+-- Returns the frame and the mask, nil when the icon can't be styled.
 --------------------------------------------------------------------------------
-local ICON_MASK  = "UI-HUD-ActionBar-IconFrame-Mask"
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
 local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame
 
-local maskInfo, frameInfo
+local frameInfo
 
-function ns.StyleIcon(icon, parent, anchored)
+function ns.StyleIcon(icon, parent)
     if not (icon and icon.AddMaskTexture) or icon:IsForbidden() then return end
     parent = parent or icon:GetParent()
     if not parent or parent:IsForbidden() then return end
-    maskInfo = maskInfo or C_Texture.GetAtlasInfo(ICON_MASK)
-    local info = maskInfo
 
     local ok, mask = pcall(parent.CreateMaskTexture, parent)
     if not ok then return end
+    mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    mask:SetAllPoints(icon)
+    icon:AddMaskTexture(mask)
+
     local frame = parent:CreateTexture(nil, "OVERLAY", nil, -1) -- below other overlays
     frame:SetAtlas(ICON_FRAME)
-
-    if anchored then
-        mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        mask:SetAllPoints(icon)
-        icon:AddMaskTexture(mask)
-        -- The 46x45 frame atlas is cropped to 45x45 to center its opening.
-        frameInfo = frameInfo or C_Texture.GetAtlasInfo(ICON_FRAME)
-        local fi = frameInfo
-        if fi and fi.file and fi.width and fi.width > 1 then
-            local l, r = fi.leftTexCoord, fi.rightTexCoord
-            frame:SetTexture(fi.file)
-            frame:SetTexCoord(l, r - (r - l) / fi.width, fi.topTexCoord, fi.bottomTexCoord)
-        end
-        frame:SetAllPoints(icon)
-        return frame, mask
+    -- The 46x45 frame atlas is cropped to 45x45 to center its opening.
+    frameInfo = frameInfo or C_Texture.GetAtlasInfo(ICON_FRAME)
+    local fi = frameInfo
+    if fi and fi.file and fi.width and fi.width > 1 then
+        local l, r = fi.leftTexCoord, fi.rightTexCoord
+        frame:SetTexture(fi.file)
+        frame:SetTexCoord(l, r - (r - l) / fi.width, fi.topTexCoord, fi.bottomTexCoord)
     end
-
-    mask:SetAtlas(ICON_MASK)
-    icon:AddMaskTexture(mask)
-    frame:SetPoint("TOPLEFT", icon)
-    frame:SetPoint("BOTTOMRIGHT", icon)
-    mask:SetAllPoints(icon)
-
-    -- Follows the icon size; unknown sizes (0x0, secret) are read again on show.
-    local lastW, lastH, sized = -1, -1, false
-    local function Resize()
-        local w, h = icon:GetSize()
-        if IsSecret(w) or IsSecret(h) or w <= 0 or h <= 0 then return sized end
-        if w == lastW and h == lastH then return true end
-        lastW, lastH, sized = w, h, true
-        if info then
-            mask:ClearAllPoints()
-            mask:SetPoint("CENTER", icon)
-            mask:SetSize(info.width * w / 45, info.height * h / 45)
-        end
-        frame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", w / 45, 0)
-        return true
-    end
-    if not Resize() then ns.Defer(Resize) end -- size known after the first layout
-    parent:HookScript("OnSizeChanged", Resize)
-    parent:HookScript("OnShow", function()
-        if not sized and not Resize() then ns.Defer(Resize) end
-    end)
+    frame:SetAllPoints(icon)
     return frame, mask
 end
 

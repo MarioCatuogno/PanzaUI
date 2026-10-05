@@ -60,7 +60,7 @@ local styledAuras = {}
 -- Styles a button once its icon, cooldown and border exist.
 local function StyleAuraFrame(frame)
     if styledAuras[frame] or not (frame.Icon and frame.Cooldown and frame.Border) then return end
-    if not ns.StyleIcon(frame.Icon, frame, true) then return end
+    if not ns.StyleIcon(frame.Icon, frame) then return end
     styledAuras[frame] = true
     ns.RoundSwipe(frame.Cooldown)
     frame.Border:SetAlpha(0)
@@ -518,7 +518,7 @@ end
 
 local function StyleBattleRes()
     local frame = FindBattleRes(UIParent:GetChildren())
-    local ring = frame and ns.StyleIcon(frame.icon, frame, true)
+    local ring = frame and ns.StyleIcon(frame.icon, frame)
     if not ring then return end
     ns.RoundSwipe(frame.cooldown)
     hooksecurefunc(frame.border, "SetBackdrop", HideBackdropEdges)

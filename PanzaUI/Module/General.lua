@@ -826,6 +826,76 @@ local function RewardIcon(button)
     return button.Icon or button.IconTexture or (name and _G[name .. "IconTexture"])
 end
 
+-- Item buttons (rewards, reagents, profession gear): rounded icon fitted to
+-- the button's icon, its frame in the item quality color instead of
+-- Blizzard's square quality border. The color is read from every way
+-- Blizzard sets that border: quality, vertex color or colored atlas.
+local qualityFrames = setmetatable({}, { __mode = "k" }) -- button -> icon frame
+local QUALITY_MIN = Enum.ItemQuality and Enum.ItemQuality.Uncommon or 2
+local Q = Enum.ItemQuality or {}
+local ATLAS_QUALITY = { -- word in the border atlas name -> quality
+    green = Q.Uncommon or 2, blue = Q.Rare or 3, purple = Q.Epic or 4, orange = Q.Legendary or 5,
+    artifact = Q.Artifact or 6, heirloom = Q.Heirloom or 7, account = Q.Heirloom or 7,
+    uncommon = Q.Uncommon or 2, rare = Q.Rare or 3, epic = Q.Epic or 4, legendary = Q.Legendary or 5,
+}
+
+local function SetFrameColor(frame, r, g, b)
+    if r then frame:SetVertexColor(r, g, b) else frame:SetVertexColor(1, 1, 1) end
+end
+
+local function QualityColor(quality)
+    if ns.IsSecret(quality) or not quality or quality < QUALITY_MIN then return end
+    local c = ITEM_QUALITY_COLORS[quality]
+    if c then return c.r, c.g, c.b end
+end
+
+local function TintQualityFrame(button, quality)
+    local frame = qualityFrames[button]
+    if frame then SetFrameColor(frame, QualityColor(quality)) end
+end
+if SetItemButtonQuality then hooksecurefunc("SetItemButtonQuality", TintQualityFrame) end
+
+local function AtlasQuality(atlas)
+    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
+    atlas = atlas:lower()
+    for word, quality in pairs(ATLAS_QUALITY) do
+        if atlas:find(word, 1, true) then return quality end
+    end
+end
+
+local function StyleItemButton(button, icon)
+    if qualityFrames[button] or not icon then return end
+    local frame = ns.StyleIcon(icon, button)
+    if not frame then return end
+    qualityFrames[button] = frame
+    if button.SetItemButtonQuality then hooksecurefunc(button, "SetItemButtonQuality", TintQualityFrame) end
+    local border = button.IconBorder
+    if not border then return frame end
+    border:SetAlpha(0)
+    hooksecurefunc(border, "Hide", function() SetFrameColor(frame) end)
+    hooksecurefunc(border, "SetAtlas", function(_, atlas)
+        local quality = AtlasQuality(atlas)
+        if quality then SetFrameColor(frame, QualityColor(quality)) end
+    end)
+    hooksecurefunc(border, "SetVertexColor", function(_, r, g, b)
+        if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not r then return end
+        if r + g + b < 2.9 then SetFrameColor(frame, r, g, b) end -- white: no quality color
+    end)
+    -- Border already set before styling.
+    if border:IsShown() then
+        local quality = AtlasQuality(border:GetAtlas())
+        if quality then
+            SetFrameColor(frame, QualityColor(quality))
+        else
+            local r, g, b = border:GetVertexColor()
+            if not (ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b)) and r and r + g + b < 2.9 then
+                SetFrameColor(frame, r, g, b)
+            end
+        end
+    end
+    return frame
+end
+
 local function StyleRewardButtons(levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
@@ -834,9 +904,7 @@ local function StyleRewardButtons(levels, ...)
             local icon = RewardIcon(button)
             if icon and icon.AddMaskTexture and (button.NameFrame or (name and _G[name .. "NameFrame"])) then
                 styledRewards[button] = true
-                -- The square quality border doesn't fit the rounded frame.
-                if button.IconBorder then button.IconBorder:SetAlpha(0) end
-                ns.StyleIcon(icon, button)
+                StyleItemButton(button, icon)
             elseif levels > 0 then
                 StyleRewardButtons(levels - 1, button:GetChildren())
             end
@@ -901,6 +969,43 @@ local function SetupDelveRewards()
         rewards:HookScript("OnShow", Queue)
     end
     if picker:IsShown() then Queue() end
+end
+
+-- Professions: concentration, gear slots, reagents and the Concentrate
+-- button (the round recipe icon keeps its own look).
+local function StyleProfessionButtons(form, levels, ...)
+    for i = 1, select("#", ...) do
+        local button = select(i, ...)
+        if not button:IsForbidden() and button ~= form.OutputIcon then
+            local icon = button.Icon or button.icon
+            if icon and icon.AddMaskTexture and button.IconBorder then
+                StyleItemButton(button, icon)
+            elseif levels > 0 then
+                StyleProfessionButtons(form, levels - 1, button:GetChildren())
+            end
+        end
+    end
+end
+
+local function SetupProfessionIcons()
+    local page = ProfessionsFrame and ProfessionsFrame.CraftingPage
+    if not page then return end
+    local form = page.SchematicForm
+    local function StylePage()
+        local display = page.ConcentrationDisplay
+        if display and display.Icon and not qualityFrames[display] then StyleItemButton(display, display.Icon) end
+        StyleProfessionButtons(page, 1, page:GetChildren()) -- gear slots
+        if form then
+            StyleProfessionButtons(form, 5, form:GetChildren()) -- reagents
+            local choices = form.Details and form.Details.CraftingChoicesContainer
+            local toggle = choices and choices.ConcentrateContainer and choices.ConcentrateContainer.ConcentrateToggleButton
+            if toggle and toggle.Icon then StyleItemButton(toggle, toggle.Icon) end
+        end
+    end
+    local function Queue() ns.Defer(StylePage) end
+    page:HookScript("OnShow", Queue)
+    if form then ns.Hook(form, "Init", Queue) end
+    if page:IsShown() then Queue() end
 end
 
 -- Called at login and when the Group Finder loads: each hook is set once.
@@ -1056,6 +1161,7 @@ function GEN:OnEnable()
         if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
