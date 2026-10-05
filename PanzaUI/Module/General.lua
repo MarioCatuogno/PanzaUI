@@ -853,6 +853,22 @@ local function StyleQuestRewards()
     StyleRewards(MapQuestInfoRewardsFrame, 2)
 end
 
+-- Currency tab: the icon of each currency row, styled once per row.
+local styledCurrency = setmetatable({}, { __mode = "k" })
+
+local function StyleCurrencyEntry(entry)
+    local content = entry and (entry.Content or entry)
+    local icon = content and (content.CurrencyIcon or entry.CurrencyIcon)
+    if not icon or styledCurrency[icon] then return end
+    if ns.StyleIcon(icon, content) then styledCurrency[icon] = true end
+end
+
+local function SetupCurrencyIcons()
+    local box = TokenFrame and TokenFrame.ScrollBox
+    if not (box and ScrollUtil) then return end
+    ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(StyleCurrencyEntry), ns, true)
+end
+
 -- Called at login and when the Group Finder loads: each hook is set once.
 local questHooked, lfgHooked
 local function SetupRewardIcons()
@@ -996,6 +1012,7 @@ function GEN:OnEnable()
     if self.db.refinedBorders then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
         SetupRewardIcons()
+        if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
