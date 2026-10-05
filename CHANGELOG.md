@@ -1,3 +1,13 @@
+## 2.3-RELEASE
+
+### 🛠️ Core
+
+### 👤 Profiles
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.2-RELEASE
 
 This is a smaller update focused on a more consistent look (new borders for tooltips, Platynator and BigWigs), some new quality of life options and many fixes to the UI and for errors in combat and in raids.
