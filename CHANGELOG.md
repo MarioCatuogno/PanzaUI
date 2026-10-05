@@ -2,6 +2,8 @@
 
 ### 🛠️ Core
 
+* Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
+
 ### 👤 Profiles
 
 ### 📏 Various

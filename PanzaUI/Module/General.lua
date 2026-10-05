@@ -826,76 +826,6 @@ local function RewardIcon(button)
     return button.Icon or button.IconTexture or (name and _G[name .. "IconTexture"])
 end
 
--- Item buttons (rewards, reagents, profession gear): rounded icon fitted to
--- the button's icon, its frame in the item quality color instead of
--- Blizzard's square quality border. The color is read from every way
--- Blizzard sets that border: quality, vertex color or colored atlas.
-local qualityFrames = setmetatable({}, { __mode = "k" }) -- button -> icon frame
-local QUALITY_MIN = Enum.ItemQuality and Enum.ItemQuality.Uncommon or 2
-local Q = Enum.ItemQuality or {}
-local ATLAS_QUALITY = { -- word in the border atlas name -> quality
-    green = Q.Uncommon or 2, blue = Q.Rare or 3, purple = Q.Epic or 4, orange = Q.Legendary or 5,
-    artifact = Q.Artifact or 6, heirloom = Q.Heirloom or 7, account = Q.Heirloom or 7,
-    uncommon = Q.Uncommon or 2, rare = Q.Rare or 3, epic = Q.Epic or 4, legendary = Q.Legendary or 5,
-}
-
-local function SetFrameColor(frame, r, g, b)
-    if r then frame:SetVertexColor(r, g, b) else frame:SetVertexColor(1, 1, 1) end
-end
-
-local function QualityColor(quality)
-    if ns.IsSecret(quality) or not quality or quality < QUALITY_MIN then return end
-    local c = ITEM_QUALITY_COLORS[quality]
-    if c then return c.r, c.g, c.b end
-end
-
-local function TintQualityFrame(button, quality)
-    local frame = qualityFrames[button]
-    if frame then SetFrameColor(frame, QualityColor(quality)) end
-end
-if SetItemButtonQuality then hooksecurefunc("SetItemButtonQuality", TintQualityFrame) end
-
-local function AtlasQuality(atlas)
-    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
-    atlas = atlas:lower()
-    for word, quality in pairs(ATLAS_QUALITY) do
-        if atlas:find(word, 1, true) then return quality end
-    end
-end
-
-local function StyleItemButton(button, icon)
-    if qualityFrames[button] or not icon then return end
-    local frame = ns.StyleIcon(icon, button)
-    if not frame then return end
-    qualityFrames[button] = frame
-    if button.SetItemButtonQuality then hooksecurefunc(button, "SetItemButtonQuality", TintQualityFrame) end
-    local border = button.IconBorder
-    if not border then return frame end
-    border:SetAlpha(0)
-    hooksecurefunc(border, "Hide", function() SetFrameColor(frame) end)
-    hooksecurefunc(border, "SetAtlas", function(_, atlas)
-        local quality = AtlasQuality(atlas)
-        if quality then SetFrameColor(frame, QualityColor(quality)) end
-    end)
-    hooksecurefunc(border, "SetVertexColor", function(_, r, g, b)
-        if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not r then return end
-        if r + g + b < 2.9 then SetFrameColor(frame, r, g, b) end -- white: no quality color
-    end)
-    -- Border already set before styling.
-    if border:IsShown() then
-        local quality = AtlasQuality(border:GetAtlas())
-        if quality then
-            SetFrameColor(frame, QualityColor(quality))
-        else
-            local r, g, b = border:GetVertexColor()
-            if not (ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b)) and r and r + g + b < 2.9 then
-                SetFrameColor(frame, r, g, b)
-            end
-        end
-    end
-    return frame
-end
-
 local function StyleRewardButtons(levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
@@ -904,7 +834,7 @@ local function StyleRewardButtons(levels, ...)
             local icon = RewardIcon(button)
             if icon and icon.AddMaskTexture and (button.NameFrame or (name and _G[name .. "NameFrame"])) then
                 styledRewards[button] = true
-                StyleItemButton(button, icon)
+                ns.StyleItemButton(button, icon)
             elseif levels > 0 then
                 StyleRewardButtons(levels - 1, button:GetChildren())
             end
@@ -921,19 +851,6 @@ local function StyleQuestRewards()
     StyleRewards(MapQuestInfoRewardsFrame, 2)
 end
 
--- Scrolling lists (Currency tab, Equipment Manager): the icon of each row,
--- styled once per row as Blizzard creates it.
-local styledRowIcons = setmetatable({}, { __mode = "k" })
-
-local function StyleRowIcons(box, GetIcon)
-    if not (box and ScrollUtil) then return end
-    ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(function(row)
-        local icon, parent = GetIcon(row)
-        if not icon or styledRowIcons[icon] then return end
-        if ns.StyleIcon(icon, parent) then styledRowIcons[icon] = true end
-    end), ns, true)
-end
-
 local function CurrencyIcon(row)
     local content = row.Content or row
     return content.CurrencyIcon or row.CurrencyIcon, content
@@ -947,12 +864,12 @@ local function GearSetIcon(row)
 end
 
 local function SetupCurrencyIcons()
-    StyleRowIcons(TokenFrame and TokenFrame.ScrollBox, CurrencyIcon)
+    ns.StyleScrollIcons(TokenFrame and TokenFrame.ScrollBox, CurrencyIcon)
 end
 
 local function SetupGearSetIcons()
     local pane = PaperDollFrame and PaperDollFrame.EquipmentManagerPane
-    StyleRowIcons(pane and pane.ScrollBox, GearSetIcon)
+    ns.StyleScrollIcons(pane and pane.ScrollBox, GearSetIcon)
 end
 
 -- Delves: the "Chance to receive" rewards, checked when the picker shows
@@ -972,32 +889,14 @@ local function SetupDelveRewards()
 end
 
 -- Professions: concentration, gear slots, reagents and the Concentrate
--- button (the round recipe icon keeps its own look).
--- Profession slots (gear, reagents): their square slot art (background
--- layers and normal texture) sits off the icon, so only the icon and its
--- frame are kept.
-local function HideSlotArt(button, icon, frame, ...)
-    for i = 1, select("#", ...) do
-        local region = select(i, ...)
-        if region ~= icon and region ~= frame and region:GetObjectType() == "Texture" then
-            local layer = region:GetDrawLayer()
-            if layer == "BACKGROUND" or layer == "BORDER" then region:SetAlpha(0) end
-        end
-    end
-    local normal = button.GetNormalTexture and button:GetNormalTexture()
-    if normal then normal:SetAlpha(0) end
-end
-
+-- button (the round recipe icon keeps its own look, slot art is hidden).
 local function StyleProfessionButtons(form, levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
         if not button:IsForbidden() and button ~= form.OutputIcon then
             local icon = button.Icon or button.icon
             if icon and icon.AddMaskTexture and button.IconBorder then
-                if not qualityFrames[button] then
-                    local frame = StyleItemButton(button, icon)
-                    if frame then HideSlotArt(button, icon, frame, button:GetRegions()) end
-                end
+                ns.StyleItemButton(button, icon, true)
             elseif levels > 0 then
                 StyleProfessionButtons(form, levels - 1, button:GetChildren())
             end
@@ -1011,16 +910,13 @@ local function SetupProfessionIcons()
     local form = page.SchematicForm
     local function StylePage()
         local display = page.ConcentrationDisplay
-        if display and display.Icon and not qualityFrames[display] then StyleItemButton(display, display.Icon) end
+        if display then ns.StyleItemButton(display, display.Icon) end
         StyleProfessionButtons(page, 1, page:GetChildren()) -- gear slots
         if form then
             StyleProfessionButtons(form, 5, form:GetChildren()) -- reagents
             local choices = form.Details and form.Details.CraftingChoicesContainer
             local toggle = choices and choices.ConcentrateContainer and choices.ConcentrateContainer.ConcentrateToggleButton
-            if toggle and toggle.Icon and not qualityFrames[toggle] then
-                local frame = StyleItemButton(toggle, toggle.Icon)
-                if frame then HideSlotArt(toggle, toggle.Icon, frame, toggle:GetRegions()) end
-            end
+            if toggle then ns.StyleItemButton(toggle, toggle.Icon, true) end
         end
     end
     local function Queue() ns.Defer(StylePage) end

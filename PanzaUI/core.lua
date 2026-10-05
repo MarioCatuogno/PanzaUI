@@ -176,7 +176,10 @@ ns.BORDER = {
 -- Returns the frame and the mask, nil when the icon can't be styled.
 --------------------------------------------------------------------------------
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
-local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame
+local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame (cooldown swipe)
+-- Icon mask: reaches under the frame band, so no gap is left in the corners
+-- of the frame opening (it isn't centered in Blizzard's atlas).
+local ICON_FILL  = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconfill.tga]]
 
 local frameInfo
 
@@ -187,7 +190,7 @@ function ns.StyleIcon(icon, parent)
 
     local ok, mask = pcall(parent.CreateMaskTexture, parent)
     if not ok then return end
-    mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    mask:SetTexture(ICON_FILL, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
     mask:SetAllPoints(icon)
     icon:AddMaskTexture(mask)
 
@@ -221,6 +224,104 @@ function ns.ZoomIcon(icon, percent)
     local lo = (tonumber(percent) or 0) / 100
     icon:SetTexCoord(lo, 1 - lo, lo, 1 - lo)
 end
+
+--------------------------------------------------------------------------------
+-- Item buttons (rewards, reagents, profession gear): the icon look, its frame
+-- in the item quality color instead of Blizzard's square quality border.
+-- The color is read from every way Blizzard sets that border: quality,
+-- vertex color or colored atlas. hideSlotArt: the square slot art behind
+-- (background layers, normal texture) is hidden too. Styled once per button.
+--------------------------------------------------------------------------------
+local qualityFrames = setmetatable({}, { __mode = "k" }) -- button -> icon frame
+local QUALITY_MIN = Enum.ItemQuality and Enum.ItemQuality.Uncommon or 2
+local Q = Enum.ItemQuality or {}
+local ATLAS_QUALITY = { -- word in the border atlas name -> quality
+    green = Q.Uncommon or 2, blue = Q.Rare or 3, purple = Q.Epic or 4, orange = Q.Legendary or 5,
+    artifact = Q.Artifact or 6, heirloom = Q.Heirloom or 7, account = Q.Heirloom or 7,
+    uncommon = Q.Uncommon or 2, rare = Q.Rare or 3, epic = Q.Epic or 4, legendary = Q.Legendary or 5,
+}
+
+local function SetFrameColor(frame, r, g, b)
+    if r then frame:SetVertexColor(r, g, b) else frame:SetVertexColor(1, 1, 1) end
+end
+
+local function QualityColor(quality)
+    if IsSecret(quality) or not quality or quality < QUALITY_MIN then return end
+    local c = ITEM_QUALITY_COLORS[quality]
+    if c then return c.r, c.g, c.b end
+end
+
+local function TintQualityFrame(button, quality)
+    local frame = qualityFrames[button]
+    if frame then SetFrameColor(frame, QualityColor(quality)) end
+end
+if SetItemButtonQuality then hooksecurefunc("SetItemButtonQuality", TintQualityFrame) end
+
+local function AtlasQuality(atlas)
+    if IsSecret(atlas) or type(atlas) ~= "string" then return end
+    atlas = atlas:lower()
+    for word, quality in pairs(ATLAS_QUALITY) do
+        if atlas:find(word, 1, true) then return quality end
+    end
+end
+
+-- Colored border tints the frame (white means no quality color).
+local function BorderColor(frame, r, g, b)
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) or not r then return end
+    if r + g + b < 2.9 then SetFrameColor(frame, r, g, b) end
+end
+
+local function HideSlotArt(button, icon, frame, ...)
+    for i = 1, select("#", ...) do
+        local region = select(i, ...)
+        if region ~= icon and region ~= frame and region:GetObjectType() == "Texture" then
+            local layer = region:GetDrawLayer()
+            if layer == "BACKGROUND" or layer == "BORDER" then region:SetAlpha(0) end
+        end
+    end
+    local normal = button.GetNormalTexture and button:GetNormalTexture()
+    if normal then normal:SetAlpha(0) end
+end
+
+function ns.StyleItemButton(button, icon, hideSlotArt)
+    if not button or qualityFrames[button] or not icon then return end
+    local frame = ns.StyleIcon(icon, button)
+    if not frame then return end
+    qualityFrames[button] = frame
+    if hideSlotArt then HideSlotArt(button, icon, frame, button:GetRegions()) end
+    if button.SetItemButtonQuality then hooksecurefunc(button, "SetItemButtonQuality", TintQualityFrame) end
+    local border = button.IconBorder
+    if not border then return frame end
+    border:SetAlpha(0)
+    hooksecurefunc(border, "Hide", function() SetFrameColor(frame) end)
+    hooksecurefunc(border, "SetAtlas", function(_, atlas)
+        local quality = AtlasQuality(atlas)
+        if quality then SetFrameColor(frame, QualityColor(quality)) end
+    end)
+    hooksecurefunc(border, "SetVertexColor", function(_, r, g, b) BorderColor(frame, r, g, b) end)
+    -- Border already set before styling.
+    if border:IsShown() then
+        local quality = AtlasQuality(border:GetAtlas())
+        if quality then SetFrameColor(frame, QualityColor(quality)) else BorderColor(frame, border:GetVertexColor()) end
+    end
+    return frame
+end
+
+--------------------------------------------------------------------------------
+-- Scrolling lists (eg. Currency tab, Equipment Manager): the icon look on
+-- each row as Blizzard creates it; GetIcon(row) returns icon, parent.
+--------------------------------------------------------------------------------
+local styledRowIcons = setmetatable({}, { __mode = "k" })
+
+function ns.StyleScrollIcons(box, GetIcon)
+    if not (box and ScrollUtil) then return end
+    ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(function(row)
+        local icon, parent = GetIcon(row)
+        if not icon or styledRowIcons[icon] then return end
+        if ns.StyleIcon(icon, parent) then styledRowIcons[icon] = true end
+    end), ns, true)
+end
+
 
 --------------------------------------------------------------------------------
 -- ScrollBox frame callback that always receives the frame.
