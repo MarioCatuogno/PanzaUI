@@ -8,6 +8,8 @@
 
 ### 👤 Profiles
 
+* Platynator - Fixed the width of Enemy names
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version
