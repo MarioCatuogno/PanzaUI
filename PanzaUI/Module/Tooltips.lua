@@ -3,6 +3,7 @@
     Tooltip style, player info, mounts and IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
@@ -31,8 +32,6 @@ function TT:Migrate(db)
     ns.MergeOptions(db, "style", db, "hideHealthBar", "classColorNames")
     ns.MergeOptions(db, "playerInfo", db, "showMythicRating", "showItemLevel")
 end
-
-local IsSecret = ns.IsSecret
 
 local ILVL_CACHE_TIME  = 300 -- seconds
 local INSPECT_THROTTLE = 1.5 -- seconds between inspects

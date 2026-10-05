@@ -3,6 +3,7 @@
     Other addons' styling and quality of life features.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 -- Saved variables key of the old Miscellaneous module.
 local Misc = ns:RegisterModule("Miscellaneous", {
@@ -160,7 +161,7 @@ end
 
 local events = CreateFrame("Frame")
 events:SetScript("OnEvent", function(_, _, unit)
-    if ns.IsSecret(unit) or not unit then return end
+    if IsSecret(unit) or not unit then return end
     pendingUnits[unit] = true
     ns.Defer(UpdatePending)
 end)
@@ -216,11 +217,7 @@ lootEvents:SetScript("OnEvent", function()
 end)
 
 local function SetFastLoot(on)
-    if on then
-        lootEvents:RegisterEvent("LOOT_READY")
-    else
-        lootEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(lootEvents, on, "LOOT_READY")
 end
 
 --------------------------------------------------------------------------------
@@ -240,14 +237,10 @@ local function SetExpansionFilter()
     if searchBar.UpdateClearFiltersButton then searchBar:UpdateClearFiltersButton() end
 end
 
-ahEvents:SetScript("OnEvent", function() RunNextFrame(SetExpansionFilter) end)
+ahEvents:SetScript("OnEvent", function() ns.Defer(SetExpansionFilter) end)
 
 local function SetAuctionFilter(on)
-    if on then
-        ahEvents:RegisterEvent("AUCTION_HOUSE_SHOW")
-    else
-        ahEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(ahEvents, on, "AUCTION_HOUSE_SHOW")
 end
 
 --------------------------------------------------------------------------------
@@ -444,13 +437,12 @@ local function StopMicroPulse(button)
 end
 
 -- Help tips already open (Blizzard's pool): closed when they are notices.
+local function CloseNotice(frame)
+    if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
+end
+
 local function CloseOpenNotices()
-    local pool = Misc.db.hideNotices and HelpTip and HelpTip.framePool
-    local active = pool and pool.activeObjects
-    if not active then return end
-    for frame in pairs(active) do
-        if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
-    end
+    if Misc.db.hideNotices and HelpTip then ns.ForEachActive(HelpTip.framePool, CloseNotice) end
 end
 
 local function SetupNotices()
@@ -496,15 +488,7 @@ end
 -- bars, BigWigs' own border hidden. The icon has no name: found among the
 -- UIParent children by its fields.
 --------------------------------------------------------------------------------
-local BACKDROP_EDGES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-
-local function HideBackdropEdges(border)
-    for _, key in ipairs(BACKDROP_EDGES) do
-        local edge = border[key]
-        if edge then edge:SetAlpha(0) end
-    end
-end
+local HideBackdropEdges = ns.HideFramePieces
 
 local function FindBattleRes(...)
     for i = 1, select("#", ...) do

@@ -152,15 +152,13 @@ events:SetScript("OnEvent", function(_, event)
 end)
 
 local function SetCombatCollapse(on)
+    ns.SetEvents(events, on, unpack(COLLAPSE_EVENTS))
     if on then
-        for _, event in ipairs(COLLAPSE_EVENTS) do events:RegisterEvent(event) end
         inCombat = InCombatLockdown()
-        UpdateCollapse()
     else
-        events:UnregisterAllEvents()
         inEncounter, inCombat = false, false
-        UpdateCollapse()
     end
+    UpdateCollapse()
 end
 
 --------------------------------------------------------------------------------
@@ -220,12 +218,8 @@ local function SetQuestCount(on)
     end
     if not countText then return end
     countText:SetShown(on)
-    if on then
-        for _, event in ipairs(COUNT_EVENTS) do countEvents:RegisterEvent(event) end
-        DelayedCount()
-    else
-        countEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(countEvents, on, unpack(COUNT_EVENTS))
+    if on then DelayedCount() end
 end
 
 --------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
     Text style, class colors, borders, bar textures and profile import.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 local DEFAULT = ""
@@ -283,7 +284,7 @@ local function SetTexture(bar, path)
     local fill = bar:GetStatusBarTexture()
     local layer, sublevel
     if fill then layer, sublevel = fill:GetDrawLayer() end
-    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
+    if IsSecret(layer) or IsSecret(sublevel) then layer = nil end
     bar:SetStatusBarTexture(path)
     fill = bar:GetStatusBarTexture()
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
@@ -340,7 +341,7 @@ local ATLAS_COLORS = { -- first match wins
 local atlasColors = {}
 local function AtlasColor(atlas)
     -- Secret names are never used as cache keys.
-    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
+    if IsSecret(atlas) or type(atlas) ~= "string" then return end
     local cached = atlasColors[atlas]
     if cached ~= nil then return cached or nil end
     local name = atlas:lower()
@@ -368,7 +369,7 @@ local function TrackTexture(bar, path, inset)
         if bar.Background then bar.Background:AddMaskTexture(mask) end
     end
     local function EnsureMask(atlas)
-        if not mask and not ns.IsSecret(atlas) and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
+        if not mask and not IsSecret(atlas) and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
             mask = bar:CreateMaskTexture()
             mask:SetAtlas(atlas)
             mask:SetAllPoints(bar)
@@ -383,7 +384,7 @@ local function TrackTexture(bar, path, inset)
     local original = bar:GetStatusBarTexture()
     local layer, sublevel
     if original then layer, sublevel = original:GetDrawLayer() end
-    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
+    if IsSecret(layer) or IsSecret(sublevel) then layer = nil end
 
     local busy
     local function Reapply(atlas)
@@ -424,7 +425,7 @@ local function UpdatePowerBar(bar)
     if not path then return end
     SetTexture(bar, path)
     local token = bar.powerToken
-    local info = bar.overrideInfo or (not ns.IsSecret(token) and token and PowerBarColor[token])
+    local info = bar.overrideInfo or (not IsSecret(token) and token and PowerBarColor[token])
     if info and info.r then bar:SetStatusBarColor(info.r, info.g, info.b) end
 end
 
@@ -466,7 +467,7 @@ local function ColorToTPower()
     for i = 1, #totPower, 2 do
         local bar, unit = totPower[i], ns.GroupUnit(totPower[i + 1])
         local _, token = UnitPowerType(unit)
-        local c = not ns.IsSecret(token) and token and PowerBarColor[token]
+        local c = not IsSecret(token) and token and PowerBarColor[token]
         if c then
             totColor[bar] = c
             bar:SetStatusBarColor(c.r, c.g, c.b)
@@ -568,8 +569,8 @@ end
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
     local kind = bar.barType
-    if ns.IsSecret(kind) or type(kind) ~= "string" then kind = asset end
-    if ns.IsSecret(kind) or type(kind) ~= "string" then
+    if IsSecret(kind) or type(kind) ~= "string" then kind = asset end
+    if IsSecret(kind) or type(kind) ~= "string" then
         castBarColor[bar] = nil
         return
     end
@@ -651,27 +652,14 @@ local function FitOutline(region)
     if not region or region:GetObjectType() ~= "FontString" then return end
     local path, size, flags = region:GetFont()
     local r, g, b = region:GetTextColor()
-    if ns.IsSecret(path) or not path or ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or ns.IsSecret(flags) then return end
+    if IsSecret(path) or not path or IsSecret(r) or IsSecret(g) or IsSecret(b) or IsSecret(flags) then return end
     local light = r + g + b >= 1
     local outlined = flags and flags:find("OUTLINE") ~= nil
     if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end
 end
 
--- Regions and children walked as returned, without temporary tables.
-local FitFrameOutlines
-
-local function FitRegions(...)
-    for i = 1, select("#", ...) do FitOutline((select(i, ...))) end
-end
-
-local function FitChildren(levels, ...)
-    for i = 1, select("#", ...) do FitFrameOutlines((select(i, ...)), levels) end
-end
-
-function FitFrameOutlines(frame, levels)
-    if not frame then return end
-    FitRegions(frame:GetRegions())
-    if levels > 0 then FitChildren(levels - 1, frame:GetChildren()) end
+local function FitFrameOutlines(frame, levels)
+    ns.WalkRegions(frame, levels, FitOutline)
 end
 
 local function FitQuestInfo()
@@ -680,55 +668,43 @@ local function FitQuestInfo()
     FitFrameOutlines(MapQuestInfoRewardsFrame, 2)
 end
 
--- Spellbook: spell names, headers and page number, as Blizzard sets them up.
--- Archaeology: parchment texts colored dark by the panel itself; each page
--- is checked when it shows.
-local function SetupArchaeology()
-    local panel = ArchaeologyFrame
+-- Parchment panels: their dark texts are checked when the panel shows.
+local function FitPanelOnShow(panel, levels)
     if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 5) end
-    local function Queue() ns.Defer(FitPanel) end
-    panel:HookScript("OnShow", Queue)
-    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
-        local page = panel[key]
-        if page then page:HookScript("OnShow", Queue) end
-    end
-    if panel:IsShown() then Queue() end
+    return ns.OnShowDeferred(panel, function() FitFrameOutlines(panel, levels) end)
 end
 
--- What's New: dark header on the parchment, checked when the panel shows.
+-- Archaeology: texts colored dark by the panel itself, on every page.
+local function SetupArchaeology()
+    local Queue = FitPanelOnShow(ArchaeologyFrame, 5)
+    if not Queue then return end
+    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
+        local page = ArchaeologyFrame[key]
+        if page then page:HookScript("OnShow", Queue) end
+    end
+end
+
+-- What's New: dark header on the parchment.
 local function SetupSplash()
-    local panel = SplashFrame
-    if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 3) end
-    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
-    if panel:IsShown() then ns.Defer(FitPanel) end
+    FitPanelOnShow(SplashFrame, 3)
 end
 
 -- Adventure Guide: dark texts on the parchment (Suggested Content,
--- Tutorials), checked when the guide shows, the tab changes or the
--- suggestions change.
+-- Tutorials), also checked when the tab or the suggestions change.
 local function SetupAdventureGuide()
-    local guide = EncounterJournal
-    if not guide then return end
-    local function FitGuide() FitFrameOutlines(guide, 5) end
-    local function Queue() ns.Defer(FitGuide) end
-    guide:HookScript("OnShow", Queue)
+    local Queue = FitPanelOnShow(EncounterJournal, 5)
+    if not Queue then return end
     ns.Hook("EJ_ContentTab_Select", Queue)
     ns.Hook("EJSuggestFrame_RefreshDisplay", Queue)
-    if guide:IsShown() then Queue() end
 end
 
--- PvP: dark texts of the New Season parchment (Rated tab), checked when it
--- shows (the whole PvP panel if the parchment isn't found).
+-- PvP: dark texts of the New Season parchment (Rated tab), or of the whole
+-- PvP panel if the parchment isn't found.
 local function SetupPvP()
-    local panel = (PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame
-    if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 4) end
-    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
-    if panel:IsShown() then ns.Defer(FitPanel) end
+    FitPanelOnShow((PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame, 4)
 end
 
+-- Spellbook: spell names, headers and page number, as Blizzard sets them up.
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -738,9 +714,7 @@ local function SetupSpellBook()
     ns.Hook(SpellBookHeaderMixin, "Init", function(header) FitOutline(header.Text) end)
     local book = PlayerSpellsFrame and PlayerSpellsFrame.SpellBookFrame
     local pages = book and book.PagedSpellsFrame
-    if not pages then return end
-    local function FitPages() FitFrameOutlines(pages, 4) end
-    book:HookScript("OnShow", function() ns.Defer(FitPages) end)
+    if pages then ns.OnShowDeferred(book, function() FitFrameOutlines(pages, 4) end) end
 end
 
 -- Texts colored dark at runtime (achievements, parchment pages): the outline
@@ -763,12 +737,12 @@ local function OnNamePlate(region)
 end
 
 local function FitTextColor(text, r, g, b)
-    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not (r and g and b) then return end
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) or not (r and g and b) then return end
     local dark, flags = math.max(r, g, b) < DARK, removedOutline[text]
     if not dark and not flags then return end -- light text never changed
     if text:IsForbidden() or (dark and OnNamePlate(text)) then return end
     local path, size, current = text:GetFont()
-    if ns.IsSecret(path) or not path or ns.IsSecret(current) then return end
+    if IsSecret(path) or not path or IsSecret(current) then return end
     local outlined = current and current:find("OUTLINE") ~= nil
     if dark then
         if outlined then
@@ -877,15 +851,12 @@ end
 local function SetupDelveRewards()
     local picker = DelvesDifficultyPickerFrame
     if not picker then return end
-    local function Style() StyleRewards(picker, 4) end
-    local function Queue() ns.Defer(Style) end
-    picker:HookScript("OnShow", Queue)
+    local Queue = ns.OnShowDeferred(picker, function() StyleRewards(picker, 4) end)
     local rewards = picker.DelveRewardsContainerFrame
     if rewards then
         ns.Hook(rewards, "SetRewards", Queue)
         rewards:HookScript("OnShow", Queue)
     end
-    if picker:IsShown() then Queue() end
 end
 
 -- Professions: concentration, gear slots, reagents and the Concentrate
@@ -919,10 +890,8 @@ local function SetupProfessionIcons()
             if toggle then ns.StyleItemButton(toggle, toggle.Icon, true) end
         end
     end
-    local function Queue() ns.Defer(StylePage) end
-    page:HookScript("OnShow", Queue)
+    local Queue = ns.OnShowDeferred(page, StylePage)
     if form then ns.Hook(form, "Init", Queue) end
-    if page:IsShown() then Queue() end
 end
 
 -- Called at login and when the Group Finder loads: each hook is set once.
@@ -942,9 +911,7 @@ end
 -- PanzaUI border instead of Blizzard's frame, scaled down to the icon frame
 -- size. Tooltips: the background is inset to stay inside the corners; both
 -- are set again when Blizzard changes the tooltip style.
-local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-local BORDER_SCALE, TOOLTIP_INSET = 0.2, 3
+local TOOLTIP_INSET = 3
 local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
 local DIALOG_OVERLAP = 2 -- framed dialogs: border outside the background (2 of its 4 units cover the edge)
 -- Dialogs with Blizzard's dialog frame (Border with edges and a Bg).
@@ -961,31 +928,7 @@ local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialo
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
     "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip",
     "AutoCompleteBox" } -- name suggestions (mail, whispers, invites)
-local panelBorders = {}
-
-local function HidePieces(nineSlice)
-    for _, key in ipairs(NINESLICE_PIECES) do
-        local piece = nineSlice[key]
-        if piece then piece:SetAlpha(0) end
-    end
-end
-
--- Border on `owner`, around `anchor` pushed out by `outset` (screen units).
-local function PanelBorder(owner, anchor, outset)
-    if panelBorders[owner] then return panelBorders[owner] end
-    local border = owner:CreateTexture(nil, "BORDER", nil, 7)
-    local m = ns.BORDER.margin
-    local pad = ns.BORDER.padding + outset / BORDER_SCALE
-    border:SetTexture(ns.BORDER.file)
-    border:SetTextureSliceMargins(m, m, m, m)
-    border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
-    border:SetScale(BORDER_SCALE)
-    border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
-    border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
-    panelBorders[owner] = border
-    return border
-end
-ns.PanelBorder = PanelBorder
+local HidePieces, PanelBorder = ns.HideFramePieces, ns.PanelBorder
 
 local function StyleTooltipBorder(tooltip)
     local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
@@ -1193,15 +1136,9 @@ function GEN:OnEnable()
 
     -- Tooltip progress and status bars.
     if interface then
+        local function TrackTooltipBar(bar) TrackTexture(bar.Bar or bar, interface, 1) end
         local function TrackTooltipPool(tooltip, poolKey)
-            local pool = tooltip and tooltip[poolKey]
-            if not pool then return end
-            local active = pool.activeObjects
-            if active then
-                for bar in pairs(active) do TrackTexture(bar.Bar or bar, interface, 1) end
-            elseif pool.EnumerateActive then
-                for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, interface, 1) end
-            end
+            ns.ForEachActive(tooltip and tooltip[poolKey], TrackTooltipBar)
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)

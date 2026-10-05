@@ -3,6 +3,7 @@
     Window style, timestamps, Combat Log tab and message filters.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local Chat = ns:RegisterModule("Chat", {
     title = "Chat",
@@ -163,7 +164,7 @@ local FLAG_EVENTS = {
 }
 
 local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
-    if ns.IsSecret(flag) or flag == nil or KEEP_FLAGS[flag] then return false end
+    if IsSecret(flag) or flag == nil or KEEP_FLAGS[flag] then return false end
     return false, msg, author, lang, channel, target, "", ...
 end
 
@@ -189,7 +190,7 @@ local function ShortName(channel, zoneChannel)
 end
 
 local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zoneID, ...)
-    if type(channel) ~= "string" or ns.IsSecret(channel) or ns.IsSecret(zoneID) then return false end
+    if type(channel) ~= "string" or IsSecret(channel) or IsSecret(zoneID) then return false end
     local zoneChannel = type(zoneID) == "number" and zoneID > 0
     return false, msg, author, lang, ShortName(channel, zoneChannel), target, flag, zoneID, ...
 end
@@ -202,7 +203,7 @@ local URL_PATTERNS = { "(%a[%w+.-]*://[^%s|]+)", "(www%.[%w-]+%.[^%s|]+)" }
 local URL_LINK = "|cff4fc3f7|Haddon:PanzaUI:url|h[%1]|h|r"
 
 local function LinkURLs(_, _, msg, ...)
-    if type(msg) ~= "string" or ns.IsSecret(msg) or msg:find("|H", 1, true) then return false end
+    if type(msg) ~= "string" or IsSecret(msg) or msg:find("|H", 1, true) then return false end
     if not (msg:find("://", 1, true) or msg:find("www.", 1, true)) then return false end
     local linked, count = msg:gsub(URL_PATTERNS[1], URL_LINK)
     if count == 0 then linked, count = msg:gsub(URL_PATTERNS[2], URL_LINK) end
@@ -260,7 +261,7 @@ for _, fmt in ipairs({ ERR_LOOT_SPEC_CHANGED_S, GUILD_MOTD_TEMPLATE }) do
 end
 
 local function IsClutter(text)
-    if type(text) ~= "string" or ns.IsSecret(text) then return false end
+    if type(text) ~= "string" or IsSecret(text) then return false end
     for i = 1, #CLUTTER do
         if text:find(CLUTTER[i], 1, true) then return true end
     end
@@ -271,7 +272,7 @@ end
 local ALLY_ICON = "%s?|A:friendslist%-recentallies[^|]*|a"
 
 local function HasAllyIcon(text)
-    return type(text) == "string" and not ns.IsSecret(text) and text:find("friendslist-recentallies", 1, true) ~= nil
+    return type(text) == "string" and not IsSecret(text) and text:find("friendslist-recentallies", 1, true) ~= nil
 end
 
 local function StripAllyIcon(text, ...)
@@ -307,7 +308,7 @@ local OWN_CRAFT = type(TRADESKILL_LOG_FIRSTPERSON) == "string" and TRADESKILL_LO
 
 local function HideOthersCrafts(_, _, msg)
     local db = Chat.db
-    if not (db and db.hideClutter) or type(msg) ~= "string" or ns.IsSecret(msg) then return false end
+    if not (db and db.hideClutter) or type(msg) ~= "string" or IsSecret(msg) then return false end
     return not (OWN_CRAFT and OWN_CRAFT ~= "" and msg:find(OWN_CRAFT, 1, true) == 1)
 end
 
@@ -351,7 +352,7 @@ local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LO
 
 local function Hiding(msg)
     local db = Chat.db
-    return db and db.hideClutter and type(msg) == "string" and not ns.IsSecret(msg)
+    return db and db.hideClutter and type(msg) == "string" and not IsSecret(msg)
 end
 
 local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES) end

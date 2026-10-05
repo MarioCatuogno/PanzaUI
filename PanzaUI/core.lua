@@ -42,6 +42,25 @@ function ns.Defer(func)
     deferFrame:Show()
 end
 
+-- Registers the given events on `frame` when `on`, otherwise unregisters all
+-- of them (event frames used only while their option is on).
+function ns.SetEvents(frame, on, ...)
+    if not on then
+        frame:UnregisterAllEvents()
+        return
+    end
+    for i = 1, select("#", ...) do frame:RegisterEvent((select(i, ...))) end
+end
+
+-- Runs func on the next frame each time `frame` shows, and now if it is
+-- already shown. Returns the queuing function, for other hooks too.
+function ns.OnShowDeferred(frame, func)
+    local function Queue() ns.Defer(func) end
+    frame:HookScript("OnShow", Queue)
+    if frame:IsShown() then Queue() end
+    return Queue
+end
+
 -- Outlined copy of a font object, one per base font.
 local outlinedFonts, fontCount = {}, 0
 function ns.OutlinedFont(base)
@@ -169,6 +188,37 @@ ns.BORDER = {
     margin  = 136 * 0.35,
     padding = 16,
 }
+local BORDER_SCALE = 0.2 -- panels: the border at the icon frame size
+local panelBorders = {}
+
+-- PanzaUI border on `owner`, around `anchor` pushed out by `outset` (screen
+-- units). Created once per owner.
+function ns.PanelBorder(owner, anchor, outset)
+    if panelBorders[owner] then return panelBorders[owner] end
+    local border = owner:CreateTexture(nil, "BORDER", nil, 7)
+    local m = ns.BORDER.margin
+    local pad = ns.BORDER.padding + outset / BORDER_SCALE
+    border:SetTexture(ns.BORDER.file)
+    border:SetTextureSliceMargins(m, m, m, m)
+    border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
+    border:SetScale(BORDER_SCALE)
+    border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
+    border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
+    panelBorders[owner] = border
+    return border
+end
+
+-- Hides the corners and edges of a Blizzard frame border (nine-slice or
+-- backdrop); its background is kept.
+local FRAME_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
+
+function ns.HideFramePieces(frame)
+    for _, key in ipairs(FRAME_PIECES) do
+        local piece = frame[key]
+        if piece then piece:SetAlpha(0) end
+    end
+end
 
 --------------------------------------------------------------------------------
 -- Icon look, one style for every icon: action button frame and rounded mask,
@@ -332,6 +382,17 @@ function ns.ScrollFrameCallback(func)
     end
 end
 
+-- Calls func(object) for each active object of a Blizzard frame pool.
+function ns.ForEachActive(pool, func)
+    if not pool then return end
+    local active = pool.activeObjects
+    if active then
+        for object in pairs(active) do func(object) end
+    elseif pool.EnumerateActive then
+        for object in pool:EnumerateActive() do func(object) end
+    end
+end
+
 --------------------------------------------------------------------------------
 -- Damage Meter registry: each function runs once per entry and per window.
 --------------------------------------------------------------------------------
@@ -465,34 +526,34 @@ function ns.ItemLevelText(button, ilvl, color)
 end
 
 --------------------------------------------------------------------------------
--- Styles every font string of a frame, down to `levels` children.
+-- Calls func(region) for every region of a frame, down to `levels` children
+-- (regions and children walked as returned, without temporary tables).
 --------------------------------------------------------------------------------
--- skipDark: dark texts (e.g. on parchment backgrounds) are left as they are.
-local StyleAllFonts
+local WalkRegions
 
-local function IsDark(region)
-    local r, g, b = region:GetTextColor()
-    if IsSecret(r) or IsSecret(g) or IsSecret(b) then return false end
-    return r + g + b < 1
+local function WalkRegionList(func, ...)
+    for i = 1, select("#", ...) do func((select(i, ...))) end
 end
 
-local function StyleFontRegions(skipDark, ...)
-    for i = 1, select("#", ...) do
-        local region = select(i, ...)
-        if region:GetObjectType() == "FontString" and not (skipDark and IsDark(region)) then ns.StyleFont(region) end
-    end
+local function WalkChildren(func, levels, ...)
+    for i = 1, select("#", ...) do WalkRegions((select(i, ...)), levels, func) end
 end
 
-local function StyleChildFonts(levels, skipDark, ...)
-    for i = 1, select("#", ...) do StyleAllFonts((select(i, ...)), levels, skipDark) end
-end
-
-function StyleAllFonts(frame, levels, skipDark)
+function WalkRegions(frame, levels, func)
     if not frame or frame:IsForbidden() then return end
-    StyleFontRegions(skipDark, frame:GetRegions())
-    if levels and levels > 0 then StyleChildFonts(levels - 1, skipDark, frame:GetChildren()) end
+    WalkRegionList(func, frame:GetRegions())
+    if levels and levels > 0 then WalkChildren(func, levels - 1, frame:GetChildren()) end
 end
-ns.StyleAllFonts = StyleAllFonts
+ns.WalkRegions = WalkRegions
+
+-- Styles every font string of a frame, down to `levels` children.
+local function StyleFontRegion(region)
+    if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
+end
+
+function ns.StyleAllFonts(frame, levels)
+    WalkRegions(frame, levels, StyleFontRegion)
+end
 
 --------------------------------------------------------------------------------
 -- Calls func for the Player, Target, Focus and Boss cast bars.

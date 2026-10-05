@@ -4,6 +4,7 @@
     merchant automation.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local Items = ns:RegisterModule("Items", {
     title = "Bags & Items",
@@ -115,7 +116,7 @@ end
 
 -- Item level and quality color from an item link.
 local function LinkItemLevel(link, equipmentOnly)
-    if ns.IsSecret(link) or not link then return end
+    if IsSecret(link) or not link then return end
     if equipmentOnly then
         local _, _, _, equipLoc, _, classID = C_Item.GetItemInfoInstant(link)
         if not EQUIPMENT[classID] or SKIP_SLOTS[equipLoc] then return end
@@ -228,7 +229,7 @@ local function SetupBanks()
     if BankPanel then
         ns.Hook(BankPanel, "GenerateItemSlotsForSelectedTab", UpdateBankPanel)
         ns.Hook(BankPanel, "RefreshAllItemsForSelectedTab", UpdateBankPanel)
-        BankPanel:HookScript("OnShow", function() ns.Defer(UpdateBankPanel) end)
+        ns.OnShowDeferred(BankPanel, UpdateBankPanel)
     end
     bankEvents:RegisterEvent("BANKFRAME_OPENED")
     bankEvents:RegisterEvent("BANKFRAME_CLOSED")
@@ -268,11 +269,7 @@ merchantEvents:SetScript("OnEvent", function()
 end)
 
 local function UpdateMerchantEvents()
-    if Items.db.autoRepair or Items.db.autoSellJunk then
-        merchantEvents:RegisterEvent("MERCHANT_SHOW")
-    else
-        merchantEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(merchantEvents, Items.db.autoRepair or Items.db.autoSellJunk, "MERCHANT_SHOW")
 end
 
 --------------------------------------------------------------------------------

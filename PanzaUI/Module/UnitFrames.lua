@@ -561,14 +561,7 @@ local function StyleFocusDebuff(button)
 end
 
 local function StyleFocusDebuffs(frame)
-    local pool = frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate")
-    if not pool then return end
-    local active = pool.activeObjects
-    if active then
-        for button in pairs(active) do StyleFocusDebuff(button) end
-    else
-        for button in pool:EnumerateActive() do StyleFocusDebuff(button) end
-    end
+    ns.ForEachActive(frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate"), StyleFocusDebuff)
 end
 
 --------------------------------------------------------------------------------
