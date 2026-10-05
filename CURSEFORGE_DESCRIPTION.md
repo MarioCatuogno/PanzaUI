@@ -2,16 +2,16 @@
 
 # PanzaUI
 
-**PanzaUI** is a lightweight addon that makes the default World of Warcraft UI cleaner, sharper and more comfortable to play with — without replacing it.
+**PanzaUI** is a lightweight addon that makes the default World of Warcraft UI cleaner, sharper and more comfortable to play with, without replacing it.
 
 No heavy frameworks, no custom frames to learn: you keep the Blizzard interface you already know, just polished. Every feature has its own toggle, so you only keep what you like.
 
 ## ✨ Why PanzaUI?
 
-- **Feels like Blizzard, only better** — it improves the default frames instead of replacing them, so Edit Mode and every Blizzard feature keep working as usual.
-- **Light as a feather** — tiny memory footprint and almost no CPU usage, even in raids.
-- **Built for Midnight** — designed from the ground up around the new addon restrictions.
-- **Fully modular** — turn every feature on or off from a single, simple menu.
+- **Feels like Blizzard, only better** - it improves the default frames instead of replacing them, so Edit Mode and every Blizzard feature keep working as usual.
+- **Light as a feather** - tiny memory footprint and almost no CPU usage, even in raids.
+- **Built for Midnight** - designed from the ground up around the new addon restrictions.
+- **Fully modular** - turn every feature on or off from a single, simple menu.
 
 ![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
 
@@ -21,7 +21,7 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - **Refined text**: a clean outlined font across the whole UI, from unit frames to menus and tooltips
 - **Class colors** on the health bars, with reaction colors for NPCs
 - **Custom bar textures** for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars
-- **Refined borders**: icons of Blizzard panels in the same rounded style as the action bars
+- **Refined borders**: rounded icons in the action bar style across Blizzard panels (rewards, professions, currency, equipment sets), colored by item quality, and a cleaner border for tooltips, pop-ups, Delves and Edit Mode windows
 - **Profiles**: the PanzaUI Edit Mode layout and the Platynator and BigWigs profiles, imported with one click
 
 ### Action Bars
@@ -59,6 +59,7 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 ### Tooltips
 - Class colored names, Mythic+ rating and item level of players
 - Item and spell IDs
+- Mount of players, with its icon
 
 ### Unit Frames
 - Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage
@@ -68,9 +69,11 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 ### Various
 - Cursor ring in your class color
 - Fast auto-loot and fast item delete
+- Current expansion filter set automatically in the Auction House
+- Destination shown while flying on a flight path
 - `/way` command to set map waypoints from coordinates
-- Rounded icons for Platynator nameplates
-- Refined style for BigWigs bars (Blizzard style), with the same texture as the Cooldown Manager bars
+- Rounded icons and a matching HD border for Platynator nameplates
+- Refined style for BigWigs bars (Blizzard style), Battle Res icon and queue timer
 - No more flashing micro menu alerts
 
 ![PanzaUI - Interface](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg)
