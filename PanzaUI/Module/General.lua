@@ -690,16 +690,18 @@ local function SetupSplash()
     if panel:IsShown() then ns.Defer(FitPanel) end
 end
 
--- Adventure Guide, Suggested Content: dark descriptions on the parchment,
--- checked when the tab shows and when its suggestions change.
-local function SetupSuggestions()
-    local panel = EncounterJournalSuggestFrame or (EncounterJournal and EncounterJournal.suggestFrame)
-    if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 4) end
-    local function Queue() ns.Defer(FitPanel) end
-    panel:HookScript("OnShow", Queue)
+-- Adventure Guide: dark texts on the parchment (Suggested Content,
+-- Tutorials), checked when the guide shows, the tab changes or the
+-- suggestions change.
+local function SetupAdventureGuide()
+    local guide = EncounterJournal
+    if not guide then return end
+    local function FitGuide() FitFrameOutlines(guide, 5) end
+    local function Queue() ns.Defer(FitGuide) end
+    guide:HookScript("OnShow", Queue)
+    ns.Hook("EJ_ContentTab_Select", Queue)
     ns.Hook("EJSuggestFrame_RefreshDisplay", Queue)
-    if panel:IsShown() then Queue() end
+    if guide:IsShown() then Queue() end
 end
 
 local function SetupSpellBook()
@@ -765,7 +767,7 @@ local function StyleBlizzardTexts()
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupSuggestions)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupAdventureGuide)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
