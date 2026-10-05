@@ -412,10 +412,15 @@ end
 
 -- Pinned player row: Blizzard keeps your row on the edge of the list when it
 -- is scrolled out of view, over the other rows; it stays hidden instead.
+local function HideLocalPlayerEntry(window)
+    local entry = window:GetLocalPlayerEntry()
+    if entry then entry:Hide() end
+end
+
 local function HidePinnedPlayer(window)
     if not window.GetLocalPlayerEntry then return end
-    window:GetLocalPlayerEntry():Hide()
-    ns.Hook(window, "ShowLocalPlayerEntry", function(self) self:GetLocalPlayerEntry():Hide() end)
+    HideLocalPlayerEntry(window)
+    ns.Hook(window, "ShowLocalPlayerEntry", HideLocalPlayerEntry)
 end
 
 -- Window texts (title, buttons).

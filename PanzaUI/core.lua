@@ -121,12 +121,35 @@ function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
 end
 
--- Permanently hides a non-secure frame and stops its events.
+-- Permanently hides a frame and stops its events. Protected frames shown
+-- again in combat (eg. the Totem frame) are made invisible, then hidden
+-- once combat ends.
+local pendingHide = {}
+local hideEvents = CreateFrame("Frame")
+hideEvents:SetScript("OnEvent", function(self)
+    self:UnregisterAllEvents()
+    for frame, alpha in pairs(pendingHide) do
+        frame:Hide()
+        frame:SetAlpha(alpha)
+    end
+    wipe(pendingHide)
+end)
+
+local function HideFrame(frame)
+    if InCombatLockdown() and frame:IsProtected() then
+        if not pendingHide[frame] then pendingHide[frame] = frame:GetAlpha() end
+        frame:SetAlpha(0)
+        hideEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+    else
+        frame:Hide()
+    end
+end
+
 function ns.Disable(frame)
     if not frame then return end
     frame:UnregisterAllEvents()
-    frame:Hide()
-    frame:HookScript("OnShow", frame.Hide)
+    HideFrame(frame)
+    frame:HookScript("OnShow", HideFrame)
 end
 
 -- hooksecurefunc, only when the function exists.
@@ -519,8 +542,10 @@ local function ShowPercent(bar)
     if bar.RightText then bar.RightText:Hide() end
 
     local unit = bar.unit or info.unit
-    if not unit then
+    local exists = unit and UnitExists(unit)
+    if not unit or (not IsSecret(exists) and not exists) then
         text:Hide()
+        if partCurve then FullText(text):Hide() end
         return
     end
     ns.SetPercentText(text, unit, info.power, bar.powerType)
