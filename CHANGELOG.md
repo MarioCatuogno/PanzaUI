@@ -1,6 +1,6 @@
 ## 2.2-RELEASE
 
-This is a smaller update with many bug fixes, performance improvements and style optimizations.
+This is a smaller update focused on a more consistent look (new borders for tooltips, Platynator and BigWigs), some new quality of life options and many fixes for errors in combat and in raids.
 
 ### 🛠️ Core
 
