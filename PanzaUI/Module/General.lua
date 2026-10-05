@@ -874,11 +874,16 @@ local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner"
     "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
 local BORDER_SCALE, TOOLTIP_INSET = 0.2, 3
 local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
-local DIALOG_OVERLAP = 4 -- framed dialogs: the border covers the background edge
+local DIALOG_OVERLAP = 2 -- framed dialogs: border outside the background (2 of its 4 units cover the edge)
 -- Dialogs with Blizzard's dialog frame (Border with edges and a Bg).
 local FRAMED_DIALOGS = { "LFGDungeonReadyDialog", "LFGDungeonReadyStatus", "LFDRoleCheckPopup",
     "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog",
     "ReadyCheckListenerFrame" }
+-- Edit Mode windows: styled once at login, without hooks (Edit Mode is
+-- sensitive to taint); Blizzard doesn't redraw their frame.
+local EDIT_MODE_BG = { 0.06, 0.05, 0.04, 0.85 } -- dark and see-through, like Blizzard's
+local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialog",
+    "EditModeUnsavedChangesDialog", "EditModeNewLayoutDialog", "EditModeImportLayoutDialog" }
 -- Tooltips styled once at login too: some (eg. the options and AddOns list
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
@@ -942,11 +947,27 @@ end
 
 -- Framed dialogs (eg. "A group has been formed"): edges hidden on every
 -- show, the border drawn around their background.
-local function StyleFramedDialog(dialog)
+-- flatBg: Blizzard's background (lines at the top and bottom edges) is
+-- replaced by a plain one.
+local flatBgs = {}
+
+local function StyleFramedDialog(dialog, flatBg)
     local frame = dialog and not dialog:IsForbidden() and (dialog.Border or dialog.NineSlice)
     if not frame or frame:IsForbidden() then return end
     HidePieces(frame)
-    if frame.Bg then PanelBorder(frame, frame.Bg, DIALOG_OVERLAP) else PanelBorder(frame, frame, 0) end
+    local bg = frame.Bg
+    if not bg then
+        PanelBorder(frame, frame, 0)
+        return
+    end
+    PanelBorder(frame, bg, DIALOG_OVERLAP)
+    if flatBg == true and not flatBgs[frame] then
+        local plain = frame:CreateTexture(nil, "BACKGROUND")
+        plain:SetColorTexture(unpack(EDIT_MODE_BG))
+        plain:SetAllPoints(bg)
+        bg:SetAlpha(0)
+        flatBgs[frame] = plain
+    end
 end
 
 local function StyleDialogs()
@@ -964,6 +985,7 @@ local function StyleDialogs()
             dialog:HookScript("OnShow", StyleFramedDialog)
         end
     end
+    for _, name in ipairs(EDIT_MODE_DIALOGS) do StyleFramedDialog(_G[name], true) end
 end
 
 --------------------------------------------------------------------------------
