@@ -6,10 +6,11 @@
 * Combat - Fixed a possible error on the Damage Meter windows without your own row
 * Core - Added a new border texture to the tooltips, with the Refined borders option
 * Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
+* Core - Fixed the Refined text on the dark header of the What's New panel, now shown without the outline
 * Tooltips - Added an option to show the mount of players
 * Unit Frames - Fixed an error in combat when Blizzard shows the hidden Totem frame or class resources
-* Unit Frames - Fixed an error on the percentage texts of missing units (eg. no target or no pet)
 * Unit Frames - Fixed an error in combat when the Player frame art changed with the class resources hidden
+* Unit Frames - Fixed an error on the percentage texts of missing units (eg. no target or no pet)
 * Various - Added a new border texture for Platynator nameplates
 * Various - Added an option to set the current expansion filter when opening the Auction House
 * Various - Added an option to show the destination while flying on a flight path [#123]

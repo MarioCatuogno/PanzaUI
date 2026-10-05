@@ -681,6 +681,15 @@ local function SetupArchaeology()
     if panel:IsShown() then Queue() end
 end
 
+-- What's New: dark header on the parchment, checked when the panel shows.
+local function SetupSplash()
+    local panel = SplashFrame
+    if not panel then return end
+    local function FitPanel() FitFrameOutlines(panel, 3) end
+    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
+    if panel:IsShown() then ns.Defer(FitPanel) end
+end
+
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -744,6 +753,7 @@ local function StyleBlizzardTexts()
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
+    if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
 --------------------------------------------------------------------------------
