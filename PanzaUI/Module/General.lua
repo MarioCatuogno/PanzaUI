@@ -651,12 +651,21 @@ local function FitOutline(region)
     if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end
 end
 
-local function FitFrameOutlines(frame, levels)
+-- Regions and children walked as returned, without temporary tables.
+local FitFrameOutlines
+
+local function FitRegions(...)
+    for i = 1, select("#", ...) do FitOutline((select(i, ...))) end
+end
+
+local function FitChildren(levels, ...)
+    for i = 1, select("#", ...) do FitFrameOutlines((select(i, ...)), levels) end
+end
+
+function FitFrameOutlines(frame, levels)
     if not frame then return end
-    for _, region in ipairs({ frame:GetRegions() }) do FitOutline(region) end
-    if levels > 0 then
-        for _, child in ipairs({ frame:GetChildren() }) do FitFrameOutlines(child, levels - 1) end
-    end
+    FitRegions(frame:GetRegions())
+    if levels > 0 then FitChildren(levels - 1, frame:GetChildren()) end
 end
 
 local function FitQuestInfo()
