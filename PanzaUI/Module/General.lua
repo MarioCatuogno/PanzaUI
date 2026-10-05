@@ -973,13 +973,31 @@ end
 
 -- Professions: concentration, gear slots, reagents and the Concentrate
 -- button (the round recipe icon keeps its own look).
+-- Profession slots (gear, reagents): their square slot art (background
+-- layers and normal texture) sits off the icon, so only the icon and its
+-- frame are kept.
+local function HideSlotArt(button, icon, frame, ...)
+    for i = 1, select("#", ...) do
+        local region = select(i, ...)
+        if region ~= icon and region ~= frame and region:GetObjectType() == "Texture" then
+            local layer = region:GetDrawLayer()
+            if layer == "BACKGROUND" or layer == "BORDER" then region:SetAlpha(0) end
+        end
+    end
+    local normal = button.GetNormalTexture and button:GetNormalTexture()
+    if normal then normal:SetAlpha(0) end
+end
+
 local function StyleProfessionButtons(form, levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
         if not button:IsForbidden() and button ~= form.OutputIcon then
             local icon = button.Icon or button.icon
             if icon and icon.AddMaskTexture and button.IconBorder then
-                StyleItemButton(button, icon)
+                if not qualityFrames[button] then
+                    local frame = StyleItemButton(button, icon)
+                    if frame then HideSlotArt(button, icon, frame, button:GetRegions()) end
+                end
             elseif levels > 0 then
                 StyleProfessionButtons(form, levels - 1, button:GetChildren())
             end
@@ -999,7 +1017,10 @@ local function SetupProfessionIcons()
             StyleProfessionButtons(form, 5, form:GetChildren()) -- reagents
             local choices = form.Details and form.Details.CraftingChoicesContainer
             local toggle = choices and choices.ConcentrateContainer and choices.ConcentrateContainer.ConcentrateToggleButton
-            if toggle and toggle.Icon then StyleItemButton(toggle, toggle.Icon) end
+            if toggle and toggle.Icon and not qualityFrames[toggle] then
+                local frame = StyleItemButton(toggle, toggle.Icon)
+                if frame then HideSlotArt(toggle, toggle.Icon, frame, toggle:GetRegions()) end
+            end
         end
     end
     local function Queue() ns.Defer(StylePage) end
