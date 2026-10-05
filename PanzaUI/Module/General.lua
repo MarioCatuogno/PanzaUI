@@ -887,6 +887,22 @@ local function SetupGearSetIcons()
     StyleRowIcons(pane and pane.ScrollBox, GearSetIcon)
 end
 
+-- Delves: the "Chance to receive" rewards, checked when the picker shows
+-- and when its rewards change (tier picked).
+local function SetupDelveRewards()
+    local picker = DelvesDifficultyPickerFrame
+    if not picker then return end
+    local function Style() StyleRewards(picker, 4) end
+    local function Queue() ns.Defer(Style) end
+    picker:HookScript("OnShow", Queue)
+    local rewards = picker.DelveRewardsContainerFrame
+    if rewards then
+        ns.Hook(rewards, "SetRewards", Queue)
+        rewards:HookScript("OnShow", Queue)
+    end
+    if picker:IsShown() then Queue() end
+end
+
 -- Called at login and when the Group Finder loads: each hook is set once.
 local questHooked, lfgHooked
 local function SetupRewardIcons()
@@ -1004,6 +1020,16 @@ local function StyleFramedDialog(dialog, flatBg)
     end
 end
 
+-- Framed dialogs of load-on-demand addons, styled when they load.
+local LOD_DIALOGS = { Blizzard_DelvesDifficultyPicker = "DelvesDifficultyPickerFrame" }
+
+local function HookFramedDialog(name)
+    local dialog = _G[name]
+    if not dialog then return end
+    StyleFramedDialog(dialog)
+    dialog:HookScript("OnShow", StyleFramedDialog)
+end
+
 local function StyleDialogs()
     for i = 1, STATICPOPUP_NUMDIALOGS or 4 do
         local dialog = _G["StaticPopup" .. i]
@@ -1012,12 +1038,9 @@ local function StyleDialogs()
             dialog:HookScript("OnShow", StyleDialogBorder)
         end
     end
-    for _, name in ipairs(FRAMED_DIALOGS) do
-        local dialog = _G[name]
-        if dialog then
-            StyleFramedDialog(dialog)
-            dialog:HookScript("OnShow", StyleFramedDialog)
-        end
+    for _, name in ipairs(FRAMED_DIALOGS) do HookFramedDialog(name) end
+    for addon, name in pairs(LOD_DIALOGS) do
+        EventUtil.ContinueOnAddOnLoaded(addon, function() HookFramedDialog(name) end)
     end
     for _, name in ipairs(EDIT_MODE_DIALOGS) do StyleFramedDialog(_G[name], true) end
 end
@@ -1032,6 +1055,7 @@ function GEN:OnEnable()
         SetupRewardIcons()
         if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
         SetupGearSetIcons()
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
