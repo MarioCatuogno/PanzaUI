@@ -719,6 +719,16 @@ local function SetupAdventureGuide()
     if guide:IsShown() then Queue() end
 end
 
+-- PvP: dark texts of the New Season parchment (Rated tab), checked when it
+-- shows (the whole PvP panel if the parchment isn't found).
+local function SetupPvP()
+    local panel = (PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame
+    if not panel then return end
+    local function FitPanel() FitFrameOutlines(panel, 4) end
+    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
+    if panel:IsShown() then ns.Defer(FitPanel) end
+end
+
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -783,6 +793,7 @@ local function StyleBlizzardTexts()
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupAdventureGuide)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_PVPUI", SetupPvP)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 

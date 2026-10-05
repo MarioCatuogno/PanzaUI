@@ -9,7 +9,7 @@ This is a smaller update focused on a more consistent look (new borders for tool
 * Core - Added a new border texture to the tooltips and pop-up dialogs, with the Refined borders option
 * Core - Added the action bar style to the reward icons of quests, Dungeon Finder and Raid Finder, with the Refined borders option
 * Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
-* Core - Fixed the Refined text on the dark texts of the Adventure Guide (Suggested Content, Tutorials) and the What's New panel
+* Core - Fixed the Refined text on the dark texts of the Adventure Guide (Suggested Content, Tutorials), the PvP New Season panel and the What's New panel
 * Tooltips - Added an option to show the mount of players
 * Unit Frames - Fixed an error in combat when Blizzard shows the hidden Totem frame or class resources
 * Unit Frames - Fixed an error in combat when the Player frame art changed with the class resources hidden
