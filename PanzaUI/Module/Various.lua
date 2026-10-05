@@ -23,7 +23,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "platynatorStyle", label = "Platynator: Refined style", reload = true,
           tooltip = "Polish the look of the Platynator nameplates." },
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
-          tooltip = "Polish the look of the BigWigs bars and battle res icon." },
+          tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
         { key = "ahExpansion", label = "Auction House: current expansion",
           tooltip = "Set the current expansion filter when opening the Auction House." },
@@ -530,6 +530,25 @@ local function StyleBattleRes()
     ring:SetShown(frame.icon:GetTexture() ~= nil)
 end
 
+-- Queue timer (under the "group formed" dialog): Interface bars texture
+-- (General > Textures) and the PanzaUI border instead of the old cast bar
+-- frame. Styled through BigWigs' own callback, when it is created.
+local QUEUE_BORDER_OUTSET = 3 -- room for the border corners around the thin bar
+local CAST_BORDER = 130874    -- Interface\CastingBar\UI-CastingBar-Border
+
+local function StyleQueueTimer(_, bar, name)
+    if name ~= "QueueTimer" or not bar or bar:IsForbidden() then return end
+    local path = ns.InterfaceBarTexture()
+    if path then bar:SetStatusBarTexture(path) end
+    for _, region in ipairs({ bar:GetRegions() }) do
+        local file = region:GetObjectType() == "Texture" and region:GetTexture()
+        if file == CAST_BORDER or (type(file) == "string" and file:find("CastingBar%-Border")) then
+            region:SetAlpha(0)
+        end
+    end
+    ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
+end
+
 local function SetupBigWigs()
     StyleBigWigsBars()
     StyleBattleRes()
@@ -545,7 +564,13 @@ end
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
-    if self.db.bigwigsStyle then EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs) end
+    if self.db.bigwigsStyle then
+        EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs)
+        -- The queue timer is part of BigWigs itself, loaded with the game.
+        if BigWigsLoader and BigWigsLoader.RegisterMessage then
+            BigWigsLoader.RegisterMessage(ns, "BigWigs_FrameCreated", StyleQueueTimer)
+        end
+    end
     SetFastLoot(self.db.fastLoot)
     SetAuctionFilter(self.db.ahExpansion)
     ns.Hook("TakeTaxiNode", OnTakeTaxiNode)

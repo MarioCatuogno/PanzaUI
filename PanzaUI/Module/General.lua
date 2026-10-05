@@ -271,6 +271,12 @@ function ns.CooldownBarTexture()
     return TexturePath("texCdmPRD")
 end
 
+-- Interface bars texture as a file (nil for Default or a Blizzard atlas).
+function ns.InterfaceBarTexture()
+    if ATLASES[GEN.db.texInterface] then return end
+    return TexturePath("texInterface")
+end
+
 -- Sets a bar texture, keeping Blizzard's draw layer.
 local function SetTexture(bar, path)
     if not (bar and path and bar.SetStatusBarTexture) or bar:IsForbidden() then return end
@@ -807,6 +813,11 @@ local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner"
     "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
 local BORDER_SCALE, TOOLTIP_INSET = 0.2, 3
 local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
+local DIALOG_OVERLAP = 4 -- framed dialogs: the border covers the background edge
+-- Dialogs with Blizzard's dialog frame (Border with edges and a Bg).
+local FRAMED_DIALOGS = { "LFGDungeonReadyDialog", "LFGDungeonReadyStatus", "LFDRoleCheckPopup",
+    "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog",
+    "ReadyCheckListenerFrame" }
 -- Tooltips styled once at login too: some (eg. the options and AddOns list
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
@@ -822,7 +833,7 @@ end
 
 -- Border on `owner`, around `anchor` pushed out by `outset` (screen units).
 local function PanelBorder(owner, anchor, outset)
-    if panelBorders[owner] then return end
+    if panelBorders[owner] then return panelBorders[owner] end
     local border = owner:CreateTexture(nil, "BORDER", nil, 7)
     local m = ns.BORDER.margin
     local pad = ns.BORDER.padding + outset / BORDER_SCALE
@@ -833,7 +844,9 @@ local function PanelBorder(owner, anchor, outset)
     border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
     border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
     panelBorders[owner] = border
+    return border
 end
+ns.PanelBorder = PanelBorder
 
 local function StyleTooltipBorder(tooltip)
     local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
@@ -866,12 +879,28 @@ local function StyleDialogBorder(dialog)
     PanelBorder(dialog, frame, 0)
 end
 
+-- Framed dialogs (eg. "A group has been formed"): edges hidden on every
+-- show, the border drawn around their background.
+local function StyleFramedDialog(dialog)
+    local frame = dialog and not dialog:IsForbidden() and (dialog.Border or dialog.NineSlice)
+    if not frame or frame:IsForbidden() then return end
+    HidePieces(frame)
+    if frame.Bg then PanelBorder(frame, frame.Bg, DIALOG_OVERLAP) else PanelBorder(frame, frame, 0) end
+end
+
 local function StyleDialogs()
     for i = 1, STATICPOPUP_NUMDIALOGS or 4 do
         local dialog = _G["StaticPopup" .. i]
         if dialog then
             StyleDialogBorder(dialog)
             dialog:HookScript("OnShow", StyleDialogBorder)
+        end
+    end
+    for _, name in ipairs(FRAMED_DIALOGS) do
+        local dialog = _G[name]
+        if dialog then
+            StyleFramedDialog(dialog)
+            dialog:HookScript("OnShow", StyleFramedDialog)
         end
     end
 end

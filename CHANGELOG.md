@@ -17,6 +17,7 @@ This is a smaller update focused on a more consistent look (new borders for tool
 * Various - Added an option to set the current expansion filter when opening the Auction House
 * Various - Added an option to show the destination while flying on a flight path [#123]
 * Various - Added the refined style to the BigWigs Battle Res icon
+* Various - Added the refined style to the BigWigs queue timer, with the Interface bars texture
 
 ### 👤 Profiles
 
