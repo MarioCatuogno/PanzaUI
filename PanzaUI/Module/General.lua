@@ -806,6 +806,56 @@ local function StyleProfessionIcons()
     end
 end
 
+-- Reward icons (quest details and log, Dungeon and Raid Finder): reward
+-- buttons (icon plus name frame) found in their panel, styled once.
+local styledRewards = setmetatable({}, { __mode = "k" })
+
+local function RewardIcon(button)
+    local name = button:GetName()
+    return button.Icon or button.IconTexture or (name and _G[name .. "IconTexture"])
+end
+
+local function StyleRewardButtons(levels, ...)
+    for i = 1, select("#", ...) do
+        local button = select(i, ...)
+        if not styledRewards[button] and not button:IsForbidden() then
+            local name = button:GetName()
+            local icon = RewardIcon(button)
+            if icon and icon.AddMaskTexture and (button.NameFrame or (name and _G[name .. "NameFrame"])) then
+                styledRewards[button] = true
+                -- The square quality border doesn't fit the rounded frame.
+                if button.IconBorder then button.IconBorder:SetAlpha(0) end
+                ns.StyleIcon(icon, button)
+            elseif levels > 0 then
+                StyleRewardButtons(levels - 1, button:GetChildren())
+            end
+        end
+    end
+end
+
+local function StyleRewards(frame, levels)
+    if frame and not frame:IsForbidden() then StyleRewardButtons(levels, frame:GetChildren()) end
+end
+
+local function StyleQuestRewards()
+    StyleRewards(QuestInfoRewardsFrame, 2)
+    StyleRewards(MapQuestInfoRewardsFrame, 2)
+end
+
+-- Called at login and when the Group Finder loads: each hook is set once.
+local questHooked, lfgHooked
+local function SetupRewardIcons()
+    if not questHooked then
+        questHooked = true
+        ns.Hook("QuestInfo_Display", function() ns.Defer(StyleQuestRewards) end)
+    end
+    if lfgHooked or not LFGRewardsFrame_UpdateFrame then return end
+    lfgHooked = true
+    hooksecurefunc("LFGRewardsFrame_UpdateFrame", function(parent)
+        if parent then ns.Defer(function() StyleRewards(parent, 1) end) end
+    end)
+end
+
 -- PanzaUI border instead of Blizzard's frame, scaled down to the icon frame
 -- size. Tooltips: the background is inset to stay inside the corners; both
 -- are set again when Blizzard changes the tooltip style.
@@ -912,6 +962,8 @@ function GEN:OnEnable()
     if ns.textStyle then StyleBlizzardTexts() end
     if self.db.refinedBorders then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
+        SetupRewardIcons()
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
         StyleDialogs()
