@@ -800,44 +800,80 @@ local function StyleProfessionIcons()
     end
 end
 
--- Tooltips: the PanzaUI border instead of Blizzard's frame, scaled down to
--- the icon frame size. The background is inset to stay inside the corners;
--- both are set again when Blizzard changes the tooltip style.
+-- PanzaUI border instead of Blizzard's frame, scaled down to the icon frame
+-- size. Tooltips: the background is inset to stay inside the corners; both
+-- are set again when Blizzard changes the tooltip style.
 local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
     "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-local TOOLTIP_SCALE, TOOLTIP_INSET = 0.2, 3
+local BORDER_SCALE, TOOLTIP_INSET = 0.2, 3
+local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
 -- Tooltips styled once at login too: some (eg. the options and AddOns list
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
     "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip" }
-local tooltipBorders = {}
+local panelBorders = {}
 
-local function TooltipBorder(nineSlice)
-    local border = nineSlice:CreateTexture(nil, "BORDER", nil, 7)
-    local m, pad = ns.BORDER.margin, ns.BORDER.padding
+local function HidePieces(nineSlice)
+    for _, key in ipairs(NINESLICE_PIECES) do
+        local piece = nineSlice[key]
+        if piece then piece:SetAlpha(0) end
+    end
+end
+
+-- Border on `owner`, around `anchor` pushed out by `outset` (screen units).
+local function PanelBorder(owner, anchor, outset)
+    if panelBorders[owner] then return end
+    local border = owner:CreateTexture(nil, "BORDER", nil, 7)
+    local m = ns.BORDER.margin
+    local pad = ns.BORDER.padding + outset / BORDER_SCALE
     border:SetTexture(ns.BORDER.file)
     border:SetTextureSliceMargins(m, m, m, m)
     border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
-    border:SetScale(TOOLTIP_SCALE)
-    border:SetPoint("TOPLEFT", -pad, pad)
-    border:SetPoint("BOTTOMRIGHT", pad, -pad)
-    tooltipBorders[nineSlice] = border
+    border:SetScale(BORDER_SCALE)
+    border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
+    border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
+    panelBorders[owner] = border
 end
 
 local function StyleTooltipBorder(tooltip)
     local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
     if not nineSlice or nineSlice:IsForbidden() then return end
-    for _, key in ipairs(NINESLICE_PIECES) do
-        local piece = nineSlice[key]
-        if piece then piece:SetAlpha(0) end
-    end
+    HidePieces(nineSlice)
     local center = nineSlice.Center
     if center then
         center:ClearAllPoints()
         center:SetPoint("TOPLEFT", TOOLTIP_INSET, -TOOLTIP_INSET)
         center:SetPoint("BOTTOMRIGHT", -TOOLTIP_INSET, TOOLTIP_INSET)
     end
-    if not tooltipBorders[nineSlice] then TooltipBorder(nineSlice) end
+    PanelBorder(nineSlice, nineSlice, 0)
+end
+
+-- Dialogs (eg. "Do you want to destroy...?"): Blizzard's frame (BG, drawn
+-- as whole textures) hidden on every show, replaced by a plain background
+-- and the border.
+local dialogBgs = {}
+
+local function StyleDialogBorder(dialog)
+    local frame = dialog and not dialog:IsForbidden() and dialog.BG
+    if not frame or frame:IsForbidden() then return end
+    frame:SetAlpha(0)
+    if dialogBgs[dialog] then return end
+    local bg = dialog:CreateTexture(nil, "BACKGROUND")
+    bg:SetColorTexture(unpack(DIALOG_BG))
+    bg:SetPoint("TOPLEFT", frame, "TOPLEFT", TOOLTIP_INSET, -TOOLTIP_INSET)
+    bg:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -TOOLTIP_INSET, TOOLTIP_INSET)
+    dialogBgs[dialog] = bg
+    PanelBorder(dialog, frame, 0)
+end
+
+local function StyleDialogs()
+    for i = 1, STATICPOPUP_NUMDIALOGS or 4 do
+        local dialog = _G["StaticPopup" .. i]
+        if dialog then
+            StyleDialogBorder(dialog)
+            dialog:HookScript("OnShow", StyleDialogBorder)
+        end
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -849,6 +885,7 @@ function GEN:OnEnable()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
+        StyleDialogs()
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
     local group, interface = TexturePath("texGroup"), TexturePath("texInterface")

@@ -6,7 +6,7 @@ This is a smaller update focused on a more consistent look (new borders for tool
 
 * Chat - Fixed the Hide clutter option on chat windows opened later (eg. whispers)
 * Combat - Fixed a possible error on the Damage Meter windows without your own row
-* Core - Added a new border texture to the tooltips, with the Refined borders option
+* Core - Added a new border texture to the tooltips and pop-up dialogs, with the Refined borders option
 * Core - Fixed the Edit Mode import on WoW: Forever, now saved with the interface style of the game
 * Core - Fixed the Refined text on the dark texts of the Adventure Guide (Suggested Content, Tutorials) and the What's New panel
 * Tooltips - Added an option to show the mount of players
