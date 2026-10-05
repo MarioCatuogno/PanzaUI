@@ -690,6 +690,18 @@ local function SetupSplash()
     if panel:IsShown() then ns.Defer(FitPanel) end
 end
 
+-- Adventure Guide, Suggested Content: dark descriptions on the parchment,
+-- checked when the tab shows and when its suggestions change.
+local function SetupSuggestions()
+    local panel = EncounterJournalSuggestFrame or (EncounterJournal and EncounterJournal.suggestFrame)
+    if not panel then return end
+    local function FitPanel() FitFrameOutlines(panel, 4) end
+    local function Queue() ns.Defer(FitPanel) end
+    panel:HookScript("OnShow", Queue)
+    ns.Hook("EJSuggestFrame_RefreshDisplay", Queue)
+    if panel:IsShown() then Queue() end
+end
+
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -753,6 +765,7 @@ local function StyleBlizzardTexts()
     ns.Hook("QuestInfo_Display", function() ns.Defer(FitQuestInfo) end)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PlayerSpells", SetupSpellBook)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupSuggestions)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
