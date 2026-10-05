@@ -1063,7 +1063,8 @@ local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialo
 -- Tooltips styled once at login too: some (eg. the options and AddOns list
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
-    "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip" }
+    "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip",
+    "AutoCompleteBox" } -- name suggestions (mail, whispers, invites)
 local panelBorders = {}
 
 local function HidePieces(nineSlice)
