@@ -260,6 +260,10 @@ for _, fmt in ipairs({ ERR_LOOT_SPEC_CHANGED_S, GUILD_MOTD_TEMPLATE }) do
     local prefix = type(fmt) == "string" and fmt:match("^(.-)%%s")
     if prefix and prefix ~= "" then CLUTTER[#CLUTTER + 1] = prefix end
 end
+-- Edit Mode "layout copied to clipboard" notice: the text after the name.
+local CLIPBOARD = type(EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE) == "string"
+    and EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE:match("%%s([^%%]+)$") or "copied to clipboard"
+CLUTTER[#CLUTTER + 1] = CLIPBOARD
 
 local function IsClutter(text)
     if type(text) ~= "string" or IsSecret(text) then return false end
@@ -360,10 +364,8 @@ local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
 local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
 
--- Edit Mode "layout copied to clipboard" notice, shown in the middle of the
--- screen (errors frame or action status), removed as soon as it is added.
-local CLIPBOARD = KeyText(EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE) or "copied to clipboard"
-
+-- The same notice in the middle of the screen (errors frame or action
+-- status), removed as soon as it is added.
 local function IsClipboardNotice(text)
     return Hiding(text) and text:find(CLIPBOARD, 1, true) ~= nil
 end
