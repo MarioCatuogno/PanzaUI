@@ -1115,12 +1115,27 @@ function GEN:OnEnable()
     end
 
     -- Achievement window and criteria bars (children walked as varargs).
+    -- Their texts sit a bit high on the flat texture: moved down once.
     if interface then
+        local ACHIEVEMENT_TEXT_OFFSET = 2
+        local loweredTexts = {}
+        local function LowerText(region)
+            if loweredTexts[region] or region:GetObjectType() ~= "FontString" then return end
+            loweredTexts[region] = true
+            for i = 1, region:GetNumPoints() do
+                local point, relative, relativePoint, x, y = region:GetPoint(i)
+                region:SetPoint(point, relative, relativePoint, x, (y or 0) - ACHIEVEMENT_TEXT_OFFSET)
+            end
+        end
+        local function TrackAchievementBar(bar)
+            TrackTexture(bar, interface, 2)
+            ns.WalkRegions(bar, 0, LowerText)
+        end
         local Scan
         local function ScanChildren(...)
             for i = 1, select("#", ...) do
                 local child = select(i, ...)
-                if child:IsObjectType("StatusBar") then TrackTexture(child, interface, 2) end
+                if child:IsObjectType("StatusBar") then TrackAchievementBar(child) end
                 Scan(child)
             end
         end
@@ -1132,7 +1147,7 @@ function GEN:OnEnable()
                 if not bars then return end
                 for _, bar in pairs(bars) do
                     if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
-                        TrackTexture(bar, interface, 2)
+                        TrackAchievementBar(bar)
                     end
                 end
             end)
