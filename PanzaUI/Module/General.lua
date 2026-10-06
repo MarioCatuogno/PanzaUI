@@ -846,6 +846,22 @@ local function SetupGearSetIcons()
     ns.StyleScrollIcons(pane and pane.ScrollBox, GearSetIcon)
 end
 
+-- Collections, Sets: the item icons of the selected set, in the item quality
+-- color, styled each time a set is shown.
+-- Blizzard sets the alpha of the square quality border on every display
+-- (collected or not), so it is hidden again each time.
+local function StyleSetItem(item)
+    ns.StyleItemButton(item, item.Icon, true) -- square slot art hidden
+    if item.IconBorder then item.IconBorder:SetAlpha(0) end
+end
+
+local function SetupSetIcons()
+    local sets = WardrobeCollectionFrame and WardrobeCollectionFrame.SetsCollectionFrame
+    local details = sets and sets.DetailsFrame
+    if not details then return end
+    ns.Hook(sets, "DisplaySet", function() ns.ForEachActive(details.itemFramesPool, StyleSetItem) end)
+end
+
 -- Delves Companion abilities: the icon of each ability button, checked when
 -- the list shows and when its page or role changes.
 local styledAbilities = setmetatable({}, { __mode = "k" })
@@ -1054,6 +1070,7 @@ function GEN:OnEnable()
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", SetupSetIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
