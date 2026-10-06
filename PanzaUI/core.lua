@@ -359,16 +359,20 @@ end
 
 --------------------------------------------------------------------------------
 -- Scrolling lists (eg. Currency tab, Equipment Manager): the icon look on
--- each row as Blizzard creates it; GetIcon(row) returns icon, parent.
+-- each row as Blizzard creates it; GetIcon(row) returns icon, parent and
+-- optionally an overlay drawn over the icon (masked to the same shape).
 --------------------------------------------------------------------------------
 local styledRowIcons = setmetatable({}, { __mode = "k" })
 
 function ns.StyleScrollIcons(box, GetIcon)
     if not (box and ScrollUtil) then return end
     ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(function(row)
-        local icon, parent = GetIcon(row)
+        local icon, parent, overlay = GetIcon(row)
         if not icon or styledRowIcons[icon] then return end
-        if ns.StyleIcon(icon, parent) then styledRowIcons[icon] = true end
+        local frame, mask = ns.StyleIcon(icon, parent)
+        if not frame then return end
+        styledRowIcons[icon] = true
+        if overlay and overlay.AddMaskTexture then overlay:AddMaskTexture(mask) end
     end), ns, true)
 end
 
