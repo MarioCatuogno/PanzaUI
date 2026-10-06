@@ -27,7 +27,8 @@ local Chat = ns:RegisterModule("Chat", {
           bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
                       "Online and offline notices", "Channel and group join and leave notices",
                       "Not in a group warnings", "Recent Allies icon by player names",
-                      "Group settings and leader changes", "Spells learned on specialization changes" } },
+                      "Group settings and leader changes", "Spells learned on specialization changes",
+                      "Edit Mode layout copied to clipboard" } },
     },
 })
 
@@ -358,6 +359,28 @@ end
 local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES) end
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
 local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
+
+-- Edit Mode "layout copied to clipboard" notice, shown in the middle of the
+-- screen (errors frame or action status), removed as soon as it is added.
+local CLIPBOARD = KeyText(EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE) or "copied to clipboard"
+
+local function IsClipboardNotice(text)
+    return Hiding(text) and text:find(CLIPBOARD, 1, true) ~= nil
+end
+
+local function RemoveClipboardNotice(frame, text)
+    if not IsClipboardNotice(text) then return end
+    if frame.RemoveMessagesByPredicate then
+        pcall(frame.RemoveMessagesByPredicate, frame, IsClipboardNotice)
+    elseif frame.Hide then
+        frame:Hide()
+    end
+end
+
+if UIErrorsFrame then hooksecurefunc(UIErrorsFrame, "AddMessage", RemoveClipboardNotice) end
+if ActionStatus and ActionStatus.DisplayMessage then
+    hooksecurefunc(ActionStatus, "DisplayMessage", RemoveClipboardNotice)
+end
 
 if AddFilter then
     AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)

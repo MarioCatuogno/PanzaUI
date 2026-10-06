@@ -2,6 +2,7 @@
 
 ### 🛠️ Core
 
+* Chat - Hidden the Edit Mode layout copied to clipboard notice, with the Hide clutter option
 * Combat - Fixed the Buffs & Debuffs Refined style on the loss of control alert icon (eg. Rooted), now in the action bar style
 * Core - Changed the ready check command from /rc to /rd
 * Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
