@@ -90,7 +90,7 @@ Handy chat commands:
 |---|---|
 | `/pui` | Opens the PanzaUI options |
 | `/rl` | Reloads the UI |
-| `/rc` | Starts a ready check |
+| `/rd` | Starts a ready check |
 | `/pl` | Starts a 10-second pull timer |
 
 ## 🎨 The full PanzaUI look

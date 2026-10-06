@@ -43,7 +43,7 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 
 Want the action bars set up like mine? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 
-Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rc` (ready check), `/pl` (10-second pull timer).
+Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rd` (ready check), `/pl` (10-second pull timer).
 
 ## Support
 

@@ -1153,12 +1153,12 @@ SlashCmdList.PANZAUI = function(msg)
     end
 end
 
--- Shortcuts: /rl Reload UI, /rc ready check, /pl pull timer.
+-- Shortcuts: /rl Reload UI, /rd ready check, /pl pull timer.
 SLASH_PANZAUI_RL1 = "/rl"
 SlashCmdList.PANZAUI_RL = ReloadUI
 
-SLASH_PANZAUI_RC1 = "/rc"
-SlashCmdList.PANZAUI_RC = function() DoReadyCheck() end
+SLASH_PANZAUI_RD1 = "/rd"
+SlashCmdList.PANZAUI_RD = function() DoReadyCheck() end
 
 SLASH_PANZAUI_PL1 = "/pl"
 SlashCmdList.PANZAUI_PL = function() C_PartyInfo.DoCountdown(10) end
