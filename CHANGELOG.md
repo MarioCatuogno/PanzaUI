@@ -5,6 +5,7 @@
 * Core - Changed the ready check command from /rc to /rd
 * Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
 * Core - Fixed the Refined borders option on the Delves Companion panel and abilities, now with the new border texture and the action bar style on the icons
+* Core - Fixed the Refined text on the zone names shown when entering an area, now with the same outline as the rest of the UI
 * Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
 * Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon

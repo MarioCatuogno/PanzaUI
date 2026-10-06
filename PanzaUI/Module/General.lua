@@ -755,9 +755,14 @@ local function FitTextColor(text, r, g, b)
     end
 end
 
+-- Zone texts shown when entering an area: thick outlined fonts kept by the
+-- shared fonts pass, given the shared style on their own texts.
+local ZONE_TEXTS = { "ZoneTextString", "SubZoneTextString", "PVPInfoTextString", "PVPArenaTextString" }
+
 local function StyleBlizzardTexts()
     if not GetFonts then return end
     StyleSharedFonts()
+    for _, name in ipairs(ZONE_TEXTS) do ns.StyleFont(_G[name]) end
     local fontString = UIParent:CreateFontString()
     hooksecurefunc(getmetatable(fontString).__index, "SetTextColor", FitTextColor)
     local loader = CreateFrame("Frame")
