@@ -21,7 +21,8 @@ local CB = ns:RegisterModule("PersonalResource", {
     options = {
         { header = "Buffs & Debuffs" },
         { key = "auraStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the buff and debuff icons." },
+          tooltip = "Polish the look of the buff and debuff icons.",
+          bullets = { "Loss of control alert icon too (eg. Rooted, Stunned)" } },
         { key = "auraIconZoom", label = "Icon zoom",
           tooltip = "Crop the edges of the buff and debuff icons.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
@@ -81,6 +82,14 @@ end
 
 local function StyleAuraButton(button, icon)
     ns.StyleIcon(icon, button)
+end
+
+-- Loss of control alert (eg. "Rooted"): its icon and cooldown swipe.
+local function StyleLossOfControl()
+    local frame = LossOfControlFrame
+    if not (frame and frame.Icon) then return end
+    ns.StyleIcon(frame.Icon, frame)
+    ns.RoundSwipe(frame.Cooldown)
 end
 
 local function StyleAuraText(button)
@@ -437,6 +446,7 @@ function CB:OnEnable()
         if ns.textStyle then ForEachAuraButton(StyleAuraText) end
         ForEachAuraButton(ZoomAuraIcon)
     end)
+    if db.auraStyle then StyleLossOfControl() end
     if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
     if ns.textStyle then ns.ForEachCastBar(StyleCastText) end
     if db.prdStyle or ns.textStyle then
