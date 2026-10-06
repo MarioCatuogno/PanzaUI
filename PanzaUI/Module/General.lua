@@ -846,6 +846,34 @@ local function SetupGearSetIcons()
     ns.StyleScrollIcons(pane and pane.ScrollBox, GearSetIcon)
 end
 
+-- Delves Companion abilities: the icon of each ability button, checked when
+-- the list shows and when its page or role changes.
+local styledAbilities = setmetatable({}, { __mode = "k" })
+
+local function StyleAbilityButtons(levels, ...)
+    for i = 1, select("#", ...) do
+        local button = select(i, ...)
+        if not button:IsForbidden() and not styledAbilities[button] then
+            local icon = button.Icon
+            if icon and icon.AddMaskTexture and button.Name then
+                styledAbilities[button] = true
+                ns.StyleIcon(icon, button)
+            elseif levels > 0 then
+                StyleAbilityButtons(levels - 1, button:GetChildren())
+            end
+        end
+    end
+end
+
+local function SetupCompanionAbilities()
+    local list = DelvesCompanionAbilityListFrame
+    if not list then return end
+    local Queue = ns.OnShowDeferred(list, function() StyleAbilityButtons(3, list:GetChildren()) end)
+    for _, method in ipairs({ "UpdatePaginatedButtonDisplay", "RefreshPaginatedButtons", "UpdateDisplay" }) do
+        ns.Hook(list, method, Queue)
+    end
+end
+
 -- Delves: the "Chance to receive" rewards, checked when the picker shows
 -- and when its rewards change (tier picked).
 local function SetupDelveRewards()
@@ -1025,6 +1053,7 @@ function GEN:OnEnable()
         if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
