@@ -556,10 +556,12 @@ function ns.StyleAllFonts(frame, levels)
 end
 
 --------------------------------------------------------------------------------
--- Calls func for the Player, Target, Focus and Boss cast bars.
+-- Calls func for the Player, Target, Focus and Boss cast bars, and the
+-- overlay one (eg. "Activating Specialization" over the talents panel).
 --------------------------------------------------------------------------------
 function ns.ForEachCastBar(func)
     if PlayerCastingBarFrame then func(PlayerCastingBarFrame) end
+    if OverlayPlayerCastingBarFrame then func(OverlayPlayerCastingBarFrame) end
     if TargetFrame and TargetFrame.spellbar then func(TargetFrame.spellbar) end
     if FocusFrame and FocusFrame.spellbar then func(FocusFrame.spellbar) end
     for i = 1, 5 do
