@@ -9,6 +9,7 @@
 * Core - Optimized the scan of panels and fonts, now done without temporary tables
 * Quest & Minimap - Added a Refined style option for the Quest Tracker, without the All Objectives header and with the quest count on the Quests header
 * Quest & Minimap - Fixed the clock text size with the minimap Refined style, now the same as the zone name
+* Tooltips - Added the faction of players in red (Horde) or blue (Alliance) to the Refined style
 * Various - Added an option to insert the Mythic+ keystone automatically when opening the Font of Power
 
 ### 👤 Profiles
