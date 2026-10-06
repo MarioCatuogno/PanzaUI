@@ -874,6 +874,20 @@ local function SetupSetIcons()
     end
 end
 
+-- Collections, Mounts: the icon of each mount row and of the selected mount.
+local function MountIcon(row)
+    return row.icon or row.Icon, row
+end
+
+local function SetupMountIcons()
+    local journal = MountJournal
+    if not journal then return end
+    ns.StyleScrollIcons(journal.ScrollBox, MountIcon)
+    local info = journal.MountDisplay and journal.MountDisplay.InfoButton
+    local icon = info and (info.Icon or MountJournalIcon)
+    if icon then ns.StyleIcon(icon, info) end
+end
+
 -- Delves Companion abilities: the icon of each ability button, checked when
 -- the list shows and when its page or role changes.
 local styledAbilities = setmetatable({}, { __mode = "k" })
@@ -1082,7 +1096,10 @@ function GEN:OnEnable()
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", SetupSetIcons)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", function()
+            SetupSetIcons()
+            SetupMountIcons()
+        end)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)

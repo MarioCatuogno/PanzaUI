@@ -3,7 +3,7 @@
 ### 🛠️ Core
 
 * Combat - Fixed the Buffs & Debuffs Refined style on the loss of control alert icon (eg. Rooted), now in the action bar style
-* Core - Added the action bar style to the icons of the Collections sets and their items (in the item quality color), with the Refined borders option
+* Core - Added the action bar style to the icons of the Collections mounts, sets and set items (in the item quality color), with the Refined borders option
 * Core - Changed the ready check command from /rc to /rd
 * Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
 * Core - Fixed the Refined borders option on the Delves Companion panel and abilities, now with the new border texture and the action bar style on the icons
