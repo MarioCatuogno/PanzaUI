@@ -1117,7 +1117,7 @@ function GEN:OnEnable()
     -- Achievement window and criteria bars (children walked as varargs).
     -- Their texts sit a bit high on the flat texture: moved down once.
     if interface then
-        local ACHIEVEMENT_TEXT_OFFSET = 2
+        local ACHIEVEMENT_TEXT_OFFSET = 1
         local loweredTexts = {}
         local function LowerText(region)
             if loweredTexts[region] or region:GetObjectType() ~= "FontString" then return end
