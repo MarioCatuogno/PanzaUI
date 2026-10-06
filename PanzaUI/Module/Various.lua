@@ -571,6 +571,26 @@ local function StyleQueueTimer(_, bar, name)
     ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
 end
 
+-- Start timer (eg. battleground and arena gates, shown by Blizzard next to
+-- BigWigs' timers): its bar frame hidden, the same border as the queue timer.
+-- Timers are created by the tracker's events, so they are checked after each one.
+local styledTimers = {}
+
+local function StyleStartTimers()
+    local timers = TimerTracker.timerList
+    if not timers then return end
+    for _, timer in ipairs(timers) do
+        local bar = timer.bar
+        if bar and not styledTimers[bar] then
+            styledTimers[bar] = true
+            local name = bar:GetName()
+            local frame = name and _G[name .. "Border"]
+            if frame then frame:SetAlpha(0) end
+            ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
+        end
+    end
+end
+
 local function SetupBigWigs()
     StyleBigWigsBars()
     StyleBattleRes()
@@ -592,6 +612,7 @@ function Misc:OnEnable()
         if BigWigsLoader and BigWigsLoader.RegisterMessage then
             BigWigsLoader.RegisterMessage(ns, "BigWigs_FrameCreated", StyleQueueTimer)
         end
+        if TimerTracker then TimerTracker:HookScript("OnEvent", StyleStartTimers) end
     end
     SetFastLoot(self.db.fastLoot)
     SetAuctionFilter(self.db.ahExpansion)
