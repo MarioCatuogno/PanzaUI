@@ -16,6 +16,7 @@
 
 ### 👤 Profiles
 
+* Platynator - Fixed the Cast bar border texture
 * Platynator - Fixed the width of Enemy names
 
 ### 📏 Various
