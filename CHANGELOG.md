@@ -8,6 +8,7 @@
 * Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
 * Core - Fixed the Refined borders option on the Delves Companion panel and abilities, now with the new border texture and the action bar style on the icons
 * Core - Fixed the Refined borders option on the icons of the Collections mounts, sets and set items, now in the action bar style (in the item quality color)
+* Core - Fixed the Refined text on the dark texts of the Mythic+ New Season panel, now shown without the outline
 * Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
 * Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon
@@ -16,6 +17,7 @@
 * Quest & Minimap - Fixed the clock text size with the minimap Refined style, now the same as the zone name
 * Tooltips - Added the faction of players in red (Horde) or blue (Alliance) to the Refined style
 * Various - Added an option to insert the Mythic+ keystone automatically when opening the Font of Power
+* Various - Fixed the BigWigs Refined style on the start timer bar (eg. battlegrounds), now with the same border as the queue timer
 
 ### 👤 Profiles
 

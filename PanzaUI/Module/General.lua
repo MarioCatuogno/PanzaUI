@@ -704,6 +704,11 @@ local function SetupPvP()
     FitPanelOnShow((PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame, 4)
 end
 
+-- Mythic+: dark texts of the New Season parchment.
+local function SetupChallenges()
+    FitPanelOnShow(ChallengesFrame and ChallengesFrame.SeasonChangeNoticeFrame, 2)
+end
+
 -- Spellbook: spell names, headers and page number, as Blizzard sets them up.
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
@@ -768,6 +773,7 @@ local function StyleBlizzardTexts()
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupAdventureGuide)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PVPUI", SetupPvP)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ChallengesUI", SetupChallenges)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
