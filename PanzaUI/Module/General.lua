@@ -987,7 +987,10 @@ local function StyleFramedDialog(dialog, flatBg)
 end
 
 -- Framed dialogs of load-on-demand addons, styled when they load.
-local LOD_DIALOGS = { Blizzard_DelvesDifficultyPicker = "DelvesDifficultyPickerFrame" }
+local LOD_DIALOGS = {
+    Blizzard_DelvesDifficultyPicker = "DelvesDifficultyPickerFrame",
+    Blizzard_DelvesCompanionConfiguration = "DelvesCompanionConfigurationFrame",
+}
 
 local function HookFramedDialog(name)
     local dialog = _G[name]
