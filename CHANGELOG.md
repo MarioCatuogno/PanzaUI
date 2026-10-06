@@ -7,6 +7,7 @@
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
 * Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon
 * Core - Optimized the scan of panels and fonts, now done without temporary tables
+* Quest & Minimap - Added a Refined style option for the Quest Tracker, without the All Objectives header and with the quest count on the Quests header
 * Various - Added an option to insert the Mythic+ keystone automatically when opening the Font of Power
 
 ### 👤 Profiles

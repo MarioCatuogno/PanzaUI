@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest & Minimap
-    Minimap style and clutter, Quest Tracker auto-collapse and quest count.
+    Minimap style and clutter, Quest Tracker style, auto-collapse and quest
+    count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -10,6 +11,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
         minimapStyle   = true,
         minimapClutter = true,
         combatCollapse = true,
+        trackerStyle   = true,
         questCount     = true,
     },
     options = {
@@ -25,6 +27,9 @@ local QM = ns:RegisterModule("QuestMinimap", {
           bullets = { "Boss fights and Mythic+ runs", "Raid and dungeon combat, except Raid Finder and Follower dungeons", "Dungeon and Mythic+ objectives stay visible" } },
         { key = "questCount", label = "Quest count",
           tooltip = "Show the number of quests in the tracker header." },
+        { key = "trackerStyle", label = "Refined style", reload = true,
+          tooltip = "Polish the look of the Quest Tracker.",
+          bullets = { "No \"All Objectives\" header, its collapse button is kept", "Quest count on the Quests header" } },
     },
 })
 
@@ -162,7 +167,18 @@ local function SetCombatCollapse(on)
 end
 
 --------------------------------------------------------------------------------
--- Quest count in the tracker header.
+-- Refined style: the "All Objectives" header without its background and
+-- title (hidden with alpha, its collapse button stays where it is).
+--------------------------------------------------------------------------------
+local function ApplyTrackerStyle()
+    local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
+    if not header then return end
+    if header.Background then header.Background:SetAlpha(0) end
+    if header.Text then header.Text:SetAlpha(0) end
+end
+
+--------------------------------------------------------------------------------
+-- Quest count in the tracker header (the Quests header with Refined style).
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -178,8 +194,15 @@ local function CountQuests()
     return count
 end
 
+local function CountHeader()
+    local quests = QM.db.trackerStyle and QuestObjectiveTracker and QuestObjectiveTracker.Header
+    if quests and quests.Text then return quests end
+    return ObjectiveTrackerFrame.Header
+end
+
 local function PlaceCount()
-    local header = ObjectiveTrackerFrame.Header
+    local header = CountHeader()
+    countText:SetParent(header)
     local button = header.MinimizeButton or header
     local _, textY = header.Text:GetCenter()
     local _, buttonY = button:GetCenter()
@@ -209,7 +232,7 @@ countEvents:SetScript("OnEvent", function(_, event)
 end)
 
 local function SetQuestCount(on)
-    local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
+    local header = ObjectiveTrackerFrame and CountHeader()
     if not (header and header.Text) then return end
     if on and not countText then
         countText = header:CreateFontString(nil, "OVERLAY")
@@ -269,6 +292,9 @@ function QM:OnEnable()
         end)
     end
 
+    if db.trackerStyle then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", ApplyTrackerStyle)
+    end
     if db.questCount then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
     end
