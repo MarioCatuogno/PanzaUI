@@ -71,6 +71,20 @@ local function ApplyBackgrounds()
     for _, region in pairs(Backgrounds()) do region:SetAlpha(alpha) end
 end
 
+-- Clock text at the zone name size (its own size kept to restore it).
+local clockSize
+
+local function ApplyClockSize()
+    local clock, zone = TimeManagerClockTicker, MinimapZoneText
+    if not (clock and zone) then return end
+    local path, size, flags = clock:GetFont()
+    local _, zoneSize = zone:GetFont()
+    if not (path and size and zoneSize) then return end
+    clockSize = clockSize or size
+    local target = QM.db.minimapStyle and zoneSize or clockSize
+    if size ~= target then clock:SetFont(path, target, flags) end
+end
+
 --------------------------------------------------------------------------------
 -- Text style: Quest Tracker fonts and instance texts at the top.
 --------------------------------------------------------------------------------
@@ -285,12 +299,11 @@ function QM:OnEnable()
 
     if db.minimapStyle then ApplyBackgrounds() end
 
-    if ns.textStyle then
-        ns.StyleFont(MinimapZoneText)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
-            ns.StyleFont(TimeManagerClockTicker)
-        end)
-    end
+    if ns.textStyle then ns.StyleFont(MinimapZoneText) end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
+        if ns.textStyle then ns.StyleFont(TimeManagerClockTicker) end
+        ApplyClockSize()
+    end)
 
     if db.trackerStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", ApplyTrackerStyle)
@@ -317,6 +330,7 @@ end
 function QM:OnOptionChanged(key, value)
     if key == "minimapStyle" then
         ApplyBackgrounds()
+        ApplyClockSize()
     elseif key == "minimapClutter" then
         ApplyClutter()
     elseif key == "combatCollapse" then
