@@ -8,6 +8,7 @@
 * Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
 * Core - Fixed the Refined borders option on the Delves Companion panel and abilities, now with the new border texture and the action bar style on the icons
 * Core - Fixed the Refined borders option on the icons of the Collections mounts, sets and set items, now in the action bar style (in the item quality color)
+* Core - Fixed the Refined borders option on the Great Vault rewards, now with the action bar style on the icons and the new border texture on the item names (in the item quality color)
 * Core - Fixed the Refined text on the dark texts of the Mythic+ New Season panel, now shown without the outline
 * Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option

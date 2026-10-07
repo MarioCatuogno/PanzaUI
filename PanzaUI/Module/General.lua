@@ -1087,6 +1087,134 @@ local function StyleDialogs()
     for _, name in ipairs(EDIT_MODE_DIALOGS) do StyleFramedDialog(_G[name], true) end
 end
 
+-- Great Vault "Collect" buttons: the reward icon is drawn inside
+-- their text. It's replaced by an empty space of the same size, with a real
+-- icon (action bar style) placed on it.
+local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
+local vaultIcons = {} -- text -> icon texture
+
+local function PlaceVaultIcon(text, icon)
+    local justify, shown = text:GetJustifyH(), text:GetStringWidth()
+    icon:ClearAllPoints()
+    if justify == "LEFT" then
+        icon:SetPoint("LEFT", text, "LEFT")
+    elseif justify == "RIGHT" then
+        icon:SetPoint("LEFT", text, "RIGHT", -shown, 0)
+    else
+        icon:SetPoint("LEFT", text, "CENTER", -shown / 2, 0)
+    end
+end
+
+local function StyleVaultText(text)
+    local value = text:GetText()
+    if IsSecret(value) or type(value) ~= "string" then return end
+    local icon = vaultIcons[text]
+    -- Only an icon at the start of the text (eg. "[icon] x 6").
+    local file, params, rest = value:match("^%s*|T([^:|]+):?([^|]*)|t(.*)$")
+    if not file or file == BLANK then
+        if icon and not file then icon:Hide() end
+        return
+    end
+    local height, width = params:match("^(%d*):?(%d*)")
+    height, width = tonumber(height) or 0, tonumber(width) or 0
+    if height == 0 then height = select(2, text:GetFont()) or 16 end
+    if width == 0 then width = height end
+    if not icon then
+        local parent = text:GetParent()
+        icon = parent:CreateTexture(nil, "ARTWORK")
+        if not ns.StyleIcon(icon, parent) then return end
+        vaultIcons[text] = icon
+    end
+    icon:SetTexture(tonumber(file) or file)
+    icon:SetSize(width, height)
+    text:SetText("|T" .. BLANK .. ":" .. height .. ":" .. width .. "|t" .. rest)
+    PlaceVaultIcon(text, icon)
+    icon:Show()
+end
+
+-- Great Vault rewards (raids, dungeons, world): the item icon of every
+-- unlocked slot in the quality color of the item (read from its link).
+-- Blizzard's item box draws the square icon frame and the name box in one
+-- texture: it's hidden and the name box is drawn again, with the PanzaUI
+-- border in the same color, and the icon centered on it.
+local VAULT_ITEM_BOX = "weeklyrewards%-reward%-itemframe"
+local VAULT_BOX_CUT = 3 -- the name box starts this far right of the icon
+local vaultFrames, vaultBorders = {}, {} -- item -> icon frame, name box border
+
+local function StyleVaultBox(item)
+    for _, region in ipairs({ item:GetRegions() }) do
+        local atlas = region.GetAtlas and region:GetAtlas()
+        if not IsSecret(atlas) and type(atlas) == "string" and atlas:find(VAULT_ITEM_BOX) then
+            local left, top, right, bottom = region:GetLeft(), region:GetTop(), region:GetRight(), region:GetBottom()
+            local iconRight, x0, y0 = item.Icon:GetRight(), item:GetLeft(), item:GetTop()
+            if not (left and right and iconRight and x0) then return end
+            left = math.max(left, iconRight + VAULT_BOX_CUT)
+            if left >= right then return end
+            region:SetAlpha(0)
+            local bg = item:CreateTexture(nil, "BORDER", nil, -1)
+            bg:SetColorTexture(unpack(DIALOG_BG))
+            bg:SetPoint("TOPLEFT", item, "TOPLEFT", left - x0 + TOOLTIP_INSET, top - y0 - TOOLTIP_INSET)
+            bg:SetPoint("BOTTOMRIGHT", item, "TOPLEFT", right - x0 - TOOLTIP_INSET, bottom - y0 + TOOLTIP_INSET)
+            vaultBorders[item] = PanelBorder(item, bg, TOOLTIP_INSET)
+            local _, iconY = item.Icon:GetCenter()
+            if iconY and item.Icon.AdjustPointsOffset then
+                item.Icon:AdjustPointsOffset(0, (top + bottom) / 2 - iconY)
+            end
+            return
+        end
+    end
+end
+
+local function TintVaultItem(item)
+    local frame = vaultFrames[item]
+    if not frame then return end
+    local info = item:GetParent() and item:GetParent().info
+    local reward = info and info.rewards and info.rewards[1]
+    local id = item.displayedItemDBID or (reward and reward.itemDBID)
+    local link = id and C_WeeklyRewards.GetItemHyperlink and C_WeeklyRewards.GetItemHyperlink(id)
+    local quality = link and C_Item.GetItemQualityByID(link)
+    local c = not IsSecret(quality) and quality and quality >= 2 and ITEM_QUALITY_COLORS[quality]
+    local r, g, b = 1, 1, 1
+    if c then r, g, b = c.r, c.g, c.b end
+    frame:SetVertexColor(r, g, b)
+    if vaultBorders[item] then vaultBorders[item]:SetVertexColor(r, g, b) end
+end
+
+local function StyleVaultItems(vault)
+    for _, activity in ipairs(vault.Activities or {}) do
+        local item = activity.ItemFrame
+        if item and item.Icon and not vaultFrames[item] then
+            vaultFrames[item] = ns.StyleIcon(item.Icon, item)
+            if item.SetDisplayedItem then hooksecurefunc(item, "SetDisplayedItem", TintVaultItem) end
+        end
+        if item and vaultFrames[item] then
+            if not vaultBorders[item] and item:IsVisible() then StyleVaultBox(item) end
+            TintVaultItem(item)
+        end
+    end
+end
+
+local function SetupVaultIcons()
+    local vault = WeeklyRewardsFrame
+    if not vault then return end
+    ns.OnShowDeferred(vault, function() StyleVaultItems(vault) end)
+    local rewards = vault.ConcessionsFrame
+    rewards = rewards and rewards.Rewards
+    if not rewards then return end
+    local i = 1
+    local button = rewards.ConcessionFrame1
+    while button do
+        local text = button.RewardsFrame and button.RewardsFrame.Text
+        if text then
+            StyleVaultText(text)
+            hooksecurefunc(text, "SetText", StyleVaultText)
+            hooksecurefunc(text, "SetFormattedText", StyleVaultText)
+        end
+        i = i + 1
+        button = rewards["ConcessionFrame" .. i]
+    end
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -1099,6 +1227,7 @@ function GEN:OnEnable()
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_WeeklyRewards", SetupVaultIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", function()
             SetupSetIcons()
             SetupMountIcons()
