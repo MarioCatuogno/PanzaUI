@@ -27,6 +27,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Fixed bars position to be aligned to the Focus frame
 * BlizzUI - Fixed the position of Action Bar 3
 * Platynator - Fixed the Cast bar border texture
 * Platynator - Fixed the width of Enemy names
