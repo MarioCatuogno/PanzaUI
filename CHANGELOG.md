@@ -10,6 +10,7 @@
 * Core - Fixed the Refined borders option on the icons of the Collections mounts, sets and set items, now in the action bar style (in the item quality color)
 * Core - Fixed the Refined borders option on the Great Vault rewards, now with the action bar style on the icons and the new border texture on the item names (in the item quality color)
 * Core - Fixed the Refined text on the dark texts of the Mythic+ New Season panel, now shown without the outline
+* Core - Fixed the Refined text on the profession names of the Professions book, now outlined
 * Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
 * Core - Improved the tooltips of the options, with details only where they add useful information

@@ -706,6 +706,11 @@ local function SetupChallenges()
     FitPanelOnShow(ChallengesFrame and ChallengesFrame.SeasonChangeNoticeFrame, 2)
 end
 
+-- Professions book: profession names on the parchment.
+local function SetupProfessionsBook()
+    FitPanelOnShow(ProfessionsBookFrame, 4)
+end
+
 -- Spellbook: spell names, headers and page number, as Blizzard sets them up.
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
@@ -771,6 +776,7 @@ local function StyleBlizzardTexts()
     EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupAdventureGuide)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PVPUI", SetupPvP)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ChallengesUI", SetupChallenges)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", SetupProfessionsBook)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
