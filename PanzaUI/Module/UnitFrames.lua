@@ -29,7 +29,7 @@ for _, t in ipairs(TARGET_FRAMES) do
     local styleBullets = { "Centered name without level", "Health and power as a percentage" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
-        styleBullets[#styleBullets + 1] = "Only 4 debuffs"
+        styleBullets[#styleBullets + 1] = "Only 5 debuffs"
         clutterBullets[#clutterBullets + 1] = "Cast bar"
     end
     options[#options + 1] = { header = t.unit }
@@ -379,9 +379,9 @@ end
 -- Layout parts Blizzard may reset (Focus small size).
 local function ApplyLayout(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
-    -- Aura limits: Focus refined style keeps 4 debuffs.
+    -- Aura limits: Focus refined style keeps 5 debuffs.
     if p == "focus" and db.focusStyle then
-        frame.maxBuffs, frame.maxDebuffs = 0, 4
+        frame.maxBuffs, frame.maxDebuffs = 0, 5
     elseif db[p .. "HideClutter"] then
         frame.maxBuffs, frame.maxDebuffs = 0, 0
     end

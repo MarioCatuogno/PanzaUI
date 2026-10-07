@@ -20,6 +20,7 @@
 * Quest & Minimap - Added a Refined style option for the Quest Tracker, without the All Objectives header and with the quest count on the Quests header
 * Quest & Minimap - Fixed the clock text size with the minimap Refined style, now the same as the zone name
 * Tooltips - Added the faction of players in red (Horde) or blue (Alliance) to the Refined style
+* Unit Frames - Changed the number of debuffs shown on the Focus frame with the Refined style, now 5
 * Various - Added an option to insert the Mythic+ keystone automatically when opening the Font of Power
 * Various - Fixed the BigWigs Refined style on the start timer bar (eg. battlegrounds), now with the same border as the queue timer
 
