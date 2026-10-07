@@ -85,10 +85,10 @@ end
 -- Role icons: fixed when Blizzard leaves them hidden, optionally HD.
 --------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
-local ROLE_ICON_INSET = 2 -- the icon is this much smaller than the name
+local ROLE_ICON_INSET = 0 -- the icon is this much smaller than the name
 local hdRoles
 
--- Icon size from the name text (eg. name 14, icon 12); nil if unreadable.
+-- Icon size from the name text (eg. name 14, icon 14); nil if unreadable.
 local function NameIconSize(frame)
     local size = frame.name and select(2, frame.name:GetFont())
     if IsSecret(size) or not size or size < 2 + ROLE_ICON_INSET then return end

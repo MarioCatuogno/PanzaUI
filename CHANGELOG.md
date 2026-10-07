@@ -16,7 +16,7 @@
 * Core - Improved the tooltips of the options, with details only where they add useful information
 * Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon
 * Core - Optimized the scan of panels and fonts, now done without temporary tables
-* Party & Raid Frames - Changed the size of the sharper role icons
+* Party & Raid Frames - Changed the size of the sharper role icons, now the same as the name
 * Quest & Minimap - Added a Refined style option for the Quest Tracker, without the All Objectives header and with the quest count on the Quests header
 * Quest & Minimap - Fixed the clock text size with the minimap Refined style, now the same as the zone name
 * Tooltips - Added the faction of players in red (Horde) or blue (Alliance) to the Refined style
