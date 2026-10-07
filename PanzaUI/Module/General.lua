@@ -177,21 +177,18 @@ local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
-      tooltip = "Import the PanzaUI layout of the interface frames.",
-      bullets = { "Saved as PanzaUI and made active" } },
+      tooltip = "Import the PanzaUI layout of the interface." },
     { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
-      tooltip = "Import the PanzaUI profile of the Platynator nameplates.",
-      bullets = { "Saved as PanzaUI and made active" } },
+      tooltip = "Import the PanzaUI nameplates for Platynator." },
     { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
-      tooltip = "Import the PanzaUI profile of the BigWigs boss alerts.",
-      bullets = { "Confirmed in a BigWigs window" } },
+      tooltip = "Import the PanzaUI boss alerts for BigWigs." },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color the health bars by class or reaction." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
-      tooltip = "Polish the look of borders across the whole UI." },
+      tooltip = "Give icons, tooltips and windows a cleaner border." },
     { key = "textStyle", label = "Refined text", reload = true,
-      tooltip = "Polish the look of text across the whole UI." },
+      tooltip = "Use a clean outlined font across the whole UI." },
 }
 local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }

@@ -38,11 +38,10 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Type \"DELETE\" for you when deleting an item." },
         { key = "hideNotices", label = "Hide system notices",
-          tooltip = "Hide the alerts on the micro menu buttons.",
-          bullets = { "Help tips like unspent talent points", "Flashing buttons" } },
+          tooltip = "Hide the alerts on the micro menu buttons." },
         { key = "waypoints", label = "Waypoint command", reload = true,
           tooltip = "Set a map waypoint with /way and coordinates.",
-          bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is enabled" } },
+          bullets = { "Example: /way 45.2 61.8", "Remove it with /way clear" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring in your class color around the cursor.",
           dropdown = {

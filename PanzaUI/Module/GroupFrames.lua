@@ -15,13 +15,11 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the party and raid frames.",
-          bullets = { "Names without server", "Long names shortened", "Health as a percentage" } },
+          bullets = { "Names without server", "Health as a percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
-          tooltip = "Use cleaner overlays on the party and raid health bars.",
-          bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
+          tooltip = "Give shields, incoming heals and aggro a cleaner look." },
         { key = "hdRoleIcons", label = "HD role icons", reload = true,
-          tooltip = "Use sharper role icons on the party and raid frames.",
-          bullets = { "Also on the Player frame" } },
+          tooltip = "Use sharper role icons on the party and raid frames." },
     },
 })
 
@@ -87,7 +85,15 @@ end
 -- Role icons: fixed when Blizzard leaves them hidden, optionally HD.
 --------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
+local ROLE_ICON_INSET = 2 -- the icon is this much smaller than the name
 local hdRoles
+
+-- Icon size from the name text (eg. name 14, icon 12); nil if unreadable.
+local function NameIconSize(frame)
+    local size = frame.name and select(2, frame.name:GetFont())
+    if IsSecret(size) or not size or size < 2 + ROLE_ICON_INSET then return end
+    return size - ROLE_ICON_INSET
+end
 
 local function KnownRole(frame)
     local unit = frame.unit
@@ -110,7 +116,10 @@ local function UpdateRoleIcon(frame)
     local icon = frame.roleIcon
     if not (icon and icon:IsShown()) then return end
     local role = KnownRole(frame)
-    if role and icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
+    if not role then return end
+    if icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
+    local size = NameIconSize(frame)
+    if size then icon:SetSize(size, size) end
 end
 
 local TINY_ROLE_ATLASES = {
@@ -126,12 +135,13 @@ local function UpdatePlayerRoleIcon()
     if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
 end
 
--- The icon can be 0x0 before the first layout: the name size is used.
+-- The icon can be 0x0 before the first layout: sized from the name (HD
+-- icons always are), else from its own height.
 local function RoleIconSize(frame, icon)
-    local size = icon:GetHeight()
+    local size = NameIconSize(frame)
+    if size then return size end
+    size = icon:GetHeight()
     if not IsSecret(size) and size >= 2 then return size end
-    local _, fontSize = frame.name and frame.name:GetFont()
-    if not IsSecret(fontSize) and fontSize and fontSize >= 2 then return fontSize end
     return 12
 end
 

@@ -16,19 +16,15 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names",
-                      "Short channel names", "Clickable web links" } },
+          bullets = { "Short channel names", "Clickable web links" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time before every message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
           tooltip = "Hide the Combat Log tab." },
         { key = "hideClutter", label = "Hide clutter",
           tooltip = "Hide minor messages in the chat.",
-          bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
-                      "Online and offline notices", "Channel and group join and leave notices",
-                      "Not in a group warnings", "Recent Allies icon by player names",
-                      "Group settings and leader changes", "Spells learned on specialization changes",
-                      "Edit Mode layout copied to clipboard" } },
+          bullets = { "Guild message of the day", "Online and offline notices", "Join and leave notices",
+                      "Loot and crafting of other players", "Group changes" } },
     },
 })
 

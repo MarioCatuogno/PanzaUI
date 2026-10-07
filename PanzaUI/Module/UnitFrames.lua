@@ -18,7 +18,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage" } },
+      bullets = { "Centered name without level", "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -26,7 +26,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage", "Rounded cast bar icon" }
+    local styleBullets = { "Centered name without level", "Health and power as a percentage" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 4 debuffs"
@@ -42,7 +42,7 @@ end
 options[#options + 1] = { header = "Boss" }
 options[#options + 1] = { key = "bossStyle", label = "Refined style",
     tooltip = "Polish the look of the Boss frames.",
-    bullets = { "Health and power as a percentage", "Rounded cast bar icon", "No colored name background" } }
+    bullets = { "Health and power as a percentage" } }
 options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Boss frames.",
     bullets = { "Level", "Threat glow" } }
@@ -66,13 +66,11 @@ end
 -- Blizzard's class icon portraits (off by default, applied live).
 defaults.playerClassIcon, defaults.targetClassIcon = false, false
 table.insert(options, 2, { key = "playerClassIcon", label = "Class icon portrait",
-    tooltip = "Show your class icon instead of the Player portrait.",
-    bullets = { "No portraits stuck zoomed in" } })
+    tooltip = "Show your class icon instead of the Player portrait." })
 for i, o in ipairs(options) do
     if o.header == "Target" then
         table.insert(options, i + 1, { key = "targetClassIcon", label = "Class icon portrait",
-            tooltip = "Show the class icon instead of the portrait of other players.",
-            bullets = { "Also on the Focus frame", "No portraits stuck zoomed in" } })
+            tooltip = "Show the class icon instead of the portrait of other players." })
         break
     end
 end
