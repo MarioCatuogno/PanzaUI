@@ -71,21 +71,21 @@ end
 --------------------------------------------------------------------------------
 -- old: option keys merged into this one (see Migrate).
 local UNIT_BARS = {
-    { key = "texFocus",      label = "Focus",        tooltip = "Texture for the bars of the Focus frame." },
-    { key = "texGroup",      label = "Party/Raid",   tooltip = "Texture for the bars of the party and raid frames." },
-    { key = "texPlayerPet",  label = "Player & Pet", tooltip = "Texture for the bars of the Player and Pet frames.",
+    { key = "texFocus",      label = "Focus",        tooltip = "Set the texture of the Focus frame bars." },
+    { key = "texGroup",      label = "Party/Raid",   tooltip = "Set the texture of the party and raid frame bars." },
+    { key = "texPlayerPet",  label = "Player & Pet", tooltip = "Set the texture of the Player and Pet frame bars.",
       old = { "texPlayer", "texPet" } },
-    { key = "texTargetBoss", label = "Target & Boss", tooltip = "Texture for the bars of the Target, Target of Target and Boss frames.",
+    { key = "texTargetBoss", label = "Target & Boss", tooltip = "Set the texture of the Target, Target of Target and Boss frame bars.",
       old = { "texTarget", "texBoss" } },
 }
 
 local OTHER_BARS = {
-    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the cast bars.",
+    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Set the texture of the cast bars.",
       bullets = { "Colored by cast type" } },
-    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of the Cooldown Manager and Personal Resource Display.",
+    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Set the texture of the Cooldown Manager and Personal Resource Display bars.",
       old = { "texPRD", "texCooldownBars" } },
-    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
-    { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
+    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
+    { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
                   "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },

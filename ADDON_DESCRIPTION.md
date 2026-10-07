@@ -21,7 +21,7 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - **Refined text**: a clean outlined font across the whole UI, from unit frames to menus and tooltips
 - **Class colors** on the health bars, with reaction colors for NPCs
 - **Custom bar textures** for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars
-- **Refined borders**: rounded icons in the action bar style across Blizzard panels (rewards, professions, currency, equipment sets), colored by item quality, and a cleaner border for tooltips, pop-ups, Delves and Edit Mode windows
+- **Refined borders**: rounded icons in the action bar style across Blizzard panels (rewards, professions, currency, equipment sets, collections, Delves companion), colored by item quality, and a cleaner border for tooltips, pop-ups, Delves and Edit Mode windows
 - **Profiles**: the PanzaUI Edit Mode layout and the Platynator and BigWigs profiles, imported with one click
 
 ### Action Bars
@@ -53,11 +53,11 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - Sharper role icons
 
 ### Quest & Minimap
-- Cleaner minimap and a quest counter in the tracker header
+- Cleaner minimap and Quest Tracker, with the quest count on the Quests header
 - Quest Tracker hidden during boss fights, Mythic+ and instance combat, so you can focus on the fight
 
 ### Tooltips
-- Class colored names, Mythic+ rating and item level of players
+- Class colored names, faction, Mythic+ rating and item level of players
 - Item and spell IDs
 - Mount of players, with its icon
 
@@ -69,11 +69,12 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 ### Various
 - Cursor ring in your class color
 - Fast auto-loot and fast item delete
+- Mythic+ keystone inserted automatically in the Font of Power
 - Current expansion filter set automatically in the Auction House
 - Destination shown while flying on a flight path
 - `/way` command to set map waypoints from coordinates
 - Rounded icons and a matching HD border for Platynator nameplates
-- Refined style for BigWigs bars (Blizzard style), Battle Res icon and queue timer
+- Refined style for BigWigs bars (Blizzard style), Battle Res icon, queue timer and start timer
 - No more flashing micro menu alerts
 
 ![PanzaUI - Interface](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg)

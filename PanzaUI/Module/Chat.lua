@@ -374,6 +374,8 @@ local function RemoveClipboardNotice(frame, text)
     if not IsClipboardNotice(text) then return end
     if frame.RemoveMessagesByPredicate then
         pcall(frame.RemoveMessagesByPredicate, frame, IsClipboardNotice)
+    elseif frame.Clear then -- errors frame: cleared, never hidden
+        frame:Clear()
     elseif frame.Hide then
         frame:Hide()
     end

@@ -877,9 +877,10 @@ end
 --       defaults = { key = value, ... },
 --       options  = {
 --           { header = "Section" },
---           { key, label, tooltip, bullets = { ... }, reload = true,
+--           { key = "name", label = "Text", tooltip = "Text.", bullets = { ... }, reload = true,
 --             slider = { min, max, step, suffix } | dropdown = list or func },
---           { label, tooltip, button = "Text", onClick = func },  -- no saved value
+--           { label = "Text", tooltip = "Text.", button = "Text", onClick = func },  -- no saved value
+--   Dropdown list entries: { value, label, tooltip }.
 --       },
 --   }
 --   Sections (by header) and the options inside them are listed
