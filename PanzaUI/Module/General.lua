@@ -994,9 +994,9 @@ local TOOLTIP_INSET = 3
 local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
 local DIALOG_OVERLAP = 2 -- framed dialogs: border outside the background (2 of its 4 units cover the edge)
 -- Dialogs with Blizzard's dialog frame (Border with edges and a Bg).
+-- The ready check keeps Blizzard's frame: its portrait sits on the border.
 local FRAMED_DIALOGS = { "LFGDungeonReadyDialog", "LFGDungeonReadyStatus", "LFDRoleCheckPopup",
-    "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog",
-    "ReadyCheckListenerFrame" }
+    "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog" }
 -- Edit Mode windows: styled once at login, without hooks (Edit Mode is
 -- sensitive to taint); Blizzard doesn't redraw their frame.
 local EDIT_MODE_BG = { 0.06, 0.05, 0.04, 0.85 } -- dark and see-through, like Blizzard's
