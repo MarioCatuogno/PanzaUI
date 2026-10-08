@@ -9,7 +9,7 @@ local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 local DEFAULT = ""
 
 -- PanzaUI bar textures, also registered in SharedMedia.
-local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local MEDIA = ns.MEDIA .. [[Statusbar\]]
 local PANZA = {
     ["PanzaUI - General"] = MEDIA .. "PanzaUI_general.tga",
     ["PanzaUI - Glass"]   = MEDIA .. "PanzaUI_glass.tga",
@@ -177,18 +177,18 @@ local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
-      tooltip = "Import the PanzaUI layout of the interface." },
+      tooltip = "Import the PanzaUI Edit Mode layout." },
     { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
       tooltip = "Import the PanzaUI nameplates for Platynator." },
     { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
-      tooltip = "Import the PanzaUI boss alerts for BigWigs." },
+      tooltip = "Import the PanzaUI boss timers for BigWigs." },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
-      tooltip = "Color the health bars by class or reaction." },
+      tooltip = "Color health bars by class for players and by reaction for NPCs." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
-      tooltip = "Give icons, tooltips and windows a cleaner border." },
+      tooltip = "Use rounded icons and a clean border on tooltips and pop-up windows." },
     { key = "textStyle", label = "Refined text", reload = true,
-      tooltip = "Use a clean outlined font across the whole UI." },
+      tooltip = "Use a clean outlined font across the whole interface." },
 }
 local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }
@@ -728,6 +728,7 @@ end
 -- is removed while they are dark and put back when they turn light again.
 -- Nameplates are left to their own addons.
 local DARK = 0.4 -- brightest channel of a dark color
+local max = math.max
 local removedOutline = setmetatable({}, { __mode = "k" }) -- text -> its flags
 
 local function OnNamePlate(region)
@@ -745,7 +746,7 @@ end
 
 local function FitTextColor(text, r, g, b)
     if IsSecret(r) or IsSecret(g) or IsSecret(b) or not (r and g and b) then return end
-    local dark, flags = math.max(r, g, b) < DARK, removedOutline[text]
+    local dark, flags = max(r, g, b) < DARK, removedOutline[text]
     if not dark and not flags then return end -- light text never changed
     if text:IsForbidden() or (dark and OnNamePlate(text)) then return end
     local path, size, current = text:GetFont()
@@ -1096,7 +1097,7 @@ end
 -- Great Vault "Collect" buttons: the reward icon is drawn inside
 -- their text. It's replaced by an empty space of the same size, with a real
 -- icon (action bar style) placed on it.
-local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
+local BLANK = ns.BLANK
 local vaultIcons = {} -- text -> icon texture
 
 local function PlaceVaultIcon(text, icon)
