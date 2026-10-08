@@ -3,6 +3,7 @@
     Window style, timestamps, Combat Log tab and message filters.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local Chat = ns:RegisterModule("Chat", {
     title = "Chat",
@@ -15,18 +16,15 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the chat windows.",
-          bullets = { "Cleaner tabs and input box", "No background or side buttons", "No status icons by player names",
-                      "Short channel names", "Clickable web links" } },
+          bullets = { "Short channel names", "Clickable web links" } },
         { key = "timestamps", label = "Timestamps",
-          tooltip = "Show the time before every message." },
+          tooltip = "Show the time before each message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
           tooltip = "Hide the Combat Log tab." },
         { key = "hideClutter", label = "Hide clutter",
-          tooltip = "Hide minor messages in the chat.",
-          bullets = { "Guild message of the day", "Loot specialization changes", "Crafting and loot of other players",
-                      "Online and offline notices", "Channel and group join and leave notices",
-                      "Not in a group warnings", "Recent Allies icon by player names",
-                      "Group settings and leader changes", "Spells learned on specialization changes" } },
+          tooltip = "Hide minor system messages in the chat.",
+          bullets = { "Guild message of the day", "Online and offline notices", "Join and leave notices",
+                      "Loot and crafting of other players", "Group changes" } },
     },
 })
 
@@ -163,7 +161,7 @@ local FLAG_EVENTS = {
 }
 
 local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
-    if ns.IsSecret(flag) or flag == nil or KEEP_FLAGS[flag] then return false end
+    if IsSecret(flag) or flag == nil or KEEP_FLAGS[flag] then return false end
     return false, msg, author, lang, channel, target, "", ...
 end
 
@@ -189,7 +187,7 @@ local function ShortName(channel, zoneChannel)
 end
 
 local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zoneID, ...)
-    if type(channel) ~= "string" or ns.IsSecret(channel) or ns.IsSecret(zoneID) then return false end
+    if type(channel) ~= "string" or IsSecret(channel) or IsSecret(zoneID) then return false end
     local zoneChannel = type(zoneID) == "number" and zoneID > 0
     return false, msg, author, lang, ShortName(channel, zoneChannel), target, flag, zoneID, ...
 end
@@ -202,7 +200,7 @@ local URL_PATTERNS = { "(%a[%w+.-]*://[^%s|]+)", "(www%.[%w-]+%.[^%s|]+)" }
 local URL_LINK = "|cff4fc3f7|Haddon:PanzaUI:url|h[%1]|h|r"
 
 local function LinkURLs(_, _, msg, ...)
-    if type(msg) ~= "string" or ns.IsSecret(msg) or msg:find("|H", 1, true) then return false end
+    if type(msg) ~= "string" or IsSecret(msg) or msg:find("|H", 1, true) then return false end
     if not (msg:find("://", 1, true) or msg:find("www.", 1, true)) then return false end
     local linked, count = msg:gsub(URL_PATTERNS[1], URL_LINK)
     if count == 0 then linked, count = msg:gsub(URL_PATTERNS[2], URL_LINK) end
@@ -228,11 +226,17 @@ StaticPopupDialogs.PANZAUI_COPY_URL = {
     hideOnEscape = true,
 }
 
--- The address is the link text: "[url]" inside the clicked link.
+-- The address is the link text: "[url]" inside the clicked link. The click
+-- can arrive twice in the same frame (Blizzard's callback and the SetItemRef
+-- hook): the box opens once.
+local lastClick
 local function OnLinkClick(link, text)
     if type(link) ~= "string" or not link:find("^addon:PanzaUI:url") then return end
     local url = type(text) == "string" and text:match("%[(.-)%]")
-    if url then StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url) end
+    local now = GetTime()
+    if not url or now == lastClick then return end
+    lastClick = now
+    StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url)
 end
 
 local function SetupStyleFilters()
@@ -258,9 +262,13 @@ for _, fmt in ipairs({ ERR_LOOT_SPEC_CHANGED_S, GUILD_MOTD_TEMPLATE }) do
     local prefix = type(fmt) == "string" and fmt:match("^(.-)%%s")
     if prefix and prefix ~= "" then CLUTTER[#CLUTTER + 1] = prefix end
 end
+-- Edit Mode "layout copied to clipboard" notice: the text after the name.
+local CLIPBOARD = type(EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE) == "string"
+    and EDIT_MODE_COPY_TO_CLIPBOARD_NOTICE:match("%%s([^%%]+)$") or "copied to clipboard"
+CLUTTER[#CLUTTER + 1] = CLIPBOARD
 
 local function IsClutter(text)
-    if type(text) ~= "string" or ns.IsSecret(text) then return false end
+    if type(text) ~= "string" or IsSecret(text) then return false end
     for i = 1, #CLUTTER do
         if text:find(CLUTTER[i], 1, true) then return true end
     end
@@ -271,7 +279,7 @@ end
 local ALLY_ICON = "%s?|A:friendslist%-recentallies[^|]*|a"
 
 local function HasAllyIcon(text)
-    return type(text) == "string" and not ns.IsSecret(text) and text:find("friendslist-recentallies", 1, true) ~= nil
+    return type(text) == "string" and not IsSecret(text) and text:find("friendslist-recentallies", 1, true) ~= nil
 end
 
 local function StripAllyIcon(text, ...)
@@ -307,7 +315,7 @@ local OWN_CRAFT = type(TRADESKILL_LOG_FIRSTPERSON) == "string" and TRADESKILL_LO
 
 local function HideOthersCrafts(_, _, msg)
     local db = Chat.db
-    if not (db and db.hideClutter) or type(msg) ~= "string" or ns.IsSecret(msg) then return false end
+    if not (db and db.hideClutter) or type(msg) ~= "string" or IsSecret(msg) then return false end
     return not (OWN_CRAFT and OWN_CRAFT ~= "" and msg:find(OWN_CRAFT, 1, true) == 1)
 end
 
@@ -351,12 +359,34 @@ local OTHERS_LOOT = KeyTexts(LOOT_ITEM, LOOT_ITEM_MULTIPLE, LOOT_ITEM_PUSHED, LO
 
 local function Hiding(msg)
     local db = Chat.db
-    return db and db.hideClutter and type(msg) == "string" and not ns.IsSecret(msg)
+    return db and db.hideClutter and type(msg) == "string" and not IsSecret(msg)
 end
 
 local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES) end
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
 local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
+
+-- The same notice in the middle of the screen (errors frame or action
+-- status), removed as soon as it is added.
+local function IsClipboardNotice(text)
+    return Hiding(text) and text:find(CLIPBOARD, 1, true) ~= nil
+end
+
+local function RemoveClipboardNotice(frame, text)
+    if not IsClipboardNotice(text) then return end
+    if frame.RemoveMessagesByPredicate then
+        pcall(frame.RemoveMessagesByPredicate, frame, IsClipboardNotice)
+    elseif frame.Clear then -- errors frame: cleared, never hidden
+        frame:Clear()
+    elseif frame.Hide then
+        frame:Hide()
+    end
+end
+
+if UIErrorsFrame then hooksecurefunc(UIErrorsFrame, "AddMessage", RemoveClipboardNotice) end
+if ActionStatus and ActionStatus.DisplayMessage then
+    hooksecurefunc(ActionStatus, "DisplayMessage", RemoveClipboardNotice)
+end
 
 if AddFilter then
     AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)

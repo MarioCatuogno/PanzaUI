@@ -8,6 +8,7 @@ ns.modules    = {}
 ns.IsSecret   = issecretvalue or function() return false end
 local IsSecret = ns.IsSecret
 ns.FONT_FLAGS = "OUTLINE, SLUG" -- shared text style
+ns.MEDIA      = [[Interface\AddOns\PanzaUI\Media\]] -- PanzaUI textures
 ns.textStyle  = false -- General > Style > Refined text
 ns.classColors = false -- General > Style > Class colors
 
@@ -40,6 +41,25 @@ end)
 function ns.Defer(func)
     pending[func] = true
     deferFrame:Show()
+end
+
+-- Registers the given events on `frame` when `on`, otherwise unregisters all
+-- of them (event frames used only while their option is on).
+function ns.SetEvents(frame, on, ...)
+    if not on then
+        frame:UnregisterAllEvents()
+        return
+    end
+    for i = 1, select("#", ...) do frame:RegisterEvent((select(i, ...))) end
+end
+
+-- Runs func on the next frame each time `frame` shows, and now if it is
+-- already shown. Returns the queuing function, for other hooks too.
+function ns.OnShowDeferred(frame, func)
+    local function Queue() ns.Defer(func) end
+    frame:HookScript("OnShow", Queue)
+    if frame:IsShown() then Queue() end
+    return Queue
 end
 
 -- Outlined copy of a font object, one per base font.
@@ -116,6 +136,12 @@ function ns.GroupUnit(unit)
     return unit
 end
 
+-- Name without the "*" Blizzard puts before NPC followers.
+function ns.StripFollowerMark(name)
+    if name:byte(1) ~= 42 then return name end -- 42: "*"
+    return (name:gsub("^%*+%s*", ""))
+end
+
 -- Chat message with the addon prefix.
 function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
@@ -164,11 +190,42 @@ end
 -- transparent padding around it (sizes in texture pixels).
 --------------------------------------------------------------------------------
 ns.BORDER = {
-    file    = [[Interface\AddOns\PanzaUI\Media\Borders\PanzaUI_nameplates.tga]],
+    file    = ns.MEDIA .. [[Borders\PanzaUI_nameplates.tga]],
     size    = 136,
     margin  = 136 * 0.35,
     padding = 16,
 }
+local BORDER_SCALE = 0.2 -- panels: the border at the icon frame size
+local panelBorders = {}
+
+-- PanzaUI border on `owner`, around `anchor` pushed out by `outset` (screen
+-- units). Created once per owner.
+function ns.PanelBorder(owner, anchor, outset)
+    if panelBorders[owner] then return panelBorders[owner] end
+    local border = owner:CreateTexture(nil, "BORDER", nil, 7)
+    local m = ns.BORDER.margin
+    local pad = ns.BORDER.padding + outset / BORDER_SCALE
+    border:SetTexture(ns.BORDER.file)
+    border:SetTextureSliceMargins(m, m, m, m)
+    border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
+    border:SetScale(BORDER_SCALE)
+    border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
+    border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
+    panelBorders[owner] = border
+    return border
+end
+
+-- Hides the corners and edges of a Blizzard frame border (nine-slice or
+-- backdrop); its background is kept.
+local FRAME_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
+
+function ns.HideFramePieces(frame)
+    for _, key in ipairs(FRAME_PIECES) do
+        local piece = frame[key]
+        if piece then piece:SetAlpha(0) end
+    end
+end
 
 --------------------------------------------------------------------------------
 -- Icon look, one style for every icon: action button frame and rounded mask,
@@ -176,7 +233,10 @@ ns.BORDER = {
 -- Returns the frame and the mask, nil when the icon can't be styled.
 --------------------------------------------------------------------------------
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
-local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame
+local ICON_SHAPE = ns.MEDIA .. [[Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame (cooldown swipe)
+-- Icon mask: reaches under the frame band, so no gap is left in the corners
+-- of the frame opening (it isn't centered in Blizzard's atlas).
+local ICON_FILL  = ns.MEDIA .. [[Icons\PanzaUI_iconfill.tga]]
 
 local frameInfo
 
@@ -187,7 +247,7 @@ function ns.StyleIcon(icon, parent)
 
     local ok, mask = pcall(parent.CreateMaskTexture, parent)
     if not ok then return end
-    mask:SetTexture(ICON_SHAPE, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    mask:SetTexture(ICON_FILL, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
     mask:SetAllPoints(icon)
     icon:AddMaskTexture(mask)
 
@@ -206,7 +266,8 @@ function ns.StyleIcon(icon, parent)
 end
 
 -- Rounded cooldown swipe, without the edge line drawn outside the frame.
-local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
+local BLANK = ns.MEDIA .. [[Icons\PanzaUI_blank.tga]] -- fully transparent
+ns.BLANK = BLANK
 
 function ns.RoundSwipe(cooldown)
     if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then
@@ -223,11 +284,124 @@ function ns.ZoomIcon(icon, percent)
 end
 
 --------------------------------------------------------------------------------
+-- Item buttons (rewards, reagents, profession gear): the icon look, its frame
+-- in the item quality color instead of Blizzard's square quality border.
+-- The color is read from every way Blizzard sets that border: quality,
+-- vertex color or colored atlas. hideSlotArt: the square slot art behind
+-- (background layers, normal texture) is hidden too. Styled once per button.
+--------------------------------------------------------------------------------
+local qualityFrames = setmetatable({}, { __mode = "k" }) -- button -> icon frame
+local QUALITY_MIN = Enum.ItemQuality and Enum.ItemQuality.Uncommon or 2
+local Q = Enum.ItemQuality or {}
+local ATLAS_QUALITY = { -- word in the border atlas name -> quality
+    green = Q.Uncommon or 2, blue = Q.Rare or 3, purple = Q.Epic or 4, orange = Q.Legendary or 5,
+    artifact = Q.Artifact or 6, heirloom = Q.Heirloom or 7, account = Q.Heirloom or 7,
+    uncommon = Q.Uncommon or 2, rare = Q.Rare or 3, epic = Q.Epic or 4, legendary = Q.Legendary or 5,
+}
+
+local function SetFrameColor(frame, r, g, b)
+    if r then frame:SetVertexColor(r, g, b) else frame:SetVertexColor(1, 1, 1) end
+end
+
+local function QualityColor(quality)
+    if IsSecret(quality) or not quality or quality < QUALITY_MIN then return end
+    local c = ITEM_QUALITY_COLORS[quality]
+    if c then return c.r, c.g, c.b end
+end
+
+local function TintQualityFrame(button, quality)
+    local frame = qualityFrames[button]
+    if frame then SetFrameColor(frame, QualityColor(quality)) end
+end
+if SetItemButtonQuality then hooksecurefunc("SetItemButtonQuality", TintQualityFrame) end
+
+local function AtlasQuality(atlas)
+    if IsSecret(atlas) or type(atlas) ~= "string" then return end
+    atlas = atlas:lower()
+    for word, quality in pairs(ATLAS_QUALITY) do
+        if atlas:find(word, 1, true) then return quality end
+    end
+end
+
+-- Colored border tints the frame (white means no quality color).
+local function BorderColor(frame, r, g, b)
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) or not r then return end
+    if r + g + b < 2.9 then SetFrameColor(frame, r, g, b) end
+end
+
+local function HideSlotArt(button, icon, frame, ...)
+    for i = 1, select("#", ...) do
+        local region = select(i, ...)
+        if region ~= icon and region ~= frame and region:GetObjectType() == "Texture" then
+            local layer = region:GetDrawLayer()
+            if layer == "BACKGROUND" or layer == "BORDER" then region:SetAlpha(0) end
+        end
+    end
+    local normal = button.GetNormalTexture and button:GetNormalTexture()
+    if normal then normal:SetAlpha(0) end
+end
+
+function ns.StyleItemButton(button, icon, hideSlotArt)
+    if not button or qualityFrames[button] or not icon then return end
+    local frame = ns.StyleIcon(icon, button)
+    if not frame then return end
+    qualityFrames[button] = frame
+    if hideSlotArt then HideSlotArt(button, icon, frame, button:GetRegions()) end
+    if button.SetItemButtonQuality then hooksecurefunc(button, "SetItemButtonQuality", TintQualityFrame) end
+    local border = button.IconBorder
+    if not border then return frame end
+    border:SetAlpha(0)
+    hooksecurefunc(border, "Hide", function() SetFrameColor(frame) end)
+    hooksecurefunc(border, "SetAtlas", function(_, atlas)
+        local quality = AtlasQuality(atlas)
+        if quality then SetFrameColor(frame, QualityColor(quality)) end
+    end)
+    hooksecurefunc(border, "SetVertexColor", function(_, r, g, b) BorderColor(frame, r, g, b) end)
+    -- Border already set before styling.
+    if border:IsShown() then
+        local quality = AtlasQuality(border:GetAtlas())
+        if quality then SetFrameColor(frame, QualityColor(quality)) else BorderColor(frame, border:GetVertexColor()) end
+    end
+    return frame
+end
+
+--------------------------------------------------------------------------------
+-- Scrolling lists (eg. Currency tab, Equipment Manager): the icon look on
+-- each row as Blizzard creates it; GetIcon(row) returns icon, parent and
+-- optionally an overlay drawn over the icon (masked to the same shape).
+--------------------------------------------------------------------------------
+local styledRowIcons = setmetatable({}, { __mode = "k" })
+
+function ns.StyleScrollIcons(box, GetIcon)
+    if not (box and ScrollUtil) then return end
+    ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(function(row)
+        local icon, parent, overlay = GetIcon(row)
+        if not icon or styledRowIcons[icon] then return end
+        local frame, mask = ns.StyleIcon(icon, parent)
+        if not frame then return end
+        styledRowIcons[icon] = true
+        if overlay and overlay.AddMaskTexture then overlay:AddMaskTexture(mask) end
+    end), ns, true)
+end
+
+
+--------------------------------------------------------------------------------
 -- ScrollBox frame callback that always receives the frame.
 --------------------------------------------------------------------------------
 function ns.ScrollFrameCallback(func)
     return function(a, b)
         if type(a) == "table" and a.GetObjectType then func(a) else func(b) end
+    end
+end
+
+-- Calls func(object) for each active object of a Blizzard frame pool.
+function ns.ForEachActive(pool, func)
+    if not pool then return end
+    local active = pool.activeObjects
+    if active then
+        for object in pairs(active) do func(object) end
+    elseif pool.EnumerateActive then
+        for object in pool:EnumerateActive() do func(object) end
     end
 end
 
@@ -364,40 +538,42 @@ function ns.ItemLevelText(button, ilvl, color)
 end
 
 --------------------------------------------------------------------------------
--- Styles every font string of a frame, down to `levels` children.
+-- Calls func(region) for every region of a frame, down to `levels` children
+-- (regions and children walked as returned, without temporary tables).
 --------------------------------------------------------------------------------
--- skipDark: dark texts (e.g. on parchment backgrounds) are left as they are.
-local StyleAllFonts
+local WalkRegions
 
-local function IsDark(region)
-    local r, g, b = region:GetTextColor()
-    if IsSecret(r) or IsSecret(g) or IsSecret(b) then return false end
-    return r + g + b < 1
+local function WalkRegionList(func, ...)
+    for i = 1, select("#", ...) do func((select(i, ...))) end
 end
 
-local function StyleFontRegions(skipDark, ...)
-    for i = 1, select("#", ...) do
-        local region = select(i, ...)
-        if region:GetObjectType() == "FontString" and not (skipDark and IsDark(region)) then ns.StyleFont(region) end
-    end
+local function WalkChildren(func, levels, ...)
+    for i = 1, select("#", ...) do WalkRegions((select(i, ...)), levels, func) end
 end
 
-local function StyleChildFonts(levels, skipDark, ...)
-    for i = 1, select("#", ...) do StyleAllFonts((select(i, ...)), levels, skipDark) end
-end
-
-function StyleAllFonts(frame, levels, skipDark)
+function WalkRegions(frame, levels, func)
     if not frame or frame:IsForbidden() then return end
-    StyleFontRegions(skipDark, frame:GetRegions())
-    if levels and levels > 0 then StyleChildFonts(levels - 1, skipDark, frame:GetChildren()) end
+    WalkRegionList(func, frame:GetRegions())
+    if levels and levels > 0 then WalkChildren(func, levels - 1, frame:GetChildren()) end
 end
-ns.StyleAllFonts = StyleAllFonts
+ns.WalkRegions = WalkRegions
+
+-- Styles every font string of a frame, down to `levels` children.
+local function StyleFontRegion(region)
+    if region:GetObjectType() == "FontString" then ns.StyleFont(region) end
+end
+
+function ns.StyleAllFonts(frame, levels)
+    WalkRegions(frame, levels, StyleFontRegion)
+end
 
 --------------------------------------------------------------------------------
--- Calls func for the Player, Target, Focus and Boss cast bars.
+-- Calls func for the Player, Target, Focus and Boss cast bars, and the
+-- overlay one (eg. "Activating Specialization" over the talents panel).
 --------------------------------------------------------------------------------
 function ns.ForEachCastBar(func)
     if PlayerCastingBarFrame then func(PlayerCastingBarFrame) end
+    if OverlayPlayerCastingBarFrame then func(OverlayPlayerCastingBarFrame) end
     if TargetFrame and TargetFrame.spellbar then func(TargetFrame.spellbar) end
     if FocusFrame and FocusFrame.spellbar then func(FocusFrame.spellbar) end
     for i = 1, 5 do
@@ -535,11 +711,11 @@ end
 local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
-    { VIS.DEFAULT,      "Default",        "Blizzard's default behavior." },
-    { VIS.MOUSEOVER,    "Mouseover",      "Shown on mouseover." },
+    { VIS.DEFAULT,      "Default",        "Shown as Blizzard sets it." },
+    { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
     { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
     { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
-    { VIS.HIDDEN,       "Always hidden",  "Never shown. Keybindings still work." },
+    { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
 }
 
 local visEntries   = {}
@@ -709,9 +885,10 @@ end
 --       defaults = { key = value, ... },
 --       options  = {
 --           { header = "Section" },
---           { key, label, tooltip, bullets = { ... }, reload = true,
+--           { key = "name", label = "Text", tooltip = "Text.", bullets = { ... }, reload = true,
 --             slider = { min, max, step, suffix } | dropdown = list or func },
---           { label, tooltip, button = "Text", onClick = func },  -- no saved value
+--           { label = "Text", tooltip = "Text.", button = "Text", onClick = func },  -- no saved value
+--   Dropdown list entries: { value, label, tooltip }.
 --       },
 --   }
 --   Sections (by header) and the options inside them are listed
@@ -991,12 +1168,12 @@ SlashCmdList.PANZAUI = function(msg)
     end
 end
 
--- Shortcuts: /rl Reload UI, /rc ready check, /pl pull timer.
+-- Shortcuts: /rl Reload UI, /rd ready check, /pl pull timer.
 SLASH_PANZAUI_RL1 = "/rl"
 SlashCmdList.PANZAUI_RL = ReloadUI
 
-SLASH_PANZAUI_RC1 = "/rc"
-SlashCmdList.PANZAUI_RC = function() DoReadyCheck() end
+SLASH_PANZAUI_RD1 = "/rd"
+SlashCmdList.PANZAUI_RD = function() DoReadyCheck() end
 
 SLASH_PANZAUI_PL1 = "/pl"
 SlashCmdList.PANZAUI_PL = function() C_PartyInfo.DoCountdown(10) end

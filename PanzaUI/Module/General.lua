@@ -3,12 +3,13 @@
     Text style, class colors, borders, bar textures and profile import.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 local DEFAULT = ""
 
 -- PanzaUI bar textures, also registered in SharedMedia.
-local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local MEDIA = ns.MEDIA .. [[Statusbar\]]
 local PANZA = {
     ["PanzaUI - General"] = MEDIA .. "PanzaUI_general.tga",
     ["PanzaUI - Glass"]   = MEDIA .. "PanzaUI_glass.tga",
@@ -70,21 +71,21 @@ end
 --------------------------------------------------------------------------------
 -- old: option keys merged into this one (see Migrate).
 local UNIT_BARS = {
-    { key = "texFocus",      label = "Focus",        tooltip = "Texture for the bars of the Focus frame." },
-    { key = "texGroup",      label = "Party/Raid",   tooltip = "Texture for the bars of the party and raid frames." },
-    { key = "texPlayerPet",  label = "Player & Pet", tooltip = "Texture for the bars of the Player and Pet frames.",
+    { key = "texFocus",      label = "Focus",        tooltip = "Set the texture of the Focus frame bars." },
+    { key = "texGroup",      label = "Party/Raid",   tooltip = "Set the texture of the party and raid frame bars." },
+    { key = "texPlayerPet",  label = "Player & Pet", tooltip = "Set the texture of the Player and Pet frame bars.",
       old = { "texPlayer", "texPet" } },
-    { key = "texTargetBoss", label = "Target & Boss", tooltip = "Texture for the bars of the Target, Target of Target and Boss frames.",
+    { key = "texTargetBoss", label = "Target & Boss", tooltip = "Set the texture of the Target, Target of Target and Boss frame bars.",
       old = { "texTarget", "texBoss" } },
 }
 
 local OTHER_BARS = {
-    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Texture for the cast bars.",
+    { key = "texCastBar",      label = "Cast Bars",              tooltip = "Set the texture of the cast bars.",
       bullets = { "Colored by cast type" } },
-    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Texture for the bars of the Cooldown Manager and Personal Resource Display.",
+    { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Set the texture of the Cooldown Manager and Personal Resource Display bars.",
       old = { "texPRD", "texCooldownBars" } },
-    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Texture for the bars of the Damage Meter." },
-    { key = "texInterface",    label = "Interface bars",         tooltip = "Texture for the progress bars of the interface.",
+    { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
+    { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
                   "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
@@ -176,21 +177,18 @@ local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
-      tooltip = "Import the PanzaUI layout of the interface frames.",
-      bullets = { "Saved as PanzaUI and made active" } },
+      tooltip = "Import the PanzaUI Edit Mode layout." },
     { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
-      tooltip = "Import the PanzaUI profile of the Platynator nameplates.",
-      bullets = { "Saved as PanzaUI and made active" } },
+      tooltip = "Import the PanzaUI nameplates for Platynator." },
     { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
-      tooltip = "Import the PanzaUI profile of the BigWigs boss alerts.",
-      bullets = { "Confirmed in a BigWigs window" } },
+      tooltip = "Import the PanzaUI boss timers for BigWigs." },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
-      tooltip = "Color the health bars by class or reaction." },
+      tooltip = "Color health bars by class for players and by reaction for NPCs." },
     { key = "refinedBorders", label = "Refined borders", reload = true,
-      tooltip = "Polish the look of borders across the whole UI." },
+      tooltip = "Use rounded icons and a clean border on tooltips and pop-up windows." },
     { key = "textStyle", label = "Refined text", reload = true,
-      tooltip = "Polish the look of text across the whole UI." },
+      tooltip = "Use a clean outlined font across the whole interface." },
 }
 local function AddTextureOptions(header, list)
     options[#options + 1] = { header = header }
@@ -283,7 +281,7 @@ local function SetTexture(bar, path)
     local fill = bar:GetStatusBarTexture()
     local layer, sublevel
     if fill then layer, sublevel = fill:GetDrawLayer() end
-    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
+    if IsSecret(layer) or IsSecret(sublevel) then layer = nil end
     bar:SetStatusBarTexture(path)
     fill = bar:GetStatusBarTexture()
     if fill and layer then fill:SetDrawLayer(layer, sublevel) end
@@ -340,7 +338,7 @@ local ATLAS_COLORS = { -- first match wins
 local atlasColors = {}
 local function AtlasColor(atlas)
     -- Secret names are never used as cache keys.
-    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
+    if IsSecret(atlas) or type(atlas) ~= "string" then return end
     local cached = atlasColors[atlas]
     if cached ~= nil then return cached or nil end
     local name = atlas:lower()
@@ -368,7 +366,7 @@ local function TrackTexture(bar, path, inset)
         if bar.Background then bar.Background:AddMaskTexture(mask) end
     end
     local function EnsureMask(atlas)
-        if not mask and not ns.IsSecret(atlas) and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
+        if not mask and not IsSecret(atlas) and type(atlas) == "string" and C_Texture.GetAtlasInfo(atlas) then
             mask = bar:CreateMaskTexture()
             mask:SetAtlas(atlas)
             mask:SetAllPoints(bar)
@@ -383,7 +381,7 @@ local function TrackTexture(bar, path, inset)
     local original = bar:GetStatusBarTexture()
     local layer, sublevel
     if original then layer, sublevel = original:GetDrawLayer() end
-    if ns.IsSecret(layer) or ns.IsSecret(sublevel) then layer = nil end
+    if IsSecret(layer) or IsSecret(sublevel) then layer = nil end
 
     local busy
     local function Reapply(atlas)
@@ -424,7 +422,7 @@ local function UpdatePowerBar(bar)
     if not path then return end
     SetTexture(bar, path)
     local token = bar.powerToken
-    local info = bar.overrideInfo or (not ns.IsSecret(token) and token and PowerBarColor[token])
+    local info = bar.overrideInfo or (not IsSecret(token) and token and PowerBarColor[token])
     if info and info.r then bar:SetStatusBarColor(info.r, info.g, info.b) end
 end
 
@@ -466,7 +464,7 @@ local function ColorToTPower()
     for i = 1, #totPower, 2 do
         local bar, unit = totPower[i], ns.GroupUnit(totPower[i + 1])
         local _, token = UnitPowerType(unit)
-        local c = not ns.IsSecret(token) and token and PowerBarColor[token]
+        local c = not IsSecret(token) and token and PowerBarColor[token]
         if c then
             totColor[bar] = c
             bar:SetStatusBarColor(c.r, c.g, c.b)
@@ -568,8 +566,8 @@ end
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
     local kind = bar.barType
-    if ns.IsSecret(kind) or type(kind) ~= "string" then kind = asset end
-    if ns.IsSecret(kind) or type(kind) ~= "string" then
+    if IsSecret(kind) or type(kind) ~= "string" then kind = asset end
+    if IsSecret(kind) or type(kind) ~= "string" then
         castBarColor[bar] = nil
         return
     end
@@ -651,27 +649,14 @@ local function FitOutline(region)
     if not region or region:GetObjectType() ~= "FontString" then return end
     local path, size, flags = region:GetFont()
     local r, g, b = region:GetTextColor()
-    if ns.IsSecret(path) or not path or ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or ns.IsSecret(flags) then return end
+    if IsSecret(path) or not path or IsSecret(r) or IsSecret(g) or IsSecret(b) or IsSecret(flags) then return end
     local light = r + g + b >= 1
     local outlined = flags and flags:find("OUTLINE") ~= nil
     if light ~= outlined then region:SetFont(path, size, light and ns.FONT_FLAGS or "") end
 end
 
--- Regions and children walked as returned, without temporary tables.
-local FitFrameOutlines
-
-local function FitRegions(...)
-    for i = 1, select("#", ...) do FitOutline((select(i, ...))) end
-end
-
-local function FitChildren(levels, ...)
-    for i = 1, select("#", ...) do FitFrameOutlines((select(i, ...)), levels) end
-end
-
-function FitFrameOutlines(frame, levels)
-    if not frame then return end
-    FitRegions(frame:GetRegions())
-    if levels > 0 then FitChildren(levels - 1, frame:GetChildren()) end
+local function FitFrameOutlines(frame, levels)
+    ns.WalkRegions(frame, levels, FitOutline)
 end
 
 local function FitQuestInfo()
@@ -680,55 +665,53 @@ local function FitQuestInfo()
     FitFrameOutlines(MapQuestInfoRewardsFrame, 2)
 end
 
--- Spellbook: spell names, headers and page number, as Blizzard sets them up.
--- Archaeology: parchment texts colored dark by the panel itself; each page
--- is checked when it shows.
-local function SetupArchaeology()
-    local panel = ArchaeologyFrame
+-- Parchment panels: their dark texts are checked when the panel shows.
+local function FitPanelOnShow(panel, levels)
     if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 5) end
-    local function Queue() ns.Defer(FitPanel) end
-    panel:HookScript("OnShow", Queue)
-    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
-        local page = panel[key]
-        if page then page:HookScript("OnShow", Queue) end
-    end
-    if panel:IsShown() then Queue() end
+    return ns.OnShowDeferred(panel, function() FitFrameOutlines(panel, levels) end)
 end
 
--- What's New: dark header on the parchment, checked when the panel shows.
+-- Archaeology: texts colored dark by the panel itself, on every page.
+local function SetupArchaeology()
+    local Queue = FitPanelOnShow(ArchaeologyFrame, 5)
+    if not Queue then return end
+    for _, key in ipairs({ "summaryPage", "completedPage", "artifactPage", "helpPage" }) do
+        local page = ArchaeologyFrame[key]
+        if page then page:HookScript("OnShow", Queue) end
+    end
+end
+
+-- What's New: dark header on the parchment.
 local function SetupSplash()
-    local panel = SplashFrame
-    if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 3) end
-    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
-    if panel:IsShown() then ns.Defer(FitPanel) end
+    FitPanelOnShow(SplashFrame, 3)
 end
 
 -- Adventure Guide: dark texts on the parchment (Suggested Content,
--- Tutorials), checked when the guide shows, the tab changes or the
--- suggestions change.
+-- Tutorials), also checked when the tab or the suggestions change.
 local function SetupAdventureGuide()
-    local guide = EncounterJournal
-    if not guide then return end
-    local function FitGuide() FitFrameOutlines(guide, 5) end
-    local function Queue() ns.Defer(FitGuide) end
-    guide:HookScript("OnShow", Queue)
+    local Queue = FitPanelOnShow(EncounterJournal, 5)
+    if not Queue then return end
     ns.Hook("EJ_ContentTab_Select", Queue)
     ns.Hook("EJSuggestFrame_RefreshDisplay", Queue)
-    if guide:IsShown() then Queue() end
 end
 
--- PvP: dark texts of the New Season parchment (Rated tab), checked when it
--- shows (the whole PvP panel if the parchment isn't found).
+-- PvP: dark texts of the New Season parchment (Rated tab), or of the whole
+-- PvP panel if the parchment isn't found.
 local function SetupPvP()
-    local panel = (PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame
-    if not panel then return end
-    local function FitPanel() FitFrameOutlines(panel, 4) end
-    panel:HookScript("OnShow", function() ns.Defer(FitPanel) end)
-    if panel:IsShown() then ns.Defer(FitPanel) end
+    FitPanelOnShow((PVPQueueFrame and PVPQueueFrame.NewSeasonPopup) or PVPUIFrame, 4)
 end
 
+-- Mythic+: dark texts of the New Season parchment.
+local function SetupChallenges()
+    FitPanelOnShow(ChallengesFrame and ChallengesFrame.SeasonChangeNoticeFrame, 2)
+end
+
+-- Professions book: profession names on the parchment.
+local function SetupProfessionsBook()
+    FitPanelOnShow(ProfessionsBookFrame, 4)
+end
+
+-- Spellbook: spell names, headers and page number, as Blizzard sets them up.
 local function SetupSpellBook()
     ns.Hook(SpellBookItemMixin, "UpdateVisuals", function(item)
         FitOutline(item.Name)
@@ -738,15 +721,14 @@ local function SetupSpellBook()
     ns.Hook(SpellBookHeaderMixin, "Init", function(header) FitOutline(header.Text) end)
     local book = PlayerSpellsFrame and PlayerSpellsFrame.SpellBookFrame
     local pages = book and book.PagedSpellsFrame
-    if not pages then return end
-    local function FitPages() FitFrameOutlines(pages, 4) end
-    book:HookScript("OnShow", function() ns.Defer(FitPages) end)
+    if pages then ns.OnShowDeferred(book, function() FitFrameOutlines(pages, 4) end) end
 end
 
 -- Texts colored dark at runtime (achievements, parchment pages): the outline
 -- is removed while they are dark and put back when they turn light again.
 -- Nameplates are left to their own addons.
 local DARK = 0.4 -- brightest channel of a dark color
+local max = math.max
 local removedOutline = setmetatable({}, { __mode = "k" }) -- text -> its flags
 
 local function OnNamePlate(region)
@@ -763,12 +745,12 @@ local function OnNamePlate(region)
 end
 
 local function FitTextColor(text, r, g, b)
-    if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not (r and g and b) then return end
-    local dark, flags = math.max(r, g, b) < DARK, removedOutline[text]
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) or not (r and g and b) then return end
+    local dark, flags = max(r, g, b) < DARK, removedOutline[text]
     if not dark and not flags then return end -- light text never changed
     if text:IsForbidden() or (dark and OnNamePlate(text)) then return end
     local path, size, current = text:GetFont()
-    if ns.IsSecret(path) or not path or ns.IsSecret(current) then return end
+    if IsSecret(path) or not path or IsSecret(current) then return end
     local outlined = current and current:find("OUTLINE") ~= nil
     if dark then
         if outlined then
@@ -794,6 +776,8 @@ local function StyleBlizzardTexts()
     EventUtil.ContinueOnAddOnLoaded("Blizzard_ArchaeologyUI", SetupArchaeology)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_EncounterJournal", SetupAdventureGuide)
     EventUtil.ContinueOnAddOnLoaded("Blizzard_PVPUI", SetupPvP)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ChallengesUI", SetupChallenges)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", SetupProfessionsBook)
     if SplashFrame then SetupSplash() else EventUtil.ContinueOnAddOnLoaded("Blizzard_SplashFrame", SetupSplash) end
 end
 
@@ -826,76 +810,6 @@ local function RewardIcon(button)
     return button.Icon or button.IconTexture or (name and _G[name .. "IconTexture"])
 end
 
--- Item buttons (rewards, reagents, profession gear): rounded icon fitted to
--- the button's icon, its frame in the item quality color instead of
--- Blizzard's square quality border. The color is read from every way
--- Blizzard sets that border: quality, vertex color or colored atlas.
-local qualityFrames = setmetatable({}, { __mode = "k" }) -- button -> icon frame
-local QUALITY_MIN = Enum.ItemQuality and Enum.ItemQuality.Uncommon or 2
-local Q = Enum.ItemQuality or {}
-local ATLAS_QUALITY = { -- word in the border atlas name -> quality
-    green = Q.Uncommon or 2, blue = Q.Rare or 3, purple = Q.Epic or 4, orange = Q.Legendary or 5,
-    artifact = Q.Artifact or 6, heirloom = Q.Heirloom or 7, account = Q.Heirloom or 7,
-    uncommon = Q.Uncommon or 2, rare = Q.Rare or 3, epic = Q.Epic or 4, legendary = Q.Legendary or 5,
-}
-
-local function SetFrameColor(frame, r, g, b)
-    if r then frame:SetVertexColor(r, g, b) else frame:SetVertexColor(1, 1, 1) end
-end
-
-local function QualityColor(quality)
-    if ns.IsSecret(quality) or not quality or quality < QUALITY_MIN then return end
-    local c = ITEM_QUALITY_COLORS[quality]
-    if c then return c.r, c.g, c.b end
-end
-
-local function TintQualityFrame(button, quality)
-    local frame = qualityFrames[button]
-    if frame then SetFrameColor(frame, QualityColor(quality)) end
-end
-if SetItemButtonQuality then hooksecurefunc("SetItemButtonQuality", TintQualityFrame) end
-
-local function AtlasQuality(atlas)
-    if ns.IsSecret(atlas) or type(atlas) ~= "string" then return end
-    atlas = atlas:lower()
-    for word, quality in pairs(ATLAS_QUALITY) do
-        if atlas:find(word, 1, true) then return quality end
-    end
-end
-
-local function StyleItemButton(button, icon)
-    if qualityFrames[button] or not icon then return end
-    local frame = ns.StyleIcon(icon, button)
-    if not frame then return end
-    qualityFrames[button] = frame
-    if button.SetItemButtonQuality then hooksecurefunc(button, "SetItemButtonQuality", TintQualityFrame) end
-    local border = button.IconBorder
-    if not border then return frame end
-    border:SetAlpha(0)
-    hooksecurefunc(border, "Hide", function() SetFrameColor(frame) end)
-    hooksecurefunc(border, "SetAtlas", function(_, atlas)
-        local quality = AtlasQuality(atlas)
-        if quality then SetFrameColor(frame, QualityColor(quality)) end
-    end)
-    hooksecurefunc(border, "SetVertexColor", function(_, r, g, b)
-        if ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b) or not r then return end
-        if r + g + b < 2.9 then SetFrameColor(frame, r, g, b) end -- white: no quality color
-    end)
-    -- Border already set before styling.
-    if border:IsShown() then
-        local quality = AtlasQuality(border:GetAtlas())
-        if quality then
-            SetFrameColor(frame, QualityColor(quality))
-        else
-            local r, g, b = border:GetVertexColor()
-            if not (ns.IsSecret(r) or ns.IsSecret(g) or ns.IsSecret(b)) and r and r + g + b < 2.9 then
-                SetFrameColor(frame, r, g, b)
-            end
-        end
-    end
-    return frame
-end
-
 local function StyleRewardButtons(levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
@@ -904,7 +818,7 @@ local function StyleRewardButtons(levels, ...)
             local icon = RewardIcon(button)
             if icon and icon.AddMaskTexture and (button.NameFrame or (name and _G[name .. "NameFrame"])) then
                 styledRewards[button] = true
-                StyleItemButton(button, icon)
+                ns.StyleItemButton(button, icon)
             elseif levels > 0 then
                 StyleRewardButtons(levels - 1, button:GetChildren())
             end
@@ -921,19 +835,6 @@ local function StyleQuestRewards()
     StyleRewards(MapQuestInfoRewardsFrame, 2)
 end
 
--- Scrolling lists (Currency tab, Equipment Manager): the icon of each row,
--- styled once per row as Blizzard creates it.
-local styledRowIcons = setmetatable({}, { __mode = "k" })
-
-local function StyleRowIcons(box, GetIcon)
-    if not (box and ScrollUtil) then return end
-    ScrollUtil.AddInitializedFrameCallback(box, ns.ScrollFrameCallback(function(row)
-        local icon, parent = GetIcon(row)
-        if not icon or styledRowIcons[icon] then return end
-        if ns.StyleIcon(icon, parent) then styledRowIcons[icon] = true end
-    end), ns, true)
-end
-
 local function CurrencyIcon(row)
     local content = row.Content or row
     return content.CurrencyIcon or row.CurrencyIcon, content
@@ -947,12 +848,82 @@ local function GearSetIcon(row)
 end
 
 local function SetupCurrencyIcons()
-    StyleRowIcons(TokenFrame and TokenFrame.ScrollBox, CurrencyIcon)
+    ns.StyleScrollIcons(TokenFrame and TokenFrame.ScrollBox, CurrencyIcon)
 end
 
 local function SetupGearSetIcons()
     local pane = PaperDollFrame and PaperDollFrame.EquipmentManagerPane
-    StyleRowIcons(pane and pane.ScrollBox, GearSetIcon)
+    ns.StyleScrollIcons(pane and pane.ScrollBox, GearSetIcon)
+end
+
+-- Collections, Sets: the icons of the sets list and the item icons of the
+-- selected set (in the item quality color, styled each time it is shown).
+-- Blizzard sets the alpha of the square quality border on every display
+-- (collected or not), so it is hidden again each time.
+local function StyleSetItem(item)
+    ns.StyleItemButton(item, item.Icon, true) -- square slot art hidden
+    if item.IconBorder then item.IconBorder:SetAlpha(0) end
+end
+
+-- Sets list: the icon of each set row (in its IconFrame, with the dark
+-- cover of sets not collected).
+local function SetListIcon(row)
+    local holder = row.IconFrame
+    if holder then return holder.Icon, holder, holder.Cover end
+    return row.Icon, row
+end
+
+local function SetupSetIcons()
+    local sets = WardrobeCollectionFrame and WardrobeCollectionFrame.SetsCollectionFrame
+    if not sets then return end
+    local list = sets.ListContainer
+    ns.StyleScrollIcons(list and list.ScrollBox, SetListIcon)
+    local details = sets.DetailsFrame
+    if details then
+        ns.Hook(sets, "DisplaySet", function() ns.ForEachActive(details.itemFramesPool, StyleSetItem) end)
+    end
+end
+
+-- Collections, Mounts: the icon of each mount row and of the selected mount.
+local function MountIcon(row)
+    return row.icon or row.Icon, row
+end
+
+local function SetupMountIcons()
+    local journal = MountJournal
+    if not journal then return end
+    ns.StyleScrollIcons(journal.ScrollBox, MountIcon)
+    local info = journal.MountDisplay and journal.MountDisplay.InfoButton
+    local icon = info and (info.Icon or MountJournalIcon)
+    if icon then ns.StyleIcon(icon, info) end
+end
+
+-- Delves Companion abilities: the icon of each ability button, checked when
+-- the list shows and when its page or role changes.
+local styledAbilities = setmetatable({}, { __mode = "k" })
+
+local function StyleAbilityButtons(levels, ...)
+    for i = 1, select("#", ...) do
+        local button = select(i, ...)
+        if not button:IsForbidden() and not styledAbilities[button] then
+            local icon = button.Icon
+            if icon and icon.AddMaskTexture and button.Name then
+                styledAbilities[button] = true
+                ns.StyleIcon(icon, button)
+            elseif levels > 0 then
+                StyleAbilityButtons(levels - 1, button:GetChildren())
+            end
+        end
+    end
+end
+
+local function SetupCompanionAbilities()
+    local list = DelvesCompanionAbilityListFrame
+    if not list then return end
+    local Queue = ns.OnShowDeferred(list, function() StyleAbilityButtons(3, list:GetChildren()) end)
+    for _, method in ipairs({ "UpdatePaginatedButtonDisplay", "RefreshPaginatedButtons", "UpdateDisplay" }) do
+        ns.Hook(list, method, Queue)
+    end
 end
 
 -- Delves: the "Chance to receive" rewards, checked when the picker shows
@@ -960,44 +931,23 @@ end
 local function SetupDelveRewards()
     local picker = DelvesDifficultyPickerFrame
     if not picker then return end
-    local function Style() StyleRewards(picker, 4) end
-    local function Queue() ns.Defer(Style) end
-    picker:HookScript("OnShow", Queue)
+    local Queue = ns.OnShowDeferred(picker, function() StyleRewards(picker, 4) end)
     local rewards = picker.DelveRewardsContainerFrame
     if rewards then
         ns.Hook(rewards, "SetRewards", Queue)
         rewards:HookScript("OnShow", Queue)
     end
-    if picker:IsShown() then Queue() end
 end
 
 -- Professions: concentration, gear slots, reagents and the Concentrate
--- button (the round recipe icon keeps its own look).
--- Profession slots (gear, reagents): their square slot art (background
--- layers and normal texture) sits off the icon, so only the icon and its
--- frame are kept.
-local function HideSlotArt(button, icon, frame, ...)
-    for i = 1, select("#", ...) do
-        local region = select(i, ...)
-        if region ~= icon and region ~= frame and region:GetObjectType() == "Texture" then
-            local layer = region:GetDrawLayer()
-            if layer == "BACKGROUND" or layer == "BORDER" then region:SetAlpha(0) end
-        end
-    end
-    local normal = button.GetNormalTexture and button:GetNormalTexture()
-    if normal then normal:SetAlpha(0) end
-end
-
+-- button (the round recipe icon keeps its own look, slot art is hidden).
 local function StyleProfessionButtons(form, levels, ...)
     for i = 1, select("#", ...) do
         local button = select(i, ...)
         if not button:IsForbidden() and button ~= form.OutputIcon then
             local icon = button.Icon or button.icon
             if icon and icon.AddMaskTexture and button.IconBorder then
-                if not qualityFrames[button] then
-                    local frame = StyleItemButton(button, icon)
-                    if frame then HideSlotArt(button, icon, frame, button:GetRegions()) end
-                end
+                ns.StyleItemButton(button, icon, true)
             elseif levels > 0 then
                 StyleProfessionButtons(form, levels - 1, button:GetChildren())
             end
@@ -1011,22 +961,17 @@ local function SetupProfessionIcons()
     local form = page.SchematicForm
     local function StylePage()
         local display = page.ConcentrationDisplay
-        if display and display.Icon and not qualityFrames[display] then StyleItemButton(display, display.Icon) end
+        if display then ns.StyleItemButton(display, display.Icon) end
         StyleProfessionButtons(page, 1, page:GetChildren()) -- gear slots
         if form then
             StyleProfessionButtons(form, 5, form:GetChildren()) -- reagents
             local choices = form.Details and form.Details.CraftingChoicesContainer
             local toggle = choices and choices.ConcentrateContainer and choices.ConcentrateContainer.ConcentrateToggleButton
-            if toggle and toggle.Icon and not qualityFrames[toggle] then
-                local frame = StyleItemButton(toggle, toggle.Icon)
-                if frame then HideSlotArt(toggle, toggle.Icon, frame, toggle:GetRegions()) end
-            end
+            if toggle then ns.StyleItemButton(toggle, toggle.Icon, true) end
         end
     end
-    local function Queue() ns.Defer(StylePage) end
-    page:HookScript("OnShow", Queue)
+    local Queue = ns.OnShowDeferred(page, StylePage)
     if form then ns.Hook(form, "Init", Queue) end
-    if page:IsShown() then Queue() end
 end
 
 -- Called at login and when the Group Finder loads: each hook is set once.
@@ -1046,15 +991,13 @@ end
 -- PanzaUI border instead of Blizzard's frame, scaled down to the icon frame
 -- size. Tooltips: the background is inset to stay inside the corners; both
 -- are set again when Blizzard changes the tooltip style.
-local NINESLICE_PIECES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-local BORDER_SCALE, TOOLTIP_INSET = 0.2, 3
+local TOOLTIP_INSET = 3
 local DIALOG_BG = { 0.08, 0.07, 0.06, 0.95 } -- dark, like Blizzard's dialogs
 local DIALOG_OVERLAP = 2 -- framed dialogs: border outside the background (2 of its 4 units cover the edge)
 -- Dialogs with Blizzard's dialog frame (Border with edges and a Bg).
+-- The ready check keeps Blizzard's frame: its portrait sits on the border.
 local FRAMED_DIALOGS = { "LFGDungeonReadyDialog", "LFGDungeonReadyStatus", "LFDRoleCheckPopup",
-    "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog",
-    "ReadyCheckListenerFrame" }
+    "LFGInvitePopup", "LFGListInviteDialog", "LFGListApplicationDialog", "PVPReadyDialog" }
 -- Edit Mode windows: styled once at login, without hooks (Edit Mode is
 -- sensitive to taint); Blizzard doesn't redraw their frame.
 local EDIT_MODE_BG = { 0.06, 0.05, 0.04, 0.85 } -- dark and see-through, like Blizzard's
@@ -1065,31 +1008,7 @@ local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialo
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
     "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip",
     "AutoCompleteBox" } -- name suggestions (mail, whispers, invites)
-local panelBorders = {}
-
-local function HidePieces(nineSlice)
-    for _, key in ipairs(NINESLICE_PIECES) do
-        local piece = nineSlice[key]
-        if piece then piece:SetAlpha(0) end
-    end
-end
-
--- Border on `owner`, around `anchor` pushed out by `outset` (screen units).
-local function PanelBorder(owner, anchor, outset)
-    if panelBorders[owner] then return panelBorders[owner] end
-    local border = owner:CreateTexture(nil, "BORDER", nil, 7)
-    local m = ns.BORDER.margin
-    local pad = ns.BORDER.padding + outset / BORDER_SCALE
-    border:SetTexture(ns.BORDER.file)
-    border:SetTextureSliceMargins(m, m, m, m)
-    border:SetTextureSliceMode(Enum.UITextureSliceMode.Stretched)
-    border:SetScale(BORDER_SCALE)
-    border:SetPoint("TOPLEFT", anchor, "TOPLEFT", -pad, pad)
-    border:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", pad, -pad)
-    panelBorders[owner] = border
-    return border
-end
-ns.PanelBorder = PanelBorder
+local HidePieces, PanelBorder = ns.HideFramePieces, ns.PanelBorder
 
 local function StyleTooltipBorder(tooltip)
     local nineSlice = tooltip and not tooltip:IsForbidden() and tooltip.NineSlice
@@ -1148,7 +1067,10 @@ local function StyleFramedDialog(dialog, flatBg)
 end
 
 -- Framed dialogs of load-on-demand addons, styled when they load.
-local LOD_DIALOGS = { Blizzard_DelvesDifficultyPicker = "DelvesDifficultyPickerFrame" }
+local LOD_DIALOGS = {
+    Blizzard_DelvesDifficultyPicker = "DelvesDifficultyPickerFrame",
+    Blizzard_DelvesCompanionConfiguration = "DelvesCompanionConfigurationFrame",
+}
 
 local function HookFramedDialog(name)
     local dialog = _G[name]
@@ -1172,6 +1094,134 @@ local function StyleDialogs()
     for _, name in ipairs(EDIT_MODE_DIALOGS) do StyleFramedDialog(_G[name], true) end
 end
 
+-- Great Vault "Collect" buttons: the reward icon is drawn inside
+-- their text. It's replaced by an empty space of the same size, with a real
+-- icon (action bar style) placed on it.
+local BLANK = ns.BLANK
+local vaultIcons = {} -- text -> icon texture
+
+local function PlaceVaultIcon(text, icon)
+    local justify, shown = text:GetJustifyH(), text:GetStringWidth()
+    icon:ClearAllPoints()
+    if justify == "LEFT" then
+        icon:SetPoint("LEFT", text, "LEFT")
+    elseif justify == "RIGHT" then
+        icon:SetPoint("LEFT", text, "RIGHT", -shown, 0)
+    else
+        icon:SetPoint("LEFT", text, "CENTER", -shown / 2, 0)
+    end
+end
+
+local function StyleVaultText(text)
+    local value = text:GetText()
+    if IsSecret(value) or type(value) ~= "string" then return end
+    local icon = vaultIcons[text]
+    -- Only an icon at the start of the text (eg. "[icon] x 6").
+    local file, params, rest = value:match("^%s*|T([^:|]+):?([^|]*)|t(.*)$")
+    if not file or file == BLANK then
+        if icon and not file then icon:Hide() end
+        return
+    end
+    local height, width = params:match("^(%d*):?(%d*)")
+    height, width = tonumber(height) or 0, tonumber(width) or 0
+    if height == 0 then height = select(2, text:GetFont()) or 16 end
+    if width == 0 then width = height end
+    if not icon then
+        local parent = text:GetParent()
+        icon = parent:CreateTexture(nil, "ARTWORK")
+        if not ns.StyleIcon(icon, parent) then return end
+        vaultIcons[text] = icon
+    end
+    icon:SetTexture(tonumber(file) or file)
+    icon:SetSize(width, height)
+    text:SetText("|T" .. BLANK .. ":" .. height .. ":" .. width .. "|t" .. rest)
+    PlaceVaultIcon(text, icon)
+    icon:Show()
+end
+
+-- Great Vault rewards (raids, dungeons, world): the item icon of every
+-- unlocked slot in the quality color of the item (read from its link).
+-- Blizzard's item box draws the square icon frame and the name box in one
+-- texture: it's hidden and the name box is drawn again, with the PanzaUI
+-- border in the same color, and the icon centered on it.
+local VAULT_ITEM_BOX = "weeklyrewards%-reward%-itemframe"
+local VAULT_BOX_CUT = 3 -- the name box starts this far right of the icon
+local vaultFrames, vaultBorders = {}, {} -- item -> icon frame, name box border
+
+local function StyleVaultBox(item)
+    for _, region in ipairs({ item:GetRegions() }) do
+        local atlas = region.GetAtlas and region:GetAtlas()
+        if not IsSecret(atlas) and type(atlas) == "string" and atlas:find(VAULT_ITEM_BOX) then
+            local left, top, right, bottom = region:GetLeft(), region:GetTop(), region:GetRight(), region:GetBottom()
+            local iconRight, x0, y0 = item.Icon:GetRight(), item:GetLeft(), item:GetTop()
+            if not (left and right and iconRight and x0) then return end
+            left = math.max(left, iconRight + VAULT_BOX_CUT)
+            if left >= right then return end
+            region:SetAlpha(0)
+            local bg = item:CreateTexture(nil, "BORDER", nil, -1)
+            bg:SetColorTexture(unpack(DIALOG_BG))
+            bg:SetPoint("TOPLEFT", item, "TOPLEFT", left - x0 + TOOLTIP_INSET, top - y0 - TOOLTIP_INSET)
+            bg:SetPoint("BOTTOMRIGHT", item, "TOPLEFT", right - x0 - TOOLTIP_INSET, bottom - y0 + TOOLTIP_INSET)
+            vaultBorders[item] = PanelBorder(item, bg, TOOLTIP_INSET)
+            local _, iconY = item.Icon:GetCenter()
+            if iconY and item.Icon.AdjustPointsOffset then
+                item.Icon:AdjustPointsOffset(0, (top + bottom) / 2 - iconY)
+            end
+            return
+        end
+    end
+end
+
+local function TintVaultItem(item)
+    local frame = vaultFrames[item]
+    if not frame then return end
+    local info = item:GetParent() and item:GetParent().info
+    local reward = info and info.rewards and info.rewards[1]
+    local id = item.displayedItemDBID or (reward and reward.itemDBID)
+    local link = id and C_WeeklyRewards.GetItemHyperlink and C_WeeklyRewards.GetItemHyperlink(id)
+    local quality = link and C_Item.GetItemQualityByID(link)
+    local c = not IsSecret(quality) and quality and quality >= 2 and ITEM_QUALITY_COLORS[quality]
+    local r, g, b = 1, 1, 1
+    if c then r, g, b = c.r, c.g, c.b end
+    frame:SetVertexColor(r, g, b)
+    if vaultBorders[item] then vaultBorders[item]:SetVertexColor(r, g, b) end
+end
+
+local function StyleVaultItems(vault)
+    for _, activity in ipairs(vault.Activities or {}) do
+        local item = activity.ItemFrame
+        if item and item.Icon and not vaultFrames[item] then
+            vaultFrames[item] = ns.StyleIcon(item.Icon, item)
+            if item.SetDisplayedItem then hooksecurefunc(item, "SetDisplayedItem", TintVaultItem) end
+        end
+        if item and vaultFrames[item] then
+            if not vaultBorders[item] and item:IsVisible() then StyleVaultBox(item) end
+            TintVaultItem(item)
+        end
+    end
+end
+
+local function SetupVaultIcons()
+    local vault = WeeklyRewardsFrame
+    if not vault then return end
+    ns.OnShowDeferred(vault, function() StyleVaultItems(vault) end)
+    local rewards = vault.ConcessionsFrame
+    rewards = rewards and rewards.Rewards
+    if not rewards then return end
+    local i = 1
+    local button = rewards.ConcessionFrame1
+    while button do
+        local text = button.RewardsFrame and button.RewardsFrame.Text
+        if text then
+            StyleVaultText(text)
+            hooksecurefunc(text, "SetText", StyleVaultText)
+            hooksecurefunc(text, "SetFormattedText", StyleVaultText)
+        end
+        i = i + 1
+        button = rewards["ConcessionFrame" .. i]
+    end
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -1183,6 +1233,12 @@ function GEN:OnEnable()
         if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
         SetupGearSetIcons()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_WeeklyRewards", SetupVaultIcons)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", function()
+            SetupSetIcons()
+            SetupMountIcons()
+        end)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
@@ -1244,12 +1300,27 @@ function GEN:OnEnable()
     end
 
     -- Achievement window and criteria bars (children walked as varargs).
+    -- Their texts sit a bit high on the flat texture: moved down once.
     if interface then
+        local ACHIEVEMENT_TEXT_OFFSET = 1
+        local loweredTexts = {}
+        local function LowerText(region)
+            if loweredTexts[region] or region:GetObjectType() ~= "FontString" then return end
+            loweredTexts[region] = true
+            for i = 1, region:GetNumPoints() do
+                local point, relative, relativePoint, x, y = region:GetPoint(i)
+                region:SetPoint(point, relative, relativePoint, x, (y or 0) - ACHIEVEMENT_TEXT_OFFSET)
+            end
+        end
+        local function TrackAchievementBar(bar)
+            TrackTexture(bar, interface, 2)
+            ns.WalkRegions(bar, 0, LowerText)
+        end
         local Scan
         local function ScanChildren(...)
             for i = 1, select("#", ...) do
                 local child = select(i, ...)
-                if child:IsObjectType("StatusBar") then TrackTexture(child, interface, 2) end
+                if child:IsObjectType("StatusBar") then TrackAchievementBar(child) end
                 Scan(child)
             end
         end
@@ -1261,7 +1332,7 @@ function GEN:OnEnable()
                 if not bars then return end
                 for _, bar in pairs(bars) do
                     if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
-                        TrackTexture(bar, interface, 2)
+                        TrackAchievementBar(bar)
                     end
                 end
             end)
@@ -1297,15 +1368,9 @@ function GEN:OnEnable()
 
     -- Tooltip progress and status bars.
     if interface then
+        local function TrackTooltipBar(bar) TrackTexture(bar.Bar or bar, interface, 1) end
         local function TrackTooltipPool(tooltip, poolKey)
-            local pool = tooltip and tooltip[poolKey]
-            if not pool then return end
-            local active = pool.activeObjects
-            if active then
-                for bar in pairs(active) do TrackTexture(bar.Bar or bar, interface, 1) end
-            elseif pool.EnumerateActive then
-                for bar in pool:EnumerateActive() do TrackTexture(bar.Bar or bar, interface, 1) end
-            end
+            ns.ForEachActive(tooltip and tooltip[poolKey], TrackTooltipBar)
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)

@@ -28,21 +28,19 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Cast Bar" },
         { key = "castStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the cast bars.",
-          bullets = { "Elapsed time in the center", "No fade out" } },
+          bullets = { "Cast time on the bar" } },
         { header = "Cooldown Manager" },
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager." },
         { key = "cdmDynamic", label = "Dynamic layout", reload = true,
-          tooltip = "Keep tracked buffs and bars packed with no gaps.",
-          bullets = { "Icons grow from the center", "Bars grow upwards" } },
+          tooltip = "Keep tracked buffs and bars packed together, with no gaps." },
         { header = "Damage Meter" },
         { key = "dmStyle", label = "Refined style", reload = true,
-          tooltip = "Polish the look of the Damage Meter.",
-          bullets = { "Icons in the action bar style", "No pinned row for your character" } },
+          tooltip = "Polish the look of the Damage Meter." },
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
-          bullets = { "Centered text", "Health and power as a percentage", "Alternate power value always shown", "Hidden while casting" } },
+          bullets = { "Health and power as a percentage", "Hidden while casting" } },
     },
 })
 
@@ -81,6 +79,14 @@ end
 
 local function StyleAuraButton(button, icon)
     ns.StyleIcon(icon, button)
+end
+
+-- Loss of control alert (eg. "Rooted"): its icon and cooldown swipe.
+local function StyleLossOfControl()
+    local frame = LossOfControlFrame
+    if not (frame and frame.Icon) then return end
+    ns.StyleIcon(frame.Icon, frame)
+    ns.RoundSwipe(frame.Cooldown)
 end
 
 local function StyleAuraText(button)
@@ -437,6 +443,7 @@ function CB:OnEnable()
         if ns.textStyle then ForEachAuraButton(StyleAuraText) end
         ForEachAuraButton(ZoomAuraIcon)
     end)
+    if db.auraStyle then StyleLossOfControl() end
     if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
     if ns.textStyle then ns.ForEachCastBar(StyleCastText) end
     if db.prdStyle or ns.textStyle then

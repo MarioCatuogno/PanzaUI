@@ -15,13 +15,11 @@ local GF = ns:RegisterModule("GroupFrames", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the party and raid frames.",
-          bullets = { "Names without server", "Long names shortened", "Health as a percentage" } },
+          bullets = { "Names without server", "Health as a percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
-          tooltip = "Use cleaner overlays on the party and raid health bars.",
-          bullets = { "Shields and incoming heals", "Aggro border", "No over-absorb glow" } },
+          tooltip = "Use cleaner textures for shields, incoming heals and aggro." },
         { key = "hdRoleIcons", label = "HD role icons", reload = true,
-          tooltip = "Use sharper role icons on the party and raid frames.",
-          bullets = { "Also on the Player frame" } },
+          tooltip = "Use sharper role icons on the party and raid frames." },
     },
 })
 
@@ -62,8 +60,7 @@ local function UpdateName(frame)
     if IsSecret(unit) or not unit or unit:find("nameplate", 1, true) or not frame.name then return end
     local name = UnitName(unit)
     if IsSecret(name) or not name then return end
-    if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
-    frame.name:SetText(name)
+    frame.name:SetText(ns.StripFollowerMark(name))
 end
 
 -- Only where Blizzard shows a health text; status texts are kept.
@@ -87,7 +84,15 @@ end
 -- Role icons: fixed when Blizzard leaves them hidden, optionally HD.
 --------------------------------------------------------------------------------
 local ROLES = { TANK = true, HEALER = true, DAMAGER = true }
+local ROLE_ICON_INSET = 0 -- the icon is this much smaller than the name
 local hdRoles
+
+-- Icon size from the name text (eg. name 14, icon 14); nil if unreadable.
+local function NameIconSize(frame)
+    local size = frame.name and select(2, frame.name:GetFont())
+    if IsSecret(size) or not size or size < 2 + ROLE_ICON_INSET then return end
+    return size - ROLE_ICON_INSET
+end
 
 local function KnownRole(frame)
     local unit = frame.unit
@@ -110,7 +115,10 @@ local function UpdateRoleIcon(frame)
     local icon = frame.roleIcon
     if not (icon and icon:IsShown()) then return end
     local role = KnownRole(frame)
-    if role and icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
+    if not role then return end
+    if icon:GetAtlas() == GetMicroIconForRole(role) then SetRoleAtlas(icon, role) end
+    local size = NameIconSize(frame)
+    if size then icon:SetSize(size, size) end
 end
 
 local TINY_ROLE_ATLASES = {
@@ -120,18 +128,21 @@ local TINY_ROLE_ATLASES = {
 }
 
 local function UpdatePlayerRoleIcon()
-    local icon = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.RoleIcon
+    local content = PlayerFrame and PlayerFrame.PlayerFrameContent
+    local ctx = content and content.PlayerFrameContentContextual
+    local icon = ctx and ctx.RoleIcon
     if not (icon and icon:IsShown() and GetIconForRole) then return end
     local role = TINY_ROLE_ATLASES[icon:GetAtlas()]
     if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
 end
 
--- The icon can be 0x0 before the first layout: the name size is used.
+-- The icon can be 0x0 before the first layout: sized from the name (HD
+-- icons always are), else from its own height.
 local function RoleIconSize(frame, icon)
-    local size = icon:GetHeight()
+    local size = NameIconSize(frame)
+    if size then return size end
+    size = icon:GetHeight()
     if not IsSecret(size) and size >= 2 then return size end
-    local _, fontSize = frame.name and frame.name:GetFont()
-    if not IsSecret(fontSize) and fontSize and fontSize >= 2 then return fontSize end
     return 12
 end
 
@@ -166,7 +177,7 @@ end)
 --------------------------------------------------------------------------------
 -- Refined overlays: PanzaUI textures for absorbs, heal prediction and aggro.
 --------------------------------------------------------------------------------
-local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local MEDIA = ns.MEDIA .. [[Statusbar\]]
 local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
 
 local function StyleHealPrediction(bar, color)

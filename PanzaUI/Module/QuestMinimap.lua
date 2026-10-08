@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Quest & Minimap
-    Minimap style and clutter, Quest Tracker auto-collapse and quest count.
+    Minimap style and clutter, Quest Tracker style, auto-collapse and quest
+    count.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -10,6 +11,7 @@ local QM = ns:RegisterModule("QuestMinimap", {
         minimapStyle   = true,
         minimapClutter = true,
         combatCollapse = true,
+        trackerStyle   = true,
         questCount     = true,
     },
     options = {
@@ -17,14 +19,14 @@ local QM = ns:RegisterModule("QuestMinimap", {
         { key = "minimapStyle", label = "Refined style",
           tooltip = "Polish the look of the minimap." },
         { key = "minimapClutter", label = "Hide clutter",
-          tooltip = "Hide minor notifications around the minimap.",
-          bullets = { "Pending calendar invites notice and flashing icon" } },
+          tooltip = "Hide the calendar invite alerts on the minimap." },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
-          tooltip = "Hide the Quest Tracker during instance combat.",
-          bullets = { "Boss fights and Mythic+ runs", "Raid and dungeon combat, except Raid Finder and Follower dungeons", "Dungeon and Mythic+ objectives stay visible" } },
+          tooltip = "Hide the Quest Tracker during boss fights and combat in dungeons and raids." },
         { key = "questCount", label = "Quest count",
-          tooltip = "Show the number of quests in the tracker header." },
+          tooltip = "Show how many quests you have in the tracker header." },
+        { key = "trackerStyle", label = "Refined style", reload = true,
+          tooltip = "Give the Quest Tracker a cleaner header." },
     },
 })
 
@@ -64,6 +66,20 @@ end
 local function ApplyBackgrounds()
     local alpha = QM.db.minimapStyle and 0 or 1
     for _, region in pairs(Backgrounds()) do region:SetAlpha(alpha) end
+end
+
+-- Clock text at the zone name size (its own size kept to restore it).
+local clockSize
+
+local function ApplyClockSize()
+    local clock, zone = TimeManagerClockTicker, MinimapZoneText
+    if not (clock and zone) then return end
+    local path, size, flags = clock:GetFont()
+    local _, zoneSize = zone:GetFont()
+    if not (path and size and zoneSize) then return end
+    clockSize = clockSize or size
+    local target = QM.db.minimapStyle and zoneSize or clockSize
+    if size ~= target then clock:SetFont(path, target, flags) end
 end
 
 --------------------------------------------------------------------------------
@@ -152,19 +168,28 @@ events:SetScript("OnEvent", function(_, event)
 end)
 
 local function SetCombatCollapse(on)
+    ns.SetEvents(events, on, unpack(COLLAPSE_EVENTS))
     if on then
-        for _, event in ipairs(COLLAPSE_EVENTS) do events:RegisterEvent(event) end
         inCombat = InCombatLockdown()
-        UpdateCollapse()
     else
-        events:UnregisterAllEvents()
         inEncounter, inCombat = false, false
-        UpdateCollapse()
     end
+    UpdateCollapse()
 end
 
 --------------------------------------------------------------------------------
--- Quest count in the tracker header.
+-- Refined style: the "All Objectives" header without its background and
+-- title (hidden with alpha, its collapse button stays where it is).
+--------------------------------------------------------------------------------
+local function ApplyTrackerStyle()
+    local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
+    if not header then return end
+    if header.Background then header.Background:SetAlpha(0) end
+    if header.Text then header.Text:SetAlpha(0) end
+end
+
+--------------------------------------------------------------------------------
+-- Quest count in the tracker header (the Quests header with Refined style).
 --------------------------------------------------------------------------------
 local countText
 local countEvents = CreateFrame("Frame")
@@ -180,8 +205,15 @@ local function CountQuests()
     return count
 end
 
+local function CountHeader()
+    local quests = QM.db.trackerStyle and QuestObjectiveTracker and QuestObjectiveTracker.Header
+    if quests and quests.Text then return quests end
+    return ObjectiveTrackerFrame.Header
+end
+
 local function PlaceCount()
-    local header = ObjectiveTrackerFrame.Header
+    local header = CountHeader()
+    countText:SetParent(header)
     local button = header.MinimizeButton or header
     local _, textY = header.Text:GetCenter()
     local _, buttonY = button:GetCenter()
@@ -211,7 +243,7 @@ countEvents:SetScript("OnEvent", function(_, event)
 end)
 
 local function SetQuestCount(on)
-    local header = ObjectiveTrackerFrame and ObjectiveTrackerFrame.Header
+    local header = ObjectiveTrackerFrame and CountHeader()
     if not (header and header.Text) then return end
     if on and not countText then
         countText = header:CreateFontString(nil, "OVERLAY")
@@ -220,12 +252,8 @@ local function SetQuestCount(on)
     end
     if not countText then return end
     countText:SetShown(on)
-    if on then
-        for _, event in ipairs(COUNT_EVENTS) do countEvents:RegisterEvent(event) end
-        DelayedCount()
-    else
-        countEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(countEvents, on, unpack(COUNT_EVENTS))
+    if on then DelayedCount() end
 end
 
 --------------------------------------------------------------------------------
@@ -268,13 +296,15 @@ function QM:OnEnable()
 
     if db.minimapStyle then ApplyBackgrounds() end
 
-    if ns.textStyle then
-        ns.StyleFont(MinimapZoneText)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
-            ns.StyleFont(TimeManagerClockTicker)
-        end)
-    end
+    if ns.textStyle then ns.StyleFont(MinimapZoneText) end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
+        if ns.textStyle then ns.StyleFont(TimeManagerClockTicker) end
+        ApplyClockSize()
+    end)
 
+    if db.trackerStyle then
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", ApplyTrackerStyle)
+    end
     if db.questCount then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
     end
@@ -297,6 +327,7 @@ end
 function QM:OnOptionChanged(key, value)
     if key == "minimapStyle" then
         ApplyBackgrounds()
+        ApplyClockSize()
     elseif key == "minimapClutter" then
         ApplyClutter()
     elseif key == "combatCollapse" then

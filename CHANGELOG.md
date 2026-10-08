@@ -1,3 +1,45 @@
+## 2.3-RELEASE
+
+This is a smaller update focused on fixing a lot of small bugs and adding some new features.
+
+### 🛠️ Core
+
+* Action Bars - Added an option to color the action button icons red when out of range [#127]
+* Chat - Fixed the copy box of web links opening twice with a single click
+* Chat - Hidden the Edit Mode layout copied to clipboard notice, with the Hide clutter option
+* Combat - Fixed the Buffs & Debuffs Refined style on the loss of control alert icon (eg. Rooted), now in the action bar style
+* Core - Changed the ready check command from /rc to /rd
+* Core - Fixed the Cast Bars texture missing on the overlay cast bar (eg. "Activating Specialization" in the talents panel)
+* Core - Fixed the Refined borders option on the Delves Companion panel and abilities, now with the new border texture and the action bar style on the icons
+* Core - Fixed the Refined borders option on the icons of the Collections mounts, sets and set items, now in the action bar style (in the item quality color)
+* Core - Fixed the Refined borders option on the Great Vault rewards, now with the action bar style on the icons and the new border texture on the item names (in the item quality color)
+* Core - Fixed the Refined borders option on the ready check window, now with the Blizzard frame (the border covered the portrait)
+* Core - Fixed the Refined text on the dark texts of the Mythic+ New Season panel, now shown without the outline
+* Core - Fixed the Refined text on the profession names of the Professions book, now outlined
+* Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
+* Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
+* Core - Improved the descriptions of all the options, now clear and concise (eg. "Hide system notices" is now "Hide micro menu alerts")
+* Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon
+* Core - Optimized the scan of panels and fonts, now done without temporary tables
+* Party & Raid Frames - Changed the size of the sharper role icons, now the same as the name
+* Quest & Minimap - Added a Refined style option for the Quest Tracker, without the All Objectives header and with the quest count on the Quests header
+* Quest & Minimap - Fixed the clock text size with the minimap Refined style, now the same as the zone name
+* Tooltips - Added the faction of players in red (Horde) or blue (Alliance) to the Refined style
+* Unit Frames - Changed the number of debuffs shown on the Focus frame with the Refined style, now 5
+* Various - Added an option to insert the Mythic+ keystone automatically when opening the Font of Power
+* Various - Fixed the BigWigs Refined style on the start timer bar (eg. battlegrounds), now with the same border as the queue timer
+
+### 👤 Profiles
+
+* BigWigs - Fixed bars position to be aligned to the Focus frame
+* BlizzUI - Fixed the position of Action Bar 3
+* Platynator - Fixed the Cast bar border texture
+* Platynator - Fixed the width of Enemy names
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.2-RELEASE
 
 This is a smaller update focused on a more consistent look (new borders for tooltips, Platynator and BigWigs), some new quality of life options and many fixes to the UI and for errors in combat and in raids.

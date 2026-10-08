@@ -3,6 +3,7 @@
     Other addons' styling and quality of life features.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 -- Saved variables key of the old Miscellaneous module.
 local Misc = ns:RegisterModule("Miscellaneous", {
@@ -12,6 +13,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         bigwigsStyle    = true,
         fastLoot        = true,
         ahExpansion     = true,
+        autoKeystone    = true,
         flightDestination = true,
         cursorRing      = 0, -- off
         fastDelete      = true,
@@ -26,19 +28,20 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
         { key = "ahExpansion", label = "Auction House: current expansion",
-          tooltip = "Set the current expansion filter when opening the Auction House." },
+          tooltip = "Show only current expansion items when opening the Auction House." },
+        { key = "autoKeystone", label = "Auto-insert keystone",
+          tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
         { key = "fastLoot", label = "Fast auto-loot",
-          tooltip = "Loot everything at once when auto-loot is on." },
+          tooltip = "Loot everything at once when auto loot is on." },
         { key = "flightDestination", label = "Flight destination",
           tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
-          tooltip = "Type \"DELETE\" for you when deleting an item." },
-        { key = "hideNotices", label = "Hide system notices",
-          tooltip = "Hide the alerts on the micro menu buttons.",
-          bullets = { "Help tips like unspent talent points", "Flashing buttons" } },
+          tooltip = "Fill in the \"DELETE\" confirmation when deleting an item." },
+        { key = "hideNotices", label = "Hide micro menu alerts",
+          tooltip = "Hide the alerts and flashing on the micro menu buttons." },
         { key = "waypoints", label = "Waypoint command", reload = true,
-          tooltip = "Set a map waypoint with /way and coordinates.",
-          bullets = { "/way 45.2 61.8 on the current map", "/way #2371 45.2 61.8 on another map", "/way clear removes it", "Off when TomTom is enabled" } },
+          tooltip = "Set a map waypoint by typing /way and the coordinates.",
+          bullets = { "Example: /way 45.2 61.8", "Remove it with /way clear" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring in your class color around the cursor.",
           dropdown = {
@@ -160,7 +163,7 @@ end
 
 local events = CreateFrame("Frame")
 events:SetScript("OnEvent", function(_, _, unit)
-    if ns.IsSecret(unit) or not unit then return end
+    if IsSecret(unit) or not unit then return end
     pendingUnits[unit] = true
     ns.Defer(UpdatePending)
 end)
@@ -216,11 +219,42 @@ lootEvents:SetScript("OnEvent", function()
 end)
 
 local function SetFastLoot(on)
-    if on then
-        lootEvents:RegisterEvent("LOOT_READY")
-    else
-        lootEvents:UnregisterAllEvents()
+    ns.SetEvents(lootEvents, on, "LOOT_READY")
+end
+
+--------------------------------------------------------------------------------
+-- Keystone: found in the bags and slotted when the Font of Power opens
+-- (skipped in combat or when a keystone is already slotted).
+--------------------------------------------------------------------------------
+local keystoneEvents = CreateFrame("Frame")
+local KEYSTONE_CLASS = Enum.ItemClass and Enum.ItemClass.Reagent
+local KEYSTONE_SUBCLASS = Enum.ItemReagentSubclass and Enum.ItemReagentSubclass.Keystone
+
+local function IsKeystone(itemID)
+    if C_Item.IsItemKeystoneByID then return C_Item.IsItemKeystoneByID(itemID) end
+    local _, _, _, _, _, classID, subclassID = C_Item.GetItemInfoInstant(itemID)
+    return classID == KEYSTONE_CLASS and subclassID == KEYSTONE_SUBCLASS
+end
+
+local function SlotKeystone()
+    if InCombatLockdown() or not C_ChallengeMode.SlotKeystone then return end
+    if C_ChallengeMode.HasSlottedKeystone and C_ChallengeMode.HasSlottedKeystone() then return end
+    for bag = 0, NUM_BAG_SLOTS or 4 do
+        for slot = 1, C_Container.GetContainerNumSlots(bag) do
+            local itemID = C_Container.GetContainerItemID(bag, slot)
+            if itemID and IsKeystone(itemID) then
+                C_Container.PickupContainerItem(bag, slot)
+                if CursorHasItem() then C_ChallengeMode.SlotKeystone() end
+                return
+            end
+        end
     end
+end
+
+keystoneEvents:SetScript("OnEvent", function() ns.Defer(SlotKeystone) end)
+
+local function SetAutoKeystone(on)
+    ns.SetEvents(keystoneEvents, on, "CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
 end
 
 --------------------------------------------------------------------------------
@@ -240,14 +274,10 @@ local function SetExpansionFilter()
     if searchBar.UpdateClearFiltersButton then searchBar:UpdateClearFiltersButton() end
 end
 
-ahEvents:SetScript("OnEvent", function() RunNextFrame(SetExpansionFilter) end)
+ahEvents:SetScript("OnEvent", function() ns.Defer(SetExpansionFilter) end)
 
 local function SetAuctionFilter(on)
-    if on then
-        ahEvents:RegisterEvent("AUCTION_HOUSE_SHOW")
-    else
-        ahEvents:UnregisterAllEvents()
-    end
+    ns.SetEvents(ahEvents, on, "AUCTION_HOUSE_SHOW")
 end
 
 --------------------------------------------------------------------------------
@@ -294,7 +324,7 @@ end
 -- while shown).
 --------------------------------------------------------------------------------
 local RING = { OFF = 0, ALWAYS = 1, COMBAT = 2, GROUP = 3 }
-local RING_TEXTURE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_ring.tga]]
+local RING_TEXTURE = ns.MEDIA .. [[Icons\PanzaUI_ring.tga]]
 local RING_SIZE = 48
 local ring, ringCombat
 
@@ -444,13 +474,12 @@ local function StopMicroPulse(button)
 end
 
 -- Help tips already open (Blizzard's pool): closed when they are notices.
+local function CloseNotice(frame)
+    if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
+end
+
 local function CloseOpenNotices()
-    local pool = Misc.db.hideNotices and HelpTip and HelpTip.framePool
-    local active = pool and pool.activeObjects
-    if not active then return end
-    for frame in pairs(active) do
-        if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
-    end
+    if Misc.db.hideNotices and HelpTip then ns.ForEachActive(HelpTip.framePool, CloseNotice) end
 end
 
 local function SetupNotices()
@@ -496,15 +525,7 @@ end
 -- bars, BigWigs' own border hidden. The icon has no name: found among the
 -- UIParent children by its fields.
 --------------------------------------------------------------------------------
-local BACKDROP_EDGES = { "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge" }
-
-local function HideBackdropEdges(border)
-    for _, key in ipairs(BACKDROP_EDGES) do
-        local edge = border[key]
-        if edge then edge:SetAlpha(0) end
-    end
-end
+local HideBackdropEdges = ns.HideFramePieces
 
 local function FindBattleRes(...)
     for i = 1, select("#", ...) do
@@ -549,6 +570,26 @@ local function StyleQueueTimer(_, bar, name)
     ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
 end
 
+-- Start timer (eg. battleground and arena gates, shown by Blizzard next to
+-- BigWigs' timers): its bar frame hidden, the same border as the queue timer.
+-- Timers are created by the tracker's events, so they are checked after each one.
+local styledTimers = {}
+
+local function StyleStartTimers()
+    local timers = TimerTracker.timerList
+    if not timers then return end
+    for _, timer in ipairs(timers) do
+        local bar = timer.bar
+        if bar and not styledTimers[bar] then
+            styledTimers[bar] = true
+            local name = bar:GetName()
+            local frame = name and _G[name .. "Border"]
+            if frame then frame:SetAlpha(0) end
+            ns.PanelBorder(bar, bar, QUEUE_BORDER_OUTSET):SetDrawLayer("OVERLAY", 6) -- over the bar fill
+        end
+    end
+end
+
 local function SetupBigWigs()
     StyleBigWigsBars()
     StyleBattleRes()
@@ -570,9 +611,11 @@ function Misc:OnEnable()
         if BigWigsLoader and BigWigsLoader.RegisterMessage then
             BigWigsLoader.RegisterMessage(ns, "BigWigs_FrameCreated", StyleQueueTimer)
         end
+        if TimerTracker then TimerTracker:HookScript("OnEvent", StyleStartTimers) end
     end
     SetFastLoot(self.db.fastLoot)
     SetAuctionFilter(self.db.ahExpansion)
+    SetAutoKeystone(self.db.autoKeystone)
     ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
@@ -586,6 +629,8 @@ function Misc:OnOptionChanged(key, value)
         SetFastLoot(value)
     elseif key == "ahExpansion" then
         SetAuctionFilter(value)
+    elseif key == "autoKeystone" then
+        SetAutoKeystone(value)
     elseif key == "flightDestination" then
         if not value and flightFrame then flightFrame:Hide() end
     elseif key == "hideNotices" then

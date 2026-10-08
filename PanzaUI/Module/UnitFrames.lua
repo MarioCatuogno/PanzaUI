@@ -18,7 +18,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage" } },
+      bullets = { "Centered name without level", "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -26,10 +26,10 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Larger centered name, no level", "Long names shortened", "Health and power as a percentage", "Rounded cast bar icon" }
+    local styleBullets = { "Centered name without level", "Health and power as a percentage" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
-        styleBullets[#styleBullets + 1] = "Only 4 debuffs"
+        styleBullets[#styleBullets + 1] = "Only 5 debuffs"
         clutterBullets[#clutterBullets + 1] = "Cast bar"
     end
     options[#options + 1] = { header = t.unit }
@@ -42,7 +42,7 @@ end
 options[#options + 1] = { header = "Boss" }
 options[#options + 1] = { key = "bossStyle", label = "Refined style",
     tooltip = "Polish the look of the Boss frames.",
-    bullets = { "Health and power as a percentage", "Rounded cast bar icon", "No colored name background" } }
+    bullets = { "Health and power as a percentage" } }
 options[#options + 1] = { key = "bossHideClutter", label = "Hide clutter",
     tooltip = "Hide minor elements of the Boss frames.",
     bullets = { "Level", "Threat glow" } }
@@ -66,13 +66,11 @@ end
 -- Blizzard's class icon portraits (off by default, applied live).
 defaults.playerClassIcon, defaults.targetClassIcon = false, false
 table.insert(options, 2, { key = "playerClassIcon", label = "Class icon portrait",
-    tooltip = "Show your class icon instead of the Player portrait.",
-    bullets = { "No portraits stuck zoomed in" } })
+    tooltip = "Show your class icon instead of the Player portrait." })
 for i, o in ipairs(options) do
     if o.header == "Target" then
         table.insert(options, i + 1, { key = "targetClassIcon", label = "Class icon portrait",
-            tooltip = "Show the class icon instead of the portrait of other players.",
-            bullets = { "Also on the Focus frame", "No portraits stuck zoomed in" } })
+            tooltip = "Show the class icon instead of the portrait of other players." })
         break
     end
 end
@@ -366,8 +364,7 @@ local function HideFollowerMark(text, frame, fallbackUnit)
         local name = UnitName(unit)
         if IsSecret(name) or not name then return end
         busy = true
-        if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
-        text:SetText(name)
+        text:SetText(ns.StripFollowerMark(name))
         busy = false
     end
     hooksecurefunc(text, "SetText", Fix)
@@ -381,9 +378,9 @@ end
 -- Layout parts Blizzard may reset (Focus small size).
 local function ApplyLayout(frame, db, p)
     local main = frame.TargetFrameContent.TargetFrameContentMain
-    -- Aura limits: Focus refined style keeps 4 debuffs.
+    -- Aura limits: Focus refined style keeps 5 debuffs.
     if p == "focus" and db.focusStyle then
-        frame.maxBuffs, frame.maxDebuffs = 0, 4
+        frame.maxBuffs, frame.maxDebuffs = 0, 5
     elseif db[p .. "HideClutter"] then
         frame.maxBuffs, frame.maxDebuffs = 0, 0
     end
@@ -561,14 +558,7 @@ local function StyleFocusDebuff(button)
 end
 
 local function StyleFocusDebuffs(frame)
-    local pool = frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate")
-    if not pool then return end
-    local active = pool.activeObjects
-    if active then
-        for button in pairs(active) do StyleFocusDebuff(button) end
-    else
-        for button in pool:EnumerateActive() do StyleFocusDebuff(button) end
-    end
+    ns.ForEachActive(frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate"), StyleFocusDebuff)
 end
 
 --------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
     Tooltip style, player info, mounts and IDs.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 
 local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
@@ -15,12 +16,11 @@ local TT = ns:RegisterModule("Tooltips", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the unit tooltips.",
-          bullets = { "No health bar", "Class colored player names" } },
+          bullets = { "No health bar", "Class and faction colors" } },
         { key = "playerInfo", label = "Player info",
-          tooltip = "Show more information about players.",
-          bullets = { "Item level", "Mythic+ rating" } },
+          tooltip = "Show the item level and Mythic+ rating of players." },
         { key = "playerMount", label = "Player mount",
-          tooltip = "Show the mount of players, with its icon." },
+          tooltip = "Show the mount of players." },
         { key = "showIDs", label = "Show IDs",
           tooltip = "Show the ID of items and spells." },
     },
@@ -31,8 +31,6 @@ function TT:Migrate(db)
     ns.MergeOptions(db, "style", db, "hideHealthBar", "classColorNames")
     ns.MergeOptions(db, "playerInfo", db, "showMythicRating", "showItemLevel")
 end
-
-local IsSecret = ns.IsSecret
 
 local ILVL_CACHE_TIME  = 300 -- seconds
 local INSPECT_THROTTLE = 1.5 -- seconds between inspects
@@ -179,6 +177,26 @@ local function ColorName(unit)
     if line then line:SetTextColor(color.r, color.g, color.b) end
 end
 
+-- Faction line of players, in the faction color.
+local FACTIONS = {
+    Horde    = { text = FACTION_HORDE,    color = PLAYER_FACTION_COLOR_HORDE    or CreateColor(0.90, 0.10, 0.10) },
+    Alliance = { text = FACTION_ALLIANCE, color = PLAYER_FACTION_COLOR_ALLIANCE or CreateColor(0.20, 0.50, 1.00) },
+}
+
+local function ColorFaction(tooltip, unit)
+    local group = UnitFactionGroup(unit)
+    local faction = not IsSecret(group) and group and FACTIONS[group]
+    if not (faction and faction.text) then return end
+    for i = 2, tooltip:NumLines() do
+        local line = _G["GameTooltipTextLeft" .. i]
+        local text = line and line:GetText()
+        if not IsSecret(text) and text == faction.text then
+            line:SetTextColor(faction.color:GetRGB())
+            return
+        end
+    end
+end
+
 local function OnUnit(tooltip)
     local db = TT.db
     if tooltip ~= GameTooltip or not (db.playerInfo or db.style or db.playerMount) then return end
@@ -187,7 +205,10 @@ local function OnUnit(tooltip)
     if IsSecret(unit) or not unit then return end
     local isPlayer = UnitIsPlayer(unit)
     if IsSecret(isPlayer) or not isPlayer then return end
-    if db.style then ColorName(unit) end
+    if db.style then
+        ColorName(unit)
+        ColorFaction(tooltip, unit)
+    end
 
     -- Fixed order: Item Level, M+ Rating, Mount.
     ilvlLine = nil
