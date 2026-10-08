@@ -3,6 +3,7 @@
     Button style, icon zoom and visibility of the bars.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
+local IsSecret = ns.IsSecret
 local VIS = ns.VIS
 
 --------------------------------------------------------------------------------
@@ -120,12 +121,29 @@ end
 --------------------------------------------------------------------------------
 -- Buttons: refined style, icon zoom and text style.
 --------------------------------------------------------------------------------
+-- Keybinding hidden with the refined style; the out of range dot Blizzard
+-- shows on buttons without a keybinding stays visible.
+local function FitHotKey(hotkey)
+    local text = hotkey:GetText()
+    local dot = not IsSecret(text) and text == RANGE_INDICATOR
+    hotkey:SetAlpha((AB.db.style and not dot) and 0 or 1)
+end
+
+local hookedHotKeys = {}
+
 local function RefreshButtons(bar)
     local db = AB.db
     local textAlpha = db.style and 0 or 1
     for _, btn in ipairs(bar.buttons) do
-        if btn.Name   then btn.Name:SetAlpha(textAlpha) end
-        if btn.HotKey then btn.HotKey:SetAlpha(textAlpha) end
+        if btn.Name then btn.Name:SetAlpha(textAlpha) end
+        local hotkey = btn.HotKey
+        if hotkey then
+            if not hookedHotKeys[hotkey] then
+                hookedHotKeys[hotkey] = true
+                hooksecurefunc(hotkey, "SetText", FitHotKey)
+            end
+            FitHotKey(hotkey)
+        end
         ns.ZoomIcon(btn.icon or btn.Icon, db.iconZoom)
     end
 end
