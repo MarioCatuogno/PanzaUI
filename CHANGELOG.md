@@ -4,6 +4,8 @@
 
 ### 👤 Profiles
 
+* BlizzUI - Switched position of Pet bar and Stance bar
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version
