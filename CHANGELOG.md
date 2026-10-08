@@ -1,3 +1,13 @@
+## 2.4-RELEASE
+
+### 🛠️ Core
+
+### 👤 Profiles
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.3-RELEASE
 
 This is a smaller update focused on fixing a lot of small bugs and adding some new features.
