@@ -2,7 +2,7 @@
 
 ### 🛠️ Core
 
-* Action Bars - Fixed the out of range dot hidden by the Refined style, now shown on buttons without a keybinding [#127]
+* Action Bars - Added an option to color the action button icons red when out of range [#127]
 * Chat - Fixed the copy box of web links opening twice with a single click
 * Chat - Hidden the Edit Mode layout copied to clipboard notice, with the Hide clutter option
 * Combat - Fixed the Buffs & Debuffs Refined style on the loss of control alert icon (eg. Rooted), now in the action bar style

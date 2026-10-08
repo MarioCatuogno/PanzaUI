@@ -32,7 +32,7 @@ local OTHER_BARS = {
 --------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
-local defaults = { style = true, iconZoom = 5 }
+local defaults = { style = true, iconZoom = 5, rangeColor = true }
 local options  = {
     { header = "Buttons" },
     { key = "style", label = "Refined style",
@@ -41,6 +41,8 @@ local options  = {
     { key = "iconZoom", label = "Icon zoom",
       tooltip = "Crop the edges of the action button icons.",
       slider = { min = 0, max = 15, step = 1, suffix = "%" } },
+    { key = "rangeColor", label = "Out of range color",
+      tooltip = "Color the action button icons red when out of range." },
     { header = "Visibility" },
 }
 for _, list in ipairs({ ACTION_BARS, OTHER_BARS }) do
@@ -121,31 +123,72 @@ end
 --------------------------------------------------------------------------------
 -- Buttons: refined style, icon zoom and text style.
 --------------------------------------------------------------------------------
--- Keybinding hidden with the refined style; the out of range dot Blizzard
--- shows on buttons without a keybinding stays visible.
-local function FitHotKey(hotkey)
-    local text = hotkey:GetText()
-    local dot = not IsSecret(text) and text == RANGE_INDICATOR
-    hotkey:SetAlpha((AB.db.style and not dot) and 0 or 1)
-end
-
-local hookedHotKeys = {}
-
 local function RefreshButtons(bar)
     local db = AB.db
     local textAlpha = db.style and 0 or 1
     for _, btn in ipairs(bar.buttons) do
-        if btn.Name then btn.Name:SetAlpha(textAlpha) end
-        local hotkey = btn.HotKey
-        if hotkey then
-            if not hookedHotKeys[hotkey] then
-                hookedHotKeys[hotkey] = true
-                hooksecurefunc(hotkey, "SetText", FitHotKey)
-            end
-            FitHotKey(hotkey)
-        end
+        if btn.Name   then btn.Name:SetAlpha(textAlpha) end
+        if btn.HotKey then btn.HotKey:SetAlpha(textAlpha) end
         ns.ZoomIcon(btn.icon or btn.Icon, db.iconZoom)
     end
+end
+
+--------------------------------------------------------------------------------
+-- Out of range color: the icon turns red while the action is out of range.
+-- Blizzard's own icon color (eg. not enough mana) is remembered and put back
+-- when back in range (widget calls only, no Blizzard function called).
+--------------------------------------------------------------------------------
+local RANGE_RED = { 0.80, 0.10, 0.10 }
+local rangeIcons = {}          -- button -> icon
+local outOfRange = {}          -- icon -> true while out of range
+local baseR, baseG, baseB = {}, {}, {} -- icon -> Blizzard's last color
+local tinting = false
+
+local function TintIcon(icon)
+    tinting = true
+    if AB.db.rangeColor and outOfRange[icon] then
+        icon:SetVertexColor(RANGE_RED[1], RANGE_RED[2], RANGE_RED[3])
+    else
+        icon:SetVertexColor(baseR[icon] or 1, baseG[icon] or 1, baseB[icon] or 1)
+    end
+    tinting = false
+end
+
+-- Blizzard's color change: remembered, then red again if out of range.
+local function OnIconColor(icon, r, g, b)
+    if tinting then return end
+    if IsSecret(r) or IsSecret(g) or IsSecret(b) then r, g, b = nil, nil, nil end
+    baseR[icon], baseG[icon], baseB[icon] = r, g, b
+    if AB.db.rangeColor and outOfRange[icon] then TintIcon(icon) end
+end
+
+local function OnRangeUpdate(button, checksRange, inRange)
+    local icon = rangeIcons[button]
+    if not icon then return end
+    local out = not (IsSecret(checksRange) or IsSecret(inRange)) and checksRange and not inRange or false
+    if out == (outOfRange[icon] or false) then return end
+    outOfRange[icon] = out or nil
+    if AB.db.rangeColor then TintIcon(icon) end
+end
+
+local function SetupRangeColor()
+    for _, bar in ipairs(ACTION_BARS) do
+        for _, btn in ipairs(bar.buttons) do
+            local icon = btn.icon or btn.Icon
+            if icon then
+                rangeIcons[btn] = icon
+                OnIconColor(icon, icon:GetVertexColor()) -- color set before the hook
+                hooksecurefunc(icon, "SetVertexColor", OnIconColor)
+                ns.Hook(btn, "UpdateRangeIndicator", OnRangeUpdate)
+            end
+        end
+    end
+    ns.Hook("ActionButton_UpdateRangeIndicator", OnRangeUpdate)
+end
+
+-- Option turned on or off: icons out of range turn red or get their color back.
+local function RefreshRangeColor()
+    for icon in pairs(outOfRange) do TintIcon(icon) end
 end
 
 local function StyleText(bar)
@@ -166,10 +209,12 @@ function AB:OnEnable()
         RefreshButtons(bar)
         if ns.textStyle then StyleText(bar) end
     end
+    SetupRangeColor()
 end
 
 -- Live options.
-function AB:OnOptionChanged()
+function AB:OnOptionChanged(key)
+    if key == "rangeColor" then RefreshRangeColor() return end
     ns.RefreshVisibility()
     for _, bar in ipairs(ACTION_BARS) do RefreshButtons(bar) end
 end
