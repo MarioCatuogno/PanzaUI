@@ -7,6 +7,7 @@
 ### 📏 Various
 
 * Updated documentation to the latest UI version
+* Updated TOC file to patch version 12.1.5
 
 ## 2.3-RELEASE
 
