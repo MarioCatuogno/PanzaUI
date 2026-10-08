@@ -18,11 +18,11 @@ local Chat = ns:RegisterModule("Chat", {
           tooltip = "Polish the look of the chat windows.",
           bullets = { "Short channel names", "Clickable web links" } },
         { key = "timestamps", label = "Timestamps",
-          tooltip = "Show the time before every message." },
+          tooltip = "Show the time before each message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
           tooltip = "Hide the Combat Log tab." },
         { key = "hideClutter", label = "Hide clutter",
-          tooltip = "Hide minor messages in the chat.",
+          tooltip = "Hide minor system messages in the chat.",
           bullets = { "Guild message of the day", "Online and offline notices", "Join and leave notices",
                       "Loot and crafting of other players", "Group changes" } },
     },
@@ -226,11 +226,17 @@ StaticPopupDialogs.PANZAUI_COPY_URL = {
     hideOnEscape = true,
 }
 
--- The address is the link text: "[url]" inside the clicked link.
+-- The address is the link text: "[url]" inside the clicked link. The click
+-- can arrive twice in the same frame (Blizzard's callback and the SetItemRef
+-- hook): the box opens once.
+local lastClick
 local function OnLinkClick(link, text)
     if type(link) ~= "string" or not link:find("^addon:PanzaUI:url") then return end
     local url = type(text) == "string" and text:match("%[(.-)%]")
-    if url then StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url) end
+    local now = GetTime()
+    if not url or now == lastClick then return end
+    lastClick = now
+    StaticPopup_Show("PANZAUI_COPY_URL", nil, nil, url)
 end
 
 local function SetupStyleFilters()
