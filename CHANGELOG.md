@@ -1,5 +1,7 @@
 ## 2.3-RELEASE
 
+This is a smaller update focused on fixing a lot of small bugs and adding some new features.
+
 ### 🛠️ Core
 
 * Action Bars - Added an option to color the action button icons red when out of range [#127]
