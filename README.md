@@ -84,6 +84,10 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg" alt="PanzaUI - Party">
   </a>
 
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_pvp_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_pvp_01.jpeg" alt="PanzaUI - PVP">
+  </a>
+
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg" alt="PanzaUI - Interface (Character panel, professions, bags and tooltips)">
   </a>
