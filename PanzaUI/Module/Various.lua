@@ -28,19 +28,19 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
         { key = "ahExpansion", label = "Auction House: current expansion",
-          tooltip = "Set the current expansion filter when opening the Auction House." },
+          tooltip = "Show only current expansion items when opening the Auction House." },
         { key = "autoKeystone", label = "Auto-insert keystone",
           tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
         { key = "fastLoot", label = "Fast auto-loot",
-          tooltip = "Loot everything at once when auto-loot is on." },
+          tooltip = "Loot everything at once when auto loot is on." },
         { key = "flightDestination", label = "Flight destination",
           tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
-          tooltip = "Type \"DELETE\" for you when deleting an item." },
-        { key = "hideNotices", label = "Hide system notices",
-          tooltip = "Hide the alerts on the micro menu buttons." },
+          tooltip = "Fill in the \"DELETE\" confirmation when deleting an item." },
+        { key = "hideNotices", label = "Hide micro menu alerts",
+          tooltip = "Hide the alerts and flashing on the micro menu buttons." },
         { key = "waypoints", label = "Waypoint command", reload = true,
-          tooltip = "Set a map waypoint with /way and coordinates.",
+          tooltip = "Set a map waypoint by typing /way and the coordinates.",
           bullets = { "Example: /way 45.2 61.8", "Remove it with /way clear" } },
         { key = "cursorRing", label = "Cursor ring",
           tooltip = "Show a ring in your class color around the cursor.",
@@ -324,7 +324,7 @@ end
 -- while shown).
 --------------------------------------------------------------------------------
 local RING = { OFF = 0, ALWAYS = 1, COMBAT = 2, GROUP = 3 }
-local RING_TEXTURE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_ring.tga]]
+local RING_TEXTURE = ns.MEDIA .. [[Icons\PanzaUI_ring.tga]]
 local RING_SIZE = 48
 local ring, ringCombat
 

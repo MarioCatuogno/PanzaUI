@@ -46,7 +46,7 @@ for _, list in ipairs({ ACTION_BARS, OTHER_BARS }) do
     for _, bar in ipairs(list) do
         defaults[bar.key] = VIS.DEFAULT
         options[#options + 1] = { key = bar.key, label = bar.label, dropdown = ns.VISIBILITY_OPTIONS,
-            tooltip = "Choose when the bar is shown." }
+            tooltip = "Choose when this bar is shown." }
     end
 end
 

@@ -33,7 +33,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         { key = "cdmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Cooldown Manager." },
         { key = "cdmDynamic", label = "Dynamic layout", reload = true,
-          tooltip = "Keep tracked buffs and bars together, with no gaps." },
+          tooltip = "Keep tracked buffs and bars packed together, with no gaps." },
         { header = "Damage Meter" },
         { key = "dmStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Damage Meter." },

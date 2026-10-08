@@ -17,7 +17,7 @@ local GF = ns:RegisterModule("GroupFrames", {
           tooltip = "Polish the look of the party and raid frames.",
           bullets = { "Names without server", "Health as a percentage" } },
         { key = "overlays", label = "Refined overlays", reload = true,
-          tooltip = "Give shields, incoming heals and aggro a cleaner look." },
+          tooltip = "Use cleaner textures for shields, incoming heals and aggro." },
         { key = "hdRoleIcons", label = "HD role icons", reload = true,
           tooltip = "Use sharper role icons on the party and raid frames." },
     },
@@ -60,8 +60,7 @@ local function UpdateName(frame)
     if IsSecret(unit) or not unit or unit:find("nameplate", 1, true) or not frame.name then return end
     local name = UnitName(unit)
     if IsSecret(name) or not name then return end
-    if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
-    frame.name:SetText(name)
+    frame.name:SetText(ns.StripFollowerMark(name))
 end
 
 -- Only where Blizzard shows a health text; status texts are kept.
@@ -129,7 +128,9 @@ local TINY_ROLE_ATLASES = {
 }
 
 local function UpdatePlayerRoleIcon()
-    local icon = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.RoleIcon
+    local content = PlayerFrame and PlayerFrame.PlayerFrameContent
+    local ctx = content and content.PlayerFrameContentContextual
+    local icon = ctx and ctx.RoleIcon
     if not (icon and icon:IsShown() and GetIconForRole) then return end
     local role = TINY_ROLE_ATLASES[icon:GetAtlas()]
     if role then icon:SetAtlas(GetIconForRole(role, false), TextureKitConstants.IgnoreAtlasSize) end
@@ -176,7 +177,7 @@ end)
 --------------------------------------------------------------------------------
 -- Refined overlays: PanzaUI textures for absorbs, heal prediction and aggro.
 --------------------------------------------------------------------------------
-local MEDIA = [[Interface\AddOns\PanzaUI\Media\Statusbar\]]
+local MEDIA = ns.MEDIA .. [[Statusbar\]]
 local HEAL_PRED = MEDIA .. "PanzaUI_general.tga"
 
 local function StyleHealPrediction(bar, color)

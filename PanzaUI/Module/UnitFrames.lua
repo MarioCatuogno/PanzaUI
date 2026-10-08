@@ -364,8 +364,7 @@ local function HideFollowerMark(text, frame, fallbackUnit)
         local name = UnitName(unit)
         if IsSecret(name) or not name then return end
         busy = true
-        if name:byte(1) == 42 then name = name:gsub("^%*+%s*", "") end -- leading "*"
-        text:SetText(name)
+        text:SetText(ns.StripFollowerMark(name))
         busy = false
     end
     hooksecurefunc(text, "SetText", Fix)

@@ -2,6 +2,7 @@
 
 ### 🛠️ Core
 
+* Chat - Fixed the copy box of web links opening twice with a single click
 * Chat - Hidden the Edit Mode layout copied to clipboard notice, with the Hide clutter option
 * Combat - Fixed the Buffs & Debuffs Refined style on the loss of control alert icon (eg. Rooted), now in the action bar style
 * Core - Changed the ready check command from /rc to /rd
@@ -14,7 +15,7 @@
 * Core - Fixed the Refined text on the profession names of the Professions book, now outlined
 * Core - Fixed the position of the texts on the achievement bars with the Interface bars texture, now centered
 * Core - Fixed the small gap in the top corners between the icons and their border, with the Refined borders option
-* Core - Improved the tooltips of the options, with details only where they add useful information
+* Core - Improved the descriptions of all the options, now clear and concise (eg. "Hide system notices" is now "Hide micro menu alerts")
 * Core - Optimized the code with shared helpers for icons, borders, frame pools, events and panel updates, for a lighter and more consistent addon
 * Core - Optimized the scan of panels and fonts, now done without temporary tables
 * Party & Raid Frames - Changed the size of the sharper role icons, now the same as the name

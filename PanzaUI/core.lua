@@ -8,6 +8,7 @@ ns.modules    = {}
 ns.IsSecret   = issecretvalue or function() return false end
 local IsSecret = ns.IsSecret
 ns.FONT_FLAGS = "OUTLINE, SLUG" -- shared text style
+ns.MEDIA      = [[Interface\AddOns\PanzaUI\Media\]] -- PanzaUI textures
 ns.textStyle  = false -- General > Style > Refined text
 ns.classColors = false -- General > Style > Class colors
 
@@ -135,6 +136,12 @@ function ns.GroupUnit(unit)
     return unit
 end
 
+-- Name without the "*" Blizzard puts before NPC followers.
+function ns.StripFollowerMark(name)
+    if name:byte(1) ~= 42 then return name end -- 42: "*"
+    return (name:gsub("^%*+%s*", ""))
+end
+
 -- Chat message with the addon prefix.
 function ns.Print(msg)
     print("|cff00FF98Panza|rUI: " .. msg)
@@ -183,7 +190,7 @@ end
 -- transparent padding around it (sizes in texture pixels).
 --------------------------------------------------------------------------------
 ns.BORDER = {
-    file    = [[Interface\AddOns\PanzaUI\Media\Borders\PanzaUI_nameplates.tga]],
+    file    = ns.MEDIA .. [[Borders\PanzaUI_nameplates.tga]],
     size    = 136,
     margin  = 136 * 0.35,
     padding = 16,
@@ -226,10 +233,10 @@ end
 -- Returns the frame and the mask, nil when the icon can't be styled.
 --------------------------------------------------------------------------------
 local ICON_FRAME = "UI-HUD-ActionBar-IconFrame"
-local ICON_SHAPE = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame (cooldown swipe)
+local ICON_SHAPE = ns.MEDIA .. [[Icons\PanzaUI_iconmask.tga]] -- inner shape of the frame (cooldown swipe)
 -- Icon mask: reaches under the frame band, so no gap is left in the corners
 -- of the frame opening (it isn't centered in Blizzard's atlas).
-local ICON_FILL  = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_iconfill.tga]]
+local ICON_FILL  = ns.MEDIA .. [[Icons\PanzaUI_iconfill.tga]]
 
 local frameInfo
 
@@ -259,7 +266,8 @@ function ns.StyleIcon(icon, parent)
 end
 
 -- Rounded cooldown swipe, without the edge line drawn outside the frame.
-local BLANK = [[Interface\AddOns\PanzaUI\Media\Icons\PanzaUI_blank.tga]]
+local BLANK = ns.MEDIA .. [[Icons\PanzaUI_blank.tga]] -- fully transparent
+ns.BLANK = BLANK
 
 function ns.RoundSwipe(cooldown)
     if cooldown and cooldown.SetSwipeTexture and not cooldown:IsForbidden() then
@@ -703,11 +711,11 @@ end
 local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
-    { VIS.DEFAULT,      "Default",        "Blizzard's default behavior." },
-    { VIS.MOUSEOVER,    "Mouseover",      "Shown on mouseover." },
+    { VIS.DEFAULT,      "Default",        "Shown as Blizzard sets it." },
+    { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
     { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
     { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
-    { VIS.HIDDEN,       "Always hidden",  "Never shown. Keybindings still work." },
+    { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
 }
 
 local visEntries   = {}

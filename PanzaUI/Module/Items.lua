@@ -17,13 +17,13 @@ local Items = ns:RegisterModule("Items", {
     options = {
         { header = "Items" },
         { key = "iconZoom", label = "Icon zoom",
-          tooltip = "Crop the edges of the bag item icons.",
+          tooltip = "Crop the edges of the item icons in your bags.",
           slider = { min = 0, max = 15, step = 1, suffix = "%" } },
         { key = "itemLevel", label = "Item level",
           tooltip = "Show the item level on equipment in bags, banks and the Character and Inspect panels." },
         { header = "Merchant" },
         { key = "autoRepair", label = "Auto-repair",
-          tooltip = "Repair your gear with your own gold at merchants." },
+          tooltip = "Repair your gear at merchants, with your own gold." },
         { key = "autoSellJunk", label = "Auto-sell junk",
           tooltip = "Sell your junk items at merchants." },
     },
@@ -81,16 +81,15 @@ local function UpdateContainer(frame)
     for _, button in frame:EnumerateValidItems() do UpdateBagButton(button) end
 end
 
+local function AddContainer(frame)
+    if not frame then return end
+    containers[#containers + 1] = frame
+    ns.Hook(frame, "UpdateItems", UpdateContainer)
+end
+
 local function SetupBags()
-    local count = NUM_CONTAINER_FRAMES or 13
-    local frames = { ContainerFrameCombinedBags }
-    for i = 1, count do frames[i + 1] = _G["ContainerFrame" .. i] end
-    for i = 1, count + 1 do
-        if frames[i] then containers[#containers + 1] = frames[i] end
-    end
-    for _, frame in ipairs(containers) do
-        ns.Hook(frame, "UpdateItems", UpdateContainer)
-    end
+    AddContainer(ContainerFrameCombinedBags)
+    for i = 1, NUM_CONTAINER_FRAMES or 13 do AddContainer(_G["ContainerFrame" .. i]) end
 end
 
 --------------------------------------------------------------------------------
