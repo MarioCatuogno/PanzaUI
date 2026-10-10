@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
+* Combat - Added an option to hide the Personal Resource Display while casting, before part of the Refined style [#131]
 
 ### 👤 Profiles
 
