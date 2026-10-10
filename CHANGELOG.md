@@ -2,6 +2,8 @@
 
 ### 🛠️ Core
 
+* Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
+
 ### 👤 Profiles
 
 * BlizzUI - Switched position of Pet bar and Stance bar

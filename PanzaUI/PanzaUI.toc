@@ -4,7 +4,7 @@
 ## Author: Panzarotto
 ## X-Website: https://github.com/MarioCatuogno/PanzaUI
 ## IconTexture: 572034
-## Version: 2.3.50
+## Version: 2.4.0
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, Platynator
 

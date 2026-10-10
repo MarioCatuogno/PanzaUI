@@ -742,8 +742,45 @@ local function RestingAlpha(e)
     return 0
 end
 
-local function SetEntryAlpha(e, alpha)
+-- Mouseover fades: in over FADE_IN seconds, out over FADE_OUT (alpha only,
+-- allowed in combat; the fade frame runs only while something fades).
+local FADE_IN, FADE_OUT = 0.2, 0.2
+local fading = {} -- entry -> target alpha
+local fader = CreateFrame("Frame")
+fader:Hide()
+
+local function ApplyAlpha(e, alpha)
+    e.alpha = alpha
     for _, f in ipairs(e.frames) do f:SetAlpha(alpha) end
+end
+
+-- Instant change: any fade of the entry stops.
+local function SetEntryAlpha(e, alpha)
+    fading[e] = nil
+    ApplyAlpha(e, alpha)
+end
+
+fader:SetScript("OnUpdate", function(self, dt)
+    for e, target in pairs(fading) do
+        local alpha = e.alpha or 0
+        if target > alpha then
+            alpha = math.min(target, alpha + dt / FADE_IN)
+        else
+            alpha = math.max(target, alpha - dt / FADE_OUT)
+        end
+        ApplyAlpha(e, alpha)
+        if alpha == target then fading[e] = nil end
+    end
+    if not next(fading) then self:Hide() end
+end)
+
+local function FadeEntry(e, target)
+    if e.alpha == target then
+        fading[e] = nil
+        return
+    end
+    fading[e] = target
+    fader:Show()
 end
 
 local function IsHovered(e)
@@ -760,7 +797,7 @@ visWatcher:SetScript("OnUpdate", function(self, dt)
     elapsed = 0
     for e in pairs(visShown) do
         if not IsForced(e) and not IsHovered(e) then
-            SetEntryAlpha(e, RestingAlpha(e))
+            FadeEntry(e, RestingAlpha(e))
             visShown[e] = nil
         end
     end
@@ -769,7 +806,7 @@ end)
 
 local function OnEnterEntry(e)
     if VisMode(e) ~= VIS.MOUSEOVER then return end
-    SetEntryAlpha(e, 1)
+    FadeEntry(e, 1)
     visShown[e] = true
     visWatcher:Show()
 end
