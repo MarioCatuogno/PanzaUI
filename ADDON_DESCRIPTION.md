@@ -2,32 +2,35 @@
 
 # PanzaUI
 
-**PanzaUI** is a lightweight addon that makes the default World of Warcraft UI cleaner, sharper and more comfortable to play with, without replacing it.
+**PanzaUI** keeps the default World of Warcraft UI and fixes what bothers me in it: the small inconsistencies between panels, plus a few features I used to get from other addons.
 
-No heavy frameworks, no custom frames to learn: you keep the Blizzard interface you already know, just polished. Every feature has its own toggle, so you only keep what you like.
+It does not replace Blizzard's frames. It restyles them after they are drawn, so Edit Mode, the Blizzard options and every Blizzard feature keep working as usual.
 
 ## ✨ Why PanzaUI?
 
-- **Feels like Blizzard, only better** - it improves the default frames instead of replacing them, so Edit Mode and every Blizzard feature keep working as usual.
-- **Light as a feather** - tiny memory footprint and almost no CPU usage, even in raids.
-- **Built for Midnight** - designed from the ground up around the new addon restrictions.
-- **Fully modular** - turn every feature on or off from a single, simple menu.
+About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Blizzard frames already on screen instead of building new ones, with no libraries or frameworks. My previous setup, made of several big addons and profiles (until [1.7-RELEASE](https://github.com/MarioCatuogno/PanzaUI/releases/tag/1.7)), used about **70-90 MB** and about **15%** CPU on average for the same result.
+
+### Built for Midnight
+Midnight limits what addons can read and change in combat. PanzaUI was written around those limits from the start, so it does not break or taint the UI.
 
 ![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
 
 ## 🧩 Features
 
+Every feature has its own toggle.
+
 ### General
 - **Refined text**: a clean outlined font across the whole UI, from unit frames to menus and tooltips
 - **Class colors** on the health bars, with reaction colors for NPCs
 - **Custom bar textures** for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars
-- **Refined borders**: rounded icons in the action bar style across Blizzard panels (rewards, professions, currency, equipment sets, collections, Delves companion), colored by item quality, and a cleaner border for tooltips, pop-ups, Delves and Edit Mode windows
+- **Refined borders**: rounded icons in the action bar style across Blizzard panels (rewards and Great Vault, professions, currency, equipment sets, collections, Delves companion), colored by item quality, and a cleaner border for tooltips (including the Group Finder queue status), pop-ups, Delves and Edit Mode windows
 - **Profiles**: the PanzaUI Edit Mode layout and the Platynator and BigWigs profiles, imported with one click
 
 ### Action Bars
 - Cleaner buttons, with no macro names or keybindings
 - Icon zoom to hide the old borders of classic icons
-- Visibility for every bar: always, on mouseover, only while Skyriding, never while Skyriding or hidden (also for Micro Menu, Bag Bar and XP bar)
+- Optional red icons when the target is out of range
+- Visibility for every bar: always, on mouseover (with a smooth fade in and out), only while Skyriding, never while Skyriding or hidden (also for Micro Menu, Bag Bar and XP bar)
 - Want my setup? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119)
 
 ### Bags & Items
@@ -43,7 +46,7 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter
 - Elapsed time on the cast bars
 - Dynamic Cooldown Manager layout, always packed with no gaps
-- Cleaner Personal Resource Display with health and power as a percentage
+- Cleaner Personal Resource Display with health and power as a percentage, optionally hidden while you cast
 
 ![PanzaUI - Raid](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_raid_01.jpeg)
 
@@ -53,11 +56,11 @@ No heavy frameworks, no custom frames to learn: you keep the Blizzard interface 
 - Sharper role icons
 
 ### Quest & Minimap
-- Cleaner minimap and Quest Tracker, with the quest count on the Quests header
+- Cleaner minimap and Quest Tracker, without the All Objectives header and with the quest count on the Quests header
 - Quest Tracker hidden during boss fights, Mythic+ and instance combat, so you can focus on the fight
 
 ### Tooltips
-- Class colored names, faction, Mythic+ rating and item level of players
+- Class colored names, faction (red for Horde, blue for Alliance), Mythic+ rating and item level of players
 - Item and spell IDs
 - Mount of players, with its icon
 

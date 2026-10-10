@@ -14,9 +14,13 @@
 
 </div>
 
-PanzaUI is a clean, lightweight UI for **World of Warcraft Retail** (Midnight) that keeps the look and feel of the default Blizzard interface, but makes it sharper, tidier and more comfortable to play with.
+PanzaUI is a UI for **World of Warcraft Retail** (Midnight) that keeps the default Blizzard interface and fixes what I don't like in it: different textures between the bars of different panels, different borders, inconsistent text formats and so on. On top of that, it brings in features I used to get from other addons.
 
-Since version 2.0 the heart of the UI is the **PanzaUI addon**: a single, very light addon that improves the default UI (no heavy frameworks, no replaced frames) and is built around the new Midnight addon restrictions. Every feature has its own toggle, so you only keep what you like. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
+Since version 2.0 the heart of the UI is the **PanzaUI addon**. It does not replace Blizzard's frames: it restyles them after they are drawn, so Edit Mode and every Blizzard feature keep working as usual. Every feature has its own toggle. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
+
+## What "lightweight" means
+
+About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Blizzard frames already on screen instead of building new ones, with no libraries or frameworks. My previous setup, made of several big addons and profiles (until [1.7-RELEASE](https://github.com/MarioCatuogno/PanzaUI/releases/tag/1.7)), used about **70-90 MB** and about **15%** CPU on average for the same result.
 
 __Note__: designed for 2560×1440 and 65% UI scale. It works at other resolutions too, with some small adjustments of the frame positions.
 
