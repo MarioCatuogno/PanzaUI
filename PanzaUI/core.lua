@@ -593,26 +593,35 @@ function ns.StyleBarText(bar)
 end
 
 --------------------------------------------------------------------------------
--- Percentage text: one decimal, "100" when full, empty at 0 (secret values
--- go straight to the text, curves and a twin font string do the rest).
+-- Percentage text: one decimal for health, none for power, "100" when full,
+-- empty at 0 (secret values go straight to the text, curves and a twin font
+-- string do the rest).
 --------------------------------------------------------------------------------
 local percentBars = {}
 local fullTexts   = {}
 
-local partCurve, fullCurve
+-- Shown part (between the thresholds) and "100" part (from the top one).
+local function MakeCurves(low, high)
+    local part = C_CurveUtil.CreateCurve()
+    part:AddPoint(0, 0)
+    part:AddPoint(low - 0.0001, 0)
+    part:AddPoint(low, 1)
+    part:AddPoint(high - 0.00001, 1)
+    part:AddPoint(high, 0)
+    part:AddPoint(1, 0)
+    local full = C_CurveUtil.CreateCurve()
+    full:AddPoint(0, 0)
+    full:AddPoint(high - 0.00001, 0)
+    full:AddPoint(high, 1)
+    full:AddPoint(1, 1)
+    return part, full
+end
+
+-- Health with one decimal, power as a whole number.
+local partCurve, fullCurve, powerPartCurve, powerFullCurve
 if C_CurveUtil and C_CurveUtil.CreateCurve then
-    partCurve = C_CurveUtil.CreateCurve()
-    partCurve:AddPoint(0,       0)
-    partCurve:AddPoint(0.0004,  0)
-    partCurve:AddPoint(0.0005,  1)
-    partCurve:AddPoint(0.99949, 1)
-    partCurve:AddPoint(0.9995,  0)
-    partCurve:AddPoint(1,       0)
-    fullCurve = C_CurveUtil.CreateCurve()
-    fullCurve:AddPoint(0,       0)
-    fullCurve:AddPoint(0.99949, 0)
-    fullCurve:AddPoint(0.9995,  1)
-    fullCurve:AddPoint(1,       1)
+    partCurve, fullCurve = MakeCurves(0.0005, 0.9995)
+    powerPartCurve, powerFullCurve = MakeCurves(0.005, 0.995)
 end
 
 -- Copies the bar text font to its twin.
@@ -660,8 +669,8 @@ function ns.SetPercentText(text, unit, isPower, powerType)
     if isPower then
         pct = UnitPowerPercent(unit, powerType, false, curve)
         if partCurve then
-            alpha = UnitPowerPercent(unit, powerType, false, partCurve)
-            full  = UnitPowerPercent(unit, powerType, false, fullCurve)
+            alpha = UnitPowerPercent(unit, powerType, false, powerPartCurve)
+            full  = UnitPowerPercent(unit, powerType, false, powerFullCurve)
         end
     else
         pct = UnitHealthPercent(unit, true, curve)
@@ -670,7 +679,7 @@ function ns.SetPercentText(text, unit, isPower, powerType)
             full  = UnitHealthPercent(unit, true, fullCurve)
         end
     end
-    text:SetFormattedText("%.1f", pct)
+    text:SetFormattedText(isPower and "%.0f" or "%.1f", pct)
     if partCurve then
         text:SetAlpha(alpha)
         local twin = FullText(text)
