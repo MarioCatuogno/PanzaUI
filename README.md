@@ -18,7 +18,7 @@ PanzaUI is a UI for **World of Warcraft Retail** (Midnight) that keeps the defau
 
 Since version 2.0 the heart of the UI is the **PanzaUI addon**. It does not replace Blizzard's frames: it restyles them after they are drawn, so Edit Mode and every Blizzard feature keep working as usual. Every feature has its own toggle. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
 
-## What "lightweight" means
+## Why PanzaUI?
 
 About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Blizzard frames already on screen instead of building new ones, with no libraries or frameworks. My previous setup, made of several big addons and profiles (until [1.7-RELEASE](https://github.com/MarioCatuogno/PanzaUI/releases/tag/1.7)), used about **70-90 MB** and about **15%** CPU on average for the same result.
 
