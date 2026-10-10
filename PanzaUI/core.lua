@@ -721,12 +721,12 @@ local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDIN
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
     { VIS.DEFAULT,      "Default",        "Shown as Blizzard sets it." },
+    { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
     { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
-    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
-    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
     { VIS.COMBAT,       "In Combat",      "Shown only in combat." },
     { VIS.NO_COMBAT,    "Out of Combat",  "Hidden in combat." },
-    { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
+    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
 }
 
 local visEntries   = {}
