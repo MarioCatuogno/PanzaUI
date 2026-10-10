@@ -1007,7 +1007,8 @@ local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialo
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
     "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip",
-    "AutoCompleteBox" } -- name suggestions (mail, whispers, invites)
+    "AutoCompleteBox", -- name suggestions (mail, whispers, invites)
+    "QueueStatusFrame" } -- Group Finder eye: queue status
 local HidePieces, PanelBorder = ns.HideFramePieces, ns.PanelBorder
 
 local function StyleTooltipBorder(tooltip)
@@ -1243,6 +1244,8 @@ function GEN:OnEnable()
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
+        -- The queue status sets its own look each time it opens.
+        if QueueStatusFrame then QueueStatusFrame:HookScript("OnShow", StyleTooltipBorder) end
         StyleDialogs()
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
