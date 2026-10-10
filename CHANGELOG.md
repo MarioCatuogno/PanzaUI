@@ -5,6 +5,7 @@
 * Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
 * Combat - Added an option to hide the Personal Resource Display while casting, before part of the Refined style [#131]
 * Core - Fixed the Refined borders option on the Group Finder queue status (eye tooltip), now with the new border texture [#130]
+* Core - Fixed the Refined borders option on the reagent selection of professions (eg. finishing reagents), now with the new border texture and the action bar style on the icons
 * Core - Fixed the decimals on the power bars percentage, now shown only on the health bars
 
 ### 👤 Profiles

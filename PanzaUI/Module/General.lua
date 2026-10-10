@@ -1024,6 +1024,44 @@ local function StyleTooltipBorder(tooltip)
     PanelBorder(nineSlice, nineSlice, 0)
 end
 
+-- Reagent flyout (eg. finishing reagents): tooltip border, item buttons in
+-- the action bar style. Created by Blizzard on the first open.
+local styledFlyouts = {}
+
+local function IsItemFlyout(frame)
+    local mixin = ProfessionsItemFlyoutMixin
+    if mixin and mixin.Init then return frame.Init == mixin.Init end
+    return frame.ScrollBox and frame.NineSlice and frame.HideUnownedCheckbox
+end
+
+local function StyleFlyoutButton(button)
+    if button and not button:IsForbidden() then ns.StyleItemButton(button, button.Icon or button.icon, true) end
+end
+
+local function StyleItemFlyout(parent)
+    if type(parent) ~= "table" or not parent.GetChildren or parent:IsForbidden() then return end
+    for _, child in ipairs({ parent:GetChildren() }) do
+        if not styledFlyouts[child] and not child:IsForbidden() and IsItemFlyout(child) then
+            styledFlyouts[child] = true
+            StyleTooltipBorder(child)
+            if child.ScrollBox and ScrollUtil then
+                ScrollUtil.AddInitializedFrameCallback(child.ScrollBox, ns.ScrollFrameCallback(StyleFlyoutButton), ns, true)
+            end
+        end
+    end
+end
+
+local function SetupItemFlyout()
+    local function OnOpen(_, parent)
+        ns.Defer(function()
+            StyleItemFlyout(parent)
+            StyleItemFlyout(ProfessionsFrame and ProfessionsFrame.CraftingPage and ProfessionsFrame.CraftingPage.SchematicForm)
+        end)
+    end
+    ns.Hook("OpenProfessionsItemFlyout", OnOpen)
+    ns.Hook("ToggleProfessionsItemFlyout", OnOpen)
+end
+
 -- Dialogs (eg. "Do you want to destroy...?"): Blizzard's frame (BG, drawn
 -- as whole textures) hidden on every show, replaced by a plain background
 -- and the border.
@@ -1240,7 +1278,10 @@ function GEN:OnEnable()
             SetupSetIcons()
             SetupMountIcons()
         end)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", function()
+            SetupProfessionIcons()
+            SetupItemFlyout()
+        end)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
