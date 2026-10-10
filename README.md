@@ -35,7 +35,7 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | Section | What it does |
 |---|---|
 | **General** | Class colors for health bars, an outlined *Refined text* for the whole UI, *Refined borders* for icons, tooltips and pop-ups and custom textures for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars |
-| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom and a visibility option for every bar: always, on mouseover, only while Skyriding, never while Skyriding or hidden |
+| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom and a visibility option for every bar: always, on mouseover, only while Skyriding, never while Skyriding, only in combat, only out of combat or hidden |
 | **Bags & Items** | Item level on equipment in bags, banks and Character/Inspect panels, icon zoom, auto-repair and auto-sell of junk items |
 | **Chat** | Cleaner chat windows, timestamps, clickable web links, short channel names and no more minor messages (guild message of the day, loot of other players, online/offline and join/leave notices…) |
 | **Combat** | Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter, elapsed time on cast bars, a dynamic Cooldown Manager layout and a cleaner Personal Resource Display |

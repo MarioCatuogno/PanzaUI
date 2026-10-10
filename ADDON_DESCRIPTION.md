@@ -30,7 +30,7 @@ Every feature has its own toggle.
 - Cleaner buttons, with no macro names or keybindings
 - Icon zoom to hide the old borders of classic icons
 - Optional red icons when the target is out of range
-- Visibility for every bar: always, on mouseover (with a smooth fade in and out), only while Skyriding, never while Skyriding or hidden (also for Micro Menu, Bag Bar and XP bar)
+- Visibility for every bar: always, on mouseover (with a smooth fade in and out), only while Skyriding, never while Skyriding, only in combat, only out of combat or hidden (also for Micro Menu, Bag Bar and XP bar)
 - Want my setup? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119)
 
 ### Bags & Items

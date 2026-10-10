@@ -717,13 +717,15 @@ end
 -- Visibility engine: frames faded with alpha, hidden buttons unclickable.
 -- Entry: { frames, buttons?, getMode, grid?, flyout?, onRefresh? }
 --------------------------------------------------------------------------------
-local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
+local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4, COMBAT = 5, NO_COMBAT = 6 }
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
     { VIS.DEFAULT,      "Default",        "Shown as Blizzard sets it." },
     { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
     { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
     { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
+    { VIS.COMBAT,       "In Combat",      "Shown only in combat." },
+    { VIS.NO_COMBAT,    "Out of Combat",  "Hidden in combat." },
     { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
 }
 
@@ -731,6 +733,7 @@ local visEntries   = {}
 local visShown     = {}
 local forced       = {} -- editMode / grid
 local skyriding    = false
+local inCombat     = false
 local mousePending = false
 local visWatcher   = CreateFrame("Frame")
 visWatcher:Hide()
@@ -748,6 +751,8 @@ local function RestingAlpha(e)
     if IsForced(e) or mode == VIS.DEFAULT then return 1 end
     if mode == VIS.SKYRIDING then return skyriding and 1 or 0 end
     if mode == VIS.NO_SKYRIDING then return skyriding and 0 or 1 end
+    if mode == VIS.COMBAT then return inCombat and 1 or 0 end
+    if mode == VIS.NO_COMBAT then return inCombat and 0 or 1 end
     return 0
 end
 
@@ -830,7 +835,8 @@ local function HookEntry(e)
     end
 end
 
--- Clicks only where the entry is visible (out of combat).
+-- Clicks only where the entry is visible (out of combat). Combat modes keep
+-- them: clicks can't be switched on once combat has started.
 local function ApplyMouse()
     if InCombatLockdown() then mousePending = true return end
     mousePending = false
@@ -838,6 +844,7 @@ local function ApplyMouse()
         if e.buttons then
             local mode = VisMode(e)
             local enabled = IsForced(e) or mode == VIS.DEFAULT or mode == VIS.MOUSEOVER
+                or mode == VIS.COMBAT or mode == VIS.NO_COMBAT
                 or (mode == VIS.SKYRIDING and skyriding) or (mode == VIS.NO_SKYRIDING and not skyriding)
             if not enabled or e.mouseOff then
                 for _, b in ipairs(e.buttons) do b:EnableMouse(enabled) end
@@ -883,6 +890,7 @@ local visInitialized = false
 local function InitVisibility()
     visInitialized = true
     skyriding = ReadSkyriding()
+    inCombat = InCombatLockdown() and true or false
 
     -- Everything is shown in Edit Mode, action bars also while dragging a spell.
     EventRegistry:RegisterCallback("EditMode.Enter", function() SetForced("editMode", true) end, ns)
@@ -892,14 +900,20 @@ local function InitVisibility()
     events:RegisterEvent("ACTIONBAR_SHOWGRID")
     events:RegisterEvent("ACTIONBAR_HIDEGRID")
     events:RegisterEvent("PLAYER_REGEN_ENABLED")
+    events:RegisterEvent("PLAYER_REGEN_DISABLED")
     events:RegisterEvent("PLAYER_ENTERING_WORLD")
     events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
     pcall(events.RegisterEvent, events, "PLAYER_CAN_GLIDE_CHANGED")
     events:SetScript("OnEvent", function(_, event)
         if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
             SetForced("grid", event == "ACTIONBAR_SHOWGRID")
-        elseif event == "PLAYER_REGEN_ENABLED" then
-            if mousePending then ApplyMouse() end
+        elseif event == "PLAYER_REGEN_ENABLED" or event == "PLAYER_REGEN_DISABLED" then
+            inCombat = event == "PLAYER_REGEN_DISABLED"
+            for _, e in ipairs(visEntries) do
+                local mode = VisMode(e)
+                if (mode == VIS.COMBAT or mode == VIS.NO_COMBAT) and not IsForced(e) then FadeEntry(e, RestingAlpha(e)) end
+            end
+            if not inCombat and mousePending then ApplyMouse() end
         else
             local now = ReadSkyriding()
             if now ~= skyriding then
