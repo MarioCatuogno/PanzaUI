@@ -12,6 +12,7 @@
 
 ### 👤 Profiles
 
+* BigWigs - Fixed text style of BigWigs M+ alerts
 * BlizzUI - Switched position of Pet bar and Stance bar
 
 ### 📏 Various
