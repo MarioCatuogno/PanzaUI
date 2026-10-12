@@ -10,9 +10,14 @@
 * Core - Fixed the Refined borders option on the reagent selection of professions (eg. finishing reagents), now with the new border texture and the action bar style on the icons
 * Core - Fixed the decimals on the power bars percentage, now shown only on the health bars
 
+### 🧮 Class CDM
+
+* Monk - Windwalker: Added Combat Potion to Tracked buffs
+
 ### 👤 Profiles
 
 * BigWigs - Fixed text style of BigWigs M+ alerts
+* BlizzUI - Fixed the position of Chat frame to show Voice Chat overlay
 * BlizzUI - Switched position of Pet bar and Stance bar
 
 ### 📏 Various
