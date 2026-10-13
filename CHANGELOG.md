@@ -17,7 +17,9 @@
 
 ### 👤 Profiles
 
+* BigWigs - Adjusted the position of BigWigs bars
 * BigWigs - Fixed text style of BigWigs M+ alerts
+* BlizzUI - Adjusted the position of Focus frame to better show BigWigs bars
 * BlizzUI - Fixed the position of Chat frame to show Voice Chat overlay
 * BlizzUI - Switched position of Pet bar and Stance bar
 
