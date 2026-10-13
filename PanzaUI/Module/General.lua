@@ -553,28 +553,37 @@ end
 
 local castTexture, castBusy
 local castBarColor = {}
+local castUnknown = {} -- bars whose cast type is secret (eg. boss casts in an encounter)
+local STANDARD_CAST = CAST_COLORS[#CAST_COLORS]
+
+-- Secret cast type: the shield of uninterruptible casts tells them apart.
+local function UnknownCastColor(bar)
+    local shield = bar.BorderShield
+    if shield and shield:IsShown() then return CAST_COLORS[1] end
+    return STANDARD_CAST
+end
 
 local function KeepCastColor(bar)
-    local c = castBarColor[bar]
-    if castBusy or not c then return end
+    if castBusy then return end
+    local c = castBarColor[bar] or (castUnknown[bar] and UnknownCastColor(bar))
+    if not c then return end
     castBusy = true
     bar:SetStatusBarColor(c[2], c[3], c[4])
     castBusy = false
 end
 
--- Cast type from the bar type or the atlas name (secrets keep Blizzard's).
+-- Cast type from the bar type or the atlas name. The texture is always set;
+-- when the type is secret the color follows the shield.
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
     local kind = bar.barType
     if IsSecret(kind) or type(kind) ~= "string" then kind = asset end
-    if IsSecret(kind) or type(kind) ~= "string" then
-        castBarColor[bar] = nil
-        return
-    end
+    local known = not IsSecret(kind) and type(kind) == "string"
     castBusy = true
     SetTexture(bar, castTexture)
     castBusy = false
-    castBarColor[bar] = CastColor(kind)
+    castBarColor[bar] = known and CastColor(kind) or nil
+    castUnknown[bar] = not known
     KeepCastColor(bar)
 end
 
@@ -1303,7 +1312,7 @@ function GEN:OnEnable()
     SkinToT(TargetFrame, target, "targettarget")
     SkinToT(FocusFrame, target, "focustarget")
     if target then
-        for i = 1, 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
+        for i = 1, MAX_BOSS_FRAMES or 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
 

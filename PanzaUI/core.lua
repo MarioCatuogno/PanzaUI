@@ -576,7 +576,7 @@ function ns.ForEachCastBar(func)
     if OverlayPlayerCastingBarFrame then func(OverlayPlayerCastingBarFrame) end
     if TargetFrame and TargetFrame.spellbar then func(TargetFrame.spellbar) end
     if FocusFrame and FocusFrame.spellbar then func(FocusFrame.spellbar) end
-    for i = 1, 5 do
+    for i = 1, MAX_BOSS_FRAMES or 5 do
         local boss = _G["Boss" .. i .. "TargetFrame"]
         if boss and boss.spellbar then func(boss.spellbar) end
     end
