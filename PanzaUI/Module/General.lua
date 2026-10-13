@@ -86,8 +86,8 @@ local OTHER_BARS = {
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
     { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
-      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
-                  "Progress bars of events and NPCs" },
+      bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
+                  "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -415,6 +415,56 @@ if UIWidgetTemplateStatusBarMixin then
         if c then bar:SetStatusBarColor(c[2], c[3], c[4]) end
     end)
 end
+
+-- Mirror timers (breath, fatigue, feign death): interface texture, colored
+-- by timer type. Bars are created when a timer starts.
+local MIRROR_COLORS = {
+    BREATH     = { 0.20, 0.50, 0.95 },
+    EXHAUSTION = { 0.95, 0.80, 0.10 },
+    FEIGNDEATH = { 0.93, 0.45, 0.10 },
+    DEATH      = { 0.93, 0.45, 0.10 },
+}
+
+-- Timer type: from the bar when Blizzard stores it, otherwise from the
+-- started timer whose duration matches the bar.
+local mirrorKinds = {} -- bar -> timer type
+local TIMER_FIELDS = { "timer", "timerType", "timerName", "mirrorTimerType" }
+
+local function TimerKind(timer)
+    for _, key in ipairs(TIMER_FIELDS) do
+        local kind = timer[key]
+        if not IsSecret(kind) and type(kind) == "string" and MIRROR_COLORS[kind] then return kind end
+    end
+end
+
+local function SameMax(bar, maxValue)
+    if IsSecret(maxValue) or type(maxValue) ~= "number" then return end
+    local _, max = bar:GetMinMaxValues()
+    if IsSecret(max) or not max then return end
+    return math.abs(max - maxValue) < 0.5 or math.abs(max - maxValue / 1000) < 0.5
+end
+
+local function SkinMirrorTimers(started, maxValue)
+    local container = MirrorTimerContainer
+    if not (container and widgetTexture) or container:IsForbidden() then return end
+    for _, timer in ipairs({ container:GetChildren() }) do
+        local bar = timer.StatusBar
+        if bar and not bar:IsForbidden() then
+            TrackTexture(bar, widgetTexture)
+            local kind = TimerKind(timer)
+            if not kind and started and timer:IsShown() and SameMax(bar, maxValue) then kind = started end
+            mirrorKinds[bar] = kind or mirrorKinds[bar]
+            local c = MIRROR_COLORS[mirrorKinds[bar] or "BREATH"]
+            bar:SetStatusBarColor(c[1], c[2], c[3])
+        end
+    end
+end
+
+local mirrorEvents = CreateFrame("Frame")
+mirrorEvents:SetScript("OnEvent", function(_, _, timerType, _, maxValue)
+    local started = not IsSecret(timerType) and MIRROR_COLORS[timerType] and timerType or nil
+    ns.Defer(function() SkinMirrorTimers(started, maxValue) end)
+end)
 
 -- Unit frame power bars: texture and power color after Blizzard's update.
 local function UpdatePowerBar(bar)
@@ -1353,6 +1403,12 @@ function GEN:OnEnable()
             local content = entry.Content or entry
             TrackTexture(content.ReputationBar or entry.ReputationBar, interface, 2)
         end), self, true)
+    end
+
+    -- Breath, fatigue and feign death bars.
+    if interface then
+        mirrorEvents:RegisterEvent("MIRROR_TIMER_START")
+        SkinMirrorTimers()
     end
 
     -- Achievement window and criteria bars (children walked as varargs).
