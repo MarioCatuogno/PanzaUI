@@ -556,10 +556,13 @@ local castBarColor = {}
 local castUnknown = {} -- bars whose cast type is secret (eg. boss casts in an encounter)
 local STANDARD_CAST = CAST_COLORS[#CAST_COLORS]
 
--- Secret cast type: the shield of uninterruptible casts tells them apart.
+-- Secret cast type: the shield of uninterruptible casts tells them apart,
+-- when its state is readable (it can be secret too, eg. in an encounter).
 local function UnknownCastColor(bar)
     local shield = bar.BorderShield
-    if shield and shield:IsShown() then return CAST_COLORS[1] end
+    if not shield then return STANDARD_CAST end
+    local shown = shield:IsShown()
+    if not IsSecret(shown) and shown then return CAST_COLORS[1] end
     return STANDARD_CAST
 end
 

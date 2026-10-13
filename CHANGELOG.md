@@ -7,7 +7,7 @@
 * Action Bars - Fixed the order of the visibility options
 * Combat - Added an option to hide the Personal Resource Display while casting, before part of the Refined style [#131]
 * Core - Fixed the Refined borders option on the Group Finder queue status (eye tooltip), now with the new border texture [#130]
-* Core - Fixed the Cast Bars texture missing on some casts of the Boss frames (eg. during an encounter), now always applied, with the shield showing the uninterruptible ones
+* Core - Fixed the Cast Bars texture missing on some casts of the Boss frames (eg. during an encounter), now always applied
 * Core - Fixed the Refined borders option on the reagent selection of professions (eg. finishing reagents), now with the new border texture and the action bar style on the icons
 * Core - Fixed the decimals on the power bars percentage, now shown only on the health bars
 
