@@ -1,3 +1,15 @@
+## 2.5-RELEASE
+
+### 🛠️ Core
+
+### 🧮 Class CDM
+
+### 👤 Profiles
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.4-RELEASE
 
 This update brings new visibility options for the action bars, a few new skins and some fixes for patch 12.1.5.
