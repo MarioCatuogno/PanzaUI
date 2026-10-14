@@ -1227,13 +1227,28 @@ local function MemoryReport()
     ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
 end
 
+-- Options panel: Blizzard blocks opening it in combat, so it opens as soon
+-- as combat ends.
+local openEvents = CreateFrame("Frame")
+
+local function OpenOptions()
+    if InCombatLockdown() then
+        ns.Print("the options will open after combat.")
+        openEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    openEvents:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    Settings.OpenToCategory(ns.category:GetID())
+end
+openEvents:SetScript("OnEvent", OpenOptions)
+
 -- /pui: options. /pui mem: memory report.
 SLASH_PANZAUI1 = "/pui"
 SlashCmdList.PANZAUI = function(msg)
     if msg and msg:lower():find("^%s*mem") then
         MemoryReport()
     else
-        Settings.OpenToCategory(ns.category:GetID())
+        OpenOptions()
     end
 end
 
