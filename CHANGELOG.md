@@ -25,6 +25,7 @@
 * BigWigs - Fixed text style of BigWigs M+ alerts
 * BlizzUI - Adjusted the position of Focus frame to better show BigWigs bars [#134]
 * BlizzUI - Fixed the position of Chat frame to show Voice Chat overlay
+* BlizzUI - Fixed the position of Quest Tracker to avoid conflict with some quest panels [#135]
 * BlizzUI - Switched position of Pet bar and Stance bar
 
 ### 📏 Various
