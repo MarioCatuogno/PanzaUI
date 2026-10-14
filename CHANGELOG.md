@@ -5,6 +5,7 @@
 * Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
 * Action Bars - Added the In Combat and Out of Combat visibility options [#128]
 * Action Bars - Fixed the order of the visibility options
+* Bags & Items - Fixed the error after the auto-repair at merchants with patch 12.1.5 [#135]
 * Combat - Added an option to hide the Personal Resource Display while casting, before part of the Refined style [#131]
 * Core - Added the breath and fatigue bars (eg. underwater) to the Interface bars texture
 * Core - Fixed the Refined borders option on the Group Finder queue status (eye tooltip), now with the new border texture [#130]
