@@ -19,6 +19,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         fastDelete      = true,
         waypoints       = true,
         hideNotices     = true,
+        hideErrors      = false,
     },
     options = {
         { header = "Other Addons" },
@@ -32,13 +33,16 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "autoKeystone", label = "Auto-insert keystone",
           tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
         { key = "fastLoot", label = "Fast auto-loot",
-          tooltip = "Loot everything at once when auto loot is on." },
+          tooltip = "Loot everything at once when Auto Loot is on." },
         { key = "flightDestination", label = "Flight destination",
           tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Fill in the \"DELETE\" confirmation when deleting an item." },
-        { key = "hideNotices", label = "Hide micro menu alerts",
-          tooltip = "Hide the alerts and flashing on the micro menu buttons." },
+        { key = "hideErrors", label = "Hide error messages",
+          tooltip = "Hide the red error messages at the top of the screen.",
+          bullets = { "Quest updates still shown" } },
+        { key = "hideNotices", label = "Hide Micro Menu alerts",
+          tooltip = "Hide the alerts and flashing on the Micro Menu buttons." },
         { key = "waypoints", label = "Waypoint command", reload = true,
           tooltip = "Set a map waypoint by typing /way and the coordinates.",
           bullets = { "Example: /way 45.2 61.8", "Remove it with /way clear" } },
@@ -47,8 +51,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           dropdown = {
               { 0, "Off", "Never shown." },
               { 1, "Always", "Always shown." },
-              { 2, "In combat", "Shown in combat." },
-              { 3, "In combat (group)", "Shown in combat while in a group." },
+              { 2, "In Combat", "Shown in combat." },
+              { 3, "In Combat (group)", "Shown in combat while in a group." },
           } },
     },
 })
@@ -596,6 +600,16 @@ local function SetupBigWigs()
 end
 
 --------------------------------------------------------------------------------
+-- Error messages: the red errors at the top of the screen (eg. "Not enough
+-- energy") are not shown; quest updates and other info messages are kept.
+--------------------------------------------------------------------------------
+local function SetErrorMessages(hide)
+    local frame = UIErrorsFrame
+    if not frame then return end
+    if hide then frame:UnregisterEvent("UI_ERROR_MESSAGE") else frame:RegisterEvent("UI_ERROR_MESSAGE") end
+end
+
+--------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
 function Misc:OnLoad()
@@ -620,6 +634,7 @@ function Misc:OnEnable()
     SetCursorRing(self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
     SetupNotices()
+    if self.db.hideErrors then SetErrorMessages(true) end
     if self.db.waypoints then SetupWaypoints() end
 end
 
@@ -633,6 +648,8 @@ function Misc:OnOptionChanged(key, value)
         SetAutoKeystone(value)
     elseif key == "flightDestination" then
         if not value and flightFrame then flightFrame:Hide() end
+    elseif key == "hideErrors" then
+        SetErrorMessages(value)
     elseif key == "hideNotices" then
         if value then CloseOpenNotices() end
     elseif key == "cursorRing" then
