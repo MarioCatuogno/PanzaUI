@@ -85,7 +85,7 @@ local OTHER_BARS = {
     { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Set the texture of the Cooldown Manager and Personal Resource Display bars.",
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
-    { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
+    { key = "texInterface",    label = "Interface Bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
                   "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },

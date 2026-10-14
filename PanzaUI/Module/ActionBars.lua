@@ -26,7 +26,7 @@ local OTHER_BARS = {
     -- MicroMenu only, so the Group Finder eye stays visible.
     { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenu" } },
     { key = "bagBar",     label = "Bag Bar",                   frames = { "BagsBar" } },
-    { key = "statusBars", label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
+    { key = "statusBars", label = "Experience/Reputation Bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
 }
 
 --------------------------------------------------------------------------------
