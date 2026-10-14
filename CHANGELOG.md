@@ -2,6 +2,8 @@
 
 ### 🛠️ Core
 
+* Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
+
 ### 🧮 Class CDM
 
 ### 👤 Profiles

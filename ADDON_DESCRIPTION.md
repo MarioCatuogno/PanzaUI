@@ -63,6 +63,7 @@ Every feature has its own toggle.
 - Class colored names, faction (red for Horde, blue for Alliance), Mythic+ rating and item level of players
 - Item and spell IDs
 - Mount of players, with its icon
+- Optional anchor to the mouse cursor
 
 ### Unit Frames
 - Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage

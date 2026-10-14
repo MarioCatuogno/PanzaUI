@@ -41,7 +41,7 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | **Combat** | Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter, elapsed time on cast bars, a dynamic Cooldown Manager layout and a cleaner Personal Resource Display, optionally hidden while casting |
 | **Party & Raid Frames** | Names without server, health as a percentage, cleaner shields and heal prediction, aggro border and sharper role icons |
 | **Quest & Minimap** | Cleaner minimap and Quest Tracker, quest counter in the tracker header and a Quest Tracker that hides itself during boss fights, Mythic+ and instance combat |
-| **Tooltips** | Class colored names, faction, Mythic+ rating, item level and mount of players, item and spell IDs |
+| **Tooltips** | Class colored names, faction, Mythic+ rating, item level and mount of players, item and spell IDs and an optional anchor to the mouse cursor |
 | **Unit Frames** | Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage and less clutter (PvP icons, glows, combat text…) |
 | **Various** | Cursor ring, fast auto-loot, fast item delete, automatic Mythic+ keystone, current expansion filter in the Auction House, flight path destination, `/way` waypoints, refined Platynator nameplates and BigWigs bars and no more micro menu alerts |
 

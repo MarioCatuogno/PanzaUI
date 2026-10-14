@@ -1,6 +1,6 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Tooltip style, player info, mounts and IDs.
+    Tooltip style, player info, mounts, IDs and cursor anchor.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
@@ -12,6 +12,7 @@ local TT = ns:RegisterModule("Tooltips", {
         playerInfo = true,
         playerMount = true,
         showIDs    = true,
+        cursorAnchor = false,
     },
     options = {
         { key = "style", label = "Refined style", reload = true,
@@ -23,6 +24,8 @@ local TT = ns:RegisterModule("Tooltips", {
           tooltip = "Show the mount of players." },
         { key = "showIDs", label = "Show IDs",
           tooltip = "Show the ID of items and spells." },
+        { key = "cursorAnchor", label = "Anchor to cursor",
+          tooltip = "Show the tooltips next to the mouse cursor." },
     },
 })
 
@@ -230,6 +233,13 @@ local function IDLine(label)
     end
 end
 
+-- Anchor to cursor: tooltips placed at the default position (world, unit
+-- frames, buttons) follow the mouse instead (option read live).
+local function AnchorToCursor(tooltip, parent)
+    if not TT.db.cursorAnchor or not tooltip or tooltip:IsForbidden() then return end
+    tooltip:SetOwner(parent or UIParent, "ANCHOR_CURSOR")
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
@@ -244,4 +254,5 @@ function TT:OnEnable()
     add(types.Item,  IDLine("Item ID"))
     add(types.Spell, IDLine("Spell ID"))
     inspectEvents:RegisterEvent("INSPECT_READY")
+    ns.Hook("GameTooltip_SetDefaultAnchor", AnchorToCursor)
 end
