@@ -32,7 +32,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           tooltip = "Show only current expansion items when opening the Auction House." },
         { key = "autoKeystone", label = "Auto-insert keystone",
           tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
-        { key = "fastLoot", label = "Fast auto-loot",
+        { key = "fastLoot", label = "Fast Auto Loot",
           tooltip = "Loot everything at once when Auto Loot is on." },
         { key = "flightDestination", label = "Flight destination",
           tooltip = "Show the destination while flying on a flight path." },

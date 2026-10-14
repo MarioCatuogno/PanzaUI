@@ -72,7 +72,7 @@ Every feature has its own toggle.
 
 ### Various
 - Cursor ring in your class color
-- Fast auto-loot and fast item delete
+- Fast Auto Loot and fast item delete
 - Mythic+ keystone inserted automatically in the Font of Power
 - Current expansion filter set automatically in the Auction House
 - Destination shown while flying on a flight path
