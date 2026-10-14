@@ -1,5 +1,7 @@
 ## 2.4-RELEASE
 
+This update brings new visibility options for the action bars, a few new skins and some fixes for patch 12.1.5.
+
 ### 🛠️ Core
 
 * Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
