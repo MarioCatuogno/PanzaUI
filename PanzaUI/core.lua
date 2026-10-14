@@ -1044,11 +1044,20 @@ local function UpdateReloadButton(_, category)
     if own then settingsViewed = true end
 end
 
--- Collects the settings panel's temporary memory when it closes (out of combat).
-local function CollectAfterSettings()
-    if not settingsViewed or InCombatLockdown() then return end
-    settingsViewed = false
+-- Collects the settings panel's temporary memory once it has closed (out of
+-- combat). Delayed: Blizzard releases the panel's controls after its OnHide,
+-- so a collection right away would miss that garbage.
+local COLLECT_DELAY = 1 -- seconds
+
+local function Collect()
+    if InCombatLockdown() or (SettingsPanel and SettingsPanel:IsShown()) then return end
     collectgarbage("collect")
+end
+
+local function CollectAfterSettings()
+    if not settingsViewed then return end
+    settingsViewed = false
+    C_Timer.After(COLLECT_DELAY, Collect)
 end
 
 -- Tooltip: summary, sorted bullets and reload note.
