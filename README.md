@@ -43,7 +43,7 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | **Quest & Minimap** | Cleaner minimap and Quest Tracker, quest counter in the tracker header and a Quest Tracker that hides itself during boss fights, Mythic+ and instance combat |
 | **Tooltips** | Class colored names, faction, Mythic+ rating, item level and mount of players, item and spell IDs and an optional anchor to the mouse cursor |
 | **Unit Frames** | Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage and less clutter (PvP icons, glows, combat text…) |
-| **Various** | Cursor ring, fast auto-loot, fast item delete, automatic Mythic+ keystone, current expansion filter in the Auction House, flight path destination, `/way` waypoints, refined Platynator nameplates and BigWigs bars and no more micro menu alerts |
+| **Various** | Cursor ring, fast auto-loot, fast item delete, automatic Mythic+ keystone, current expansion filter in the Auction House, flight path destination, `/way` waypoints, refined Platynator nameplates and BigWigs bars, no more Micro Menu alerts and optionally no error messages |
 
 Want the action bars set up like mine? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 

@@ -17,9 +17,9 @@ local QM = ns:RegisterModule("QuestMinimap", {
     options = {
         { header = "Minimap" },
         { key = "minimapStyle", label = "Refined style",
-          tooltip = "Polish the look of the minimap." },
+          tooltip = "Polish the look of the Minimap." },
         { key = "minimapClutter", label = "Hide clutter",
-          tooltip = "Hide the calendar invite alerts on the minimap." },
+          tooltip = "Hide the calendar invite alerts on the Minimap." },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Hide the Quest Tracker during boss fights and combat in dungeons and raids." },

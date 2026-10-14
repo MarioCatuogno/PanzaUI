@@ -79,7 +79,8 @@ Every feature has its own toggle.
 - `/way` command to set map waypoints from coordinates
 - Rounded icons and a matching HD border for Platynator nameplates
 - Refined style for BigWigs bars (Blizzard style), Battle Res icon, queue timer and start timer
-- No more flashing micro menu alerts
+- No more flashing Micro Menu alerts
+- Optionally hide the red error messages
 
 ![PanzaUI - Interface](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg)
 
