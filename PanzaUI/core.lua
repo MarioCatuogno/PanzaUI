@@ -576,7 +576,7 @@ function ns.ForEachCastBar(func)
     if OverlayPlayerCastingBarFrame then func(OverlayPlayerCastingBarFrame) end
     if TargetFrame and TargetFrame.spellbar then func(TargetFrame.spellbar) end
     if FocusFrame and FocusFrame.spellbar then func(FocusFrame.spellbar) end
-    for i = 1, 5 do
+    for i = 1, MAX_BOSS_FRAMES or 5 do
         local boss = _G["Boss" .. i .. "TargetFrame"]
         if boss and boss.spellbar then func(boss.spellbar) end
     end
@@ -593,26 +593,35 @@ function ns.StyleBarText(bar)
 end
 
 --------------------------------------------------------------------------------
--- Percentage text: one decimal, "100" when full, empty at 0 (secret values
--- go straight to the text, curves and a twin font string do the rest).
+-- Percentage text: one decimal for health, none for power, "100" when full,
+-- empty at 0 (secret values go straight to the text, curves and a twin font
+-- string do the rest).
 --------------------------------------------------------------------------------
 local percentBars = {}
 local fullTexts   = {}
 
-local partCurve, fullCurve
+-- Shown part (between the thresholds) and "100" part (from the top one).
+local function MakeCurves(low, high)
+    local part = C_CurveUtil.CreateCurve()
+    part:AddPoint(0, 0)
+    part:AddPoint(low - 0.0001, 0)
+    part:AddPoint(low, 1)
+    part:AddPoint(high - 0.00001, 1)
+    part:AddPoint(high, 0)
+    part:AddPoint(1, 0)
+    local full = C_CurveUtil.CreateCurve()
+    full:AddPoint(0, 0)
+    full:AddPoint(high - 0.00001, 0)
+    full:AddPoint(high, 1)
+    full:AddPoint(1, 1)
+    return part, full
+end
+
+-- Health with one decimal, power as a whole number.
+local partCurve, fullCurve, powerPartCurve, powerFullCurve
 if C_CurveUtil and C_CurveUtil.CreateCurve then
-    partCurve = C_CurveUtil.CreateCurve()
-    partCurve:AddPoint(0,       0)
-    partCurve:AddPoint(0.0004,  0)
-    partCurve:AddPoint(0.0005,  1)
-    partCurve:AddPoint(0.99949, 1)
-    partCurve:AddPoint(0.9995,  0)
-    partCurve:AddPoint(1,       0)
-    fullCurve = C_CurveUtil.CreateCurve()
-    fullCurve:AddPoint(0,       0)
-    fullCurve:AddPoint(0.99949, 0)
-    fullCurve:AddPoint(0.9995,  1)
-    fullCurve:AddPoint(1,       1)
+    partCurve, fullCurve = MakeCurves(0.0005, 0.9995)
+    powerPartCurve, powerFullCurve = MakeCurves(0.005, 0.995)
 end
 
 -- Copies the bar text font to its twin.
@@ -660,8 +669,8 @@ function ns.SetPercentText(text, unit, isPower, powerType)
     if isPower then
         pct = UnitPowerPercent(unit, powerType, false, curve)
         if partCurve then
-            alpha = UnitPowerPercent(unit, powerType, false, partCurve)
-            full  = UnitPowerPercent(unit, powerType, false, fullCurve)
+            alpha = UnitPowerPercent(unit, powerType, false, powerPartCurve)
+            full  = UnitPowerPercent(unit, powerType, false, powerFullCurve)
         end
     else
         pct = UnitHealthPercent(unit, true, curve)
@@ -670,7 +679,7 @@ function ns.SetPercentText(text, unit, isPower, powerType)
             full  = UnitHealthPercent(unit, true, fullCurve)
         end
     end
-    text:SetFormattedText("%.1f", pct)
+    text:SetFormattedText(isPower and "%.0f" or "%.1f", pct)
     if partCurve then
         text:SetAlpha(alpha)
         local twin = FullText(text)
@@ -708,20 +717,23 @@ end
 -- Visibility engine: frames faded with alpha, hidden buttons unclickable.
 -- Entry: { frames, buttons?, getMode, grid?, flyout?, onRefresh? }
 --------------------------------------------------------------------------------
-local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4 }
+local VIS = { DEFAULT = 0, MOUSEOVER = 1, SKYRIDING = 2, HIDDEN = 3, NO_SKYRIDING = 4, COMBAT = 5, NO_COMBAT = 6 }
 ns.VIS = VIS
 ns.VISIBILITY_OPTIONS = {
     { VIS.DEFAULT,      "Default",        "Shown as Blizzard sets it." },
-    { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
-    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
-    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
     { VIS.HIDDEN,       "Always hidden",  "Never shown, keybindings still work." },
+    { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
+    { VIS.COMBAT,       "In Combat",      "Shown only in combat." },
+    { VIS.NO_COMBAT,    "Out of Combat",  "Hidden in combat." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
+    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
 }
 
 local visEntries   = {}
 local visShown     = {}
 local forced       = {} -- editMode / grid
 local skyriding    = false
+local inCombat     = false
 local mousePending = false
 local visWatcher   = CreateFrame("Frame")
 visWatcher:Hide()
@@ -739,11 +751,50 @@ local function RestingAlpha(e)
     if IsForced(e) or mode == VIS.DEFAULT then return 1 end
     if mode == VIS.SKYRIDING then return skyriding and 1 or 0 end
     if mode == VIS.NO_SKYRIDING then return skyriding and 0 or 1 end
+    if mode == VIS.COMBAT then return inCombat and 1 or 0 end
+    if mode == VIS.NO_COMBAT then return inCombat and 0 or 1 end
     return 0
 end
 
-local function SetEntryAlpha(e, alpha)
+-- Mouseover fades: in over FADE_IN seconds, out over FADE_OUT (alpha only,
+-- allowed in combat; the fade frame runs only while something fades).
+local FADE_IN, FADE_OUT = 0.2, 0.2
+local fading = {} -- entry -> target alpha
+local fader = CreateFrame("Frame")
+fader:Hide()
+
+local function ApplyAlpha(e, alpha)
+    e.alpha = alpha
     for _, f in ipairs(e.frames) do f:SetAlpha(alpha) end
+end
+
+-- Instant change: any fade of the entry stops.
+local function SetEntryAlpha(e, alpha)
+    fading[e] = nil
+    ApplyAlpha(e, alpha)
+end
+
+fader:SetScript("OnUpdate", function(self, dt)
+    for e, target in pairs(fading) do
+        local alpha = e.alpha or 0
+        if target > alpha then
+            alpha = math.min(target, alpha + dt / FADE_IN)
+        else
+            alpha = math.max(target, alpha - dt / FADE_OUT)
+        end
+        ApplyAlpha(e, alpha)
+        if alpha == target then fading[e] = nil end
+    end
+    if not next(fading) then self:Hide() end
+end)
+
+local function FadeEntry(e, target)
+    if e.alpha == target then
+        fading[e] = nil
+        return
+    end
+    fading[e] = target
+    fader:Show()
 end
 
 local function IsHovered(e)
@@ -760,7 +811,7 @@ visWatcher:SetScript("OnUpdate", function(self, dt)
     elapsed = 0
     for e in pairs(visShown) do
         if not IsForced(e) and not IsHovered(e) then
-            SetEntryAlpha(e, RestingAlpha(e))
+            FadeEntry(e, RestingAlpha(e))
             visShown[e] = nil
         end
     end
@@ -769,7 +820,7 @@ end)
 
 local function OnEnterEntry(e)
     if VisMode(e) ~= VIS.MOUSEOVER then return end
-    SetEntryAlpha(e, 1)
+    FadeEntry(e, 1)
     visShown[e] = true
     visWatcher:Show()
 end
@@ -784,7 +835,8 @@ local function HookEntry(e)
     end
 end
 
--- Clicks only where the entry is visible (out of combat).
+-- Clicks only where the entry is visible (out of combat). Combat modes keep
+-- them: clicks can't be switched on once combat has started.
 local function ApplyMouse()
     if InCombatLockdown() then mousePending = true return end
     mousePending = false
@@ -792,6 +844,7 @@ local function ApplyMouse()
         if e.buttons then
             local mode = VisMode(e)
             local enabled = IsForced(e) or mode == VIS.DEFAULT or mode == VIS.MOUSEOVER
+                or mode == VIS.COMBAT or mode == VIS.NO_COMBAT
                 or (mode == VIS.SKYRIDING and skyriding) or (mode == VIS.NO_SKYRIDING and not skyriding)
             if not enabled or e.mouseOff then
                 for _, b in ipairs(e.buttons) do b:EnableMouse(enabled) end
@@ -837,6 +890,7 @@ local visInitialized = false
 local function InitVisibility()
     visInitialized = true
     skyriding = ReadSkyriding()
+    inCombat = InCombatLockdown() and true or false
 
     -- Everything is shown in Edit Mode, action bars also while dragging a spell.
     EventRegistry:RegisterCallback("EditMode.Enter", function() SetForced("editMode", true) end, ns)
@@ -846,14 +900,20 @@ local function InitVisibility()
     events:RegisterEvent("ACTIONBAR_SHOWGRID")
     events:RegisterEvent("ACTIONBAR_HIDEGRID")
     events:RegisterEvent("PLAYER_REGEN_ENABLED")
+    events:RegisterEvent("PLAYER_REGEN_DISABLED")
     events:RegisterEvent("PLAYER_ENTERING_WORLD")
     events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
     pcall(events.RegisterEvent, events, "PLAYER_CAN_GLIDE_CHANGED")
     events:SetScript("OnEvent", function(_, event)
         if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
             SetForced("grid", event == "ACTIONBAR_SHOWGRID")
-        elseif event == "PLAYER_REGEN_ENABLED" then
-            if mousePending then ApplyMouse() end
+        elseif event == "PLAYER_REGEN_ENABLED" or event == "PLAYER_REGEN_DISABLED" then
+            inCombat = event == "PLAYER_REGEN_DISABLED"
+            for _, e in ipairs(visEntries) do
+                local mode = VisMode(e)
+                if (mode == VIS.COMBAT or mode == VIS.NO_COMBAT) and not IsForced(e) then FadeEntry(e, RestingAlpha(e)) end
+            end
+            if not inCombat and mousePending then ApplyMouse() end
         else
             local now = ReadSkyriding()
             if now ~= skyriding then

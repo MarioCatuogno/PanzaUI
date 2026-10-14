@@ -14,9 +14,13 @@
 
 </div>
 
-PanzaUI is a clean, lightweight UI for **World of Warcraft Retail** (Midnight) that keeps the look and feel of the default Blizzard interface, but makes it sharper, tidier and more comfortable to play with.
+PanzaUI is a UI for **World of Warcraft Retail** (Midnight) that keeps the default Blizzard interface and fixes what I don't like in it: different textures between the bars of different panels, different borders, inconsistent text formats and so on. On top of that, it brings in features I used to get from other addons.
 
-Since version 2.0 the heart of the UI is the **PanzaUI addon**: a single, very light addon that improves the default UI (no heavy frameworks, no replaced frames) and is built around the new Midnight addon restrictions. Every feature has its own toggle, so you only keep what you like. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
+Since version 2.0 the heart of the UI is the **PanzaUI addon**. It does not replace Blizzard's frames: it restyles them after they are drawn, so Edit Mode and every Blizzard feature keep working as usual. Every feature has its own toggle. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
+
+## Why PanzaUI?
+
+About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Blizzard frames already on screen instead of building new ones, with no libraries or frameworks. My previous setup, made of several big addons and profiles (until [1.7-RELEASE](https://github.com/MarioCatuogno/PanzaUI/releases/tag/1.7)), used about **70-90 MB** and about **15%** CPU on average for the same result.
 
 __Note__: designed for 2560×1440 and 65% UI scale. It works at other resolutions too, with some small adjustments of the frame positions.
 
@@ -31,10 +35,10 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | Section | What it does |
 |---|---|
 | **General** | Class colors for health bars, an outlined *Refined text* for the whole UI, *Refined borders* for icons, tooltips and pop-ups and custom textures for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars |
-| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom and a visibility option for every bar: always, on mouseover, only while Skyriding, never while Skyriding or hidden |
+| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom, icons in red when out of range and a visibility option for every bar: always, on mouseover (with a fade in and out), only while Skyriding, never while Skyriding, only in combat, only out of combat or hidden |
 | **Bags & Items** | Item level on equipment in bags, banks and Character/Inspect panels, icon zoom, auto-repair and auto-sell of junk items |
 | **Chat** | Cleaner chat windows, timestamps, clickable web links, short channel names and no more minor messages (guild message of the day, loot of other players, online/offline and join/leave notices…) |
-| **Combat** | Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter, elapsed time on cast bars, a dynamic Cooldown Manager layout and a cleaner Personal Resource Display |
+| **Combat** | Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter, elapsed time on cast bars, a dynamic Cooldown Manager layout and a cleaner Personal Resource Display, optionally hidden while casting |
 | **Party & Raid Frames** | Names without server, health as a percentage, cleaner shields and heal prediction, aggro border and sharper role icons |
 | **Quest & Minimap** | Cleaner minimap and Quest Tracker, quest counter in the tracker header and a Quest Tracker that hides itself during boss fights, Mythic+ and instance combat |
 | **Tooltips** | Class colored names, faction, Mythic+ rating, item level and mount of players, item and spell IDs |
@@ -82,6 +86,10 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_party_01.jpeg" alt="PanzaUI - Party">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_pvp_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_pvp_01.jpeg" alt="PanzaUI - PVP">
   </a>
 
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_interface_01.jpeg">

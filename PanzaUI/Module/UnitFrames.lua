@@ -448,7 +448,7 @@ end
 -- Boss frames
 --------------------------------------------------------------------------------
 local function SetupBoss(db)
-    for i = 1, 5 do
+    for i = 1, MAX_BOSS_FRAMES or 5 do
         local frame = _G["Boss" .. i .. "TargetFrame"]
         local content = frame and frame.TargetFrameContent
         if content then

@@ -17,6 +17,7 @@ local CB = ns:RegisterModule("PersonalResource", {
         cdmDynamic   = true,
         dmStyle      = true,
         prdStyle     = true,
+        prdHideCasting = true,
     },
     options = {
         { header = "Buffs & Debuffs" },
@@ -40,7 +41,9 @@ local CB = ns:RegisterModule("PersonalResource", {
         { header = "Personal Resource Display" },
         { key = "prdStyle", label = "Refined style", reload = true,
           tooltip = "Polish the look of the Personal Resource Display.",
-          bullets = { "Health and power as a percentage", "Hidden while casting" } },
+          bullets = { "Health and power as a percentage" } },
+        { key = "prdHideCasting", label = "Hide while casting",
+          tooltip = "Hide the Personal Resource Display while you cast." },
     },
 })
 
@@ -53,6 +56,8 @@ function CB:Migrate(db, saved)
     ns.MergeOptions(db, "prdStyle", db, "fontStyle", "centerText", "percentText", "altText")
     ns.MergeOptions(db, "cdmStyle", db, "cdmIconStyle", "cdmFontStyle")
     ns.MergeOptions(db, "dmStyle", db, "dmIconStyle", "dmFontStyle")
+    -- Up to 2.3 hiding while casting was part of the PRD Refined style.
+    ns.MergeOptions(db, "prdHideCasting", db, "prdStyle")
 end
 
 --------------------------------------------------------------------------------
@@ -247,8 +252,18 @@ castEvents:SetScript("OnEvent", function(_, event)
     end
 end)
 
-local function SetupCastHide()
-    if not PersonalResourceDisplayFrame then return end
+-- Turned on or off live: the display shows again when turned off mid-cast.
+local function SetCastHide(on)
+    local frame = PersonalResourceDisplayFrame
+    if not frame then return end
+    if not on then
+        castEvents:UnregisterAllEvents()
+        if castHidden then
+            castHidden = false
+            frame:SetAlpha(hiddenAlpha)
+        end
+        return
+    end
     for _, event in ipairs(CAST_EVENTS) do castEvents:RegisterUnitEvent(event, "player") end
 end
 
@@ -446,15 +461,15 @@ function CB:OnEnable()
     if db.auraStyle then StyleLossOfControl() end
     if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
     if ns.textStyle then ns.ForEachCastBar(StyleCastText) end
-    if db.prdStyle or ns.textStyle then
+    if db.prdStyle or ns.textStyle or db.prdHideCasting then
         local function Setup()
             if not PersonalResourceDisplayFrame then return end
             if ns.textStyle then StylePRDText() end
             if db.prdStyle then
                 SetupPRD()
                 SetupAltText()
-                SetupCastHide()
             end
+            SetCastHide(db.prdHideCasting)
         end
         if PersonalResourceDisplayFrame then
             Setup()
@@ -478,6 +493,10 @@ function CB:OnEnable()
 end
 
 -- Live options.
-function CB:OnOptionChanged(key)
-    if key == "auraIconZoom" then ForEachAuraButton(ZoomAuraIcon) end
+function CB:OnOptionChanged(key, value)
+    if key == "auraIconZoom" then
+        ForEachAuraButton(ZoomAuraIcon)
+    elseif key == "prdHideCasting" then
+        SetCastHide(value)
+    end
 end

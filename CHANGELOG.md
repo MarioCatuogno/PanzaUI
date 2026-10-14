@@ -1,3 +1,40 @@
+## 2.4-RELEASE
+
+This update brings new visibility options for the action bars, a few new skins and some fixes for patch 12.1.5.
+
+### 🛠️ Core
+
+* Action Bars - Added a fade in and fade out to the bars shown on mouseover [#132]
+* Action Bars - Added the In Combat and Out of Combat visibility options [#128]
+* Action Bars - Fixed the order of the visibility options
+* Bags & Items - Fixed the error after the auto-repair at merchants with patch 12.1.5 [#135]
+* Combat - Added an option to hide the Personal Resource Display while casting, before part of the Refined style [#131]
+* Core - Added the breath and fatigue bars (eg. underwater) to the Interface bars texture
+* Core - Fixed the Refined borders option on the Group Finder queue status (eye tooltip), now with the new border texture [#130]
+* Core - Fixed the Cast Bars texture missing on some casts of the Boss frames (eg. during an encounter), now always applied
+* Core - Fixed the Refined borders option on the reagent selection of professions (eg. finishing reagents), now with the new border texture and the action bar style on the icons
+* Core - Fixed the decimals on the power bars percentage, now shown only on the health bars
+
+### 🧮 Class CDM
+
+* Druid - Feral: Added Combat Potion to Tracked buffs
+* Monk - Brewmaster: Added Combat Potion to Tracked buffs
+* Monk - Windwalker: Added Combat Potion to Tracked buffs
+
+### 👤 Profiles
+
+* BigWigs - Adjusted the position of BigWigs bars [#134]
+* BigWigs - Fixed text style of BigWigs M+ alerts
+* BlizzUI - Adjusted the position of Focus frame to better show BigWigs bars [#134]
+* BlizzUI - Fixed the position of Chat frame to show Voice Chat overlay
+* BlizzUI - Fixed the position of Quest Tracker to avoid conflict with some quest panels introduced with patch 12.1.5 [#135]
+* BlizzUI - Switched position of Pet bar and Stance bar
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+* Updated TOC file to patch version 12.1.5
+
 ## 2.3-RELEASE
 
 This is a smaller update focused on fixing a lot of small bugs and adding some new features.

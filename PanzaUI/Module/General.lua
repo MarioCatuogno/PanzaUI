@@ -86,8 +86,8 @@ local OTHER_BARS = {
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
     { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
-      bullets = { "Achievements", "Experience and reputation bars", "Quest Tracker", "Reputation panel", "Tooltips",
-                  "Progress bars of events and NPCs" },
+      bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
+                  "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -416,6 +416,56 @@ if UIWidgetTemplateStatusBarMixin then
     end)
 end
 
+-- Mirror timers (breath, fatigue, feign death): interface texture, colored
+-- by timer type. Bars are created when a timer starts.
+local MIRROR_COLORS = {
+    BREATH     = { 0.20, 0.50, 0.95 },
+    EXHAUSTION = { 0.95, 0.80, 0.10 },
+    FEIGNDEATH = { 0.93, 0.45, 0.10 },
+    DEATH      = { 0.93, 0.45, 0.10 },
+}
+
+-- Timer type: from the bar when Blizzard stores it, otherwise from the
+-- started timer whose duration matches the bar.
+local mirrorKinds = {} -- bar -> timer type
+local TIMER_FIELDS = { "timer", "timerType", "timerName", "mirrorTimerType" }
+
+local function TimerKind(timer)
+    for _, key in ipairs(TIMER_FIELDS) do
+        local kind = timer[key]
+        if not IsSecret(kind) and type(kind) == "string" and MIRROR_COLORS[kind] then return kind end
+    end
+end
+
+local function SameMax(bar, maxValue)
+    if IsSecret(maxValue) or type(maxValue) ~= "number" then return end
+    local _, max = bar:GetMinMaxValues()
+    if IsSecret(max) or not max then return end
+    return math.abs(max - maxValue) < 0.5 or math.abs(max - maxValue / 1000) < 0.5
+end
+
+local function SkinMirrorTimers(started, maxValue)
+    local container = MirrorTimerContainer
+    if not (container and widgetTexture) or container:IsForbidden() then return end
+    for _, timer in ipairs({ container:GetChildren() }) do
+        local bar = timer.StatusBar
+        if bar and not bar:IsForbidden() then
+            TrackTexture(bar, widgetTexture)
+            local kind = TimerKind(timer)
+            if not kind and started and timer:IsShown() and SameMax(bar, maxValue) then kind = started end
+            mirrorKinds[bar] = kind or mirrorKinds[bar]
+            local c = MIRROR_COLORS[mirrorKinds[bar] or "BREATH"]
+            bar:SetStatusBarColor(c[1], c[2], c[3])
+        end
+    end
+end
+
+local mirrorEvents = CreateFrame("Frame")
+mirrorEvents:SetScript("OnEvent", function(_, _, timerType, _, maxValue)
+    local started = not IsSecret(timerType) and MIRROR_COLORS[timerType] and timerType or nil
+    ns.Defer(function() SkinMirrorTimers(started, maxValue) end)
+end)
+
 -- Unit frame power bars: texture and power color after Blizzard's update.
 local function UpdatePowerBar(bar)
     local path = powerBars[bar]
@@ -553,28 +603,40 @@ end
 
 local castTexture, castBusy
 local castBarColor = {}
+local castUnknown = {} -- bars whose cast type is secret (eg. boss casts in an encounter)
+local STANDARD_CAST = CAST_COLORS[#CAST_COLORS]
+
+-- Secret cast type: the shield of uninterruptible casts tells them apart,
+-- when its state is readable (it can be secret too, eg. in an encounter).
+local function UnknownCastColor(bar)
+    local shield = bar.BorderShield
+    if not shield then return STANDARD_CAST end
+    local shown = shield:IsShown()
+    if not IsSecret(shown) and shown then return CAST_COLORS[1] end
+    return STANDARD_CAST
+end
 
 local function KeepCastColor(bar)
-    local c = castBarColor[bar]
-    if castBusy or not c then return end
+    if castBusy then return end
+    local c = castBarColor[bar] or (castUnknown[bar] and UnknownCastColor(bar))
+    if not c then return end
     castBusy = true
     bar:SetStatusBarColor(c[2], c[3], c[4])
     castBusy = false
 end
 
--- Cast type from the bar type or the atlas name (secrets keep Blizzard's).
+-- Cast type from the bar type or the atlas name. The texture is always set;
+-- when the type is secret the color follows the shield.
 local function KeepCastTexture(bar, asset)
     if castBusy then return end
     local kind = bar.barType
     if IsSecret(kind) or type(kind) ~= "string" then kind = asset end
-    if IsSecret(kind) or type(kind) ~= "string" then
-        castBarColor[bar] = nil
-        return
-    end
+    local known = not IsSecret(kind) and type(kind) == "string"
     castBusy = true
     SetTexture(bar, castTexture)
     castBusy = false
-    castBarColor[bar] = CastColor(kind)
+    castBarColor[bar] = known and CastColor(kind) or nil
+    castUnknown[bar] = not known
     KeepCastColor(bar)
 end
 
@@ -1007,7 +1069,8 @@ local EDIT_MODE_DIALOGS = { "EditModeManagerFrame", "EditModeSystemSettingsDialo
 -- ones) set their look only when created.
 local TOOLTIPS = { "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2",
     "ItemRefShoppingTooltip1", "ItemRefShoppingTooltip2", "SettingsTooltip", "AddonTooltip",
-    "AutoCompleteBox" } -- name suggestions (mail, whispers, invites)
+    "AutoCompleteBox", -- name suggestions (mail, whispers, invites)
+    "QueueStatusFrame" } -- Group Finder eye: queue status
 local HidePieces, PanelBorder = ns.HideFramePieces, ns.PanelBorder
 
 local function StyleTooltipBorder(tooltip)
@@ -1021,6 +1084,44 @@ local function StyleTooltipBorder(tooltip)
         center:SetPoint("BOTTOMRIGHT", -TOOLTIP_INSET, TOOLTIP_INSET)
     end
     PanelBorder(nineSlice, nineSlice, 0)
+end
+
+-- Reagent flyout (eg. finishing reagents): tooltip border, item buttons in
+-- the action bar style. Created by Blizzard on the first open.
+local styledFlyouts = {}
+
+local function IsItemFlyout(frame)
+    local mixin = ProfessionsItemFlyoutMixin
+    if mixin and mixin.Init then return frame.Init == mixin.Init end
+    return frame.ScrollBox and frame.NineSlice and frame.HideUnownedCheckbox
+end
+
+local function StyleFlyoutButton(button)
+    if button and not button:IsForbidden() then ns.StyleItemButton(button, button.Icon or button.icon, true) end
+end
+
+local function StyleItemFlyout(parent)
+    if type(parent) ~= "table" or not parent.GetChildren or parent:IsForbidden() then return end
+    for _, child in ipairs({ parent:GetChildren() }) do
+        if not styledFlyouts[child] and not child:IsForbidden() and IsItemFlyout(child) then
+            styledFlyouts[child] = true
+            StyleTooltipBorder(child)
+            if child.ScrollBox and ScrollUtil then
+                ScrollUtil.AddInitializedFrameCallback(child.ScrollBox, ns.ScrollFrameCallback(StyleFlyoutButton), ns, true)
+            end
+        end
+    end
+end
+
+local function SetupItemFlyout()
+    local function OnOpen(_, parent)
+        ns.Defer(function()
+            StyleItemFlyout(parent)
+            StyleItemFlyout(ProfessionsFrame and ProfessionsFrame.CraftingPage and ProfessionsFrame.CraftingPage.SchematicForm)
+        end)
+    end
+    ns.Hook("OpenProfessionsItemFlyout", OnOpen)
+    ns.Hook("ToggleProfessionsItemFlyout", OnOpen)
 end
 
 -- Dialogs (eg. "Do you want to destroy...?"): Blizzard's frame (BG, drawn
@@ -1239,10 +1340,15 @@ function GEN:OnEnable()
             SetupSetIcons()
             SetupMountIcons()
         end)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", SetupProfessionIcons)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", function()
+            SetupProfessionIcons()
+            SetupItemFlyout()
+        end)
         EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
         ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
         for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
+        -- The queue status sets its own look each time it opens.
+        if QueueStatusFrame then QueueStatusFrame:HookScript("OnShow", StyleTooltipBorder) end
         StyleDialogs()
     end
     local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
@@ -1259,7 +1365,7 @@ function GEN:OnEnable()
     SkinToT(TargetFrame, target, "targettarget")
     SkinToT(FocusFrame, target, "focustarget")
     if target then
-        for i = 1, 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
+        for i = 1, MAX_BOSS_FRAMES or 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
 
@@ -1297,6 +1403,12 @@ function GEN:OnEnable()
             local content = entry.Content or entry
             TrackTexture(content.ReputationBar or entry.ReputationBar, interface, 2)
         end), self, true)
+    end
+
+    -- Breath, fatigue and feign death bars.
+    if interface then
+        mirrorEvents:RegisterEvent("MIRROR_TIMER_START")
+        SkinMirrorTimers()
     end
 
     -- Achievement window and criteria bars (children walked as varargs).

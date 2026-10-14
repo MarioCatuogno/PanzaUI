@@ -1,10 +1,10 @@
-## Interface: 120100, 120005, 120001
+## Interface: 120105, 120100, 120005, 120001
 ## Title: |cff00FF98Panza|rUI
 ## Notes: Lightweight, modular enhancements for the default UI.|n|nType |cff00FF98/pui|r to open the options.
 ## Author: Panzarotto
 ## X-Website: https://github.com/MarioCatuogno/PanzaUI
 ## IconTexture: 572034
-## Version: 2.3.50
+## Version: 2.4.12
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, Platynator
 
