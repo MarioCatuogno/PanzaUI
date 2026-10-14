@@ -34,6 +34,7 @@ Every feature has its own toggle.
 - Want my setup? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119)
 
 ### Bags & Items
+- Optional auto-sort of your bags each time you open them
 - Item level on equipment in bags, banks and the Character and Inspect panels, colored by quality
 - Auto-repair and auto-sell of junk items at merchants
 

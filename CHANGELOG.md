@@ -2,6 +2,7 @@
 
 ### 🛠️ Core
 
+* Bags & Items - Added an option to sort the bags each time you open them [#141]
 * Core - Fixed the capitalization of some options
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
 * Various - Added an option to hide the error messages [#138]
