@@ -13,6 +13,8 @@
 
 ### 🧮 Class CDM
 
+* Monk - Brewmaster: Added Combat Potion to Tracked buffs
+
 ### 👤 Profiles
 
 ### 📏 Various
