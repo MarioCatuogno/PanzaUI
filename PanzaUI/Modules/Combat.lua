@@ -139,11 +139,19 @@ local function StyleCastText(bar)
     ns.StyleFont(bar.Text)
 end
 
+-- The bar hides before Blizzard's interrupt animation ends, so its red glow
+-- can stay lit: cleared when a new cast shows the bar.
+local function ClearInterruptGlow(bar)
+    local glow = bar.InterruptGlow
+    if glow then glow:SetAlpha(0) end
+end
+
 local function SetupCastBar(bar)
     for _, key in ipairs(FADE_ANIMS) do
         local group = bar[key]
         if group and group.GetAnimations then InstantAnims(group:GetAnimations()) end
     end
+    if bar.InterruptGlow then bar:HookScript("OnShow", ClearInterruptGlow) end
     SetupCastTimer(bar)
 end
 
