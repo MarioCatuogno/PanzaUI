@@ -16,6 +16,8 @@
 
 PanzaUI is a UI for **World of Warcraft Retail** (Midnight) that keeps the default Blizzard interface and fixes what I don't like in it: different textures between the bars of different panels, different borders, inconsistent text formats and so on. On top of that, it brings in features I used to get from other addons.
 
+__WoW Forever__: PanzaUI already loads on WoW Forever, but there its features stay off until they are tested on that version of the game. They will be unlocked step by step in the next updates.
+
 Since version 2.0 the heart of the UI is the **PanzaUI addon**. It does not replace Blizzard's frames: it restyles them after they are drawn, so Edit Mode and every Blizzard feature keep working as usual. Every feature has its own toggle. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
 
 ## Why PanzaUI?

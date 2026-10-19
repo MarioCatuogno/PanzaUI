@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Bags & Items - Added an option to sort the bags each time you open them [#141]
+* Core - Changed the structure of the addon files (Core, Modules and Profiles per game version) to support both Retail and Forever [#124]
 * Core - Fixed the capitalization of some options
 * Core - Fixed the error when typing /pui in combat, the options now open after combat
 * Core - Improved the memory cleanup after closing the PanzaUI options

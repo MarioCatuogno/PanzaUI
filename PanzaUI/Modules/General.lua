@@ -91,10 +91,11 @@ local OTHER_BARS = {
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
--- Profiles: the PanzaUI Edit Mode layout, saved as "PanzaUI" (replacing an
--- older copy) and made active.
+-- Profiles (Profiles/<Flavor>/, read with ns.Profile): the PanzaUI Edit Mode
+-- layout, saved as "PanzaUI" (replacing an older copy) and made active.
 local function ImportEditMode()
-    local info = not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(ns.EDIT_MODE_LAYOUT)
+    local layout = ns.Profile("editMode")
+    local info = layout and not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(layout)
     if not info then
         ns.Print("The Edit Mode layout can't be imported now (in combat or invalid).")
         return
@@ -143,7 +144,7 @@ local function ImportPlatynator()
         ns.Print("The Platynator profile can't be imported now (in combat or Platynator not loaded).")
         return
     end
-    if pcall(api.ImportString, ns.PLATYNATOR_PROFILE, "PanzaUI") then
+    if pcall(api.ImportString, ns.Profile("platynator"), "PanzaUI") then
         ns.Print("Platynator profile imported.")
     else
         ns.Print("The Platynator profile can't be read.")
@@ -157,7 +158,7 @@ local function ImportBigWigs()
         ns.Print("The BigWigs profile can't be imported now (in combat or BigWigs not loaded).")
         return
     end
-    if not pcall(api.RegisterProfile, "PanzaUI", ns.BIGWIGS_PROFILE, "PanzaUI") then
+    if not pcall(api.RegisterProfile, "PanzaUI", ns.Profile("bigwigs"), "PanzaUI") then
         ns.Print("The BigWigs profile can't be read.")
     end
 end
@@ -177,11 +178,11 @@ local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
-      tooltip = "Import the PanzaUI Edit Mode layout." },
+      tooltip = "Import the PanzaUI Edit Mode layout.", profile = "editMode" },
     { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
-      tooltip = "Import the PanzaUI nameplates for Platynator." },
+      tooltip = "Import the PanzaUI nameplates for Platynator.", profile = "platynator" },
     { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
-      tooltip = "Import the PanzaUI boss timers for BigWigs." },
+      tooltip = "Import the PanzaUI boss timers for BigWigs.", profile = "bigwigs" },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color health bars by class for players and by reaction for NPCs." },

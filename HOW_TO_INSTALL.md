@@ -22,19 +22,19 @@ __Note__: the fonts replace the default ones of the whole game. To get the origi
 
 ### Cooldown Manager Class Profiles
 
-Optional class-specific profiles for the Cooldown Manager. These are not required to replicate the UI.
+Optional class-specific profiles for the Cooldown Manager (World of Warcraft Retail). These are not required to replicate the UI.
 
 | Class / Spec | Github Link | Wago Link |
 |---|---|---|
-| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Druid-Feral.txt) | — |
-| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Druid-Guardian.txt) | — |
-| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Mage-Frost.txt) | — |
-| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Brewmaster.txt) | [Import](https://wago.io/SC-WYrPjb) |
-| Monk — Mistweaver | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Mistweaver.txt) | — |
-| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Monk-Windwalker.txt) | [Import](https://wago.io/EE08tdX1t) |
-| Rogue — Outlaw | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Rogue-Outlaw.txt) | — |
-| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Shaman-Elemental.txt) | — |
-| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/CooldownManager/Shaman-Enhancement.txt) | — |
+| Druid — Feral | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Druid-Feral.txt) | — |
+| Druid — Guardian | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Druid-Guardian.txt) | — |
+| Mage — Frost | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Mage-Frost.txt) | — |
+| Monk — Brewmaster | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Monk-Brewmaster.txt) | [Import](https://wago.io/SC-WYrPjb) |
+| Monk — Mistweaver | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Monk-Mistweaver.txt) | — |
+| Monk — Windwalker | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Monk-Windwalker.txt) | [Import](https://wago.io/EE08tdX1t) |
+| Rogue — Outlaw | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Rogue-Outlaw.txt) | — |
+| Shaman — Elemental | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Shaman-Elemental.txt) | — |
+| Shaman — Enhancement | [Import](https://github.com/MarioCatuogno/PanzaUI/blob/main/PanzaUI/Profiles/Retail/CooldownManager/Shaman-Enhancement.txt) | — |
 
 ## FAQ
 
