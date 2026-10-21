@@ -2,14 +2,15 @@
 
 ### 🛠️ Core
 
-* Action Bars - Added the support for WoW Forever
+* Action Bars - Added the support for WoW Forever [#124]
 * Bags & Items - Added an option to sort the bags each time you open them [#141]
-* Chat - Added the support for WoW Forever
+* Chat - Added the support for WoW Forever [#124]
 * Combat - Fixed the red interrupt glow staying on the cast bars after an interrupted cast, with the Refined style
 * Core - Changed the structure of the addon files (Core, Modules and Profiles per game version) to support both Retail and Forever [#124]
 * Core - Fixed the capitalization of some options
 * Core - Fixed the error when typing /pui in combat, the options now open after combat
 * Core - Improved the memory cleanup after closing the PanzaUI options
+* General - Added the support for WoW Forever [#124]
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
 * Various - Added an option to hide the error messages [#138]
 

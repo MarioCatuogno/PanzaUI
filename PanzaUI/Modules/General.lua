@@ -202,7 +202,7 @@ end
 AddTextureOptions("Textures - Unit Frames", UNIT_BARS)
 AddTextureOptions("Textures - Other Bars", OTHER_BARS)
 
-local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
+local GEN = ns:RegisterModule("General", { title = "General", main = true, flavor = "both", defaults = defaults, options = options })
 
 -- Converts the saved values of older versions.
 function GEN:Migrate(db, saved)
@@ -1359,7 +1359,11 @@ function GEN:OnEnable()
     -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
     -- Green health when not class colored (the Pet frame never is).
     local tint = not ns.classColors
-    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
+    if PlayerFrame_GetHealthBar then
+        SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
+    else
+        SkinBars(PlayerFrameHealthBar, PlayerFrameManaBar, player, tint)
+    end
     SkinBars(PetFrameHealthBar, PetFrameManaBar, player, true)
     SkinFrame(TargetFrame, target, tint)
     SkinFrame(FocusFrame, focus, tint)
@@ -1502,7 +1506,10 @@ function GEN:OnEnable()
 
     -- Experience, reputation and honor bars.
     if interface then
-        local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
+        local containers = {}
+        for _, name in ipairs({ "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" }) do
+            containers[#containers + 1] = _G[name]
+        end
         local function ScanTracking()
             for _, container in ipairs(containers) do
                 local bars = container.bars
