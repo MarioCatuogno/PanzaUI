@@ -8,6 +8,7 @@ local IsSecret = ns.IsSecret
 -- Saved variables key of the old Miscellaneous module.
 local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Various",
+    flavor = "both",
     defaults = {
         platynatorStyle = true,
         bigwigsStyle    = true,
@@ -28,9 +29,9 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
           tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
-        { key = "ahExpansion", label = "Auction House: current expansion",
+        { key = "ahExpansion", label = "Auction House: current expansion", flavor = "retail",
           tooltip = "Show only current expansion items when opening the Auction House." },
-        { key = "autoKeystone", label = "Auto-insert keystone",
+        { key = "autoKeystone", label = "Auto-insert keystone", flavor = "retail",
           tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
         { key = "fastLoot", label = "Fast Auto Loot",
           tooltip = "Loot everything at once when Auto Loot is on." },
@@ -618,7 +619,7 @@ end
 
 -- Other addons are already loaded when modules are enabled.
 function Misc:OnEnable()
-    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
+    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then ns.Safe(SetupPlatynator) end
     if self.db.bigwigsStyle then
         EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs)
         -- The queue timer is part of BigWigs itself, loaded with the game.
@@ -627,15 +628,15 @@ function Misc:OnEnable()
         end
         if TimerTracker then TimerTracker:HookScript("OnEvent", StyleStartTimers) end
     end
-    SetFastLoot(self.db.fastLoot)
-    SetAuctionFilter(self.db.ahExpansion)
-    SetAutoKeystone(self.db.autoKeystone)
+    ns.Safe(SetFastLoot, self.db.fastLoot)
+    ns.Safe(SetAuctionFilter, self.db.ahExpansion)
+    ns.Safe(SetAutoKeystone, self.db.autoKeystone)
     ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
-    SetCursorRing(self.db.cursorRing)
+    ns.Safe(SetCursorRing, self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
-    SetupNotices()
+    ns.Safe(SetupNotices)
     if self.db.hideErrors then SetErrorMessages(true) end
-    if self.db.waypoints then SetupWaypoints() end
+    if self.db.waypoints then ns.Safe(SetupWaypoints) end
 end
 
 -- Live options.

@@ -7,6 +7,7 @@ local IsSecret = ns.IsSecret
 
 local GF = ns:RegisterModule("GroupFrames", {
     title = "Party & Raid Frames",
+    flavor = "both",
     defaults = {
         style       = true,
         overlays    = true,
@@ -231,7 +232,7 @@ end
 --------------------------------------------------------------------------------
 function GF:OnEnable()
     local db = self.db
-    SetupGroupBorders()
+    ns.Safe(SetupGroupBorders)
 
     roleEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
     roleEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -241,7 +242,7 @@ function GF:OnEnable()
         ns.Hook("CompactUnitFrame_UpdateRoleIcon", UpdateRoleIcon)
         ns.ForEachCompactFrame(UpdateRoleIcon)
         ns.Hook("PlayerFrame_UpdateRolesAssigned", UpdatePlayerRoleIcon)
-        UpdatePlayerRoleIcon()
+        ns.Safe(UpdatePlayerRoleIcon)
     end
 
     if db.overlays then
@@ -253,7 +254,7 @@ function GF:OnEnable()
         -- Blizzard reapplies the fonts in its frame setup.
         ns.Hook("DefaultCompactUnitFrameSetup", StyleFrame)
         ns.Hook("DefaultCompactMiniFrameSetup", StyleFrame)
-        StyleExisting()
+        ns.Safe(StyleExisting)
     end
 
     if not db.style then return end

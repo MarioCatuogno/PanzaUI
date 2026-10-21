@@ -8,6 +8,7 @@ local IsSecret = ns.IsSecret
 
 local Items = ns:RegisterModule("Items", {
     title = "Bags & Items",
+    flavor = "both",
     defaults = {
         iconZoom     = 5,
         itemLevel    = true,
@@ -49,11 +50,10 @@ end
 --------------------------------------------------------------------------------
 -- Item level of a bag slot (equipment only).
 --------------------------------------------------------------------------------
-local EQUIPMENT = {
-    [Enum.ItemClass.Weapon]     = true,
-    [Enum.ItemClass.Armor]      = true,
-    [Enum.ItemClass.Profession] = true,
-}
+local EQUIPMENT = {}
+for _, class in ipairs({ "Weapon", "Armor", "Profession" }) do -- Profession: Retail only
+    if Enum.ItemClass[class] then EQUIPMENT[Enum.ItemClass[class]] = true end
+end
 local SKIP_SLOTS = { [""] = true, INVTYPE_NON_EQUIP_IGNORE = true, INVTYPE_BODY = true, INVTYPE_TABARD = true }
 local bagLocation = ItemLocation:CreateEmpty()
 
@@ -318,10 +318,10 @@ end
 -- Module API
 --------------------------------------------------------------------------------
 function Items:OnEnable()
-    SetupBags()
-    SetupPanels()
-    SetupBanks()
-    if self.db.itemLevel then UpdateCharSlots() end
+    ns.Safe(SetupBags)
+    ns.Safe(SetupPanels)
+    ns.Safe(SetupBanks)
+    if self.db.itemLevel then ns.Safe(UpdateCharSlots) end
     UpdateMerchantEvents()
 end
 
