@@ -7,6 +7,7 @@ local IsSecret = ns.IsSecret
 
 local Chat = ns:RegisterModule("Chat", {
     title = "Chat",
+    flavor = "both",
     defaults = {
         style         = true,
         timestamps    = true,

@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Bags & Items - Added an option to sort the bags each time you open them [#141]
+* Chat - Added the support for WoW Forever
 * Combat - Fixed the red interrupt glow staying on the cast bars after an interrupted cast, with the Refined style
 * Core - Changed the structure of the addon files (Core, Modules and Profiles per game version) to support both Retail and Forever [#124]
 * Core - Fixed the capitalization of some options
