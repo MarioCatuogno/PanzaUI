@@ -7,6 +7,7 @@ local IsSecret = ns.IsSecret
 
 local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
+    flavor = "both",
     defaults = {
         style      = true,
         playerInfo = true,
@@ -119,6 +120,8 @@ local RATING_CACHE_TIME = 60 -- seconds
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
 
 local function AddMythicRating(tooltip, unit, guid)
+    -- Mythic+ only exists in Retail.
+    if not (C_PlayerInfo.GetPlayerMythicPlusRatingSummary and C_ChallengeMode) then return end
     local now = GetTime()
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
@@ -147,11 +150,11 @@ end
 -- and while auras are secret (eg. in instances): reading them would error.
 --------------------------------------------------------------------------------
 local MOUNT_TEXT = "|T%d:0|t %s"
-local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal.GetMountFromSpell
+local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal and C_MountJournal.GetMountFromSpell
 local AurasSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
 
 local function MountText(unit)
-    if InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
+    if not GetMountFromSpell or InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
     for i = 1, 40 do
         local aura = GetAura(unit, i, "HELPFUL")
         if IsSecret(aura) or not aura then return end
