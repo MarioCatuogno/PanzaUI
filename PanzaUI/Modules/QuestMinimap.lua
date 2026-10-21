@@ -48,6 +48,12 @@ local function CalendarBackgrounds()
     local keep = {
         [f:GetNormalTexture() or f] = true, [f:GetPushedTexture() or f] = true, [f:GetHighlightTexture() or f] = true,
     }
+    -- WoW Forever draws the button itself with these two textures.
+    if not ns.IsFlavor("retail") then
+        for _, key in ipairs({ "AddTexture", "StateTexture" }) do
+            if f[key] then keep[f[key]] = true end
+        end
+    end
     for _, name in ipairs({ "GameTimeCalendarInvitesTexture", "GameTimeCalendarInvitesGlow", "GameTimeCalendarEventAlarmTexture" }) do
         if _G[name] then keep[_G[name]] = true end
     end
