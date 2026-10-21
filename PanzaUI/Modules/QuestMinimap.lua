@@ -7,6 +7,7 @@ local _, ns = ...
 
 local QM = ns:RegisterModule("QuestMinimap", {
     title = "Quest & Minimap",
+    flavor = "both",
     defaults = {
         minimapStyle   = true,
         minimapClutter = true,
@@ -58,8 +59,10 @@ end
 
 local function Backgrounds()
     local list = CalendarBackgrounds()
-    list[#list + 1] = MinimapCluster.BorderTop
-    list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background
+    if MinimapCluster then
+        list[#list + 1] = MinimapCluster.BorderTop
+        list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background
+    end
     return list
 end
 
@@ -292,35 +295,35 @@ end
 function QM:OnEnable()
     local db = self.db
     if HelpTip then ns.Hook(HelpTip, "Show", HideClutterTip) end
-    if db.minimapClutter then ApplyClutter() end
+    if db.minimapClutter then ns.Safe(ApplyClutter) end
 
-    if db.minimapStyle then ApplyBackgrounds() end
+    if db.minimapStyle then ns.Safe(ApplyBackgrounds) end
 
     if ns.textStyle then ns.StyleFont(MinimapZoneText) end
     EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
         if ns.textStyle then ns.StyleFont(TimeManagerClockTicker) end
-        ApplyClockSize()
+        ns.Safe(ApplyClockSize)
     end)
 
     if db.trackerStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", ApplyTrackerStyle)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() ns.Safe(ApplyTrackerStyle) end)
     end
     if db.questCount then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() ns.Safe(SetQuestCount, true) end)
     end
     if ns.textStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
-            StyleFonts()
+            ns.Safe(StyleFonts)
             -- Edit Mode "Text Size" resets the font objects.
-            ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts)
+            if ObjectiveTrackerManager then ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts) end
         end)
         local top = UIWidgetTopCenterContainerFrame
         if top then
             ns.Hook(top, "UpdateWidgetLayout", StyleTopWidgets)
-            StyleTopWidgets(top)
+            ns.Safe(StyleTopWidgets, top)
         end
     end
-    SetCombatCollapse(db.combatCollapse)
+    ns.Safe(SetCombatCollapse, db.combatCollapse)
 end
 
 -- Live options.
