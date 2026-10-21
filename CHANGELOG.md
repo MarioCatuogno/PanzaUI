@@ -12,6 +12,7 @@
 * Core - Fixed the error when typing /pui in combat, the options now open after combat
 * Core - Improved the memory cleanup after closing the PanzaUI options
 * General - Added the support for WoW Forever [#124]
+* Quest & Minimap - Added the support for WoW Forever [#124]
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
 * Tooltips - Added the support for WoW Forever [#124]
 * Unit Frames - Added the support for WoW Forever [#124]
