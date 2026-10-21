@@ -186,6 +186,12 @@ function ns.Hook(target, name, callback)
     if target and type(target[name]) == "function" then hooksecurefunc(target, name, callback) end
 end
 
+-- Runs func(...) with errors sent to the error handler, so a failing part (eg.
+-- a Blizzard field that differs between game versions) does not stop the rest.
+function ns.Safe(func, ...)
+    xpcall(func, geterrorhandler(), ...)
+end
+
 --------------------------------------------------------------------------------
 -- PanzaUI border: sliced texture in the action bar icon frame colors, with a
 -- transparent padding around it (sizes in texture pixels).

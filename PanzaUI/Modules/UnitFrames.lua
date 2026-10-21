@@ -75,7 +75,7 @@ for i, o in ipairs(options) do
     end
 end
 
-local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", flavor = "both", defaults = defaults, options = options })
 
 -- Blizzard's own settings, set only when an option is on or turned off.
 local CLASS_ICON_CVARS = { playerClassIcon = "ReplaceMyPlayerPortrait", targetClassIcon = "ReplaceOtherPlayerPortraits" }
@@ -564,13 +564,14 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+-- Each frame is set up on its own (ns.Safe).
 function UF:OnEnable()
     local db = self.db
-    SetupPlayer(db)
+    ns.Safe(SetupPlayer, db)
 
     for _, t in ipairs(TARGET_FRAMES) do
         local frame = _G[t.frame]
-        if frame then SetupTargetFrame(frame, db, t.prefix) end
+        if frame then ns.Safe(SetupTargetFrame, frame, db, t.prefix) end
     end
 
     if FocusFrame then
@@ -583,8 +584,8 @@ function UF:OnEnable()
         end
     end
 
-    SetupBoss(db)
-    SetupPet(db)
+    ns.Safe(SetupBoss, db)
+    ns.Safe(SetupPet, db)
     SetupPortraits(db)
     for key in pairs(CLASS_ICON_CVARS) do
         if db[key] then SetClassIcon(key, true) end
