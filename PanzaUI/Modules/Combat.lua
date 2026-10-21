@@ -9,6 +9,7 @@ local IsSecret = ns.IsSecret
 -- Saved variables key of the old Personal Resource Display module.
 local CB = ns:RegisterModule("PersonalResource", {
     title = "Combat",
+    flavor = "both",
     defaults = {
         auraStyle    = true,
         auraIconZoom = 5,
@@ -462,13 +463,13 @@ end
 function CB:OnEnable()
     local db = self.db
     EventUtil.ContinueOnAddOnLoaded("Blizzard_BuffFrame", function()
-        if db.auraStyle then ForEachAuraButton(StyleAuraButton) end
-        if ns.textStyle then ForEachAuraButton(StyleAuraText) end
-        ForEachAuraButton(ZoomAuraIcon)
+        if db.auraStyle then ns.Safe(ForEachAuraButton, StyleAuraButton) end
+        if ns.textStyle then ns.Safe(ForEachAuraButton, StyleAuraText) end
+        ns.Safe(ForEachAuraButton, ZoomAuraIcon)
     end)
-    if db.auraStyle then StyleLossOfControl() end
-    if db.castStyle then ns.ForEachCastBar(SetupCastBar) end
-    if ns.textStyle then ns.ForEachCastBar(StyleCastText) end
+    if db.auraStyle then ns.Safe(StyleLossOfControl) end
+    if db.castStyle then ns.Safe(ns.ForEachCastBar, SetupCastBar) end
+    if ns.textStyle then ns.Safe(ns.ForEachCastBar, StyleCastText) end
     if db.prdStyle or ns.textStyle or db.prdHideCasting then
         local function Setup()
             if not PersonalResourceDisplayFrame then return end
@@ -480,23 +481,23 @@ function CB:OnEnable()
             SetCastHide(db.prdHideCasting)
         end
         if PersonalResourceDisplayFrame then
-            Setup()
+            ns.Safe(Setup)
         else
-            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", Setup)
+            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", function() ns.Safe(Setup) end)
         end
     end
-    if db.cdmStyle then ns.OnCooldownItem(StyleItem) end
-    if ns.textStyle then ns.OnCooldownItem(StyleItemText) end
+    if db.cdmStyle then ns.Safe(ns.OnCooldownItem, StyleItem) end
+    if ns.textStyle then ns.Safe(ns.OnCooldownItem, StyleItemText) end
     if db.cdmDynamic then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", SetupDynamicLayout)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_CooldownViewer", function() ns.Safe(SetupDynamicLayout) end)
     end
     if db.dmStyle then
-        ns.OnDamageMeterEntry(StyleEntryIcon)
-        ns.OnDamageMeterWindow(HidePinnedPlayer)
+        ns.Safe(ns.OnDamageMeterEntry, StyleEntryIcon)
+        ns.Safe(ns.OnDamageMeterWindow, HidePinnedPlayer)
     end
     if ns.textStyle then
-        ns.OnDamageMeterEntry(StyleEntryText)
-        ns.OnDamageMeterWindow(StyleWindowText)
+        ns.Safe(ns.OnDamageMeterEntry, StyleEntryText)
+        ns.Safe(ns.OnDamageMeterWindow, StyleWindowText)
     end
 end
 
