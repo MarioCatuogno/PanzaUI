@@ -6,6 +6,11 @@
 local _, ns = ...
 local IsSecret = ns.IsSecret
 
+-- The level of the Player, Target and Focus frames is hidden by the Refined style
+-- on Retail only: WoW Forever keeps it.
+local HIDE_LEVEL = ns.IsFlavor("retail")
+local NAME_STYLE = HIDE_LEVEL and "Centered name without level" or "Centered name"
+
 --------------------------------------------------------------------------------
 -- Options: Target and Focus share their entries (<prefix><Key>).
 --------------------------------------------------------------------------------
@@ -18,7 +23,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Centered name without level", "Health and power as a percentage" } },
+      bullets = { NAME_STYLE, "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -26,7 +31,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Centered name without level", "Health and power as a percentage" }
+    local styleBullets = { NAME_STYLE, "Health and power as a percentage" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 5 debuffs"
@@ -336,7 +341,7 @@ local function SetupPlayer(db)
     end
 
     if db.playerStyle then
-        ns.Kill(PlayerLevelText)
+        if HIDE_LEVEL then ns.Kill(PlayerLevelText) end
         local bar = main.HealthBarsContainer
         CenterName(PlayerName, bar)
         EnlargeName(PlayerName)
@@ -424,8 +429,10 @@ local function SetupTargetFrame(frame, db, p)
 
     if db[p .. "Style"] then
         -- Only the skull icon is anchored to the level text.
-        ns.Kill(main.LevelText)
-        ns.Kill(ctx.HighLevelTexture)
+        if HIDE_LEVEL then
+            ns.Kill(main.LevelText)
+            ns.Kill(ctx.HighLevelTexture)
+        end
 
         EnlargeName(main.Name)
         HideFollowerMark(main.Name, frame)

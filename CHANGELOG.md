@@ -15,6 +15,7 @@
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
 * Tooltips - Added the support for WoW Forever [#124]
 * Unit Frames - Added the support for WoW Forever [#124]
+* Unit Frames - Fixed the level of the Player and Target frames being hidden by the Refined style on WoW Forever
 * Various - Added an option to hide the error messages [#138]
 
 ### 🧮 Class CDM
