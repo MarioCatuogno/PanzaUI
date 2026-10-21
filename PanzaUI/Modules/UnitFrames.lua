@@ -196,10 +196,11 @@ end
 
 -- Centered over the health bar on one line; long names end with "...".
 local NAME_MARGIN = 4 -- pixels kept free on each side
+local NAME_RAISE  = ns.IsFlavor("retail") and 0 or 2 -- WoW Forever: name a bit higher
 local function CenterName(name, bar)
     name:ClearAllPoints()
-    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  NAME_MARGIN, 1)
-    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", -NAME_MARGIN, 1)
+    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  NAME_MARGIN, 1 + NAME_RAISE)
+    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", -NAME_MARGIN, 1 + NAME_RAISE)
     name:SetJustifyH("CENTER")
     name:SetWordWrap(false)
     if name.SetMaxLines then name:SetMaxLines(1) end

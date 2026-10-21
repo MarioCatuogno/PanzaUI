@@ -17,6 +17,7 @@
 * Tooltips - Added the support for WoW Forever [#124]
 * Unit Frames - Added the support for WoW Forever [#124]
 * Unit Frames - Fixed the level of the Player and Target frames being hidden by the Refined style on WoW Forever
+* Unit Frames - Fixed the position of the names of the Player, Target and Focus frames on WoW Forever [#124]
 * Various - Added an option to hide the error messages [#138]
 
 ### 🧮 Class CDM
