@@ -53,7 +53,7 @@ for _, list in ipairs({ ACTION_BARS, OTHER_BARS }) do
     end
 end
 
-local AB = ns:RegisterModule("ActionBars", { title = "Action Bars", defaults = defaults, options = options })
+local AB = ns:RegisterModule("ActionBars", { title = "Action Bars", flavor = "both", defaults = defaults, options = options })
 
 -- Converts the saved values of older versions.
 function AB:Migrate(db, saved)

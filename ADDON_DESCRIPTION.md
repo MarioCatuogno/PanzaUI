@@ -13,7 +13,7 @@ About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Bl
 ### Built for Midnight
 Midnight limits what addons can read and change in combat. PanzaUI was written around those limits from the start, so it does not break or taint the UI.
 
-**WoW Forever**: PanzaUI already loads on WoW Forever. The Chat features are available there; the other features stay off until they are tested on that version of the game and will be unlocked step by step in the next updates.
+**WoW Forever**: PanzaUI already loads on WoW Forever, but there its features stay off until they are tested on that version of the game. They will be unlocked step by step in the next updates.
 
 ![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
 

@@ -726,8 +726,8 @@ ns.VISIBILITY_OPTIONS = {
     { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
     { VIS.COMBAT,       "In Combat",      "Shown only in combat." },
     { VIS.NO_COMBAT,    "Out of Combat",  "Hidden in combat." },
-    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
-    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding.", "retail" },
+    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding.", "retail" },
 }
 
 local visEntries   = {}
@@ -883,6 +883,7 @@ local function SetForced(kind, on)
 end
 
 local function ReadSkyriding()
+    if not (C_PlayerInfo and C_PlayerInfo.GetGlidingInfo) then return false end
     local _, canGlide = C_PlayerInfo.GetGlidingInfo()
     return not IsSecret(canGlide) and canGlide and true or false
 end
