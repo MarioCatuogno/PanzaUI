@@ -405,8 +405,9 @@ local function TrackTexture(bar, path, inset)
 end
 
 -- Bars that are not StatusBars (WoW Forever reputation bar): the Fill texture
--- gets the interface texture, tinted by the atlas color. Fills whose atlas has
--- no known color are left as they are.
+-- gets the interface texture. The fill atlas is white (common-stat-bar-white):
+-- Blizzard tints it by standing, so the vertex color is kept unless the atlas
+-- name gives a color.
 local function TrackFillTexture(bar, path)
     local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
     if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] then return end
@@ -415,11 +416,10 @@ local function TrackFillTexture(bar, path)
     local function Reapply(atlas)
         if busy then return end
         busy = true
+        fill:SetTexture(path)
+        fill:SetTexCoord(0, 1, 0, 1)
         local c = AtlasColor(atlas)
-        if c then
-            fill:SetTexture(path)
-            fill:SetVertexColor(c[2], c[3], c[4])
-        end
+        if c then fill:SetVertexColor(c[2], c[3], c[4]) end
         busy = false
     end
     Reapply(fill:GetAtlas())
