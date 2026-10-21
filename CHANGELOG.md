@@ -20,7 +20,9 @@
 
 * Monk - Brewmaster: Added Combat Potion to Tracked buffs
 
-### 👤 Profiles
+### 👤 Profile
+
+* BlizzUI - Added the support for WoW Forever [#124]
 
 ### 📏 Various
 

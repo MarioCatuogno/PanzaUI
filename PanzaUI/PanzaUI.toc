@@ -4,7 +4,7 @@
 ## Author: Panzarotto
 ## X-Website: https://github.com/MarioCatuogno/PanzaUI
 ## IconTexture: 572034
-## Version: 2.5.18
+## Version: 2.5.19
 ## SavedVariables: PanzaUI_DB
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia, Platynator
 
@@ -13,6 +13,7 @@ Core\core.lua
 Profiles\Retail\EditMode.lua
 Profiles\Retail\Platynator.lua
 Profiles\Retail\BigWigs.lua
+Profiles\Forever\EditMode.lua
 Modules\General.lua
 Modules\Chat.lua
 Modules\ActionBars.lua
