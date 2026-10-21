@@ -404,6 +404,28 @@ local function TrackTexture(bar, path, inset)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
 
+-- Bars that are not StatusBars (WoW Forever reputation bar): the Fill texture
+-- gets the interface texture, tinted by the atlas color. Fills whose atlas has
+-- no known color are left as they are.
+local function TrackFillTexture(bar, path)
+    local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
+    if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] then return end
+    trackedBars[bar] = true
+    local busy
+    local function Reapply(atlas)
+        if busy then return end
+        busy = true
+        local c = AtlasColor(atlas)
+        if c then
+            fill:SetTexture(path)
+            fill:SetVertexColor(c[2], c[3], c[4])
+        end
+        busy = false
+    end
+    Reapply(fill:GetAtlas())
+    hooksecurefunc(fill, "SetAtlas", function(_, atlas) Reapply(atlas) end)
+end
+
 -- Widget progress bars (events, NPCs): interface texture, set up with each
 -- bar (Blizzard sets the color after the fill, so the fill color goes back).
 local widgetTexture -- set in OnEnable
@@ -1406,7 +1428,12 @@ function GEN:OnEnable()
     if interface and scrollBox and ScrollUtil then
         ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
             local content = entry.Content or entry
-            TrackTexture(content.ReputationBar or entry.ReputationBar, interface, 2)
+            local bar = content.ReputationBar or entry.ReputationBar
+            if bar and bar.SetStatusBarTexture then
+                TrackTexture(bar, interface, 2)
+            else
+                ns.Safe(TrackFillTexture, bar, interface)
+            end
         end), self, true)
     end
 
