@@ -405,9 +405,9 @@ local function TrackTexture(bar, path, inset)
 end
 
 -- Bars that are not StatusBars (WoW Forever reputation bar): the Fill texture
--- gets the interface texture. The fill atlas is white (common-stat-bar-white):
--- Blizzard tints it by standing, so the vertex color is kept unless the atlas
--- name gives a color.
+-- gets the interface texture. Blizzard crops the fill with its texture
+-- coordinates (not touched here); the color comes from the atlas name
+-- (common-stat-bar-blue), otherwise the current vertex color is kept.
 local function TrackFillTexture(bar, path)
     local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
     if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] then return end
@@ -417,7 +417,6 @@ local function TrackFillTexture(bar, path)
         if busy then return end
         busy = true
         fill:SetTexture(path)
-        fill:SetTexCoord(0, 1, 0, 1)
         local c = AtlasColor(atlas)
         if c then fill:SetVertexColor(c[2], c[3], c[4]) end
         busy = false
@@ -1423,18 +1422,22 @@ function GEN:OnEnable()
         end
     end
 
-    -- Reputation panel.
-    local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
-    if interface and scrollBox and ScrollUtil then
-        ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
-            local content = entry.Content or entry
-            local bar = content.ReputationBar or entry.ReputationBar
-            if bar and bar.SetStatusBarTexture then
-                TrackTexture(bar, interface, 2)
-            else
-                ns.Safe(TrackFillTexture, bar, interface)
+    -- Reputation panel and, on WoW Forever, the Skills tab (same layout).
+    if interface and ScrollUtil then
+        for _, panel in ipairs({ { ReputationFrame, "ReputationBar" }, { SkillsFrame, "SkillsBar" } }) do
+            local scrollBox, key = panel[1] and panel[1].ScrollBox, panel[2]
+            if scrollBox then
+                ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
+                    local content = entry.Content or entry
+                    local bar = content[key] or entry[key]
+                    if bar and bar.SetStatusBarTexture then
+                        TrackTexture(bar, interface, 2)
+                    else
+                        ns.Safe(TrackFillTexture, bar, interface)
+                    end
+                end), self, true)
             end
-        end), self, true)
+        end
     end
 
     -- Breath, fatigue and feign death bars.

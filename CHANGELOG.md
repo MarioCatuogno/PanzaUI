@@ -13,6 +13,7 @@
 * Core - Improved the memory cleanup after closing the PanzaUI options
 * General - Added the support for WoW Forever [#124]
 * General - Fixed the texture of the reputation bars in the Reputation tab on WoW Forever [#124]
+* General - Added the texture of the Interface Bars to the bars of the Skills tab on WoW Forever [#124]
 * Quest & Minimap - Added the support for WoW Forever [#124]
 * Quest & Minimap - Fixed the calendar button on the Minimap being transparent on WoW Forever [#124]
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
