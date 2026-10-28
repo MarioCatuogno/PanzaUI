@@ -355,7 +355,8 @@ end
 -- The original atlas is kept as a mask (or a square inset mask).
 local trackedBars = {}
 local function TrackTexture(bar, path, inset)
-    if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] then return end
+    -- Forbidden bars (eg. tooltips shown from secure code) are never touched.
+    if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] or bar:IsForbidden() then return end
     trackedBars[bar] = true
 
     local mask, masked = nil, {}
@@ -410,7 +411,7 @@ end
 -- (common-stat-bar-blue), otherwise the current vertex color is kept.
 local function TrackFillTexture(bar, path)
     local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
-    if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] then return end
+    if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] or bar:IsForbidden() then return end
     trackedBars[bar] = true
     local busy
     local function Reapply(atlas)
@@ -1517,7 +1518,8 @@ function GEN:OnEnable()
     if interface then
         local function TrackTooltipBar(bar) TrackTexture(bar.Bar or bar, interface, 1) end
         local function TrackTooltipPool(tooltip, poolKey)
-            ns.ForEachActive(tooltip and tooltip[poolKey], TrackTooltipBar)
+            if not tooltip or tooltip:IsForbidden() then return end
+            ns.ForEachActive(tooltip[poolKey], TrackTooltipBar)
         end
         ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
         ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
