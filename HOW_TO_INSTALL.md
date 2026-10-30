@@ -1,8 +1,8 @@
 ## Installation
 
 1. Download the latest PanzaUI [release](https://github.com/MarioCatuogno/PanzaUI/releases) and unzip it.
-2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui) or [Wago](https://addons.wago.io/addons/panzaui), or copy the `PanzaUI` folder into `World of Warcraft/_retail_/Interface/AddOns`.
-3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
+2. Install the PanzaUI addon from [CurseForge](https://www.curseforge.com/wow/addons/panzaui) or [Wago](https://addons.wago.io/addons/panzaui), or copy the `PanzaUI` folder into the `Interface/AddOns` folder of your game version (eg. `World of Warcraft/_retail_/Interface/AddOns` for Retail).
+3. Copy the `Fonts` folder (from `PanzaUI/Fonts`) into the folder of your game version, eg. `World of Warcraft/_retail_` (next to the `Interface` folder, not inside it).
 4. Install the [required addons](https://github.com/MarioCatuogno/PanzaUI?tab=readme-ov-file#required-addons).
 5. Launch World of Warcraft and set the UI scale to 0.65 (Options → System → Graphics → Use UI Scale).
 6. Import the PanzaUI profiles: type `/pui` to open the PanzaUI options and, in the **Profiles** section, click **Import** next to:
@@ -10,13 +10,13 @@
    - **Platynator** (required): the nameplates, confirm with **Yes**;
    - **BigWigs** (optional): the boss alerts, confirm in the BigWigs window.
 
-   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat.
+   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat. On WoW Forever only the Edit Mode layout is available for now.
 7. Type `/rl` to reload the UI.
-8. If you want, you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
+8. If you want, on Retail you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
 9. Type `/pui` to open the PanzaUI options and turn off anything you don't like. To set up the action bars like mine, follow [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 10. Enjoy!
 
-__Note__: the fonts replace the default ones of the whole game. To get the original fonts back, just delete the `Fonts` folder from `_retail_`.
+__Note__: the fonts replace the default ones of the whole game. To get the original fonts back, just delete the `Fonts` folder from the folder of your game version (eg. `_retail_`).
 
 ## Profiles
 
@@ -40,15 +40,15 @@ Optional class-specific profiles for the Cooldown Manager (World of Warcraft Ret
 
 **PanzaUI is not in the AddOns list, what should I do?**
 
-Check that the file `_retail_/Interface/AddOns/PanzaUI/PanzaUI.toc` exists: the `PanzaUI` folder must not be inside another `PanzaUI` folder.
+Check that the file `Interface/AddOns/PanzaUI/PanzaUI.toc` exists in the folder of your game version (eg. `_retail_`): the `PanzaUI` folder must not be inside another `PanzaUI` folder.
 
 **Why didn't the fonts change?**
 
-Make sure the `Fonts` folder is directly inside `_retail_` and restart the game completely (a `/reload` is not enough for fonts).
+Make sure the `Fonts` folder is directly inside the folder of your game version (eg. `_retail_`) and restart the game completely (a `/reload` is not enough for fonts).
 
 **Does it support WoW Classic?**
 
-No — PanzaUI only supports the **Retail** version of World of Warcraft.
+No — PanzaUI supports **Retail** and **WoW Forever**, not the Classic versions of World of Warcraft. On WoW Forever the features tied to Retail content (Skyriding, Mythic+, Auction House expansion filter, `/rd` and `/pl`) are hidden.
 
 **Where do I find the latest version of the profiles?**
 

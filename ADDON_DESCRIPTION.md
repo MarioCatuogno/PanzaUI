@@ -13,7 +13,7 @@ About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Bl
 ### Built for Midnight
 Midnight limits what addons can read and change in combat. PanzaUI was written around those limits from the start, so it does not break or taint the UI.
 
-**WoW Forever**: PanzaUI already loads on WoW Forever, but there its features stay off until they are tested on that version of the game. They will be unlocked step by step in the next updates.
+**WoW Forever**: PanzaUI supports WoW Forever too, with the same modules and options. The few features tied to Retail content are hidden there: the Skyriding visibility of the bars, the Mythic+ rating and keystone, the Auction House expansion filter and the `/rd` and `/pl` shortcuts. Forever support is new: if something doesn't look right, please [open an issue](https://github.com/MarioCatuogno/PanzaUI/issues).
 
 ![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
 
@@ -32,7 +32,7 @@ Every feature has its own toggle.
 - Cleaner buttons, with no macro names or keybindings
 - Icon zoom to hide the old borders of classic icons
 - Icons in red when the target is out of range
-- Visibility for every bar: always, on mouseover (with a smooth fade in and out), only while Skyriding, never while Skyriding, only in combat, only out of combat or hidden (also for Micro Menu, Bag Bar and XP bar)
+- Visibility for every bar: always, on mouseover (with a smooth fade in and out), only while Skyriding, never while Skyriding (Retail), only in combat, only out of combat or hidden (also for Micro Menu, Bag Bar and XP bar)
 - Want my setup? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119)
 
 ### Bags & Items
@@ -60,10 +60,10 @@ Every feature has its own toggle.
 
 ### Quest & Minimap
 - Cleaner minimap and Quest Tracker, without the All Objectives header and with the quest count on the Quests header
-- Quest Tracker hidden during boss fights, Mythic+ and instance combat, so you can focus on the fight
+- Quest Tracker hidden during boss fights, Mythic+ (Retail) and instance combat, so you can focus on the fight
 
 ### Tooltips
-- Class colored names, faction (red for Horde, blue for Alliance), Mythic+ rating and item level of players
+- Class colored names, faction (red for Horde, blue for Alliance), Mythic+ rating (Retail) and item level of players
 - Item and spell IDs
 - Mount of players, with its icon
 - Optional anchor to the mouse cursor
@@ -76,8 +76,8 @@ Every feature has its own toggle.
 ### Various
 - Cursor ring in your class color
 - Fast Auto Loot and fast item delete
-- Mythic+ keystone inserted automatically in the Font of Power
-- Current expansion filter set automatically in the Auction House
+- Mythic+ keystone inserted automatically in the Font of Power (Retail)
+- Current expansion filter set automatically in the Auction House (Retail)
 - Destination shown while flying on a flight path
 - `/way` command to set map waypoints from coordinates
 - Rounded icons and a matching HD border for Platynator nameplates
@@ -99,8 +99,8 @@ Handy chat commands:
 |---|---|
 | `/pui` | Opens the PanzaUI options |
 | `/rl` | Reloads the UI |
-| `/rd` | Starts a ready check |
-| `/pl` | Starts a 10-second pull timer |
+| `/rd` | Starts a ready check (Retail) |
+| `/pl` | Starts a 10-second pull timer (Retail) |
 
 ## 🎨 The full PanzaUI look
 

@@ -10,15 +10,18 @@
 * Core - Changed the structure of the addon files (Core, Modules and Profiles per game version) to support both Retail and Forever [#124]
 * Core - Fixed the capitalization of some options
 * Core - Fixed the error when typing /pui in combat, the options now open after combat
+* Core - Improved the error handling: an error in one part of a module no longer stops the other parts, and events missing in a game version are skipped
 * Core - Improved the memory cleanup after closing the PanzaUI options
 * General - Added the support for WoW Forever [#124]
-* General - Fixed the texture of the reputation bars in the Reputation tab on WoW Forever [#124]
 * General - Added the texture of the Interface Bars to the bars of the Skills tab on WoW Forever [#124]
+* General - Fixed the texture of the reputation bars in the Reputation tab on WoW Forever [#124]
 * General - Fixed an error when showing the progress bars of some tooltips, eg. the Paragon rewards
+* Optimized the code to work on both WoW Retail and WoW Forever [#124]
 * Quest & Minimap - Added the support for WoW Forever [#124]
 * Quest & Minimap - Fixed the calendar button on the Minimap being transparent on WoW Forever [#124]
 * Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
 * Tooltips - Added the support for WoW Forever [#124]
+* Tooltips - Changed the description of the Player info option on WoW Forever, where there is no Mythic+ rating
 * Unit Frames - Added the support for WoW Forever [#124]
 * Unit Frames - Fixed the level of the Player and Target frames being hidden by the Refined style on WoW Forever
 * Unit Frames - Fixed the position of the names of the Player, Target and Focus frames on WoW Forever [#124]

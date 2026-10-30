@@ -14,9 +14,9 @@
 
 </div>
 
-PanzaUI is a UI for **World of Warcraft Retail** (Midnight) that keeps the default Blizzard interface and fixes what I don't like in it: different textures between the bars of different panels, different borders, inconsistent text formats and so on. On top of that, it brings in features I used to get from other addons.
+PanzaUI is a UI for **World of Warcraft Retail** (Midnight) and **WoW Forever** that keeps the default Blizzard interface and fixes what I don't like in it: different textures between the bars of different panels, different borders, inconsistent text formats and so on. On top of that, it brings in features I used to get from other addons.
 
-__WoW Forever__: PanzaUI already loads on WoW Forever, but there its features stay off until they are tested on that version of the game. They will be unlocked step by step in the next updates.
+__WoW Forever__: PanzaUI supports WoW Forever too, with the same modules and options. The few features tied to Retail content are hidden there: the Skyriding visibility of the bars, the Mythic+ rating and keystone, the Auction House expansion filter and the `/rd` and `/pl` shortcuts. Forever support is new: if something doesn't look right, please [open an issue](https://github.com/MarioCatuogno/PanzaUI/issues).
 
 Since version 2.0 the heart of the UI is the **PanzaUI addon**. It does not replace Blizzard's frames: it restyles them after they are drawn, so Edit Mode and every Blizzard feature keep working as usual. Every feature has its own toggle. Together with a few profiles (Edit Mode layout, Platynator nameplates and, if you want, BigWigs), imported with one click from the options, it recreates the whole PanzaUI setup.
 
@@ -37,19 +37,19 @@ All the options are in the game menu: **Options → AddOns → PanzaUI** (or jus
 | Section | What it does |
 |---|---|
 | **General** | Class colors for health bars, an outlined *Refined text* for the whole UI, *Refined borders* for icons, tooltips and pop-ups and custom textures for unit frames, cast bars, Cooldown Manager, Personal Resource Display, Damage Meter and progress bars |
-| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom, icons in red when out of range and a visibility option for every bar: always, on mouseover (with a fade in and out), only while Skyriding, never while Skyriding, only in combat, only out of combat or hidden |
+| **Action Bars** | Cleaner buttons (no macro names or keybindings), icon zoom, icons in red when out of range and a visibility option for every bar: always, on mouseover (with a fade in and out), only while Skyriding, never while Skyriding (Retail), only in combat, only out of combat or hidden |
 | **Bags & Items** | Optional bag auto-sort, item level on equipment in bags, banks and Character/Inspect panels, icon zoom, auto-repair and auto-sell of junk items |
 | **Chat** | Cleaner chat windows, timestamps, clickable web links, short channel names and no more minor messages (guild message of the day, loot of other players, online/offline and join/leave notices…) |
 | **Combat** | Rounded icons for buffs, debuffs, Cooldown Manager and Damage Meter, elapsed time on cast bars, a dynamic Cooldown Manager layout and a cleaner Personal Resource Display, optionally hidden while casting |
 | **Party & Raid Frames** | Names without server, health as a percentage, cleaner shields and heal prediction, aggro border and sharper role icons |
-| **Quest & Minimap** | Cleaner minimap and Quest Tracker, quest counter in the tracker header and a Quest Tracker that hides itself during boss fights, Mythic+ and instance combat |
-| **Tooltips** | Class colored names, faction, Mythic+ rating, item level and mount of players, item and spell IDs and an optional anchor to the mouse cursor |
+| **Quest & Minimap** | Cleaner minimap and Quest Tracker, quest counter in the tracker header and a Quest Tracker that hides itself during boss fights, Mythic+ (Retail) and instance combat |
+| **Tooltips** | Class colored names, faction, Mythic+ rating (Retail), item level and mount of players, item and spell IDs and an optional anchor to the mouse cursor |
 | **Unit Frames** | Refined Player, Target, Focus, Boss and Pet frames: centered names, health and power as a percentage and less clutter (PvP icons, glows, combat text…) |
-| **Various** | Cursor ring, Fast Auto Loot, fast item delete, automatic Mythic+ keystone, current expansion filter in the Auction House, flight path destination, `/way` waypoints, refined Platynator nameplates and BigWigs bars, no more Micro Menu alerts and optionally no error messages |
+| **Various** | Cursor ring, Fast Auto Loot, fast item delete, automatic Mythic+ keystone and current expansion filter in the Auction House (Retail), flight path destination, `/way` waypoints, refined Platynator nameplates and BigWigs bars, no more Micro Menu alerts and optionally no error messages |
 
 Want the action bars set up like mine? Check [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
 
-Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rd` (ready check), `/pl` (10-second pull timer).
+Handy chat commands: `/pui` (options), `/rl` (reload the UI), `/rd` (ready check, Retail) and `/pl` (10-second pull timer, Retail).
 
 ## Support
 
