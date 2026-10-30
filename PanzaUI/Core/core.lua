@@ -44,6 +44,17 @@ function ns.Defer(func)
     deferFrame:Show()
 end
 
+-- Registers an event (a unit event when units are given) only if it exists
+-- in the running game version; returns true when registered.
+local IsEventValid = C_EventUtils and C_EventUtils.IsEventValid
+function ns.RegisterEvent(frame, event, unit1, unit2)
+    if IsEventValid and not IsEventValid(event) then return false end
+    if unit1 then
+        return (pcall(frame.RegisterUnitEvent, frame, event, unit1, unit2))
+    end
+    return (pcall(frame.RegisterEvent, frame, event))
+end
+
 -- Registers the given events on `frame` when `on`, otherwise unregisters all
 -- of them (event frames used only while their option is on).
 function ns.SetEvents(frame, on, ...)
@@ -51,7 +62,7 @@ function ns.SetEvents(frame, on, ...)
         frame:UnregisterAllEvents()
         return
     end
-    for i = 1, select("#", ...) do frame:RegisterEvent((select(i, ...))) end
+    for i = 1, select("#", ...) do ns.RegisterEvent(frame, (select(i, ...))) end
 end
 
 -- Runs func on the next frame each time `frame` shows, and now if it is
@@ -911,7 +922,7 @@ local function InitVisibility()
     events:RegisterEvent("PLAYER_REGEN_DISABLED")
     events:RegisterEvent("PLAYER_ENTERING_WORLD")
     events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
-    pcall(events.RegisterEvent, events, "PLAYER_CAN_GLIDE_CHANGED")
+    ns.RegisterEvent(events, "PLAYER_CAN_GLIDE_CHANGED")
     events:SetScript("OnEvent", function(_, event)
         if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
             SetForced("grid", event == "ACTIONBAR_SHOWGRID")
