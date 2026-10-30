@@ -273,7 +273,7 @@ local function SetCastHide(on)
         end
         return
     end
-    for _, event in ipairs(CAST_EVENTS) do castEvents:RegisterUnitEvent(event, "player") end
+    for _, event in ipairs(CAST_EVENTS) do ns.RegisterEvent(castEvents, event, "player") end
 end
 
 --------------------------------------------------------------------------------
