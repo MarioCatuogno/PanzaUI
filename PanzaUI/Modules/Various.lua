@@ -596,8 +596,8 @@ local function StyleStartTimers()
 end
 
 local function SetupBigWigs()
-    StyleBigWigsBars()
-    StyleBattleRes()
+    ns.Safe(StyleBigWigsBars)
+    ns.Safe(StyleBattleRes)
 end
 
 --------------------------------------------------------------------------------
@@ -617,7 +617,8 @@ function Misc:OnLoad()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then RegisterPlatynatorBorder() end
 end
 
--- Other addons are already loaded when modules are enabled.
+-- Other addons are already loaded when modules are enabled. Each part is set
+-- up on its own (ns.Safe): an error stops only that part.
 function Misc:OnEnable()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then ns.Safe(SetupPlatynator) end
     if self.db.bigwigsStyle then
@@ -635,7 +636,7 @@ function Misc:OnEnable()
     ns.Safe(SetCursorRing, self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
     ns.Safe(SetupNotices)
-    if self.db.hideErrors then SetErrorMessages(true) end
+    if self.db.hideErrors then ns.Safe(SetErrorMessages, true) end
     if self.db.waypoints then ns.Safe(SetupWaypoints) end
 end
 

@@ -3,6 +3,12 @@
     Game version (Retail or WoW: Forever), read once before everything else.
     Modules, options, dropdown entries and profiles carry a flavor tag:
     "retail", "forever" or "both"; without a tag they follow DEFAULT_FLAVOR.
+
+    Fixing something for one version only:
+      - a feature that doesn't exist there: tag its option flavor = "retail";
+      - a value that differs (offset, size, label): ns.ForFlavor(retail, forever);
+      - a Blizzard frame or API that may be missing: check it before use and
+        run the part through ns.Safe (Core), so an error stops only that part.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
@@ -28,6 +34,13 @@ ns.DEFAULT_FLAVOR = "retail"
 function ns.IsFlavor(tag)
     tag = tag or ns.DEFAULT_FLAVOR
     return tag == "both" or tag == ns.FLAVOR
+end
+
+-- Value for the running game version: ns.ForFlavor(retailValue, foreverValue).
+-- Safe with false/nil values (unlike `cond and a or b`).
+function ns.ForFlavor(retail, forever)
+    if ns.FLAVOR == "forever" then return forever end
+    return retail
 end
 
 -- Import profiles per flavor (Profiles/<Flavor>/*.lua); nil when the running

@@ -234,19 +234,19 @@ function GF:OnEnable()
     local db = self.db
     ns.Safe(SetupGroupBorders)
 
-    roleEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-    roleEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
-    roleEvents:RegisterEvent("PLAYER_ROLES_ASSIGNED")
+    for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "GROUP_ROSTER_UPDATE", "PLAYER_ROLES_ASSIGNED" }) do
+        ns.RegisterEvent(roleEvents, event)
+    end
     if db.hdRoleIcons then
         hdRoles = true
         ns.Hook("CompactUnitFrame_UpdateRoleIcon", UpdateRoleIcon)
-        ns.ForEachCompactFrame(UpdateRoleIcon)
+        ns.Safe(ns.ForEachCompactFrame, UpdateRoleIcon)
         ns.Hook("PlayerFrame_UpdateRolesAssigned", UpdatePlayerRoleIcon)
         ns.Safe(UpdatePlayerRoleIcon)
     end
 
     if db.overlays then
-        ns.ForEachCompactFrame(StyleOverlays)
+        ns.Safe(ns.ForEachCompactFrame, StyleOverlays)
         ns.Hook("DefaultCompactUnitFrameSetup", StyleOverlays)
     end
 
@@ -258,12 +258,12 @@ function GF:OnEnable()
     end
 
     if not db.style then return end
-    ns.ForEachCompactFrame(FitName)
+    ns.Safe(ns.ForEachCompactFrame, FitName)
     ns.Hook("DefaultCompactUnitFrameSetup", FitName)
     ns.Hook("CompactUnitFrame_UpdateName", UpdateName)
     if CurveConstants and UnitHealthPercent then
         ns.Hook("CompactUnitFrame_UpdateStatusText", UpdateStatusText)
-        ns.ForEachCompactFrame(UpdateStatusText)
+        ns.Safe(ns.ForEachCompactFrame, UpdateStatusText)
         -- The "100" text follows Blizzard's font size (synced by the text
         -- style when it is on).
         if not ns.textStyle then
