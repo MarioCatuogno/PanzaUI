@@ -401,22 +401,29 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
+local function HideSideButtons()
+    for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
+end
+
+local function SetupWindows()
+    SetupAllFrames()
+    ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
+    for tab in pairs(chatTabs) do FitTabText(tab) end
+    ns.Hook("PanelTemplates_TabResize", FitTabText)
+end
+
+-- Each part is set up on its own (ns.Safe): an error stops only that part.
 function Chat:OnEnable()
     local db = self.db
 
-    if db.timestamps    then SetTimestamps(true) end
-    if db.hideCombatLog then SetCombatLog(false) end
+    if db.timestamps    then ns.Safe(SetTimestamps, true) end
+    if db.hideCombatLog then ns.Safe(SetCombatLog, false) end
 
     if db.style then
-        for _, name in ipairs(SIDE_BUTTONS) do ns.Kill(_G[name]) end
-        SetupStyleFilters()
+        ns.Safe(HideSideButtons)
+        ns.Safe(SetupStyleFilters)
     end
-    if db.style or ns.textStyle then
-        SetupAllFrames()
-        ns.Hook("FCF_OpenTemporaryWindow", SetupAllFrames)
-        for tab in pairs(chatTabs) do FitTabText(tab) end
-        ns.Hook("PanelTemplates_TabResize", FitTabText)
-    end
+    if db.style or ns.textStyle then ns.Safe(SetupWindows) end
     if ns.textStyle then
         ns.Hook("FCF_SetChatWindowFontSize", function(_, frame)
             StyleText(frame or FCF_GetCurrentChatFrame())
