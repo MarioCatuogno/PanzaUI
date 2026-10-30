@@ -20,7 +20,7 @@ local TT = ns:RegisterModule("Tooltips", {
           tooltip = "Polish the look of the unit tooltips.",
           bullets = { "No health bar", "Class and faction colors" } },
         { key = "playerInfo", label = "Player info",
-          tooltip = "Show the item level and Mythic+ rating of players." },
+          tooltip = ns.ForFlavor("Show the item level and Mythic+ rating of players.", "Show the item level of players.") },
         { key = "playerMount", label = "Player mount",
           tooltip = "Show the mount of players." },
         { key = "showIDs", label = "Show IDs",
@@ -246,16 +246,20 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
-function TT:OnEnable()
-    if self.db.style then
-        -- Hidden, not reparented: no empty space is left.
-        ns.Disable(GameTooltip.StatusBar or GameTooltipStatusBar)
-    end
-
+local function AddPostCalls()
     local add, types = TooltipDataProcessor.AddTooltipPostCall, Enum.TooltipDataType
     add(types.Unit,  OnUnit)
     add(types.Item,  IDLine("Item ID"))
     add(types.Spell, IDLine("Spell ID"))
-    inspectEvents:RegisterEvent("INSPECT_READY")
+end
+
+-- Each part is set up on its own (ns.Safe): an error stops only that part.
+function TT:OnEnable()
+    if self.db.style then
+        -- Hidden, not reparented: no empty space is left.
+        ns.Safe(ns.Disable, GameTooltip.StatusBar or GameTooltipStatusBar)
+    end
+    ns.Safe(AddPostCalls)
+    ns.RegisterEvent(inspectEvents, "INSPECT_READY")
     ns.Hook("GameTooltip_SetDefaultAnchor", AnchorToCursor)
 end
