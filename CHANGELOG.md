@@ -7,6 +7,7 @@
 ### 👤 Profile
 
 * BlizzUI - Fixed Quest Tracker position
+* Platynator - Fixed health bar texture
 
 ## 2.5-RELEASE
 
