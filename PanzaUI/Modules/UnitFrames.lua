@@ -562,14 +562,15 @@ end
 -- with Blizzard's own texture, and a taller bar slot. The health bar and its
 -- mask (both anchored by their top left corner, with a size of their own) are
 -- made wider toward the portrait and taller to fill the slot while that frame
--- art is shown, and get Blizzard's size back with the normal one. Checked on
--- the next frame, after Blizzard's own update.
+-- art is shown. Their size and anchor are read right before growing them and
+-- put back with the normal art: the normal frame is never changed otherwise.
+-- Checked on the next frame, after Blizzard's own update.
 --------------------------------------------------------------------------------
 -- Units added: width on the portrait side, height, and how much of it goes
 -- above the bar (measured on a screenshot of the rare frame).
 local ELITE_BAR = ns.ForFlavor(nil, { width = 5, height = 7, up = 4 })
 local ELITE_WORDS = { "Rare", "Elite" }    -- in the frame art atlas name
-local baseLayout = {} -- region -> Blizzard's width, height and first anchor
+local grown = {} -- region -> Blizzard's width, height and first anchor, while grown
 local barEvents = CreateFrame("Frame")
 
 local function IsEliteArt(atlas)
@@ -582,18 +583,19 @@ end
 
 local function Grow(region, grow)
     if not region then return end
-    local base = baseLayout[region]
-    if not base then
+    local base = grown[region]
+    if grow and not base then
         local width, height = region:GetSize()
         local point, relative, relativePoint, x, y = region:GetPoint(1)
         if IsSecret(width) or IsSecret(height) or IsSecret(x) or IsSecret(y) or not point or width <= 0 then return end
-        base = { width, height, point, relative, relativePoint, x, y }
-        baseLayout[region] = base
+        grown[region] = { width, height, point, relative, relativePoint, x, y }
+        region:SetSize(width + grow.width, height + grow.height)
+        region:SetPoint(point, relative, relativePoint, x, y + grow.up)
+    elseif not grow and base then
+        grown[region] = nil
+        region:SetSize(base[1], base[2])
+        region:SetPoint(base[3], base[4], base[5], base[6], base[7])
     end
-    local w, h, up = 0, 0, 0
-    if grow then w, h, up = grow.width, grow.height, grow.up end
-    region:SetSize(base[1] + w, base[2] + h)
-    region:SetPoint(base[3], base[4], base[5], base[6], base[7] + up)
 end
 
 local function FitEliteBar()
