@@ -78,6 +78,10 @@ To replicate this setup, follow the [installation guide](https://github.com/Mari
 
 <p align="center">
 
+  <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_forever_01.jpeg">
+  <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_forever_01.jpeg" alt="PanzaUI - Forever">
+  </a>
+
   <a href="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg">
   <img width=800px src="https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg" alt="PanzaUI - Combat Dummy">
   </a>

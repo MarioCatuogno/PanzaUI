@@ -10,7 +10,7 @@
    - **Platynator** (required): the nameplates, confirm with **Yes**;
    - **BigWigs** (optional): the boss alerts, confirm in the BigWigs window.
 
-   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat. On WoW Forever only the Edit Mode layout is available for now.
+   Every profile is saved as **PanzaUI** and made active (an older PanzaUI profile is replaced). Profiles can't be imported in combat. On WoW Forever the Edit Mode layout and the Platynator profile are available (no BigWigs profile for now).
 7. Type `/rl` to reload the UI.
 8. If you want, on Retail you can also import the [Cooldown Manager](#cooldown-manager-class-profiles) class profiles (Edit Mode → Cooldown Manager → Advanced Cooldown Settings → Import).
 9. Type `/pui` to open the PanzaUI options and turn off anything you don't like. To set up the action bars like mine, follow [this guide](https://github.com/MarioCatuogno/PanzaUI/issues/119).
