@@ -4,6 +4,10 @@
 
 * Unit Frames - Fixed the health bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
 
+### 👤 Profile
+
+* BlizzUI - Fixed Quest Tracker position
+
 ## 2.5-RELEASE
 
 This update brings support to WoW Forever and fixes some small bugs from previous version.
