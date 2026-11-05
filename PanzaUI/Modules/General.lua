@@ -87,7 +87,7 @@ local OTHER_BARS = {
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
     { key = "texInterface",    label = "Interface Bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
-                  ns.ForFlavor("Reputation panel", "Reputation and Skills panels"), "Tooltips", "Progress bars of events and NPCs" },
+                  "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -405,10 +405,11 @@ local function TrackTexture(bar, path, inset)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
 
--- Bars that are not StatusBars (WoW Forever Reputation and Skills tabs): the
--- Fill texture gets the interface texture file. Blizzard crops the fill with its texture
--- coordinates (not touched here); the color comes from the atlas name
--- (common-stat-bar-blue), otherwise the current vertex color is kept.
+-- Bars that are not StatusBars (WoW Forever Reputation tab): the Fill texture
+-- gets the interface texture file. Blizzard crops the fill with its texture
+-- coordinates (not touched here); the color comes from the atlas name,
+-- otherwise the current vertex color is kept. The Skills tab, same layout,
+-- turned white with it and keeps Blizzard's look.
 local function TrackFillTexture(bar, path)
     local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
     if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] or bar:IsForbidden() then return end
@@ -1418,25 +1419,21 @@ local function SkinPRDBars(prd)
     end
 end
 
--- Reputation panel and, on WoW Forever, the Skills tab (same layout). Their
--- Forever bars aren't StatusBars: only a texture file can replace the fill.
+-- Reputation panel. On WoW Forever its bars are not StatusBars: only a
+-- texture file can replace their fill.
 local function SkinPanelBars(interface)
-    if not ScrollUtil then return end
+    local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
+    if not (scrollBox and ScrollUtil) then return end
     local file = ns.InterfaceBarTexture()
-    for _, panel in ipairs({ { ReputationFrame, "ReputationBar" }, { SkillsFrame, "SkillsBar" } }) do
-        local scrollBox, key = panel[1] and panel[1].ScrollBox, panel[2]
-        if scrollBox then
-            ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
-                local content = entry.Content or entry
-                local bar = content[key] or entry[key]
-                if bar and bar.SetStatusBarTexture then
-                    TrackTexture(bar, interface, 2)
-                elseif file then
-                    ns.Safe(TrackFillTexture, bar, file)
-                end
-            end), GEN, true)
+    ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
+        local content = entry.Content or entry
+        local bar = content.ReputationBar or entry.ReputationBar
+        if bar and bar.SetStatusBarTexture then
+            TrackTexture(bar, interface, 2)
+        elseif file then
+            ns.Safe(TrackFillTexture, bar, file)
         end
-    end
+    end), GEN, true)
 end
 
 -- Breath, fatigue and feign death bars.
