@@ -1,3 +1,46 @@
+## 2.5-RELEASE
+
+This update brings support to WoW Forever and fixes some small bugs from previous version.
+
+### 🛠️ Core
+
+* Action Bars - Added the support for WoW Forever [#124]
+* Bags & Items - Added an option to sort the bags each time you open them [#141]
+* Chat - Added the support for WoW Forever [#124]
+* Combat - Added the support for WoW Forever [#124]
+* Combat - Fixed the red interrupt glow staying on the cast bars after an interrupted cast, with the Refined style
+* Core - Changed the structure of the addon files (Core, Modules and Profiles per game version) to support both Retail and Forever [#124]
+* Core - Fixed the capitalization of some options
+* Core - Fixed the error when typing /pui in combat, the options now open after combat
+* Core - Improved the error handling: an error in one part of a module no longer stops the other parts, and events missing in a game version are skipped
+* Core - Improved the memory cleanup after closing the PanzaUI options
+* General - Added the support for WoW Forever [#124]
+* General - Fixed an error when showing the progress bars of some tooltips, eg. the Paragon rewards
+* General - Fixed the texture of the reputation bars in the Reputation tab on WoW Forever [#124]
+* Optimized the code to work on both WoW Retail and WoW Forever [#124]
+* Quest & Minimap - Added the support for WoW Forever [#124]
+* Quest & Minimap - Fixed the calendar button on the Minimap being transparent on WoW Forever [#124]
+* Tooltips - Added an option to anchor the tooltips to the mouse cursor [#137]
+* Tooltips - Added the support for WoW Forever [#124]
+* Tooltips - Changed the description of the Player info option on WoW Forever, where there is no Mythic+ rating
+* Unit Frames - Added the support for WoW Forever [#124]
+* Unit Frames - Fixed the level of the Player and Target frames being hidden by the Refined style on WoW Forever
+* Unit Frames - Fixed the position of the names of the Player, Target and Focus frames on WoW Forever [#124]
+* Various - Added an option to hide the error messages [#138]
+
+### 🧮 Class CDM
+
+* Monk - Brewmaster: Added Combat Potion to Tracked buffs
+
+### 👤 Profile
+
+* BlizzUI - Added the support for WoW Forever [#124]
+* Platynator - Added the support for WoW Forever [#124]
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.4-RELEASE
 
 This update brings new visibility options for the action bars, a few new skins and some fixes for patch 12.1.5.

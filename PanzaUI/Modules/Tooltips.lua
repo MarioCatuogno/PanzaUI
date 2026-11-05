@@ -1,28 +1,32 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Tooltips
-    Tooltip style, player info, mounts and IDs.
+    Tooltip style, player info, mounts, IDs and cursor anchor.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
 
 local TT = ns:RegisterModule("Tooltips", {
     title = "Tooltips",
+    flavor = "both",
     defaults = {
         style      = true,
         playerInfo = true,
         playerMount = true,
         showIDs    = true,
+        cursorAnchor = false,
     },
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the unit tooltips.",
           bullets = { "No health bar", "Class and faction colors" } },
         { key = "playerInfo", label = "Player info",
-          tooltip = "Show the item level and Mythic+ rating of players." },
+          tooltip = ns.ForFlavor("Show the item level and Mythic+ rating of players.", "Show the item level of players.") },
         { key = "playerMount", label = "Player mount",
           tooltip = "Show the mount of players." },
         { key = "showIDs", label = "Show IDs",
           tooltip = "Show the ID of items and spells." },
+        { key = "cursorAnchor", label = "Anchor to cursor",
+          tooltip = "Show the tooltips next to the mouse cursor." },
     },
 })
 
@@ -116,6 +120,8 @@ local RATING_CACHE_TIME = 60 -- seconds
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
 
 local function AddMythicRating(tooltip, unit, guid)
+    -- Mythic+ only exists in Retail.
+    if not (C_PlayerInfo.GetPlayerMythicPlusRatingSummary and C_ChallengeMode) then return end
     local now = GetTime()
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
@@ -144,11 +150,11 @@ end
 -- and while auras are secret (eg. in instances): reading them would error.
 --------------------------------------------------------------------------------
 local MOUNT_TEXT = "|T%d:0|t %s"
-local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal.GetMountFromSpell
+local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal and C_MountJournal.GetMountFromSpell
 local AurasSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
 
 local function MountText(unit)
-    if InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
+    if not GetMountFromSpell or InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
     for i = 1, 40 do
         local aura = GetAura(unit, i, "HELPFUL")
         if IsSecret(aura) or not aura then return end
@@ -230,18 +236,30 @@ local function IDLine(label)
     end
 end
 
+-- Anchor to cursor: tooltips placed at the default position (world, unit
+-- frames, buttons) follow the mouse instead (option read live).
+local function AnchorToCursor(tooltip, parent)
+    if not TT.db.cursorAnchor or not tooltip or tooltip:IsForbidden() then return end
+    tooltip:SetOwner(parent or UIParent, "ANCHOR_CURSOR")
+end
+
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
-function TT:OnEnable()
-    if self.db.style then
-        -- Hidden, not reparented: no empty space is left.
-        ns.Disable(GameTooltip.StatusBar or GameTooltipStatusBar)
-    end
-
+local function AddPostCalls()
     local add, types = TooltipDataProcessor.AddTooltipPostCall, Enum.TooltipDataType
     add(types.Unit,  OnUnit)
     add(types.Item,  IDLine("Item ID"))
     add(types.Spell, IDLine("Spell ID"))
-    inspectEvents:RegisterEvent("INSPECT_READY")
+end
+
+-- Each part is set up on its own (ns.Safe): an error stops only that part.
+function TT:OnEnable()
+    if self.db.style then
+        -- Hidden, not reparented: no empty space is left.
+        ns.Safe(ns.Disable, GameTooltip.StatusBar or GameTooltipStatusBar)
+    end
+    ns.Safe(AddPostCalls)
+    ns.RegisterEvent(inspectEvents, "INSPECT_READY")
+    ns.Hook("GameTooltip_SetDefaultAnchor", AnchorToCursor)
 end

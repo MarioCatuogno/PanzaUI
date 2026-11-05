@@ -8,6 +8,7 @@ local IsSecret = ns.IsSecret
 -- Saved variables key of the old Miscellaneous module.
 local Misc = ns:RegisterModule("Miscellaneous", {
     title = "Various",
+    flavor = "both",
     defaults = {
         platynatorStyle = true,
         bigwigsStyle    = true,
@@ -19,6 +20,7 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         fastDelete      = true,
         waypoints       = true,
         hideNotices     = true,
+        hideErrors      = false,
     },
     options = {
         { header = "Other Addons" },
@@ -27,18 +29,21 @@ local Misc = ns:RegisterModule("Miscellaneous", {
         { key = "bigwigsStyle", label = "BigWigs: Refined style", reload = true,
           tooltip = "Polish the look of the BigWigs bars and icons." },
         { header = "Quality of Life" },
-        { key = "ahExpansion", label = "Auction House: current expansion",
+        { key = "ahExpansion", label = "Auction House: current expansion", flavor = "retail",
           tooltip = "Show only current expansion items when opening the Auction House." },
-        { key = "autoKeystone", label = "Auto-insert keystone",
+        { key = "autoKeystone", label = "Auto-insert keystone", flavor = "retail",
           tooltip = "Insert your Mythic+ keystone when opening the Font of Power." },
-        { key = "fastLoot", label = "Fast auto-loot",
-          tooltip = "Loot everything at once when auto loot is on." },
+        { key = "fastLoot", label = "Fast Auto Loot",
+          tooltip = "Loot everything at once when Auto Loot is on." },
         { key = "flightDestination", label = "Flight destination",
           tooltip = "Show the destination while flying on a flight path." },
         { key = "fastDelete", label = "Fast item delete",
           tooltip = "Fill in the \"DELETE\" confirmation when deleting an item." },
-        { key = "hideNotices", label = "Hide micro menu alerts",
-          tooltip = "Hide the alerts and flashing on the micro menu buttons." },
+        { key = "hideErrors", label = "Hide error messages",
+          tooltip = "Hide the red error messages at the top of the screen.",
+          bullets = { "Quest updates still shown" } },
+        { key = "hideNotices", label = "Hide Micro Menu alerts",
+          tooltip = "Hide the alerts and flashing on the Micro Menu buttons." },
         { key = "waypoints", label = "Waypoint command", reload = true,
           tooltip = "Set a map waypoint by typing /way and the coordinates.",
           bullets = { "Example: /way 45.2 61.8", "Remove it with /way clear" } },
@@ -47,8 +52,8 @@ local Misc = ns:RegisterModule("Miscellaneous", {
           dropdown = {
               { 0, "Off", "Never shown." },
               { 1, "Always", "Always shown." },
-              { 2, "In combat", "Shown in combat." },
-              { 3, "In combat (group)", "Shown in combat while in a group." },
+              { 2, "In Combat", "Shown in combat." },
+              { 3, "In Combat (group)", "Shown in combat while in a group." },
           } },
     },
 })
@@ -591,8 +596,18 @@ local function StyleStartTimers()
 end
 
 local function SetupBigWigs()
-    StyleBigWigsBars()
-    StyleBattleRes()
+    ns.Safe(StyleBigWigsBars)
+    ns.Safe(StyleBattleRes)
+end
+
+--------------------------------------------------------------------------------
+-- Error messages: the red errors at the top of the screen (eg. "Not enough
+-- energy") are not shown; quest updates and other info messages are kept.
+--------------------------------------------------------------------------------
+local function SetErrorMessages(hide)
+    local frame = UIErrorsFrame
+    if not frame then return end
+    if hide then frame:UnregisterEvent("UI_ERROR_MESSAGE") else frame:RegisterEvent("UI_ERROR_MESSAGE") end
 end
 
 --------------------------------------------------------------------------------
@@ -602,9 +617,10 @@ function Misc:OnLoad()
     if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then RegisterPlatynatorBorder() end
 end
 
--- Other addons are already loaded when modules are enabled.
+-- Other addons are already loaded when modules are enabled. Each part is set
+-- up on its own (ns.Safe): an error stops only that part.
 function Misc:OnEnable()
-    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then SetupPlatynator() end
+    if self.db.platynatorStyle and C_AddOns.IsAddOnLoaded("Platynator") then ns.Safe(SetupPlatynator) end
     if self.db.bigwigsStyle then
         EventUtil.ContinueOnAddOnLoaded("BigWigs_Plugins", SetupBigWigs)
         -- The queue timer is part of BigWigs itself, loaded with the game.
@@ -613,14 +629,15 @@ function Misc:OnEnable()
         end
         if TimerTracker then TimerTracker:HookScript("OnEvent", StyleStartTimers) end
     end
-    SetFastLoot(self.db.fastLoot)
-    SetAuctionFilter(self.db.ahExpansion)
-    SetAutoKeystone(self.db.autoKeystone)
+    ns.Safe(SetFastLoot, self.db.fastLoot)
+    ns.Safe(SetAuctionFilter, self.db.ahExpansion)
+    ns.Safe(SetAutoKeystone, self.db.autoKeystone)
     ns.Hook("TakeTaxiNode", OnTakeTaxiNode)
-    SetCursorRing(self.db.cursorRing)
+    ns.Safe(SetCursorRing, self.db.cursorRing)
     ns.Hook("StaticPopup_Show", FillDeleteText)
-    SetupNotices()
-    if self.db.waypoints then SetupWaypoints() end
+    ns.Safe(SetupNotices)
+    if self.db.hideErrors then ns.Safe(SetErrorMessages, true) end
+    if self.db.waypoints then ns.Safe(SetupWaypoints) end
 end
 
 -- Live options.
@@ -633,6 +650,8 @@ function Misc:OnOptionChanged(key, value)
         SetAutoKeystone(value)
     elseif key == "flightDestination" then
         if not value and flightFrame then flightFrame:Hide() end
+    elseif key == "hideErrors" then
+        SetErrorMessages(value)
     elseif key == "hideNotices" then
         if value then CloseOpenNotices() end
     elseif key == "cursorRing" then

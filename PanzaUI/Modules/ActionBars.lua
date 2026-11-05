@@ -26,7 +26,7 @@ local OTHER_BARS = {
     -- MicroMenu only, so the Group Finder eye stays visible.
     { key = "microMenu",  label = "Micro Menu",                frames = { "MicroMenu" } },
     { key = "bagBar",     label = "Bag Bar",                   frames = { "BagsBar" } },
-    { key = "statusBars", label = "Experience/Reputation bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
+    { key = "statusBars", label = "Experience/Reputation Bar", frames = { "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" } },
 }
 
 --------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ for _, list in ipairs({ ACTION_BARS, OTHER_BARS }) do
     end
 end
 
-local AB = ns:RegisterModule("ActionBars", { title = "Action Bars", defaults = defaults, options = options })
+local AB = ns:RegisterModule("ActionBars", { title = "Action Bars", flavor = "both", defaults = defaults, options = options })
 
 -- Converts the saved values of older versions.
 function AB:Migrate(db, saved)
@@ -126,7 +126,7 @@ end
 local function RefreshButtons(bar)
     local db = AB.db
     local textAlpha = db.style and 0 or 1
-    for _, btn in ipairs(bar.buttons) do
+    for _, btn in ipairs(bar.buttons or {}) do
         if btn.Name   then btn.Name:SetAlpha(textAlpha) end
         if btn.HotKey then btn.HotKey:SetAlpha(textAlpha) end
         ns.ZoomIcon(btn.icon or btn.Icon, db.iconZoom)
@@ -202,14 +202,19 @@ end
 --------------------------------------------------------------------------------
 -- Module API
 --------------------------------------------------------------------------------
-function AB:OnEnable()
-    SetupActionBars()
-    SetupOtherBars()
+local function StyleButtons()
     for _, bar in ipairs(ACTION_BARS) do
         RefreshButtons(bar)
         if ns.textStyle then StyleText(bar) end
     end
-    SetupRangeColor()
+end
+
+-- Each part is set up on its own (ns.Safe): an error stops only that part.
+function AB:OnEnable()
+    ns.Safe(SetupActionBars)
+    ns.Safe(SetupOtherBars)
+    ns.Safe(StyleButtons)
+    ns.Safe(SetupRangeColor)
 end
 
 -- Live options.

@@ -7,6 +7,7 @@ local _, ns = ...
 
 local QM = ns:RegisterModule("QuestMinimap", {
     title = "Quest & Minimap",
+    flavor = "both",
     defaults = {
         minimapStyle   = true,
         minimapClutter = true,
@@ -17,9 +18,9 @@ local QM = ns:RegisterModule("QuestMinimap", {
     options = {
         { header = "Minimap" },
         { key = "minimapStyle", label = "Refined style",
-          tooltip = "Polish the look of the minimap." },
+          tooltip = "Polish the look of the Minimap." },
         { key = "minimapClutter", label = "Hide clutter",
-          tooltip = "Hide the calendar invite alerts on the minimap." },
+          tooltip = "Hide the calendar invite alerts on the Minimap." },
         { header = "Quest Tracker" },
         { key = "combatCollapse", label = "Collapse in instances",
           tooltip = "Hide the Quest Tracker during boss fights and combat in dungeons and raids." },
@@ -47,6 +48,12 @@ local function CalendarBackgrounds()
     local keep = {
         [f:GetNormalTexture() or f] = true, [f:GetPushedTexture() or f] = true, [f:GetHighlightTexture() or f] = true,
     }
+    -- WoW Forever draws the button itself with these two textures.
+    if not ns.IsFlavor("retail") then
+        for _, key in ipairs({ "AddTexture", "StateTexture" }) do
+            if f[key] then keep[f[key]] = true end
+        end
+    end
     for _, name in ipairs({ "GameTimeCalendarInvitesTexture", "GameTimeCalendarInvitesGlow", "GameTimeCalendarEventAlarmTexture" }) do
         if _G[name] then keep[_G[name]] = true end
     end
@@ -58,8 +65,10 @@ end
 
 local function Backgrounds()
     local list = CalendarBackgrounds()
-    list[#list + 1] = MinimapCluster.BorderTop
-    list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background
+    if MinimapCluster then
+        list[#list + 1] = MinimapCluster.BorderTop
+        list[#list + 1] = MinimapCluster.Tracking and MinimapCluster.Tracking.Background
+    end
     return list
 end
 
@@ -292,35 +301,35 @@ end
 function QM:OnEnable()
     local db = self.db
     if HelpTip then ns.Hook(HelpTip, "Show", HideClutterTip) end
-    if db.minimapClutter then ApplyClutter() end
+    if db.minimapClutter then ns.Safe(ApplyClutter) end
 
-    if db.minimapStyle then ApplyBackgrounds() end
+    if db.minimapStyle then ns.Safe(ApplyBackgrounds) end
 
     if ns.textStyle then ns.StyleFont(MinimapZoneText) end
     EventUtil.ContinueOnAddOnLoaded("Blizzard_TimeManager", function()
         if ns.textStyle then ns.StyleFont(TimeManagerClockTicker) end
-        ApplyClockSize()
+        ns.Safe(ApplyClockSize)
     end)
 
     if db.trackerStyle then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", ApplyTrackerStyle)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() ns.Safe(ApplyTrackerStyle) end)
     end
     if db.questCount then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() SetQuestCount(true) end)
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function() ns.Safe(SetQuestCount, true) end)
     end
     if ns.textStyle then
         EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
-            StyleFonts()
+            ns.Safe(StyleFonts)
             -- Edit Mode "Text Size" resets the font objects.
-            ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts)
+            if ObjectiveTrackerManager then ns.Hook(ObjectiveTrackerManager, "SetTextSize", StyleFonts) end
         end)
         local top = UIWidgetTopCenterContainerFrame
         if top then
             ns.Hook(top, "UpdateWidgetLayout", StyleTopWidgets)
-            StyleTopWidgets(top)
+            ns.Safe(StyleTopWidgets, top)
         end
     end
-    SetCombatCollapse(db.combatCollapse)
+    ns.Safe(SetCombatCollapse, db.combatCollapse)
 end
 
 -- Live options.

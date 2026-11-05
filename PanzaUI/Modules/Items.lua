@@ -1,20 +1,26 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Bags & Items
-    Bag items, item level (bags, banks, Character and Inspect panels) and
-    merchant automation.
+    Bag auto-sort, bag items, item level (bags, banks, Character and Inspect
+    panels) and merchant automation.
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 local IsSecret = ns.IsSecret
 
 local Items = ns:RegisterModule("Items", {
     title = "Bags & Items",
+    flavor = "both",
     defaults = {
         iconZoom     = 5,
         itemLevel    = true,
         autoRepair   = true,
         autoSellJunk = true,
+        autoSort     = false,
     },
     options = {
+        { header = "Bags" },
+        { key = "autoSort", label = "Auto-sort",
+          tooltip = "Sort your bags each time you open them.",
+          bullets = { "Skipped in combat and at merchants" } },
         { header = "Items" },
         { key = "iconZoom", label = "Icon zoom",
           tooltip = "Crop the edges of the item icons in your bags.",
@@ -44,11 +50,10 @@ end
 --------------------------------------------------------------------------------
 -- Item level of a bag slot (equipment only).
 --------------------------------------------------------------------------------
-local EQUIPMENT = {
-    [Enum.ItemClass.Weapon]     = true,
-    [Enum.ItemClass.Armor]      = true,
-    [Enum.ItemClass.Profession] = true,
-}
+local EQUIPMENT = {}
+for _, class in ipairs({ "Weapon", "Armor", "Profession" }) do -- Profession: Retail only
+    if Enum.ItemClass[class] then EQUIPMENT[Enum.ItemClass[class]] = true end
+end
 local SKIP_SLOTS = { [""] = true, INVTYPE_NON_EQUIP_IGNORE = true, INVTYPE_BODY = true, INVTYPE_TABARD = true }
 local bagLocation = ItemLocation:CreateEmpty()
 
@@ -87,9 +92,35 @@ local function AddContainer(frame)
     ns.Hook(frame, "UpdateItems", UpdateContainer)
 end
 
+-- Auto-sort: once per opening of the character bags (opening all bags shows
+-- several frames at once), never in combat, at merchants (junk being sold)
+-- or with an item on the cursor.
+local SORT_THROTTLE = 1 -- seconds
+local lastSort = 0
+
+local function IsPlayerBag(frame)
+    local bag = frame.GetBagID and frame:GetBagID()
+    return type(bag) == "number" and bag >= 0 and bag <= (NUM_TOTAL_EQUIPPED_BAG_SLOTS or 5) -- backpack, bags and reagent bag
+end
+
+local function SortBags()
+    if InCombatLockdown() or GetCursorInfo() or (MerchantFrame and MerchantFrame:IsShown()) then return end
+    C_Container.SortBags()
+end
+
+local function OnBagShow(frame)
+    if not Items.db.autoSort or not IsPlayerBag(frame) then return end
+    local now = GetTime()
+    if now - lastSort < SORT_THROTTLE then return end
+    lastSort = now
+    ns.Defer(SortBags)
+end
+
 local function SetupBags()
     AddContainer(ContainerFrameCombinedBags)
     for i = 1, NUM_CONTAINER_FRAMES or 13 do AddContainer(_G["ContainerFrame" .. i]) end
+    if not (C_Container and C_Container.SortBags) then return end
+    for _, frame in ipairs(containers) do frame:HookScript("OnShow", OnBagShow) end
 end
 
 --------------------------------------------------------------------------------
@@ -287,10 +318,10 @@ end
 -- Module API
 --------------------------------------------------------------------------------
 function Items:OnEnable()
-    SetupBags()
-    SetupPanels()
-    SetupBanks()
-    if self.db.itemLevel then UpdateCharSlots() end
+    ns.Safe(SetupBags)
+    ns.Safe(SetupPanels)
+    ns.Safe(SetupBanks)
+    if self.db.itemLevel then ns.Safe(UpdateCharSlots) end
     UpdateMerchantEvents()
 end
 
@@ -298,7 +329,7 @@ end
 function Items:OnOptionChanged(key)
     if key == "autoRepair" or key == "autoSellJunk" then
         UpdateMerchantEvents()
-    else
+    elseif key ~= "autoSort" then -- read when a bag opens
         for _, frame in ipairs(containers) do UpdateContainer(frame) end
         UpdateCharSlots()
         UpdateBankPanel()

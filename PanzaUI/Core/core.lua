@@ -1,6 +1,7 @@
 --[[----------------------------------------------------------------------------
     PanzaUI - Core
     Shared helpers, saved variables, module registry and settings panel.
+    Game version (flavor) checks are in Flavor.lua, loaded before this file.
 ------------------------------------------------------------------------------]]
 local addonName, ns = ...
 
@@ -43,6 +44,17 @@ function ns.Defer(func)
     deferFrame:Show()
 end
 
+-- Registers an event (a unit event when units are given) only if it exists
+-- in the running game version; returns true when registered.
+local IsEventValid = C_EventUtils and C_EventUtils.IsEventValid
+function ns.RegisterEvent(frame, event, unit1, unit2)
+    if IsEventValid and not IsEventValid(event) then return false end
+    if unit1 then
+        return (pcall(frame.RegisterUnitEvent, frame, event, unit1, unit2))
+    end
+    return (pcall(frame.RegisterEvent, frame, event))
+end
+
 -- Registers the given events on `frame` when `on`, otherwise unregisters all
 -- of them (event frames used only while their option is on).
 function ns.SetEvents(frame, on, ...)
@@ -50,7 +62,7 @@ function ns.SetEvents(frame, on, ...)
         frame:UnregisterAllEvents()
         return
     end
-    for i = 1, select("#", ...) do frame:RegisterEvent((select(i, ...))) end
+    for i = 1, select("#", ...) do ns.RegisterEvent(frame, (select(i, ...))) end
 end
 
 -- Runs func on the next frame each time `frame` shows, and now if it is
@@ -183,6 +195,12 @@ end
 function ns.Hook(target, name, callback)
     if type(target) == "string" then target, name, callback = _G, target, name end
     if target and type(target[name]) == "function" then hooksecurefunc(target, name, callback) end
+end
+
+-- Runs func(...) with errors sent to the error handler, so a failing part (eg.
+-- a Blizzard field that differs between game versions) does not stop the rest.
+function ns.Safe(func, ...)
+    xpcall(func, geterrorhandler(), ...)
 end
 
 --------------------------------------------------------------------------------
@@ -725,8 +743,8 @@ ns.VISIBILITY_OPTIONS = {
     { VIS.MOUSEOVER,    "Mouseover",      "Shown only with the mouse over it." },
     { VIS.COMBAT,       "In Combat",      "Shown only in combat." },
     { VIS.NO_COMBAT,    "Out of Combat",  "Hidden in combat." },
-    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding." },
-    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding." },
+    { VIS.NO_SKYRIDING, "No Skyriding",   "Hidden while Skyriding.", "retail" },
+    { VIS.SKYRIDING,    "Skyriding only", "Shown only while Skyriding.", "retail" },
 }
 
 local visEntries   = {}
@@ -882,6 +900,7 @@ local function SetForced(kind, on)
 end
 
 local function ReadSkyriding()
+    if not (C_PlayerInfo and C_PlayerInfo.GetGlidingInfo) then return false end
     local _, canGlide = C_PlayerInfo.GetGlidingInfo()
     return not IsSecret(canGlide) and canGlide and true or false
 end
@@ -903,7 +922,7 @@ local function InitVisibility()
     events:RegisterEvent("PLAYER_REGEN_DISABLED")
     events:RegisterEvent("PLAYER_ENTERING_WORLD")
     events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
-    pcall(events.RegisterEvent, events, "PLAYER_CAN_GLIDE_CHANGED")
+    ns.RegisterEvent(events, "PLAYER_CAN_GLIDE_CHANGED")
     events:SetScript("OnEvent", function(_, event)
         if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
             SetForced("grid", event == "ACTIONBAR_SHOWGRID")
@@ -942,13 +961,19 @@ end
 --   info = {
 --       title    = "Page title",
 --       main     = true,                     -- options on the main page
+--       flavor   = "retail" | "forever" | "both", -- default ns.DEFAULT_FLAVOR
 --       defaults = { key = value, ... },
 --       options  = {
 --           { header = "Section" },
 --           { key = "name", label = "Text", tooltip = "Text.", bullets = { ... }, reload = true,
---             slider = { min, max, step, suffix } | dropdown = list or func },
---           { label = "Text", tooltip = "Text.", button = "Text", onClick = func },  -- no saved value
---   Dropdown list entries: { value, label, tooltip }.
+--             slider = { min, max, step, suffix } | dropdown = list or func,
+--             flavor = tag, off = value },     -- off: value used where the option is hidden
+--           { label = "Text", tooltip = "Text.", button = "Text", onClick = func,  -- no saved value
+--             profile = "kind" },              -- shown only when ns.Profile(kind) exists
+--   Dropdown list entries: { value, label, tooltip, flavor }.
+--   Modules, options and entries without a flavor tag follow their parent;
+--   a module of another game version is registered (its saved values are
+--   kept) but never loaded nor shown.
 --       },
 --   }
 --   Sections (by header) and the options inside them are listed
@@ -960,8 +985,19 @@ end
 --------------------------------------------------------------------------------
 function ns:RegisterModule(key, info)
     info.key = key
+    info.available = ns.IsFlavor(info.flavor)
     self.modules[#self.modules + 1] = info
     return info
+end
+
+-- Options and dropdown entries of the running game version.
+local function IsOptionShown(m, opt)
+    if not ns.IsFlavor(opt.flavor or m.flavor) then return false end
+    return not opt.profile or ns.Profile(opt.profile) ~= nil
+end
+
+local function IsEntryShown(entry)
+    return entry[4] == nil or ns.IsFlavor(entry[4])
 end
 
 -- Migration helper: newKey takes the value of older options.
@@ -982,6 +1018,29 @@ end
 --------------------------------------------------------------------------------
 -- Saved variables: migrations, cleanup and defaults.
 --------------------------------------------------------------------------------
+-- Options of another game version are off (Retail and Forever keep separate
+-- saved variables); a saved dropdown entry of another version goes back to
+-- the default.
+local function ApplyFlavor(m, db)
+    for _, opt in ipairs(m.options) do
+        local key = opt.key
+        if key and not IsOptionShown(m, opt) then
+            local default = m.defaults[key]
+            if opt.off ~= nil then
+                db[key] = opt.off
+            elseif type(default) == "boolean" then
+                db[key] = false
+            else
+                db[key] = default
+            end
+        elseif key and type(opt.dropdown) == "table" then
+            for _, entry in ipairs(opt.dropdown) do
+                if entry[1] == db[key] and not IsEntryShown(entry) then db[key] = m.defaults[key] break end
+            end
+        end
+    end
+end
+
 local function InitDB()
     PanzaUI_DB = PanzaUI_DB or {}
     local saved = PanzaUI_DB
@@ -1004,7 +1063,16 @@ local function InitDB()
         for k, v in pairs(m.defaults) do
             if type(db[k]) ~= type(v) then db[k] = v end
         end
-        m.db = db
+        if m.available then
+            m.db = db
+            ApplyFlavor(m, db)
+        else
+            -- Module of another game version: its saved values are kept, the
+            -- code (eg. file-level hooks) only sees switches turned off.
+            local off = {}
+            for k, v in pairs(m.defaults) do off[k] = type(v) ~= "boolean" and v or false end
+            m.db = off
+        end
     end
 end
 
@@ -1044,11 +1112,20 @@ local function UpdateReloadButton(_, category)
     if own then settingsViewed = true end
 end
 
--- Collects the settings panel's temporary memory when it closes (out of combat).
-local function CollectAfterSettings()
-    if not settingsViewed or InCombatLockdown() then return end
-    settingsViewed = false
+-- Collects the settings panel's temporary memory once it has closed (out of
+-- combat). Delayed: Blizzard releases the panel's controls after its OnHide,
+-- so a collection right away would miss that garbage.
+local COLLECT_DELAY = 1 -- seconds
+
+local function Collect()
+    if InCombatLockdown() or (SettingsPanel and SettingsPanel:IsShown()) then return end
     collectgarbage("collect")
+end
+
+local function CollectAfterSettings()
+    if not settingsViewed then return end
+    settingsViewed = false
+    C_Timer.After(COLLECT_DELAY, Collect)
 end
 
 -- Tooltip: summary, sorted bullets and reload note.
@@ -1074,7 +1151,9 @@ local function DropdownData(list)
     local data = dropdownData[list]
     if not data then
         local container = Settings.CreateControlTextContainer()
-        for _, o in ipairs(list) do container:Add(o[1], o[2], o[3]) end
+        for _, o in ipairs(list) do
+            if IsEntryShown(o) then container:Add(o[1], o[2], o[3]) end
+        end
         data = container:GetData()
         dropdownData[list] = data
     end
@@ -1126,9 +1205,11 @@ end
 local function BuildSettings()
     local category, layout = Settings.RegisterVerticalLayoutCategory("|cff00FF98Panza|rUI")
     local version = C_AddOns.GetAddOnMetadata(addonName, "Version") or ""
+    if ns.FLAVOR ~= "retail" then version = version .. " (" .. ns.FLAVOR_NAMES[ns.FLAVOR] .. ")" end
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Version: " .. version))
 
-    -- Sections and options are sorted alphabetically.
+    -- Sections and options of the running game version, sorted
+    -- alphabetically; sections left empty are skipped.
     local function AddOptions(cat, lay, m)
         local sections, current = {}, { options = {} }
         sections[1] = current
@@ -1136,7 +1217,7 @@ local function BuildSettings()
             if opt.header then
                 current = { header = opt.header, label = opt.header, options = {} }
                 sections[#sections + 1] = current
-            else
+            elseif IsOptionShown(m, opt) then
                 current.options[#current.options + 1] = opt
             end
         end
@@ -1145,7 +1226,7 @@ local function BuildSettings()
         table.insert(sections, 1, untitled)
 
         for _, section in ipairs(sections) do
-            if section.header then
+            if section.header and #section.options > 0 then
                 lay:AddInitializer(CreateSettingsListSectionHeaderInitializer(section.header))
             end
             table.sort(section.options, ByLabel)
@@ -1153,10 +1234,18 @@ local function BuildSettings()
         end
     end
 
-    -- Main modules on the main page, the others on their own page.
-    local sorted = {}
+    -- Main modules on the main page, the others on their own page; modules
+    -- of another game version are left out.
+    local sorted, shown = {}, 0
     for _, m in ipairs(ns.modules) do
-        if m.main then AddOptions(category, layout, m) else sorted[#sorted + 1] = m end
+        if m.available then
+            shown = shown + 1
+            if m.main then AddOptions(category, layout, m) else sorted[#sorted + 1] = m end
+        end
+    end
+    if shown == 0 then
+        layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(
+            "Features are unlocked here once tested on this version of the game."))
     end
     table.sort(sorted, function(a, b) return a.title < b.title end)
 
@@ -1184,12 +1273,17 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         if arg1 ~= addonName then return end
         self:UnregisterEvent(event)
         InitDB()
-        ns.textStyle = PanzaUI_DB.General.textStyle
-        ns.classColors = PanzaUI_DB.General.classColors
+        local general = PanzaUI_DB.General
+        local generalOn = false
+        for _, m in ipairs(ns.modules) do
+            if m.key == "General" then generalOn = m.available end
+        end
+        ns.textStyle = generalOn and general.textStyle or false
+        ns.classColors = generalOn and general.classColors or false
         BuildSettings()
         local handler = geterrorhandler()
         for _, m in ipairs(ns.modules) do
-            if m.OnLoad then xpcall(m.OnLoad, handler, m) end
+            if m.available and m.OnLoad then xpcall(m.OnLoad, handler, m) end
         end
     else -- PLAYER_LOGIN, or PLAYER_REGEN_ENABLED after a /reload in combat
         self:UnregisterEvent(event)
@@ -1200,7 +1294,7 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         end
         local handler = geterrorhandler()
         for _, m in ipairs(ns.modules) do
-            if m.OnEnable then
+            if m.available and m.OnEnable then
                 xpcall(m.OnEnable, handler, m)
             end
         end
@@ -1218,22 +1312,40 @@ local function MemoryReport()
     ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
 end
 
+-- Options panel: Blizzard blocks opening it in combat, so it opens as soon
+-- as combat ends.
+local openEvents = CreateFrame("Frame")
+
+local function OpenOptions()
+    if InCombatLockdown() then
+        ns.Print("the options will open after combat.")
+        openEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    openEvents:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    Settings.OpenToCategory(ns.category:GetID())
+end
+openEvents:SetScript("OnEvent", OpenOptions)
+
 -- /pui: options. /pui mem: memory report.
 SLASH_PANZAUI1 = "/pui"
 SlashCmdList.PANZAUI = function(msg)
     if msg and msg:lower():find("^%s*mem") then
         MemoryReport()
     else
-        Settings.OpenToCategory(ns.category:GetID())
+        OpenOptions()
     end
 end
 
--- Shortcuts: /rl Reload UI, /rd ready check, /pl pull timer.
+-- Shortcuts: /rl Reload UI (every version); Retail: /rd ready check, /pl
+-- pull timer.
 SLASH_PANZAUI_RL1 = "/rl"
 SlashCmdList.PANZAUI_RL = ReloadUI
 
-SLASH_PANZAUI_RD1 = "/rd"
-SlashCmdList.PANZAUI_RD = function() DoReadyCheck() end
+if ns.IsFlavor("retail") then
+    SLASH_PANZAUI_RD1 = "/rd"
+    SlashCmdList.PANZAUI_RD = function() DoReadyCheck() end
 
-SLASH_PANZAUI_PL1 = "/pl"
-SlashCmdList.PANZAUI_PL = function() C_PartyInfo.DoCountdown(10) end
+    SLASH_PANZAUI_PL1 = "/pl"
+    SlashCmdList.PANZAUI_PL = function() C_PartyInfo.DoCountdown(10) end
+end

@@ -6,6 +6,11 @@
 local _, ns = ...
 local IsSecret = ns.IsSecret
 
+-- The level of the Player, Target and Focus frames is hidden by the Refined style
+-- on Retail only: WoW Forever keeps it.
+local HIDE_LEVEL = ns.ForFlavor(true, false)
+local NAME_STYLE = ns.ForFlavor("Centered name without level", "Centered name")
+
 --------------------------------------------------------------------------------
 -- Options: Target and Focus share their entries (<prefix><Key>).
 --------------------------------------------------------------------------------
@@ -18,7 +23,7 @@ local options = {
     { header = "Player" },
     { key = "playerStyle", label = "Refined style",
       tooltip = "Polish the look of the Player frame.",
-      bullets = { "Centered name without level", "Health and power as a percentage" } },
+      bullets = { NAME_STYLE, "Health and power as a percentage" } },
     { key = "playerHideClutter", label = "Hide clutter",
       tooltip = "Hide minor elements of the Player frame.",
       bullets = { "Combat and rest glow", "Damage and healing numbers", "PvP, leader and group icons", "Totems and class resources" } },
@@ -26,7 +31,7 @@ local options = {
 
 for _, t in ipairs(TARGET_FRAMES) do
     local p = t.prefix
-    local styleBullets = { "Centered name without level", "Health and power as a percentage" }
+    local styleBullets = { NAME_STYLE, "Health and power as a percentage" }
     local clutterBullets = { "PvP and leader icons", "Buffs and debuffs", "Threat glow" }
     if p == "focus" then
         styleBullets[#styleBullets + 1] = "Only 5 debuffs"
@@ -75,13 +80,15 @@ for i, o in ipairs(options) do
     end
 end
 
-local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", defaults = defaults, options = options })
+local UF = ns:RegisterModule("UnitFrames", { title = "Unit Frames", flavor = "both", defaults = defaults, options = options })
 
 -- Blizzard's own settings, set only when an option is on or turned off.
 local CLASS_ICON_CVARS = { playerClassIcon = "ReplaceMyPlayerPortrait", targetClassIcon = "ReplaceOtherPlayerPortraits" }
 
 local function SetClassIcon(key, on)
-    C_CVar.SetCVar(CLASS_ICON_CVARS[key], on and "1" or "0")
+    local cvar = CLASS_ICON_CVARS[key]
+    if C_CVar.GetCVar(cvar) == nil then return end -- missing in this game version
+    C_CVar.SetCVar(cvar, on and "1" or "0")
     if not UnitFramePortrait_Update then return end
     for _, frame in ipairs({ PlayerFrame, TargetFrame, FocusFrame }) do
         if frame and frame.unit and UnitExists(frame.unit) then UnitFramePortrait_Update(frame) end
@@ -191,10 +198,11 @@ end
 
 -- Centered over the health bar on one line; long names end with "...".
 local NAME_MARGIN = 4 -- pixels kept free on each side
+local NAME_RAISE  = ns.ForFlavor(0, 2) -- WoW Forever: name a bit higher
 local function CenterName(name, bar)
     name:ClearAllPoints()
-    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  NAME_MARGIN, 1)
-    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", -NAME_MARGIN, 1)
+    name:SetPoint("BOTTOMLEFT",  bar, "TOPLEFT",  NAME_MARGIN, 1 + NAME_RAISE)
+    name:SetPoint("BOTTOMRIGHT", bar, "TOPRIGHT", -NAME_MARGIN, 1 + NAME_RAISE)
     name:SetJustifyH("CENTER")
     name:SetWordWrap(false)
     if name.SetMaxLines then name:SetMaxLines(1) end
@@ -336,7 +344,7 @@ local function SetupPlayer(db)
     end
 
     if db.playerStyle then
-        ns.Kill(PlayerLevelText)
+        if HIDE_LEVEL then ns.Kill(PlayerLevelText) end
         local bar = main.HealthBarsContainer
         CenterName(PlayerName, bar)
         EnlargeName(PlayerName)
@@ -424,8 +432,10 @@ local function SetupTargetFrame(frame, db, p)
 
     if db[p .. "Style"] then
         -- Only the skull icon is anchored to the level text.
-        ns.Kill(main.LevelText)
-        ns.Kill(ctx.HighLevelTexture)
+        if HIDE_LEVEL then
+            ns.Kill(main.LevelText)
+            ns.Kill(ctx.HighLevelTexture)
+        end
 
         EnlargeName(main.Name)
         HideFollowerMark(main.Name, frame)
@@ -538,11 +548,11 @@ local function SetupPortraits(db)
     end
     if #PORTRAIT_FRAMES == 0 then return end
     for _, event in ipairs(PORTRAIT_UNIT_EVENTS) do
-        portraitEvents:RegisterUnitEvent(event, "player", "vehicle")
-        portraitEvents2:RegisterUnitEvent(event, "target", "focus")
+        ns.RegisterEvent(portraitEvents, event, "player", "vehicle")
+        ns.RegisterEvent(portraitEvents2, event, "target", "focus")
     end
     for _, event in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED" }) do
-        portraitEvents:RegisterEvent(event)
+        ns.RegisterEvent(portraitEvents, event)
     end
 end
 
@@ -561,46 +571,58 @@ local function StyleFocusDebuffs(frame)
     ns.ForEachActive(frame.auraPools and frame.auraPools:GetPool("TargetDebuffFrameTemplate"), StyleFocusDebuff)
 end
 
---------------------------------------------------------------------------------
--- Module API
---------------------------------------------------------------------------------
-function UF:OnEnable()
-    local db = self.db
-    SetupPlayer(db)
-
-    for _, t in ipairs(TARGET_FRAMES) do
-        local frame = _G[t.frame]
-        if frame then SetupTargetFrame(frame, db, t.prefix) end
+-- Focus extras: layout kept on resize, cast bar hidden, debuff borders.
+local function SetupFocus(db)
+    if not FocusFrame then return end
+    ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
+    -- Cast bar hidden and its events stopped.
+    if db.focusHideClutter then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
+    if db.focusStyle then
+        ns.Hook(FocusFrame, "UpdateAuras", StyleFocusDebuffs)
+        StyleFocusDebuffs(FocusFrame)
     end
+end
 
-    if FocusFrame then
-        ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
-        -- Cast bar hidden and its events stopped.
-        if db.focusHideClutter then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
-        if db.focusStyle then
-            ns.Hook(FocusFrame, "UpdateAuras", StyleFocusDebuffs)
-            StyleFocusDebuffs(FocusFrame)
-        end
-    end
-
-    SetupBoss(db)
-    SetupPet(db)
-    SetupPortraits(db)
+local function SetupClassIcons(db)
     for key in pairs(CLASS_ICON_CVARS) do
         if db[key] then SetClassIcon(key, true) end
     end
+end
 
-    if next(classColorBars) then
-        for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
-                                 "INSTANCE_ENCOUNTER_ENGAGE_UNIT" }) do
-            colorEvents:RegisterEvent(event)
-        end
-        for _, event in ipairs({ "UNIT_TARGET", "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE" }) do
-            colorEvents:RegisterUnitEvent(event, "target", "focus")
-        end
-        ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
-        for bar in pairs(classColorBars) do ClassColorHealth(bar) end
+-- Class colors of every registered bar, kept through Blizzard's updates.
+local function SetupClassColors()
+    if not next(classColorBars) then return end
+    for _, event in ipairs({ "PLAYER_TARGET_CHANGED", "PLAYER_FOCUS_CHANGED", "GROUP_ROSTER_UPDATE", "PLAYER_ENTERING_WORLD",
+                             "INSTANCE_ENCOUNTER_ENGAGE_UNIT" }) do
+        ns.RegisterEvent(colorEvents, event)
     end
+    for _, event in ipairs({ "UNIT_TARGET", "UNIT_FACTION", "UNIT_FLAGS", "UNIT_NAME_UPDATE" }) do
+        ns.RegisterEvent(colorEvents, event, "target", "focus")
+    end
+    ns.Hook("UnitFrameHealthBar_Update", ClassColorHealth)
+    for bar in pairs(classColorBars) do ClassColorHealth(bar) end
+end
+
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
+-- Each part is set up on its own (ns.Safe): an error stops only that part.
+-- Class colors come last: the frames above register their bars.
+function UF:OnEnable()
+    local db = self.db
+    ns.Safe(SetupPlayer, db)
+
+    for _, t in ipairs(TARGET_FRAMES) do
+        local frame = _G[t.frame]
+        if frame then ns.Safe(SetupTargetFrame, frame, db, t.prefix) end
+    end
+
+    ns.Safe(SetupFocus, db)
+    ns.Safe(SetupBoss, db)
+    ns.Safe(SetupPet, db)
+    ns.Safe(SetupPortraits, db)
+    ns.Safe(SetupClassIcons, db)
+    ns.Safe(SetupClassColors)
 end
 
 -- Live options.

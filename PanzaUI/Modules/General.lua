@@ -85,16 +85,17 @@ local OTHER_BARS = {
     { key = "texCdmPRD",       label = "Cooldown Manager & PRD", tooltip = "Set the texture of the Cooldown Manager and Personal Resource Display bars.",
       old = { "texPRD", "texCooldownBars" } },
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
-    { key = "texInterface",    label = "Interface bars",         tooltip = "Set the texture of the interface progress bars.",
+    { key = "texInterface",    label = "Interface Bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
                   "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
--- Profiles: the PanzaUI Edit Mode layout, saved as "PanzaUI" (replacing an
--- older copy) and made active.
+-- Profiles (Profiles/<Flavor>/, read with ns.Profile): the PanzaUI Edit Mode
+-- layout, saved as "PanzaUI" (replacing an older copy) and made active.
 local function ImportEditMode()
-    local info = not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(ns.EDIT_MODE_LAYOUT)
+    local layout = ns.Profile("editMode")
+    local info = layout and not InCombatLockdown() and C_EditMode.ConvertStringToLayoutInfo(layout)
     if not info then
         ns.Print("The Edit Mode layout can't be imported now (in combat or invalid).")
         return
@@ -143,7 +144,7 @@ local function ImportPlatynator()
         ns.Print("The Platynator profile can't be imported now (in combat or Platynator not loaded).")
         return
     end
-    if pcall(api.ImportString, ns.PLATYNATOR_PROFILE, "PanzaUI") then
+    if pcall(api.ImportString, ns.Profile("platynator"), "PanzaUI") then
         ns.Print("Platynator profile imported.")
     else
         ns.Print("The Platynator profile can't be read.")
@@ -157,7 +158,7 @@ local function ImportBigWigs()
         ns.Print("The BigWigs profile can't be imported now (in combat or BigWigs not loaded).")
         return
     end
-    if not pcall(api.RegisterProfile, "PanzaUI", ns.BIGWIGS_PROFILE, "PanzaUI") then
+    if not pcall(api.RegisterProfile, "PanzaUI", ns.Profile("bigwigs"), "PanzaUI") then
         ns.Print("The BigWigs profile can't be read.")
     end
 end
@@ -177,11 +178,11 @@ local defaults = { textStyle = true, classColors = true, refinedBorders = true }
 local options  = {
     { header = "Profiles" },
     { label = "Blizzard Edit Mode", button = "Import", onClick = ConfirmImport("Edit Mode", ImportEditMode),
-      tooltip = "Import the PanzaUI Edit Mode layout." },
+      tooltip = "Import the PanzaUI Edit Mode layout.", profile = "editMode" },
     { label = "Platynator", button = "Import", onClick = ConfirmImport("Platynator", ImportPlatynator),
-      tooltip = "Import the PanzaUI nameplates for Platynator." },
+      tooltip = "Import the PanzaUI nameplates for Platynator.", profile = "platynator" },
     { label = "BigWigs", button = "Import", onClick = ImportBigWigs,
-      tooltip = "Import the PanzaUI boss timers for BigWigs." },
+      tooltip = "Import the PanzaUI boss timers for BigWigs.", profile = "bigwigs" },
     { header = "Style" },
     { key = "classColors", label = "Class colors", reload = true,
       tooltip = "Color health bars by class for players and by reaction for NPCs." },
@@ -201,7 +202,7 @@ end
 AddTextureOptions("Textures - Unit Frames", UNIT_BARS)
 AddTextureOptions("Textures - Other Bars", OTHER_BARS)
 
-local GEN = ns:RegisterModule("General", { title = "General", main = true, defaults = defaults, options = options })
+local GEN = ns:RegisterModule("General", { title = "General", main = true, flavor = "both", defaults = defaults, options = options })
 
 -- Converts the saved values of older versions.
 function GEN:Migrate(db, saved)
@@ -354,7 +355,8 @@ end
 -- The original atlas is kept as a mask (or a square inset mask).
 local trackedBars = {}
 local function TrackTexture(bar, path, inset)
-    if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] then return end
+    -- Forbidden bars (eg. tooltips shown from secure code) are never touched.
+    if not (bar and path and bar.SetStatusBarTexture) or trackedBars[bar] or bar:IsForbidden() then return end
     trackedBars[bar] = true
 
     local mask, masked = nil, {}
@@ -401,6 +403,28 @@ local function TrackTexture(bar, path, inset)
     Reapply(texture and texture.GetAtlas and texture:GetAtlas())
     hooksecurefunc(bar, "SetStatusBarTexture", function(_, asset) Reapply(asset) end)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
+end
+
+-- Bars that are not StatusBars (WoW Forever Reputation tab): the Fill texture
+-- gets the interface texture file. Blizzard crops the fill with its texture
+-- coordinates (not touched here); the color comes from the atlas name,
+-- otherwise the current vertex color is kept. The Skills tab, same layout,
+-- turned white with it and keeps Blizzard's look.
+local function TrackFillTexture(bar, path)
+    local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
+    if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] or bar:IsForbidden() then return end
+    trackedBars[bar] = true
+    local busy
+    local function Reapply(atlas)
+        if busy then return end
+        busy = true
+        fill:SetTexture(path)
+        local c = AtlasColor(atlas)
+        if c then fill:SetVertexColor(c[2], c[3], c[4]) end
+        busy = false
+    end
+    Reapply(fill:GetAtlas())
+    hooksecurefunc(fill, "SetAtlas", function(_, atlas) Reapply(atlas) end)
 end
 
 -- Widget progress bars (events, NPCs): interface texture, set up with each
@@ -1324,41 +1348,42 @@ local function SetupVaultIcons()
 end
 
 --------------------------------------------------------------------------------
--- Module API
+-- Setup parts, run one by one from OnEnable (ns.Safe): an error in one part
+-- (eg. a frame that differs in another game version) stops only that part.
 --------------------------------------------------------------------------------
-function GEN:OnEnable()
-    if ns.textStyle then StyleBlizzardTexts() end
-    if self.db.refinedBorders then
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
-        SetupRewardIcons()
-        if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
-        SetupGearSetIcons()
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_WeeklyRewards", SetupVaultIcons)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", function()
-            SetupSetIcons()
-            SetupMountIcons()
-        end)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", function()
-            SetupProfessionIcons()
-            SetupItemFlyout()
-        end)
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
-        ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
-        for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
-        -- The queue status sets its own look each time it opens.
-        if QueueStatusFrame then QueueStatusFrame:HookScript("OnShow", StyleTooltipBorder) end
-        StyleDialogs()
-    end
-    local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
-    local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
-    widgetTexture = interface
+local function SetupRefinedBorders()
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ProfessionsBook", StyleProfessionIcons)
+    SetupRewardIcons()
+    if TokenFrame then SetupCurrencyIcons() else EventUtil.ContinueOnAddOnLoaded("Blizzard_TokenUI", SetupCurrencyIcons) end
+    SetupGearSetIcons()
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesDifficultyPicker", SetupDelveRewards)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DelvesCompanionConfiguration", SetupCompanionAbilities)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_WeeklyRewards", SetupVaultIcons)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_Collections", function()
+        SetupSetIcons()
+        SetupMountIcons()
+    end)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_Professions", function()
+        SetupProfessionIcons()
+        SetupItemFlyout()
+    end)
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_GroupFinder", SetupRewardIcons)
+    ns.Hook("SharedTooltip_SetBackdropStyle", StyleTooltipBorder)
+    for _, name in ipairs(TOOLTIPS) do StyleTooltipBorder(_G[name]) end
+    -- The queue status sets its own look each time it opens.
+    if QueueStatusFrame then QueueStatusFrame:HookScript("OnShow", StyleTooltipBorder) end
+    StyleDialogs()
+end
 
-    -- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
-    -- Green health when not class colored (the Pet frame never is).
+-- Unit frames: Player & Pet, Target & Boss (and every Target of Target), Focus.
+-- Green health when not class colored (the Pet frame never is).
+local function SkinUnitFrames(player, target, focus)
     local tint = not ns.classColors
-    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
+    if PlayerFrame_GetHealthBar then
+        SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
+    else
+        SkinBars(PlayerFrameHealthBar, PlayerFrameManaBar, player, tint)
+    end
     SkinBars(PetFrameHealthBar, PetFrameManaBar, player, true)
     SkinFrame(TargetFrame, target, tint)
     SkinFrame(FocusFrame, focus, tint)
@@ -1368,169 +1393,212 @@ function GEN:OnEnable()
         for i = 1, MAX_BOSS_FRAMES or 5 do SkinFrame(_G["Boss" .. i .. "TargetFrame"], target) end
     end
     if next(powerBars) then ns.Hook("UnitFrameManaBar_UpdateType", UpdatePowerBar) end
+end
+
+-- Personal Resource Display bars (loaded on demand).
+local function SkinPRDBars(prd)
+    local function SkinPRD()
+        local frame = PersonalResourceDisplayFrame
+        if not frame then return end
+        local container = frame.HealthBarsContainer
+        local health = container and (container.healthBar or container.HealthBar)
+        SetTexture(health, prd)
+        KeepTexture(health, prd)
+        SetTexture(frame.PowerBar, prd)
+        KeepTexture(frame.PowerBar, prd)
+        KeepFeedback(frame.PowerBar, prd)
+        -- Alternate power bar, set up again on spec changes.
+        local function SkinAlt(f) TrackTexture(f.AlternatePowerBar, prd) end
+        SkinAlt(frame)
+        ns.Hook(frame, "SetupAlternatePowerBar", SkinAlt)
+    end
+    if PersonalResourceDisplayFrame then
+        SkinPRD()
+    else
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", function() ns.Safe(SkinPRD) end)
+    end
+end
+
+-- Reputation panel. On WoW Forever its bars are not StatusBars: only a
+-- texture file can replace their fill.
+local function SkinPanelBars(interface)
+    local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
+    if not (scrollBox and ScrollUtil) then return end
+    local file = ns.InterfaceBarTexture()
+    ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
+        local content = entry.Content or entry
+        local bar = content.ReputationBar or entry.ReputationBar
+        if bar and bar.SetStatusBarTexture then
+            TrackTexture(bar, interface, 2)
+        elseif file then
+            ns.Safe(TrackFillTexture, bar, file)
+        end
+    end), GEN, true)
+end
+
+-- Breath, fatigue and feign death bars.
+local function SkinMirrorBars()
+    ns.RegisterEvent(mirrorEvents, "MIRROR_TIMER_START")
+    SkinMirrorTimers()
+end
+
+-- Achievement window and criteria bars (children walked as varargs).
+-- Their texts sit a bit high on the flat texture: moved down once.
+local ACHIEVEMENT_TEXT_OFFSET = 1
+local function SkinAchievementBars(interface)
+    local loweredTexts = {}
+    local function LowerText(region)
+        if loweredTexts[region] or region:GetObjectType() ~= "FontString" then return end
+        loweredTexts[region] = true
+        for i = 1, region:GetNumPoints() do
+            local point, relative, relativePoint, x, y = region:GetPoint(i)
+            region:SetPoint(point, relative, relativePoint, x, (y or 0) - ACHIEVEMENT_TEXT_OFFSET)
+        end
+    end
+    local function TrackAchievementBar(bar)
+        TrackTexture(bar, interface, 2)
+        ns.WalkRegions(bar, 0, LowerText)
+    end
+    local Scan
+    local function ScanChildren(...)
+        for i = 1, select("#", ...) do
+            local child = select(i, ...)
+            if child:IsObjectType("StatusBar") then TrackAchievementBar(child) end
+            Scan(child)
+        end
+    end
+    function Scan(frame) ScanChildren(frame:GetChildren()) end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_AchievementUI", function()
+        AchievementFrame:HookScript("OnShow", Scan)
+        ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
+            local bars = objectives.progressBars
+            if not bars then return end
+            for _, bar in pairs(bars) do
+                if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
+                    TrackAchievementBar(bar)
+                end
+            end
+        end)
+        if AchievementFrame:IsShown() then Scan(AchievementFrame) end
+    end)
+end
+
+-- Quest Tracker progress and timer bars.
+local TRACKER_MODULES = {
+    "ScenarioObjectiveTracker", "UIWidgetObjectiveTracker", "CampaignQuestObjectiveTracker",
+    "QuestObjectiveTracker", "AdventureObjectiveTracker", "AchievementObjectiveTracker",
+    "MonthlyActivitiesObjectiveTracker", "InitiativeTasksObjectiveTracker",
+    "ProfessionsRecipeTracker", "BonusObjectiveTracker", "WorldQuestObjectiveTracker",
+}
+
+local function SkinTrackerBars(interface)
+    local function TrackPool(pool)
+        if not pool then return end
+        for _, bar in pairs(pool) do
+            if type(bar) == "table" then TrackTexture(bar.Bar or bar, interface) end
+        end
+    end
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
+        for _, name in ipairs(TRACKER_MODULES) do
+            local module = _G[name]
+            if module then
+                TrackPool(module.usedProgressBars)
+                TrackPool(module.usedTimerBars)
+                ns.Hook(module, "GetProgressBar", function(m) TrackPool(m.usedProgressBars) end)
+                ns.Hook(module, "GetTimerBar",    function(m) TrackPool(m.usedTimerBars) end)
+            end
+        end
+    end)
+end
+
+-- Tooltip progress and status bars.
+local function SkinTooltipBars(interface)
+    local function TrackTooltipBar(bar) TrackTexture(bar.Bar or bar, interface, 1) end
+    local function TrackTooltipPool(tooltip, poolKey)
+        if not tooltip or tooltip:IsForbidden() then return end
+        ns.ForEachActive(tooltip[poolKey], TrackTooltipBar)
+    end
+    ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
+    ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
+end
+
+-- Experience, reputation and honor bars.
+local function SkinTrackingBars(interface)
+    local containers = {}
+    for _, name in ipairs({ "MainStatusTrackingBarContainer", "SecondaryStatusTrackingBarContainer" }) do
+        containers[#containers + 1] = _G[name]
+    end
+    local function ScanTracking()
+        for _, container in ipairs(containers) do
+            local bars = container.bars
+            if bars then
+                for _, bar in pairs(bars) do
+                    if type(bar) == "table" then TrackTexture(bar.StatusBar, interface) end
+                end
+            end
+        end
+    end
+    ScanTracking()
+    for _, container in ipairs(containers) do
+        ns.Hook(container, "UpdateBarsShown", ScanTracking)
+    end
+end
+
+-- Party frames (classic and compact).
+local function SkinGroupFrames(group)
+    for i = 1, 4 do
+        local frame = PartyFrame and PartyFrame["MemberFrame" .. i]
+        if frame then SkinFrame(frame, group) end
+    end
+    local function SkinCompact(frame)
+        if frame:IsForbidden() then return end
+        SetTexture(frame.healthBar, group)
+        SetTexture(frame.powerBar, group)
+    end
+    ns.ForEachCompactFrame(SkinCompact)
+    ns.Hook("DefaultCompactUnitFrameSetup", SkinCompact)
+    ns.Hook("DefaultCompactMiniFrameSetup", SkinCompact)
+end
+
+--------------------------------------------------------------------------------
+-- Module API
+--------------------------------------------------------------------------------
+local Safe = ns.Safe
+
+function GEN:OnEnable()
+    if ns.textStyle then Safe(StyleBlizzardTexts) end
+    if self.db.refinedBorders then Safe(SetupRefinedBorders) end
+
+    local player, target, focus = TexturePath("texPlayerPet"), TexturePath("texTargetBoss"), TexturePath("texFocus")
+    local group, interface = TexturePath("texGroup"), TexturePath("texInterface")
+    widgetTexture = interface
+    Safe(SkinUnitFrames, player, target, focus)
 
     castTexture = TexturePath("texCastBar")
-    if castTexture then ns.ForEachCastBar(SkinCastBar) end
+    if castTexture then Safe(ns.ForEachCastBar, SkinCastBar) end
 
     local prd = TexturePath("texCdmPRD")
-    if prd then
-        local function SkinPRD()
-            local frame = PersonalResourceDisplayFrame
-            if not frame then return end
-            local container = frame.HealthBarsContainer
-            local health = container and (container.healthBar or container.HealthBar)
-            SetTexture(health, prd)
-            KeepTexture(health, prd)
-            SetTexture(frame.PowerBar, prd)
-            KeepTexture(frame.PowerBar, prd)
-            KeepFeedback(frame.PowerBar, prd)
-            -- Alternate power bar, set up again on spec changes.
-            local function SkinAlt(f) TrackTexture(f.AlternatePowerBar, prd) end
-            SkinAlt(frame)
-            ns.Hook(frame, "SetupAlternatePowerBar", SkinAlt)
-        end
-        if PersonalResourceDisplayFrame then
-            SkinPRD()
-        else
-            EventUtil.ContinueOnAddOnLoaded("Blizzard_PersonalResourceDisplay", SkinPRD)
-        end
-    end
+    if prd then Safe(SkinPRDBars, prd) end
 
-    -- Reputation panel.
-    local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
-    if interface and scrollBox and ScrollUtil then
-        ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
-            local content = entry.Content or entry
-            TrackTexture(content.ReputationBar or entry.ReputationBar, interface, 2)
-        end), self, true)
-    end
-
-    -- Breath, fatigue and feign death bars.
     if interface then
-        mirrorEvents:RegisterEvent("MIRROR_TIMER_START")
-        SkinMirrorTimers()
-    end
-
-    -- Achievement window and criteria bars (children walked as varargs).
-    -- Their texts sit a bit high on the flat texture: moved down once.
-    if interface then
-        local ACHIEVEMENT_TEXT_OFFSET = 1
-        local loweredTexts = {}
-        local function LowerText(region)
-            if loweredTexts[region] or region:GetObjectType() ~= "FontString" then return end
-            loweredTexts[region] = true
-            for i = 1, region:GetNumPoints() do
-                local point, relative, relativePoint, x, y = region:GetPoint(i)
-                region:SetPoint(point, relative, relativePoint, x, (y or 0) - ACHIEVEMENT_TEXT_OFFSET)
-            end
-        end
-        local function TrackAchievementBar(bar)
-            TrackTexture(bar, interface, 2)
-            ns.WalkRegions(bar, 0, LowerText)
-        end
-        local Scan
-        local function ScanChildren(...)
-            for i = 1, select("#", ...) do
-                local child = select(i, ...)
-                if child:IsObjectType("StatusBar") then TrackAchievementBar(child) end
-                Scan(child)
-            end
-        end
-        function Scan(frame) ScanChildren(frame:GetChildren()) end
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_AchievementUI", function()
-            AchievementFrame:HookScript("OnShow", Scan)
-            ns.Hook(AchievementFrameAchievementsObjectives, "GetProgressBar", function(objectives)
-                local bars = objectives.progressBars
-                if not bars then return end
-                for _, bar in pairs(bars) do
-                    if type(bar) == "table" and bar.IsObjectType and bar:IsObjectType("StatusBar") then
-                        TrackAchievementBar(bar)
-                    end
-                end
-            end)
-            if AchievementFrame:IsShown() then Scan(AchievementFrame) end
-        end)
-    end
-
-    -- Quest Tracker progress and timer bars.
-    if interface then
-        local function TrackPool(pool)
-            if not pool then return end
-            for _, bar in pairs(pool) do
-                if type(bar) == "table" then TrackTexture(bar.Bar or bar, interface) end
-            end
-        end
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_ObjectiveTracker", function()
-            for _, name in ipairs({
-                "ScenarioObjectiveTracker", "UIWidgetObjectiveTracker", "CampaignQuestObjectiveTracker",
-                "QuestObjectiveTracker", "AdventureObjectiveTracker", "AchievementObjectiveTracker",
-                "MonthlyActivitiesObjectiveTracker", "InitiativeTasksObjectiveTracker",
-                "ProfessionsRecipeTracker", "BonusObjectiveTracker", "WorldQuestObjectiveTracker",
-            }) do
-                local module = _G[name]
-                if module then
-                    TrackPool(module.usedProgressBars)
-                    TrackPool(module.usedTimerBars)
-                    ns.Hook(module, "GetProgressBar", function(m) TrackPool(m.usedProgressBars) end)
-                    ns.Hook(module, "GetTimerBar",    function(m) TrackPool(m.usedTimerBars) end)
-                end
-            end
-        end)
-    end
-
-    -- Tooltip progress and status bars.
-    if interface then
-        local function TrackTooltipBar(bar) TrackTexture(bar.Bar or bar, interface, 1) end
-        local function TrackTooltipPool(tooltip, poolKey)
-            ns.ForEachActive(tooltip and tooltip[poolKey], TrackTooltipBar)
-        end
-        ns.Hook("GameTooltip_ShowProgressBar", function(tooltip) TrackTooltipPool(tooltip, "progressBarPool") end)
-        ns.Hook("GameTooltip_ShowStatusBar",   function(tooltip) TrackTooltipPool(tooltip, "statusBarPool") end)
+        Safe(SkinPanelBars, interface)
+        Safe(SkinMirrorBars)
+        Safe(SkinAchievementBars, interface)
+        Safe(SkinTrackerBars, interface)
+        Safe(SkinTooltipBars, interface)
     end
 
     -- Cooldown Manager bars.
     if prd then
-        ns.OnCooldownItem(function(item) TrackTexture(item.Bar, prd) end)
+        Safe(ns.OnCooldownItem, function(item) TrackTexture(item.Bar, prd) end)
     end
 
     -- Damage Meter bars.
     local damageMeter = TexturePath("texDamageMeter")
     if damageMeter then
-        ns.OnDamageMeterEntry(function(entry) TrackTexture(entry.StatusBar, damageMeter) end)
+        Safe(ns.OnDamageMeterEntry, function(entry) TrackTexture(entry.StatusBar, damageMeter) end)
     end
 
-    -- Experience, reputation and honor bars.
-    if interface then
-        local containers = { MainStatusTrackingBarContainer, SecondaryStatusTrackingBarContainer }
-        local function ScanTracking()
-            for _, container in ipairs(containers) do
-                local bars = container.bars
-                if bars then
-                    for _, bar in pairs(bars) do
-                        if type(bar) == "table" then TrackTexture(bar.StatusBar, interface) end
-                    end
-                end
-            end
-        end
-        ScanTracking()
-        for _, container in ipairs(containers) do
-            ns.Hook(container, "UpdateBarsShown", ScanTracking)
-        end
-    end
-
-    if group then
-        -- Party frames (classic and compact).
-        for i = 1, 4 do
-            local frame = PartyFrame and PartyFrame["MemberFrame" .. i]
-            if frame then SkinFrame(frame, group) end
-        end
-        local function SkinCompact(frame)
-            if frame:IsForbidden() then return end
-            SetTexture(frame.healthBar, group)
-            SetTexture(frame.powerBar, group)
-        end
-        ns.ForEachCompactFrame(SkinCompact)
-        ns.Hook("DefaultCompactUnitFrameSetup", SkinCompact)
-        ns.Hook("DefaultCompactMiniFrameSetup", SkinCompact)
-    end
+    if interface then Safe(SkinTrackingBars, interface) end
+    if group then Safe(SkinGroupFrames, group) end
 end
