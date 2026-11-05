@@ -33,6 +33,7 @@
 ### 👤 Profile
 
 * BlizzUI - Added the support for WoW Forever [#124]
+* Platynator - Added the support for WoW Forever [#124]
 
 ### 📏 Various
 
