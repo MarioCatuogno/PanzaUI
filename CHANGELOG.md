@@ -1,5 +1,7 @@
 ## 2.5-RELEASE
 
+This update brings support to WoW Forever and fixes some small bugs from previous version.
+
 ### 🛠️ Core
 
 * Action Bars - Added the support for WoW Forever [#124]
