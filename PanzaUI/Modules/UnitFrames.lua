@@ -557,15 +557,19 @@ local function SetupPortraits(db)
 end
 
 --------------------------------------------------------------------------------
--- WoW Forever: the rare and elite Target frames (eg. UI-HUD-UnitFrame-Target-Rare-
--- PortraitOn) leave a gap between the health bar and the portrait, also with
--- Blizzard's own texture. The bar is widened toward the portrait while that
--- frame art is shown, and restored with the normal one.
+-- WoW Forever: the rare and elite Target frames (eg. UI-HUD-UnitFrame-Target-
+-- Rare-PortraitOn) leave a gap between the health bar and the portrait, also
+-- with Blizzard's own texture, and a taller bar slot. The health bar and its
+-- mask (both anchored by their top left corner, with a size of their own) are
+-- made wider toward the portrait and taller to fill the slot while that frame
+-- art is shown, and get Blizzard's size back with the normal one. Checked on
+-- the next frame, after Blizzard's own update.
 --------------------------------------------------------------------------------
-local ELITE_BAR_EXTRA = ns.ForFlavor(0, 6) -- units added on the portrait side
+-- Units added: width on the portrait side, height, and how much of it goes
+-- above the bar (measured on a screenshot of the rare frame).
+local ELITE_BAR = ns.ForFlavor(nil, { width = 5, height = 7, up = 4 })
 local ELITE_WORDS = { "Rare", "Elite" }    -- in the frame art atlas name
-local barLayout = {} -- health container -> { width, points }
-local pendingBars = {}
+local baseLayout = {} -- region -> Blizzard's width, height and first anchor
 local barEvents = CreateFrame("Frame")
 
 local function IsEliteArt(atlas)
@@ -576,56 +580,51 @@ local function IsEliteArt(atlas)
     return false
 end
 
--- Right-side anchors move by `extra`; with no left-side anchor the width
--- grows too, so the left edge stays where it is.
-local function FitEliteBar(frame)
-    local container = frame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer
-    local art = frame.TargetFrameContainer and frame.TargetFrameContainer.FrameTexture
-    if not (container and art) then return end
-    if InCombatLockdown() and container:IsProtected() then
-        pendingBars[frame] = true
+local function Grow(region, grow)
+    if not region then return end
+    local base = baseLayout[region]
+    if not base then
+        local width, height = region:GetSize()
+        local point, relative, relativePoint, x, y = region:GetPoint(1)
+        if IsSecret(width) or IsSecret(height) or IsSecret(x) or IsSecret(y) or not point or width <= 0 then return end
+        base = { width, height, point, relative, relativePoint, x, y }
+        baseLayout[region] = base
+    end
+    local w, h, up = 0, 0, 0
+    if grow then w, h, up = grow.width, grow.height, grow.up end
+    region:SetSize(base[1] + w, base[2] + h)
+    region:SetPoint(base[3], base[4], base[5], base[6], base[7] + up)
+end
+
+local function FitEliteBar()
+    local container = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer
+    local art = TargetFrame.TargetFrameContainer.FrameTexture
+    local bar = container and container.HealthBar
+    if not (bar and art) then return end
+    if InCombatLockdown() and bar:IsProtected() then
         barEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
-    local layout = barLayout[container]
-    if not layout then
-        local width = container:GetWidth()
-        if IsSecret(width) then return end
-        layout = { width = width, points = {} }
-        for i = 1, container:GetNumPoints() do
-            local point, relative, relativePoint, x, y = container:GetPoint(i)
-            if IsSecret(x) or IsSecret(y) then return end
-            layout.points[i] = { point, relative, relativePoint, x, y }
-        end
-        barLayout[container] = layout
-    end
-    local extra = IsEliteArt(art:GetAtlas()) and ELITE_BAR_EXTRA or 0
-    local hasLeft = false
-    container:ClearAllPoints()
-    for _, p in ipairs(layout.points) do
-        local isRight = p[1]:find("RIGHT", 1, true) ~= nil
-        if p[1]:find("LEFT", 1, true) then hasLeft = true end
-        container:SetPoint(p[1], p[2], p[3], p[4] + (isRight and extra or 0), p[5])
-    end
-    if not hasLeft then container:SetWidth(layout.width + extra) end
+    local grow = IsEliteArt(art:GetAtlas()) and ELITE_BAR or nil
+    Grow(bar, grow)
+    Grow(container.HealthBarMask, grow)
 end
 
-barEvents:SetScript("OnEvent", function(self)
-    self:UnregisterAllEvents()
-    for frame in pairs(pendingBars) do
-        pendingBars[frame] = nil
-        FitEliteBar(frame)
-    end
+local function QueueEliteBar() ns.Defer(FitEliteBar) end
+
+barEvents:SetScript("OnEvent", function(self, event)
+    if event == "PLAYER_REGEN_ENABLED" then self:UnregisterEvent(event) end
+    QueueEliteBar()
 end)
 
 -- Target Refined style, WoW Forever only (the Focus frame changes its own
 -- layout when it is made smaller, so it is left as Blizzard draws it).
 local function SetupEliteBars(db)
-    local frame = TargetFrame
-    local art = frame and frame.TargetFrameContainer and frame.TargetFrameContainer.FrameTexture
-    if ELITE_BAR_EXTRA == 0 or not (art and db.targetStyle) then return end
-    hooksecurefunc(art, "SetAtlas", function() FitEliteBar(frame) end)
-    FitEliteBar(frame)
+    local art = TargetFrame and TargetFrame.TargetFrameContainer and TargetFrame.TargetFrameContainer.FrameTexture
+    if not (ELITE_BAR and art and db.targetStyle) then return end
+    hooksecurefunc(art, "SetAtlas", QueueEliteBar)
+    barEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+    QueueEliteBar()
 end
 
 --------------------------------------------------------------------------------
