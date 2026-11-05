@@ -557,6 +557,78 @@ local function SetupPortraits(db)
 end
 
 --------------------------------------------------------------------------------
+-- WoW Forever: the rare and elite Target frames (eg. UI-HUD-UnitFrame-Target-Rare-
+-- PortraitOn) leave a gap between the health bar and the portrait, also with
+-- Blizzard's own texture. The bar is widened toward the portrait while that
+-- frame art is shown, and restored with the normal one.
+--------------------------------------------------------------------------------
+local ELITE_BAR_EXTRA = ns.ForFlavor(0, 6) -- units added on the portrait side
+local ELITE_WORDS = { "Rare", "Elite" }    -- in the frame art atlas name
+local barLayout = {} -- health container -> { width, points }
+local pendingBars = {}
+local barEvents = CreateFrame("Frame")
+
+local function IsEliteArt(atlas)
+    if IsSecret(atlas) or type(atlas) ~= "string" then return false end
+    for _, word in ipairs(ELITE_WORDS) do
+        if atlas:find(word, 1, true) then return true end
+    end
+    return false
+end
+
+-- Right-side anchors move by `extra`; with no left-side anchor the width
+-- grows too, so the left edge stays where it is.
+local function FitEliteBar(frame)
+    local container = frame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer
+    local art = frame.TargetFrameContainer and frame.TargetFrameContainer.FrameTexture
+    if not (container and art) then return end
+    if InCombatLockdown() and container:IsProtected() then
+        pendingBars[frame] = true
+        barEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    local layout = barLayout[container]
+    if not layout then
+        local width = container:GetWidth()
+        if IsSecret(width) then return end
+        layout = { width = width, points = {} }
+        for i = 1, container:GetNumPoints() do
+            local point, relative, relativePoint, x, y = container:GetPoint(i)
+            if IsSecret(x) or IsSecret(y) then return end
+            layout.points[i] = { point, relative, relativePoint, x, y }
+        end
+        barLayout[container] = layout
+    end
+    local extra = IsEliteArt(art:GetAtlas()) and ELITE_BAR_EXTRA or 0
+    local hasLeft = false
+    container:ClearAllPoints()
+    for _, p in ipairs(layout.points) do
+        local isRight = p[1]:find("RIGHT", 1, true) ~= nil
+        if p[1]:find("LEFT", 1, true) then hasLeft = true end
+        container:SetPoint(p[1], p[2], p[3], p[4] + (isRight and extra or 0), p[5])
+    end
+    if not hasLeft then container:SetWidth(layout.width + extra) end
+end
+
+barEvents:SetScript("OnEvent", function(self)
+    self:UnregisterAllEvents()
+    for frame in pairs(pendingBars) do
+        pendingBars[frame] = nil
+        FitEliteBar(frame)
+    end
+end)
+
+-- Target Refined style, WoW Forever only (the Focus frame changes its own
+-- layout when it is made smaller, so it is left as Blizzard draws it).
+local function SetupEliteBars(db)
+    local frame = TargetFrame
+    local art = frame and frame.TargetFrameContainer and frame.TargetFrameContainer.FrameTexture
+    if ELITE_BAR_EXTRA == 0 or not (art and db.targetStyle) then return end
+    hooksecurefunc(art, "SetAtlas", function() FitEliteBar(frame) end)
+    FitEliteBar(frame)
+end
+
+--------------------------------------------------------------------------------
 -- Focus debuffs: rounded icon borders.
 --------------------------------------------------------------------------------
 local styledAuras = {}
@@ -622,6 +694,7 @@ function UF:OnEnable()
     ns.Safe(SetupPet, db)
     ns.Safe(SetupPortraits, db)
     ns.Safe(SetupClassIcons, db)
+    ns.Safe(SetupEliteBars, db)
     ns.Safe(SetupClassColors)
 end
 
