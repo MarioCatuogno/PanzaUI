@@ -6,6 +6,7 @@
 
 ### 👤 Profile
 
+* BlizzUI - Enabled Totem Bar frame
 * BlizzUI - Fixed Quest Tracker position
 * Platynator - Fixed health bar texture
 
