@@ -71,7 +71,7 @@ local function StyleAuraFrame(frame)
     if not ns.StyleIcon(frame.Icon, frame) then return end
     styledAuras[frame] = true
     ns.RoundSwipe(frame.Cooldown)
-    frame.Border:SetAlpha(0)
+    if not frame.Border:IsForbidden() then frame.Border:SetAlpha(0) end
 end
 
 -- The button being built is the last one of its container.
@@ -143,6 +143,31 @@ local function HookMarkers(display)
 end
 
 --------------------------------------------------------------------------------
+-- WoW Forever: Platynator keeps each aura list in a widget of the display
+-- (eg. DebuffDisplay > holder.frames), with no AurasManager, and its buttons
+-- aren't caught by the CreateFrame hook: the lists are checked when a
+-- nameplate shows and when its auras change.
+--------------------------------------------------------------------------------
+local FOREVER_AURAS = ns.ForFlavor(false, true)
+
+local function StyleAuraList(list)
+    for _, frame in ipairs(list) do
+        if not frame:IsForbidden() then StyleAuraFrame(frame) end
+    end
+end
+
+local function StyleWidgetAuras(display)
+    for _, widget in ipairs(display.widgets) do
+        if type(widget) == "table" and widget.details and widget.GetChildren and not widget:IsForbidden() then
+            for _, holder in ipairs({ widget:GetChildren() }) do
+                local list = not holder:IsForbidden() and holder.frames
+                if type(list) == "table" then StyleAuraList(list) end
+            end
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Displays: found among the nameplate children, once each.
 --------------------------------------------------------------------------------
 local pendingUnits, knownDisplays = {}, {}
@@ -153,6 +178,9 @@ local function RegisterDisplays(...)
         if not knownDisplays[display] and not display:IsForbidden() and display.AurasManager then
             knownDisplays[display] = true
             StyleExistingAuras(display.AurasManager)
+        elseif FOREVER_AURAS and not display:IsForbidden() and type(display.widgets) == "table" then
+            knownDisplays[display] = true
+            StyleWidgetAuras(display)
         end
         if knownDisplays[display] then HookMarkers(display) end
     end
@@ -167,8 +195,9 @@ local function UpdatePending()
 end
 
 local events = CreateFrame("Frame")
-events:SetScript("OnEvent", function(_, _, unit)
+events:SetScript("OnEvent", function(_, event, unit)
     if IsSecret(unit) or not unit then return end
+    if event == "UNIT_AURA" and not unit:find("^nameplate") then return end
     pendingUnits[unit] = true
     ns.Defer(UpdatePending)
 end)
@@ -176,6 +205,7 @@ end)
 local function SetupPlatynator()
     hooksecurefunc("CreateFrame", OnCreateFrame)
     events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    if FOREVER_AURAS then ns.RegisterEvent(events, "UNIT_AURA") end
     for _, plate in ipairs(C_NamePlate.GetNamePlates()) do
         if not plate:IsForbidden() then RegisterDisplays(plate:GetChildren()) end
     end

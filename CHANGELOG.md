@@ -6,6 +6,7 @@ This update adds some new modules to Blizzard default profile and fixes some bug
 
 * Combat - Fixed the Refined style of the Damage Meter not applied on WoW Forever
 * Unit Frames - Fixed the health bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
+* Various - Fixed the Platynator aura icons not styled by the Refined style on WoW Forever
 
 ### 👤 Profile
 
