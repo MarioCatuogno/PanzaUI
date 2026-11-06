@@ -308,6 +308,18 @@ local function StyleTexts(name, level, health, power)
     ns.StyleBarText(power)
 end
 
+-- WoW Forever: the Player power text sits higher than on Retail (measured:
+-- 3.5 px above the bar center at 2.3 px per unit), so it is moved down once.
+local POWER_TEXT_DROP = ns.ForFlavor(0, 1.5)
+
+local function LowerBarText(bar, drop)
+    local text = bar and bar.TextString
+    if not text or drop == 0 then return end
+    local point, relative, relativePoint, x, y = text:GetPoint(1)
+    if not point or IsSecret(x) or IsSecret(y) then return end
+    text:SetPoint(point, relative, relativePoint, x, y - drop)
+end
+
 --------------------------------------------------------------------------------
 -- Player
 --------------------------------------------------------------------------------
@@ -352,6 +364,7 @@ local function SetupPlayer(db)
 
         ns.PercentText(health, false)
         ns.PercentText(power, true)
+        LowerBarText(power, POWER_TEXT_DROP)
     end
 
     if ns.classColors then classColorBars[health] = true end
