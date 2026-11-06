@@ -1,5 +1,7 @@
 ## 2.6-RELEASE
 
+This update adds some new modules to Blizzard default profile and fixes some bugs.
+
 ### 🛠️ Core
 
 * Unit Frames - Fixed the health bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
@@ -12,6 +14,10 @@
 * BlizzUI - Enabled Totem Bar frame
 * BlizzUI - Fixed Quest Tracker position
 * Platynator - Fixed health bar texture
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
 
 ## 2.5-RELEASE
 
