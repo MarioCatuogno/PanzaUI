@@ -477,18 +477,29 @@ local function SetupDamageMeter()
     end)
 end
 
+-- Retail: set up when Blizzard_DamageMeter loads. WoW Forever: its Damage
+-- Meter doesn't come with an addon of that name, so it is set up right away
+-- when it already exists.
+local function WhenDamageMeterLoads()
+    if DamageMeter and not ns.IsFlavor("retail") then
+        SetupDamageMeter()
+    else
+        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
+    end
+end
+
 -- func(entry): entry.Icon.Icon is the icon, entry.StatusBar the bar.
 function ns.OnDamageMeterEntry(func)
     dmFuncs[#dmFuncs + 1] = func
     for entry in pairs(dmEntries) do func(entry) end
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
+    WhenDamageMeterLoads()
 end
 
 -- func(window): session and spell breakdown windows.
 function ns.OnDamageMeterWindow(func)
     dmWindowFuncs[#dmWindowFuncs + 1] = func
     for window in pairs(dmWindows) do func(window) end
-    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
+    WhenDamageMeterLoads()
 end
 
 --------------------------------------------------------------------------------
