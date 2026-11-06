@@ -19,6 +19,7 @@ This update adds some new modules to Blizzard default profile and fixes some bug
 ### 📏 Various
 
 * Updated documentation to the latest UI version
+* Updated TOC file to latest version of WoW Retail and WoW Forever
 
 ## 2.5-RELEASE
 
