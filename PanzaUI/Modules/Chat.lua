@@ -17,7 +17,7 @@ local Chat = ns:RegisterModule("Chat", {
     options = {
         { key = "style", label = "Refined style", reload = true,
           tooltip = "Polish the look of the chat windows.",
-          bullets = { "Short channel names", "Clickable web links" } },
+          bullets = { "Clickable web links" } },
         { key = "timestamps", label = "Timestamps",
           tooltip = "Show the time before each message." },
         { key = "hideCombatLog", label = "Hide Combat Log tab",
@@ -167,33 +167,6 @@ local function StripFlag(_, _, msg, author, lang, channel, target, flag, ...)
 end
 
 --------------------------------------------------------------------------------
--- Short channel names: built-in channels as initials ("2. T"), custom ones
--- without the zone suffix. Each name is built once and cached.
---------------------------------------------------------------------------------
-local shortNames = {}
-
-local function ShortName(channel, zoneChannel)
-    local short = shortNames[channel]
-    if short then return short end
-    local number, name = channel:match("^(%d+)%.%s*(.-)$")
-    if not number then return channel end
-    name = name:gsub("%s+%-%s+.*$", "") -- zone suffix
-    if zoneChannel then
-        local initials = name:gsub("(%a)[%l']*%s*", function(c) return c:upper() end)
-        name = initials ~= "" and initials or name
-    end
-    short = number .. ". " .. name
-    shortNames[channel] = short
-    return short
-end
-
-local function ShortenChannel(_, _, msg, author, lang, channel, target, flag, zoneID, ...)
-    if type(channel) ~= "string" or IsSecret(channel) or IsSecret(zoneID) then return false end
-    local zoneChannel = type(zoneID) == "number" and zoneID > 0
-    return false, msg, author, lang, ShortName(channel, zoneChannel), target, flag, zoneID, ...
-end
-
---------------------------------------------------------------------------------
 -- Clickable links: web addresses in player messages open a box to copy them
 -- (messages with other links are left alone).
 --------------------------------------------------------------------------------
@@ -247,7 +220,6 @@ local function SetupStyleFilters()
         AddFilter(event, LinkURLs)
     end
     AddFilter("CHAT_MSG_BN_WHISPER", LinkURLs)
-    AddFilter("CHAT_MSG_CHANNEL", ShortenChannel)
     if EventRegistry then
         EventRegistry:RegisterCallback("SetItemRef", function(_, link, text) OnLinkClick(link, text) end, ns)
     end
@@ -365,7 +337,6 @@ end
 
 local function HideNotices(_, _, msg) return Hiding(msg) and HasAny(msg, NOTICES) end
 local function HideOthersLoot(_, _, msg) return Hiding(msg) and HasAny(msg, OTHERS_LOOT) end
-local function HideChannelNotice() local db = Chat.db return db and db.hideClutter or false end
 
 -- The same notice in the middle of the screen (errors frame or action
 -- status), removed as soon as it is added.
@@ -393,9 +364,6 @@ if AddFilter then
     AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
     AddFilter("CHAT_MSG_SYSTEM", HideNotices)
     AddFilter("CHAT_MSG_LOOT", HideOthersLoot)
-    for _, event in ipairs({ "CHAT_MSG_CHANNEL_NOTICE", "CHAT_MSG_CHANNEL_NOTICE_USER", "CHAT_MSG_CHANNEL_JOIN", "CHAT_MSG_CHANNEL_LEAVE" }) do
-        AddFilter(event, HideChannelNotice)
-    end
 end
 
 --------------------------------------------------------------------------------

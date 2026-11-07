@@ -13,9 +13,12 @@ About **1 MB** of memory and about **0.1%** CPU on average. PanzaUI hooks the Bl
 ### Built for Midnight
 Midnight limits what addons can read and change in combat. PanzaUI was written around those limits from the start, so it does not break or taint the UI.
 
+![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
+
 **WoW Forever**: PanzaUI supports WoW Forever too, with the same modules and options. The few features tied to Retail content are hidden there: the Skyriding visibility of the bars, the Mythic+ rating and keystone, the Auction House expansion filter and the `/rd` and `/pl` shortcuts. Forever support is new: if something doesn't look right, please [open an issue](https://github.com/MarioCatuogno/PanzaUI/issues).
 
-![PanzaUI - Combat](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_dummy.jpeg)
+![PanzaUI - Forever 01](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_forever_01.jpeg)
+![PanzaUI - Forever 02](https://raw.githubusercontent.com/MarioCatuogno/PanzaUI/main/Images/panzaui_forever_02.jpeg)
 
 ## 🧩 Features
 
@@ -41,7 +44,7 @@ Every feature has its own toggle.
 - Auto-repair and auto-sell of junk items at merchants
 
 ### Chat
-- Cleaner chat windows, timestamps and short channel names
+- Cleaner chat windows and timestamps
 - Clickable web links, with a box to copy them
 - No more minor messages: guild message of the day, loot of other players, online/offline and join/leave notices, group settings, spells learned when changing specialization, and more
 

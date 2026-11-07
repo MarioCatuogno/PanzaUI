@@ -308,6 +308,18 @@ local function StyleTexts(name, level, health, power)
     ns.StyleBarText(power)
 end
 
+-- WoW Forever: the Player power text sits higher than on Retail (measured:
+-- 3.5 px above the bar center at 2.3 px per unit), so it is moved down once.
+local POWER_TEXT_DROP = ns.ForFlavor(0, 1.5)
+
+local function LowerBarText(bar, drop)
+    local text = bar and bar.TextString
+    if not text or drop == 0 then return end
+    local point, relative, relativePoint, x, y = text:GetPoint(1)
+    if not point or IsSecret(x) or IsSecret(y) then return end
+    text:SetPoint(point, relative, relativePoint, x, y - drop)
+end
+
 --------------------------------------------------------------------------------
 -- Player
 --------------------------------------------------------------------------------
@@ -352,6 +364,7 @@ local function SetupPlayer(db)
 
         ns.PercentText(health, false)
         ns.PercentText(power, true)
+        LowerBarText(power, POWER_TEXT_DROP)
     end
 
     if ns.classColors then classColorBars[health] = true end
@@ -557,6 +570,79 @@ local function SetupPortraits(db)
 end
 
 --------------------------------------------------------------------------------
+-- WoW Forever: the rare and elite Target frames (eg. UI-HUD-UnitFrame-Target-
+-- Rare-PortraitOn) leave a gap between the health bar and the portrait, also
+-- with Blizzard's own texture, and a taller bar slot. The health bar and its
+-- mask (both anchored by their top left corner, with a size of their own) are
+-- made wider toward the portrait and taller to fill the slot while that frame
+-- art is shown. Their size and anchor are read right before growing them and
+-- put back with the normal art: the normal frame is never changed otherwise.
+-- Checked on the next frame, after Blizzard's own update.
+--------------------------------------------------------------------------------
+-- Units added: width on the portrait side, height, and how much of it goes
+-- above the bar (measured on a screenshot of the rare frame).
+local ELITE_BAR = ns.ForFlavor(nil, { width = 5, height = 7, up = 4 })
+local ELITE_WORDS = { "Rare", "Elite" }    -- in the frame art atlas name
+local grown = {} -- region -> Blizzard's width, height and first anchor, while grown
+local barEvents = CreateFrame("Frame")
+
+local function IsEliteArt(atlas)
+    if IsSecret(atlas) or type(atlas) ~= "string" then return false end
+    for _, word in ipairs(ELITE_WORDS) do
+        if atlas:find(word, 1, true) then return true end
+    end
+    return false
+end
+
+local function Grow(region, grow)
+    if not region then return end
+    local base = grown[region]
+    if grow and not base then
+        local width, height = region:GetSize()
+        local point, relative, relativePoint, x, y = region:GetPoint(1)
+        if IsSecret(width) or IsSecret(height) or IsSecret(x) or IsSecret(y) or not point or width <= 0 then return end
+        grown[region] = { width, height, point, relative, relativePoint, x, y }
+        region:SetSize(width + grow.width, height + grow.height)
+        region:SetPoint(point, relative, relativePoint, x, y + grow.up)
+    elseif not grow and base then
+        grown[region] = nil
+        region:SetSize(base[1], base[2])
+        region:SetPoint(base[3], base[4], base[5], base[6], base[7])
+    end
+end
+
+local function FitEliteBar()
+    local container = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer
+    local art = TargetFrame.TargetFrameContainer.FrameTexture
+    local bar = container and container.HealthBar
+    if not (bar and art) then return end
+    if InCombatLockdown() and bar:IsProtected() then
+        barEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    local grow = IsEliteArt(art:GetAtlas()) and ELITE_BAR or nil
+    Grow(bar, grow)
+    Grow(container.HealthBarMask, grow)
+end
+
+local function QueueEliteBar() ns.Defer(FitEliteBar) end
+
+barEvents:SetScript("OnEvent", function(self, event)
+    if event == "PLAYER_REGEN_ENABLED" then self:UnregisterEvent(event) end
+    QueueEliteBar()
+end)
+
+-- Target Refined style, WoW Forever only (the Focus frame changes its own
+-- layout when it is made smaller, so it is left as Blizzard draws it).
+local function SetupEliteBars(db)
+    local art = TargetFrame and TargetFrame.TargetFrameContainer and TargetFrame.TargetFrameContainer.FrameTexture
+    if not (ELITE_BAR and art and db.targetStyle) then return end
+    hooksecurefunc(art, "SetAtlas", QueueEliteBar)
+    barEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+    QueueEliteBar()
+end
+
+--------------------------------------------------------------------------------
 -- Focus debuffs: rounded icon borders.
 --------------------------------------------------------------------------------
 local styledAuras = {}
@@ -622,6 +708,7 @@ function UF:OnEnable()
     ns.Safe(SetupPet, db)
     ns.Safe(SetupPortraits, db)
     ns.Safe(SetupClassIcons, db)
+    ns.Safe(SetupEliteBars, db)
     ns.Safe(SetupClassColors)
 end
 

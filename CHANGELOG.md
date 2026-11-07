@@ -1,3 +1,30 @@
+## 2.6-RELEASE
+
+This update adds some new modules to Blizzard default profile and fixes some bugs.
+
+### 🛠️ Core
+
+* Chat - Changed the chat channels back to their full names, and their notices (eg. joining or leaving a channel) are shown again
+* Combat - Fixed the Refined style of the Damage Meter not applied on WoW Forever
+* General - Fixed the texture of the standing bar in the reputation details on WoW Forever
+* Unit Frames - Fixed the health bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
+* Unit Frames - Fixed the position of the power text of the Player frame on WoW Forever, with the Refined style
+* Various - Fixed the Platynator aura icons not styled by the Refined style on WoW Forever
+
+### 👤 Profile
+
+* BigWigs - Added the support for WoW Forever
+* BlizzUI - Enabled Cooldown Manager frame
+* BlizzUI - Enabled Damage Meter frame
+* BlizzUI - Enabled Totem Bar frame
+* BlizzUI - Fixed Quest Tracker position
+* Platynator - Fixed health bar texture
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+* Updated TOC file to latest version of WoW Retail and WoW Forever
+
 ## 2.5-RELEASE
 
 This update brings support to WoW Forever and fixes some small bugs from previous version.

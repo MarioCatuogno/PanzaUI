@@ -1420,11 +1420,16 @@ local function SkinPRDBars(prd)
 end
 
 -- Reputation panel. On WoW Forever its bars are not StatusBars: only a
--- texture file can replace their fill.
+-- texture file can replace their fill. Forever also has the standing bar of
+-- the selected faction (details pane), with the same layout.
 local function SkinPanelBars(interface)
     local scrollBox = ReputationFrame and ReputationFrame.ScrollBox
     if not (scrollBox and ScrollUtil) then return end
     local file = ns.InterfaceBarTexture()
+    local details = ReputationFrame.ReputationDetailFrame
+    if file and details and details.StandingBar and not ns.IsFlavor("retail") then
+        ns.Safe(TrackFillTexture, details.StandingBar, file)
+    end
     ScrollUtil.AddInitializedFrameCallback(scrollBox, ns.ScrollFrameCallback(function(entry)
         local content = entry.Content or entry
         local bar = content.ReputationBar or entry.ReputationBar
