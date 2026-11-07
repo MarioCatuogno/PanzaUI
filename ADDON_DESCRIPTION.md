@@ -41,7 +41,7 @@ Every feature has its own toggle.
 - Auto-repair and auto-sell of junk items at merchants
 
 ### Chat
-- Cleaner chat windows, timestamps and short channel names
+- Cleaner chat windows and timestamps
 - Clickable web links, with a box to copy them
 - No more minor messages: guild message of the day, loot of other players, online/offline and join/leave notices, group settings, spells learned when changing specialization, and more
 
