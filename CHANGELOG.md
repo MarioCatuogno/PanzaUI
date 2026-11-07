@@ -6,6 +6,7 @@ This update adds some new modules to Blizzard default profile and fixes some bug
 
 * Chat - Changed the chat channels back to their full names, and their notices (eg. joining or leaving a channel) are shown again
 * Combat - Fixed the Refined style of the Damage Meter not applied on WoW Forever
+* General - Fixed the texture of the standing bar in the reputation details on WoW Forever
 * Unit Frames - Fixed the health bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
 * Unit Frames - Fixed the position of the power text of the Player frame on WoW Forever, with the Refined style
 * Various - Fixed the Platynator aura icons not styled by the Refined style on WoW Forever
