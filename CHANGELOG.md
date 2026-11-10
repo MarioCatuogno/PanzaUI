@@ -1,3 +1,13 @@
+## 2.7-RELEASE
+
+### 🛠️ Core
+
+### 👤 Profile
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.6-RELEASE
 
 This update adds some new modules to Blizzard default profile and fixes some bugs.
