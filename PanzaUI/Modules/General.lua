@@ -578,12 +578,12 @@ totEvents:SetScript("OnEvent", function() ns.Defer(ColorToTPower) end)
 local function SkinToT(frame, path, unit)
     local tot = frame and path and (frame.totFrame or _G[frame:GetName() .. "ToT"])
     if not tot then return end
-    local health = tot.HealthBar or tot.healthbar or tot.healthBar
+    local health = tot.HealthBar
     if health then
         SetTexture(health, path)
         KeepTexture(health, path)
     end
-    local power = tot.ManaBar or tot.manabar or tot.manaBar
+    local power = tot.ManaBar
     if power then
         KeepToTPower(power, path)
         totPower[#totPower + 1] = power
@@ -980,7 +980,7 @@ local function SetupMountIcons()
     if not journal then return end
     ns.StyleScrollIcons(journal.ScrollBox, MountIcon)
     local info = journal.MountDisplay and journal.MountDisplay.InfoButton
-    local icon = info and (info.Icon or MountJournalIcon)
+    local icon = info and info.Icon
     if icon then ns.StyleIcon(icon, info) end
 end
 
@@ -1115,8 +1115,6 @@ end
 local styledFlyouts = {}
 
 local function IsItemFlyout(frame)
-    local mixin = ProfessionsItemFlyoutMixin
-    if mixin and mixin.Init then return frame.Init == mixin.Init end
     return frame.ScrollBox and frame.NineSlice and frame.HideUnownedCheckbox
 end
 
@@ -1145,7 +1143,6 @@ local function SetupItemFlyout()
         end)
     end
     ns.Hook("OpenProfessionsItemFlyout", OnOpen)
-    ns.Hook("ToggleProfessionsItemFlyout", OnOpen)
 end
 
 -- Dialogs (eg. "Do you want to destroy...?"): Blizzard's frame (BG, drawn
@@ -1205,7 +1202,7 @@ local function HookFramedDialog(name)
 end
 
 local function StyleDialogs()
-    for i = 1, STATICPOPUP_NUMDIALOGS or 4 do
+    for i = 1, 4 do -- StaticPopup1-4
         local dialog = _G["StaticPopup" .. i]
         if dialog then
             StyleDialogBorder(dialog)
@@ -1379,11 +1376,7 @@ end
 -- Green health when not class colored (the Pet frame never is).
 local function SkinUnitFrames(player, target, focus)
     local tint = not ns.classColors
-    if PlayerFrame_GetHealthBar then
-        SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
-    else
-        SkinBars(PlayerFrameHealthBar, PlayerFrameManaBar, player, tint)
-    end
+    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
     SkinBars(PetFrameHealthBar, PetFrameManaBar, player, true)
     SkinFrame(TargetFrame, target, tint)
     SkinFrame(FocusFrame, focus, tint)
@@ -1401,7 +1394,7 @@ local function SkinPRDBars(prd)
         local frame = PersonalResourceDisplayFrame
         if not frame then return end
         local container = frame.HealthBarsContainer
-        local health = container and (container.healthBar or container.HealthBar)
+        local health = container and container.healthBar
         SetTexture(health, prd)
         KeepTexture(health, prd)
         SetTexture(frame.PowerBar, prd)

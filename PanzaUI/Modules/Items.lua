@@ -280,18 +280,8 @@ local function SellJunk()
     ns.Print(("sold %d junk item%s."):format(count, count == 1 and "" or "s"))
 end
 
--- Money with coin icons. The global GetCoinTextureString was removed in
--- 12.1.5: the C_CurrencyInfo version is used, with a plain fallback.
-local COIN = "|TInterface\\MoneyFrame\\UI-%sIcon:0:0:2:0|t"
-local function MoneyText(copper)
-    local api = C_CurrencyInfo and C_CurrencyInfo.GetCoinTextureString or GetCoinTextureString
-    if api then return api(copper) end
-    local gold, silver = floor(copper / 10000), floor(copper / 100) % 100
-    local text = (copper % 100) .. COIN:format("Copper")
-    if silver > 0 or gold > 0 then text = silver .. COIN:format("Silver") .. " " .. text end
-    if gold > 0 then text = (BreakUpLargeNumbers and BreakUpLargeNumbers(gold) or gold) .. COIN:format("Gold") .. " " .. text end
-    return text
-end
+-- Money with coin icons.
+local MoneyText = C_CurrencyInfo.GetCoinTextureString
 
 local function Repair()
     if not CanMerchantRepair() then return end

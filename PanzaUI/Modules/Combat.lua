@@ -162,7 +162,7 @@ end
 local function PRDBars()
     local frame = PersonalResourceDisplayFrame
     local container = frame.HealthBarsContainer
-    return container and (container.healthBar or container.HealthBar), frame.PowerBar, frame.AlternatePowerBar
+    return container and container.healthBar, frame.PowerBar, frame.AlternatePowerBar
 end
 
 -- Text style, before the percentage text.

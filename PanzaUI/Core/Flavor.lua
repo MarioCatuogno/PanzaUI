@@ -12,14 +12,10 @@
 ------------------------------------------------------------------------------]]
 local _, ns = ...
 
--- Forever: Blizzard's project constant when it exists (named "Forever" or
--- "Camelot"), else the interface number (Forever uses 1.x builds).
+-- Forever: Blizzard's project constant (WOW_PROJECT_CAMELOT, defined only
+-- there), else the interface number (Forever uses 1.x builds).
 local function IsForever()
-    local project = WOW_PROJECT_ID
-    for _, name in ipairs({ "WOW_PROJECT_FOREVER", "WOW_PROJECT_CAMELOT" }) do
-        local id = _G[name]
-        if id and project == id and id ~= WOW_PROJECT_MAINLINE then return true end
-    end
+    if WOW_PROJECT_CAMELOT and WOW_PROJECT_ID == WOW_PROJECT_CAMELOT then return true end
     local interface = select(4, GetBuildInfo())
     return type(interface) == "number" and interface < 20000
 end
@@ -44,7 +40,8 @@ function ns.ForFlavor(retail, forever)
 end
 
 -- Import profiles per flavor (Profiles/<Flavor>/*.lua); nil when the running
--- game has none of that kind.
+-- game has none of that kind. The other flavor's profiles are dropped once
+-- the addon is loaded (Core).
 ns.PROFILES = { retail = {}, forever = {} }
 
 function ns.Profile(kind)
