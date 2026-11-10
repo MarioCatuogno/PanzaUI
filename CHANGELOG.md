@@ -2,6 +2,11 @@
 
 ### 🛠️ Core
 
+* Core - Changed the code to use only the game's current functions and frames, removing the leftover fallbacks for older game versions
+* Core - Changed the import profiles to keep in memory only those of the running game version
+* Core - Changed the visibility options to skip the Skyriding checks on WoW Forever
+* Tooltips - Changed the player tooltips to do less work each time they are shown
+
 ### 👤 Profile
 
 ### 📏 Various
