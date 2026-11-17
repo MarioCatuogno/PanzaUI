@@ -12,7 +12,7 @@ This updates applies many fixes and performance improvements.
 
 ### 👤 Profile
 
-* BlizzUI - Fixed Quest Tracker position
+* BlizzUI - Fixed Micro Menu position
 
 ### 📏 Various
 
