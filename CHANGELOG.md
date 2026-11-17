@@ -12,6 +12,8 @@ This updates applies many fixes and performance improvements.
 
 ### 👤 Profile
 
+* BlizzUI - Fixed Quest Tracker position
+
 ### 📏 Various
 
 * Updated documentation to the latest UI version
