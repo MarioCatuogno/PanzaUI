@@ -46,9 +46,9 @@ end
 
 -- Registers an event (a unit event when units are given) only if it exists
 -- in the running game version; returns true when registered.
-local IsEventValid = C_EventUtils and C_EventUtils.IsEventValid
+local IsEventValid = C_EventUtils.IsEventValid
 function ns.RegisterEvent(frame, event, unit1, unit2)
-    if IsEventValid and not IsEventValid(event) then return false end
+    if not IsEventValid(event) then return false end
     if unit1 then
         return (pcall(frame.RegisterUnitEvent, frame, event, unit1, unit2))
     end
@@ -126,7 +126,7 @@ function ns.ForEachCompactFrame(func)
     end
 end
 
--- Midnight: compound units (e.g. targettarget) can be secret in combat.
+-- Midnight: compound units (eg. targettarget) can be secret in combat.
 -- Returns the matching player/party/raid token, or the unit itself.
 local PARTY_UNITS, RAID_UNITS = {}, {}
 for i = 1, 4 do PARTY_UNITS[i] = "party" .. i end
@@ -402,7 +402,6 @@ function ns.StyleScrollIcons(box, GetIcon)
     end), ns, true)
 end
 
-
 --------------------------------------------------------------------------------
 -- ScrollBox frame callback that always receives the frame.
 --------------------------------------------------------------------------------
@@ -477,29 +476,18 @@ local function SetupDamageMeter()
     end)
 end
 
--- Retail: set up when Blizzard_DamageMeter loads. WoW Forever: its Damage
--- Meter doesn't come with an addon of that name, so it is set up right away
--- when it already exists.
-local function WhenDamageMeterLoads()
-    if DamageMeter and not ns.IsFlavor("retail") then
-        SetupDamageMeter()
-    else
-        EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
-    end
-end
-
 -- func(entry): entry.Icon.Icon is the icon, entry.StatusBar the bar.
 function ns.OnDamageMeterEntry(func)
     dmFuncs[#dmFuncs + 1] = func
     for entry in pairs(dmEntries) do func(entry) end
-    WhenDamageMeterLoads()
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
 end
 
 -- func(window): session and spell breakdown windows.
 function ns.OnDamageMeterWindow(func)
     dmWindowFuncs[#dmWindowFuncs + 1] = func
     for window in pairs(dmWindows) do func(window) end
-    WhenDamageMeterLoads()
+    EventUtil.ContinueOnAddOnLoaded("Blizzard_DamageMeter", SetupDamageMeter)
 end
 
 --------------------------------------------------------------------------------
@@ -910,8 +898,11 @@ local function SetForced(kind, on)
     end
 end
 
+-- Skyriding only exists in Retail: never read nor watched elsewhere.
+local HAS_SKYRIDING = ns.IsFlavor("retail")
+
 local function ReadSkyriding()
-    if not (C_PlayerInfo and C_PlayerInfo.GetGlidingInfo) then return false end
+    if not HAS_SKYRIDING then return false end
     local _, canGlide = C_PlayerInfo.GetGlidingInfo()
     return not IsSecret(canGlide) and canGlide and true or false
 end
@@ -931,9 +922,11 @@ local function InitVisibility()
     events:RegisterEvent("ACTIONBAR_HIDEGRID")
     events:RegisterEvent("PLAYER_REGEN_ENABLED")
     events:RegisterEvent("PLAYER_REGEN_DISABLED")
-    events:RegisterEvent("PLAYER_ENTERING_WORLD")
-    events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
-    ns.RegisterEvent(events, "PLAYER_CAN_GLIDE_CHANGED")
+    if HAS_SKYRIDING then
+        events:RegisterEvent("PLAYER_ENTERING_WORLD")
+        events:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+        events:RegisterEvent("PLAYER_CAN_GLIDE_CHANGED")
+    end
     events:SetScript("OnEvent", function(_, event)
         if event == "ACTIONBAR_SHOWGRID" or event == "ACTIONBAR_HIDEGRID" then
             SetForced("grid", event == "ACTIONBAR_SHOWGRID")
@@ -981,12 +974,12 @@ end
 --             flavor = tag, off = value },     -- off: value used where the option is hidden
 --           { label = "Text", tooltip = "Text.", button = "Text", onClick = func,  -- no saved value
 --             profile = "kind" },              -- shown only when ns.Profile(kind) exists
+--       },
+--   }
 --   Dropdown list entries: { value, label, tooltip, flavor }.
 --   Modules, options and entries without a flavor tag follow their parent;
 --   a module of another game version is registered (its saved values are
 --   kept) but never loaded nor shown.
---       },
---   }
 --   Sections (by header) and the options inside them are listed
 --   alphabetically.
 --   Optional methods: module:OnLoad() (saved variables ready, before login),
@@ -1268,7 +1261,7 @@ local function BuildSettings()
     Settings.RegisterAddOnCategory(category)
     ns.category = category
     if SettingsPanel then
-        ns.Hook(SettingsPanel, SettingsPanel.DisplayCategory and "DisplayCategory" or "SelectCategory", UpdateReloadButton)
+        ns.Hook(SettingsPanel, "DisplayCategory", UpdateReloadButton)
         SettingsPanel:HookScript("OnHide", CollectAfterSettings)
     end
 end
@@ -1284,6 +1277,7 @@ loader:SetScript("OnEvent", function(self, event, arg1)
         if arg1 ~= addonName then return end
         self:UnregisterEvent(event)
         InitDB()
+        ns.PROFILES = { [ns.FLAVOR] = ns.PROFILES[ns.FLAVOR] } -- the other flavor's are freed
         local general = PanzaUI_DB.General
         local generalOn = false
         for _, m in ipairs(ns.modules) do
@@ -1314,13 +1308,11 @@ end)
 
 -- Memory report: PanzaUI memory before and after a garbage collection.
 local function MemoryReport()
-    local GetMemory = GetAddOnMemoryUsage or (C_AddOns and C_AddOns.GetAddOnMemoryUsage)
-    if not GetMemory then return end
     UpdateAddOnMemoryUsage()
-    local before = GetMemory(addonName)
+    local before = GetAddOnMemoryUsage(addonName)
     collectgarbage("collect")
     UpdateAddOnMemoryUsage()
-    ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetMemory(addonName)))
+    ns.Print(format("memory %.0f KB, %.0f KB after garbage collection.", before, GetAddOnMemoryUsage(addonName)))
 end
 
 -- Options panel: Blizzard blocks opening it in combat, so it opens as soon

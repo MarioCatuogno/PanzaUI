@@ -1,3 +1,23 @@
+## 2.7-RELEASE
+
+This updates applies some fixes and many performance improvements.
+
+### 🛠️ Core
+
+* Core - Changed the code to use only the game's current functions and frames, removing the leftover fallbacks for older game versions
+* Core - Changed the import profiles to keep in memory only those of the running game version
+* Core - Changed the visibility options to skip the Skyriding checks on WoW Forever
+* General - Added the Interface Bars texture to the bars of the Skills panel on WoW Forever
+* Tooltips - Changed the player tooltips to do less work each time they are shown
+
+### 👤 Profile
+
+* BlizzUI - Fixed Micro Menu position
+
+### 📏 Various
+
+* Updated documentation to the latest UI version
+
 ## 2.6-RELEASE
 
 This update adds some new modules to Blizzard default profile and fixes some bugs.

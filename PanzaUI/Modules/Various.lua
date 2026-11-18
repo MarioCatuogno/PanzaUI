@@ -95,7 +95,7 @@ local function OnCreateFrame(frameType, name, parent, template)
     pcall(CheckAuraButton, parent)
 end
 
--- Buttons made before the hook (e.g. after a reload).
+-- Buttons made before the hook (eg. after a reload).
 local function StyleExistingAuras(manager)
     for _, kind in ipairs(AURA_KINDS) do
         local list = manager[kind] and manager[kind].frames

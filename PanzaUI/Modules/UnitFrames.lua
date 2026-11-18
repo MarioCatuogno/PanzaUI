@@ -337,7 +337,7 @@ local function SetupPlayer(db)
         HidePvpIcon(ctx)
         ns.Kill(PlayerPVPTimerText)
         HideLeaderIcon(ctx)
-        ns.Kill(ctx.GroupIndicator or PlayerFrameGroupIndicator)
+        ns.Kill(ctx.GroupIndicator)
 
         -- Totems: hidden and events stopped.
         ns.Disable(TotemFrame)
@@ -662,7 +662,7 @@ local function SetupFocus(db)
     if not FocusFrame then return end
     ns.Hook(FocusFrame, "SetSmallSize", function(frame) ApplyLayout(frame, db, "focus") end)
     -- Cast bar hidden and its events stopped.
-    if db.focusHideClutter then ns.Disable(FocusFrame.spellbar or FocusFrameSpellBar) end
+    if db.focusHideClutter then ns.Disable(FocusFrame.spellbar) end
     if db.focusStyle then
         ns.Hook(FocusFrame, "UpdateAuras", StyleFocusDebuffs)
         StyleFocusDebuffs(FocusFrame)

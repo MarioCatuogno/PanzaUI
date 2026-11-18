@@ -119,9 +119,10 @@ end
 local RATING_CACHE_TIME = 60 -- seconds
 local ratingScore, ratingTime, ratingR, ratingG, ratingB = {}, {}, {}, {}, {}
 
+local HAS_MYTHIC = ns.IsFlavor("retail") -- Mythic+ only exists in Retail
+
 local function AddMythicRating(tooltip, unit, guid)
-    -- Mythic+ only exists in Retail.
-    if not (C_PlayerInfo.GetPlayerMythicPlusRatingSummary and C_ChallengeMode) then return end
+    if not HAS_MYTHIC then return end
     local now = GetTime()
     if not ratingTime[guid] or now - ratingTime[guid] > RATING_CACHE_TIME then
         local summary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit)
@@ -150,11 +151,11 @@ end
 -- and while auras are secret (eg. in instances): reading them would error.
 --------------------------------------------------------------------------------
 local MOUNT_TEXT = "|T%d:0|t %s"
-local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal and C_MountJournal.GetMountFromSpell
-local AurasSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
+local GetAura, GetMountFromSpell = C_UnitAuras.GetAuraDataByIndex, C_MountJournal.GetMountFromSpell
+local AurasSecret = C_Secrets.ShouldAurasBeSecret
 
 local function MountText(unit)
-    if not GetMountFromSpell or InCombatLockdown() or (AurasSecret and AurasSecret()) then return end
+    if InCombatLockdown() or AurasSecret() then return end
     for i = 1, 40 do
         local aura = GetAura(unit, i, "HELPFUL")
         if IsSecret(aura) or not aura then return end
@@ -189,12 +190,18 @@ local FACTIONS = {
     Alliance = { text = FACTION_ALLIANCE, color = PLAYER_FACTION_COLOR_ALLIANCE or CreateColor(0.20, 0.50, 1.00) },
 }
 
+local leftLines = {} -- GameTooltip left lines by index, looked up once
+
 local function ColorFaction(tooltip, unit)
     local group = UnitFactionGroup(unit)
     local faction = not IsSecret(group) and group and FACTIONS[group]
     if not (faction and faction.text) then return end
     for i = 2, tooltip:NumLines() do
-        local line = _G["GameTooltipTextLeft" .. i]
+        local line = leftLines[i]
+        if not line then
+            line = _G["GameTooltipTextLeft" .. i]
+            leftLines[i] = line
+        end
         local text = line and line:GetText()
         if not IsSecret(text) and text == faction.text then
             line:SetTextColor(faction.color:GetRGB())
@@ -257,7 +264,7 @@ end
 function TT:OnEnable()
     if self.db.style then
         -- Hidden, not reparented: no empty space is left.
-        ns.Safe(ns.Disable, GameTooltip.StatusBar or GameTooltipStatusBar)
+        ns.Safe(ns.Disable, GameTooltip.StatusBar)
     end
     ns.Safe(AddPostCalls)
     ns.RegisterEvent(inspectEvents, "INSPECT_READY")

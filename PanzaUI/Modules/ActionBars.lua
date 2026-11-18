@@ -10,7 +10,7 @@ local VIS = ns.VIS
 -- Managed bars: global frame names and action button prefixes.
 --------------------------------------------------------------------------------
 local ACTION_BARS = {
-    { key = "bar1",   label = "Action Bar 1", frames = { "MainActionBar", "MainMenuBar" }, prefix = "ActionButton" },
+    { key = "bar1",   label = "Action Bar 1", frames = { "MainActionBar" }, prefix = "ActionButton" },
     { key = "bar2",   label = "Action Bar 2", frames = { "MultiBarBottomLeft" },  prefix = "MultiBarBottomLeftButton" },
     { key = "bar3",   label = "Action Bar 3", frames = { "MultiBarBottomRight" }, prefix = "MultiBarBottomRightButton" },
     { key = "bar4",   label = "Action Bar 4", frames = { "MultiBarRight" },       prefix = "MultiBarRightButton" },

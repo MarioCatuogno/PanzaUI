@@ -112,7 +112,7 @@ local function SetupFrame(frame)
     local name = frame:GetName()
     local tab  = _G[name .. "Tab"]
 
-    local tabText = tab and (tab.Text or _G[name .. "TabText"])
+    local tabText = tab and tab.Text
     if ns.textStyle then
         StyleText(frame)
         ns.StyleFont(tabText)
@@ -127,7 +127,7 @@ local function SetupFrame(frame)
         end
     end
 
-    ns.Kill(frame.buttonFrame or _G[name .. "ButtonFrame"])
+    ns.Kill(frame.buttonFrame)
 
     local editName = name .. "EditBox"
     for _, suffix in ipairs(EDITBOX_TEXTURES) do
@@ -148,7 +148,7 @@ local function SetupAllFrames()
 end
 
 -- Chat message filters (refined style and hide clutter).
-local AddFilter = ChatFrame_AddMessageEventFilter or (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+local AddFilter = ChatFrameUtil.AddMessageEventFilter
 
 --------------------------------------------------------------------------------
 -- Status icons before player names (AFK, DND and Blizzard staff kept).
@@ -188,7 +188,7 @@ StaticPopupDialogs.PANZAUI_COPY_URL = {
     hasEditBox = true,
     editBoxWidth = 320,
     OnShow = function(self, data)
-        local box = (self.GetEditBox and self:GetEditBox()) or self.editBox
+        local box = self:GetEditBox()
         box:SetText(data or self.data or "")
         box:HighlightText()
         box:SetFocus()
@@ -214,7 +214,6 @@ local function OnLinkClick(link, text)
 end
 
 local function SetupStyleFilters()
-    if not AddFilter then return end
     for _, event in ipairs(FLAG_EVENTS) do
         AddFilter(event, StripFlag)
         AddFilter(event, LinkURLs)
@@ -360,11 +359,9 @@ if ActionStatus and ActionStatus.DisplayMessage then
     hooksecurefunc(ActionStatus, "DisplayMessage", RemoveClipboardNotice)
 end
 
-if AddFilter then
-    AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
-    AddFilter("CHAT_MSG_SYSTEM", HideNotices)
-    AddFilter("CHAT_MSG_LOOT", HideOthersLoot)
-end
+AddFilter("CHAT_MSG_TRADESKILLS", HideOthersCrafts)
+AddFilter("CHAT_MSG_SYSTEM", HideNotices)
+AddFilter("CHAT_MSG_LOOT", HideOthersLoot)
 
 --------------------------------------------------------------------------------
 -- Module API

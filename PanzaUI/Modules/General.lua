@@ -87,7 +87,8 @@ local OTHER_BARS = {
     { key = "texDamageMeter",  label = "Damage Meter",           tooltip = "Set the texture of the Damage Meter bars." },
     { key = "texInterface",    label = "Interface Bars",         tooltip = "Set the texture of the interface progress bars.",
       bullets = { "Achievements", "Breath and fatigue bars", "Experience and reputation bars", "Quest Tracker",
-                  "Reputation panel", "Tooltips", "Progress bars of events and NPCs" },
+                  "Reputation panel", "Tooltips", "Progress bars of events and NPCs",
+                  ns.ForFlavor(nil, "Skills panel") },
       old = { "texAchievements", "texTracking", "texQuestTracker", "texRepPanel", "texTooltips" } },
 }
 
@@ -405,26 +406,27 @@ local function TrackTexture(bar, path, inset)
     if texture then hooksecurefunc(texture, "SetAtlas", function(_, atlas) Reapply(atlas) end) end
 end
 
--- Bars that are not StatusBars (WoW Forever Reputation tab): the Fill texture
--- gets the interface texture file. Blizzard crops the fill with its texture
--- coordinates (not touched here); the color comes from the atlas name,
--- otherwise the current vertex color is kept. The Skills tab, same layout,
--- turned white with it and keeps Blizzard's look.
+-- WoW Forever bars drawn by their Fill texture (Reputation and Skills tabs):
+-- the Fill gets the interface texture file. Blizzard crops it with its
+-- texture coordinates (not touched here). The color comes from the atlas
+-- name and is put back after Blizzard's tint (Skills: blue atlas tinted
+-- white); a white atlas keeps Blizzard's tint (Reputation standing color).
 local function TrackFillTexture(bar, path)
-    local fill = bar and path and not bar.SetStatusBarTexture and bar.Fill
+    local fill = bar and path and bar.Fill
     if not (fill and fill.SetAtlas and fill.GetAtlas) or trackedBars[bar] or bar:IsForbidden() then return end
     trackedBars[bar] = true
-    local busy
+    local color
+    local function Tint()
+        if color then fill:SetVertexColor(color[2], color[3], color[4]) end
+    end
     local function Reapply(atlas)
-        if busy then return end
-        busy = true
         fill:SetTexture(path)
-        local c = AtlasColor(atlas)
-        if c then fill:SetVertexColor(c[2], c[3], c[4]) end
-        busy = false
+        color = AtlasColor(atlas)
+        Tint()
     end
     Reapply(fill:GetAtlas())
     hooksecurefunc(fill, "SetAtlas", function(_, atlas) Reapply(atlas) end)
+    if bar.UpdateBarColor then hooksecurefunc(bar, "UpdateBarColor", Tint) end
 end
 
 -- Widget progress bars (events, NPCs): interface texture, set up with each
@@ -578,12 +580,12 @@ totEvents:SetScript("OnEvent", function() ns.Defer(ColorToTPower) end)
 local function SkinToT(frame, path, unit)
     local tot = frame and path and (frame.totFrame or _G[frame:GetName() .. "ToT"])
     if not tot then return end
-    local health = tot.HealthBar or tot.healthbar or tot.healthBar
+    local health = tot.HealthBar
     if health then
         SetTexture(health, path)
         KeepTexture(health, path)
     end
-    local power = tot.ManaBar or tot.manabar or tot.manaBar
+    local power = tot.ManaBar
     if power then
         KeepToTPower(power, path)
         totPower[#totPower + 1] = power
@@ -980,7 +982,7 @@ local function SetupMountIcons()
     if not journal then return end
     ns.StyleScrollIcons(journal.ScrollBox, MountIcon)
     local info = journal.MountDisplay and journal.MountDisplay.InfoButton
-    local icon = info and (info.Icon or MountJournalIcon)
+    local icon = info and info.Icon
     if icon then ns.StyleIcon(icon, info) end
 end
 
@@ -1115,8 +1117,6 @@ end
 local styledFlyouts = {}
 
 local function IsItemFlyout(frame)
-    local mixin = ProfessionsItemFlyoutMixin
-    if mixin and mixin.Init then return frame.Init == mixin.Init end
     return frame.ScrollBox and frame.NineSlice and frame.HideUnownedCheckbox
 end
 
@@ -1145,7 +1145,6 @@ local function SetupItemFlyout()
         end)
     end
     ns.Hook("OpenProfessionsItemFlyout", OnOpen)
-    ns.Hook("ToggleProfessionsItemFlyout", OnOpen)
 end
 
 -- Dialogs (eg. "Do you want to destroy...?"): Blizzard's frame (BG, drawn
@@ -1205,7 +1204,7 @@ local function HookFramedDialog(name)
 end
 
 local function StyleDialogs()
-    for i = 1, STATICPOPUP_NUMDIALOGS or 4 do
+    for i = 1, 4 do -- StaticPopup1-4
         local dialog = _G["StaticPopup" .. i]
         if dialog then
             StyleDialogBorder(dialog)
@@ -1379,11 +1378,7 @@ end
 -- Green health when not class colored (the Pet frame never is).
 local function SkinUnitFrames(player, target, focus)
     local tint = not ns.classColors
-    if PlayerFrame_GetHealthBar then
-        SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
-    else
-        SkinBars(PlayerFrameHealthBar, PlayerFrameManaBar, player, tint)
-    end
+    SkinBars(PlayerFrame_GetHealthBar(), PlayerFrame_GetManaBar(), player, tint)
     SkinBars(PetFrameHealthBar, PetFrameManaBar, player, true)
     SkinFrame(TargetFrame, target, tint)
     SkinFrame(FocusFrame, focus, tint)
@@ -1401,7 +1396,7 @@ local function SkinPRDBars(prd)
         local frame = PersonalResourceDisplayFrame
         if not frame then return end
         local container = frame.HealthBarsContainer
-        local health = container and (container.healthBar or container.HealthBar)
+        local health = container and container.healthBar
         SetTexture(health, prd)
         KeepTexture(health, prd)
         SetTexture(frame.PowerBar, prd)
@@ -1438,6 +1433,20 @@ local function SkinPanelBars(interface)
         elseif file then
             ns.Safe(TrackFillTexture, bar, file)
         end
+    end), GEN, true)
+end
+
+-- WoW Forever Skills tab: its bars (list and details pane) are StatusBars
+-- that draw only their Fill texture, skinned like the Reputation tab.
+local function SkinSkillsBars()
+    local file = ns.InterfaceBarTexture()
+    local skills = SkillsFrame
+    if not (file and skills and skills.ScrollBox and ScrollUtil) then return end
+    local details = skills.SkillDetailFrame
+    if details then ns.Safe(TrackFillTexture, details.RankBar, file) end
+    ScrollUtil.AddInitializedFrameCallback(skills.ScrollBox, ns.ScrollFrameCallback(function(entry)
+        local content = entry.Content
+        if content then ns.Safe(TrackFillTexture, content.SkillsBar, file) end
     end), GEN, true)
 end
 
@@ -1587,6 +1596,7 @@ function GEN:OnEnable()
 
     if interface then
         Safe(SkinPanelBars, interface)
+        if not ns.IsFlavor("retail") then Safe(SkinSkillsBars) end
         Safe(SkinMirrorBars)
         Safe(SkinAchievementBars, interface)
         Safe(SkinTrackerBars, interface)
