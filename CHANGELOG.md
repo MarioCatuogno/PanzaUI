@@ -1,6 +1,6 @@
 ## 2.7-RELEASE
 
-This updates applies many fixes and performance improvements.
+This updates applies some fixes and many performance improvements.
 
 ### 🛠️ Core
 
