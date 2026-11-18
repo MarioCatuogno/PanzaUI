@@ -190,6 +190,23 @@ function ns.Disable(frame)
     frame:HookScript("OnShow", HideFrame)
 end
 
+-- Makes a frame invisible with its alpha only: no Blizzard script runs from
+-- PanzaUI's code. Hiding a frame placed by Blizzard's layout (eg. the Totem
+-- frame under the Player frame) runs its OnHide and the new layout from
+-- PanzaUI's code, and on WoW Forever the action bars then fail in combat.
+-- The frame keeps its events and its place; clicks are up to the caller.
+local concealed = {}
+local function KeepConcealed(frame, alpha)
+    if concealed[frame] and (IsSecret(alpha) or alpha ~= 0) then frame:SetAlpha(0) end
+end
+
+function ns.Conceal(frame)
+    if not frame or concealed[frame] then return end
+    concealed[frame] = true
+    frame:SetAlpha(0)
+    hooksecurefunc(frame, "SetAlpha", KeepConcealed)
+end
+
 -- hooksecurefunc, only when the function exists.
 -- ns.Hook("GlobalFunc", cb) or ns.Hook(object, "Method", cb)
 function ns.Hook(target, name, callback)

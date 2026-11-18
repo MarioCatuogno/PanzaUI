@@ -1,3 +1,13 @@
+## 2.8-RELEASE
+
+### 🛠️ Core
+
+* Unit Frames - Fixed the action bar errors in combat on WoW Forever when the totems and class resources of the Player frame are hidden
+
+### 👤 Profile
+
+### 📏 Various
+
 ## 2.7-RELEASE
 
 This updates applies some fixes and many performance improvements.

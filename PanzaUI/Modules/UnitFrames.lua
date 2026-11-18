@@ -120,6 +120,16 @@ local CLASS_RESOURCES = {
 }
 local hiddenResources = {}
 
+-- Totems and class resources: hidden with their events stopped on Retail,
+-- only made invisible on WoW Forever (see ns.Conceal).
+local HideResource = ns.ForFlavor(ns.Disable, ns.Conceal)
+
+-- WoW Forever: the invisible totem buttons can't be clicked (a right click
+-- would dismiss the totem).
+local function DisableTotemClicks(frame)
+    ns.ForEachActive(frame.totemPool, function(button) button:EnableMouse(false) end)
+end
+
 local function IsInPRD(frame)
     local prd = PersonalResourceDisplayFrame
     while frame and prd do
@@ -339,15 +349,18 @@ local function SetupPlayer(db)
         HideLeaderIcon(ctx)
         ns.Kill(ctx.GroupIndicator)
 
-        -- Totems: hidden and events stopped.
-        ns.Disable(TotemFrame)
+        HideResource(TotemFrame)
+        if TotemFrame and not ns.IsFlavor("retail") then
+            ns.Hook(TotemFrame, "Update", DisableTotemClicks)
+            DisableTotemClicks(TotemFrame)
+        end
 
         local bars = { PlayerFrame.classPowerBar }
         for i, name in ipairs(CLASS_RESOURCES) do bars[i + 1] = _G[name] end
         for i = 1, #CLASS_RESOURCES + 1 do
             local bar = bars[i]
             if bar and not IsInPRD(bar) then
-                ns.Disable(bar)
+                HideResource(bar)
                 hiddenResources[bar] = true
             end
         end
