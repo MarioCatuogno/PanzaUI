@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Unit Frames - Fixed the action bar errors in combat on WoW Forever when the totems and class resources of the Player frame are hidden
+* Various - Fixed the action bar error when opening the talents in combat with Hide Micro Menu alerts on
 
 ### 👤 Profile
 

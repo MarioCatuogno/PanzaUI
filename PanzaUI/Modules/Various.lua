@@ -474,8 +474,10 @@ end
 
 --------------------------------------------------------------------------------
 -- System notices: micro menu alerts (help tips on or pointing at a micro
--- button, or with a known alert text) closed as soon as they are shown,
--- their button flash stopped, and the ones already open closed at login.
+-- button, or with a known alert text) and the flash of the micro buttons.
+-- Only made invisible and click-through (alpha, mouse): closing them or
+-- stopping the flash with Blizzard's functions from PanzaUI's code tainted
+-- the alert state Blizzard reads when a panel opens (eg. talents in combat).
 -- Post-hooks, option read live.
 --------------------------------------------------------------------------------
 local NOTICE_TEXTS = {}
@@ -498,30 +500,45 @@ local function IsNotice(parent, info, relativeRegion)
     return IsMicroButton(parent) or IsMicroButton(relativeRegion)
 end
 
-local function HideNotice(helpTip, parent, info, relativeRegion)
-    if Misc.db.hideNotices and info and info.text and IsNotice(parent, info, relativeRegion) then
-        helpTip:Hide(parent, info.text)
+-- Help tips come from Blizzard's pool: a hidden one gets its look back when
+-- it is reused for another tip (or the option is turned off).
+local hiddenTips = {}
+
+local function SetTipShown(tip, shown)
+    tip:SetAlpha(shown and 1 or 0)
+    tip:EnableMouse(shown)
+    if tip.OkayButton then tip.OkayButton:EnableMouse(shown) end
+    if tip.CloseButton then tip.CloseButton:EnableMouse(shown) end
+    hiddenTips[tip] = not shown or nil
+end
+
+local function CheckTip(tip)
+    if Misc.db.hideNotices and tip.info and IsNotice(tip:GetParent(), tip.info, tip.relativeRegion) then
+        SetTipShown(tip, false)
+    elseif hiddenTips[tip] then
+        SetTipShown(tip, true)
     end
 end
 
-local function StopMicroPulse(button)
-    if Misc.db.hideNotices and MicroButtonPulseStop and IsMicroButton(button) then MicroButtonPulseStop(button) end
+local function CheckTips()
+    ns.ForEachActive(HelpTip.framePool, CheckTip)
 end
 
--- Help tips already open (Blizzard's pool): closed when they are notices.
-local function CloseNotice(frame)
-    if IsNotice(frame.owner or frame:GetParent(), frame.info, frame.relativeRegion) then frame:Hide() end
-end
-
-local function CloseOpenNotices()
-    if Misc.db.hideNotices and HelpTip then ns.ForEachActive(HelpTip.framePool, CloseNotice) end
+-- Flash textures of the micro buttons: kept invisible while flashing.
+local function KeepFlashHidden(texture, alpha)
+    if Misc.db.hideNotices and (IsSecret(alpha) or alpha ~= 0) then texture:SetAlpha(0) end
 end
 
 local function SetupNotices()
-    if HelpTip then ns.Hook(HelpTip, "Show", HideNotice) end
-    ns.Hook("MicroButtonPulse", StopMicroPulse)
-    CloseOpenNotices()
-    C_Timer.After(3, CloseOpenNotices) -- alerts shown during the login
+    ns.Hook(HelpTip, "Show", CheckTips)
+    CheckTips()
+    C_Timer.After(3, CheckTips) -- alerts shown during the login
+    for _, button in ipairs({ MicroMenu:GetChildren() }) do
+        for _, key in ipairs({ "FlashBorder", "FlashContent" }) do
+            local texture = button[key]
+            if texture then hooksecurefunc(texture, "SetAlpha", KeepFlashHidden) end
+        end
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -683,7 +700,7 @@ function Misc:OnOptionChanged(key, value)
     elseif key == "hideErrors" then
         SetErrorMessages(value)
     elseif key == "hideNotices" then
-        if value then CloseOpenNotices() end
+        CheckTips()
     elseif key == "cursorRing" then
         SetCursorRing(value)
     end
