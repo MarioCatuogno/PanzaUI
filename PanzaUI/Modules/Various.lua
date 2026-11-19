@@ -60,7 +60,10 @@ local Misc = ns:RegisterModule("Miscellaneous", {
 
 --------------------------------------------------------------------------------
 -- Platynator aura icons: styled while Platynator builds each button, before
--- secret aura data locks it (found through a post-hook of CreateFrame).
+-- secret aura data locks it (found through a post-hook of CreateFrame). Its
+-- aura containers (Platynator 547+) make the buttons themselves: the button
+-- is found when Platynator adds its cooldown, and styled on the next frame,
+-- once its icon and border exist.
 --------------------------------------------------------------------------------
 local AURA_KINDS = { "buffs", "debuffs", "crowdControl" }
 local styledAuras = {}
@@ -81,18 +84,32 @@ local function IsNewAuraButton(button, container)
     return type(list) == "table" and list[#list] == button
 end
 
+local pendingAuras = {}
+
+local function StylePendingAuras()
+    for button in pairs(pendingAuras) do
+        pendingAuras[button] = nil
+        if not button:IsForbidden() then StyleAuraFrame(button) end
+    end
+end
+
 local function CheckAuraButton(button)
-    if button:IsForbidden() or not button.Border or styledAuras[button] then return end
+    if button:IsForbidden() or styledAuras[button] then return end
     local container = button:GetParent()
     if IsNewAuraButton(button, container) or (container and IsNewAuraButton(button, container:GetParent())) then
-        StyleAuraFrame(button)
+        if button.Border then
+            StyleAuraFrame(button)
+        else -- still being built
+            pendingAuras[button] = true
+            ns.Defer(StylePendingAuras)
+        end
     end
 end
 
 -- Forbidden parents can't be indexed: the check runs protected.
 local function OnCreateFrame(frameType, name, parent, template)
-    if frameType ~= "Frame" or name ~= nil or template ~= nil or type(parent) ~= "table" then return end
-    pcall(CheckAuraButton, parent)
+    if name ~= nil or type(parent) ~= "table" then return end
+    if (frameType == "Frame" and template == nil) or frameType == "Cooldown" then pcall(CheckAuraButton, parent) end
 end
 
 -- Buttons made before the hook (eg. after a reload).
