@@ -588,13 +588,18 @@ end
 -- with Blizzard's own texture, and a taller bar slot. The health bar and its
 -- mask (both anchored by their top left corner, with a size of their own) are
 -- made wider toward the portrait and taller to fill the slot while that frame
--- art is shown. Their size and anchor are read right before growing them and
--- put back with the normal art: the normal frame is never changed otherwise.
+-- art is shown. The mana bar (anchored by its top right corner) and its mask
+-- (top left, it limits the visible fill) are made wider toward the portrait,
+-- the mask a bit more: the mana bar sits lower, where the ring curves away. Sizes and anchors are read right before growing them and put
+-- back with the normal art: the normal frame is never changed otherwise.
 -- Checked on the next frame, after Blizzard's own update.
 --------------------------------------------------------------------------------
--- Units added: width on the portrait side, height, and how much of it goes
--- above the bar (measured on a screenshot of the rare frame).
-local ELITE_BAR = ns.ForFlavor(nil, { width = 5, height = 7, up = 4 })
+-- Units added: width on the portrait side, height, how much of it goes above
+-- the bar and how far the anchor moves right (measured on screenshots of the
+-- rare frame).
+local ELITE_BAR  = ns.ForFlavor(nil, { width = 5, height = 7, up = 4, right = 0 })
+local ELITE_MANA = { width = 5, height = 0, up = 0, right = 5 }
+local ELITE_MASK = { width = 9, height = 0, up = 0, right = 0 }
 local ELITE_WORDS = { "Rare", "Elite" }    -- in the frame art atlas name
 local grown = {} -- region -> Blizzard's width, height and first anchor, while grown
 local barEvents = CreateFrame("Frame")
@@ -616,7 +621,7 @@ local function Grow(region, grow)
         if IsSecret(width) or IsSecret(height) or IsSecret(x) or IsSecret(y) or not point or width <= 0 then return end
         grown[region] = { width, height, point, relative, relativePoint, x, y }
         region:SetSize(width + grow.width, height + grow.height)
-        region:SetPoint(point, relative, relativePoint, x, y + grow.up)
+        region:SetPoint(point, relative, relativePoint, x + grow.right, y + grow.up)
     elseif not grow and base then
         grown[region] = nil
         region:SetSize(base[1], base[2])
@@ -625,7 +630,8 @@ local function Grow(region, grow)
 end
 
 local function FitEliteBar()
-    local container = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer
+    local main = TargetFrame.TargetFrameContent.TargetFrameContentMain
+    local container = main.HealthBarsContainer
     local art = TargetFrame.TargetFrameContainer.FrameTexture
     local bar = container and container.HealthBar
     if not (bar and art) then return end
@@ -633,9 +639,14 @@ local function FitEliteBar()
         barEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
-    local grow = IsEliteArt(art:GetAtlas()) and ELITE_BAR or nil
-    Grow(bar, grow)
-    Grow(container.HealthBarMask, grow)
+    local elite = IsEliteArt(art:GetAtlas())
+    Grow(bar, elite and ELITE_BAR or nil)
+    Grow(container.HealthBarMask, elite and ELITE_BAR or nil)
+    local mana = main.ManaBar
+    if mana then
+        Grow(mana, elite and ELITE_MANA or nil)
+        Grow(mana.ManaBarMask, elite and ELITE_MASK or nil)
+    end
 end
 
 local function QueueEliteBar() ns.Defer(FitEliteBar) end

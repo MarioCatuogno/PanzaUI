@@ -3,6 +3,7 @@
 ### 🛠️ Core
 
 * Unit Frames - Fixed the action bar errors in combat on WoW Forever when the totems and class resources of the Player frame are hidden
+* Unit Frames - Fixed the mana bar of the rare and elite Target frame not reaching the portrait on WoW Forever, with the Refined style
 * Various - Changed the Platynator aura icons on WoW Forever to skip a check on every aura change, no longer needed
 * Various - Fixed the action bar error when opening the talents in combat with Hide Micro Menu alerts on
 * Various - Fixed some Platynator aura icons not styled by the Refined style
